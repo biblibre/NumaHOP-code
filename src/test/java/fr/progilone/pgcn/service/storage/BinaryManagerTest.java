@@ -12,6 +12,8 @@ import static org.mockito.Mockito.when;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -89,12 +91,13 @@ public class BinaryManagerTest {
     private static final String ID_PAGE2 = "efba845c8f546045e003a846649d0eb";
     
     private static final String FAKE_LIB_ID = "libId";;
-    
+
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
+        Path tempDirectory = Files.createTempDirectory("bmTestPGCN-");
         try {
-            bm.initialize("C://Temp/bmTestPGCN/", 3, "MD5", new String[]{FAKE_LIB_ID});
+            bm.initialize(tempDirectory.toString(), 3, "MD5", new String[]{FAKE_LIB_ID});
         } catch (final IOException e) {
             fail(e.getMessage());
         }

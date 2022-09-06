@@ -1,0 +1,124 @@
+# This pipeline requires a runner that can build docker images, with the "docker" tag
+
+variables:
+    # DOCKER_VERSION must be defined in the runner used to build docker images
+    # NUMAHOP_DOCKER_REPO must be provided by gitlab, the complete name of the docker repository to use for the intermediate and final images
+    # NUMAHOP_DOCKER_CONFIG may be provided by gitlab, the content of the ~/.docker/config.json (e.g. for docker repository credentials)
+    # NUMAHOP_MAVEN_CONFIG may be provided by gitlab, the content of ~/.m2/settings.xml (e.g. for maven repository mirrors)
+    # NUMAHOP_NPM_CONFIG may be provided by gitlab, the content of ~/.npmrc (e.g. for npm repository mirrors)
+    # NUMAHOP_DEPLOY_PROJECT may be provided by gitlab, the name of a project with a deployment pipeline
+
+    # This will suppress any download for dependencies and plugins or upload messages which would clutter the console log.
+    # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
+    MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+    # As of Maven 3.3.0 instead of this you may define these options in `.mvn/maven.config` so the same config is used
+    # when running from the command line.
+    # `installAtEnd` and `deployAtEnd` are only effective with recent version of the corresponding plugins.
+    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+
+stages:
+    - prepare
+    - compile
+    - test
+    - package
+    - deploy
+
+build-version:
+    image: bash
+    stage: prepare
+    artifacts:
+        reports:
+            dotenv: version.env
+    script:
+        - TIMESTAMP="$(date -u +"%Y%m%d-%H%M%S")"
+        - GITHASH="${CI_COMMIT_SHA:0:8}"
+        - echo "VERSION=$TIMESTAMP.$GITHASH" > version.env
+        - cat version.env
+
+build-base-images:
+    image: docker:$DOCKER_VERSION
+    tags:
+        - docker
+    stage: prepare
+    needs:
+        - build-version
+    services:
+        - docker:$DOCKER_VERSION-dind
+    artifacts:
+        reports:
+            dotenv: images.env
+    script:
+        - mkdir -p ~/.docker && echo "$NUMAHOP_DOCKER_CONFIG" > ~/.docker/config.json
+        - RUN_IMAGE="$NUMAHOP_DOCKER_REPO/numahop-run:$VERSION"
+        - docker build --pull -t $RUN_IMAGE src/main/docker --target run
+        - docker push $RUN_IMAGE
+        - echo "RUN_IMAGE=$RUN_IMAGE" >> images.env
+        - BUILD_IMAGE="$NUMAHOP_DOCKER_REPO/numahop-build:$VERSION"
+        - docker build --pull -t $BUILD_IMAGE src/main/docker --target build
+        - docker push $BUILD_IMAGE
+        - echo "BUILD_IMAGE=$BUILD_IMAGE" >> images.env
+        - cat images.env
+
+compile:
+    image: $BUILD_IMAGE
+    stage: compile
+    needs:
+        - build-base-images
+    artifacts:
+        paths:
+            - target
+        expire_in: 1 day
+    script:
+        - mkdir -p ~/.m2 && echo "$NUMAHOP_MAVEN_CONFIG" > ~/.m2/settings.xml
+        - echo "$NUMAHOP_NPM_CONFIG" > ~/.npmrc
+        - mvn $MAVEN_CLI_OPTS -P webapp compile
+
+test:
+    image: $BUILD_IMAGE
+    stage: test
+    needs:
+        - build-base-images
+        - compile
+    artifacts:
+        when: always
+        paths:
+            - target/surefire-reports
+            - target/failsafe-reports
+            - target/site/jacoco-ut/jacoco.xml
+        reports:
+            junit:
+                - target/surefire-reports/*.xml
+                - target/failsafe-reports/*.xml
+        expire_in: 10 days
+    script:
+        - mkdir -p ~/.m2 && echo "$NUMAHOP_MAVEN_CONFIG" > ~/.m2/settings.xml
+        - mvn $MAVEN_CLI_OPTS verify -Dmaven.main.skip=true
+
+package:
+    image: $BUILD_IMAGE
+    stage: package
+    needs:
+        - build-version
+        - build-base-images
+        - compile
+        - test
+    artifacts:
+        reports:
+            dotenv: image.env
+    script:
+        - mkdir -p ~/.m2 && echo "$NUMAHOP_MAVEN_CONFIG" > ~/.m2/settings.xml
+        - mkdir -p ~/.docker && echo "$NUMAHOP_DOCKER_CONFIG" > ~/.docker/config.json
+        - NUMAHOP_IMAGE="$NUMAHOP_DOCKER_REPO/numahop:$VERSION"
+        - mvn $MAVEN_CLI_OPTS jib:build -Djib.from.image="$RUN_IMAGE" -Djib.to.image="$NUMAHOP_IMAGE"
+        - echo "NUMAHOP_IMAGE=$NUMAHOP_IMAGE" >> image.env
+        - cat image.env
+
+deploy:
+    stage: deploy
+    needs:
+        - package
+    rules:
+        -   if: $NUMAHOP_DEPLOY_PROJECT && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    variables:
+        NUMAHOP_IMAGE: $NUMAHOP_IMAGE
+    trigger: $NUMAHOP_DEPLOY_PROJECT

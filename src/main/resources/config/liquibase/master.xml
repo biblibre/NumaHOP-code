@@ -245,6 +245,9 @@
     <include file="classpath:config/liquibase/changelog/db-changelog-check-015.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/db-changelog-document-data-005.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/db-changelog-conf-digital-library-01.xml" relativeToChangelogFile="false"/>
+
+    <include file="classpath:config/liquibase/changelog/db-changelog-add-missing-columns.xml" relativeToChangelogFile="false"/>
+    
     <include file="classpath:config/liquibase/changelog/db-changelog-conf-omeka-007.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/db-changelog-conf-omeka-008.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/db-changelog-user-012.xml" relativeToChangelogFile="false"/>

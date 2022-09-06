@@ -21,3 +21,4 @@ src/main/webapp/styles/main.css
 /bin/
 src/main/webapp/.vscode/
 velocity.log.1
+pom.xml.bak

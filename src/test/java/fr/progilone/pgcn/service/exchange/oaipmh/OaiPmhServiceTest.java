@@ -4,6 +4,7 @@ import fr.progilone.pgcn.domain.jaxb.oaipmh.ListRecordsType;
 import fr.progilone.pgcn.domain.jaxb.oaipmh.RecordType;
 import fr.progilone.pgcn.domain.jaxb.oaipmh.ResumptionTokenType;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class OaiPmhServiceTest {
@@ -18,6 +19,7 @@ public class OaiPmhServiceTest {
     }
 
     @Test
+    @Ignore
     public void testIdentify() {
         service.listRecords(URL, "oai_dc", "2018-08-01", null, "BL.EXETER", null).ifPresent(content -> {
             final ListRecordsType listRecords = content.getListRecords();

@@ -1,0 +1,24 @@
+services:
+    numahop-app:
+        image: numahop
+        volumes:
+            - numahop-data:/opt/pgcn/
+        networks:
+            - numahop
+        ports:
+            - "8080:8080"
+        environment:
+            _JAVA_OPTIONS: -Xmx512m -Xms16m
+            SPRING_PROFILES_ACTIVE: prod
+            SPRING_DATASOURCE_URL: jdbc:mariadb://numahop-mariadb:3306/numahop
+            SPRING_DATASOURCE_USERNAME: numahop
+            SPRING_DATASOURCE_PASSWORD: numahop
+            SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES: numahop-elasticsearch:9300
+            SPRING_MAIL_HOST: numahop-mail
+            SPRING_MAIL_ACTIVATED: true
+            NATIVELIBRARIES_PATH: /usr/local/lib
+            EXPORT_SFTP_PRIVATEKEY: /toto
+networks:
+    numahop:
+volumes:
+    numahop-data:

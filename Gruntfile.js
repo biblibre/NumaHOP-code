@@ -35,7 +35,7 @@ module.exports = function (grunt) {
         yeoman: {
             // configurable paths
             app: require('./bower.json').appPath || 'app',
-            dist: 'src/main/webapp/dist',
+            dist: 'target/classes/static/dist',
             webapp: 'src/main/webapp'
         },
         watch: {
@@ -439,12 +439,18 @@ module.exports = function (grunt) {
                 cwd: 'src/main/webapp/bower_components',
                 dest: '.tmp/libs/',
                 src: ['pdfjs-dist/build/*', 'angular-pdf/dist/*']
+            },
+            static: {
+                expand: true,
+                cwd: 'src/main/webapp',
+                dest: 'target/classes/static',
+                src: ['.htaccess', 'hop_favicon.png', 'robots.txt']
             }
         },
         concurrent: {
             server: ['compass:server', 'copy:styles', 'copy:i18n', 'copy:libs', 'copy:summernote_fonts'],
             test: ['copy:libs', 'copy:mediaelement'],
-            dist: ['compass', 'imagemin',  'copy:styles', 'copy:i18n', 'copy:libs', 'copy:summernote_fonts']
+            dist: ['compass', 'imagemin',  'copy:styles', 'copy:i18n', 'copy:libs', 'copy:summernote_fonts', 'copy:static']
         },
         karma: {
             unit: {

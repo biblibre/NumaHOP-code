@@ -164,6 +164,9 @@ sshForwarding:
         localPort: 9300
         remotePort: 9300
 
+
+liquibase.change-log: classpath:config/liquibase/master.xml
+
 images:
     format:
         default:

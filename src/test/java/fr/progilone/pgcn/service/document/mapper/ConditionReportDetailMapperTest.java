@@ -6,6 +6,8 @@ import fr.progilone.pgcn.domain.document.conditionreport.DescriptionProperty;
 import fr.progilone.pgcn.domain.document.conditionreport.DescriptionValue;
 import fr.progilone.pgcn.domain.dto.document.conditionreport.ConditionReportDetailDTO;
 import fr.progilone.pgcn.domain.dto.document.conditionreport.ConditionReportValueDTO;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -34,8 +36,12 @@ public class ConditionReportDetailMapperTest {
 
         final ConditionReportDetailDTO actual = DETAIL_MAPPER.detailToDTO(detail);
 
+        NumberFormat numberFormat = DecimalFormat.getNumberInstance();
+        numberFormat.setMaximumFractionDigits(2);
+        String expectedFormatting = numberFormat.format(detail.getInsurance());
+
         assertEquals("11/10/2017", actual.getDate());
-        assertEquals("12\u00A0345,68", actual.getInsurance());
+        assertEquals(expectedFormatting, actual.getInsurance());
 
         checkDescDTO(descBind, actual.getBindings());
         checkDescDTO(descDesc, actual.getDescriptions());
