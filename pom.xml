@@ -8,7 +8,7 @@
     </parent>
     <groupId>fr.progilone.numahop</groupId>
     <artifactId>numahop</artifactId>
-    <version>1.1.5</version>
+    <version>1.1.8</version>
     <packaging>jar</packaging>
     <name>NumaHOP</name>
     <description>NumaHOP</description>
@@ -33,7 +33,7 @@
         <java.version>1.8</java.version>
         <jaxb.version>2.2.11</jaxb.version>
         <jena.version>3.1.1</jena.version>
-        <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
+        <jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
         <jsch.version>0.1.54</jsch.version>
         <jsog.version>1.1.1</jsog.version>
         <liquibase-hibernate4.version>3.5</liquibase-hibernate4.version>

@@ -1,6 +1,6 @@
 services:
     numahop-mariadb:
-        image: mariadb:10.2
+        image: mariadb:10.10
         volumes:
             - numahop-mariadb:/var/lib/mysql
         networks:

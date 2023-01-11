@@ -1,11 +1,12 @@
 # This pipeline requires a runner that can build docker images, with the "docker" tag
 
 variables:
-    # DOCKER_VERSION must be defined in the runner used to build docker images
-    # NUMAHOP_DOCKER_REPO must be provided by gitlab, the complete name of the docker repository to use for the intermediate and final images
-    # NUMAHOP_DOCKER_CONFIG may be provided by gitlab, the content of the ~/.docker/config.json (e.g. for docker repository credentials)
+    # NUMAHOP_DOCKER_TMP_REPO must be provided by gitlab, the complete name of the docker repository to use for the intermediate images
+    # NUMAHOP_DOCKER_RESULT_REPO must be provided by gitlab, the complete name of the docker repository to use for the final image
+    # NUMAHOP_DOCKER_MIRROR_REPO may be provided by gitlab, the complete name of a docker mirror repository
     # NUMAHOP_MAVEN_CONFIG may be provided by gitlab, the content of ~/.m2/settings.xml (e.g. for maven repository mirrors)
     # NUMAHOP_NPM_CONFIG may be provided by gitlab, the content of ~/.npmrc (e.g. for npm repository mirrors)
+    # NUMAHOP_DOCKER_CONFIG may be provided by gitlab, the content of the ~/.docker/config.json (e.g. for docker repository credentials)
     # NUMAHOP_DEPLOY_PROJECT may be provided by gitlab, the name of a project with a deployment pipeline
 
     # This will suppress any download for dependencies and plugins or upload messages which would clutter the console log.
@@ -15,6 +16,23 @@ variables:
     # when running from the command line.
     # `installAtEnd` and `deployAtEnd` are only effective with recent version of the corresponding plugins.
     MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+
+    MAVEN_CONFIG_LOCATION: ~/.m2
+    NPM_CONFIG_LOCATION: "~"
+    DOCKER_CONFIG_LOCATION: ~/.docker
+
+default:
+    before_script:
+        - MAVEN_CONFIG_LOCATION="${MAVEN_CONFIG_LOCATION/#\~/$HOME}"
+        - mkdir -p $MAVEN_CONFIG_LOCATION
+        - echo "$NUMAHOP_MAVEN_CONFIG" > $MAVEN_CONFIG_LOCATION/settings.xml
+        - NPM_CONFIG_LOCATION="${NPM_CONFIG_LOCATION/#\~/$HOME}"
+        - mkdir -p $NPM_CONFIG_LOCATION
+        - echo "$NUMAHOP_NPM_CONFIG" > $NPM_CONFIG_LOCATION/.npmrc
+        - DOCKER_CONFIG_LOCATION="${DOCKER_CONFIG_LOCATION/#\~/$HOME}"
+        - mkdir -p $DOCKER_CONFIG_LOCATION
+        - echo "$NUMAHOP_DOCKER_CONFIG" > $DOCKER_CONFIG_LOCATION/config.json
+        - set -x
 
 stages:
     - prepare
@@ -33,31 +51,37 @@ build-version:
         - TIMESTAMP="$(date -u +"%Y%m%d-%H%M%S")"
         - GITHASH="${CI_COMMIT_SHA:0:8}"
         - echo "VERSION=$TIMESTAMP.$GITHASH" > version.env
-        - cat version.env
 
 build-base-images:
-    image: docker:$DOCKER_VERSION
-    tags:
-        - docker
+    image:
+        name: gcr.io/kaniko-project/executor:debug
+        entrypoint: [ "" ]
     stage: prepare
     needs:
         - build-version
-    services:
-        - docker:$DOCKER_VERSION-dind
+    variables:
+        DOCKER_CONFIG_LOCATION: /kaniko/.docker
     artifacts:
         reports:
             dotenv: images.env
     script:
-        - mkdir -p ~/.docker && echo "$NUMAHOP_DOCKER_CONFIG" > ~/.docker/config.json
-        - RUN_IMAGE="$NUMAHOP_DOCKER_REPO/numahop-run:$VERSION"
-        - docker build --pull -t $RUN_IMAGE src/main/docker --target run
-        - docker push $RUN_IMAGE
-        - echo "RUN_IMAGE=$RUN_IMAGE" >> images.env
-        - BUILD_IMAGE="$NUMAHOP_DOCKER_REPO/numahop-build:$VERSION"
-        - docker build --pull -t $BUILD_IMAGE src/main/docker --target build
-        - docker push $BUILD_IMAGE
-        - echo "BUILD_IMAGE=$BUILD_IMAGE" >> images.env
-        - cat images.env
+        - >
+          if [ -n "$NUMAHOP_DOCKER_MIRROR_REPO" ]; then
+            MIRROR_REPO="--registry-mirror $NUMAHOP_DOCKER_MIRROR_REPO"
+          fi
+        - >
+          for TARGET in run build; do
+            IMAGE="$NUMAHOP_DOCKER_TMP_REPO/numahop:$VERSION-$TARGET"
+            /kaniko/executor \
+                --context src/main/docker \
+                --target "$TARGET" \
+                --destination "$IMAGE" \
+                $MIRROR_REPO \
+                --cleanup \
+                --cache=true \
+                --skip-unused-stages
+            echo "$(echo $TARGET | tr [:lower:] [:upper:])_IMAGE=$IMAGE" >> images.env
+          done
 
 compile:
     image: $BUILD_IMAGE
@@ -69,7 +93,6 @@ compile:
             - target
         expire_in: 1 day
     script:
-        - mkdir -p ~/.m2 && echo "$NUMAHOP_MAVEN_CONFIG" > ~/.m2/settings.xml
         - echo "$NUMAHOP_NPM_CONFIG" > ~/.npmrc
         - mvn $MAVEN_CLI_OPTS -P webapp compile
 
@@ -91,7 +114,6 @@ test:
                 - target/failsafe-reports/*.xml
         expire_in: 10 days
     script:
-        - mkdir -p ~/.m2 && echo "$NUMAHOP_MAVEN_CONFIG" > ~/.m2/settings.xml
         - mvn $MAVEN_CLI_OPTS verify -Dmaven.main.skip=true
 
 package:
@@ -106,9 +128,7 @@ package:
         reports:
             dotenv: image.env
     script:
-        - mkdir -p ~/.m2 && echo "$NUMAHOP_MAVEN_CONFIG" > ~/.m2/settings.xml
-        - mkdir -p ~/.docker && echo "$NUMAHOP_DOCKER_CONFIG" > ~/.docker/config.json
-        - NUMAHOP_IMAGE="$NUMAHOP_DOCKER_REPO/numahop:$VERSION"
+        - NUMAHOP_IMAGE="$NUMAHOP_DOCKER_RESULT_REPO/numahop:$VERSION"
         - mvn $MAVEN_CLI_OPTS jib:build -Djib.from.image="$RUN_IMAGE" -Djib.to.image="$NUMAHOP_IMAGE"
         - echo "NUMAHOP_IMAGE=$NUMAHOP_IMAGE" >> image.env
         - cat image.env
