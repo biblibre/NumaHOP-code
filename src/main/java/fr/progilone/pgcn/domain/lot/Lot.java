@@ -10,7 +10,6 @@ import java.util.Set;
 import javax.persistence.*;
 
 import fr.progilone.pgcn.domain.administration.ExportFTPDeliveryFolder;
-import fr.progilone.pgcn.domain.administration.ExportFTPDeliveryFolder_;
 import org.hibernate.Hibernate;
 import org.hibernate.LazyInitializationException;
 import org.hibernate.envers.AuditTable;
