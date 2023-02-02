@@ -31,6 +31,8 @@ RUN mkdir -p /opt/pgcn \
 ADD ["run/install-yaz.sh", "/"]
 RUN chmod u+x /install-yaz.sh && /install-yaz.sh && rm /install-yaz.sh
 
+ENV NATIVELIBRARIES_PATH /usr/local/lib
+
 USER ${DOCKER_USER_ID}:${DOCKER_GROUP_ID}
 
 # build image

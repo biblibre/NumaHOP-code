@@ -16,8 +16,6 @@ services:
             SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES: numahop-elasticsearch:9300
             SPRING_MAIL_HOST: numahop-mail
             SPRING_MAIL_ACTIVATED: true
-            NATIVELIBRARIES_PATH: /usr/local/lib
-            EXPORT_SFTP_PRIVATEKEY: /toto
 networks:
     numahop:
 volumes:
