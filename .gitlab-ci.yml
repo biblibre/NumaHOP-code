@@ -91,7 +91,6 @@ compile:
             - target
         expire_in: 1 day
     script:
-        - echo "$NUMAHOP_NPM_CONFIG" > ~/.npmrc
         - mvn $MAVEN_CLI_OPTS -P webapp compile
 
 test:
