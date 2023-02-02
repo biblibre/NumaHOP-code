@@ -1,5 +1,3 @@
-# This pipeline requires a runner that can build docker images, with the "docker" tag
-
 variables:
     # NUMAHOP_DOCKER_TMP_REPO must be provided by gitlab, the complete name of the docker repository to use for the intermediate images
     # NUMAHOP_DOCKER_RESULT_REPO must be provided by gitlab, the complete name of the docker repository to use for the final image
