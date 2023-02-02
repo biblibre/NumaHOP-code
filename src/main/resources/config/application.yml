@@ -39,7 +39,7 @@ async:
     maxPoolSize: 10
     queueCapacity: 10000
 
-liquibase.change-log: classpath:config/liquibase/master.xml
+liquibase.change-log: classpath:/config/liquibase/master.xml
 
 spring:
 
