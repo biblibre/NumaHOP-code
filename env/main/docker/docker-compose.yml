@@ -1,6 +1,6 @@
 services:
     numahop-mariadb:
-        image: mariadb:10.10
+        image: mariadb:10.11
         volumes:
             - numahop-mariadb:/var/lib/mysql
         networks:
@@ -12,6 +12,7 @@ services:
             MARIADB_DATABASE: numahop
             MARIADB_USER: numahop
             MARIADB_PASSWORD: numahop
+            MARIADB_AUTO_UPGRADE: true
     numahop-elasticsearch:
         image: elasticsearch:2.4.6
         volumes:

@@ -7,8 +7,9 @@ services:
             - numahop
         ports:
             - "8080:8080"
+            - "8000:8000"
         environment:
-            _JAVA_OPTIONS: -Xmx512m -Xms16m
+            _JAVA_OPTIONS: -Xmx512m -Xms16m -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n
             SPRING_PROFILES_ACTIVE: prod
             SPRING_DATASOURCE_URL: jdbc:mariadb://numahop-mariadb:3306/numahop
             SPRING_DATASOURCE_USERNAME: numahop
