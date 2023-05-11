@@ -434,11 +434,17 @@ module.exports = function (grunt) {
                 dest: '.tmp/styles/',
                 src: ['mediaelement/build/*']
             },
-            libs: {
+            bower_libs: {
                 expand: true,
                 cwd: 'src/main/webapp/bower_components',
                 dest: '.tmp/libs/',
                 src: ['pdfjs-dist/build/*', 'angular-pdf/dist/*']
+            },
+            libs: {
+                expand: true,
+                cwd: 'src/main/webapp/libs',
+                dest: '.tmp/libs/',
+                src: ['mirador/**']
             },
             static: {
                 expand: true,
@@ -448,9 +454,9 @@ module.exports = function (grunt) {
             }
         },
         concurrent: {
-            server: ['compass:server', 'copy:styles', 'copy:i18n', 'copy:libs', 'copy:summernote_fonts'],
-            test: ['copy:libs', 'copy:mediaelement'],
-            dist: ['compass', 'imagemin',  'copy:styles', 'copy:i18n', 'copy:libs', 'copy:summernote_fonts', 'copy:static']
+            server: ['compass:server', 'copy:styles', 'copy:i18n', 'copy:bower_libs', 'copy:libs', 'copy:summernote_fonts'],
+            test: ['copy:bower_libs', 'copy:libs', 'copy:mediaelement'],
+            dist: ['compass', 'imagemin', 'copy:styles', 'copy:i18n', 'copy:bower_libs', 'copy:libs', 'copy:summernote_fonts', 'copy:static']
         },
         karma: {
             unit: {
