@@ -1,5 +1,5 @@
 # base image
-FROM eclipse-temurin:8-jre as base
+FROM eclipse-temurin:8-jre AS base
 
 ENV DOCKER_USER_ID 185
 ENV DOCKER_GROUP_ID $DOCKER_USER_ID
@@ -22,7 +22,7 @@ ENV EXIFTOOL_PATH /usr/bin/exiftool
 ENV TESSERACT_PATH /usr/bin/tesseract
 
 # run image
-FROM base as run
+FROM base AS run
 
 RUN mkdir -p /opt/pgcn \
  && chown ${DOCKER_USER_ID}:${DOCKER_GROUP_ID} /opt/pgcn
@@ -36,7 +36,7 @@ ENV NATIVELIBRARIES_PATH /usr/local/lib
 USER ${DOCKER_USER_ID}:${DOCKER_GROUP_ID}
 
 # build image
-FROM base as build
+FROM base AS build
 
 RUN apt-get update \
  && apt-get install -y openjdk-8-jdk-headless maven bzip2 \

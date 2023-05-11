@@ -120,7 +120,8 @@ package:
         - build-version
         - build-base-images
         - compile
-        - test
+        - job: test
+          artifacts: false
     artifacts:
         reports:
             dotenv: image.env
