@@ -1,6 +1,6 @@
 services:
     numahop-mariadb:
-        image: mariadb:10.11
+        image: mariadb:11.1
         volumes:
             - numahop-mariadb:/var/lib/mysql
         networks:
@@ -14,19 +14,19 @@ services:
             MARIADB_PASSWORD: numahop
             MARIADB_AUTO_UPGRADE: true
     numahop-elasticsearch:
-        image: elasticsearch:2.4.6
+        image: elasticsearch:8.6.1
         volumes:
-            - numahop-elasticsearch:/usr/share/elasticsearch/data
+            - numahop-elasticsearch-8:/usr/share/elasticsearch/data
         networks:
             - numahop
         ports:
             - "9209:9200"
-            - "9309:9300"
-        ulimits:
-            nofile: 65536
         environment:
-            ES_JAVA_OPTS: -Xms1500m -Xmx1500m -Des.cluster.name=pgcn
+            ES_JAVA_OPTS: -Xms1g -Xmx1g
+            cluster.name: numahop
             discovery.type: single-node
+            xpack.security.enabled: false
+#            ingest.geoip.downloader.enabled: false
         mem_limit: 2g
     numahop-mail:
         image: namshi/smtp
@@ -37,4 +37,4 @@ networks:
     numahop:
 volumes:
     numahop-mariadb:
-    numahop-elasticsearch:
+    numahop-elasticsearch-8:

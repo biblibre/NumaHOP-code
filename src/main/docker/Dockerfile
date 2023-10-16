@@ -1,5 +1,5 @@
 # base image
-FROM eclipse-temurin:8-jre AS base
+FROM eclipse-temurin:17-jre AS base
 
 ENV DOCKER_USER_ID 185
 ENV DOCKER_GROUP_ID $DOCKER_USER_ID
@@ -8,9 +8,9 @@ ENV DOCKER_USER_NAME numahop
 ENV DOCKER_GROUP_NAME $DOCKER_USER_NAME
 ENV DOCKER_USER_HOME /home/$DOCKER_USER_NAME
 
-RUN groupadd -r $DOCKER_GROUP_NAME -g $DOCKER_GROUP_ID \
- && useradd -r -u $DOCKER_USER_ID -g $DOCKER_GROUP_ID -m -d $DOCKER_USER_HOME -s /sbin/nologin $DOCKER_USER_NAME \
- && chmod 0770 $DOCKER_USER_HOME
+RUN groupadd -r "$DOCKER_GROUP_NAME" -g "$DOCKER_GROUP_ID" \
+ && useradd -r -u "$DOCKER_USER_ID" -g "$DOCKER_GROUP_ID" -m -d "$DOCKER_USER_HOME" -s /sbin/nologin "$DOCKER_USER_NAME" \
+ && chmod 0770 "$DOCKER_USER_HOME"
 
 RUN apt-get update \
  && apt-get install -y tesseract-ocr imagemagick libimage-exiftool-perl \
@@ -31,19 +31,17 @@ RUN mkdir -p /opt/pgcn \
 ADD ["run/install-yaz.sh", "/"]
 RUN chmod u+x /install-yaz.sh && /install-yaz.sh && rm /install-yaz.sh
 
-ENV NATIVELIBRARIES_PATH /usr/local/lib
-
 USER ${DOCKER_USER_ID}:${DOCKER_GROUP_ID}
 
 # build image
 FROM base AS build
 
 RUN apt-get update \
- && apt-get install -y openjdk-8-jdk-headless maven bzip2 \
+ && apt-get install -y openjdk-17-jdk-headless maven bzip2 \
  && apt-get install -y ruby-dev ruby-ffi \
  && apt-get clean \
  && gem install compass
 
-ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-amd64
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64
 
 USER ${DOCKER_USER_ID}:${DOCKER_GROUP_ID}

@@ -14,7 +14,7 @@ services:
             SPRING_DATASOURCE_URL: jdbc:mariadb://numahop-mariadb:3306/numahop
             SPRING_DATASOURCE_USERNAME: numahop
             SPRING_DATASOURCE_PASSWORD: numahop
-            SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES: numahop-elasticsearch:9300
+            SPRING_ELASTICSEARCH_URIS: http://numahop-elasticsearch:9200
             SPRING_MAIL_HOST: numahop-mail
             SPRING_MAIL_ACTIVATED: true
 networks:

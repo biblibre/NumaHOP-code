@@ -14,7 +14,8 @@ cd yaz-4.2.69 && ./configure && make install
 cd /root
 curl -s https://ftp.indexdata.com/pub/yaz4j/yaz4j-1.5.tar.gz | tar xzf -
 cd yaz4j-1.5 && mvn package -DskipTests && cd unix && mvn package -DskipTests
-cp target/libyaz4j.so /usr/local/lib/
+mkdir -p /usr/java/packages/lib
+cp target/libyaz4j.so /usr/java/packages/lib/
 
 cd /root
 rm -rf yaz-4.2.69 yaz4j-1.5 .m2

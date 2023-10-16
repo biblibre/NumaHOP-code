@@ -34,10 +34,6 @@ public class ConditionReportDetailMapperTest {
 
         final ConditionReportDetailDTO actual = DETAIL_MAPPER.detailToDTO(detail);
 
-        NumberFormat numberFormat = DecimalFormat.getNumberInstance();
-        numberFormat.setMaximumFractionDigits(2);
-        String expectedFormatting = numberFormat.format(detail.getInsurance());
-
         assertEquals("11/10/2017", actual.getDate());
         assertEquals(new DecimalFormat("#,##0.##").format(12345.6789D), actual.getInsurance());
 

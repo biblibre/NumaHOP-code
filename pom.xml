@@ -482,11 +482,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>${sqlite-jdbc.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.yaz4j</groupId>
             <artifactId>yaz4j-any</artifactId>
             <version>${yaz.version}</version>
@@ -523,6 +518,14 @@
                         <version>${git-code-format-maven-plugin.version}</version>
                     </dependency>
                 </dependencies>
+                <executions>
+                    <execution>
+                        <id>validate-code-format</id>
+                        <goals>
+                            <goal>validate-code-format</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>com.github.ekryd.sortpom</groupId>
@@ -889,7 +892,6 @@
                 <configuration>
                     <mainClass>${start-class}</mainClass>
                     <executable>true</executable>
-                    <fork>true</fork>
                 </configuration>
                 <executions>
                     <execution>

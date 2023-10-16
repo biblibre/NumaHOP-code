@@ -464,7 +464,7 @@ module.exports = function (grunt) {
                 dest: '.tmp/styles/',
                 src: ['mediaelement/build/*'],
             },
-            bower_libs: {
+            libs: {
                 expand: true,
                 cwd: 'node_modules',
                 dest: '.tmp/libs/',
