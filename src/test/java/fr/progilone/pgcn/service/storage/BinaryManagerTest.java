@@ -80,7 +80,7 @@ public class BinaryManagerTest {
     public void setUp() {
         Path tempDirectory = Files.createTempDirectory("bmTestPGCN-");
         try {
-            bm.initialize(tempDirectory.toString(), 3, "MD5", new String[]{FAKE_LIB_ID});
+            bm.initialize(tempDirectory.toString(), 3, "MD5", new String[] {FAKE_LIB_ID});
         } catch (final IOException e) {
             fail(e.getMessage());
         }
