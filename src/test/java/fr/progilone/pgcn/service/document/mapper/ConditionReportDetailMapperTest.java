@@ -1,5 +1,7 @@
 package fr.progilone.pgcn.service.document.mapper;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import fr.progilone.pgcn.domain.document.conditionreport.ConditionReportDetail;
 import fr.progilone.pgcn.domain.document.conditionreport.Description;
 import fr.progilone.pgcn.domain.document.conditionreport.DescriptionProperty;
@@ -7,13 +9,9 @@ import fr.progilone.pgcn.domain.document.conditionreport.DescriptionValue;
 import fr.progilone.pgcn.domain.dto.document.conditionreport.ConditionReportDetailDTO;
 import fr.progilone.pgcn.domain.dto.document.conditionreport.ConditionReportValueDTO;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import org.junit.Test;
-
 import java.time.LocalDate;
 import java.util.List;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
 public class ConditionReportDetailMapperTest {
 
@@ -41,7 +39,7 @@ public class ConditionReportDetailMapperTest {
         String expectedFormatting = numberFormat.format(detail.getInsurance());
 
         assertEquals("11/10/2017", actual.getDate());
-        assertEquals(expectedFormatting, actual.getInsurance());
+        assertEquals(new DecimalFormat("#,##0.##").format(12345.6789D), actual.getInsurance());
 
         checkDescDTO(descBind, actual.getBindings());
         checkDescDTO(descDesc, actual.getDescriptions());
