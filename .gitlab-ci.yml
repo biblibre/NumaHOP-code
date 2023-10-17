@@ -9,14 +9,14 @@ variables:
 
     # This will suppress any download for dependencies and plugins or upload messages which would clutter the console log.
     # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
-    MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+    MAVEN_OPTS: '-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true'
     # As of Maven 3.3.0 instead of this you may define these options in `.mvn/maven.config` so the same config is used
     # when running from the command line.
     # `installAtEnd` and `deployAtEnd` are only effective with recent version of the corresponding plugins.
-    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+    MAVEN_CLI_OPTS: '--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true'
 
     MAVEN_CONFIG_LOCATION: ~/.m2
-    NPM_CONFIG_LOCATION: "~"
+    NPM_CONFIG_LOCATION: '~'
     DOCKER_CONFIG_LOCATION: ~/.docker
 
 default:
@@ -53,7 +53,7 @@ build-version:
 build-base-images:
     image:
         name: gcr.io/kaniko-project/executor:debug
-        entrypoint: [ "" ]
+        entrypoint: ['']
     stage: prepare
     needs:
         - build-version
@@ -64,22 +64,22 @@ build-base-images:
             dotenv: images.env
     script:
         - >
-          if [ -n "$NUMAHOP_DOCKER_MIRROR_REPO" ]; then
-            MIRROR_REPO="--registry-mirror $NUMAHOP_DOCKER_MIRROR_REPO"
-          fi
+            if [ -n "$NUMAHOP_DOCKER_MIRROR_REPO" ]; then
+              MIRROR_REPO="--registry-mirror $NUMAHOP_DOCKER_MIRROR_REPO"
+            fi
         - >
-          for TARGET in run build; do
-            IMAGE="$NUMAHOP_DOCKER_TMP_REPO/numahop:$VERSION-$TARGET"
-            /kaniko/executor \
-                --context src/main/docker \
-                --target "$TARGET" \
-                --destination "$IMAGE" \
-                $MIRROR_REPO \
-                --cleanup \
-                --cache=true \
-                --skip-unused-stages
-            echo "$(echo $TARGET | tr [:lower:] [:upper:])_IMAGE=$IMAGE" >> images.env
-          done
+            for TARGET in run build; do
+              IMAGE="$NUMAHOP_DOCKER_TMP_REPO/numahop:$VERSION-$TARGET"
+              /kaniko/executor \
+                  --context src/main/docker \
+                  --target "$TARGET" \
+                  --destination "$IMAGE" \
+                  $MIRROR_REPO \
+                  --cleanup \
+                  --cache=true \
+                  --skip-unused-stages
+              echo "$(echo $TARGET | tr [:lower:] [:upper:])_IMAGE=$IMAGE" >> images.env
+            done
 
 compile:
     image: $BUILD_IMAGE
@@ -136,7 +136,7 @@ deploy:
     needs:
         - package
     rules:
-        -   if: $NUMAHOP_DEPLOY_PROJECT && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+        - if: $NUMAHOP_DEPLOY_PROJECT && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     variables:
         NUMAHOP_IMAGE: $NUMAHOP_IMAGE
     trigger: $NUMAHOP_DEPLOY_PROJECT

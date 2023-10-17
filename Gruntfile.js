@@ -480,8 +480,8 @@ module.exports = function (grunt) {
                 expand: true,
                 cwd: 'src/main/webapp',
                 dest: 'target/classes/static',
-                src: ['.htaccess', 'hop_favicon.png', 'robots.txt']
-            }
+                src: ['.htaccess', 'hop_favicon.png', 'robots.txt'],
+            },
         },
         concurrent: {
             server: ['compass:server', 'copy:styles', 'copy:i18n', 'copy:libs', 'copy:mirador', 'copy:summernote_fonts'],
