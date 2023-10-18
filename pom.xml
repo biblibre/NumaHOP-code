@@ -966,7 +966,7 @@
                                     <goal>grunt</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>build --force --no-color</arguments>
+                                    <arguments>build --no-color</arguments>
                                 </configuration>
                             </execution>
                         </executions>
