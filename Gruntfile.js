@@ -38,9 +38,9 @@ module.exports = function (grunt) {
             webapp: 'src/main/webapp',
         },
         watch: {
-            sass: {
+            'dart-sass': {
                 files: ['src/main/scss/**/*.{scss,sass}'],
-                tasks: ['dart-sass', 'autoprefixer'],
+                tasks: ['dart-sass:dev', 'autoprefixer'],
             },
             styles: {
                 files: ['styles/**/*.css'],
@@ -197,12 +197,19 @@ module.exports = function (grunt) {
             all: ['Gruntfile.js', 'scripts/{,*/}*.js'],
         },
         'dart-sass': {
-            target: {
-                files: [
-                    {
-                        '.tmp/assets/styles/main.css': 'src/main/scss/main.scss',
-                    },
-                ],
+            dev: {
+                files: {
+                    '.tmp/assets/styles/main.css': 'src/main/scss/main.scss',
+                },
+            },
+            dist: {
+                options: {
+                    outputStyle: 'compressed',
+                    sourceMap: false,
+                },
+                files: {
+                    '.tmp/assets/styles/main.css': 'src/main/scss/main.scss',
+                },
             },
         },
         concat: {
@@ -361,7 +368,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '.tmp/styles',
-                        dest: '<%= yeoman.dist %>/styles',
+                        dest: '<%= yeoman.dist %>/assets/styles',
                         src: ['famfamfam-flags.png'],
                     },
                 ],
@@ -472,9 +479,9 @@ module.exports = function (grunt) {
             },
         },
         concurrent: {
-            server: ['dart-sass', 'copy:styles', 'copy:i18n', 'copy:libs', 'copy:mirador', 'copy:summernote_fonts'],
+            server: ['dart-sass:dev', 'copy:styles', 'copy:i18n', 'copy:libs', 'copy:mirador', 'copy:summernote_fonts'],
             test: ['copy:libs', 'copy:mirador', 'copy:mediaelement'],
-            dist: ['dart-sass', 'imagemin', 'copy:styles', 'copy:i18n', 'copy:libs', 'copy:mirador', 'copy:summernote_fonts', 'copy:static'],
+            dist: ['dart-sass:dist', 'imagemin', 'copy:styles', 'copy:i18n', 'copy:libs', 'copy:mirador', 'copy:summernote_fonts', 'copy:static'],
         },
         nggettext_extract: {
             pot: {
@@ -560,7 +567,7 @@ module.exports = function (grunt) {
         if (target === 'dist') {
             return grunt.task.run(['build', 'configureProxies', 'connect:dist:keepalive']);
         } else if (target == 'fast') {
-            grunt.task.run(['checkDependencies', 'dart-sass', 'autoprefixer', 'configureProxies', 'connect:livereload', 'watch']);
+            grunt.task.run(['checkDependencies', 'dart-sass:dev', 'autoprefixer', 'configureProxies', 'connect:livereload', 'watch']);
         } else {
             grunt.task.run(['checkDependencies', 'clean', 'nggettext_compile', 'concurrent:server', 'autoprefixer', 'copy:directives', 'configureProxies', 'connect:livereload', 'watch']);
         }
