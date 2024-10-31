@@ -53,9 +53,10 @@ Le profil "dev" est dédié à la mise en place d'un environnement de developpem
 
 **Pour simplement lancer NumaHop, l'utilisation du profil "prod" est préconisée.**
 
-MariaDB : il faut simplement créer une base et un utilisateur autorisé. La structure et les données paramétrées seront créées lors du 1er démarrage de l'application.
+-   MariaDB
 
-Exemple de fichier **application-prod.yml** à compléter avec vos informations :
+Il faut simplement créer une base et un utilisateur autorisé.
+La structure et les données paramétrées seront créées lors du 1er démarrage de l'application.
 
 ```
 spring:
@@ -64,7 +65,13 @@ spring:
         url: jdbc:mariadb://**urlDataBase**
         username: **userName**
         password: **userpassword**
-    # configuration de l'accès à elasticsearch
+        maximum-pool-size: 20
+```
+
+-   elasticsearch
+
+```
+spring:
     elasticsearch:
         uris:
             - http://localhost:9200
@@ -84,26 +91,41 @@ spring:
 elasticsearch:
     index:
         name: **indexName**
+```
 
-# chemins vers imagemagick
+-   ImageMagick
+
+```
 imageMagick:
     convert: **imConvertPath**
     identify: **imIdentifyPath**
+```
 
-# Chemin vers exiftool
+-   exifTool
+
+```
 exifTool:
     process: **exiftoolPath**
     quot_char: ''
+```
 
-# Chemin vers tesseract
+-   tesseract
+
+```
 tesseract:
     process: **tesseractPath**
+```
 
+-   Autres paramètres obligatoires
+
+Certains paramètres supplémentaires doivent être également renseignés
+
+```
 # lister les bibliotheques utilisatrices comme suit: library_identifier1, library_identifier2, etc..
 instance:
     libraries: library_bibliotheque
 
-# répertoires de stockage des images
+# répertoires de stockage images
 storage:
     binaries: **path to Image Dir repository**
 
@@ -131,7 +153,6 @@ services:
            sip: **path to workBaseDir**/xsd/sip.xsd
     archive:
         alto: **path to workBaseDir**/archive/alto
-        text: **path to workBaseDir**/archive/text
     metaDatas:
         path: **path to workBaseDir**/metadatas
     deliveryreporting:
@@ -165,11 +186,17 @@ Pour démarrer l'application:
 -   exécuter la commande suivante:
 
 ```
-$ mvn clean spring-boot:run -Pprod -Dspring-boot.run.profiles=prod
+$ mvn clean package spring-boot:run -Pprod -Drun.jvmArguments="-Dspring.profiles.active=prod"
+```
+
+En cas de problème, une commande alternative :
+
+```
+$  mvn spring-boot:run -P prod  -Drun.arguments="--spring.profiles.active=prod,--spring.config.additional-location=file:/opt/pgcn/src/main/resources/config/"
 ```
 
 En fin de build, l'application est lancée sur le port 8080.
-Vous pouvez vous logger en admin (mot de passe par défaut : password) afin d'effectuer le paramétrage de base, créer des utilisateurs autorisés etc..
+Vous pouvez vous logger en admin / admin afin d'effectuer le paramétrage de base, créer des utilisateurs autorisés etc..
 
 ## Les acteurs du projet
 

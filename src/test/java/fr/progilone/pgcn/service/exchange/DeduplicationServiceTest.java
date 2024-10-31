@@ -9,7 +9,9 @@ import fr.progilone.pgcn.domain.document.DocProperty;
 import fr.progilone.pgcn.domain.document.DocPropertyType;
 import fr.progilone.pgcn.domain.document.DocUnit;
 import fr.progilone.pgcn.repository.document.DocUnitRepository;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,11 +52,8 @@ public class DeduplicationServiceTest {
         final DocUnit duplDocUnit2 = new DocUnit();
         duplDocUnit2.setIdentifier("30e62d6b-cfd2-4c02-80e6-879a2aa1ad31");
 
-        final List<DocUnit> duplicates = new ArrayList<>();
-        duplicates.add(duplDocUnit);
-
-        when(docUnitRepository.findAllByPgcnId(docUnit.getPgcnId())).thenReturn(duplicates);
-        when(docUnitRepository.searchDuplicates(eq(docUnit), any())).thenReturn(Collections.singletonList(duplDocUnit2));
+        when(docUnitRepository.getOneByPgcnIdAndState(docUnit.getPgcnId(), DocUnit.State.AVAILABLE)).thenReturn(duplDocUnit);
+        when(docUnitRepository.searchDuplicates(eq(docUnit), any(), eq(DocUnit.State.AVAILABLE))).thenReturn(Collections.singletonList(duplDocUnit2));
 
         final Collection<DocUnit> actual = service.lookupDuplicates(docUnit);
 

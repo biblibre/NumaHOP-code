@@ -22,6 +22,8 @@ import fr.progilone.pgcn.service.util.ImageUtils;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -77,9 +79,10 @@ public class BinaryManagerTest {
     private static final String FAKE_LIB_ID = "libId";;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws IOException {
+        Path tempDirectory = Files.createTempDirectory("bmTestPGCN-");
         try {
-            bm.initialize("C://Temp/bmTestPGCN/", 3, "MD5", new String[] {FAKE_LIB_ID});
+            bm.initialize(tempDirectory.toString(), 3, "MD5", new String[] {FAKE_LIB_ID});
         } catch (final IOException e) {
             fail(e.getMessage());
         }
