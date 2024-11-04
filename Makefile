@@ -27,10 +27,10 @@ build: build-app build-docker
 
 # targets
 build-app:
-	$(mvn) clean compile -P webapp
+	$(mvn) clean compile -P webapp ${MVN_EXTRA_ARGS}
 
 build-docker: build-docker-run-img
-	$(mvn) -P dev jib:dockerBuild
+	$(mvn) -P dev jib:dockerBuild ${MVN_EXTRA_ARGS}
 
 build-docker-run-img:
 	docker build -t $(docker_run_img_name) $(docker_base_img_build_dir) --target run
@@ -44,4 +44,4 @@ $(call actions,env-)
 	$(call dc_env_cmd,$($*))
 
 local-app: build-app
-	$(mvn) spring-boot:run
+	$(mvn) spring-boot:run ${MVN_EXTRA_ARGS}
