@@ -23,7 +23,10 @@ clean = $(down) -v
 all-up: env-up build app-up app-logs
 all-stop: app-stop env-stop
 
-build: build-app build-docker
+build: build-app build-docker build-docs
+
+build-docs:
+	$(mvn) javadoc:javadoc ${MVN_EXTRA_ARGS}
 
 # targets
 build-app:
