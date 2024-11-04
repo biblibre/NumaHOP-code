@@ -5,7 +5,7 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
 import java.util.Set;
 
 /**
- * Structure pour renseigner les erreurs sur une page & les notes.
+ * Structure pour renseigner les erreurs sur une page &amp; les notes.
  *
  * Fait également office de 'passe-plat' pour données de table des matieres.
  *

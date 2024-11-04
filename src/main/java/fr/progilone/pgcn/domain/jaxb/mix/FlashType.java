@@ -14,38 +14,39 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour flashType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="flashType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="Flash did not fire"/>
- *     &lt;enumeration value="Flash fired"/>
- *     &lt;enumeration value="Strobe return light not detected"/>
- *     &lt;enumeration value="Strobe return light detected"/>
- *     &lt;enumeration value="Flash fired, compulsory flash mode"/>
- *     &lt;enumeration value="Flash fired, compulsory flash mode, return light not detected"/>
- *     &lt;enumeration value="Flash fired, compulsory flash mode, return light detected"/>
- *     &lt;enumeration value="Flash did not fire, compulsory flash mode"/>
- *     &lt;enumeration value="Flash did not fire, auto mode"/>
- *     &lt;enumeration value="Flash fired, auto mode"/>
- *     &lt;enumeration value="Flash fired, auto mode, return light not detected"/>
- *     &lt;enumeration value="Flash fired, auto mode, return light detected"/>
- *     &lt;enumeration value="No flash function"/>
- *     &lt;enumeration value="Flash fired, red-eye reduction mode"/>
- *     &lt;enumeration value="Flash fired, red-eye reduction mode, return light not detected"/>
- *     &lt;enumeration value="Flash fired, red-eye reduction mode, return light detected"/>
- *     &lt;enumeration value="Flash fired, compulsory flash mode, red-eye reduction mode"/>
- *     &lt;enumeration value="Flash fired, compulsory flash mode, red-eye reduction mode, return light not detected"/>
- *     &lt;enumeration value="Flash fired, compulsory flash mode, red-eye reduction mode, return light detected"/>
- *     &lt;enumeration value="Flash fired, auto mode, red-eye reduction mode"/>
- *     &lt;enumeration value="Flash fired, auto mode, return light not detected, red-eye reduction mode"/>
- *     &lt;enumeration value="Flash fired, auto mode, return light detected, red-eye reduction mode"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="flashType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="Flash did not fire"/&gt;
+ *     &lt;enumeration value="Flash fired"/&gt;
+ *     &lt;enumeration value="Strobe return light not detected"/&gt;
+ *     &lt;enumeration value="Strobe return light detected"/&gt;
+ *     &lt;enumeration value="Flash fired, compulsory flash mode"/&gt;
+ *     &lt;enumeration value="Flash fired, compulsory flash mode, return light not detected"/&gt;
+ *     &lt;enumeration value="Flash fired, compulsory flash mode, return light detected"/&gt;
+ *     &lt;enumeration value="Flash did not fire, compulsory flash mode"/&gt;
+ *     &lt;enumeration value="Flash did not fire, auto mode"/&gt;
+ *     &lt;enumeration value="Flash fired, auto mode"/&gt;
+ *     &lt;enumeration value="Flash fired, auto mode, return light not detected"/&gt;
+ *     &lt;enumeration value="Flash fired, auto mode, return light detected"/&gt;
+ *     &lt;enumeration value="No flash function"/&gt;
+ *     &lt;enumeration value="Flash fired, red-eye reduction mode"/&gt;
+ *     &lt;enumeration value="Flash fired, red-eye reduction mode, return light not detected"/&gt;
+ *     &lt;enumeration value="Flash fired, red-eye reduction mode, return light detected"/&gt;
+ *     &lt;enumeration value="Flash fired, compulsory flash mode, red-eye reduction mode"/&gt;
+ *     &lt;enumeration value="Flash fired, compulsory flash mode, red-eye reduction mode, return light not detected"/&gt;
+ *     &lt;enumeration value="Flash fired, compulsory flash mode, red-eye reduction mode, return light detected"/&gt;
+ *     &lt;enumeration value="Flash fired, auto mode, red-eye reduction mode"/&gt;
+ *     &lt;enumeration value="Flash fired, auto mode, return light not detected, red-eye reduction mode"/&gt;
+ *     &lt;enumeration value="Flash fired, auto mode, return light detected, red-eye reduction mode"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

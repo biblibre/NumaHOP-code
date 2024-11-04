@@ -28,14 +28,16 @@ import javax.xml.namespace.QName;
 /**
  * seqType: Complex Type for Sequences of Files
  * The seq element should be used to link a div to a set of content files when those files should be played/displayed sequentially to deliver content
- * to a user. Individual <area> subelements within the seq element provide the links to the files or portions thereof.
+ * to a user. Individual &lt;area&gt; subelements within the seq element provide the links to the files or portions thereof.
  *
  *
  * <p>
  * Classe Java pour seqType complex type.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+ * </p>
  *
  * <pre>
  * &lt;complexType name="seqType"&gt;
@@ -83,10 +85,12 @@ public class SeqType {
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the areaOrPar property.
+     * This is why there is not a &lt;CODE&gt;set&lt;/CODE&gt; method for the areaOrPar property.
+     * </p>
      *
      * <p>
      * For example, to add a new item, do as follows:
+     * </p>
      *
      * <pre>
      * getAreaOrPar().add(newItem);
@@ -97,6 +101,7 @@ public class SeqType {
      * Objects of the following type(s) are allowed in the list
      * {@link AreaType }
      * {@link ParType }
+     * </p>
      *
      *
      */
@@ -207,10 +212,11 @@ public class SeqType {
      * Gets a map that contains attributes that aren't bound to any typed property on this class.
      *
      * <p>
-     * the map is keyed by the name of the attribute and
-     * the value is the string value of the attribute.
+     * The map is keyed by the name of the attribute and
+     * The value is the string value of the attribute.
+     * </p>
      *
-     * the map returned by this method is live, and you can add new attribute
+     * The map returned by this method is live, and you can add new attribute
      * by updating the map directly. Because of this design, there's no setter.
      *
      *

@@ -51,7 +51,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Service de gestion des instances de workflow (étapes & workflow)
+ * Service de gestion des instances de workflow (étapes &amp; workflow)
  *
  * @author jbrunet
  *         Créé le 10 oct. 2017

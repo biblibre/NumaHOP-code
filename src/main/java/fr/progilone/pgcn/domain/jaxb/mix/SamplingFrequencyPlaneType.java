@@ -14,19 +14,20 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour samplingFrequencyPlaneType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="samplingFrequencyPlaneType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="camera/scanner focal plane"/>
- *     &lt;enumeration value="object plane"/>
- *     &lt;enumeration value="source object plane"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="samplingFrequencyPlaneType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="camera/scanner focal plane"/&gt;
+ *     &lt;enumeration value="object plane"/&gt;
+ *     &lt;enumeration value="source object plane"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

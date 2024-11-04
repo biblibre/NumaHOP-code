@@ -17,28 +17,27 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
  *
  * <pre>
- * &lt;simpleType name="av.render">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token">
- *     &lt;enumeration value="altrender"/>
- *     &lt;enumeration value="bold"/>
- *     &lt;enumeration value="bolddoublequote"/>
- *     &lt;enumeration value="bolditalic"/>
- *     &lt;enumeration value="boldsinglequote"/>
- *     &lt;enumeration value="boldsmcaps"/>
- *     &lt;enumeration value="boldunderline"/>
- *     &lt;enumeration value="doublequote"/>
- *     &lt;enumeration value="italic"/>
- *     &lt;enumeration value="nonproport"/>
- *     &lt;enumeration value="singlequote"/>
- *     &lt;enumeration value="smcaps"/>
- *     &lt;enumeration value="sub"/>
- *     &lt;enumeration value="super"/>
- *     &lt;enumeration value="underline"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="av.render"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token"&gt;
+ *     &lt;enumeration value="altrender"/&gt;
+ *     &lt;enumeration value="bold"/&gt;
+ *     &lt;enumeration value="bolddoublequote"/&gt;
+ *     &lt;enumeration value="bolditalic"/&gt;
+ *     &lt;enumeration value="boldsinglequote"/&gt;
+ *     &lt;enumeration value="boldsmcaps"/&gt;
+ *     &lt;enumeration value="boldunderline"/&gt;
+ *     &lt;enumeration value="doublequote"/&gt;
+ *     &lt;enumeration value="italic"/&gt;
+ *     &lt;enumeration value="nonproport"/&gt;
+ *     &lt;enumeration value="singlequote"/&gt;
+ *     &lt;enumeration value="smcaps"/&gt;
+ *     &lt;enumeration value="sub"/&gt;
+ *     &lt;enumeration value="super"/&gt;
+ *     &lt;enumeration value="underline"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

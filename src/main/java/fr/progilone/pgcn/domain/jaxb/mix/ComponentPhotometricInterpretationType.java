@@ -14,22 +14,23 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour componentPhotometricInterpretationType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="componentPhotometricInterpretationType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="R"/>
- *     &lt;enumeration value="G"/>
- *     &lt;enumeration value="B"/>
- *     &lt;enumeration value="Y"/>
- *     &lt;enumeration value="Cb"/>
- *     &lt;enumeration value="Cr"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="componentPhotometricInterpretationType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="R"/&gt;
+ *     &lt;enumeration value="G"/&gt;
+ *     &lt;enumeration value="B"/&gt;
+ *     &lt;enumeration value="Y"/&gt;
+ *     &lt;enumeration value="Cb"/&gt;
+ *     &lt;enumeration value="Cr"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

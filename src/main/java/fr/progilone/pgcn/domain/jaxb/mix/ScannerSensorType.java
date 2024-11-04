@@ -14,25 +14,26 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour scannerSensorType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="scannerSensorType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="undefined"/>
- *     &lt;enumeration value="MonochromeLinear"/>
- *     &lt;enumeration value="ColorTriLinear"/>
- *     &lt;enumeration value="ColorSequentialLinear"/>
- *     &lt;enumeration value="MonochromeArea"/>
- *     &lt;enumeration value="OneChipColourArea"/>
- *     &lt;enumeration value="TwoChipColorArea"/>
- *     &lt;enumeration value="ThreeChipColorArea"/>
- *     &lt;enumeration value="ColorSequentialArea"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="scannerSensorType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="undefined"/&gt;
+ *     &lt;enumeration value="MonochromeLinear"/&gt;
+ *     &lt;enumeration value="ColorTriLinear"/&gt;
+ *     &lt;enumeration value="ColorSequentialLinear"/&gt;
+ *     &lt;enumeration value="MonochromeArea"/&gt;
+ *     &lt;enumeration value="OneChipColourArea"/&gt;
+ *     &lt;enumeration value="TwoChipColorArea"/&gt;
+ *     &lt;enumeration value="ThreeChipColorArea"/&gt;
+ *     &lt;enumeration value="ColorSequentialArea"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

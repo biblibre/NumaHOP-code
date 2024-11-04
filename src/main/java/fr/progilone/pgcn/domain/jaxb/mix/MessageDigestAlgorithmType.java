@@ -14,28 +14,29 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour messageDigestAlgorithmType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="messageDigestAlgorithmType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="Adler-32"/>
- *     &lt;enumeration value="CRC32"/>
- *     &lt;enumeration value="HAVAL"/>
- *     &lt;enumeration value="MD5"/>
- *     &lt;enumeration value="MNP"/>
- *     &lt;enumeration value="SHA-1"/>
- *     &lt;enumeration value="SHA-256"/>
- *     &lt;enumeration value="SHA-384"/>
- *     &lt;enumeration value="SHA-512"/>
- *     &lt;enumeration value="TIGER"/>
- *     &lt;enumeration value="WHIRLPOOL"/>
- *     &lt;enumeration value="unknown"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="messageDigestAlgorithmType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="Adler-32"/&gt;
+ *     &lt;enumeration value="CRC32"/&gt;
+ *     &lt;enumeration value="HAVAL"/&gt;
+ *     &lt;enumeration value="MD5"/&gt;
+ *     &lt;enumeration value="MNP"/&gt;
+ *     &lt;enumeration value="SHA-1"/&gt;
+ *     &lt;enumeration value="SHA-256"/&gt;
+ *     &lt;enumeration value="SHA-384"/&gt;
+ *     &lt;enumeration value="SHA-512"/&gt;
+ *     &lt;enumeration value="TIGER"/&gt;
+ *     &lt;enumeration value="WHIRLPOOL"/&gt;
+ *     &lt;enumeration value="unknown"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

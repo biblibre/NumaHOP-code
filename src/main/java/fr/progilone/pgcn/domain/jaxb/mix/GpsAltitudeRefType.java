@@ -14,18 +14,19 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour gpsAltitudeRefType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="gpsAltitudeRefType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="Sea level"/>
- *     &lt;enumeration value="Sea level reference (negative value)"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="gpsAltitudeRefType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="Sea level"/&gt;
+ *     &lt;enumeration value="Sea level reference (negative value)"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

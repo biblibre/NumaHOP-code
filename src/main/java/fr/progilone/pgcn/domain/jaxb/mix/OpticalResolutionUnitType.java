@@ -14,19 +14,20 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour opticalResolutionUnitType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="opticalResolutionUnitType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="no absolute unit"/>
- *     &lt;enumeration value="in."/>
- *     &lt;enumeration value="cm"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="opticalResolutionUnitType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="no absolute unit"/&gt;
+ *     &lt;enumeration value="in."/&gt;
+ *     &lt;enumeration value="cm"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

@@ -14,25 +14,26 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour exposureProgramType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="exposureProgramType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="Not defined"/>
- *     &lt;enumeration value="Manual"/>
- *     &lt;enumeration value="Normal program"/>
- *     &lt;enumeration value="Aperture priority"/>
- *     &lt;enumeration value="Shutter priority"/>
- *     &lt;enumeration value="Creative program (biased toward depth of field)"/>
- *     &lt;enumeration value="Action program (biased toward fast shutter speed)"/>
- *     &lt;enumeration value="Portrait mode (for closeup photos with the background out of focus)"/>
- *     &lt;enumeration value="Landscape mode (for landscape photos with the background in focus)"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="exposureProgramType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="Not defined"/&gt;
+ *     &lt;enumeration value="Manual"/&gt;
+ *     &lt;enumeration value="Normal program"/&gt;
+ *     &lt;enumeration value="Aperture priority"/&gt;
+ *     &lt;enumeration value="Shutter priority"/&gt;
+ *     &lt;enumeration value="Creative program (biased toward depth of field)"/&gt;
+ *     &lt;enumeration value="Action program (biased toward fast shutter speed)"/&gt;
+ *     &lt;enumeration value="Portrait mode (for closeup photos with the background out of focus)"/&gt;
+ *     &lt;enumeration value="Landscape mode (for landscape photos with the background in focus)"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

@@ -14,20 +14,21 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour captureDeviceType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="captureDeviceType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="transmission scanner"/>
- *     &lt;enumeration value="reflection print scanner"/>
- *     &lt;enumeration value="digital still camera"/>
- *     &lt;enumeration value="still from video"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="captureDeviceType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="transmission scanner"/&gt;
+ *     &lt;enumeration value="reflection print scanner"/&gt;
+ *     &lt;enumeration value="digital still camera"/&gt;
+ *     &lt;enumeration value="still from video"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

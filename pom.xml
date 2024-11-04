@@ -498,6 +498,15 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.2</version>
+                <configuration>
+                    <!-- TODO: Enlever quand assez de documentation a ete ecrite -->
+                    <doclint>missing</doclint>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>com.cosium.code</groupId>
                 <artifactId>git-code-format-maven-plugin</artifactId>
                 <version>${git-code-format-maven-plugin.version}</version>

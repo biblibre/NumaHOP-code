@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.core.env.Environment;
 
 /**
+ * <p>
  * This filter is used in production, to put HTTP cache headers with a long (1 month) expiration time.
  * </p>
  */

@@ -14,19 +14,20 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour samplingFrequencyUnitType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="samplingFrequencyUnitType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="no absolute unit of measurement"/>
- *     &lt;enumeration value="in."/>
- *     &lt;enumeration value="cm"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="samplingFrequencyUnitType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="no absolute unit of measurement"/&gt;
+ *     &lt;enumeration value="in."/&gt;
+ *     &lt;enumeration value="cm"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

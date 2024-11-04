@@ -27,15 +27,18 @@ import javax.xml.namespace.QName;
 
 /**
  * parType: Complex Type for Parallel Files
- * The <par> or parallel files element aggregates pointers to files, parts of files, and/or sequences of files or parts of files that must be played
- * or displayed simultaneously to manifest a block of digital content represented by an <fptr> element.
+ * The &lt;par&gt; or parallel files element aggregates pointers to files, parts of files, and/or sequences of files or parts of files that must be
+ * played
+ * or displayed simultaneously to manifest a block of digital content represented by an &lt;fptr&gt; element.
  *
  *
  * <p>
  * Classe Java pour parType complex type.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+ * </p>
  *
  * <pre>
  * &lt;complexType name="parType"&gt;

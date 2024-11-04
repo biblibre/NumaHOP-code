@@ -5,6 +5,9 @@
 // Généré le : 2017.01.02 à 04:49:01 PM CET
 //
 
+/**
+ * Rdf package.
+ */
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
                                        elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
                                        xmlns = {@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#", prefix = "rdf"),

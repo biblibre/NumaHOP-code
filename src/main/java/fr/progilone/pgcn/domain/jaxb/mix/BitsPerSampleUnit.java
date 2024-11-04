@@ -14,18 +14,19 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour bitsPerSampleUnit.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="bitsPerSampleUnit">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="integer"/>
- *     &lt;enumeration value="floating point"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="bitsPerSampleUnit"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="integer"/&gt;
+ *     &lt;enumeration value="floating point"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

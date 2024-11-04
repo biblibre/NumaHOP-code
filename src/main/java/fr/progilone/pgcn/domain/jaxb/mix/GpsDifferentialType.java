@@ -14,18 +14,19 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour gpsDifferentialType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="gpsDifferentialType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="Measurement without differential correction"/>
- *     &lt;enumeration value="Differential correction applied"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="gpsDifferentialType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="Measurement without differential correction"/&gt;
+ *     &lt;enumeration value="Differential correction applied"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

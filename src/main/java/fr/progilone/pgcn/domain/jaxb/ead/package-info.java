@@ -5,6 +5,9 @@
 // Généré le : 2017.05.16 à 10:56:55 AM CEST
 //
 
+/**
+ * Ead package.
+ */
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "urn:isbn:1-931666-22-9",
                                        elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
                                        xmlns = {@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "urn:isbn:1-931666-22-9", prefix = ""),

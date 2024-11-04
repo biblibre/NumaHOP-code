@@ -14,21 +14,22 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour componentUseType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="componentUseType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="image data"/>
- *     &lt;enumeration value="associated alpha data"/>
- *     &lt;enumeration value="unassociated alpha data"/>
- *     &lt;enumeration value="range data"/>
- *     &lt;enumeration value="unspecified data"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="componentUseType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="image data"/&gt;
+ *     &lt;enumeration value="associated alpha data"/&gt;
+ *     &lt;enumeration value="unassociated alpha data"/&gt;
+ *     &lt;enumeration value="range data"/&gt;
+ *     &lt;enumeration value="unspecified data"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

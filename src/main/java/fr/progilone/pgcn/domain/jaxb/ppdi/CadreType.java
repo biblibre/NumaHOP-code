@@ -14,18 +14,19 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour cadreType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="cadreType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="Archivage patrimonial"/>
- *     &lt;enumeration value="Tiers archivage"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="cadreType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="Archivage patrimonial"/&gt;
+ *     &lt;enumeration value="Tiers archivage"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

@@ -17,14 +17,13 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
  *
  * <pre>
- * &lt;simpleType name="statusType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="deleted"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="statusType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="deleted"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

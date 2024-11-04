@@ -17,19 +17,18 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
  *
  * <pre>
- * &lt;simpleType name="verbType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="Identify"/>
- *     &lt;enumeration value="ListMetadataFormats"/>
- *     &lt;enumeration value="ListSets"/>
- *     &lt;enumeration value="GetRecord"/>
- *     &lt;enumeration value="ListIdentifiers"/>
- *     &lt;enumeration value="ListRecords"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="verbType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="Identify"/&gt;
+ *     &lt;enumeration value="ListMetadataFormats"/&gt;
+ *     &lt;enumeration value="ListSets"/&gt;
+ *     &lt;enumeration value="GetRecord"/&gt;
+ *     &lt;enumeration value="ListIdentifiers"/&gt;
+ *     &lt;enumeration value="ListRecords"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

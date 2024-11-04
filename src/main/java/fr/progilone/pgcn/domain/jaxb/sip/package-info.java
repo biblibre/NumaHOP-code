@@ -5,6 +5,9 @@
 // Généré le : 2016.12.29 à 11:53:40 AM CET
 //
 
+/**
+ * Sip package.
+ */
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.cines.fr/pac/sip",
                                        elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
                                        xmlns = {@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.cines.fr/pac/sip", prefix = ""),

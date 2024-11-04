@@ -35,9 +35,11 @@ import javax.xml.namespace.QName;
  *
  * <p>
  * Classe Java pour structLinkType complex type.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+ * </p>
  *
  * <pre>
  * &lt;complexType name="structLinkType"&gt;
@@ -512,10 +514,12 @@ public class StructLinkType {
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the smLocatorLink property.
+         * This is why there is not a &lt;CODE&gt;set&lt;/CODE&gt; method for the smLocatorLink property.
+         * </p>
          *
          * <p>
          * For example, to add a new item, do as follows:
+         * </p>
          *
          * <pre>
          * getSmLocatorLink().add(newItem);
@@ -525,6 +529,7 @@ public class StructLinkType {
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link SmLocatorLink }
+         * </p>
          *
          *
          */
@@ -542,10 +547,12 @@ public class StructLinkType {
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the smArcLink property.
+         * This is why there is not a &lt;CODE&gt;set&lt;/CODE&gt; method for the smArcLink property.
+         * </p>
          *
          * <p>
          * For example, to add a new item, do as follows:
+         * </p>
          *
          * <pre>
          * getSmArcLink().add(newItem);
@@ -555,6 +562,7 @@ public class StructLinkType {
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link SmArcLink }
+         * </p>
          *
          *
          */
@@ -695,16 +703,20 @@ public class StructLinkType {
 
         /**
          *
-         * The structMap arc link element <smArcLink> is of xlink:type "arc" It can be used to establish a traversal link between two <div> elements
-         * as identified by <smLocatorLink> elements within the same smLinkGrp element. The associated xlink:from and xlink:to attributes identify the
+         * The structMap arc link element &lt;smArcLink&gt; is of xlink:type "arc" It can be used to establish a traversal link between two
+         * &lt;div&gt; elements
+         * as identified by &lt;smLocatorLink&gt; elements within the same smLinkGrp element. The associated xlink:from and xlink:to attributes
+         * identify the
          * from and to sides of the arc link by referencing the xlink:label attribute values on the participating smLocatorLink elements.
          *
          *
          * <p>
          * Classe Java pour anonymous complex type.
+         * </p>
          *
          * <p>
          * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+         * </p>
          *
          * <pre>
          * &lt;complexType&gt;
@@ -806,10 +818,12 @@ public class StructLinkType {
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the admid property.
+             * This is why there is not a &lt;CODE&gt;set&lt;/CODE&gt; method for the admid property.
+             * </p>
              *
              * <p>
              * For example, to add a new item, do as follows:
+             * </p>
              *
              * <pre>
              * getADMID().add(newItem);
@@ -819,6 +833,7 @@ public class StructLinkType {
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link Object }
+             * </p>
              *
              *
              */

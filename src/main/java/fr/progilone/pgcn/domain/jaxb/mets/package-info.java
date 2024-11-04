@@ -5,6 +5,9 @@
 // Généré le : 2016.12.29 à 11:54:46 AM CET
 //
 
+/**
+ * Mets package.
+ */
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.loc.gov/METS/",
                                        elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
                                        xmlns = {@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.loc.gov/METS/", prefix = "mets"),

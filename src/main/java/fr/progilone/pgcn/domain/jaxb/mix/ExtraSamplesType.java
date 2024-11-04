@@ -14,20 +14,21 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour extraSamplesType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="extraSamplesType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="unspecified data"/>
- *     &lt;enumeration value="associated alpha data (with pre-multiplied color)"/>
- *     &lt;enumeration value="unassociated alpha data"/>
- *     &lt;enumeration value="range or depth data"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="extraSamplesType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="unspecified data"/&gt;
+ *     &lt;enumeration value="associated alpha data (with pre-multiplied color)"/&gt;
+ *     &lt;enumeration value="unassociated alpha data"/&gt;
+ *     &lt;enumeration value="range or depth data"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

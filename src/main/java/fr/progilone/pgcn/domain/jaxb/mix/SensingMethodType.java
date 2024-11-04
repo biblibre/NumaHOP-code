@@ -14,23 +14,24 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour sensingMethodType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="sensingMethodType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="Not defined"/>
- *     &lt;enumeration value="One-chip color area sensor"/>
- *     &lt;enumeration value="Two-chip color area sensor"/>
- *     &lt;enumeration value="Three-chip color area sensor"/>
- *     &lt;enumeration value="Color sequential area sensor"/>
- *     &lt;enumeration value="Trilinear sensor"/>
- *     &lt;enumeration value="Color sequential linear sensor"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="sensingMethodType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="Not defined"/&gt;
+ *     &lt;enumeration value="One-chip color area sensor"/&gt;
+ *     &lt;enumeration value="Two-chip color area sensor"/&gt;
+ *     &lt;enumeration value="Three-chip color area sensor"/&gt;
+ *     &lt;enumeration value="Color sequential area sensor"/&gt;
+ *     &lt;enumeration value="Trilinear sensor"/&gt;
+ *     &lt;enumeration value="Color sequential linear sensor"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

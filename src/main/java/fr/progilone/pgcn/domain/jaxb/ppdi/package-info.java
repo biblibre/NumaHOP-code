@@ -5,6 +5,9 @@
 // Généré le : 2017.12.08 à 03:23:15 PM CET
 //
 
+/**
+ * Ppdi package.
+ */
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.cines.fr/pac/ppdi",
                                        elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
                                        xmlns = {@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.cines.fr/pac/ppdi", prefix = "")})

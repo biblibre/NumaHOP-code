@@ -5,6 +5,9 @@
 // Généré le : 2017.01.03 à 11:16:18 AM CET
 //
 
+/**
+ * Avis packages.
+ */
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.cines.fr/pac/avis",
                                        elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
                                        xmlns = {@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.cines.fr/pac/avis", prefix = "")})

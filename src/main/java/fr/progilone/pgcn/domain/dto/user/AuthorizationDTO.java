@@ -7,7 +7,7 @@ import java.util.List;
  * DTO représentant une habilitation
  *
  * @author Sebastien
- * @see Authorization
+ * @see fr.progilone.pgcn.domain.user.Authorization
  */
 public class AuthorizationDTO {
 

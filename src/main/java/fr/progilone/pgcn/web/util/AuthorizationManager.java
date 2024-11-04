@@ -13,8 +13,10 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 /**
+ * <p>
  * Classes gérant les relations de dépendance entre autorisations
  * <p/>
+ * <p>
  * Définir les relations à l'aide de AuthorizationManager.setRequirements(mon_autorisation, mon_prérequis_1, mon_prérequis_2, ...)
  * <p/>
  * Created by Sebastien on 06/11/2015.

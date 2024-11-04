@@ -22,54 +22,54 @@ import java.util.ArrayList;
 /**
  * <p>
  * Classe Java pour dsc complex type.
- * <p>
+ * </p>
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
  * &lt;complexType name="dsc">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;sequence>
- *           &lt;element name="head" type="{urn:isbn:1-931666-22-9}head" minOccurs="0"/>
- *           &lt;group ref="{urn:isbn:1-931666-22-9}m.blocks" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;/sequence>
- *         &lt;choice>
- *           &lt;sequence>
- *             &lt;element name="thead" type="{urn:isbn:1-931666-22-9}thead" minOccurs="0"/>
- *             &lt;choice>
- *               &lt;sequence maxOccurs="unbounded">
- *                 &lt;element name="c" type="{urn:isbn:1-931666-22-9}c"/>
- *                 &lt;element name="thead" type="{urn:isbn:1-931666-22-9}thead" minOccurs="0"/>
- *               &lt;/sequence>
- *               &lt;sequence maxOccurs="unbounded">
- *                 &lt;element name="c01" type="{urn:isbn:1-931666-22-9}c01"/>
- *                 &lt;element name="thead" type="{urn:isbn:1-931666-22-9}thead" minOccurs="0"/>
- *               &lt;/sequence>
- *             &lt;/choice>
- *           &lt;/sequence>
- *           &lt;element name="dsc" type="{urn:isbn:1-931666-22-9}dsc" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;/choice>
- *       &lt;/sequence>
- *       &lt;attGroup ref="{urn:isbn:1-931666-22-9}am.dsctab.tpattern"/>
- *       &lt;attGroup ref="{urn:isbn:1-931666-22-9}a.common"/>
- *       &lt;attribute name="type">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token">
- *             &lt;enumeration value="analyticover"/>
- *             &lt;enumeration value="combined"/>
- *             &lt;enumeration value="in-depth"/>
- *             &lt;enumeration value="othertype"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *       &lt;attribute name="othertype" type="{http://www.w3.org/2001/XMLSchema}NMTOKEN" />
- *       &lt;attribute name="encodinganalog" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;sequence&gt;
+ *           &lt;element name="head" type="{urn:isbn:1-931666-22-9}head" minOccurs="0"/&gt;
+ *           &lt;group ref="{urn:isbn:1-931666-22-9}m.blocks" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;/sequence&gt;
+ *         &lt;choice&gt;
+ *           &lt;sequence&gt;
+ *             &lt;element name="thead" type="{urn:isbn:1-931666-22-9}thead" minOccurs="0"/&gt;
+ *             &lt;choice&gt;
+ *               &lt;sequence maxOccurs="unbounded"&gt;
+ *                 &lt;element name="c" type="{urn:isbn:1-931666-22-9}c"/&gt;
+ *                 &lt;element name="thead" type="{urn:isbn:1-931666-22-9}thead" minOccurs="0"/&gt;
+ *               &lt;/sequence&gt;
+ *               &lt;sequence maxOccurs="unbounded"&gt;
+ *                 &lt;element name="c01" type="{urn:isbn:1-931666-22-9}c01"/&gt;
+ *                 &lt;element name="thead" type="{urn:isbn:1-931666-22-9}thead" minOccurs="0"/&gt;
+ *               &lt;/sequence&gt;
+ *             &lt;/choice&gt;
+ *           &lt;/sequence&gt;
+ *           &lt;element name="dsc" type="{urn:isbn:1-931666-22-9}dsc" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;/choice&gt;
+ *       &lt;/sequence&gt;
+ *       &lt;attGroup ref="{urn:isbn:1-931666-22-9}am.dsctab.tpattern"/&gt;
+ *       &lt;attGroup ref="{urn:isbn:1-931666-22-9}a.common"/&gt;
+ *       &lt;attribute name="type"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}token"&gt;
+ *             &lt;enumeration value="analyticover"/&gt;
+ *             &lt;enumeration value="combined"/&gt;
+ *             &lt;enumeration value="in-depth"/&gt;
+ *             &lt;enumeration value="othertype"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *       &lt;attribute name="othertype" type="{http://www.w3.org/2001/XMLSchema}NMTOKEN" /&gt;
+ *       &lt;attribute name="encodinganalog" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" /&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)

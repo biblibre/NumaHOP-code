@@ -19,14 +19,16 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 /**
  * objectType: complexType for interfaceDef and mechanism elements
  * The mechanism and behavior elements point to external objects--an interface definition object or an executable code object respectively--which
- * together constitute a behavior that can be applied to one or more <div> elements in a <structMap>.
+ * together constitute a behavior that can be applied to one or more &lt;div&gt; elements in a &lt;structMap&gt;.
  *
  *
  * <p>
  * Classe Java pour objectType complex type.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+ * </p>
  *
  * <pre>
  * &lt;complexType name="objectType"&gt;

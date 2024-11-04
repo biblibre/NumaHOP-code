@@ -14,37 +14,38 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour lightSourceType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="lightSourceType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="Daylight"/>
- *     &lt;enumeration value="Fluorescent"/>
- *     &lt;enumeration value="Tungsten (incandescent light)"/>
- *     &lt;enumeration value="Flash"/>
- *     &lt;enumeration value="Fine weather"/>
- *     &lt;enumeration value="Cloudy weather"/>
- *     &lt;enumeration value="Shade"/>
- *     &lt;enumeration value="Daylight fluorescent (D 5700 - 7100K)"/>
- *     &lt;enumeration value="Day white fluorescent (N 4600 - 5400K)"/>
- *     &lt;enumeration value="Cool white fluorescent (W 3900 - 4500K)"/>
- *     &lt;enumeration value="White fluorescent (WW 3200 - 3700K)"/>
- *     &lt;enumeration value="Standard light A"/>
- *     &lt;enumeration value="Standard light B"/>
- *     &lt;enumeration value="Standard light C"/>
- *     &lt;enumeration value="D55"/>
- *     &lt;enumeration value="D65"/>
- *     &lt;enumeration value="D75"/>
- *     &lt;enumeration value="D50"/>
- *     &lt;enumeration value="ISO studio tungsten"/>
- *     &lt;enumeration value="other light source"/>
- *     &lt;enumeration value="unknown"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="lightSourceType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="Daylight"/&gt;
+ *     &lt;enumeration value="Fluorescent"/&gt;
+ *     &lt;enumeration value="Tungsten (incandescent light)"/&gt;
+ *     &lt;enumeration value="Flash"/&gt;
+ *     &lt;enumeration value="Fine weather"/&gt;
+ *     &lt;enumeration value="Cloudy weather"/&gt;
+ *     &lt;enumeration value="Shade"/&gt;
+ *     &lt;enumeration value="Daylight fluorescent (D 5700 - 7100K)"/&gt;
+ *     &lt;enumeration value="Day white fluorescent (N 4600 - 5400K)"/&gt;
+ *     &lt;enumeration value="Cool white fluorescent (W 3900 - 4500K)"/&gt;
+ *     &lt;enumeration value="White fluorescent (WW 3200 - 3700K)"/&gt;
+ *     &lt;enumeration value="Standard light A"/&gt;
+ *     &lt;enumeration value="Standard light B"/&gt;
+ *     &lt;enumeration value="Standard light C"/&gt;
+ *     &lt;enumeration value="D55"/&gt;
+ *     &lt;enumeration value="D65"/&gt;
+ *     &lt;enumeration value="D75"/&gt;
+ *     &lt;enumeration value="D50"/&gt;
+ *     &lt;enumeration value="ISO studio tungsten"/&gt;
+ *     &lt;enumeration value="other light source"/&gt;
+ *     &lt;enumeration value="unknown"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

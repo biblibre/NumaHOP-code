@@ -16,18 +16,20 @@ import jakarta.xml.bind.annotation.XmlValue;
 /**
  * <p>
  * Classe Java pour typeOfgpsMeasureModeType complex type.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+ * </p>
  *
  * <pre>
- * &lt;complexType name="typeOfgpsMeasureModeType">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.loc.gov/mix/v20>gpsMeasureModeType">
- *       &lt;attribute name="use" type="{http://www.w3.org/2001/XMLSchema}string" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="typeOfgpsMeasureModeType"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.loc.gov/mix/v20&gt;gpsMeasureModeType"&gt;
+ *       &lt;attribute name="use" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  *
  *

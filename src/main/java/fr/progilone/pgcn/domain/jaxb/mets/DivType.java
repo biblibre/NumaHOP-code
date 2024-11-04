@@ -31,16 +31,19 @@ import javax.xml.namespace.QName;
  * subsidiary mptr or fptr elements) to content files which represent that div's portion of the whole document.
  *
  * SPECIAL NOTE REGARDING DIV ATTRIBUTE VALUES:
- * to clarify the differences between the ORDER, ORDERLABEL, and LABEL attributes for the <div> element, imagine a text with 10 roman numbered pages
+ * to clarify the differences between the ORDER, ORDERLABEL, and LABEL attributes for the &lt;div&gt; element, imagine a text with 10 roman numbered
+ * pages
  * followed by 10 arabic numbered pages. Page iii would have an ORDER of "3", an ORDERLABEL of "iii" and a LABEL of "Page iii", while page 3 would
  * have an ORDER of "13", an ORDERLABEL of "3" and a LABEL of "Page 3".
  *
  *
  * <p>
  * Classe Java pour divType complex type.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+ * </p>
  *
  * <pre>
  * &lt;complexType name="divType"&gt;
@@ -438,9 +441,11 @@ public class DivType {
     /**
      * <p>
      * Classe Java pour anonymous complex type.
+     * </p>
      *
      * <p>
      * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+     * </p>
      *
      * <pre>
      * &lt;complexType&gt;
@@ -613,10 +618,12 @@ public class DivType {
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the contentids property.
+         * This is why there is not a &lt;CODE&gt;set&lt;/CODE&gt; method for the contentids property.
+         * </p>
          *
          * <p>
          * For example, to add a new item, do as follows:
+         * </p>
          *
          * <pre>
          * getCONTENTIDS().add(newItem);
@@ -626,8 +633,7 @@ public class DivType {
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link String }
-         *
-         *
+         * </p>
          */
         public List<String> getCONTENTIDS() {
             if (contentids == null) {
@@ -642,6 +648,7 @@ public class DivType {
          * <p>
          * the map is keyed by the name of the attribute and
          * the value is the string value of the attribute.
+         * </p>
          *
          * the map returned by this method is live, and you can add new attribute
          * by updating the map directly. Because of this design, there's no setter.
@@ -659,9 +666,11 @@ public class DivType {
     /**
      * <p>
      * Classe Java pour anonymous complex type.
+     * </p>
      *
      * <p>
      * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+     * </p>
      *
      * <pre>
      * &lt;complexType&gt;
@@ -740,10 +749,12 @@ public class DivType {
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the contentids property.
+         * This is why there is not a &lt;CODE&gt;set&lt;/CODE&gt; method for the contentids property.
+         * </p>
          *
          * <p>
          * For example, to add a new item, do as follows:
+         * </p>
          *
          * <pre>
          * getCONTENTIDS().add(newItem);
@@ -753,6 +764,7 @@ public class DivType {
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link String }
+         * </p>
          *
          *
          */

@@ -5,6 +5,9 @@
 // Généré le : 2017.08.25 à 03:15:17 PM CEST
 //
 
+/**
+ * Mix packages.
+ */
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.loc.gov/mix/v20",
                                        elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
                                        xmlns = {@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.loc.gov/mix/v20", prefix = "")})

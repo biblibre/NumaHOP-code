@@ -14,18 +14,19 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour sourceDimensionUnitType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="sourceDimensionUnitType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="in."/>
- *     &lt;enumeration value="mm"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="sourceDimensionUnitType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="in."/&gt;
+ *     &lt;enumeration value="mm"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

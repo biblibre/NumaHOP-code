@@ -17,15 +17,14 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
  *
  * <pre>
- * &lt;simpleType name="granularityType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="YYYY-MM-DD"/>
- *     &lt;enumeration value="YYYY-MM-DDThh:mm:ssZ"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="granularityType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="YYYY-MM-DD"/&gt;
+ *     &lt;enumeration value="YYYY-MM-DDThh:mm:ssZ"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

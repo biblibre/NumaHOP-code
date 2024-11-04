@@ -14,25 +14,26 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour orientationType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="orientationType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="normal*"/>
- *     &lt;enumeration value="normal, image flipped"/>
- *     &lt;enumeration value="normal, rotated 180°"/>
- *     &lt;enumeration value="normal, image flipped, rotated 180°"/>
- *     &lt;enumeration value="normal, image flipped, rotated cw 90°"/>
- *     &lt;enumeration value="normal, rotated ccw 90°"/>
- *     &lt;enumeration value="normal, image flipped, rotated ccw 90°"/>
- *     &lt;enumeration value="normal, rotated cw 90°"/>
- *     &lt;enumeration value="unknown"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="orientationType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="normal*"/&gt;
+ *     &lt;enumeration value="normal, image flipped"/&gt;
+ *     &lt;enumeration value="normal, rotated 180°"/&gt;
+ *     &lt;enumeration value="normal, image flipped, rotated 180°"/&gt;
+ *     &lt;enumeration value="normal, image flipped, rotated cw 90°"/&gt;
+ *     &lt;enumeration value="normal, rotated ccw 90°"/&gt;
+ *     &lt;enumeration value="normal, image flipped, rotated ccw 90°"/&gt;
+ *     &lt;enumeration value="normal, rotated cw 90°"/&gt;
+ *     &lt;enumeration value="unknown"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

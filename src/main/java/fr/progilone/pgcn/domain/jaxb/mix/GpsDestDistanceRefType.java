@@ -13,19 +13,20 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour gpsDestDistanceRefType.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
- * &lt;simpleType name="gpsDestDistanceRefType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="K"/>
- *     &lt;enumeration value="M"/>
- *     &lt;enumeration value="N"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="gpsDestDistanceRefType"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="K"/&gt;
+ *     &lt;enumeration value="M"/&gt;
+ *     &lt;enumeration value="N"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */
