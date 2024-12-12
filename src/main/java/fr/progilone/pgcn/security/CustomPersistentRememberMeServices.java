@@ -28,11 +28,11 @@ import org.springframework.stereotype.Service;
 /**
  * <p>
  * Custom implementation of Spring Security's RememberMeServices.
- * <p/>
+ * </p>
  *
  * <p>
  * Persistent tokens are used by Spring Security to automatically log in users.
- * <p/>
+ * </p>
  *
  * <p>
  * This is a specific implementation of Spring Security's remember-me authentication, but it is much more powerful than the standard implementations:
@@ -41,7 +41,7 @@ import org.springframework.stereotype.Service;
  * <li>It stores more information, such as the IP address and the user agent, for audit purposes</li>
  * <li>When a user logs out, only his current session is invalidated, and not all of his sessions</li>
  * </ul>
- * <p/>
+ * </p>
  *
  * <p>
  * This is inspired by:
@@ -53,7 +53,7 @@ import org.springframework.stereotype.Service;
  *
  * <p>
  * The main algorithm comes from Spring Security's PersistentTokenBasedRememberMeServices, but this class couldn't be cleanly extended.
- * <p/>
+ * </p>
  */
 @Service
 public class CustomPersistentRememberMeServices extends AbstractRememberMeServices {

@@ -337,7 +337,6 @@ public class DocUnitController extends AbstractRestController {
 
     @RequestMapping(value = "/{identifier}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @RolesAllowed(DOC_UNIT_HAB0)
     public ResponseEntity<DocUnitDTO> getById(@PathVariable final String identifier) {
         if (!accessHelper.checkDocUnit(identifier)) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

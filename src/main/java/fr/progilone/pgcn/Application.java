@@ -25,10 +25,12 @@ public class Application {
     }
 
     /**
+     * <p>
      * Initializes numahop.
-     * <p/>
+     * </p>
+     * <p>
      * Spring profiles can be configured with a program arguments --spring.profiles.active=your-active-profile
-     * <p/>
+     * </p>
      */
     @PostConstruct
     public void initApplication() throws IOException {
@@ -48,14 +50,14 @@ public class Application {
         final SimpleCommandLinePropertySource source = new SimpleCommandLinePropertySource(args);
 
         // Check if the selected profile has been set as argument.
-        // if not the development profile will be added
+        // If not the development profile will be added.
         addDefaultProfile(app, source);
 
         app.run(args);
     }
 
     /**
-     * Set a default profile if it has not been set
+     * Set a default profile if it has not been set.
      */
     private static void addDefaultProfile(final SpringApplication app, final SimpleCommandLinePropertySource source) {
         if (!source.containsProperty("spring.profiles.active")) {

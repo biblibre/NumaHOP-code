@@ -148,13 +148,12 @@ public class FileCleaningManager {
     /**
      * Purge les répertoires de livraison des documents validés
      * des livraisons validées avec date de livraison > j-5.
-     * Traitement lancé chaque nuit à 01h00.
      */
     @Scheduled(cron = "${cron.cleanDeliveryFiles}")
     @Transactional
     public void cleanDeliveryFilesCron() {
 
-        LOG.info("Lancement du cronjob cleanDeliveryFilesCron...");
+        LOG.info("Lancement du cronjob cleanDeliveryFiles...");
         // recup les rep de livraison des documents valides
         // de livraisons validees des 5 derniers jours (trt à 1h du mat)
         final LocalDate dateFrom = LocalDate.now().minusDays(5L);

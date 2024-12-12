@@ -45,10 +45,11 @@ public class LockService {
      *            la ressource pour laquelle on souhaite acquérir un verrou ne doit pas être {@literal null}.
      * @param <T>
      *            type de la ressource
-     * @throws SemanthequeLockException
+     * @throws PgcnLockException
      *             en cas d'echec lors de l'acquisition du verrou : entité actuellement verrouillée par un autre uager
-     * @throws NullPointerException
+     * @throws IllegalArgumentException
      *             si la ressource est null
+     * @return le verrou nouvellement aquis.
      */
     @Transactional
     public <T extends AbstractDomainObject> Lock acquireLock(final T object) throws PgcnLockException {
@@ -75,8 +76,10 @@ public class LockService {
      *            la ressource pour laquelle on souhaite acquérir un verrou ne doit pas être {@literal null}.
      * @param <T>
      *            type de la ressource
-     * @throws SemanthequeLockException
+     * @throws PgcnLockException
      *             en cas d'echec lors de la suppression du verrou : entité actuellement verrouillée par un autre uager que l'utilisateur courant
+     * @throws IllegalArgumentException
+     *             si la ressource est null
      */
     @Transactional
     public <T extends AbstractDomainObject> void releaseLock(final T object) throws PgcnLockException {
@@ -97,7 +100,7 @@ public class LockService {
      *            la ressource pour laquelle on souhaite vérifier la présence d'un verrou ne doit pas être {@literal null}.
      * @param <T>
      *            type de la ressource
-     * @throws SemanthequeLockException
+     * @throws PgcnLockException
      *             entité actuellement verrouillée par un autre uager
      */
     @Transactional
@@ -116,6 +119,7 @@ public class LockService {
      * @param object
      *            verrou
      * @return
+     *         Le verrou s'il existe.
      */
     private <T extends AbstractDomainObject> Optional<Lock> isCurrentlyLockedByAnotherUser(final T object) {
         final Lock lock = lockRepository.findByIdentifier(object.getIdentifier());
@@ -130,9 +134,14 @@ public class LockService {
         }
     }
 
+    /**
+     * Libération des locks posés par l'utilisateur á la deconection.
+     *
+     * @param userLogin
+     *            L'utilisateur se déconectant.
+     */
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void releaseLocksOnLogout(final String userLogin) {
-        // Libération des locks posés par le user au logout.
         lockRepository.deleteByLockedBy(userLogin);
     }
 }

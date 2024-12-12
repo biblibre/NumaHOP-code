@@ -21,24 +21,26 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 /**
  * <p>
  * Classe Java pour anonymous complex type.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+ * </p>
  *
  * <pre>
- * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="eadheader" type="{urn:isbn:1-931666-22-9}eadheader"/>
- *         &lt;element name="frontmatter" type="{urn:isbn:1-931666-22-9}frontmatter" minOccurs="0"/>
- *         &lt;element name="archdesc" type="{urn:isbn:1-931666-22-9}archdesc"/>
- *       &lt;/sequence>
- *       &lt;attGroup ref="{urn:isbn:1-931666-22-9}a.common"/>
- *       &lt;attribute name="relatedencoding" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="eadheader" type="{urn:isbn:1-931666-22-9}eadheader"/&gt;
+ *         &lt;element name="frontmatter" type="{urn:isbn:1-931666-22-9}frontmatter" minOccurs="0"/&gt;
+ *         &lt;element name="archdesc" type="{urn:isbn:1-931666-22-9}archdesc"/&gt;
+ *       &lt;/sequence&gt;
+ *       &lt;attGroup ref="{urn:isbn:1-931666-22-9}a.common"/&gt;
+ *       &lt;attribute name="relatedencoding" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" /&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  *
  *

@@ -24,27 +24,29 @@ import java.util.List;
 /**
  * <p>
  * Classe Java pour c complex type.
+ * </p>
  *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
+ * </p>
  *
  * <pre>
- * &lt;complexType name="c">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="head" type="{urn:isbn:1-931666-22-9}head" minOccurs="0"/>
- *         &lt;element name="did" type="{urn:isbn:1-931666-22-9}did"/>
- *         &lt;group ref="{urn:isbn:1-931666-22-9}m.desc.full" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;sequence maxOccurs="unbounded" minOccurs="0">
- *           &lt;element name="thead" type="{urn:isbn:1-931666-22-9}thead" minOccurs="0"/>
- *           &lt;element name="c" type="{urn:isbn:1-931666-22-9}c" maxOccurs="unbounded"/>
- *         &lt;/sequence>
- *       &lt;/sequence>
- *       &lt;attGroup ref="{urn:isbn:1-931666-22-9}a.desc.c"/>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="c"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="head" type="{urn:isbn:1-931666-22-9}head" minOccurs="0"/&gt;
+ *         &lt;element name="did" type="{urn:isbn:1-931666-22-9}did"/&gt;
+ *         &lt;group ref="{urn:isbn:1-931666-22-9}m.desc.full" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;sequence maxOccurs="unbounded" minOccurs="0"&gt;
+ *           &lt;element name="thead" type="{urn:isbn:1-931666-22-9}thead" minOccurs="0"/&gt;
+ *           &lt;element name="c" type="{urn:isbn:1-931666-22-9}c" maxOccurs="unbounded"/&gt;
+ *         &lt;/sequence&gt;
+ *       &lt;/sequence&gt;
+ *       &lt;attGroup ref="{urn:isbn:1-931666-22-9}a.desc.c"/&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  *
  *
@@ -173,9 +175,11 @@ public class C {
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the mDescFull property.
+     * </p>
      *
      * <p>
      * For example, to add a new item, do as follows:
+     * </p>
      *
      * <pre>
      * getMDescFull().add(newItem);
@@ -211,6 +215,7 @@ public class C {
      * {@link Dao }
      * {@link Daogrp }
      * {@link Note }
+     * </p>
      *
      *
      */
@@ -229,9 +234,11 @@ public class C {
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the theadAndC property.
+     * </p>
      *
      * <p>
      * For example, to add a new item, do as follows:
+     * </p>
      *
      * <pre>
      * getTheadAndC().add(newItem);

@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * </p>
  *
  * <pre>
- * &lt;complexType name="dsc">
+ * &lt;complexType name="dsc"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
