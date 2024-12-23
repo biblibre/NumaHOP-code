@@ -63,7 +63,6 @@
         <sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 
         <sortpom-maven-plugin.version>3.2.0</sortpom-maven-plugin.version>
-        <start-class>fr.progilone.pgcn.Application</start-class>
         <tika.version>1.18</tika.version>
         <xdocreport.version>2.0.4</xdocreport.version>
         <yaz.version>1.5</yaz.version>
@@ -507,33 +506,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.cosium.code</groupId>
-                <artifactId>git-code-format-maven-plugin</artifactId>
-                <version>${git-code-format-maven-plugin.version}</version>
-                <configuration>
-                    <formatterOptions>
-                        <googleJavaFormat.fixImportsOnly>true</googleJavaFormat.fixImportsOnly>
-                        <googleJavaFormat.skipSortingImports>false</googleJavaFormat.skipSortingImports>
-                        <googleJavaFormat.skipRemovingUnusedImports>false</googleJavaFormat.skipRemovingUnusedImports>
-                    </formatterOptions>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.cosium.code</groupId>
-                        <artifactId>google-java-format</artifactId>
-                        <version>${git-code-format-maven-plugin.version}</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>validate-code-format</goal>
-                        </goals>
-                        <phase>validate</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>${frontend-maven-plugin.version}</version>
@@ -593,6 +565,19 @@
                 </executions>
             </plugin>
             <plugin>
+               <groupId>io.spring.javaformat</groupId>
+               <artifactId>spring-javaformat-maven-plugin</artifactId>
+               <version>0.0.43</version>
+               <executions>
+                   <execution>
+                       <phase>validate</phase>
+                       <goals>
+                           <goal>validate</goal>
+                       </goals>
+                   </execution>
+               </executions>
+            </plugin>
+            <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>${jib-maven-plugin.version}</version>
@@ -636,6 +621,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -933,7 +919,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>${start-class}</mainClass>
+                    <mainClass>fr.progilone.pgcn.Application</mainClass>
                     <executable>true</executable>
                 </configuration>
                 <executions>
