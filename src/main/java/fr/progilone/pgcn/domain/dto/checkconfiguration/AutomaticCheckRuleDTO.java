@@ -5,63 +5,68 @@ import fr.progilone.pgcn.domain.dto.check.AutomaticCheckTypeDTO;
 
 public class AutomaticCheckRuleDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private AutomaticCheckTypeDTO automaticCheckType;
-    private Boolean active;
-    private Boolean blocking;
-    private Boolean readOnly = false;
+	private String identifier;
 
-    public AutomaticCheckRuleDTO(final String identifier, final AutomaticCheckTypeDTO automaticCheckType, final Boolean active, final Boolean blocking, final Boolean readOnly) {
+	private AutomaticCheckTypeDTO automaticCheckType;
 
-        this.identifier = identifier;
-        this.automaticCheckType = automaticCheckType;
-        this.active = active;
-        this.blocking = blocking;
-        this.readOnly = readOnly;
-    }
+	private Boolean active;
 
-    public AutomaticCheckRuleDTO() {
+	private Boolean blocking;
 
-    }
+	private Boolean readOnly = false;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public AutomaticCheckRuleDTO(final String identifier, final AutomaticCheckTypeDTO automaticCheckType,
+			final Boolean active, final Boolean blocking, final Boolean readOnly) {
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+		this.identifier = identifier;
+		this.automaticCheckType = automaticCheckType;
+		this.active = active;
+		this.blocking = blocking;
+		this.readOnly = readOnly;
+	}
 
-    public AutomaticCheckTypeDTO getAutomaticCheckType() {
-        return automaticCheckType;
-    }
+	public AutomaticCheckRuleDTO() {
 
-    public void setAutomaticCheckType(AutomaticCheckTypeDTO automaticCheckType) {
-        this.automaticCheckType = automaticCheckType;
-    }
+	}
 
-    public Boolean getActive() {
-        return active;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public Boolean getBlocking() {
-        return blocking;
-    }
+	public AutomaticCheckTypeDTO getAutomaticCheckType() {
+		return automaticCheckType;
+	}
 
-    public void setBlocking(Boolean blocking) {
-        this.blocking = blocking;
-    }
+	public void setAutomaticCheckType(AutomaticCheckTypeDTO automaticCheckType) {
+		this.automaticCheckType = automaticCheckType;
+	}
 
-    public Boolean getReadOnly() {
-        return readOnly;
-    }
+	public Boolean getActive() {
+		return active;
+	}
 
-    public void setReadOnly(Boolean readOnly) {
-        this.readOnly = readOnly;
-    }
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public Boolean getBlocking() {
+		return blocking;
+	}
+
+	public void setBlocking(Boolean blocking) {
+		this.blocking = blocking;
+	}
+
+	public Boolean getReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(Boolean readOnly) {
+		this.readOnly = readOnly;
+	}
 
 }

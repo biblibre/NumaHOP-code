@@ -8,7 +8,8 @@ import org.mapstruct.factory.Mappers;
 @Mapper(uses = {})
 public interface DocPropertyTypeMapper {
 
-    DocPropertyTypeMapper INSTANCE = Mappers.getMapper(DocPropertyTypeMapper.class);
+	DocPropertyTypeMapper INSTANCE = Mappers.getMapper(DocPropertyTypeMapper.class);
 
-    DocPropertyTypeDTO docPropertyTypeToDocPropertyTypeDTO(DocPropertyType propertyType);
+	DocPropertyTypeDTO docPropertyTypeToDocPropertyTypeDTO(DocPropertyType propertyType);
+
 }

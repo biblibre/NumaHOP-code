@@ -7,41 +7,44 @@ package fr.progilone.pgcn.domain.dto.lot;
  */
 public class ResultAdminLotDTO {
 
-    private String identifier;
-    private String msg;
-    private boolean success;
+	private String identifier;
 
-    public ResultAdminLotDTO() {
-    }
+	private String msg;
 
-    public ResultAdminLotDTO(final String identifier, final String msg, final boolean success) {
-        super();
-        this.identifier = identifier;
-        this.msg = msg;
-        this.success = success;
-    }
+	private boolean success;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public ResultAdminLotDTO() {
+	}
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	public ResultAdminLotDTO(final String identifier, final String msg, final boolean success) {
+		super();
+		this.identifier = identifier;
+		this.msg = msg;
+		this.success = success;
+	}
 
-    public String getMsg() {
-        return msg;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setMsg(final String msg) {
-        this.msg = msg;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public boolean isSuccess() {
-        return success;
-    }
+	public String getMsg() {
+		return msg;
+	}
 
-    public void setSuccess(final boolean success) {
-        this.success = success;
-    }
+	public void setMsg(final String msg) {
+		this.msg = msg;
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(final boolean success) {
+		this.success = success;
+	}
+
 }

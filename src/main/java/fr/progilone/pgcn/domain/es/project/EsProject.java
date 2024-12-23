@@ -24,177 +24,182 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 @Setting(settingPath = "config/elasticsearch/settings_pgcn.json", shards = 1, replicas = 0)
 public class EsProject {
 
-    @Id
-    @Field(type = FieldType.Keyword)
-    private String identifier;
+	@Id
+	@Field(type = FieldType.Keyword)
+	private String identifier;
 
-    /**
-     * Bibliothèque principale
-     */
-    @Field(type = FieldType.Object)
-    private EsLibrary library;
+	/**
+	 * Bibliothèque principale
+	 */
+	@Field(type = FieldType.Object)
+	private EsLibrary library;
 
-    @Field(type = FieldType.Object)
-    private EsUser provider;
+	@Field(type = FieldType.Object)
+	private EsUser provider;
 
-    /**
-     * Nom
-     */
-    @MultiField(mainField = @Field(type = FieldType.Text),
-                otherFields = {@InnerField(type = FieldType.Keyword, suffix = SUBFIELD_RAW),
-                               @InnerField(type = FieldType.Text, suffix = SUBFIELD_CI_AI, analyzer = ANALYZER_CI_AI, searchAnalyzer = ANALYZER_CI_AI),
-                               @InnerField(type = FieldType.Text, suffix = SUBFIELD_CI_AS, analyzer = ANALYZER_CI_AS, searchAnalyzer = ANALYZER_CI_AS),
-                               @InnerField(type = FieldType.Text, suffix = SUBFIELD_PHRASE, analyzer = ANALYZER_PHRASE, searchAnalyzer = ANALYZER_PHRASE)})
-    private String name;
+	/**
+	 * Nom
+	 */
+	@MultiField(mainField = @Field(type = FieldType.Text),
+			otherFields = { @InnerField(type = FieldType.Keyword, suffix = SUBFIELD_RAW),
+					@InnerField(type = FieldType.Text, suffix = SUBFIELD_CI_AI, analyzer = ANALYZER_CI_AI,
+							searchAnalyzer = ANALYZER_CI_AI),
+					@InnerField(type = FieldType.Text, suffix = SUBFIELD_CI_AS, analyzer = ANALYZER_CI_AS,
+							searchAnalyzer = ANALYZER_CI_AS),
+					@InnerField(type = FieldType.Text, suffix = SUBFIELD_PHRASE, analyzer = ANALYZER_PHRASE,
+							searchAnalyzer = ANALYZER_PHRASE) })
+	private String name;
 
-    /**
-     * Date de début
-     */
-    @Field(type = FieldType.Date)
-    private LocalDate startDate;
+	/**
+	 * Date de début
+	 */
+	@Field(type = FieldType.Date)
+	private LocalDate startDate;
 
-    /**
-     * Date de fin prévisionnelle
-     */
-    @Field(type = FieldType.Date)
-    private LocalDate forecastEndDate;
+	/**
+	 * Date de fin prévisionnelle
+	 */
+	@Field(type = FieldType.Date)
+	private LocalDate forecastEndDate;
 
-    /**
-     * Date de fin réelle
-     */
-    @Field(type = FieldType.Date)
-    private LocalDate realEndDate;
+	/**
+	 * Date de fin réelle
+	 */
+	@Field(type = FieldType.Date)
+	private LocalDate realEndDate;
 
-    /**
-     * Actif
-     */
-    @Field(type = FieldType.Boolean)
-    private boolean active;
+	/**
+	 * Actif
+	 */
+	@Field(type = FieldType.Boolean)
+	private boolean active;
 
-    /**
-     * statut
-     */
-    @Field(type = FieldType.Keyword)
-    private ProjectStatus status;
+	/**
+	 * statut
+	 */
+	@Field(type = FieldType.Keyword)
+	private ProjectStatus status;
 
-    /**
-     * Bibliothèques associées
-     */
-    @Field(type = FieldType.Object)
-    private Set<EsLibrary> associatedLibraries;
+	/**
+	 * Bibliothèques associées
+	 */
+	@Field(type = FieldType.Object)
+	private Set<EsLibrary> associatedLibraries;
 
-    /**
-     * Utilisateurs rattachés
-     */
-    @Field(type = FieldType.Object)
-    private Set<EsUser> associatedUsers;
+	/**
+	 * Utilisateurs rattachés
+	 */
+	@Field(type = FieldType.Object)
+	private Set<EsUser> associatedUsers;
 
-    public static EsProject from(final Project project) {
-        final EsProject esProject = new EsProject();
-        esProject.setIdentifier(project.getIdentifier());
-        esProject.setName(project.getName());
-        if (project.getLibrary() != null) {
-            esProject.setLibrary(EsLibrary.from(project.getLibrary()));
-        }
-        if (project.getProvider() != null) {
-            esProject.setProvider(EsUser.from(project.getProvider()));
-        }
-        esProject.setStartDate(project.getStartDate());
-        esProject.setForecastEndDate(project.getForecastEndDate());
-        esProject.setRealEndDate(project.getRealEndDate());
-        esProject.setActive(project.isActive());
-        esProject.setStatus(project.getStatus());
-        esProject.setAssociatedLibraries(project.getAssociatedLibraries().stream().map(EsLibrary::from).collect(Collectors.toSet()));
-        esProject.setAssociatedUsers(project.getAssociatedUsers().stream().map(EsUser::from).collect(Collectors.toSet()));
-        return esProject;
-    }
+	public static EsProject from(final Project project) {
+		final EsProject esProject = new EsProject();
+		esProject.setIdentifier(project.getIdentifier());
+		esProject.setName(project.getName());
+		if (project.getLibrary() != null) {
+			esProject.setLibrary(EsLibrary.from(project.getLibrary()));
+		}
+		if (project.getProvider() != null) {
+			esProject.setProvider(EsUser.from(project.getProvider()));
+		}
+		esProject.setStartDate(project.getStartDate());
+		esProject.setForecastEndDate(project.getForecastEndDate());
+		esProject.setRealEndDate(project.getRealEndDate());
+		esProject.setActive(project.isActive());
+		esProject.setStatus(project.getStatus());
+		esProject.setAssociatedLibraries(
+				project.getAssociatedLibraries().stream().map(EsLibrary::from).collect(Collectors.toSet()));
+		esProject
+			.setAssociatedUsers(project.getAssociatedUsers().stream().map(EsUser::from).collect(Collectors.toSet()));
+		return esProject;
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public EsLibrary getLibrary() {
-        return library;
-    }
+	public EsLibrary getLibrary() {
+		return library;
+	}
 
-    public void setLibrary(final EsLibrary library) {
-        this.library = library;
-    }
+	public void setLibrary(final EsLibrary library) {
+		this.library = library;
+	}
 
-    public EsUser getProvider() {
-        return provider;
-    }
+	public EsUser getProvider() {
+		return provider;
+	}
 
-    public void setProvider(final EsUser provider) {
-        this.provider = provider;
-    }
+	public void setProvider(final EsUser provider) {
+		this.provider = provider;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public LocalDate getStartDate() {
-        return startDate;
-    }
+	public LocalDate getStartDate() {
+		return startDate;
+	}
 
-    public void setStartDate(final LocalDate startDate) {
-        this.startDate = startDate;
-    }
+	public void setStartDate(final LocalDate startDate) {
+		this.startDate = startDate;
+	}
 
-    public LocalDate getForecastEndDate() {
-        return forecastEndDate;
-    }
+	public LocalDate getForecastEndDate() {
+		return forecastEndDate;
+	}
 
-    public void setForecastEndDate(final LocalDate forecastEndDate) {
-        this.forecastEndDate = forecastEndDate;
-    }
+	public void setForecastEndDate(final LocalDate forecastEndDate) {
+		this.forecastEndDate = forecastEndDate;
+	}
 
-    public LocalDate getRealEndDate() {
-        return realEndDate;
-    }
+	public LocalDate getRealEndDate() {
+		return realEndDate;
+	}
 
-    public void setRealEndDate(final LocalDate realEndDate) {
-        this.realEndDate = realEndDate;
-    }
+	public void setRealEndDate(final LocalDate realEndDate) {
+		this.realEndDate = realEndDate;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
 
-    public ProjectStatus getStatus() {
-        return status;
-    }
+	public ProjectStatus getStatus() {
+		return status;
+	}
 
-    public void setStatus(final ProjectStatus status) {
-        this.status = status;
-    }
+	public void setStatus(final ProjectStatus status) {
+		this.status = status;
+	}
 
-    public Set<EsLibrary> getAssociatedLibraries() {
-        return associatedLibraries;
-    }
+	public Set<EsLibrary> getAssociatedLibraries() {
+		return associatedLibraries;
+	}
 
-    public void setAssociatedLibraries(final Set<EsLibrary> associatedLibraries) {
-        this.associatedLibraries = associatedLibraries;
-    }
+	public void setAssociatedLibraries(final Set<EsLibrary> associatedLibraries) {
+		this.associatedLibraries = associatedLibraries;
+	}
 
-    public Set<EsUser> getAssociatedUsers() {
-        return associatedUsers;
-    }
+	public Set<EsUser> getAssociatedUsers() {
+		return associatedUsers;
+	}
 
-    public void setAssociatedUsers(final Set<EsUser> associatedUsers) {
-        this.associatedUsers = associatedUsers;
-    }
+	public void setAssociatedUsers(final Set<EsUser> associatedUsers) {
+		this.associatedUsers = associatedUsers;
+	}
 
 }

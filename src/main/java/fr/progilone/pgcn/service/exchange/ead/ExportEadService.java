@@ -41,144 +41,145 @@ import org.xml.sax.SAXException;
 @Service
 public class ExportEadService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ExportEadService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ExportEadService.class);
 
-    // private static final String EAD_SCHEMA_VALIDATION = "http://www.loc.gov/ead/ead.xsd";
-    private static final String NS_EAD = "urn:isbn:1-931666-22-9";
-    private static final String EAD_XML_FILE = "ead.xml";
+	// private static final String EAD_SCHEMA_VALIDATION =
+	// "http://www.loc.gov/ead/ead.xsd";
+	private static final String NS_EAD = "urn:isbn:1-931666-22-9";
 
-    // Stockage des EAD
-    @Value("${uploadPath.ead}")
-    private String workingDir;
+	private static final String EAD_XML_FILE = "ead.xml";
 
-    private final FileStorageManager fm;
+	// Stockage des EAD
+	@Value("${uploadPath.ead}")
+	private String workingDir;
 
-    @Autowired
-    public ExportEadService(final FileStorageManager fm) {
-        this.fm = fm;
-    }
+	private final FileStorageManager fm;
 
-    @PostConstruct
-    public void initialize() {
-        fm.initializeStorage(workingDir);
-    }
+	@Autowired
+	public ExportEadService(final FileStorageManager fm) {
+		this.fm = fm;
+	}
 
-    /**
-     * Exporte les éléments fournis en paramètres dans un fichier EAD
-     *
-     * @param docUnitId
-     * @param eadheader
-     * @param c
-     */
-    public void exportEad(final String docUnitId, final Eadheader eadheader, final C c) {
-        if (docUnitId != null && c != null) {
-            try {
-                final ByteArrayOutputStream out = new ByteArrayOutputStream();
-                final Ead ead = getEad(docUnitId, eadheader, c);
-                writeEad(out, ead);
+	@PostConstruct
+	public void initialize() {
+		fm.initializeStorage(workingDir);
+	}
 
-                final ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
-                final Path root = Paths.get(workingDir);
-                LOG.debug("Export EAD dans le répertoire {}", root.toAbsolutePath());
-                fm.copyInputStreamToFileWithOtherDirs(in, root.toFile(), Arrays.asList(docUnitId), EAD_XML_FILE, true, true);
+	/**
+	 * Exporte les éléments fournis en paramètres dans un fichier EAD
+	 * @param docUnitId
+	 * @param eadheader
+	 * @param c
+	 */
+	public void exportEad(final String docUnitId, final Eadheader eadheader, final C c) {
+		if (docUnitId != null && c != null) {
+			try {
+				final ByteArrayOutputStream out = new ByteArrayOutputStream();
+				final Ead ead = getEad(docUnitId, eadheader, c);
+				writeEad(out, ead);
 
-            } catch (IOException | JAXBException | SAXException e) {
-                LOG.error(e.getMessage(), e);
-            }
-        }
-    }
+				final ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+				final Path root = Paths.get(workingDir);
+				LOG.debug("Export EAD dans le répertoire {}", root.toAbsolutePath());
+				fm.copyInputStreamToFileWithOtherDirs(in, root.toFile(), Arrays.asList(docUnitId), EAD_XML_FILE, true,
+						true);
 
-    /**
-     * Récupère le fichier EAD lié à l'unité documentaire
-     *
-     * @param docUnitId
-     * @return
-     */
-    public File retrieveEad(final String docUnitId) {
-        final Path root = Paths.get(workingDir);
-        if (root != null) {
-            return fm.retrieveFileWithOtherDirs(root.toFile(), Arrays.asList(docUnitId), EAD_XML_FILE);
-        }
-        return null;
-    }
+			}
+			catch (IOException | JAXBException | SAXException e) {
+				LOG.error(e.getMessage(), e);
+			}
+		}
+	}
 
-    /**
-     * L'unité documentaire est-elle liée à un fichier EAD sur le serveur ?
-     *
-     * @param docUnitId
-     * @return
-     */
-    public boolean hasEadExport(final String docUnitId) {
-        final File file = retrieveEad(docUnitId);
-        return file != null && file.exists();
-    }
+	/**
+	 * Récupère le fichier EAD lié à l'unité documentaire
+	 * @param docUnitId
+	 * @return
+	 */
+	public File retrieveEad(final String docUnitId) {
+		final Path root = Paths.get(workingDir);
+		if (root != null) {
+			return fm.retrieveFileWithOtherDirs(root.toFile(), Arrays.asList(docUnitId), EAD_XML_FILE);
+		}
+		return null;
+	}
 
-    /**
-     * Écriture du XML EAD dans out
-     *
-     * @param out
-     * @param ead
-     * @throws JAXBException
-     * @throws MalformedURLException
-     * @throws SAXException
-     */
-    private void writeEad(final OutputStream out, final Ead ead) throws JAXBException, MalformedURLException, SAXException {
-        // Écriture du XML dans le flux de sortie
-        final JAXBContext context = JAXBContext.newInstance(ObjectFactory.class); // EAD
-        final Marshaller m = context.createMarshaller();
-        // Validation
-        // final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        // m.setSchema(sf.newSchema(new URL(EAD_SCHEMA_VALIDATION)));
-        m.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8.name());
-        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+	/**
+	 * L'unité documentaire est-elle liée à un fichier EAD sur le serveur ?
+	 * @param docUnitId
+	 * @return
+	 */
+	public boolean hasEadExport(final String docUnitId) {
+		final File file = retrieveEad(docUnitId);
+		return file != null && file.exists();
+	}
 
-        m.marshal(ead, out);
-    }
+	/**
+	 * Écriture du XML EAD dans out
+	 * @param out
+	 * @param ead
+	 * @throws JAXBException
+	 * @throws MalformedURLException
+	 * @throws SAXException
+	 */
+	private void writeEad(final OutputStream out, final Ead ead)
+			throws JAXBException, MalformedURLException, SAXException {
+		// Écriture du XML dans le flux de sortie
+		final JAXBContext context = JAXBContext.newInstance(ObjectFactory.class); // EAD
+		final Marshaller m = context.createMarshaller();
+		// Validation
+		// final SchemaFactory sf =
+		// SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		// m.setSchema(sf.newSchema(new URL(EAD_SCHEMA_VALIDATION)));
+		m.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8.name());
+		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-    /**
-     * Construction de l'objet EAD à partir de eadHeader et de c
-     *
-     * @param identifier
-     * @param c
-     * @param eadheader
-     * @return
-     */
-    private Ead getEad(final String identifier, final Eadheader eadheader, final C c) {
-        final Dsc dsc = new Dsc();
-        dsc.getCAndThead().add(c);
+		m.marshal(ead, out);
+	}
 
-        final Did did = new Did();
-        final Unitid unitid = new Unitid();
-        unitid.setId(identifier);
-        did.getMDid().add(unitid);
+	/**
+	 * Construction de l'objet EAD à partir de eadHeader et de c
+	 * @param identifier
+	 * @param c
+	 * @param eadheader
+	 * @return
+	 */
+	private Ead getEad(final String identifier, final Eadheader eadheader, final C c) {
+		final Dsc dsc = new Dsc();
+		dsc.getCAndThead().add(c);
 
-        final Archdesc archDesc = new Archdesc();
-        archDesc.setDid(did);
-        archDesc.setLevel(AvLevel.OTHERLEVEL);
-        archDesc.getMDescFull().add(dsc);
+		final Did did = new Did();
+		final Unitid unitid = new Unitid();
+		unitid.setId(identifier);
+		did.getMDid().add(unitid);
 
-        final Ead ead = new Ead();
-        ead.setEadheader(eadheader != null ? eadheader
-                                           : getDefaultEadheader(identifier));
-        ead.setArchdesc(archDesc);
+		final Archdesc archDesc = new Archdesc();
+		archDesc.setDid(did);
+		archDesc.setLevel(AvLevel.OTHERLEVEL);
+		archDesc.getMDescFull().add(dsc);
 
-        return ead;
-    }
+		final Ead ead = new Ead();
+		ead.setEadheader(eadheader != null ? eadheader : getDefaultEadheader(identifier));
+		ead.setArchdesc(archDesc);
 
-    private Eadheader getDefaultEadheader(final String identifier) {
-        final Eadheader eadheader = new Eadheader();
-        final Eadid eadId = new Eadid();
-        eadId.setContent(identifier);
-        eadheader.setEadid(eadId);
+		return ead;
+	}
 
-        final Filedesc filedesc = new Filedesc();
-        final Titlestmt titlestmt = new Titlestmt();
-        final Titleproper titleproper = new Titleproper();
-        titleproper.getContent().add(EAD_XML_FILE);
-        titlestmt.getTitleproper().add(titleproper);
-        filedesc.setTitlestmt(titlestmt);
-        eadheader.setFiledesc(filedesc);
+	private Eadheader getDefaultEadheader(final String identifier) {
+		final Eadheader eadheader = new Eadheader();
+		final Eadid eadId = new Eadid();
+		eadId.setContent(identifier);
+		eadheader.setEadid(eadId);
 
-        return eadheader;
-    }
+		final Filedesc filedesc = new Filedesc();
+		final Titlestmt titlestmt = new Titlestmt();
+		final Titleproper titleproper = new Titleproper();
+		titleproper.getContent().add(EAD_XML_FILE);
+		titlestmt.getTitleproper().add(titleproper);
+		filedesc.setTitlestmt(titlestmt);
+		eadheader.setFiledesc(filedesc);
+
+		return eadheader;
+	}
+
 }

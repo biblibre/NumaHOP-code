@@ -13,96 +13,96 @@ import java.util.List;
  */
 public class SimpleDocUnitDTO extends AbstractDTO {
 
-    private String identifier;
-    private String label;
-    private String pgcnId;
-    private String digitizingNotes;
-    private SimpleLibraryDTO library;
+	private String identifier;
 
-    private List<SimpleDocUnitDTO> children;
-    private String parentIdentifier;
+	private String label;
 
-    public SimpleDocUnitDTO(final String identifier,
-                            final String label,
-                            final String pgcnId,
-                            final String digitizingNotes,
-                            final SimpleLibraryDTO library,
-                            final List<SimpleDocUnitDTO> children,
-                            final String parentIdentifier) {
-        super();
-        this.identifier = identifier;
-        this.label = label;
-        this.pgcnId = pgcnId;
-        this.digitizingNotes = digitizingNotes;
-        this.library = library;
-        this.children = children;
-        setParentIdentifier(parentIdentifier);
-    }
+	private String pgcnId;
 
-    public final String getIdentifier() {
-        return identifier;
-    }
+	private String digitizingNotes;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private SimpleLibraryDTO library;
 
-    public final String getPgcnId() {
-        return pgcnId;
-    }
+	private List<SimpleDocUnitDTO> children;
 
-    public void setPgcnId(final String pgcnId) {
-        this.pgcnId = pgcnId;
-    }
+	private String parentIdentifier;
 
-    public final String getLabel() {
-        return label;
-    }
+	public SimpleDocUnitDTO(final String identifier, final String label, final String pgcnId,
+			final String digitizingNotes, final SimpleLibraryDTO library, final List<SimpleDocUnitDTO> children,
+			final String parentIdentifier) {
+		super();
+		this.identifier = identifier;
+		this.label = label;
+		this.pgcnId = pgcnId;
+		this.digitizingNotes = digitizingNotes;
+		this.library = library;
+		this.children = children;
+		setParentIdentifier(parentIdentifier);
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public final String getIdentifier() {
+		return identifier;
+	}
 
-    /**
-     * @return the digitizingNotes
-     */
-    public String getDigitizingNotes() {
-        return digitizingNotes;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    /**
-     * @param digitizingNotes
-     *            the digitizingNotes to set
-     */
-    public void setDigitizingNotes(final String digitizingNotes) {
-        this.digitizingNotes = digitizingNotes;
-    }
+	public final String getPgcnId() {
+		return pgcnId;
+	}
 
-    public SimpleDocUnitDTO() {
-    }
+	public void setPgcnId(final String pgcnId) {
+		this.pgcnId = pgcnId;
+	}
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	public final String getLabel() {
+		return label;
+	}
 
-    public void setLibrary(final SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public List<SimpleDocUnitDTO> getChildren() {
-        return children;
-    }
+	/**
+	 * @return the digitizingNotes
+	 */
+	public String getDigitizingNotes() {
+		return digitizingNotes;
+	}
 
-    public void setChildren(final List<SimpleDocUnitDTO> children) {
-        this.children = children;
-    }
+	/**
+	 * @param digitizingNotes the digitizingNotes to set
+	 */
+	public void setDigitizingNotes(final String digitizingNotes) {
+		this.digitizingNotes = digitizingNotes;
+	}
 
-    public String getParentIdentifier() {
-        return parentIdentifier;
-    }
+	public SimpleDocUnitDTO() {
+	}
 
-    public void setParentIdentifier(final String parentIdentifier) {
-        this.parentIdentifier = parentIdentifier;
-    }
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
+
+	public void setLibrary(final SimpleLibraryDTO library) {
+		this.library = library;
+	}
+
+	public List<SimpleDocUnitDTO> getChildren() {
+		return children;
+	}
+
+	public void setChildren(final List<SimpleDocUnitDTO> children) {
+		this.children = children;
+	}
+
+	public String getParentIdentifier() {
+		return parentIdentifier;
+	}
+
+	public void setParentIdentifier(final String parentIdentifier) {
+		this.parentIdentifier = parentIdentifier;
+	}
 
 }

@@ -12,21 +12,26 @@ import org.junit.jupiter.api.Test;
  */
 public class CompiledMappingRuleTest {
 
-    @Test
-    public void testGetMarcKeys() {
-        final String expression = "\\100, someFunction(\\712, '703') + \\200$a";
-        final String condition = "\\702$4 != '160'";
+	@Test
+	public void testGetMarcKeys() {
+		final String expression = "\\100, someFunction(\\712, '703') + \\200$a";
+		final String condition = "\\702$4 != '160'";
 
-        final MappingRule rule = new MappingRule();
-        rule.setExpression(expression);
-        rule.setCondition(condition);
+		final MappingRule rule = new MappingRule();
+		rule.setExpression(expression);
+		rule.setCondition(condition);
 
-        final CompiledMappingRule actual = new CompiledMappingRule(rule);
+		final CompiledMappingRule actual = new CompiledMappingRule(rule);
 
-        assertEquals(condition, actual.getRule().getCondition());
-        assertEquals(expression, actual.getRule().getExpression());
+		assertEquals(condition, actual.getRule().getCondition());
+		assertEquals(expression, actual.getRule().getExpression());
 
-        TestUtil.checkCollectionContainsSameElements(Arrays.asList(new MarcKey("100"), new MarcKey("712"), new MarcKey("200", 'a')), actual.getExpressionStatement().getMarcKeys());
-        TestUtil.checkCollectionContainsSameElements(Arrays.asList(new MarcKey("100"), new MarcKey("712"), new MarcKey("200", 'a'), new MarcKey("702", '4')), actual.getMarcKeys());
-    }
+		TestUtil.checkCollectionContainsSameElements(
+				Arrays.asList(new MarcKey("100"), new MarcKey("712"), new MarcKey("200", 'a')),
+				actual.getExpressionStatement().getMarcKeys());
+		TestUtil.checkCollectionContainsSameElements(
+				Arrays.asList(new MarcKey("100"), new MarcKey("712"), new MarcKey("200", 'a'), new MarcKey("702", '4')),
+				actual.getMarcKeys());
+	}
+
 }

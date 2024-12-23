@@ -2,68 +2,74 @@ package fr.progilone.pgcn.domain.dto.document;
 
 public class ValidatedDeliveredDocumentDTO {
 
-    private String digitalId;
-    private String method;
-    private String folderPath;
-    private String address;
-    private String login;
-    private String password;
-    private String deliveryFolder;
+	private String digitalId;
 
-    public String getDigitalId() {
-        return digitalId;
-    }
+	private String method;
 
-    public void setDigitalId(String digitalId) {
-        this.digitalId = digitalId;
-    }
+	private String folderPath;
 
-    public String getMethod() {
-        return method;
-    }
+	private String address;
 
-    public void setMethod(String method) {
-        this.method = method;
-    }
+	private String login;
 
-    public String getFolderPath() {
-        return folderPath;
-    }
+	private String password;
 
-    public void setFolderPath(String folderPath) {
-        this.folderPath = folderPath;
-    }
+	private String deliveryFolder;
 
-    public String getAddress() {
-        return address;
-    }
+	public String getDigitalId() {
+		return digitalId;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public void setDigitalId(String digitalId) {
+		this.digitalId = digitalId;
+	}
 
-    public String getLogin() {
-        return login;
-    }
+	public String getMethod() {
+		return method;
+	}
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+	public void setMethod(String method) {
+		this.method = method;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getFolderPath() {
+		return folderPath;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setFolderPath(String folderPath) {
+		this.folderPath = folderPath;
+	}
 
-    public String getDeliveryFolder() {
-        return deliveryFolder;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setDeliveryFolder(String deliveryFolder) {
-        this.deliveryFolder = deliveryFolder;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getDeliveryFolder() {
+		return deliveryFolder;
+	}
+
+	public void setDeliveryFolder(String deliveryFolder) {
+		this.deliveryFolder = deliveryFolder;
+	}
 
 }

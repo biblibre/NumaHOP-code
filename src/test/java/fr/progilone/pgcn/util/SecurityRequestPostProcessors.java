@@ -5,10 +5,11 @@ import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 public class SecurityRequestPostProcessors {
 
-    public static RequestPostProcessor roles(final String... roles) {
-        return postProcessor -> {
-            Stream.of(roles).forEach(postProcessor::addUserRole);
-            return postProcessor;
-        };
-    }
+	public static RequestPostProcessor roles(final String... roles) {
+		return postProcessor -> {
+			Stream.of(roles).forEach(postProcessor::addUserRole);
+			return postProcessor;
+		};
+	}
+
 }

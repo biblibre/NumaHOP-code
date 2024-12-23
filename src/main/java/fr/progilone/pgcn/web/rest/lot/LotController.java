@@ -55,514 +55,518 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/lot")
 public class LotController extends AbstractRestController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(LotController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(LotController.class);
 
-    private final AccessHelper accessHelper;
-    private final WorkflowAccessHelper workflowAccessHelper;
-    private final WorkflowService workflowService;
-    private final EsLotService esLotService;
-    private final LibraryAccesssHelper libraryAccesssHelper;
-    private final LotService lotService;
-    private final UILotService uiLotService;
+	private final AccessHelper accessHelper;
 
-    @Autowired
-    public LotController(final AccessHelper accessHelper,
-                         final EsLotService esLotService,
-                         final LibraryAccesssHelper libraryAccesssHelper,
-                         final WorkflowAccessHelper workflowAccessHelper,
-                         final WorkflowService workflowService,
-                         final LotService lotService,
-                         final UILotService uiLotService) {
-        this.accessHelper = accessHelper;
-        this.esLotService = esLotService;
-        this.libraryAccesssHelper = libraryAccesssHelper;
-        this.workflowAccessHelper = workflowAccessHelper;
-        this.workflowService = workflowService;
-        this.lotService = lotService;
-        this.uiLotService = uiLotService;
-    }
+	private final WorkflowAccessHelper workflowAccessHelper;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @Timed
-    @RolesAllowed({LOT_HAB2})
-    public ResponseEntity<LotDTO> delete(@PathVariable final String id) {
-        // Droits d'accès
-        if (!accessHelper.checkLot(id)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        lotService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	private final WorkflowService workflowService;
 
-    @RequestMapping(method = RequestMethod.POST, params = {"delete"})
-    @Timed
-    @RolesAllowed({LOT_HAB2})
-    public ResponseEntity<Lot> delete(@RequestBody final List<String> lots) {
-        // Droits d'accès
-        final Collection<Lot> filteredLots = accessHelper.filterLots(lots);
-        uiLotService.delete(filteredLots);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	private final EsLotService esLotService;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"search"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({LOT_HAB3})
-    public ResponseEntity<Page<SimpleLotDTO>> search(final HttpServletRequest request,
-                                                     @RequestParam(value = "search", required = false) final String search,
-                                                     @RequestParam(value = "libraries", required = false) final List<String> libraries,
-                                                     @RequestParam(value = "projects", required = false) final List<String> projects,
-                                                     @RequestParam(value = "active", required = false, defaultValue = "true") final boolean active,
-                                                     @RequestParam(value = "statuses", required = false) final List<Lot.LotStatus> lotStatuses,
-                                                     @RequestParam(value = "docNumber", required = false) final Integer docNumber,
-                                                     @RequestParam(value = "fileFormat", required = false) final List<String> fileFormats,
-                                                     @RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
-                                                     @RequestParam(value = "size", required = false, defaultValue = "10") final Integer size,
-                                                     @RequestParam(value = "sorts", required = false) final List<String> sorts) {
-        // Droits d'accès
-        final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request, libraries);
-        final List<String> filteredProjects = accessHelper.filterProjects(projects).stream().map(AbstractDomainObject::getIdentifier).collect(Collectors.toList());
-        return new ResponseEntity<>(uiLotService.search(search, filteredLibraries, filteredProjects, active, lotStatuses, docNumber, fileFormats, null, page, size, sorts),
-                                    HttpStatus.OK);
-    }
+	private final LibraryAccesssHelper libraryAccesssHelper;
 
-    @RequestMapping(method = RequestMethod.POST, params = {"search"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({LOT_HAB3})
-    public ResponseEntity<Page<SimpleLotDTO>> search(final HttpServletRequest request,
-                                                     @RequestBody final SearchRequest requestParams,
-                                                     @RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
-                                                     @RequestParam(value = "size", required = false, defaultValue = "10") final Integer size,
-                                                     @RequestParam(value = "sorts", required = false) final List<String> sorts) {
-        // Droits d'accès
-        final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request, requestParams.getLibraries());
-        final List<String> filteredProjects = accessHelper.filterProjects(requestParams.getProjects())
-                                                          .stream()
-                                                          .map(AbstractDomainObject::getIdentifier)
-                                                          .collect(Collectors.toList());
-        return new ResponseEntity<>(uiLotService.search(requestParams.getSearch(),
-                                                        filteredLibraries,
-                                                        filteredProjects,
-                                                        requestParams.isActive(),
-                                                        requestParams.getLotStatuses(),
-                                                        requestParams.getDocNumber(),
-                                                        requestParams.getFileFormats(),
-                                                        requestParams.getFilter(),
-                                                        page,
-                                                        size,
-                                                        sorts), HttpStatus.OK);
-    }
+	private final LotService lotService;
 
-    @RequestMapping(method = RequestMethod.GET,
-                    params = {"widget",
-                              "from"},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({LOT_HAB3})
-    public ResponseEntity<List<AuditLotRevisionDTO>> getLotsForWidget(final HttpServletRequest request,
-                                                                      @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from") final LocalDate fromDate,
-                                                                      @RequestParam(value = "library", required = false) final List<String> libraries,
-                                                                      @RequestParam(value = "project", required = false) final List<String> projects,
-                                                                      @RequestParam(value = "status", required = false) final List<Lot.LotStatus> status) {
+	private final UILotService uiLotService;
 
-        final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request, libraries);
-        final List<String> filteredProjects = accessHelper.filterProjects(projects).stream().map(AbstractDomainObject::getIdentifier).collect(Collectors.toList());
+	@Autowired
+	public LotController(final AccessHelper accessHelper, final EsLotService esLotService,
+			final LibraryAccesssHelper libraryAccesssHelper, final WorkflowAccessHelper workflowAccessHelper,
+			final WorkflowService workflowService, final LotService lotService, final UILotService uiLotService) {
+		this.accessHelper = accessHelper;
+		this.esLotService = esLotService;
+		this.libraryAccesssHelper = libraryAccesssHelper;
+		this.workflowAccessHelper = workflowAccessHelper;
+		this.workflowService = workflowService;
+		this.lotService = lotService;
+		this.uiLotService = uiLotService;
+	}
 
-        // Chargement
-        final List<AuditLotRevisionDTO> revisions = uiLotService.getLotsForWidget(fromDate, filteredLibraries, filteredProjects, status);
-        // Réponse
-        return new ResponseEntity<>(revisions, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@Timed
+	@RolesAllowed({ LOT_HAB2 })
+	public ResponseEntity<LotDTO> delete(@PathVariable final String id) {
+		// Droits d'accès
+		if (!accessHelper.checkLot(id)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		lotService.delete(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-    @RequestMapping(method = RequestMethod.GET,
-                    params = {"simpleByProject",
-                              "project"},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({LOT_HAB3})
-    public ResponseEntity<List<SimpleLotDTO>> findAllSimpleForProject(@RequestParam(value = "project") final String projectId) {
-        // Droits d'accès
-        if (!accessHelper.checkProject(projectId)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final List<SimpleLotDTO> lot = uiLotService.findAllSimpleForProject(projectId);
-        return createResponseEntity(lot);
-    }
+	@RequestMapping(method = RequestMethod.POST, params = { "delete" })
+	@Timed
+	@RolesAllowed({ LOT_HAB2 })
+	public ResponseEntity<Lot> delete(@RequestBody final List<String> lots) {
+		// Droits d'accès
+		final Collection<Lot> filteredLots = accessHelper.filterLots(lots);
+		uiLotService.delete(filteredLots);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-    @RequestMapping(method = RequestMethod.GET,
-                    params = {"filterByProjects",
-                              "projectIds"},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({LOT_HAB3})
-    public ResponseEntity<List<SimpleLotDTO>> findAllIdentifiersForProjects(@RequestParam(value = "projectIds") final List<String> projectIds) {
-        final List<SimpleLotDTO> lotIds = lotService.findAllByProjectIds(projectIds);
-        return createResponseEntity(lotIds);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "search" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ LOT_HAB3 })
+	public ResponseEntity<Page<SimpleLotDTO>> search(final HttpServletRequest request,
+			@RequestParam(value = "search", required = false) final String search,
+			@RequestParam(value = "libraries", required = false) final List<String> libraries,
+			@RequestParam(value = "projects", required = false) final List<String> projects,
+			@RequestParam(value = "active", required = false, defaultValue = "true") final boolean active,
+			@RequestParam(value = "statuses", required = false) final List<Lot.LotStatus> lotStatuses,
+			@RequestParam(value = "docNumber", required = false) final Integer docNumber,
+			@RequestParam(value = "fileFormat", required = false) final List<String> fileFormats,
+			@RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
+			@RequestParam(value = "size", required = false, defaultValue = "10") final Integer size,
+			@RequestParam(value = "sorts", required = false) final List<String> sorts) {
+		// Droits d'accès
+		final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request, libraries);
+		final List<String> filteredProjects = accessHelper.filterProjects(projects)
+			.stream()
+			.map(AbstractDomainObject::getIdentifier)
+			.collect(Collectors.toList());
+		return new ResponseEntity<>(uiLotService.search(search, filteredLibraries, filteredProjects, active,
+				lotStatuses, docNumber, fileFormats, null, page, size, sorts), HttpStatus.OK);
+	}
 
-    @RequestMapping(method = RequestMethod.GET,
-                    params = {"dto",
-                              "libraries"},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<Collection<LotListDTO>> findAllActiveByLibraries(@RequestParam(required = false) final List<String> libraries) {
-        final Collection<LotListDTO> lots = uiLotService.findAllByLibraryIn(libraries);
-        final Collection<LotListDTO> filteredLots = filterLotDTOs(lots, LotListDTO::getIdentifier);
-        return createResponseEntity(filteredLots);
-    }
+	@RequestMapping(method = RequestMethod.POST, params = { "search" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ LOT_HAB3 })
+	public ResponseEntity<Page<SimpleLotDTO>> search(final HttpServletRequest request,
+			@RequestBody final SearchRequest requestParams,
+			@RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
+			@RequestParam(value = "size", required = false, defaultValue = "10") final Integer size,
+			@RequestParam(value = "sorts", required = false) final List<String> sorts) {
+		// Droits d'accès
+		final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request,
+				requestParams.getLibraries());
+		final List<String> filteredProjects = accessHelper.filterProjects(requestParams.getProjects())
+			.stream()
+			.map(AbstractDomainObject::getIdentifier)
+			.collect(Collectors.toList());
+		return new ResponseEntity<>(uiLotService.search(requestParams.getSearch(), filteredLibraries, filteredProjects,
+				requestParams.isActive(), requestParams.getLotStatuses(), requestParams.getDocNumber(),
+				requestParams.getFileFormats(), requestParams.getFilter(), page, size, sorts), HttpStatus.OK);
+	}
 
-    @RequestMapping(method = RequestMethod.GET,
-                    params = {"dto",
-                              "projects"},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<Collection<LotListDTO>> findAllActiveByProjects(@RequestParam(required = false) final List<String> projects) {
-        final Collection<LotListDTO> lots = uiLotService.findAllByProjectIn(projects);
-        final Collection<LotListDTO> filteredLots = filterLotDTOs(lots, LotListDTO::getIdentifier);
-        return createResponseEntity(filteredLots);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "widget", "from" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ LOT_HAB3 })
+	public ResponseEntity<List<AuditLotRevisionDTO>> getLotsForWidget(final HttpServletRequest request,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from") final LocalDate fromDate,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@RequestParam(value = "status", required = false) final List<Lot.LotStatus> status) {
 
-    @RequestMapping(method = RequestMethod.GET,
-                    params = {"dto",
-                              "complete",
-                              "libraries"},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<Collection<LotListDTO>> findAllByLibraries(@RequestParam(required = false) final List<String> libraries) {
-        final Collection<LotListDTO> lots = uiLotService.findAllByLibraryIn(libraries);
-        final Collection<LotListDTO> filteredLots = filterLotDTOs(lots, LotListDTO::getIdentifier);
-        return createResponseEntity(filteredLots);
-    }
+		final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request, libraries);
+		final List<String> filteredProjects = accessHelper.filterProjects(projects)
+			.stream()
+			.map(AbstractDomainObject::getIdentifier)
+			.collect(Collectors.toList());
 
-    @RequestMapping(method = RequestMethod.GET,
-                    params = {"dto",
-                              "complete",
-                              "projects"},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<Collection<LotListDTO>> findAllByProjects(@RequestParam(required = false) final List<String> projects) {
-        final Collection<LotListDTO> lots = uiLotService.findAllByProjectIn(projects);
-        final Collection<LotListDTO> filteredLots = filterLotDTOs(lots, LotListDTO::getIdentifier);
-        return createResponseEntity(filteredLots);
-    }
+		// Chargement
+		final List<AuditLotRevisionDTO> revisions = uiLotService.getLotsForWidget(fromDate, filteredLibraries,
+				filteredProjects, status);
+		// Réponse
+		return new ResponseEntity<>(revisions, HttpStatus.OK);
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({LOT_HAB3})
-    public ResponseEntity<LotDTO> getById(@PathVariable final String id) {
-        // Droits d'accès
-        if (!accessHelper.checkLot(id)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final LotDTO lot = uiLotService.getOneWithConfigRules(id);
-        return createResponseEntity(lot);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "simpleByProject", "project" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ LOT_HAB3 })
+	public ResponseEntity<List<SimpleLotDTO>> findAllSimpleForProject(
+			@RequestParam(value = "project") final String projectId) {
+		// Droits d'accès
+		if (!accessHelper.checkProject(projectId)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final List<SimpleLotDTO> lot = uiLotService.findAllSimpleForProject(projectId);
+		return createResponseEntity(lot);
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"project"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({LOT_HAB3})
-    public ResponseEntity<List<LotDTO>> findAllForProject(@RequestParam(value = "project") final String projectId) {
-        // Droits d'accès au projet
-        if (!accessHelper.checkProject(projectId)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final List<LotDTO> lots = uiLotService.findAllForProject(projectId);
-        // Droits d'accès aux lots
-        final List<LotDTO> filteredLots = filterLotDTOs(lots, LotDTO::getIdentifier);
-        return createResponseEntity(filteredLots);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "filterByProjects", "projectIds" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ LOT_HAB3 })
+	public ResponseEntity<List<SimpleLotDTO>> findAllIdentifiersForProjects(
+			@RequestParam(value = "projectIds") final List<String> projectIds) {
+		final List<SimpleLotDTO> lotIds = lotService.findAllByProjectIds(projectIds);
+		return createResponseEntity(lotIds);
+	}
 
-    @RequestMapping(method = RequestMethod.GET,
-                    params = {"project",
-                              "simpleForDocUnit"},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({LOT_HAB3})
-    public ResponseEntity<List<LotDTO>> findSimpleForDocUnit(@RequestParam(value = "project") final String projectId) {
-        // Droits d'accès au projet
-        if (!accessHelper.checkProject(projectId)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final List<LotDTO> lots = uiLotService.findAllForDocUnitByProject(projectId);
-        // Droits d'accès aux lots
-        final List<LotDTO> filteredLots = filterLotDTOs(lots, LotDTO::getIdentifier);
-        return createResponseEntity(filteredLots);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "dto", "libraries" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<Collection<LotListDTO>> findAllActiveByLibraries(
+			@RequestParam(required = false) final List<String> libraries) {
+		final Collection<LotListDTO> lots = uiLotService.findAllByLibraryIn(libraries);
+		final Collection<LotListDTO> filteredLots = filterLotDTOs(lots, LotListDTO::getIdentifier);
+		return createResponseEntity(filteredLots);
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, params = {"dto"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({LOT_HAB3})
-    public ResponseEntity<LotDTO> getDtoById(@PathVariable final String id) {
-        // Droits d'accès
-        if (!accessHelper.checkLot(id)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final LotDTO lot = uiLotService.getOne(id);
-        return createResponseEntity(lot);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "dto", "projects" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<Collection<LotListDTO>> findAllActiveByProjects(
+			@RequestParam(required = false) final List<String> projects) {
+		final Collection<LotListDTO> lots = uiLotService.findAllByProjectIn(projects);
+		final Collection<LotListDTO> filteredLots = filterLotDTOs(lots, LotListDTO::getIdentifier);
+		return createResponseEntity(filteredLots);
+	}
 
-    @RequestMapping(method = RequestMethod.GET,
-                    params = {"dto",
-                              "lot"},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({LOT_HAB3})
-    public ResponseEntity<List<LotDTO>> getDtoByIds(@RequestParam(name = "lot") final List<String> ids) {
-        final List<LotDTO> lots = uiLotService.findByIdentifierIn(ids);
-        // Droits d'accès aux lots
-        final List<LotDTO> filteredLots = filterLotDTOs(lots, LotDTO::getIdentifier);
-        return createResponseEntity(filteredLots);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "dto", "complete", "libraries" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<Collection<LotListDTO>> findAllByLibraries(
+			@RequestParam(required = false) final List<String> libraries) {
+		final Collection<LotListDTO> lots = uiLotService.findAllByLibraryIn(libraries);
+		final Collection<LotListDTO> filteredLots = filterLotDTOs(lots, LotListDTO::getIdentifier);
+		return createResponseEntity(filteredLots);
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"dto"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<Collection<LotListDTO>> findAllDTO(@RequestParam(value = "target", required = false) final String target) {
-        final Collection<LotListDTO> lots;
-        if (StringUtils.equals(target, "delivery")) {
-            lots = uiLotService.findAllActiveForDelivery();
-        } else if (StringUtils.equals(target, "multilotsdelivery")) {
-            lots = uiLotService.findAllActiveForMultiLotsDelivery();
-        } else {
-            lots = uiLotService.findAllActiveDTO();
-        }
-        // Droits d'accès aux lots
-        final List<LotListDTO> filteredLots = filterLotDTOs(lots, LotListDTO::getIdentifier);
-        return createResponseEntity(filteredLots);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "dto", "complete", "projects" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<Collection<LotListDTO>> findAllByProjects(
+			@RequestParam(required = false) final List<String> projects) {
+		final Collection<LotListDTO> lots = uiLotService.findAllByProjectIn(projects);
+		final Collection<LotListDTO> filteredLots = filterLotDTOs(lots, LotListDTO::getIdentifier);
+		return createResponseEntity(filteredLots);
+	}
 
-    @RequestMapping(method = RequestMethod.POST)
-    @Timed
-    @RolesAllowed({LOT_HAB0})
-    public ResponseEntity<LotDTO> create(final HttpServletRequest request, @RequestBody final LotDTO lot) throws PgcnException {
-        // Droit d'accès à la bibliothèque
-        if (lot.getProject() != null && !libraryAccesssHelper.checkLibrary(request, lot.getProject().getLibrary().getIdentifier())
-            && !accessHelper.checkProject(lot.getProject().getIdentifier())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final LotDTO savedLot = uiLotService.create(lot);
-        esLotService.indexAsync(savedLot.getIdentifier());    // Moteur de recherche
-        return new ResponseEntity<>(savedLot, HttpStatus.CREATED);
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ LOT_HAB3 })
+	public ResponseEntity<LotDTO> getById(@PathVariable final String id) {
+		// Droits d'accès
+		if (!accessHelper.checkLot(id)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final LotDTO lot = uiLotService.getOneWithConfigRules(id);
+		return createResponseEntity(lot);
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST, params = {"unlinkProject"})
-    @Timed
-    @RolesAllowed({LOT_HAB1})
-    public ResponseEntity<?> unlinkProject(@PathVariable final String id) {
-        // Droit d'accès
-        if (!accessHelper.checkLot(id)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        lotService.unlinkProject(id);
-        esLotService.indexAsync(id);    // Moteur de recherche
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "project" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ LOT_HAB3 })
+	public ResponseEntity<List<LotDTO>> findAllForProject(@RequestParam(value = "project") final String projectId) {
+		// Droits d'accès au projet
+		if (!accessHelper.checkProject(projectId)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final List<LotDTO> lots = uiLotService.findAllForProject(projectId);
+		// Droits d'accès aux lots
+		final List<LotDTO> filteredLots = filterLotDTOs(lots, LotDTO::getIdentifier);
+		return createResponseEntity(filteredLots);
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST, params = {"validate"})
-    @Timed
-    @RolesAllowed({LOT_HAB4})
-    public ResponseEntity<?> validateLot(@PathVariable final String id) {
-        // Droit d'accès
-        if (!accessHelper.checkLot(id)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Workflow
-        if (!workflowAccessHelper.canLotBeValidated(id)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final Lot lot = lotService.validate(id);
-        // Démarrage du workflow sur le lot
-        workflowService.initializeWorkflow(lot, lotService.getWorkflowModel(lot));
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "project", "simpleForDocUnit" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ LOT_HAB3 })
+	public ResponseEntity<List<LotDTO>> findSimpleForDocUnit(@RequestParam(value = "project") final String projectId) {
+		// Droits d'accès au projet
+		if (!accessHelper.checkProject(projectId)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final List<LotDTO> lots = uiLotService.findAllForDocUnitByProject(projectId);
+		// Droits d'accès aux lots
+		final List<LotDTO> filteredLots = filterLotDTOs(lots, LotDTO::getIdentifier);
+		return createResponseEntity(filteredLots);
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    @Timed
-    @RolesAllowed({LOT_HAB1})
-    public ResponseEntity<LotDTO> update(@RequestBody final LotDTO lot) throws PgcnException {
-        // Droit d'accès
-        if (!accessHelper.checkLot(lot.getIdentifier())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final LotDTO savedLot = uiLotService.update(lot);
-        esLotService.indexAsync(savedLot.getIdentifier());    // Moteur de recherche
-        return new ResponseEntity<>(savedLot, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, params = { "dto" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ LOT_HAB3 })
+	public ResponseEntity<LotDTO> getDtoById(@PathVariable final String id) {
+		// Droits d'accès
+		if (!accessHelper.checkLot(id)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final LotDTO lot = uiLotService.getOne(id);
+		return createResponseEntity(lot);
+	}
 
-    @RequestMapping(method = RequestMethod.POST, params = {"project"})
-    @ResponseStatus(HttpStatus.OK)
-    @Timed
-    @RolesAllowed(LOT_HAB1)
-    public void setProject(@RequestBody final List<String> lotIds, @RequestParam(name = "project") final String project) {
-        uiLotService.setProjectAndLot(lotIds, project);
-        esLotService.indexAsync(lotIds);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "dto", "lot" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ LOT_HAB3 })
+	public ResponseEntity<List<LotDTO>> getDtoByIds(@RequestParam(name = "lot") final List<String> ids) {
+		final List<LotDTO> lots = uiLotService.findByIdentifierIn(ids);
+		// Droits d'accès aux lots
+		final List<LotDTO> filteredLots = filterLotDTOs(lots, LotDTO::getIdentifier);
+		return createResponseEntity(filteredLots);
+	}
 
-    @RequestMapping(method = RequestMethod.GET, value = "/csv/{id}", produces = "text/csv")
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB0)
-    public void generateSlip(final HttpServletRequest request,
-                             final HttpServletResponse response,
-                             @PathVariable final String id,
-                             @RequestParam(value = "encoding", defaultValue = JasperReportsService.ENCODING_UTF8) final String encoding,
-                             @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+	@RequestMapping(method = RequestMethod.GET, params = { "dto" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<Collection<LotListDTO>> findAllDTO(
+			@RequestParam(value = "target", required = false) final String target) {
+		final Collection<LotListDTO> lots;
+		if (StringUtils.equals(target, "delivery")) {
+			lots = uiLotService.findAllActiveForDelivery();
+		}
+		else if (StringUtils.equals(target, "multilotsdelivery")) {
+			lots = uiLotService.findAllActiveForMultiLotsDelivery();
+		}
+		else {
+			lots = uiLotService.findAllActiveDTO();
+		}
+		// Droits d'accès aux lots
+		final List<LotListDTO> filteredLots = filterLotDTOs(lots, LotListDTO::getIdentifier);
+		return createResponseEntity(filteredLots);
+	}
 
-        if (!accessHelper.checkLot(id)) {
-            response.setStatus(403);
-            return;
-        }
+	@RequestMapping(method = RequestMethod.POST)
+	@Timed
+	@RolesAllowed({ LOT_HAB0 })
+	public ResponseEntity<LotDTO> create(final HttpServletRequest request, @RequestBody final LotDTO lot)
+			throws PgcnException {
+		// Droit d'accès à la bibliothèque
+		if (lot.getProject() != null
+				&& !libraryAccesssHelper.checkLibrary(request, lot.getProject().getLibrary().getIdentifier())
+				&& !accessHelper.checkProject(lot.getProject().getIdentifier())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final LotDTO savedLot = uiLotService.create(lot);
+		esLotService.indexAsync(savedLot.getIdentifier()); // Moteur de recherche
+		return new ResponseEntity<>(savedLot, HttpStatus.CREATED);
+	}
 
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, "bordereau.csv");
-            lotService.writeCondReportSlip(response.getOutputStream(), id, encoding, separator);
-        } catch (final IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST, params = { "unlinkProject" })
+	@Timed
+	@RolesAllowed({ LOT_HAB1 })
+	public ResponseEntity<?> unlinkProject(@PathVariable final String id) {
+		// Droit d'accès
+		if (!accessHelper.checkLot(id)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		lotService.unlinkProject(id);
+		esLotService.indexAsync(id); // Moteur de recherche
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-    @RequestMapping(method = RequestMethod.GET, value = "/pdf/{id}", produces = "application/pdf")
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB0)
-    public void generateSlipPdf(final HttpServletRequest request, final HttpServletResponse response, @PathVariable final String id) throws PgcnTechnicalException {
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST, params = { "validate" })
+	@Timed
+	@RolesAllowed({ LOT_HAB4 })
+	public ResponseEntity<?> validateLot(@PathVariable final String id) {
+		// Droit d'accès
+		if (!accessHelper.checkLot(id)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Workflow
+		if (!workflowAccessHelper.canLotBeValidated(id)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final Lot lot = lotService.validate(id);
+		// Démarrage du workflow sur le lot
+		workflowService.initializeWorkflow(lot, lotService.getWorkflowModel(lot));
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-        if (!accessHelper.checkLot(id)) {
-            response.setStatus(403);
-            return;
-        }
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	@Timed
+	@RolesAllowed({ LOT_HAB1 })
+	public ResponseEntity<LotDTO> update(@RequestBody final LotDTO lot) throws PgcnException {
+		// Droit d'accès
+		if (!accessHelper.checkLot(lot.getIdentifier())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final LotDTO savedLot = uiLotService.update(lot);
+		esLotService.indexAsync(savedLot.getIdentifier()); // Moteur de recherche
+		return new ResponseEntity<>(savedLot, HttpStatus.OK);
+	}
 
-        try {
-            writeResponseHeaderForDownload(response, "application/pdf", null, "bordereau.pdf");
-            lotService.writeCondReportSlipPDF(response.getOutputStream(), id);
-        } catch (final IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	@RequestMapping(method = RequestMethod.POST, params = { "project" })
+	@ResponseStatus(HttpStatus.OK)
+	@Timed
+	@RolesAllowed(LOT_HAB1)
+	public void setProject(@RequestBody final List<String> lotIds,
+			@RequestParam(name = "project") final String project) {
+		uiLotService.setProjectAndLot(lotIds, project);
+		esLotService.indexAsync(lotIds);
+	}
 
-    /**
-     * Force la cloture des lots en parametre (si possible).
-     *
-     * @param lotsIds
-     */
-    @RequestMapping(method = RequestMethod.POST, params = {"cloturelot"})
-    @Timed
-    @RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
-    public ResponseEntity<List<ResultAdminLotDTO>> closeLot(@RequestBody final List<String> lotsIds) {
+	@RequestMapping(method = RequestMethod.GET, value = "/csv/{id}", produces = "text/csv")
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB0)
+	public void generateSlip(final HttpServletRequest request, final HttpServletResponse response,
+			@PathVariable final String id,
+			@RequestParam(value = "encoding", defaultValue = JasperReportsService.ENCODING_UTF8) final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
 
-        final List<ResultAdminLotDTO> results = new ArrayList<>();
-        lotsIds.stream().forEach(id -> {
+		if (!accessHelper.checkLot(id)) {
+			response.setStatus(403);
+			return;
+		}
 
-            results.add(lotService.preClotureLot(id));
-            esLotService.indexAsync(id);
-        });
-        return new ResponseEntity<>(results, HttpStatus.OK);
-    }
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, "bordereau.csv");
+			lotService.writeCondReportSlip(response.getOutputStream(), id, encoding, separator);
+		}
+		catch (final IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-    /**
-     * Force la reouverture de lots clotures en parametre.
-     *
-     * @param lotsIds
-     */
-    @RequestMapping(method = RequestMethod.POST, params = {"decloturelot"})
-    @Timed
-    @RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
-    public ResponseEntity<List<ResultAdminLotDTO>> declotureLot(@RequestBody final List<String> lotsIds) {
-        final List<ResultAdminLotDTO> results = new ArrayList<>();
-        lotsIds.forEach(id -> {
-            results.add(lotService.declotureLot(id));
-            esLotService.indexAsync(id);
-        });
-        return new ResponseEntity<>(results, HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, value = "/pdf/{id}", produces = "application/pdf")
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB0)
+	public void generateSlipPdf(final HttpServletRequest request, final HttpServletResponse response,
+			@PathVariable final String id) throws PgcnTechnicalException {
 
-    /**
-     * Filtrage d'une liste de LotDTO sur les droits d'accès de l'utilisateur
-     *
-     * @param lots
-     * @return
-     */
-    private <T> List<T> filterLotDTOs(final Collection<T> lots, final Function<T, String> getIdentifier) {
-        return accessHelper.filterLots(lots.stream().map(getIdentifier).collect(Collectors.toList()))
-                           .stream()
-                           // Correspondance lot autorisé => lotDto
-                           .map(lot -> lots.stream().filter(l -> StringUtils.equals(getIdentifier.apply(l), lot.getIdentifier())).findAny())
-                           .filter(Optional::isPresent)
-                           .map(Optional::get)
-                           .collect(Collectors.toList());
-    }
+		if (!accessHelper.checkLot(id)) {
+			response.setStatus(403);
+			return;
+		}
 
-    private static final class SearchRequest {
+		try {
+			writeResponseHeaderForDownload(response, "application/pdf", null, "bordereau.pdf");
+			lotService.writeCondReportSlipPDF(response.getOutputStream(), id);
+		}
+		catch (final IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-        private String search;
-        private List<String> libraries;
-        private List<String> projects;
-        private boolean active;
-        private List<Lot.LotStatus> lotStatuses;
-        private Integer docNumber;
-        private List<String> fileFormats;
-        private List<String> filter;
+	/**
+	 * Force la cloture des lots en parametre (si possible).
+	 * @param lotsIds
+	 */
+	@RequestMapping(method = RequestMethod.POST, params = { "cloturelot" })
+	@Timed
+	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	public ResponseEntity<List<ResultAdminLotDTO>> closeLot(@RequestBody final List<String> lotsIds) {
 
-        public String getSearch() {
-            return search;
-        }
+		final List<ResultAdminLotDTO> results = new ArrayList<>();
+		lotsIds.stream().forEach(id -> {
 
-        public void setSearch(final String search) {
-            this.search = search;
-        }
+			results.add(lotService.preClotureLot(id));
+			esLotService.indexAsync(id);
+		});
+		return new ResponseEntity<>(results, HttpStatus.OK);
+	}
 
-        public List<String> getLibraries() {
-            return libraries;
-        }
+	/**
+	 * Force la reouverture de lots clotures en parametre.
+	 * @param lotsIds
+	 */
+	@RequestMapping(method = RequestMethod.POST, params = { "decloturelot" })
+	@Timed
+	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	public ResponseEntity<List<ResultAdminLotDTO>> declotureLot(@RequestBody final List<String> lotsIds) {
+		final List<ResultAdminLotDTO> results = new ArrayList<>();
+		lotsIds.forEach(id -> {
+			results.add(lotService.declotureLot(id));
+			esLotService.indexAsync(id);
+		});
+		return new ResponseEntity<>(results, HttpStatus.OK);
+	}
 
-        public void setLibraries(final List<String> libraries) {
-            this.libraries = libraries;
-        }
+	/**
+	 * Filtrage d'une liste de LotDTO sur les droits d'accès de l'utilisateur
+	 * @param lots
+	 * @return
+	 */
+	private <T> List<T> filterLotDTOs(final Collection<T> lots, final Function<T, String> getIdentifier) {
+		return accessHelper.filterLots(lots.stream().map(getIdentifier).collect(Collectors.toList()))
+			.stream()
+			// Correspondance lot autorisé => lotDto
+			.map(lot -> lots.stream()
+				.filter(l -> StringUtils.equals(getIdentifier.apply(l), lot.getIdentifier()))
+				.findAny())
+			.filter(Optional::isPresent)
+			.map(Optional::get)
+			.collect(Collectors.toList());
+	}
 
-        public List<String> getProjects() {
-            return projects;
-        }
+	private static final class SearchRequest {
 
-        public void setProjects(final List<String> projects) {
-            this.projects = projects;
-        }
+		private String search;
 
-        public boolean isActive() {
-            return active;
-        }
+		private List<String> libraries;
 
-        public void setActive(final boolean active) {
-            this.active = active;
-        }
+		private List<String> projects;
 
-        public List<Lot.LotStatus> getLotStatuses() {
-            return lotStatuses;
-        }
+		private boolean active;
 
-        public void setLotStatuses(final List<Lot.LotStatus> lotStatuses) {
-            this.lotStatuses = lotStatuses;
-        }
+		private List<Lot.LotStatus> lotStatuses;
 
-        public Integer getDocNumber() {
-            return docNumber;
-        }
+		private Integer docNumber;
 
-        public void setDocNumber(final Integer docNumber) {
-            this.docNumber = docNumber;
-        }
+		private List<String> fileFormats;
 
-        public List<String> getFileFormats() {
-            return fileFormats;
-        }
+		private List<String> filter;
 
-        public void setFileFormats(final List<String> fileFormats) {
-            this.fileFormats = fileFormats;
-        }
+		public String getSearch() {
+			return search;
+		}
 
-        public List<String> getFilter() {
-            return filter;
-        }
+		public void setSearch(final String search) {
+			this.search = search;
+		}
 
-        public void setFilter(final List<String> filter) {
-            this.filter = filter;
-        }
-    }
+		public List<String> getLibraries() {
+			return libraries;
+		}
+
+		public void setLibraries(final List<String> libraries) {
+			this.libraries = libraries;
+		}
+
+		public List<String> getProjects() {
+			return projects;
+		}
+
+		public void setProjects(final List<String> projects) {
+			this.projects = projects;
+		}
+
+		public boolean isActive() {
+			return active;
+		}
+
+		public void setActive(final boolean active) {
+			this.active = active;
+		}
+
+		public List<Lot.LotStatus> getLotStatuses() {
+			return lotStatuses;
+		}
+
+		public void setLotStatuses(final List<Lot.LotStatus> lotStatuses) {
+			this.lotStatuses = lotStatuses;
+		}
+
+		public Integer getDocNumber() {
+			return docNumber;
+		}
+
+		public void setDocNumber(final Integer docNumber) {
+			this.docNumber = docNumber;
+		}
+
+		public List<String> getFileFormats() {
+			return fileFormats;
+		}
+
+		public void setFileFormats(final List<String> fileFormats) {
+			this.fileFormats = fileFormats;
+		}
+
+		public List<String> getFilter() {
+			return filter;
+		}
+
+		public void setFilter(final List<String> filter) {
+			this.filter = filter;
+		}
+
+	}
+
 }

@@ -30,186 +30,189 @@ import org.springframework.data.elasticsearch.core.query.HighlightQuery;
 
 public abstract class AbstractEsRepository<T> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractEsRepository.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AbstractEsRepository.class);
 
-    protected static final String FIELD_SUGG_TEXT = "text";
-    protected static final String FIELD_SUGG_PAYLOAD = "payload";
+	protected static final String FIELD_SUGG_TEXT = "text";
 
-    protected static final String INDEX_CINES = "cines";
-    protected static final String INDEX_CONDREPORT = "condreport";
-    protected static final String INDEX_DELIVERY = "delivery";
-    protected static final String INDEX_DOCUNIT = "docunit";
-    protected static final String INDEX_IA = "ia";
-    protected static final String INDEX_LOT = "lot";
-    protected static final String INDEX_PHYSDOC = "physdoc";
-    protected static final String INDEX_PROJECT = "project";
-    protected static final String INDEX_PROPERTY = "property";
-    protected static final String INDEX_RECORD = "record";
-    protected static final String INDEX_TRAIN = "train";
+	protected static final String FIELD_SUGG_PAYLOAD = "payload";
 
-    protected final Class<T> clazz;
-    protected final SearchOperations searchOperations;
+	protected static final String INDEX_CINES = "cines";
 
-    public AbstractEsRepository(final Class<T> clazz, final SearchOperations searchOperations) {
-        this.clazz = clazz;
-        this.searchOperations = searchOperations;
-    }
+	protected static final String INDEX_CONDREPORT = "condreport";
 
-    /**
-     * Requête principale
-     *
-     * @param searchOp
-     * @param fuzzy
-     * @return
-     */
-    protected abstract Query getSearchQueryBuilder(final EsSearchOperation searchOp, final boolean fuzzy);
+	protected static final String INDEX_DELIVERY = "delivery";
 
-    /**
-     * Requête de filtrage des résultats suivant les droits de l'utilisateur
-     *
-     * @param libraries
-     * @return
-     */
-    protected abstract Optional<Query> getLibraryQueryBuilder(final List<String> libraries);
+	protected static final String INDEX_DOCUNIT = "docunit";
 
-    /**
-     * Requête de filtrage des résultats de recherche (sélection de facettes)
-     *
-     * @param field
-     * @param values
-     * @return
-     */
-    protected Query getFilterQueryBuilder(final String field, final List<String> values) {
-        if (CollectionUtils.isNotEmpty(values)) {
-            return EsQueryHelper.getExactQueryBuilder(field, values);
-        }
-        return null;
-    }
+	protected static final String INDEX_IA = "ia";
 
-    /**
-     * Requête de filtrage des résultats de recherche (sélection de facettes) -> intervalle de dates
-     *
-     * @param field
-     * @param values
-     * @return
-     */
-    protected Query getDateFilterQueryBuilder(final String field, final List<String> values) {
-        if (CollectionUtils.isNotEmpty(values)) {
-            final EsQueryBuilder builder = new EsQueryBuilder();
+	protected static final String INDEX_LOT = "lot";
 
-            values.stream().map(val -> {
-                final LocalDate from = DateUtils.parseStringToLocalDate(val, "dd/MM/yyyy");
-                if (from == null) {
-                    return null;
-                }
-                final LocalDate to = from.plusDays(1);
+	protected static final String INDEX_PHYSDOC = "physdoc";
 
-                return QueryBuilders.range(b -> b.field(field).gte(JsonData.of(from)).lt(JsonData.of(to)));
+	protected static final String INDEX_PROJECT = "project";
 
-            }).filter(Objects::nonNull).forEach(builder::should);
+	protected static final String INDEX_PROPERTY = "property";
 
-            return builder.build();
-        }
-        return null;
-    }
+	protected static final String INDEX_RECORD = "record";
 
-    /**
-     * Champ "highlight"
-     *
-     * @return
-     */
-    protected HighlightQuery getHighlightField() {
-        return null;
-    }
+	protected static final String INDEX_TRAIN = "train";
 
-    /**
-     * Facettes
-     *
-     * @return
-     */
-    protected Map<String, Aggregation> getAggregationBuilders() {
-        return Collections.emptyMap();
-    }
+	protected final Class<T> clazz;
 
-    /**
-     * Recherche d'entité.
-     * La requête utilisée est celle renvoyée par getSearchQueryBuilder
-     */
-    public SearchResultPage<T> search(final EsSearchOperation[] searches,
-                                      final List<String> libraries,
-                                      final boolean fuzzy,
-                                      final EsSearchOperation[] filters,
-                                      final PageRequest pageable,
-                                      final boolean facet) {
-        final NativeQueryBuilder builder = new NativeQueryBuilder().withPageable(pageable);
+	protected final SearchOperations searchOperations;
 
-        // Requête
-        final EsQueryBuilder queryBuilder = new EsQueryBuilder();
-        for (final EsSearchOperation search : searches) {
-            queryBuilder.addQuery(search.getOperator(), getSearchQueryBuilder(search, fuzzy));
-        }
-        // Droits d'accès
-        getLibraryQueryBuilder(libraries).ifPresent(queryBuilder::filter);
-        builder.withQuery(queryBuilder.build());
+	public AbstractEsRepository(final Class<T> clazz, final SearchOperations searchOperations) {
+		this.clazz = clazz;
+		this.searchOperations = searchOperations;
+	}
 
-        // Post-filters
-        final EsQueryBuilder filterBuilder = new EsQueryBuilder();
-        Arrays.stream(filters)
-              .collect(Collectors.groupingBy(EsSearchOperation::getIndex, Collectors.mapping(EsSearchOperation::getSearch, Collectors.toList())))
-              .forEach((index, values) -> {
-                  filterBuilder.addQuery(EsBoolOperator.FILTER, getFilterQueryBuilder(index, values));
-              });
-        builder.withFilter(filterBuilder.build());
+	/**
+	 * Requête principale
+	 * @param searchOp
+	 * @param fuzzy
+	 * @return
+	 */
+	protected abstract Query getSearchQueryBuilder(final EsSearchOperation searchOp, final boolean fuzzy);
 
-        // Highlight
-        final HighlightQuery highlightQuery = getHighlightField();
-        if (highlightQuery != null) {
-            builder.withHighlightQuery(highlightQuery);
-        }
+	/**
+	 * Requête de filtrage des résultats suivant les droits de l'utilisateur
+	 * @param libraries
+	 * @return
+	 */
+	protected abstract Optional<Query> getLibraryQueryBuilder(final List<String> libraries);
 
-        // Facettes
-        if (facet) {
-            getAggregationBuilders().entrySet().forEach(e -> builder.withAggregation(e.getKey(), e.getValue()));
-        }
+	/**
+	 * Requête de filtrage des résultats de recherche (sélection de facettes)
+	 * @param field
+	 * @param values
+	 * @return
+	 */
+	protected Query getFilterQueryBuilder(final String field, final List<String> values) {
+		if (CollectionUtils.isNotEmpty(values)) {
+			return EsQueryHelper.getExactQueryBuilder(field, values);
+		}
+		return null;
+	}
 
-        final NativeQuery query = builder.build();
-        if (LOG.isTraceEnabled()) {
-            LOG.trace("Query : {}", query.getQuery());
-            if (query.getAggregations() != null) {
-                LOG.trace("Aggregations : {}", query.getAggregations());
-            }
-            if (query.getHighlightQuery().isPresent()) {
-                LOG.trace("Highlight : {}", query.getHighlightQuery().get());
-            }
-        }
+	/**
+	 * Requête de filtrage des résultats de recherche (sélection de facettes) ->
+	 * intervalle de dates
+	 * @param field
+	 * @param values
+	 * @return
+	 */
+	protected Query getDateFilterQueryBuilder(final String field, final List<String> values) {
+		if (CollectionUtils.isNotEmpty(values)) {
+			final EsQueryBuilder builder = new EsQueryBuilder();
 
-        // Recherche
-        final SearchHits<T> results = searchOperations.search(query, clazz);
-        return new SearchResultPage<>(results, pageable);
-    }
+			values.stream().map(val -> {
+				final LocalDate from = DateUtils.parseStringToLocalDate(val, "dd/MM/yyyy");
+				if (from == null) {
+					return null;
+				}
+				final LocalDate to = from.plusDays(1);
 
-    /**
-     * Extrait l'objet et le champ de l'index de recherche<br/>
-     * <code>"docunit-title" => ["docunit", "title"]</code>
-     *
-     * @param index
-     * @param defaultObj
-     * @return
-     */
-    protected String[] readIndex(final String index, final String defaultObj) {
-        final String obj;
-        final String field;
-        final int pos = index.indexOf('-');
+				return QueryBuilders.range(b -> b.field(field).gte(JsonData.of(from)).lt(JsonData.of(to)));
 
-        if (pos >= 0) {
-            obj = index.substring(0, pos);
-            field = index.substring(pos + 1);
-        } else {
-            obj = defaultObj;
-            field = index;
-        }
-        return new String[] {obj,
-                             field};
-    }
+			}).filter(Objects::nonNull).forEach(builder::should);
+
+			return builder.build();
+		}
+		return null;
+	}
+
+	/**
+	 * Champ "highlight"
+	 * @return
+	 */
+	protected HighlightQuery getHighlightField() {
+		return null;
+	}
+
+	/**
+	 * Facettes
+	 * @return
+	 */
+	protected Map<String, Aggregation> getAggregationBuilders() {
+		return Collections.emptyMap();
+	}
+
+	/**
+	 * Recherche d'entité. La requête utilisée est celle renvoyée par
+	 * getSearchQueryBuilder
+	 */
+	public SearchResultPage<T> search(final EsSearchOperation[] searches, final List<String> libraries,
+			final boolean fuzzy, final EsSearchOperation[] filters, final PageRequest pageable, final boolean facet) {
+		final NativeQueryBuilder builder = new NativeQueryBuilder().withPageable(pageable);
+
+		// Requête
+		final EsQueryBuilder queryBuilder = new EsQueryBuilder();
+		for (final EsSearchOperation search : searches) {
+			queryBuilder.addQuery(search.getOperator(), getSearchQueryBuilder(search, fuzzy));
+		}
+		// Droits d'accès
+		getLibraryQueryBuilder(libraries).ifPresent(queryBuilder::filter);
+		builder.withQuery(queryBuilder.build());
+
+		// Post-filters
+		final EsQueryBuilder filterBuilder = new EsQueryBuilder();
+		Arrays.stream(filters)
+			.collect(Collectors.groupingBy(EsSearchOperation::getIndex,
+					Collectors.mapping(EsSearchOperation::getSearch, Collectors.toList())))
+			.forEach((index, values) -> {
+				filterBuilder.addQuery(EsBoolOperator.FILTER, getFilterQueryBuilder(index, values));
+			});
+		builder.withFilter(filterBuilder.build());
+
+		// Highlight
+		final HighlightQuery highlightQuery = getHighlightField();
+		if (highlightQuery != null) {
+			builder.withHighlightQuery(highlightQuery);
+		}
+
+		// Facettes
+		if (facet) {
+			getAggregationBuilders().entrySet().forEach(e -> builder.withAggregation(e.getKey(), e.getValue()));
+		}
+
+		final NativeQuery query = builder.build();
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("Query : {}", query.getQuery());
+			if (query.getAggregations() != null) {
+				LOG.trace("Aggregations : {}", query.getAggregations());
+			}
+			if (query.getHighlightQuery().isPresent()) {
+				LOG.trace("Highlight : {}", query.getHighlightQuery().get());
+			}
+		}
+
+		// Recherche
+		final SearchHits<T> results = searchOperations.search(query, clazz);
+		return new SearchResultPage<>(results, pageable);
+	}
+
+	/**
+	 * Extrait l'objet et le champ de l'index de recherche<br/>
+	 * <code>"docunit-title" => ["docunit", "title"]</code>
+	 * @param index
+	 * @param defaultObj
+	 * @return
+	 */
+	protected String[] readIndex(final String index, final String defaultObj) {
+		final String obj;
+		final String field;
+		final int pos = index.indexOf('-');
+
+		if (pos >= 0) {
+			obj = index.substring(0, pos);
+			field = index.substring(pos + 1);
+		}
+		else {
+			obj = defaultObj;
+			field = index;
+		}
+		return new String[] { obj, field };
+	}
 
 }

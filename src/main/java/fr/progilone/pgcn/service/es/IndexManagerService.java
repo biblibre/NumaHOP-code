@@ -10,73 +10,75 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 /**
- * Gestion des opérations elasticsearch, création d'index, de mapping en utilisant les alias
+ * Gestion des opérations elasticsearch, création d'index, de mapping en utilisant les
+ * alias
  */
 @Service
 public class IndexManagerService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(IndexManagerService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(IndexManagerService.class);
 
-    private final EsDocUnitService esDocUnitService;
-    private final EsConditionReportService esConditionReportService;
-    private final EsProjectService esProjectService;
-    private final EsLotService esLotService;
-    private final EsTrainService esTrainService;
-    private final EsDeliveryService esDeliveryService;
+	private final EsDocUnitService esDocUnitService;
 
-    @Autowired
-    public IndexManagerService(final EsDocUnitService esDocUnitService,
-                               final EsConditionReportService esConditionReportService,
-                               final EsProjectService esProjectService,
-                               final EsLotService esLotService,
-                               final EsTrainService esTrainService,
-                               final EsDeliveryService esDeliveryService) {
-        this.esDocUnitService = esDocUnitService;
-        this.esConditionReportService = esConditionReportService;
-        this.esProjectService = esProjectService;
-        this.esLotService = esLotService;
-        this.esTrainService = esTrainService;
-        this.esDeliveryService = esDeliveryService;
-    }
+	private final EsConditionReportService esConditionReportService;
 
-    /**
-     * Job de réindexation
-     */
-    @Scheduled(cron = "${cron.rebuildIndex}")
-    public void rebuildIndexCron() {
-        LOG.debug("Lancement du cronjob rebuildIndexCron...");
-        indexAsync();
-    }
+	private final EsProjectService esProjectService;
 
-    /**
-     * Indexation de la totalité des unités documentaires, sans interruption du moteur de recherche
-     */
-    @Async
-    public void indexAsync() {
-        LOG.info("Début de l'indexation");
-        final LocalTime start = LocalTime.now();
+	private final EsLotService esLotService;
 
-        try {
-            // Indexation des objets dans le nouvel index
-            final long nbDocUnits = esDocUnitService.reindex();
-            final long nbReports = esConditionReportService.reindex();
-            final long nbProjects = esProjectService.reindex();
-            final long nbLots = esLotService.reindex();
-            final long nbTrains = esTrainService.reindex();
-            final long nbDeliveries = esDeliveryService.reindex();
+	private final EsTrainService esTrainService;
 
-            final Duration duration = Duration.between(start, LocalTime.now());
-            LOG.info("Fin de l'indexation après {} secondes : {} unités documentaires, {} constats d'état, {} projets, {} lots, {} trains, {} livraisons",
-                     duration.getSeconds(),
-                     nbDocUnits,
-                     nbReports,
-                     nbProjects,
-                     nbLots,
-                     nbTrains,
-                     nbDeliveries);
+	private final EsDeliveryService esDeliveryService;
 
-        } catch (final Exception e) {
-            LOG.error(e.getMessage(), e);
-        }
-    }
+	@Autowired
+	public IndexManagerService(final EsDocUnitService esDocUnitService,
+			final EsConditionReportService esConditionReportService, final EsProjectService esProjectService,
+			final EsLotService esLotService, final EsTrainService esTrainService,
+			final EsDeliveryService esDeliveryService) {
+		this.esDocUnitService = esDocUnitService;
+		this.esConditionReportService = esConditionReportService;
+		this.esProjectService = esProjectService;
+		this.esLotService = esLotService;
+		this.esTrainService = esTrainService;
+		this.esDeliveryService = esDeliveryService;
+	}
+
+	/**
+	 * Job de réindexation
+	 */
+	@Scheduled(cron = "${cron.rebuildIndex}")
+	public void rebuildIndexCron() {
+		LOG.debug("Lancement du cronjob rebuildIndexCron...");
+		indexAsync();
+	}
+
+	/**
+	 * Indexation de la totalité des unités documentaires, sans interruption du moteur de
+	 * recherche
+	 */
+	@Async
+	public void indexAsync() {
+		LOG.info("Début de l'indexation");
+		final LocalTime start = LocalTime.now();
+
+		try {
+			// Indexation des objets dans le nouvel index
+			final long nbDocUnits = esDocUnitService.reindex();
+			final long nbReports = esConditionReportService.reindex();
+			final long nbProjects = esProjectService.reindex();
+			final long nbLots = esLotService.reindex();
+			final long nbTrains = esTrainService.reindex();
+			final long nbDeliveries = esDeliveryService.reindex();
+
+			final Duration duration = Duration.between(start, LocalTime.now());
+			LOG.info(
+					"Fin de l'indexation après {} secondes : {} unités documentaires, {} constats d'état, {} projets, {} lots, {} trains, {} livraisons",
+					duration.getSeconds(), nbDocUnits, nbReports, nbProjects, nbLots, nbTrains, nbDeliveries);
+
+		}
+		catch (final Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+	}
+
 }

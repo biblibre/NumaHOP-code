@@ -33,104 +33,106 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UILibraryService {
 
-    private final LibraryService libraryService;
-    private final UILibraryMapper uiLibraryMapper;
-    private final UserService userService;
+	private final LibraryService libraryService;
 
-    @Autowired
-    public UILibraryService(final LibraryService libraryService, final UILibraryMapper uiLibraryMapper, final UserService userService) {
-        this.libraryService = libraryService;
-        this.uiLibraryMapper = uiLibraryMapper;
-        this.userService = userService;
-    }
+	private final UILibraryMapper uiLibraryMapper;
 
-    @Transactional
-    public LibraryDTO create(final LibraryDTO request) throws PgcnValidationException {
-        validate(request);
-        final Library library = new Library();
-        uiLibraryMapper.mapInto(request, library);
-        final Library savedLibrary = libraryService.save(library);
-        final Library libraryWithProperties = libraryService.findOne(savedLibrary.getIdentifier());
-        return LibraryMapper.INSTANCE.libraryToLibraryDTO(libraryWithProperties);
-    }
+	private final UserService userService;
 
-    /**
-     * Mise à jour d'une bibliothèque
-     *
-     * @param request
-     *            un objet contenant les informations necessaires à l'enregistrement d'une bibliothèque
-     * @return la bibliothèque nouvellement créée ou mise à jour
-     * @throws PgcnValidationException
-     */
-    @Transactional
-    public LibraryDTO update(final LibraryDTO request) throws PgcnValidationException {
-        validate(request);
-        final Library library = libraryService.findOne(request.getIdentifier());
+	@Autowired
+	public UILibraryService(final LibraryService libraryService, final UILibraryMapper uiLibraryMapper,
+			final UserService userService) {
+		this.libraryService = libraryService;
+		this.uiLibraryMapper = uiLibraryMapper;
+		this.userService = userService;
+	}
 
-        // Contrôle d'accès concurrents
-        VersionValidationService.checkForStateObject(library, request);
+	@Transactional
+	public LibraryDTO create(final LibraryDTO request) throws PgcnValidationException {
+		validate(request);
+		final Library library = new Library();
+		uiLibraryMapper.mapInto(request, library);
+		final Library savedLibrary = libraryService.save(library);
+		final Library libraryWithProperties = libraryService.findOne(savedLibrary.getIdentifier());
+		return LibraryMapper.INSTANCE.libraryToLibraryDTO(libraryWithProperties);
+	}
 
-        uiLibraryMapper.mapInto(request, library);
-        return LibraryMapper.INSTANCE.libraryToLibraryDTO(libraryService.save(library));
-    }
+	/**
+	 * Mise à jour d'une bibliothèque
+	 * @param request un objet contenant les informations necessaires à l'enregistrement
+	 * d'une bibliothèque
+	 * @return la bibliothèque nouvellement créée ou mise à jour
+	 * @throws PgcnValidationException
+	 */
+	@Transactional
+	public LibraryDTO update(final LibraryDTO request) throws PgcnValidationException {
+		validate(request);
+		final Library library = libraryService.findOne(request.getIdentifier());
 
-    @Transactional(readOnly = true)
-    public LibraryDTO getOneDTO(final String id) {
-        final Library library = libraryService.findOneWithDependencies(id);
-        return LibraryMapper.INSTANCE.libraryToLibraryDTO(library);
-    }
+		// Contrôle d'accès concurrents
+		VersionValidationService.checkForStateObject(library, request);
 
-    @Transactional
-    public Page<SimpleLibraryDTO> search(final String search,
-                                         final String initiale,
-                                         final List<String> institutions,
-                                         final List<String> filteredLibraries,
-                                         final boolean isActive,
-                                         final Integer page,
-                                         final Integer size) {
-        final Page<Library> libraries = libraryService.search(search, filteredLibraries, initiale, institutions, isActive, page, size);
-        return libraries.map(SimpleLibraryMapper.INSTANCE::libraryToSimpleLibraryDTO);
-    }
+		uiLibraryMapper.mapInto(request, library);
+		return LibraryMapper.INSTANCE.libraryToLibraryDTO(libraryService.save(library));
+	}
 
-    @Transactional
-    public List<SimpleLibraryDTO> findAllActiveDTO() {
-        final List<Library> libraries = libraryService.findAllByActive(true);
-        return libraries.stream().map(SimpleLibraryMapper.INSTANCE::libraryToSimpleLibraryDTO).collect(Collectors.toList());
-    }
+	@Transactional(readOnly = true)
+	public LibraryDTO getOneDTO(final String id) {
+		final Library library = libraryService.findOneWithDependencies(id);
+		return LibraryMapper.INSTANCE.libraryToLibraryDTO(library);
+	}
 
-    @Transactional(readOnly = true)
-    public Collection<SimpleUserDTO> findProviders(final String id) {
-        final Collection<User> users = userService.findProvidersForLibrary(id);
-        return users.stream().map(UserMapper.INSTANCE::userToSimpleUserDTO).collect(Collectors.toList());
-    }
+	@Transactional
+	public Page<SimpleLibraryDTO> search(final String search, final String initiale, final List<String> institutions,
+			final List<String> filteredLibraries, final boolean isActive, final Integer page, final Integer size) {
+		final Page<Library> libraries = libraryService.search(search, filteredLibraries, initiale, institutions,
+				isActive, page, size);
+		return libraries.map(SimpleLibraryMapper.INSTANCE::libraryToSimpleLibraryDTO);
+	}
 
-    @Transactional(readOnly = true)
-    public Collection<SimpleUserDTO> findUsers(final String id) {
-        final Collection<User> users = userService.findUsersForLibrary(id);
-        return users.stream().map(UserMapper.INSTANCE::userToSimpleUserDTO).collect(Collectors.toList());
-    }
+	@Transactional
+	public List<SimpleLibraryDTO> findAllActiveDTO() {
+		final List<Library> libraries = libraryService.findAllByActive(true);
+		return libraries.stream()
+			.map(SimpleLibraryMapper.INSTANCE::libraryToSimpleLibraryDTO)
+			.collect(Collectors.toList());
+	}
 
-    /**
-     * Validation des champs unique au niveau du DTO avant le merge
-     */
-    private PgcnList<PgcnError> validate(final LibraryDTO dto) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
+	@Transactional(readOnly = true)
+	public Collection<SimpleUserDTO> findProviders(final String id) {
+		final Collection<User> users = userService.findProvidersForLibrary(id);
+		return users.stream().map(UserMapper.INSTANCE::userToSimpleUserDTO).collect(Collectors.toList());
+	}
 
-        final PgcnError.Builder builder = new PgcnError.Builder();
+	@Transactional(readOnly = true)
+	public Collection<SimpleUserDTO> findUsers(final String id) {
+		final Collection<User> users = userService.findUsersForLibrary(id);
+		return users.stream().map(UserMapper.INSTANCE::userToSimpleUserDTO).collect(Collectors.toList());
+	}
 
-        // Le nom est unique
-        if (StringUtils.isNotBlank(dto.getName())) {
-            final Library duplicate = libraryService.findOneByName(dto.getName());
-            if (duplicate != null && (dto.getIdentifier() == null || !duplicate.getIdentifier().equalsIgnoreCase(dto.getIdentifier()))) {
-                errors.add(builder.reinit().setCode(PgcnErrorCode.LIBRARY_DUPLICATE_NAME).setField("name").build());
-            }
-        }
+	/**
+	 * Validation des champs unique au niveau du DTO avant le merge
+	 */
+	private PgcnList<PgcnError> validate(final LibraryDTO dto) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
 
-        // Retour
-        if (!errors.isEmpty()) {
-            dto.setErrors(errors);
-            throw new PgcnValidationException(dto, errors);
-        }
-        return errors;
-    }
+		final PgcnError.Builder builder = new PgcnError.Builder();
+
+		// Le nom est unique
+		if (StringUtils.isNotBlank(dto.getName())) {
+			final Library duplicate = libraryService.findOneByName(dto.getName());
+			if (duplicate != null && (dto.getIdentifier() == null
+					|| !duplicate.getIdentifier().equalsIgnoreCase(dto.getIdentifier()))) {
+				errors.add(builder.reinit().setCode(PgcnErrorCode.LIBRARY_DUPLICATE_NAME).setField("name").build());
+			}
+		}
+
+		// Retour
+		if (!errors.isEmpty()) {
+			dto.setErrors(errors);
+			throw new PgcnValidationException(dto, errors);
+		}
+		return errors;
+	}
+
 }

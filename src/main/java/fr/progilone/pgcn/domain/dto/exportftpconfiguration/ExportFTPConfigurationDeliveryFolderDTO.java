@@ -4,22 +4,24 @@ import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
 
 public class ExportFTPConfigurationDeliveryFolderDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String name;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String name;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

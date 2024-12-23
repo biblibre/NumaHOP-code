@@ -8,9 +8,10 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface DigitalLibraryConfigurationMapper {
 
-    DigitalLibraryConfigurationDTO configurationToDto(DigitalLibraryConfiguration conf);
+	DigitalLibraryConfigurationDTO configurationToDto(DigitalLibraryConfiguration conf);
 
-    Collection<DigitalLibraryConfigurationDTO> configurationsToDtos(Collection<DigitalLibraryConfiguration> confs);
+	Collection<DigitalLibraryConfigurationDTO> configurationsToDtos(Collection<DigitalLibraryConfiguration> confs);
 
-    DigitalLibraryConfiguration dtoToConfiguration(DigitalLibraryConfigurationDTO dto);
+	DigitalLibraryConfiguration dtoToConfiguration(DigitalLibraryConfigurationDTO dto);
+
 }

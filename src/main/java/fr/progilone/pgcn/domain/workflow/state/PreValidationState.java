@@ -12,33 +12,33 @@ import java.util.List;
 @DiscriminatorValue(value = WorkflowStateKey.Values.PREVALIDATION_DOCUMENT)
 public class PreValidationState extends DocUnitState {
 
-    @Override
-    public WorkflowStateKey getKey() {
-        return WorkflowStateKey.PREVALIDATION_DOCUMENT;
-    }
+	@Override
+	public WorkflowStateKey getKey() {
+		return WorkflowStateKey.PREVALIDATION_DOCUMENT;
+	}
 
-    @Override
-    public void process(User user) {
-        processEndDate();
-        processUser(user);
-        processStatus();
+	@Override
+	public void process(User user) {
+		processEndDate();
+		processUser(user);
+		processStatus();
 
-        // Initialisation de la prochaine étape si applicable (aucune étape en cours)
-        getNextStates().forEach(state -> state.initializeState(null, null, null));
-    }
+		// Initialisation de la prochaine étape si applicable (aucune étape en cours)
+		getNextStates().forEach(state -> state.initializeState(null, null, null));
+	}
 
-    @Override
-    protected List<DocUnitState> getNextStates() {
-        List<DocUnitState> states = new ArrayList<>();
-        states.add(this.getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.VALIDATION_DOCUMENT));
-        cleanNullStates(states);
-        return states;
-    }
+	@Override
+	protected List<DocUnitState> getNextStates() {
+		List<DocUnitState> states = new ArrayList<>();
+		states.add(this.getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.VALIDATION_DOCUMENT));
+		cleanNullStates(states);
+		return states;
+	}
 
-    @Override
-    public void reject(User user) {
-        // TODO Auto-generated method stub
+	@Override
+	public void reject(User user) {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
 }

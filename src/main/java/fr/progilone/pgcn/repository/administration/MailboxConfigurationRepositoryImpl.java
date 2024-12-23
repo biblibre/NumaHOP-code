@@ -11,30 +11,31 @@ import org.apache.commons.lang3.StringUtils;
 
 public class MailboxConfigurationRepositoryImpl implements MailboxConfigurationRepositoryCustom {
 
-    private final JPAQueryFactory queryFactory;
+	private final JPAQueryFactory queryFactory;
 
-    public MailboxConfigurationRepositoryImpl(final JPAQueryFactory queryFactory) {
-        this.queryFactory = queryFactory;
-    }
+	public MailboxConfigurationRepositoryImpl(final JPAQueryFactory queryFactory) {
+		this.queryFactory = queryFactory;
+	}
 
-    @Override
-    public List<MailboxConfiguration> search(final String search, final List<String> libraries, final boolean active) {
+	@Override
+	public List<MailboxConfiguration> search(final String search, final List<String> libraries, final boolean active) {
 
-        final QMailboxConfiguration qConf = QMailboxConfiguration.mailboxConfiguration;
-        final BooleanBuilder builder = new BooleanBuilder();
+		final QMailboxConfiguration qConf = QMailboxConfiguration.mailboxConfiguration;
+		final BooleanBuilder builder = new BooleanBuilder();
 
-        if (StringUtils.isNotBlank(search)) {
-            final BooleanExpression nameFilter = qConf.label.containsIgnoreCase(search);
-            builder.andAnyOf(nameFilter);
-        }
-        if (CollectionUtils.isNotEmpty(libraries)) {
-            final BooleanExpression libraryFilter = qConf.library.identifier.in(libraries);
-            builder.and(libraryFilter);
-        }
-        if (active) {
-            builder.and(qConf.active.eq(true));
-        }
+		if (StringUtils.isNotBlank(search)) {
+			final BooleanExpression nameFilter = qConf.label.containsIgnoreCase(search);
+			builder.andAnyOf(nameFilter);
+		}
+		if (CollectionUtils.isNotEmpty(libraries)) {
+			final BooleanExpression libraryFilter = qConf.library.identifier.in(libraries);
+			builder.and(libraryFilter);
+		}
+		if (active) {
+			builder.and(qConf.active.eq(true));
+		}
 
-        return queryFactory.selectDistinct(qConf).from(qConf).where(builder).orderBy(qConf.label.asc()).fetch();
-    }
+		return queryFactory.selectDistinct(qConf).from(qConf).where(builder).orderBy(qConf.label.asc()).fetch();
+	}
+
 }

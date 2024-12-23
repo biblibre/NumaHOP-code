@@ -47,393 +47,411 @@ import org.springframework.stereotype.Service;
 /**
  * Service de Validation des fichiers de metadonnees.
  *
- * @author erizet
- *         Créé le 20 juillet 2017
+ * @author erizet Créé le 20 juillet 2017
  */
 @Service
 public class MetaDatasCheckService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MetaDatasCheckService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MetaDatasCheckService.class);
 
-    public static final String METS_XML_FILE = "mets.xml";
-    public static final String METS_FILE_FORMAT = "xml";
-    public static final String METS_MIME_TYPE = "application/xml";
+	public static final String METS_XML_FILE = "mets.xml";
 
-    private static final String TABLE_EXCEL_FILE = "toc.xlsx";
-    private static final String TABLE_EXCEL_FILE2 = "toc.xls";
-    public static final String EXCEL_FILE_FORMAT = "xlsx";
-    public static final String EXCEL_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    public static final String EXCEL_FILE_FORMAT2 = "xls";
-    public static final String EXCEL_MIME_TYPE2 = "application/vnd.ms-excel";
+	public static final String METS_FILE_FORMAT = "xml";
 
-    public static final String PDF_FILE_FORMAT = "pdf";
-    public static final String PDF_MIME_TYPE = "application/pdf";
+	public static final String METS_MIME_TYPE = "application/xml";
 
-    public static final String LABEL_MASTER = "master";
+	private static final String TABLE_EXCEL_FILE = "toc.xlsx";
 
-    private static final fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory METS_FACTORY = new fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory();
+	private static final String TABLE_EXCEL_FILE2 = "toc.xls";
 
-    private final FileStorageManager fm;
-    private final DeliveryReportingService reportService;
+	public static final String EXCEL_FILE_FORMAT = "xlsx";
 
-    @Value("${instance.libraries}")
-    private String[] instanceLibraries;
+	public static final String EXCEL_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-    @Value("${services.metaDatas.path}")
-    private String metaDatasDirectory;
+	public static final String EXCEL_FILE_FORMAT2 = "xls";
 
-    @Autowired
-    public MetaDatasCheckService(final FileStorageManager fm, final DeliveryReportingService reportService) {
-        this.fm = fm;
-        this.reportService = reportService;
-    }
+	public static final String EXCEL_MIME_TYPE2 = "application/vnd.ms-excel";
 
-    @PostConstruct
-    public void initialize() {
+	public static final String PDF_FILE_FORMAT = "pdf";
 
-        // 1 disk space per library
-        Arrays.asList(instanceLibraries).forEach(lib -> {
-            try {
-                FileUtils.forceMkdir(new File(metaDatasDirectory, lib));
-            } catch (final IOException ex) {
-                LOG.error(ex.getMessage(), ex);
-            }
-        });
+	public static final String PDF_MIME_TYPE = "application/pdf";
 
-    }
+	public static final String LABEL_MASTER = "master";
 
-    /**
-     * Vérification fichier :
-     * - Extension
-     * - Mime Type
-     * - conformite / specs.
-     *
-     * @param toCheck
-     * @param format
-     * @param type
-     * @param role
-     * @return
-     */
-    public AutomaticCheckResult checkMetaDataFileFormat(final AutomaticCheckResult result,
-                                                        final Optional<File> toCheck,
-                                                        final String format,
-                                                        final String type,
-                                                        final PreDeliveryDocumentFileDTO.FileRoleEnum role,
-                                                        final Map<String, List<MdSecType>> extractedDmdSec) {
+	private static final fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory METS_FACTORY = new fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory();
 
-        boolean checked = false;
+	private final FileStorageManager fm;
 
-        if (toCheck.isPresent()) {
-            final String fileName = toCheck.get().getName();
-            result.setResult(AutoCheckResult.OK);
+	private final DeliveryReportingService reportService;
 
-            // Verifie que le fichier correspond au type attendu.
-            if (StringUtils.endsWithIgnoreCase(fileName, format)) {
-                try {
-                    checked = StringUtils.equalsIgnoreCase(new Tika().detect(toCheck.get()), type);
-                } catch (final IOException e) {
-                    LOG.error(e.getMessage(), e);
-                    // on va dire que c'est KO..
-                    checked = false;
-                }
-            }
-            if (checked) {
+	@Value("${instance.libraries}")
+	private String[] instanceLibraries;
 
-                switch (role) {
-                    case METS:
-                        // validation spec METS
-                        try {
-                            final Optional<Mets> mets = unmarshallMetsFile(toCheck.get());
-                            LOG.info("le format du fichier METS {} est valide.", fileName);
-                            if (extractedDmdSec != null && mets.isPresent()) {
-                                extractedDmdSec.put(fileName, mets.get().getDmdSec());
-                            }
-                        } catch (final JAXBException e) {
-                            LOG.error(e.getMessage(), e);
-                            result.setResult(AutoCheckResult.OTHER);
-                            result.setMessage(fileName.concat(" - METS invalide: ").concat(e.getMessage()));
-                        }
-                        break;
-                    case PDF_MULTI:
-                        RandomAccessFile raf = null;
-                        try {
-                            raf = new RandomAccessFile(toCheck.get(), "r");
-                            final PDFParser parser = new PDFParser(raf);
-                            parser.setLenient(false);
-                            parser.parse();
+	@Value("${services.metaDatas.path}")
+	private String metaDatasDirectory;
 
-                        } catch (final IOException e) {
-                            LOG.error("[LIVRAISON] Probleme parsing du fichier pdf multi", e);
-                            result.setResult(AutoCheckResult.OTHER);
-                            result.setMessage(fileName.concat(" - PDF invalide: ").concat(e.getMessage()));
-                        } finally {
-                            if (raf != null && !raf.isClosed()) {
-                                try {
-                                    raf.close();
-                                } catch (final IOException e) {
-                                    // tant pis, on aura essayé...
-                                    LOG.error(e.getMessage(), e);
-                                }
-                            }
-                        }
-                        break;
-                    case OTHER:
-                    case EXCEL:
-                    default:
-                        break;
-                }
+	@Autowired
+	public MetaDatasCheckService(final FileStorageManager fm, final DeliveryReportingService reportService) {
+		this.fm = fm;
+		this.reportService = reportService;
+	}
 
-            } else {
-                LOG.info("le format du fichier {}: {} est refuse.", role, fileName);
-                result.setResult(AutoCheckResult.OTHER);
-                result.setMessage(fileName.concat(" ne correspond pas au format attendu"));
-            }
-        } else {
-            LOG.info("Fichier {} introuvable", role);
-            result.setResult(AutoCheckResult.OTHER);
-            result.setMessage("Fichier ".concat(role.toString()).concat(" introuvable"));
-        }
-        return result;
-    }
+	@PostConstruct
+	public void initialize() {
 
-    /**
-     * Recuperation des fichiers de metadonnees dans les dossiers / sous dossiers de la livraison.
-     *
-     * @param delivery
-     * @param metaDatasDTO
-     * @return Map Listes de fichiers classés par document_id
-     */
-    public Map<String, List<File>> getMetadataFiles(final Delivery delivery, final File[] subDirectories, final Map<String, Set<PreDeliveryDocumentFileDTO>> metaDatasDTO) {
+		// 1 disk space per library
+		Arrays.asList(instanceLibraries).forEach(lib -> {
+			try {
+				FileUtils.forceMkdir(new File(metaDatasDirectory, lib));
+			}
+			catch (final IOException ex) {
+				LOG.error(ex.getMessage(), ex);
+			}
+		});
 
-        LOG.info("Recuperation des fichiers de metadonnees classes par document");
-        final Map<String, List<String>> fileNames = new HashMap<>();
+	}
 
-        metaDatasDTO.forEach((docId, metas) -> {
-            final List<String> listNames = new ArrayList<>();
-            metas.forEach((dto) -> {
-                listNames.add(dto.getName());
-            });
-            fileNames.put(docId, listNames);
-        });
+	/**
+	 * Vérification fichier : - Extension - Mime Type - conformite / specs.
+	 * @param toCheck
+	 * @param format
+	 * @param type
+	 * @param role
+	 * @return
+	 */
+	public AutomaticCheckResult checkMetaDataFileFormat(final AutomaticCheckResult result, final Optional<File> toCheck,
+			final String format, final String type, final PreDeliveryDocumentFileDTO.FileRoleEnum role,
+			final Map<String, List<MdSecType>> extractedDmdSec) {
 
-        final Map<String, List<File>> files = new HashMap<>();
-        fileNames.forEach((idDoc, names) -> {
-            final List<File> mdFiles = new ArrayList<>();
-            names.forEach((fileName) -> {
+		boolean checked = false;
 
-                for (final File directory : subDirectories) {
-                    // idDoc correspond au prefix => on ne cherche que ds les directories du document.
-                    if (StringUtils.containsIgnoreCase(directory.getName(), idDoc)) {
-                        final Collection<File> metaDataFiles = FileUtils.listFiles(directory, new RegexFileFilter(fileName, IOCase.SENSITIVE), TrueFileFilter.TRUE);
-                        if (metaDataFiles.size() > 0) {
-                            mdFiles.addAll(metaDataFiles);
-                        }
-                    }
-                }
-            });
-            files.put(idDoc, mdFiles);
-        });
-        return files;
-    }
+		if (toCheck.isPresent()) {
+			final String fileName = toCheck.get().getName();
+			result.setResult(AutoCheckResult.OK);
 
-    public List<File> getMetadataFilesByDoc(final Delivery delivery, final File[] subDirectories, final String prefix, final Set<PreDeliveryDocumentFileDTO> metaDatasDTO) {
+			// Verifie que le fichier correspond au type attendu.
+			if (StringUtils.endsWithIgnoreCase(fileName, format)) {
+				try {
+					checked = StringUtils.equalsIgnoreCase(new Tika().detect(toCheck.get()), type);
+				}
+				catch (final IOException e) {
+					LOG.error(e.getMessage(), e);
+					// on va dire que c'est KO..
+					checked = false;
+				}
+			}
+			if (checked) {
 
-        LOG.info("Recuperation des fichiers de metadonnees du document");
-        final List<String> listNames = new ArrayList<>();
-        metaDatasDTO.forEach(dto -> {
-            listNames.add(dto.getName());
-        });
+				switch (role) {
+					case METS:
+						// validation spec METS
+						try {
+							final Optional<Mets> mets = unmarshallMetsFile(toCheck.get());
+							LOG.info("le format du fichier METS {} est valide.", fileName);
+							if (extractedDmdSec != null && mets.isPresent()) {
+								extractedDmdSec.put(fileName, mets.get().getDmdSec());
+							}
+						}
+						catch (final JAXBException e) {
+							LOG.error(e.getMessage(), e);
+							result.setResult(AutoCheckResult.OTHER);
+							result.setMessage(fileName.concat(" - METS invalide: ").concat(e.getMessage()));
+						}
+						break;
+					case PDF_MULTI:
+						RandomAccessFile raf = null;
+						try {
+							raf = new RandomAccessFile(toCheck.get(), "r");
+							final PDFParser parser = new PDFParser(raf);
+							parser.setLenient(false);
+							parser.parse();
 
-        final List<File> mdFiles = new ArrayList<>();
-        listNames.forEach((fileName) -> {
-            for (final File directory : subDirectories) {
-                final Collection<File> metaDataFiles = FileUtils.listFiles(directory, new RegexFileFilter(fileName, IOCase.SENSITIVE), TrueFileFilter.TRUE);
-                if (metaDataFiles.size() > 0) {
-                    mdFiles.addAll(metaDataFiles);
-                }
-            }
-        });
-        return mdFiles;
-    }
+						}
+						catch (final IOException e) {
+							LOG.error("[LIVRAISON] Probleme parsing du fichier pdf multi", e);
+							result.setResult(AutoCheckResult.OTHER);
+							result.setMessage(fileName.concat(" - PDF invalide: ").concat(e.getMessage()));
+						}
+						finally {
+							if (raf != null && !raf.isClosed()) {
+								try {
+									raf.close();
+								}
+								catch (final IOException e) {
+									// tant pis, on aura essayé...
+									LOG.error(e.getMessage(), e);
+								}
+							}
+						}
+						break;
+					case OTHER:
+					case EXCEL:
+					default:
+						break;
+				}
 
-    /**
-     * Recuperation du fichier Excel pour TOC.
-     *
-     * @param digitalId
-     * @return
-     */
-    public Optional<File> getMetaDataExcelFile(final String digitalId, final String libraryId) {
+			}
+			else {
+				LOG.info("le format du fichier {}: {} est refuse.", role, fileName);
+				result.setResult(AutoCheckResult.OTHER);
+				result.setMessage(fileName.concat(" ne correspond pas au format attendu"));
+			}
+		}
+		else {
+			LOG.info("Fichier {} introuvable", role);
+			result.setResult(AutoCheckResult.OTHER);
+			result.setMessage("Fichier ".concat(role.toString()).concat(" introuvable"));
+		}
+		return result;
+	}
 
-        final Path root = Paths.get(metaDatasDirectory, libraryId, digitalId);
-        Path excelPath = root.resolve(TABLE_EXCEL_FILE);
-        File excelFile = excelPath.toFile();
-        if (excelFile == null) {
-            excelPath = root.resolve(TABLE_EXCEL_FILE2);
-            excelFile = excelPath.toFile();
-        }
-        // ni .xls, ni .xlsx ...
-        if (excelFile == null) {
-            return Optional.empty();
-        }
-        return Optional.of(excelFile);
-    }
+	/**
+	 * Recuperation des fichiers de metadonnees dans les dossiers / sous dossiers de la
+	 * livraison.
+	 * @param delivery
+	 * @param metaDatasDTO
+	 * @return Map Listes de fichiers classés par document_id
+	 */
+	public Map<String, List<File>> getMetadataFiles(final Delivery delivery, final File[] subDirectories,
+			final Map<String, Set<PreDeliveryDocumentFileDTO>> metaDatasDTO) {
 
-    /**
-     * Recuperation du fichier mets brut.
-     *
-     * @param digitalId
-     * @param libraryId
-     * @return
-     */
-    public Optional<File> getMetsXmlFile(final String digitalId, final String libraryId) {
-        Optional<File> metsXml = Optional.empty();
-        final Path root = Paths.get(metaDatasDirectory, libraryId, digitalId);
-        final Path metsPath = root.resolve(METS_XML_FILE);
-        if (metsPath != null) {
-            metsXml = Optional.of(metsPath.toFile());
-        }
-        return metsXml;
-    }
+		LOG.info("Recuperation des fichiers de metadonnees classes par document");
+		final Map<String, List<String>> fileNames = new HashMap<>();
 
-    /**
-     * Recuperation de l'objet Mets pour TOC.
-     *
-     * @param digitalId
-     * @return
-     */
-    public Optional<Mets> getMetaDataMetsFile(final String digitalId, final String libraryId) {
+		metaDatasDTO.forEach((docId, metas) -> {
+			final List<String> listNames = new ArrayList<>();
+			metas.forEach((dto) -> {
+				listNames.add(dto.getName());
+			});
+			fileNames.put(docId, listNames);
+		});
 
-        Optional<Mets> mets;
-        final Optional<File> metsFile = getMetsXmlFile(digitalId, libraryId);
-        try {
-            mets = metsFile.isPresent() ? unmarshallMetsFile(metsFile.get())
-                                        : Optional.empty();
-        } catch (final JAXBException e) {
-            LOG.error("JAXB : fichier METS illisible - {}", e.getLocalizedMessage());
-            mets = Optional.empty();
-        }
-        return mets;
-    }
+		final Map<String, List<File>> files = new HashMap<>();
+		fileNames.forEach((idDoc, names) -> {
+			final List<File> mdFiles = new ArrayList<>();
+			names.forEach((fileName) -> {
 
-    /**
-     * Construit un objet Mets à partir du fichier xml.
-     *
-     * @param file
-     * @return un objet Mets si ok, null si ko
-     * @throws JAXBException
-     */
-    private Optional<Mets> unmarshallMetsFile(final File file) throws JAXBException {
-        Mets mets = null;
-        if (file.exists() && file.canRead()) {
-            final JAXBContext context = JAXBContext.newInstance(fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory.class,
-                                                                Mix.class,
-                                                                QName.class,
-                                                                fr.progilone.pgcn.domain.jaxb.dc.ObjectFactory.class,
-                                                                fr.progilone.pgcn.domain.jaxb.dc.ElementContainer.class,
-                                                                fr.progilone.pgcn.domain.jaxb.dc.SimpleLiteral.class);
-            final Unmarshaller unmarshaller = context.createUnmarshaller();
-            mets = (Mets) unmarshaller.unmarshal(file);
-        }
-        if (mets == null) {
-            return Optional.empty();
-        }
-        return Optional.of(mets);
-    }
+				for (final File directory : subDirectories) {
+					// idDoc correspond au prefix => on ne cherche que ds les directories
+					// du
+					// document.
+					if (StringUtils.containsIgnoreCase(directory.getName(), idDoc)) {
+						final Collection<File> metaDataFiles = FileUtils.listFiles(directory,
+								new RegexFileFilter(fileName, IOCase.SENSITIVE), TrueFileFilter.TRUE);
+						if (metaDataFiles.size() > 0) {
+							mdFiles.addAll(metaDataFiles);
+						}
+					}
+				}
+			});
+			files.put(idDoc, mdFiles);
+		});
+		return files;
+	}
 
-    /**
-     * Assure le stockage des fichiers de metadonnees
-     * dans leurs répertoires respectifs.
-     *
-     * @param metaDatasDTO
-     * @param metaDataFiles
-     */
-    public void handleMetaDataFiles(final Map<String, Set<PreDeliveryDocumentFileDTO>> metaDatasDTO,
-                                    final Map<String, List<File>> metaDataFiles,
-                                    final Delivery delivery,
-                                    final String libraryId,
-                                    final Set<String> prefixToTreat) {
+	public List<File> getMetadataFilesByDoc(final Delivery delivery, final File[] subDirectories, final String prefix,
+			final Set<PreDeliveryDocumentFileDTO> metaDatasDTO) {
 
-        final Path root = Paths.get(metaDatasDirectory, libraryId);
+		LOG.info("Recuperation des fichiers de metadonnees du document");
+		final List<String> listNames = new ArrayList<>();
+		metaDatasDTO.forEach(dto -> {
+			listNames.add(dto.getName());
+		});
 
-        metaDatasDTO.forEach((idDoc, dtos) -> {
+		final List<File> mdFiles = new ArrayList<>();
+		listNames.forEach((fileName) -> {
+			for (final File directory : subDirectories) {
+				final Collection<File> metaDataFiles = FileUtils.listFiles(directory,
+						new RegexFileFilter(fileName, IOCase.SENSITIVE), TrueFileFilter.TRUE);
+				if (metaDataFiles.size() > 0) {
+					mdFiles.addAll(metaDataFiles);
+				}
+			}
+		});
+		return mdFiles;
+	}
 
-            final List<File> files = metaDataFiles.get(idDoc);
-            final String[] dirsToAdd = {idDoc};
+	/**
+	 * Recuperation du fichier Excel pour TOC.
+	 * @param digitalId
+	 * @return
+	 */
+	public Optional<File> getMetaDataExcelFile(final String digitalId, final String libraryId) {
 
-            // on ne recupere que les TDM des doc à traiter.
-            if (prefixToTreat.contains(idDoc)) {
+		final Path root = Paths.get(metaDatasDirectory, libraryId, digitalId);
+		Path excelPath = root.resolve(TABLE_EXCEL_FILE);
+		File excelFile = excelPath.toFile();
+		if (excelFile == null) {
+			excelPath = root.resolve(TABLE_EXCEL_FILE2);
+			excelFile = excelPath.toFile();
+		}
+		// ni .xls, ni .xlsx ...
+		if (excelFile == null) {
+			return Optional.empty();
+		}
+		return Optional.of(excelFile);
+	}
 
-                dtos.forEach((dto) -> {
-                    String targetName = null;
-                    switch (dto.getRole()) {
-                        case METS:
-                            targetName = METS_XML_FILE;
-                            break;
-                        case EXCEL:
-                            targetName = TABLE_EXCEL_FILE;
-                            break;
-                        default:
-                            // do nothing for others..
-                            LOG.debug("another role (not TOC) : {}", dto.getRole());
-                            break;
-                    }
+	/**
+	 * Recuperation du fichier mets brut.
+	 * @param digitalId
+	 * @param libraryId
+	 * @return
+	 */
+	public Optional<File> getMetsXmlFile(final String digitalId, final String libraryId) {
+		Optional<File> metsXml = Optional.empty();
+		final Path root = Paths.get(metaDatasDirectory, libraryId, digitalId);
+		final Path metsPath = root.resolve(METS_XML_FILE);
+		if (metsPath != null) {
+			metsXml = Optional.of(metsPath.toFile());
+		}
+		return metsXml;
+	}
 
-                    // retrieve file
-                    final Optional<File> toCheck = files == null ? Optional.empty()
-                                                                 : files.stream().filter(file -> StringUtils.equalsIgnoreCase(file.getName(), dto.getName())).findFirst();
-                    if (toCheck.isPresent() && StringUtils.isNotBlank(targetName)) {
-                        try (final BufferedInputStream input = new BufferedInputStream(new FileInputStream(toCheck.get()))) {
-                            fm.copyInputStreamToFileWithOtherDirs(input, root.toFile(), Arrays.asList(dirsToAdd), targetName, true, false);
-                            reportService.updateReport(delivery, Optional.empty(), Optional.empty(), dto.getName().concat(" enregistré"), libraryId);
+	/**
+	 * Recuperation de l'objet Mets pour TOC.
+	 * @param digitalId
+	 * @return
+	 */
+	public Optional<Mets> getMetaDataMetsFile(final String digitalId, final String libraryId) {
 
-                        } catch (final FileNotFoundException e) {
-                            LOG.error("Fichier {} non trouvé.", dto.getName());
-                            reportService.updateReport(delivery, Optional.empty(), Optional.empty(), dto.getName().concat(" introuvable"), libraryId);
-                        } catch (final IOException e) {
-                            LOG.error("Erreur {} lors du traitement du fichier {}.", e.getMessage(), dto.getName());
-                            reportService.updateReport(delivery, Optional.empty(), Optional.empty(), "Erreur lors du traitement du fichier ".concat(dto.getName()), libraryId);
-                        }
-                    } else {
-                        LOG.debug("Pas de TDM pour {} dans {}", dto.getName(), files);
-                    }
+		Optional<Mets> mets;
+		final Optional<File> metsFile = getMetsXmlFile(digitalId, libraryId);
+		try {
+			mets = metsFile.isPresent() ? unmarshallMetsFile(metsFile.get()) : Optional.empty();
+		}
+		catch (final JAXBException e) {
+			LOG.error("JAXB : fichier METS illisible - {}", e.getLocalizedMessage());
+			mets = Optional.empty();
+		}
+		return mets;
+	}
 
-                });
-            }
-        });
-    }
+	/**
+	 * Construit un objet Mets à partir du fichier xml.
+	 * @param file
+	 * @return un objet Mets si ok, null si ko
+	 * @throws JAXBException
+	 */
+	private Optional<Mets> unmarshallMetsFile(final File file) throws JAXBException {
+		Mets mets = null;
+		if (file.exists() && file.canRead()) {
+			final JAXBContext context = JAXBContext.newInstance(fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory.class,
+					Mix.class, QName.class, fr.progilone.pgcn.domain.jaxb.dc.ObjectFactory.class,
+					fr.progilone.pgcn.domain.jaxb.dc.ElementContainer.class,
+					fr.progilone.pgcn.domain.jaxb.dc.SimpleLiteral.class);
+			final Unmarshaller unmarshaller = context.createUnmarshaller();
+			mets = (Mets) unmarshaller.unmarshal(file);
+		}
+		if (mets == null) {
+			return Optional.empty();
+		}
+		return Optional.of(mets);
+	}
 
-    /**
-     * Retourne la liste des AmdSecType des masters.
-     *
-     * @param mets
-     * @return
-     */
-    public List<AmdSecType> getMasterAmdSec(final Mets mets) {
+	/**
+	 * Assure le stockage des fichiers de metadonnees dans leurs répertoires respectifs.
+	 * @param metaDatasDTO
+	 * @param metaDataFiles
+	 */
+	public void handleMetaDataFiles(final Map<String, Set<PreDeliveryDocumentFileDTO>> metaDatasDTO,
+			final Map<String, List<File>> metaDataFiles, final Delivery delivery, final String libraryId,
+			final Set<String> prefixToTreat) {
 
-        final List<String> masterIds = new ArrayList<>();
-        // Recuperation des id des masters.
-        mets.getFileSec().getFileGrp().stream().filter(fgMaster -> StringUtils.containsIgnoreCase(fgMaster.getUSE(), LABEL_MASTER)).forEach(fgMaster -> {
-            fgMaster.getFile().forEach(f -> {
-                final MdSecType t = (MdSecType) f.getADMID().get(0);
-                masterIds.add(t.getID());
-            });
-        });
+		final Path root = Paths.get(metaDatasDirectory, libraryId);
 
-        // Recuperation des objets AmdSecType correspondant aux masters.
-        final List<AmdSecType> listAmdSec = new ArrayList<>();
-        for (final String id : masterIds) {
-            mets.getAmdSec().forEach(asec -> {
+		metaDatasDTO.forEach((idDoc, dtos) -> {
 
-                asec.getTechMD().stream().filter(t -> StringUtils.equals(t.getID(), id)).findFirst().ifPresent(t -> {
-                    // on reconstruit => elimine les techMD inutiles (mire, etc..)
-                    final AmdSecType ast = METS_FACTORY.createAmdSecType();
-                    ast.getTechMD().add(t);
-                    ast.getRightsMD().addAll(asec.getRightsMD());
-                    listAmdSec.add(ast);
-                });
-            });
-        }
-        return listAmdSec;
-    }
+			final List<File> files = metaDataFiles.get(idDoc);
+			final String[] dirsToAdd = { idDoc };
+
+			// on ne recupere que les TDM des doc à traiter.
+			if (prefixToTreat.contains(idDoc)) {
+
+				dtos.forEach((dto) -> {
+					String targetName = null;
+					switch (dto.getRole()) {
+						case METS:
+							targetName = METS_XML_FILE;
+							break;
+						case EXCEL:
+							targetName = TABLE_EXCEL_FILE;
+							break;
+						default:
+							// do nothing for others..
+							LOG.debug("another role (not TOC) : {}", dto.getRole());
+							break;
+					}
+
+					// retrieve file
+					final Optional<File> toCheck = files == null ? Optional.empty()
+							: files.stream()
+								.filter(file -> StringUtils.equalsIgnoreCase(file.getName(), dto.getName()))
+								.findFirst();
+					if (toCheck.isPresent() && StringUtils.isNotBlank(targetName)) {
+						try (final BufferedInputStream input = new BufferedInputStream(
+								new FileInputStream(toCheck.get()))) {
+							fm.copyInputStreamToFileWithOtherDirs(input, root.toFile(), Arrays.asList(dirsToAdd),
+									targetName, true, false);
+							reportService.updateReport(delivery, Optional.empty(), Optional.empty(),
+									dto.getName().concat(" enregistré"), libraryId);
+
+						}
+						catch (final FileNotFoundException e) {
+							LOG.error("Fichier {} non trouvé.", dto.getName());
+							reportService.updateReport(delivery, Optional.empty(), Optional.empty(),
+									dto.getName().concat(" introuvable"), libraryId);
+						}
+						catch (final IOException e) {
+							LOG.error("Erreur {} lors du traitement du fichier {}.", e.getMessage(), dto.getName());
+							reportService.updateReport(delivery, Optional.empty(), Optional.empty(),
+									"Erreur lors du traitement du fichier ".concat(dto.getName()), libraryId);
+						}
+					}
+					else {
+						LOG.debug("Pas de TDM pour {} dans {}", dto.getName(), files);
+					}
+
+				});
+			}
+		});
+	}
+
+	/**
+	 * Retourne la liste des AmdSecType des masters.
+	 * @param mets
+	 * @return
+	 */
+	public List<AmdSecType> getMasterAmdSec(final Mets mets) {
+
+		final List<String> masterIds = new ArrayList<>();
+		// Recuperation des id des masters.
+		mets.getFileSec()
+			.getFileGrp()
+			.stream()
+			.filter(fgMaster -> StringUtils.containsIgnoreCase(fgMaster.getUSE(), LABEL_MASTER))
+			.forEach(fgMaster -> {
+				fgMaster.getFile().forEach(f -> {
+					final MdSecType t = (MdSecType) f.getADMID().get(0);
+					masterIds.add(t.getID());
+				});
+			});
+
+		// Recuperation des objets AmdSecType correspondant aux masters.
+		final List<AmdSecType> listAmdSec = new ArrayList<>();
+		for (final String id : masterIds) {
+			mets.getAmdSec().forEach(asec -> {
+
+				asec.getTechMD().stream().filter(t -> StringUtils.equals(t.getID(), id)).findFirst().ifPresent(t -> {
+					// on reconstruit => elimine les techMD inutiles (mire, etc..)
+					final AmdSecType ast = METS_FACTORY.createAmdSecType();
+					ast.getTechMD().add(t);
+					ast.getRightsMD().addAll(asec.getRightsMD());
+					listAmdSec.add(ast);
+				});
+			});
+		}
+		return listAmdSec;
+	}
 
 }

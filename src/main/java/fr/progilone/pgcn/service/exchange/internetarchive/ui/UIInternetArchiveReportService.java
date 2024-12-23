@@ -30,70 +30,77 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UIInternetArchiveReportService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UIInternetArchiveReportService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(UIInternetArchiveReportService.class);
 
-    @Autowired
-    private InternetArchiveReportService iaReportService;
+	@Autowired
+	private InternetArchiveReportService iaReportService;
 
-    /**
-     * Récupère la liste des rapports CINES liés à une unité doc
-     *
-     * @param docUnitId
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public List<InternetArchiveReportDTO> findAllByDocUnitIdentifier(String docUnitId) {
-        final List<InternetArchiveReport> reports = iaReportService.findByDocUnit(docUnitId);
-        return reports.stream().map(InternetArchiveReportMapper.INSTANCE::internetArchiveReportToInternetArchiveReportDTO).collect(Collectors.toList());
-    }
+	/**
+	 * Récupère la liste des rapports CINES liés à une unité doc
+	 * @param docUnitId
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public List<InternetArchiveReportDTO> findAllByDocUnitIdentifier(String docUnitId) {
+		final List<InternetArchiveReport> reports = iaReportService.findByDocUnit(docUnitId);
+		return reports.stream()
+			.map(InternetArchiveReportMapper.INSTANCE::internetArchiveReportToInternetArchiveReportDTO)
+			.collect(Collectors.toList());
+	}
 
-    @Transactional(readOnly = true)
-    public List<StatisticsProcessedDocUnitDTO> findAll(final List<String> libraries, final LocalDate fromDate, final boolean failures) {
-        return iaReportService.findAll(libraries, fromDate, failures).stream().map(iaReport -> {
-            final StatisticsProcessedDocUnitDTO dto = new StatisticsProcessedDocUnitDTO();
-            dto.setStatus(iaReport.getStatus().name());
-            dto.setDate(iaReport.getDateSent());
-            dto.setMessage(iaReport.getMessage());
+	@Transactional(readOnly = true)
+	public List<StatisticsProcessedDocUnitDTO> findAll(final List<String> libraries, final LocalDate fromDate,
+			final boolean failures) {
+		return iaReportService.findAll(libraries, fromDate, failures).stream().map(iaReport -> {
+			final StatisticsProcessedDocUnitDTO dto = new StatisticsProcessedDocUnitDTO();
+			dto.setStatus(iaReport.getStatus().name());
+			dto.setDate(iaReport.getDateSent());
+			dto.setMessage(iaReport.getMessage());
 
-            dto.setIdentifier(iaReport.getDocUnit().getIdentifier());
-            dto.setPgcnId(iaReport.getDocUnit().getPgcnId());
+			dto.setIdentifier(iaReport.getDocUnit().getIdentifier());
+			dto.setPgcnId(iaReport.getDocUnit().getPgcnId());
 
-            return dto;
-        }).collect(Collectors.toList());
-    }
+			return dto;
+		}).collect(Collectors.toList());
+	}
 
-    /**
-     * Interroge Internet Archive pour recuperer l'url ARK.
-     *
-     * @param aiIdentifier
-     * @return
-     */
-    public String getIaArkUrl(final String aiIdentifier) {
-        final String idArkUrl = "https://archive.org/metadata/" + aiIdentifier
-                                + "/metadata/identifier-ark";
-        final HttpClient client = HttpClientBuilder.create().build();
-        final HttpGet request = new HttpGet(idArkUrl);
+	/**
+	 * Interroge Internet Archive pour recuperer l'url ARK.
+	 * @param aiIdentifier
+	 * @return
+	 */
+	public String getIaArkUrl(final String aiIdentifier) {
+		final String idArkUrl = "https://archive.org/metadata/" + aiIdentifier + "/metadata/identifier-ark";
+		final HttpClient client = HttpClientBuilder.create().build();
+		final HttpGet request = new HttpGet(idArkUrl);
 
-        String arkUrl = null;
-        try {
-            final HttpResponse response = client.execute(request);
-            final String json = EntityUtils.toString(response.getEntity());
-            final JSONObject jsonObject = new JSONObject(json);
+		String arkUrl = null;
+		try {
+			final HttpResponse response = client.execute(request);
+			final String json = EntityUtils.toString(response.getEntity());
+			final JSONObject jsonObject = new JSONObject(json);
 
-            if (jsonObject.has("error")) {
-                LOG.error("L'appel de l'url Internet Archive {} a renvoyé une erreur, détail: {}", idArkUrl, jsonObject.get("error"));
+			if (jsonObject.has("error")) {
+				LOG.error("L'appel de l'url Internet Archive {} a renvoyé une erreur, détail: {}", idArkUrl,
+						jsonObject.get("error"));
 
-            } else if (jsonObject.has("result")) {
-                arkUrl = (String) jsonObject.get("result");
-            }
+			}
+			else if (jsonObject.has("result")) {
+				arkUrl = (String) jsonObject.get("result");
+			}
 
-        } catch (final IOException e) {
-            LOG.error("Erreur de communication avec Internet Archive lors de l'appel de l'url {}, détail: {}", idArkUrl, e.getMessage());
+		}
+		catch (final IOException e) {
+			LOG.error("Erreur de communication avec Internet Archive lors de l'appel de l'url {}, détail: {}", idArkUrl,
+					e.getMessage());
 
-        } catch (final JSONException e) {
-            LOG.error("Erreur de lecture de la réponse d'Internet Archive lors de l'appel de l'url {}, détail: {} ", idArkUrl, e.getMessage());
-        }
+		}
+		catch (final JSONException e) {
+			LOG.error("Erreur de lecture de la réponse d'Internet Archive lors de l'appel de l'url {}, détail: {} ",
+					idArkUrl, e.getMessage());
+		}
 
-        return arkUrl;
-    }
+		return arkUrl;
+	}
+
 }

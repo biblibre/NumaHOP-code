@@ -21,69 +21,76 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UIWorkflowModelMapper {
 
-    private final WorkflowModelStateService workflowModelStateService;
-    private final LibraryService libraryService;
-    private final WorkflowGroupService workflowGroupService;
+	private final WorkflowModelStateService workflowModelStateService;
 
-    @Autowired
-    public UIWorkflowModelMapper(final WorkflowModelStateService workflowModelStateService, final LibraryService libraryService, final WorkflowGroupService workflowGroupService) {
-        this.workflowModelStateService = workflowModelStateService;
-        this.libraryService = libraryService;
-        this.workflowGroupService = workflowGroupService;
-    }
+	private final LibraryService libraryService;
 
-    @Transactional(readOnly = true)
-    public void mapInto(final WorkflowModelDTO dto, final WorkflowModel domainObject) {
-        domainObject.setIdentifier(dto.getIdentifier());
-        domainObject.setName(dto.getName());
-        domainObject.setDescription(dto.getDescription());
-        domainObject.setActive(dto.isActive());
+	private final WorkflowGroupService workflowGroupService;
 
-        // States
-        List<WorkflowModelStateDTO> statesDTO = dto.getStates();
-        if (statesDTO != null) {
-            Set<WorkflowModelState> states = new HashSet<>();
-            statesDTO.forEach(stateDTO -> {
-                WorkflowModelState state = null;
-                if (stateDTO.getIdentifier() != null) {
-                    state = workflowModelStateService.getOne(stateDTO.getIdentifier());
-                    VersionValidationService.checkForStateObject(state, stateDTO);
-                } else {
-                    state = new WorkflowModelState();
-                    state.setModel(domainObject);
-                }
-                mapInto(stateDTO, state);
-                states.add(state);
-            });
-            domainObject.setModelStates(states);
-        } else {
-            domainObject.setModelStates(null);
-        }
+	@Autowired
+	public UIWorkflowModelMapper(final WorkflowModelStateService workflowModelStateService,
+			final LibraryService libraryService, final WorkflowGroupService workflowGroupService) {
+		this.workflowModelStateService = workflowModelStateService;
+		this.libraryService = libraryService;
+		this.workflowGroupService = workflowGroupService;
+	}
 
-        // Bibliothèque
-        Library library = null;
-        if (dto.getLibrary() != null) {
-            library = libraryService.findByIdentifier(dto.getLibrary().getIdentifier());
-        } else {
-            if (SecurityUtils.getCurrentUser().getLibraryId() != null) {
-                library = libraryService.findByIdentifier(SecurityUtils.getCurrentUser().getLibraryId());
-            }
-        }
-        domainObject.setLibrary(library);
+	@Transactional(readOnly = true)
+	public void mapInto(final WorkflowModelDTO dto, final WorkflowModel domainObject) {
+		domainObject.setIdentifier(dto.getIdentifier());
+		domainObject.setName(dto.getName());
+		domainObject.setDescription(dto.getDescription());
+		domainObject.setActive(dto.isActive());
 
-    }
+		// States
+		List<WorkflowModelStateDTO> statesDTO = dto.getStates();
+		if (statesDTO != null) {
+			Set<WorkflowModelState> states = new HashSet<>();
+			statesDTO.forEach(stateDTO -> {
+				WorkflowModelState state = null;
+				if (stateDTO.getIdentifier() != null) {
+					state = workflowModelStateService.getOne(stateDTO.getIdentifier());
+					VersionValidationService.checkForStateObject(state, stateDTO);
+				}
+				else {
+					state = new WorkflowModelState();
+					state.setModel(domainObject);
+				}
+				mapInto(stateDTO, state);
+				states.add(state);
+			});
+			domainObject.setModelStates(states);
+		}
+		else {
+			domainObject.setModelStates(null);
+		}
 
-    @Transactional(readOnly = true)
-    public void mapInto(final WorkflowModelStateDTO dto, final WorkflowModelState domainObject) {
-        domainObject.setType(dto.getType());
-        WorkflowGroup group = null;
-        if (dto.getGroup() != null) {
-            group = workflowGroupService.getOne(dto.getGroup().getIdentifier());
-        }
-        domainObject.setGroup(group);
-        // Cas pour création
-        if (domainObject.getIdentifier() == null) {
-            domainObject.setKey(dto.getKey());
-        }
-    }
+		// Bibliothèque
+		Library library = null;
+		if (dto.getLibrary() != null) {
+			library = libraryService.findByIdentifier(dto.getLibrary().getIdentifier());
+		}
+		else {
+			if (SecurityUtils.getCurrentUser().getLibraryId() != null) {
+				library = libraryService.findByIdentifier(SecurityUtils.getCurrentUser().getLibraryId());
+			}
+		}
+		domainObject.setLibrary(library);
+
+	}
+
+	@Transactional(readOnly = true)
+	public void mapInto(final WorkflowModelStateDTO dto, final WorkflowModelState domainObject) {
+		domainObject.setType(dto.getType());
+		WorkflowGroup group = null;
+		if (dto.getGroup() != null) {
+			group = workflowGroupService.getOne(dto.getGroup().getIdentifier());
+		}
+		domainObject.setGroup(group);
+		// Cas pour création
+		if (domainObject.getIdentifier() == null) {
+			domainObject.setKey(dto.getKey());
+		}
+	}
+
 }

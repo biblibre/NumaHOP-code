@@ -28,168 +28,172 @@ import org.hibernate.envers.Audited;
 // Audit
 @AuditTable(value = Train.AUDIT_TABLE_NAME)
 // Jackson
-@JsonSubTypes({@JsonSubTypes.Type(name = "train", value = Train.class)})
+@JsonSubTypes({ @JsonSubTypes.Type(name = "train", value = Train.class) })
 public class Train extends AbstractDomainObject {
 
-    /**
-     * Nom des tables dans la base de données.
-     */
-    public static final String TABLE_NAME = "train_train";
-    public static final String AUDIT_TABLE_NAME = "aud_train_train";
+	/**
+	 * Nom des tables dans la base de données.
+	 */
+	public static final String TABLE_NAME = "train_train";
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project")
-    private Project project;
+	public static final String AUDIT_TABLE_NAME = "aud_train_train";
 
-    /**
-     * Libellé
-     */
-    @Column(name = "label")
-    private String label;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "project")
+	private Project project;
 
-    /**
-     * Description
-     */
-    @Column(name = "description")
-    private String description;
+	/**
+	 * Libellé
+	 */
+	@Column(name = "label")
+	private String label;
 
-    /**
-     * Etat
-     */
-    @Column(name = "active")
-    private boolean active;
+	/**
+	 * Description
+	 */
+	@Column(name = "description")
+	private String description;
 
-    /**
-     * statut
-     */
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    @Audited
-    private TrainStatus status;
+	/**
+	 * Etat
+	 */
+	@Column(name = "active")
+	private boolean active;
 
-    /**
-     * Date de livraison prévue
-     */
-    @Column(name = "provider_sending_date")
-    private LocalDate providerSendingDate;
+	/**
+	 * statut
+	 */
+	@Column(name = "status")
+	@Enumerated(EnumType.STRING)
+	@Audited
+	private TrainStatus status;
 
-    /**
-     * Date de retour
-     */
-    @Column(name = "return_date")
-    private LocalDate returnDate;
+	/**
+	 * Date de livraison prévue
+	 */
+	@Column(name = "provider_sending_date")
+	private LocalDate providerSendingDate;
 
-    /**
-     * Documents physiques
-     */
-    @OneToMany(mappedBy = "train", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private Set<PhysicalDocument> physicalDocuments;
+	/**
+	 * Date de retour
+	 */
+	@Column(name = "return_date")
+	private LocalDate returnDate;
 
-    /**
-     * type de statut
-     */
-    public enum TrainStatus {
-        /**
-         * Créé
-         */
-        CREATED,
-        /**
-         * En cours preparation
-         */
-        IN_PREPARATION,
-        /**
-         * En cours de numérisation
-         */
-        IN_DIGITIZATION,
-        /**
-         * Réception des documents physiques
-         */
-        RECEIVING_PHYSICAL_DOCUMENTS,
-        /**
-         * Annulé
-         */
-        CANCELED,
-        /**
-         * Clôturé
-         */
-        CLOSED;
-    }
+	/**
+	 * Documents physiques
+	 */
+	@OneToMany(mappedBy = "train", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private Set<PhysicalDocument> physicalDocuments;
 
-    public Project getProject() {
-        return project;
-    }
+	/**
+	 * type de statut
+	 */
+	public enum TrainStatus {
 
-    public void setProject(final Project project) {
-        this.project = project;
-    }
+		/**
+		 * Créé
+		 */
+		CREATED,
+		/**
+		 * En cours preparation
+		 */
+		IN_PREPARATION,
+		/**
+		 * En cours de numérisation
+		 */
+		IN_DIGITIZATION,
+		/**
+		 * Réception des documents physiques
+		 */
+		RECEIVING_PHYSICAL_DOCUMENTS,
+		/**
+		 * Annulé
+		 */
+		CANCELED,
+		/**
+		 * Clôturé
+		 */
+		CLOSED;
 
-    public String getLabel() {
-        return label;
-    }
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public Project getProject() {
+		return project;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setProject(final Project project) {
+		this.project = project;
+	}
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public TrainStatus getStatus() {
-        return status;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public void setStatus(final TrainStatus status) {
-        this.status = status;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public LocalDate getProviderSendingDate() {
-        return providerSendingDate;
-    }
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
 
-    public void setProviderSendingDate(final LocalDate providerSendingDate) {
-        this.providerSendingDate = providerSendingDate;
-    }
+	public TrainStatus getStatus() {
+		return status;
+	}
 
-    public LocalDate getReturnDate() {
-        return returnDate;
-    }
+	public void setStatus(final TrainStatus status) {
+		this.status = status;
+	}
 
-    public void setReturnDate(final LocalDate returnDate) {
-        this.returnDate = returnDate;
-    }
+	public LocalDate getProviderSendingDate() {
+		return providerSendingDate;
+	}
 
-    public Set<PhysicalDocument> getPhysicalDocuments() {
-        return physicalDocuments;
-    }
+	public void setProviderSendingDate(final LocalDate providerSendingDate) {
+		this.providerSendingDate = providerSendingDate;
+	}
 
-    public void setPhysicalDocuments(final Set<PhysicalDocument> physicalDocuments) {
-        this.physicalDocuments = physicalDocuments;
-    }
+	public LocalDate getReturnDate() {
+		return returnDate;
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                          .omitNullValues()
-                          .add("project", project)
-                          .add("label", label)
-                          .add("description", description)
-                          .add("active", active)
-                          .add("status", status)
-                          .add("providerSendingDate", providerSendingDate)
-                          .add("returnDate", returnDate)
-                          .toString();
-    }
+	public void setReturnDate(final LocalDate returnDate) {
+		this.returnDate = returnDate;
+	}
+
+	public Set<PhysicalDocument> getPhysicalDocuments() {
+		return physicalDocuments;
+	}
+
+	public void setPhysicalDocuments(final Set<PhysicalDocument> physicalDocuments) {
+		this.physicalDocuments = physicalDocuments;
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+			.omitNullValues()
+			.add("project", project)
+			.add("label", label)
+			.add("description", description)
+			.add("active", active)
+			.add("status", status)
+			.add("providerSendingDate", providerSendingDate)
+			.add("returnDate", returnDate)
+			.toString();
+	}
+
 }

@@ -12,39 +12,40 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = DescriptionValue.TABLE_NAME)
-@JsonSubTypes({@JsonSubTypes.Type(name = "doc_condreport_desc_value", value = DescriptionValue.class)})
+@JsonSubTypes({ @JsonSubTypes.Type(name = "doc_condreport_desc_value", value = DescriptionValue.class) })
 public class DescriptionValue extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "doc_condreport_desc_value";
+	public static final String TABLE_NAME = "doc_condreport_desc_value";
 
-    @Column(name = "label", nullable = false)
-    private String label;
+	@Column(name = "label", nullable = false)
+	private String label;
 
-    /**
-     * Constat d'état
-     */
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "property")
-    private DescriptionProperty property;
+	/**
+	 * Constat d'état
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "property")
+	private DescriptionProperty property;
 
-    public String getLabel() {
-        return label;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public DescriptionProperty getProperty() {
-        return property;
-    }
+	public DescriptionProperty getProperty() {
+		return property;
+	}
 
-    public void setProperty(final DescriptionProperty property) {
-        this.property = property;
-    }
+	public void setProperty(final DescriptionProperty property) {
+		this.property = property;
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("label", label).toString();
-    }
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this).add("label", label).toString();
+	}
+
 }

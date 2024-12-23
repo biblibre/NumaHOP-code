@@ -12,32 +12,27 @@ import org.springframework.data.jpa.repository.Query;
 /**
  * Created by Jonathan.
  */
-public interface BibliographicRecordRepository extends JpaRepository<BibliographicRecord, String>, BibliographicRecordRepositoryCustom {
+public interface BibliographicRecordRepository
+		extends JpaRepository<BibliographicRecord, String>, BibliographicRecordRepositoryCustom {
 
-    @Query("select r " + "from BibliographicRecord r "
-           + "left join fetch r.docUnit "
-           + "left join fetch r.properties p "
-           + "left join fetch p.type "
-           + "left join fetch r.library "
-           + "where r.identifier = ?1")
-    BibliographicRecord findOneWithDependencies(String identifier);
+	@Query("select r " + "from BibliographicRecord r " + "left join fetch r.docUnit "
+			+ "left join fetch r.properties p " + "left join fetch p.type " + "left join fetch r.library "
+			+ "where r.identifier = ?1")
+	BibliographicRecord findOneWithDependencies(String identifier);
 
-    @Query("select distinct r " + "from BibliographicRecord r "
-           + "left join fetch r.docUnit d "
-           + "where d.identifier = ?1")
-    List<BibliographicRecord> findAllByDocUnitIdentifier(String identifier);
+	@Query("select distinct r " + "from BibliographicRecord r " + "left join fetch r.docUnit d "
+			+ "where d.identifier = ?1")
+	List<BibliographicRecord> findAllByDocUnitIdentifier(String identifier);
 
-    Page<BibliographicRecord> findAllByDocUnitState(DocUnit.State state, Pageable pageable);
+	Page<BibliographicRecord> findAllByDocUnitState(DocUnit.State state, Pageable pageable);
 
-    @Query("select distinct r " + "from BibliographicRecord r "
-           + "left join fetch r.docUnit d "
-           + "where r.identifier in ?1")
-    List<BibliographicRecord> findAllByIdentifierIn(List<String> identifiers);
+	@Query("select distinct r " + "from BibliographicRecord r " + "left join fetch r.docUnit d "
+			+ "where r.identifier in ?1")
+	List<BibliographicRecord> findAllByIdentifierIn(List<String> identifiers);
 
-    Long countByLibraryAndDocUnitState(Library library, DocUnit.State state);
+	Long countByLibraryAndDocUnitState(Library library, DocUnit.State state);
 
-    @Query("select d " + "from BibliographicRecord r "
-           + "join r.docUnit d "
-           + "where r.identifier = ?1")
-    DocUnit findDocUnitByIdentifier(String identifier);
+	@Query("select d " + "from BibliographicRecord r " + "join r.docUnit d " + "where r.identifier = ?1")
+	DocUnit findDocUnitByIdentifier(String identifier);
+
 }

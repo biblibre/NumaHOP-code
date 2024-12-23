@@ -4,25 +4,27 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
 
 public class SimpleWorkflowGroupDTO extends AbstractDTO {
 
-    private String identifier;
-    private String name;
+	private String identifier;
 
-    public SimpleWorkflowGroupDTO() {
-    }
+	private String name;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public SimpleWorkflowGroupDTO() {
+	}
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

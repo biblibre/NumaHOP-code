@@ -8,14 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface WorkflowModelRepository extends JpaRepository<WorkflowModel, String>, WorkflowModelRepositoryCustom {
 
-    Long countByName(String name);
+	Long countByName(String name);
 
-    @Query("select distinct model " + "from WorkflowModel model "
-           + "left join model.library lib "
-           + "where lib.identifier = ?1 and model.active = ?2")
-    List<WorkflowModel> findAllByLibraryIdentifierAndActive(String identifier, boolean active);
+	@Query("select distinct model " + "from WorkflowModel model " + "left join model.library lib "
+			+ "where lib.identifier = ?1 and model.active = ?2")
+	List<WorkflowModel> findAllByLibraryIdentifierAndActive(String identifier, boolean active);
 
-    Long countByNameAndIdentifierNot(String name, String identifier);
+	Long countByNameAndIdentifierNot(String name, String identifier);
 
-    Long countByLibrary(Library library);
+	Long countByLibrary(Library library);
+
 }

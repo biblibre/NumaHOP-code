@@ -7,6 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface ExportFTPConfigurationRepositoryCustom {
 
-    Page<ExportFTPConfiguration> search(String search, final List<String> libraries, Pageable pageable);
+	Page<ExportFTPConfiguration> search(String search, final List<String> libraries, Pageable pageable);
 
 }

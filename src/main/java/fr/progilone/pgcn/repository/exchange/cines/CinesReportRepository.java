@@ -14,22 +14,23 @@ import org.springframework.data.jpa.repository.Modifying;
  */
 public interface CinesReportRepository extends JpaRepository<CinesReport, String>, CinesReportRepositoryCustom {
 
-    CinesReport findByIdentifier(String identifier);
+	CinesReport findByIdentifier(String identifier);
 
-    CinesReport findFirstByDocUnitPgcnIdOrderByDateSentDesc(String pgcnId);
+	CinesReport findFirstByDocUnitPgcnIdOrderByDateSentDesc(String pgcnId);
 
-    List<CinesReport> findAllByIdentifierIn(List<String> identifiers);
+	List<CinesReport> findAllByIdentifierIn(List<String> identifiers);
 
-    List<CinesReport> findByStatusIn(CinesReport.Status... status);
+	List<CinesReport> findByStatusIn(CinesReport.Status... status);
 
-    List<CinesReport> findByDocUnitIdentifierOrderByLastModifiedDateDesc(String identifier);
+	List<CinesReport> findByDocUnitIdentifierOrderByLastModifiedDateDesc(String identifier);
 
-    List<CinesReport> findByDocUnitIdentifierIn(List<String> docUnitIds);
+	List<CinesReport> findByDocUnitIdentifierIn(List<String> docUnitIds);
 
-    Page<CinesReport> findAllByDocUnitState(DocUnit.State state, Pageable pageable);
+	Page<CinesReport> findAllByDocUnitState(DocUnit.State state, Pageable pageable);
 
-    @Modifying
-    void deleteByDocUnitIdentifier(String identifier);
+	@Modifying
+	void deleteByDocUnitIdentifier(String identifier);
 
-    long countByDocUnitLibraryAndStatusIn(Library library, CinesReport.Status... status);
+	long countByDocUnitLibraryAndStatusIn(Library library, CinesReport.Status... status);
+
 }

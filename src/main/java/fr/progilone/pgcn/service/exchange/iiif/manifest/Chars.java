@@ -12,59 +12,58 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"@id"})
+@JsonPropertyOrder({ "@id" })
 public class Chars {
 
-    @JsonProperty("@id")
-    private String id;
-    @JsonIgnore
-    @Valid
-    private Map<String, Object> additionalProperties = new HashMap<>();
+	@JsonProperty("@id")
+	private String id;
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public Chars() {
-    }
+	@JsonIgnore
+	@Valid
+	private Map<String, Object> additionalProperties = new HashMap<>();
 
-    /**
-     *
-     * @param id
-     */
-    public Chars(String id) {
-        super();
-        this.id = id;
-    }
+	/**
+	 * No args constructor for use in serialization
+	 */
+	public Chars() {
+	}
 
-    @JsonProperty("@id")
-    public String getId() {
-        return id;
-    }
+	/**
+	 * @param id
+	 */
+	public Chars(String id) {
+		super();
+		this.id = id;
+	}
 
-    @JsonProperty("@id")
-    public void setId(String id) {
-        this.id = id;
-    }
+	@JsonProperty("@id")
+	public String getId() {
+		return id;
+	}
 
-    public Chars withId(String id) {
-        this.id = id;
-        return this;
-    }
+	@JsonProperty("@id")
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
+	public Chars withId(String id) {
+		this.id = id;
+		return this;
+	}
 
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
+	@JsonAnyGetter
+	public Map<String, Object> getAdditionalProperties() {
+		return this.additionalProperties;
+	}
 
-    public Chars withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
-    }
+	@JsonAnySetter
+	public void setAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+	}
+
+	public Chars withAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+		return this;
+	}
 
 }

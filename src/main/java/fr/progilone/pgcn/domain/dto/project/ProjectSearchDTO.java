@@ -5,60 +5,64 @@ package fr.progilone.pgcn.domain.dto.project;
  */
 public class ProjectSearchDTO {
 
-    private String identifier;
-    private String name;
+	private String identifier;
 
-    public ProjectSearchDTO() {
-    }
+	private String name;
 
-    public ProjectSearchDTO(final String identifier, final String name) {
-        super();
-        this.identifier = identifier;
-        this.name = name;
-    }
+	public ProjectSearchDTO() {
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public ProjectSearchDTO(final String identifier, final String name) {
+		super();
+		this.identifier = identifier;
+		this.name = name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    /**
-     * Builder pour la classe ProjectDTO
-     */
-    public static final class Builder {
+	public void setName(String name) {
+		this.name = name;
+	}
 
-        private String identifier;
-        private String name;
+	/**
+	 * Builder pour la classe ProjectDTO
+	 */
+	public static final class Builder {
 
-        public Builder reinit() {
-            this.identifier = null;
-            this.name = null;
-            return this;
-        }
+		private String identifier;
 
-        public Builder setIdentifier(final String identifier) {
-            this.identifier = identifier;
-            return this;
-        }
+		private String name;
 
-        public Builder setName(final String name) {
-            this.name = name;
-            return this;
-        }
+		public Builder reinit() {
+			this.identifier = null;
+			this.name = null;
+			return this;
+		}
 
-        public ProjectSearchDTO build() {
-            return new ProjectSearchDTO(identifier, name);
-        }
-    }
+		public Builder setIdentifier(final String identifier) {
+			this.identifier = identifier;
+			return this;
+		}
+
+		public Builder setName(final String name) {
+			this.name = name;
+			return this;
+		}
+
+		public ProjectSearchDTO build() {
+			return new ProjectSearchDTO(identifier, name);
+		}
+
+	}
+
 }

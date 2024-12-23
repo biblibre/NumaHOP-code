@@ -10,12 +10,12 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableAspectJAutoProxy
 public class LoggingAspectConfiguration {
 
-    @Value("${logging.warnDuration}")
-    private Long warnDuration;
+	@Value("${logging.warnDuration}")
+	private Long warnDuration;
 
-    @Bean
-    public LoggingAspect loggingAspect() {
-        return new LoggingAspect(warnDuration);
-    }
+	@Bean
+	public LoggingAspect loggingAspect() {
+		return new LoggingAspect(warnDuration);
+	}
 
 }

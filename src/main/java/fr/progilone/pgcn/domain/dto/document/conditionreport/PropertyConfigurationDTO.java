@@ -6,117 +6,128 @@ import java.util.Set;
 
 public class PropertyConfigurationDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private boolean required;
-    private boolean allowComment;
-    private boolean showOnCreation;
-    private Set<String> types;
-    private String descPropertyId;
-    private String descPropertyLabel;
-    private String internalProperty;
-    private LibraryDTO library;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private boolean required;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private boolean allowComment;
 
-    public boolean isRequired() {
-        return required;
-    }
+	private boolean showOnCreation;
 
-    public void setRequired(final boolean required) {
-        this.required = required;
-    }
+	private Set<String> types;
 
-    public boolean isAllowComment() {
-        return allowComment;
-    }
+	private String descPropertyId;
 
-    public void setAllowComment(final boolean allowComment) {
-        this.allowComment = allowComment;
-    }
+	private String descPropertyLabel;
 
-    public boolean isShowOnCreation() {
-        return showOnCreation;
-    }
+	private String internalProperty;
 
-    public void setShowOnCreation(final boolean showOnCreation) {
-        this.showOnCreation = showOnCreation;
-    }
+	private LibraryDTO library;
 
-    public Set<String> getTypes() {
-        return types;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setTypes(final Set<String> types) {
-        this.types = types;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getDescPropertyId() {
-        return descPropertyId;
-    }
+	public boolean isRequired() {
+		return required;
+	}
 
-    public void setDescPropertyId(final String descPropertyId) {
-        this.descPropertyId = descPropertyId;
-    }
+	public void setRequired(final boolean required) {
+		this.required = required;
+	}
 
-    public String getDescPropertyLabel() {
-        return descPropertyLabel;
-    }
+	public boolean isAllowComment() {
+		return allowComment;
+	}
 
-    public void setDescPropertyLabel(final String descPropertyLabel) {
-        this.descPropertyLabel = descPropertyLabel;
-    }
+	public void setAllowComment(final boolean allowComment) {
+		this.allowComment = allowComment;
+	}
 
-    public String getInternalProperty() {
-        return internalProperty;
-    }
+	public boolean isShowOnCreation() {
+		return showOnCreation;
+	}
 
-    public void setInternalProperty(final String internalProperty) {
-        this.internalProperty = internalProperty;
-    }
+	public void setShowOnCreation(final boolean showOnCreation) {
+		this.showOnCreation = showOnCreation;
+	}
 
-    public LibraryDTO getLibrary() {
-        return library;
-    }
+	public Set<String> getTypes() {
+		return types;
+	}
 
-    public void setLibrary(final LibraryDTO library) {
-        this.library = library;
-    }
+	public void setTypes(final Set<String> types) {
+		this.types = types;
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("identifier", identifier).toString();
-    }
+	public String getDescPropertyId() {
+		return descPropertyId;
+	}
 
-    public static class LibraryDTO {
+	public void setDescPropertyId(final String descPropertyId) {
+		this.descPropertyId = descPropertyId;
+	}
 
-        private String identifier;
-        private String name;
+	public String getDescPropertyLabel() {
+		return descPropertyLabel;
+	}
 
-        public String getIdentifier() {
-            return identifier;
-        }
+	public void setDescPropertyLabel(final String descPropertyLabel) {
+		this.descPropertyLabel = descPropertyLabel;
+	}
 
-        public void setIdentifier(final String identifier) {
-            this.identifier = identifier;
-        }
+	public String getInternalProperty() {
+		return internalProperty;
+	}
 
-        public String getName() {
-            return name;
-        }
+	public void setInternalProperty(final String internalProperty) {
+		this.internalProperty = internalProperty;
+	}
 
-        public void setName(final String name) {
-            this.name = name;
-        }
+	public LibraryDTO getLibrary() {
+		return library;
+	}
 
-        @Override
-        public String toString() {
-            return MoreObjects.toStringHelper(this).add("identifier", identifier).add("name", name).toString();
-        }
-    }
+	public void setLibrary(final LibraryDTO library) {
+		this.library = library;
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this).add("identifier", identifier).toString();
+	}
+
+	public static class LibraryDTO {
+
+		private String identifier;
+
+		private String name;
+
+		public String getIdentifier() {
+			return identifier;
+		}
+
+		public void setIdentifier(final String identifier) {
+			this.identifier = identifier;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(final String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String toString() {
+			return MoreObjects.toStringHelper(this).add("identifier", identifier).add("name", name).toString();
+		}
+
+	}
+
 }

@@ -8,10 +8,11 @@ import org.springframework.data.jpa.repository.Modifying;
 
 public interface DescriptionValueRepository extends JpaRepository<DescriptionValue, String> {
 
-    List<DescriptionValue> findByPropertyIdentifier(String propertyId);
+	List<DescriptionValue> findByPropertyIdentifier(String propertyId);
 
-    List<DescriptionValue> findByProperty(DescriptionProperty property);
+	List<DescriptionValue> findByProperty(DescriptionProperty property);
 
-    @Modifying
-    void deleteByPropertyIdentifier(String propertyId);
+	@Modifying
+	void deleteByPropertyIdentifier(String propertyId);
+
 }

@@ -23,135 +23,142 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class RoleServiceTest {
 
-    @Mock
-    private LibraryRepository libraryRepository;
-    @Mock
-    private RoleRepository roleRepository;
-    @Mock
-    private UserRepository userRepository;
+	@Mock
+	private LibraryRepository libraryRepository;
 
-    private RoleService service;
+	@Mock
+	private RoleRepository roleRepository;
 
-    @BeforeEach
-    public void setUp() {
-        service = new RoleService(libraryRepository, roleRepository, userRepository);
-    }
+	@Mock
+	private UserRepository userRepository;
 
-    @Test
-    public void testFindAllDTO() {
-        final List<Role> roles = new ArrayList<>();
-        final Role role = new Role();
-        role.setCode("CODE");
-        role.setIdentifier("1234");
-        role.setLabel("LABEL");
-        roles.add(role);
-        when(roleRepository.findAll()).thenReturn(roles);
+	private RoleService service;
 
-        final List<RoleDTO> actual = service.findAllDTO();
-        assertEquals(1, actual.size());
-        final RoleDTO dto = actual.get(0);
-        assertEquals(role.getCode(), dto.getCode());
-        assertEquals(role.getIdentifier(), dto.getIdentifier());
-        assertEquals(role.getLabel(), dto.getLabel());
-    }
+	@BeforeEach
+	public void setUp() {
+		service = new RoleService(libraryRepository, roleRepository, userRepository);
+	}
 
-    @Test
-    public void testFindAll() {
-        final List<Role> roles = new ArrayList<>();
-        when(roleRepository.findAllWithAuthorizations()).thenReturn(roles);
+	@Test
+	public void testFindAllDTO() {
+		final List<Role> roles = new ArrayList<>();
+		final Role role = new Role();
+		role.setCode("CODE");
+		role.setIdentifier("1234");
+		role.setLabel("LABEL");
+		roles.add(role);
+		when(roleRepository.findAll()).thenReturn(roles);
 
-        final List<Role> actual = service.findAll();
-        assertSame(roles, actual);
-    }
+		final List<RoleDTO> actual = service.findAllDTO();
+		assertEquals(1, actual.size());
+		final RoleDTO dto = actual.get(0);
+		assertEquals(role.getCode(), dto.getCode());
+		assertEquals(role.getIdentifier(), dto.getIdentifier());
+		assertEquals(role.getLabel(), dto.getLabel());
+	}
 
-    @Test
-    public void testFindOne() {
-        final Role role = new Role();
-        final String identifier = "123";
-        when(roleRepository.findOneWithAuthorizations(identifier)).thenReturn(role);
+	@Test
+	public void testFindAll() {
+		final List<Role> roles = new ArrayList<>();
+		when(roleRepository.findAllWithAuthorizations()).thenReturn(roles);
 
-        final Role actual = service.findOne(identifier);
-        assertSame(role, actual);
-    }
+		final List<Role> actual = service.findAll();
+		assertSame(roles, actual);
+	}
 
-    @Test
-    public void testDelete() {
-        final String identifier = "123";
-        service.delete(identifier);
-        verify(roleRepository).deleteById(identifier);
-    }
+	@Test
+	public void testFindOne() {
+		final Role role = new Role();
+		final String identifier = "123";
+		when(roleRepository.findOneWithAuthorizations(identifier)).thenReturn(role);
 
-    @Test
-    public void testSave() {
-        final String dup_identifier = "DUPLICATED_ID";
-        final String dup_label = "DUPLICATED";
-        final String label = "numahop";
-        final Role dbRole = new Role();
-        Role actual = null;
+		final Role actual = service.findOne(identifier);
+		assertSame(role, actual);
+	}
 
-        when(roleRepository.findByCode(dup_label)).thenReturn(dbRole);
-        when(roleRepository.findByCodeAndIdentifierNot(dup_label, dup_identifier)).thenReturn(dbRole);
-        when(roleRepository.findOneByLabel(dup_label)).thenReturn(dbRole);
-        when(roleRepository.findOneByLabelAndIdentifierNot(dup_label, dup_identifier)).thenReturn(dbRole);
-        when(roleRepository.save(any(Role.class))).thenReturn(dbRole);
+	@Test
+	public void testDelete() {
+		final String identifier = "123";
+		service.delete(identifier);
+		verify(roleRepository).deleteById(identifier);
+	}
 
-        // USER_ROLE_CODE_MANDATORY
-        // USER_ROLE_LABEL_MANDATORY
-        try {
-            final Role role = new Role();
+	@Test
+	public void testSave() {
+		final String dup_identifier = "DUPLICATED_ID";
+		final String dup_label = "DUPLICATED";
+		final String label = "numahop";
+		final Role dbRole = new Role();
+		Role actual = null;
 
-            actual = service.save(role);
-            fail("USER_ROLE_CODE_MANDATORY and USER_ROLE_LABEL_MANDATORY expected");
+		when(roleRepository.findByCode(dup_label)).thenReturn(dbRole);
+		when(roleRepository.findByCodeAndIdentifierNot(dup_label, dup_identifier)).thenReturn(dbRole);
+		when(roleRepository.findOneByLabel(dup_label)).thenReturn(dbRole);
+		when(roleRepository.findOneByLabelAndIdentifierNot(dup_label, dup_identifier)).thenReturn(dbRole);
+		when(roleRepository.save(any(Role.class))).thenReturn(dbRole);
 
-        } catch (final PgcnValidationException e) {
-            TestUtil.checkPgcnException(e, USER_ROLE_CODE_MANDATORY, USER_ROLE_LABEL_MANDATORY);
-        }
+		// USER_ROLE_CODE_MANDATORY
+		// USER_ROLE_LABEL_MANDATORY
+		try {
+			final Role role = new Role();
 
-        // USER_ROLE_UNIQUE_CODE_VIOLATION
-        // USER_ROLE_UNIQUE_LABEL_VIOLATION
-        // (create)
-        try {
-            final Role role = new Role();
-            role.setCode(dup_label);
-            role.setLabel(dup_label);
+			actual = service.save(role);
+			fail("USER_ROLE_CODE_MANDATORY and USER_ROLE_LABEL_MANDATORY expected");
 
-            actual = service.save(role);
-            fail("USER_ROLE_UNIQUE_CODE_VIOLATION and USER_ROLE_UNIQUE_LABEL_VIOLATION expected");
+		}
+		catch (final PgcnValidationException e) {
+			TestUtil.checkPgcnException(e, USER_ROLE_CODE_MANDATORY, USER_ROLE_LABEL_MANDATORY);
+		}
 
-        } catch (final PgcnValidationException e) {
-            TestUtil.checkPgcnException(e, USER_ROLE_UNIQUE_CODE_VIOLATION, USER_ROLE_UNIQUE_LABEL_VIOLATION);
-        }
+		// USER_ROLE_UNIQUE_CODE_VIOLATION
+		// USER_ROLE_UNIQUE_LABEL_VIOLATION
+		// (create)
+		try {
+			final Role role = new Role();
+			role.setCode(dup_label);
+			role.setLabel(dup_label);
 
-        // USER_ROLE_UNIQUE_CODE_VIOLATION
-        // USER_ROLE_UNIQUE_LABEL_VIOLATION
-        // (update)
-        try {
-            final Role role = new Role();
-            role.setIdentifier(dup_identifier);
-            role.setCode(dup_label);
-            role.setLabel(dup_label);
+			actual = service.save(role);
+			fail("USER_ROLE_UNIQUE_CODE_VIOLATION and USER_ROLE_UNIQUE_LABEL_VIOLATION expected");
 
-            actual = service.save(role);
-            fail("USER_ROLE_UNIQUE_CODE_VIOLATION and USER_ROLE_UNIQUE_LABEL_VIOLATION expected");
+		}
+		catch (final PgcnValidationException e) {
+			TestUtil.checkPgcnException(e, USER_ROLE_UNIQUE_CODE_VIOLATION, USER_ROLE_UNIQUE_LABEL_VIOLATION);
+		}
 
-        } catch (final PgcnValidationException e) {
-            TestUtil.checkPgcnException(e, USER_ROLE_UNIQUE_CODE_VIOLATION, USER_ROLE_UNIQUE_LABEL_VIOLATION);
-        }
+		// USER_ROLE_UNIQUE_CODE_VIOLATION
+		// USER_ROLE_UNIQUE_LABEL_VIOLATION
+		// (update)
+		try {
+			final Role role = new Role();
+			role.setIdentifier(dup_identifier);
+			role.setCode(dup_label);
+			role.setLabel(dup_label);
 
-        // Save ok
-        try {
-            final Role role = new Role();
-            role.setCode(label);
-            role.setLabel(label);
+			actual = service.save(role);
+			fail("USER_ROLE_UNIQUE_CODE_VIOLATION and USER_ROLE_UNIQUE_LABEL_VIOLATION expected");
 
-            actual = service.save(role);
-            assertSame(dbRole, actual);
+		}
+		catch (final PgcnValidationException e) {
+			TestUtil.checkPgcnException(e, USER_ROLE_UNIQUE_CODE_VIOLATION, USER_ROLE_UNIQUE_LABEL_VIOLATION);
+		}
 
-            // default values
-            assertEquals(label.toUpperCase(), role.getCode());
+		// Save ok
+		try {
+			final Role role = new Role();
+			role.setCode(label);
+			role.setLabel(label);
 
-        } catch (final PgcnValidationException e) {
-            fail("Validation should be ok");
-        }
-    }
+			actual = service.save(role);
+			assertSame(dbRole, actual);
+
+			// default values
+			assertEquals(label.toUpperCase(), role.getCode());
+
+		}
+		catch (final PgcnValidationException e) {
+			fail("Validation should be ok");
+		}
+	}
+
 }

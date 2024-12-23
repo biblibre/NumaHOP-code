@@ -7,5 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface SftpConfigurationRepositoryCustom {
 
-    Page<SftpConfiguration> search(String search, final List<String> libraries, Pageable pageable);
+	Page<SftpConfiguration> search(String search, final List<String> libraries, Pageable pageable);
+
 }

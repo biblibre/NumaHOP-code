@@ -10,92 +10,100 @@ import java.time.LocalDate;
  * Dto simplifie de digitalDocument pour le controle de metadonnees.
  *
  * @author ert
- *
  */
 public class SimpleMetadatasDigitalDocumentDTO extends AbstractDTO {
 
-    private String identifier;
-    private String digitalId;
-    private String pgcnId;
-    private String label;
-    private SimpleProjectDTO project;
-    private SimpleLotDTO lot;
-    private DigitalDocument.DigitalDocumentStatus status;
-    private int totalDelivery;
-    private LocalDate deliveryDate;
+	private String identifier;
 
-    public String getPgcnId() {
-        return pgcnId;
-    }
+	private String digitalId;
 
-    public void setPgcnId(String pgcnId) {
-        this.pgcnId = pgcnId;
-    }
+	private String pgcnId;
 
-    public String getLabel() {
-        return label;
-    }
+	private String label;
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+	private SimpleProjectDTO project;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private SimpleLotDTO lot;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private DigitalDocument.DigitalDocumentStatus status;
 
-    public String getDigitalId() {
-        return digitalId;
-    }
+	private int totalDelivery;
 
-    public void setDigitalId(String digitalId) {
-        this.digitalId = digitalId;
-    }
+	private LocalDate deliveryDate;
 
-    public SimpleMetadatasDigitalDocumentDTO() {
-    }
+	public String getPgcnId() {
+		return pgcnId;
+	}
 
-    public SimpleProjectDTO getProject() {
-        return project;
-    }
+	public void setPgcnId(String pgcnId) {
+		this.pgcnId = pgcnId;
+	}
 
-    public void setProject(SimpleProjectDTO project) {
-        this.project = project;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public SimpleLotDTO getLot() {
-        return lot;
-    }
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
-    public void setLot(SimpleLotDTO lot) {
-        this.lot = lot;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public LocalDate getDeliveryDate() {
-        return deliveryDate;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setDeliveryDate(LocalDate deliveryDate) {
-        this.deliveryDate = deliveryDate;
-    }
+	public String getDigitalId() {
+		return digitalId;
+	}
 
-    public int getTotalDelivery() {
-        return totalDelivery;
-    }
+	public void setDigitalId(String digitalId) {
+		this.digitalId = digitalId;
+	}
 
-    public void setTotalDelivery(int totalDelivery) {
-        this.totalDelivery = totalDelivery;
-    }
+	public SimpleMetadatasDigitalDocumentDTO() {
+	}
 
-    public DigitalDocument.DigitalDocumentStatus getStatus() {
-        return status;
-    }
+	public SimpleProjectDTO getProject() {
+		return project;
+	}
 
-    public void setStatus(DigitalDocument.DigitalDocumentStatus status) {
-        this.status = status;
-    }
+	public void setProject(SimpleProjectDTO project) {
+		this.project = project;
+	}
+
+	public SimpleLotDTO getLot() {
+		return lot;
+	}
+
+	public void setLot(SimpleLotDTO lot) {
+		this.lot = lot;
+	}
+
+	public LocalDate getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(LocalDate deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public int getTotalDelivery() {
+		return totalDelivery;
+	}
+
+	public void setTotalDelivery(int totalDelivery) {
+		this.totalDelivery = totalDelivery;
+	}
+
+	public DigitalDocument.DigitalDocumentStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(DigitalDocument.DigitalDocumentStatus status) {
+		this.status = status;
+	}
+
 }

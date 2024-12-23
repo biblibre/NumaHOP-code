@@ -9,47 +9,48 @@ import jakarta.persistence.*;
  */
 @Entity
 @Table(name = ArchiveSubject.TABLE_NAME)
-@JsonSubTypes({@JsonSubTypes.Type(name = "doc_archive_subject", value = ArchiveSubject.class)})
+@JsonSubTypes({ @JsonSubTypes.Type(name = "doc_archive_subject", value = ArchiveSubject.class) })
 public class ArchiveSubject extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "doc_archive_subject";
+	public static final String TABLE_NAME = "doc_archive_subject";
 
-    /**
-     * Valeur
-     */
-    @Column(name = "value", columnDefinition = "text")
-    private String value;
+	/**
+	 * Valeur
+	 */
+	@Column(name = "value", columnDefinition = "text")
+	private String value;
 
-    /**
-     * Notice rattachée
-     */
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "item")
-    private ArchiveItem item;
+	/**
+	 * Notice rattachée
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "item")
+	private ArchiveItem item;
 
-    public String getValue() {
-        return value;
-    }
+	public String getValue() {
+		return value;
+	}
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
 
-    public ArchiveItem getItem() {
-        return item;
-    }
+	public ArchiveItem getItem() {
+		return item;
+	}
 
-    public void setItem(ArchiveItem item) {
-        this.item = item;
-    }
+	public void setItem(ArchiveItem item) {
+		this.item = item;
+	}
+
 }

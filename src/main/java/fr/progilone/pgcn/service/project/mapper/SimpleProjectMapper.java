@@ -6,10 +6,11 @@ import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {SimpleLibraryMapper.class})
+@Mapper(uses = { SimpleLibraryMapper.class })
 public interface SimpleProjectMapper {
 
-    SimpleProjectMapper INSTANCE = Mappers.getMapper(SimpleProjectMapper.class);
+	SimpleProjectMapper INSTANCE = Mappers.getMapper(SimpleProjectMapper.class);
 
-    SimpleProjectDTO projectToSimpleProjectDTO(Project project);
+	SimpleProjectDTO projectToSimpleProjectDTO(Project project);
+
 }

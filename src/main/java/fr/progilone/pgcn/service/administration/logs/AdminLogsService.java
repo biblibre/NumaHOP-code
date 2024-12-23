@@ -11,27 +11,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminLogsService {
 
-    @Value("${logging.file.name}")
-    private String logFileName;
+	@Value("${logging.file.name}")
+	private String logFileName;
 
-    /**
-     * Récupération du fichier de log.
-     *
-     * @param deliveryId
-     * @return
-     */
-    public File getLogFile(@DateTimeFormat(pattern = "yyyy-MM-dd") final LocalDate date) {
-        final String fullName;
-        if (date.equals(LocalDate.now())) {
-            fullName = logFileName.concat(".log");
-        } else {
-            fullName = logFileName.concat(".").concat(date.toString()).concat(".log");
-        }
-        final Path root = Paths.get(fullName);
-        if (root != null && root.toFile().canRead()) {
-            return root.toFile();
-        }
-        return null;
-    }
+	/**
+	 * Récupération du fichier de log.
+	 * @param deliveryId
+	 * @return
+	 */
+	public File getLogFile(@DateTimeFormat(pattern = "yyyy-MM-dd") final LocalDate date) {
+		final String fullName;
+		if (date.equals(LocalDate.now())) {
+			fullName = logFileName.concat(".log");
+		}
+		else {
+			fullName = logFileName.concat(".").concat(date.toString()).concat(".log");
+		}
+		final Path root = Paths.get(fullName);
+		if (root != null && root.toFile().canRead()) {
+			return root.toFile();
+		}
+		return null;
+	}
 
 }

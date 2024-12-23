@@ -10,317 +10,338 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * Données associées à un item pour l'envoi sur Internet Archive
  *
- * @author jbrunet
- *         Créé le 21 avr. 2017
+ * @author jbrunet Créé le 21 avr. 2017
  */
 public class InternetArchiveItemDTO extends AbstractDTO {
 
-    private String identifier;
-    private String archiveIdentifier;
-    private final List<String> collections = new ArrayList<>();
-    private final List<String> contributors = new ArrayList<>();
-    private final List<String> coverages = new ArrayList<>();
-    private final List<String> creators = new ArrayList<>();
-    private String credits;
-    private String date; // ISO 8601 compliant required
-    private String description;
-    @JsonIgnore
-    private final TreeMap<Integer, String> descriptions = new TreeMap<>();
-    private final List<String> languages = new ArrayList<>();
-    private String licenseUrl;
-    private MediaType mediatype;
-    private String customMediatype;
-    private String notes;
-    private String publisher;
-    private String rights;
-    private final List<String> subjects = new ArrayList<>();
-    private String title;
-    private final List<CustomHeader> customHeaders = new ArrayList<>();
-    private int total;
-    private String type;
-    private String source;
+	private String identifier;
 
-    public InternetArchiveItemDTO() {
-    }
+	private String archiveIdentifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private final List<String> collections = new ArrayList<>();
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private final List<String> contributors = new ArrayList<>();
 
-    public List<String> getContributors() {
-        return contributors;
-    }
+	private final List<String> coverages = new ArrayList<>();
 
-    public void setContributors(final List<String> contributors) {
-        this.contributors.clear();
-        if (contributors != null) {
-            contributors.forEach(this::addContributor);
-        }
-    }
+	private final List<String> creators = new ArrayList<>();
 
-    public void addContributor(final String coverage) {
-        if (coverage != null) {
-            this.contributors.add(coverage);
-        }
-    }
+	private String credits;
 
-    public List<String> getCoverages() {
-        return coverages;
-    }
+	private String date; // ISO 8601 compliant required
 
-    public void setCoverages(final List<String> coverages) {
-        this.coverages.clear();
-        if (coverages != null) {
-            coverages.forEach(this::addCoverage);
-        }
-    }
+	private String description;
 
-    public void addCoverage(final String coverage) {
-        if (coverage != null) {
-            this.coverages.add(coverage);
-        }
-    }
+	@JsonIgnore
+	private final TreeMap<Integer, String> descriptions = new TreeMap<>();
 
-    public List<String> getCreators() {
-        return creators;
-    }
+	private final List<String> languages = new ArrayList<>();
 
-    public void setCreators(final List<String> creator) {
-        this.creators.clear();
-        if (creator != null) {
-            creator.forEach(this::addCreator);
-        }
-    }
+	private String licenseUrl;
 
-    public void addCreator(final String creator) {
-        if (creator != null) {
-            this.creators.add(creator);
-        }
-    }
+	private MediaType mediatype;
 
-    public String getCredits() {
-        return credits;
-    }
+	private String customMediatype;
 
-    public void setCredits(final String credits) {
-        this.credits = credits;
-    }
+	private String notes;
 
-    public String getDate() {
-        return date;
-    }
+	private String publisher;
 
-    public void setDate(final String date) {
-        this.date = date;
-    }
+	private String rights;
 
-    public String getDescription() {
-        return description;
-    }
+	private final List<String> subjects = new ArrayList<>();
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	private String title;
 
-    public List<String> getLanguages() {
-        return languages;
-    }
+	private final List<CustomHeader> customHeaders = new ArrayList<>();
 
-    public void setLanguages(final List<String> languages) {
-        this.languages.clear();
-        if (languages != null) {
-            languages.forEach(this::addLanguage);
-        }
-    }
+	private int total;
 
-    public void addLanguage(final String language) {
-        if (language != null) {
-            this.languages.add(language);
-        }
-    }
+	private String type;
 
-    public String getLicenseUrl() {
-        return licenseUrl;
-    }
+	private String source;
 
-    public void setLicenseUrl(final String licenseUrl) {
-        this.licenseUrl = licenseUrl;
-    }
+	public InternetArchiveItemDTO() {
+	}
 
-    public MediaType getMediatype() {
-        return mediatype;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setMediatype(final MediaType mediatype) {
-        this.mediatype = mediatype;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getCustomMediatype() {
-        return customMediatype;
-    }
+	public List<String> getContributors() {
+		return contributors;
+	}
 
-    public void setCustomMediatype(final String customMediatype) {
-        this.customMediatype = customMediatype;
-    }
+	public void setContributors(final List<String> contributors) {
+		this.contributors.clear();
+		if (contributors != null) {
+			contributors.forEach(this::addContributor);
+		}
+	}
 
-    public String getNotes() {
-        return notes;
-    }
+	public void addContributor(final String coverage) {
+		if (coverage != null) {
+			this.contributors.add(coverage);
+		}
+	}
 
-    public void setNotes(final String notes) {
-        this.notes = notes;
-    }
+	public List<String> getCoverages() {
+		return coverages;
+	}
 
-    public String getPublisher() {
-        return publisher;
-    }
+	public void setCoverages(final List<String> coverages) {
+		this.coverages.clear();
+		if (coverages != null) {
+			coverages.forEach(this::addCoverage);
+		}
+	}
 
-    public void setPublisher(final String publisher) {
-        this.publisher = publisher;
-    }
+	public void addCoverage(final String coverage) {
+		if (coverage != null) {
+			this.coverages.add(coverage);
+		}
+	}
 
-    public String getRights() {
-        return rights;
-    }
+	public List<String> getCreators() {
+		return creators;
+	}
 
-    public void setRights(final String rights) {
-        this.rights = rights;
-    }
+	public void setCreators(final List<String> creator) {
+		this.creators.clear();
+		if (creator != null) {
+			creator.forEach(this::addCreator);
+		}
+	}
 
-    public List<String> getSubjects() {
-        return subjects;
-    }
+	public void addCreator(final String creator) {
+		if (creator != null) {
+			this.creators.add(creator);
+		}
+	}
 
-    public TreeMap<Integer, String> getDescriptions() {
-        return descriptions;
-    }
+	public String getCredits() {
+		return credits;
+	}
 
-    public void setSubjects(final List<String> subjects) {
-        this.subjects.clear();
-        if (subjects != null) {
-            subjects.forEach(this::addSubject);
-        }
-    }
+	public void setCredits(final String credits) {
+		this.credits = credits;
+	}
 
-    public void addSubject(final String subject) {
-        if (subject != null) {
-            this.subjects.add(subject);
-        }
-    }
+	public String getDate() {
+		return date;
+	}
 
-    public List<String> getCollections() {
-        return collections;
-    }
+	public void setDate(final String date) {
+		this.date = date;
+	}
 
-    public void setCollections(final List<String> collections) {
-        this.collections.clear();
-        if (collections != null) {
-            collections.forEach(this::addCollection);
-        }
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void addCollection(final String collection) {
-        if (collection != null) {
-            this.collections.add(collection);
-        }
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public List<String> getLanguages() {
+		return languages;
+	}
 
-    public void setTitle(final String title) {
-        this.title = title;
-    }
+	public void setLanguages(final List<String> languages) {
+		this.languages.clear();
+		if (languages != null) {
+			languages.forEach(this::addLanguage);
+		}
+	}
 
-    public int getTotal() {
-        return total;
-    }
+	public void addLanguage(final String language) {
+		if (language != null) {
+			this.languages.add(language);
+		}
+	}
 
-    public void setTotal(final int total) {
-        this.total = total;
-    }
+	public String getLicenseUrl() {
+		return licenseUrl;
+	}
 
-    public List<CustomHeader> getCustomHeaders() {
-        return customHeaders;
-    }
+	public void setLicenseUrl(final String licenseUrl) {
+		this.licenseUrl = licenseUrl;
+	}
 
-    public void setCustomHeaders(final List<CustomHeader> customHeaders) {
-        this.customHeaders.clear();
-        if (customHeaders != null) {
-            customHeaders.forEach(this::addCustomHeader);
-        }
-    }
+	public MediaType getMediatype() {
+		return mediatype;
+	}
 
-    public void addCustomHeader(final CustomHeader header) {
-        if (header != null && StringUtils.isNotBlank(header.getType())
-            && StringUtils.isNotBlank(header.getValue())) {
-            this.customHeaders.add(header);
-        }
-    }
+	public void setMediatype(final MediaType mediatype) {
+		this.mediatype = mediatype;
+	}
 
-    public void addDescription(final String value, final Integer rank) {
-        this.descriptions.put(rank, value);
-    }
+	public String getCustomMediatype() {
+		return customMediatype;
+	}
 
-    public String getArchiveIdentifier() {
-        return archiveIdentifier;
-    }
+	public void setCustomMediatype(final String customMediatype) {
+		this.customMediatype = customMediatype;
+	}
 
-    public void setArchiveIdentifier(final String archiveIdentifier) {
-        this.archiveIdentifier = archiveIdentifier;
-    }
+	public String getNotes() {
+		return notes;
+	}
 
-    public enum MediaType {
-        texts,
-        image,
-        collection,
-        autre
-    }
+	public void setNotes(final String notes) {
+		this.notes = notes;
+	}
 
-    public static class CustomHeader extends AbstractDTO {
+	public String getPublisher() {
+		return publisher;
+	}
 
-        private String type;
-        private String value;
+	public void setPublisher(final String publisher) {
+		this.publisher = publisher;
+	}
 
-        public CustomHeader() {
-        }
+	public String getRights() {
+		return rights;
+	}
 
-        public String getType() {
-            return type;
-        }
+	public void setRights(final String rights) {
+		this.rights = rights;
+	}
 
-        public void setType(final String type) {
-            this.type = type;
-        }
+	public List<String> getSubjects() {
+		return subjects;
+	}
 
-        public String getValue() {
-            return value;
-        }
+	public TreeMap<Integer, String> getDescriptions() {
+		return descriptions;
+	}
 
-        public void setValue(final String value) {
-            this.value = value;
-        }
-    }
+	public void setSubjects(final List<String> subjects) {
+		this.subjects.clear();
+		if (subjects != null) {
+			subjects.forEach(this::addSubject);
+		}
+	}
 
-    public String getType() {
-        return type;
-    }
+	public void addSubject(final String subject) {
+		if (subject != null) {
+			this.subjects.add(subject);
+		}
+	}
 
-    public void setType(final String type) {
-        this.type = type;
-    }
+	public List<String> getCollections() {
+		return collections;
+	}
 
-    public String getSource() {
-        return source;
-    }
+	public void setCollections(final List<String> collections) {
+		this.collections.clear();
+		if (collections != null) {
+			collections.forEach(this::addCollection);
+		}
+	}
 
-    public void setSource(final String source) {
-        this.source = source;
-    }
+	public void addCollection(final String collection) {
+		if (collection != null) {
+			this.collections.add(collection);
+		}
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(final String title) {
+		this.title = title;
+	}
+
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(final int total) {
+		this.total = total;
+	}
+
+	public List<CustomHeader> getCustomHeaders() {
+		return customHeaders;
+	}
+
+	public void setCustomHeaders(final List<CustomHeader> customHeaders) {
+		this.customHeaders.clear();
+		if (customHeaders != null) {
+			customHeaders.forEach(this::addCustomHeader);
+		}
+	}
+
+	public void addCustomHeader(final CustomHeader header) {
+		if (header != null && StringUtils.isNotBlank(header.getType()) && StringUtils.isNotBlank(header.getValue())) {
+			this.customHeaders.add(header);
+		}
+	}
+
+	public void addDescription(final String value, final Integer rank) {
+		this.descriptions.put(rank, value);
+	}
+
+	public String getArchiveIdentifier() {
+		return archiveIdentifier;
+	}
+
+	public void setArchiveIdentifier(final String archiveIdentifier) {
+		this.archiveIdentifier = archiveIdentifier;
+	}
+
+	public enum MediaType {
+
+		texts, image, collection, autre
+
+	}
+
+	public static class CustomHeader extends AbstractDTO {
+
+		private String type;
+
+		private String value;
+
+		public CustomHeader() {
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(final String type) {
+			this.type = type;
+		}
+
+		public String getValue() {
+			return value;
+		}
+
+		public void setValue(final String value) {
+			this.value = value;
+		}
+
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(final String type) {
+		this.type = type;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(final String source) {
+		this.source = source;
+	}
 
 }

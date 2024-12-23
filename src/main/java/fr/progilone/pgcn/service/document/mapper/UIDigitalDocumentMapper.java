@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UIDigitalDocumentMapper {
 
-    public void mapInto(final DigitalDocumentDTO docDTO, final DigitalDocument doc) {
-        doc.setDigitalId(docDTO.getDigitalId());
-        doc.setCheckNotes(docDTO.getCheckNotes());
-        doc.getDocUnit().setDigitizingNotes(docDTO.getDocUnit().getDigitizingNotes());
-    }
+	public void mapInto(final DigitalDocumentDTO docDTO, final DigitalDocument doc) {
+		doc.setDigitalId(docDTO.getDigitalId());
+		doc.setCheckNotes(docDTO.getCheckNotes());
+		doc.getDocUnit().setDigitizingNotes(docDTO.getDocUnit().getDigitizingNotes());
+	}
+
 }

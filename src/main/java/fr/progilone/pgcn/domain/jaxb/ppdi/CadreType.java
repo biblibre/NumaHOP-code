@@ -1,5 +1,6 @@
 //
-// Ce fichier a été généré par l'implémentation de référence JavaTM Architecture for XML Binding (JAXB), v2.2.8-b130911.1802
+// Ce fichier a été généré par l'implémentation de référence JavaTM Architecture for XML Binding (JAXB),
+// v2.2.8-b130911.1802
 // Voir <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>
 // Toute modification apportée à fichier sera perdue lors de la recompilation du schéma source.
 // Généré le : 2017.12.08 à 03:23:15 PM CET
@@ -15,47 +16,44 @@ import jakarta.xml.bind.annotation.XmlType;
  * <p>
  * Classe Java pour cadreType.
  * </p>
- *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
  * </p>
  *
  * <pre>
  * &lt;simpleType name="cadreType"&gt;
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
- *     &lt;enumeration value="Archivage patrimonial"/&gt;
- *     &lt;enumeration value="Tiers archivage"/&gt;
- *   &lt;/restriction&gt;
+ * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ * &lt;enumeration value="Archivage patrimonial"/&gt;
+ * &lt;enumeration value="Tiers archivage"/&gt;
+ * &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- *
  */
 @XmlType(name = "cadreType")
 @XmlEnum
 public enum CadreType {
 
-    @XmlEnumValue("Archivage patrimonial")
-    ARCHIVAGE_PATRIMONIAL("Archivage patrimonial"),
-    @XmlEnumValue("Tiers archivage")
-    TIERS_ARCHIVAGE("Tiers archivage");
+	@XmlEnumValue("Archivage patrimonial")
+	ARCHIVAGE_PATRIMONIAL("Archivage patrimonial"), @XmlEnumValue("Tiers archivage")
+	TIERS_ARCHIVAGE("Tiers archivage");
 
-    private final String value;
+	private final String value;
 
-    CadreType(String v) {
-        value = v;
-    }
+	CadreType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static CadreType fromValue(String v) {
-        for (CadreType c : CadreType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static CadreType fromValue(String v) {
+		for (CadreType c : CadreType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

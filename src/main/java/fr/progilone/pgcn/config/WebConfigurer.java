@@ -29,80 +29,88 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableSpringDataWebSupport
 public class WebConfigurer implements WebMvcConfigurer, ServletContextInitializer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(WebConfigurer.class);
+	private static final Logger LOG = LoggerFactory.getLogger(WebConfigurer.class);
 
-    private final Environment env;
-    private final MetricRegistry metricRegistry;
+	private final Environment env;
 
-    public WebConfigurer(final Environment env, @Autowired(required = false) final MetricRegistry metricRegistry) {
-        this.env = env;
-        this.metricRegistry = metricRegistry;
-    }
+	private final MetricRegistry metricRegistry;
 
-    @Override
-    public void onStartup(final ServletContext servletContext) throws ServletException {
-        LOG.info("Web application configuration, using profiles: {}", Arrays.toString(env.getActiveProfiles()));
-        final EnumSet<DispatcherType> disps = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.ASYNC);
-        if (metricRegistry != null) {
-            initMetrics(servletContext, disps);
-        }
-        if (env.acceptsProfiles(Profiles.of(Constants.SPRING_PROFILE_PRODUCTION))) {
-            initCachingHttpHeadersFilter(servletContext, disps);
-            initStaticResourcesProductionFilter(servletContext, disps);
-        }
-        LOG.info("Web application fully configured");
-    }
+	public WebConfigurer(final Environment env, @Autowired(required = false) final MetricRegistry metricRegistry) {
+		this.env = env;
+		this.metricRegistry = metricRegistry;
+	}
 
-    /**
-     * Initializes the static resources production Filter.
-     */
-    private void initStaticResourcesProductionFilter(final ServletContext servletContext, final EnumSet<DispatcherType> disps) {
+	@Override
+	public void onStartup(final ServletContext servletContext) throws ServletException {
+		LOG.info("Web application configuration, using profiles: {}", Arrays.toString(env.getActiveProfiles()));
+		final EnumSet<DispatcherType> disps = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD,
+				DispatcherType.ASYNC);
+		if (metricRegistry != null) {
+			initMetrics(servletContext, disps);
+		}
+		if (env.acceptsProfiles(Profiles.of(Constants.SPRING_PROFILE_PRODUCTION))) {
+			initCachingHttpHeadersFilter(servletContext, disps);
+			initStaticResourcesProductionFilter(servletContext, disps);
+		}
+		LOG.info("Web application fully configured");
+	}
 
-        LOG.debug("Registering static resources production Filter");
-        final FilterRegistration.Dynamic staticResourcesProductionFilter = servletContext.addFilter("staticResourcesProductionFilter", new StaticResourcesProductionFilter());
+	/**
+	 * Initializes the static resources production Filter.
+	 */
+	private void initStaticResourcesProductionFilter(final ServletContext servletContext,
+			final EnumSet<DispatcherType> disps) {
 
-        staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/");
-        staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/index.html");
-        staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/assets/*");
-        staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/libs/*");
-        staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/i18n/*");
-        staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/scripts/*");
-        staticResourcesProductionFilter.setAsyncSupported(true);
-    }
+		LOG.debug("Registering static resources production Filter");
+		final FilterRegistration.Dynamic staticResourcesProductionFilter = servletContext
+			.addFilter("staticResourcesProductionFilter", new StaticResourcesProductionFilter());
 
-    /**
-     * Initializes the cachig HTTP Headers Filter.
-     */
-    private void initCachingHttpHeadersFilter(final ServletContext servletContext, final EnumSet<DispatcherType> disps) {
-        LOG.debug("Registering Caching HTTP Headers Filter");
-        final FilterRegistration.Dynamic cachingHttpHeadersFilter = servletContext.addFilter("cachingHttpHeadersFilter", new CachingHttpHeadersFilter(env));
+		staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/");
+		staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/index.html");
+		staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/assets/*");
+		staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/libs/*");
+		staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/i18n/*");
+		staticResourcesProductionFilter.addMappingForUrlPatterns(disps, true, "/scripts/*");
+		staticResourcesProductionFilter.setAsyncSupported(true);
+	}
 
-        cachingHttpHeadersFilter.addMappingForUrlPatterns(disps, true, "/assets/*");
-        cachingHttpHeadersFilter.addMappingForUrlPatterns(disps, true, "/scripts/*");
-        cachingHttpHeadersFilter.setAsyncSupported(true);
-    }
+	/**
+	 * Initializes the cachig HTTP Headers Filter.
+	 */
+	private void initCachingHttpHeadersFilter(final ServletContext servletContext,
+			final EnumSet<DispatcherType> disps) {
+		LOG.debug("Registering Caching HTTP Headers Filter");
+		final FilterRegistration.Dynamic cachingHttpHeadersFilter = servletContext.addFilter("cachingHttpHeadersFilter",
+				new CachingHttpHeadersFilter(env));
 
-    /**
-     * Initializes Metrics.
-     */
-    private void initMetrics(final ServletContext servletContext, final EnumSet<DispatcherType> disps) {
-        LOG.debug("Initializing Metrics registries");
-        servletContext.setAttribute(InstrumentedFilter.REGISTRY_ATTRIBUTE, metricRegistry);
-        servletContext.setAttribute(MetricsServlet.METRICS_REGISTRY, metricRegistry);
+		cachingHttpHeadersFilter.addMappingForUrlPatterns(disps, true, "/assets/*");
+		cachingHttpHeadersFilter.addMappingForUrlPatterns(disps, true, "/scripts/*");
+		cachingHttpHeadersFilter.setAsyncSupported(true);
+	}
 
-        LOG.debug("Registering Metrics Filter");
-        final FilterRegistration.Dynamic metricsFilter = servletContext.addFilter("webappMetricsFilter", new InstrumentedFilter());
+	/**
+	 * Initializes Metrics.
+	 */
+	private void initMetrics(final ServletContext servletContext, final EnumSet<DispatcherType> disps) {
+		LOG.debug("Initializing Metrics registries");
+		servletContext.setAttribute(InstrumentedFilter.REGISTRY_ATTRIBUTE, metricRegistry);
+		servletContext.setAttribute(MetricsServlet.METRICS_REGISTRY, metricRegistry);
 
-        metricsFilter.addMappingForUrlPatterns(disps, true, "/*");
-        metricsFilter.setAsyncSupported(true);
+		LOG.debug("Registering Metrics Filter");
+		final FilterRegistration.Dynamic metricsFilter = servletContext.addFilter("webappMetricsFilter",
+				new InstrumentedFilter());
 
-        LOG.debug("Registering Metrics Servlet");
-        final ServletRegistration.Dynamic metricsAdminServlet = servletContext.addServlet("metricsServlet", new MetricsServlet());
+		metricsFilter.addMappingForUrlPatterns(disps, true, "/*");
+		metricsFilter.setAsyncSupported(true);
 
-        metricsAdminServlet.addMapping("/actuator/jhi-metrics/*");
-        metricsAdminServlet.addMapping("/api_int/jhi-metrics/*");
-        metricsAdminServlet.setAsyncSupported(true);
-        metricsAdminServlet.setLoadOnStartup(2);
-    }
+		LOG.debug("Registering Metrics Servlet");
+		final ServletRegistration.Dynamic metricsAdminServlet = servletContext.addServlet("metricsServlet",
+				new MetricsServlet());
+
+		metricsAdminServlet.addMapping("/actuator/jhi-metrics/*");
+		metricsAdminServlet.addMapping("/api_int/jhi-metrics/*");
+		metricsAdminServlet.setAsyncSupported(true);
+		metricsAdminServlet.setLoadOnStartup(2);
+	}
 
 }

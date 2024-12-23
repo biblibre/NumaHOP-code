@@ -18,28 +18,35 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UIDocPropertyTypeService {
 
-    private final DocPropertyTypeService docPropertyTypeService;
+	private final DocPropertyTypeService docPropertyTypeService;
 
-    @Autowired
-    public UIDocPropertyTypeService(final DocPropertyTypeService docPropertyTypeService) {
-        this.docPropertyTypeService = docPropertyTypeService;
-    }
+	@Autowired
+	public UIDocPropertyTypeService(final DocPropertyTypeService docPropertyTypeService) {
+		this.docPropertyTypeService = docPropertyTypeService;
+	}
 
-    @Transactional(readOnly = true)
-    public List<DocPropertyTypeDTO> findAllDTO() {
-        final List<DocPropertyType> propertyTypes = docPropertyTypeService.findAll();
-        return propertyTypes.stream().map(DocPropertyTypeMapper.INSTANCE::docPropertyTypeToDocPropertyTypeDTO).collect(Collectors.toList());
-    }
+	@Transactional(readOnly = true)
+	public List<DocPropertyTypeDTO> findAllDTO() {
+		final List<DocPropertyType> propertyTypes = docPropertyTypeService.findAll();
+		return propertyTypes.stream()
+			.map(DocPropertyTypeMapper.INSTANCE::docPropertyTypeToDocPropertyTypeDTO)
+			.collect(Collectors.toList());
+	}
 
-    @Transactional(readOnly = true)
-    public List<DocPropertyTypeDTO> findCustomDTO() {
-        final List<DocPropertyType> propertyTypes = docPropertyTypeService.findCustom();
-        return propertyTypes.stream().map(DocPropertyTypeMapper.INSTANCE::docPropertyTypeToDocPropertyTypeDTO).collect(Collectors.toList());
-    }
+	@Transactional(readOnly = true)
+	public List<DocPropertyTypeDTO> findCustomDTO() {
+		final List<DocPropertyType> propertyTypes = docPropertyTypeService.findCustom();
+		return propertyTypes.stream()
+			.map(DocPropertyTypeMapper.INSTANCE::docPropertyTypeToDocPropertyTypeDTO)
+			.collect(Collectors.toList());
+	}
 
-    @Transactional(readOnly = true)
-    public List<DocPropertyTypeDTO> findAllDTOBySuperType(final DocPropertyType.DocPropertySuperType superType) {
-        final List<DocPropertyType> propertyTypes = docPropertyTypeService.findAllBySuperType(superType);
-        return propertyTypes.stream().map(DocPropertyTypeMapper.INSTANCE::docPropertyTypeToDocPropertyTypeDTO).collect(Collectors.toList());
-    }
+	@Transactional(readOnly = true)
+	public List<DocPropertyTypeDTO> findAllDTOBySuperType(final DocPropertyType.DocPropertySuperType superType) {
+		final List<DocPropertyType> propertyTypes = docPropertyTypeService.findAllBySuperType(superType);
+		return propertyTypes.stream()
+			.map(DocPropertyTypeMapper.INSTANCE::docPropertyTypeToDocPropertyTypeDTO)
+			.collect(Collectors.toList());
+	}
+
 }

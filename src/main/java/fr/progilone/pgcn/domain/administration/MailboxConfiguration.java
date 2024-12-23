@@ -17,234 +17,218 @@ import java.util.Set;
 @Table(name = MailboxConfiguration.TABLE_NAME)
 public class MailboxConfiguration extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "conf_email";
-    public static final String TABLE_NAME_PROPERTY = "conf_email_prop";
+	public static final String TABLE_NAME = "conf_email";
 
-    /**
-     * Libellé
-     */
-    @Column(name = "label", nullable = false)
-    private String label;
+	public static final String TABLE_NAME_PROPERTY = "conf_email_prop";
 
-    /**
-     * Bibliothèque à laquelle appartient cette configuration
-     */
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "library")
-    private Library library;
+	/**
+	 * Libellé
+	 */
+	@Column(name = "label", nullable = false)
+	private String label;
 
-    /**
-     * Nom d'utilisateur
-     */
-    @Column(name = "username")
-    private String username;
+	/**
+	 * Bibliothèque à laquelle appartient cette configuration
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "library")
+	private Library library;
 
-    /**
-     * Mot de passe, crypté avec {@link fr.progilone.pgcn.service.util.CryptoService}
-     */
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(name = "password")
-    private String password;
+	/**
+	 * Nom d'utilisateur
+	 */
+	@Column(name = "username")
+	private String username;
 
-    /**
-     * Serveur de messagerie
-     */
-    @Column(name = "host")
-    private String host;
+	/**
+	 * Mot de passe, crypté avec {@link fr.progilone.pgcn.service.util.CryptoService}
+	 */
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@Column(name = "password")
+	private String password;
 
-    /**
-     * Port de connexion
-     */
-    @Column(name = "port")
-    private Integer port;
+	/**
+	 * Serveur de messagerie
+	 */
+	@Column(name = "host")
+	private String host;
 
-    /**
-     * Répertoire de la messagerie
-     */
-    @Column(name = "inbox")
-    private String inbox;
+	/**
+	 * Port de connexion
+	 */
+	@Column(name = "port")
+	private Integer port;
 
-    /**
-     * Propriétés de configuration de la connexion à la messagerie
-     */
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = TABLE_NAME_PROPERTY, joinColumns = @JoinColumn(name = "conf_id"))
-    public final Set<Property> properties = new HashSet<>();
+	/**
+	 * Répertoire de la messagerie
+	 */
+	@Column(name = "inbox")
+	private String inbox;
 
-    /**
-     * La configuration est active / inactive
-     */
-    @Column(name = "active", nullable = false)
-    public boolean active = true;
+	/**
+	 * Propriétés de configuration de la connexion à la messagerie
+	 */
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = TABLE_NAME_PROPERTY, joinColumns = @JoinColumn(name = "conf_id"))
+	public final Set<Property> properties = new HashSet<>();
 
-    public String getLabel() {
-        return label;
-    }
+	/**
+	 * La configuration est active / inactive
+	 */
+	@Column(name = "active", nullable = false)
+	public boolean active = true;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public Library getLibrary() {
-        return library;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setLibrary(final Library library) {
-        this.library = library;
-    }
+	public Library getLibrary() {
+		return library;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public void setLibrary(final Library library) {
+		this.library = library;
+	}
 
-    public void setUsername(final String username) {
-        this.username = username;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    @JsonIgnore
-    public String getPassword() {
-        return password;
-    }
+	public void setUsername(final String username) {
+		this.username = username;
+	}
 
-    public void setPassword(final String password) {
-        this.password = password;
-    }
+	@JsonIgnore
+	public String getPassword() {
+		return password;
+	}
 
-    public String getHost() {
-        return host;
-    }
+	public void setPassword(final String password) {
+		this.password = password;
+	}
 
-    public void setHost(final String host) {
-        this.host = host;
-    }
+	public String getHost() {
+		return host;
+	}
 
-    public String getInbox() {
-        return inbox;
-    }
+	public void setHost(final String host) {
+		this.host = host;
+	}
 
-    public void setInbox(final String inbox) {
-        this.inbox = inbox;
-    }
+	public String getInbox() {
+		return inbox;
+	}
 
-    public Set<Property> getProperties() {
-        return properties;
-    }
+	public void setInbox(final String inbox) {
+		this.inbox = inbox;
+	}
 
-    public void setProperties(Set<Property> properties) {
-        this.properties.clear();
-        if (properties != null) {
-            properties.forEach(this::addProperty);
-        }
-    }
+	public Set<Property> getProperties() {
+		return properties;
+	}
 
-    public void addProperty(final Property property) {
-        if (property != null) {
-            this.properties.add(property);
-        }
-    }
+	public void setProperties(Set<Property> properties) {
+		this.properties.clear();
+		if (properties != null) {
+			properties.forEach(this::addProperty);
+		}
+	}
 
-    public void addProperty(final String property, final String value) {
-        if (property != null) {
-            Property prop = new Property();
-            prop.setName(property);
-            prop.setValue(value);
-            this.properties.add(prop);
-        }
-    }
+	public void addProperty(final Property property) {
+		if (property != null) {
+			this.properties.add(property);
+		}
+	}
 
-    @Override
-    public String toString() {
-        return "MailboxConfiguration{" + "label='"
-               + label
-               + '\''
-               + ", username='"
-               + username
-               + '\''
-               + ", host='"
-               + host
-               + '\''
-               + ", inbox='"
-               + inbox
-               + '\''
-               + ", active='"
-               + active
-               + '\''
-               + '}';
-    }
+	public void addProperty(final String property, final String value) {
+		if (property != null) {
+			Property prop = new Property();
+			prop.setName(property);
+			prop.setValue(value);
+			this.properties.add(prop);
+		}
+	}
 
-    public Integer getPort() {
-        return port;
-    }
+	@Override
+	public String toString() {
+		return "MailboxConfiguration{" + "label='" + label + '\'' + ", username='" + username + '\'' + ", host='" + host
+				+ '\'' + ", inbox='" + inbox + '\'' + ", active='" + active + '\'' + '}';
+	}
 
-    public void setPort(final Integer port) {
-        this.port = port;
-    }
+	public Integer getPort() {
+		return port;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public void setPort(final Integer port) {
+		this.port = port;
+	}
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    /**
-     * Propriété de configuration de la connexion à la messagerie
-     */
-    @Embeddable
-    public static class Property implements Serializable {
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
 
-        /**
-         * Nom de la propriété
-         */
-        @Column(name = "name")
-        private String name;
+	/**
+	 * Propriété de configuration de la connexion à la messagerie
+	 */
+	@Embeddable
+	public static class Property implements Serializable {
 
-        /**
-         * Valeur de la propriété
-         */
-        @Column(name = "value")
-        private String value;
+		/**
+		 * Nom de la propriété
+		 */
+		@Column(name = "name")
+		private String name;
 
-        public String getName() {
-            return name;
-        }
+		/**
+		 * Valeur de la propriété
+		 */
+		@Column(name = "value")
+		private String value;
 
-        public void setName(final String name) {
-            this.name = name;
-        }
+		public String getName() {
+			return name;
+		}
 
-        public String getValue() {
-            return value;
-        }
+		public void setName(final String name) {
+			this.name = name;
+		}
 
-        public void setValue(final String value) {
-            this.value = value;
-        }
+		public String getValue() {
+			return value;
+		}
 
-        @Override
-        public boolean equals(final Object o) {
-            if (this == o)
-                return true;
-            if (o == null || getClass() != o.getClass())
-                return false;
-            final Property property = (Property) o;
-            return Objects.equals(name, property.name);
-        }
+		public void setValue(final String value) {
+			this.value = value;
+		}
 
-        @Override
-        public int hashCode() {
-            return Objects.hash(name);
-        }
+		@Override
+		public boolean equals(final Object o) {
+			if (this == o)
+				return true;
+			if (o == null || getClass() != o.getClass())
+				return false;
+			final Property property = (Property) o;
+			return Objects.equals(name, property.name);
+		}
 
-        @Override
-        public String toString() {
-            return "Property{" + "name='"
-                   + name
-                   + '\''
-                   + ", value="
-                   + value
-                   + '}';
-        }
-    }
+		@Override
+		public int hashCode() {
+			return Objects.hash(name);
+		}
+
+		@Override
+		public String toString() {
+			return "Property{" + "name='" + name + '\'' + ", value=" + value + '}';
+		}
+
+	}
+
 }

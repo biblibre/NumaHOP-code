@@ -4,77 +4,84 @@ import fr.progilone.pgcn.domain.delivery.Delivery;
 
 public class AuditDeliveryRevisionDTO {
 
-    private int rev;
-    private long timestamp;
-    private String username;
+	private int rev;
 
-    private String identifier;
-    private String label;
-    private Delivery.DeliveryStatus status;
-    private String lotIdentifier;
-    private String lotLabel;
+	private long timestamp;
 
-    public int getRev() {
-        return rev;
-    }
+	private String username;
 
-    public void setRev(final int rev) {
-        this.rev = rev;
-    }
+	private String identifier;
 
-    public long getTimestamp() {
-        return timestamp;
-    }
+	private String label;
 
-    public void setTimestamp(final long timestamp) {
-        this.timestamp = timestamp;
-    }
+	private Delivery.DeliveryStatus status;
 
-    public String getUsername() {
-        return username;
-    }
+	private String lotIdentifier;
 
-    public void setUsername(final String username) {
-        this.username = username;
-    }
+	private String lotLabel;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public int getRev() {
+		return rev;
+	}
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	public void setRev(final int rev) {
+		this.rev = rev;
+	}
 
-    public String getLabel() {
-        return label;
-    }
+	public long getTimestamp() {
+		return timestamp;
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public void setTimestamp(final long timestamp) {
+		this.timestamp = timestamp;
+	}
 
-    public Delivery.DeliveryStatus getStatus() {
-        return status;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public void setStatus(final Delivery.DeliveryStatus status) {
-        this.status = status;
-    }
+	public void setUsername(final String username) {
+		this.username = username;
+	}
 
-    public String getLotIdentifier() {
-        return lotIdentifier;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setLotIdentifier(final String lotIdentifier) {
-        this.lotIdentifier = lotIdentifier;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getLotLabel() {
-        return lotLabel;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setLotLabel(final String lotLabel) {
-        this.lotLabel = lotLabel;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
+
+	public Delivery.DeliveryStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(final Delivery.DeliveryStatus status) {
+		this.status = status;
+	}
+
+	public String getLotIdentifier() {
+		return lotIdentifier;
+	}
+
+	public void setLotIdentifier(final String lotIdentifier) {
+		this.lotIdentifier = lotIdentifier;
+	}
+
+	public String getLotLabel() {
+		return lotLabel;
+	}
+
+	public void setLotLabel(final String lotLabel) {
+		this.lotLabel = lotLabel;
+	}
+
 }

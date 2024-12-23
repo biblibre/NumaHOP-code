@@ -24,21 +24,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api_int")
 public class LogsResource {
 
-    @RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
-    @RequestMapping(value = "/logs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public List<LoggerDTO> getList() {
-        final LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-        return context.getLoggerList().stream().map(LoggerDTO::new).collect(Collectors.toList());
+	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	@RequestMapping(value = "/logs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public List<LoggerDTO> getList() {
+		final LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
+		return context.getLoggerList().stream().map(LoggerDTO::new).collect(Collectors.toList());
 
-    }
+	}
 
-    @RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
-    @RequestMapping(value = "/logs", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Timed
-    public void changeLevel(@RequestBody final LoggerDTO jsonLogger) {
-        final LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-        context.getLogger(jsonLogger.getName()).setLevel(Level.valueOf(jsonLogger.getLevel()));
-    }
+	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	@RequestMapping(value = "/logs", method = RequestMethod.PUT)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@Timed
+	public void changeLevel(@RequestBody final LoggerDTO jsonLogger) {
+		final LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
+		context.getLogger(jsonLogger.getName()).setLevel(Level.valueOf(jsonLogger.getLevel()));
+	}
+
 }

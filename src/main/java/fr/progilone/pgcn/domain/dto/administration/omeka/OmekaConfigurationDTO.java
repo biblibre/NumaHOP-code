@@ -9,221 +9,241 @@ import java.util.Objects;
  */
 public class OmekaConfigurationDTO {
 
-    private String identifier;
-    private String label;
-    private String storageServer;
-    private String port;
-    private SimpleLibraryDTO library;
-    private List<OmekaListDTO> omekaCollections;
-    private List<OmekaListDTO> omekaItems;
-    private List<OmekaListDTO> omekaLists;
-    private boolean active;
-    private String address;
-    private String login;
-    private String password;
-    private String accessUrl;
-    private String mailCsv;
+	private String identifier;
 
-    private boolean exportMets;
-    private boolean exportMaster;
-    private boolean exportView;
-    private boolean exportThumb;
-    private boolean exportPdf;
+	private String label;
 
-    private boolean omekas;
-    private boolean sftp;
-    private boolean zip;
+	private String storageServer;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String port;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private SimpleLibraryDTO library;
 
-    public String getLabel() {
-        return label;
-    }
+	private List<OmekaListDTO> omekaCollections;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	private List<OmekaListDTO> omekaItems;
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	private List<OmekaListDTO> omekaLists;
 
-    public void setLibrary(final SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	private boolean active;
 
-    public boolean isActive() {
-        return active;
-    }
+	private String address;
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	private String login;
 
-    public String getStorageServer() {
-        return storageServer;
-    }
+	private String password;
 
-    public void setStorageServer(final String storageServer) {
-        this.storageServer = storageServer;
-    }
+	private String accessUrl;
 
-    public String getAddress() {
-        return address;
-    }
+	private String mailCsv;
 
-    public void setAddress(final String address) {
-        this.address = address;
-    }
+	private boolean exportMets;
 
-    public String getPort() {
-        return port;
-    }
+	private boolean exportMaster;
 
-    public void setPort(final String port) {
-        this.port = port;
-    }
+	private boolean exportView;
 
-    public String getLogin() {
-        return login;
-    }
+	private boolean exportThumb;
 
-    public void setLogin(final String login) {
-        this.login = login;
-    }
+	private boolean exportPdf;
 
-    public String getPassword() {
-        return password;
-    }
+	private boolean omekas;
 
-    public void setPassword(final String password) {
-        this.password = password;
-    }
+	private boolean sftp;
 
-    public String getAccessUrl() {
-        return accessUrl;
-    }
+	private boolean zip;
 
-    public void setAccessUrl(final String accessUrl) {
-        this.accessUrl = accessUrl;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getMailCsv() {
-        return mailCsv;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setMailCsv(final String mailCsv) {
-        this.mailCsv = mailCsv;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public boolean isExportMets() {
-        return exportMets;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setExportMets(final boolean exportMets) {
-        this.exportMets = exportMets;
-    }
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
 
-    public boolean isExportMaster() {
-        return exportMaster;
-    }
+	public void setLibrary(final SimpleLibraryDTO library) {
+		this.library = library;
+	}
 
-    public void setExportMaster(final boolean exportMaster) {
-        this.exportMaster = exportMaster;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public boolean isExportView() {
-        return exportView;
-    }
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
 
-    public void setExportView(final boolean exportView) {
-        this.exportView = exportView;
-    }
+	public String getStorageServer() {
+		return storageServer;
+	}
 
-    public boolean isExportThumb() {
-        return exportThumb;
-    }
+	public void setStorageServer(final String storageServer) {
+		this.storageServer = storageServer;
+	}
 
-    public void setExportThumb(final boolean exportThumb) {
-        this.exportThumb = exportThumb;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public boolean isExportPdf() {
-        return exportPdf;
-    }
+	public void setAddress(final String address) {
+		this.address = address;
+	}
 
-    public void setExportPdf(final boolean exportPdf) {
-        this.exportPdf = exportPdf;
-    }
+	public String getPort() {
+		return port;
+	}
 
-    public List<OmekaListDTO> getOmekaCollections() {
-        return omekaCollections;
-    }
+	public void setPort(final String port) {
+		this.port = port;
+	}
 
-    public void setOmekaCollections(final List<OmekaListDTO> omekaCollections) {
-        this.omekaCollections = omekaCollections;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public List<OmekaListDTO> getOmekaItems() {
-        return omekaItems;
-    }
+	public void setLogin(final String login) {
+		this.login = login;
+	}
 
-    public void setOmekaItems(final List<OmekaListDTO> omekaItems) {
-        this.omekaItems = omekaItems;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public List<OmekaListDTO> getOmekaLists() {
-        return omekaLists;
-    }
+	public void setPassword(final String password) {
+		this.password = password;
+	}
 
-    public void setOmekaLists(final List<OmekaListDTO> omekaLists) {
-        this.omekaLists = omekaLists;
-    }
+	public String getAccessUrl() {
+		return accessUrl;
+	}
 
-    public boolean isOmekas() {
-        return omekas;
-    }
+	public void setAccessUrl(final String accessUrl) {
+		this.accessUrl = accessUrl;
+	}
 
-    public void setOmekas(final boolean omekas) {
-        this.omekas = omekas;
-    }
+	public String getMailCsv() {
+		return mailCsv;
+	}
 
-    public boolean isSftp() {
-        return sftp;
-    }
+	public void setMailCsv(final String mailCsv) {
+		this.mailCsv = mailCsv;
+	}
 
-    public void setSftp(final boolean sftp) {
-        this.sftp = sftp;
-    }
+	public boolean isExportMets() {
+		return exportMets;
+	}
 
-    public boolean isZip() {
-        return zip;
-    }
+	public void setExportMets(final boolean exportMets) {
+		this.exportMets = exportMets;
+	}
 
-    public void setZip(final boolean zip) {
-        this.zip = zip;
-    }
+	public boolean isExportMaster() {
+		return exportMaster;
+	}
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final OmekaConfigurationDTO that = (OmekaConfigurationDTO) o;
-        return Objects.equals(identifier, that.identifier);
-    }
+	public void setExportMaster(final boolean exportMaster) {
+		this.exportMaster = exportMaster;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(identifier);
-    }
+	public boolean isExportView() {
+		return exportView;
+	}
+
+	public void setExportView(final boolean exportView) {
+		this.exportView = exportView;
+	}
+
+	public boolean isExportThumb() {
+		return exportThumb;
+	}
+
+	public void setExportThumb(final boolean exportThumb) {
+		this.exportThumb = exportThumb;
+	}
+
+	public boolean isExportPdf() {
+		return exportPdf;
+	}
+
+	public void setExportPdf(final boolean exportPdf) {
+		this.exportPdf = exportPdf;
+	}
+
+	public List<OmekaListDTO> getOmekaCollections() {
+		return omekaCollections;
+	}
+
+	public void setOmekaCollections(final List<OmekaListDTO> omekaCollections) {
+		this.omekaCollections = omekaCollections;
+	}
+
+	public List<OmekaListDTO> getOmekaItems() {
+		return omekaItems;
+	}
+
+	public void setOmekaItems(final List<OmekaListDTO> omekaItems) {
+		this.omekaItems = omekaItems;
+	}
+
+	public List<OmekaListDTO> getOmekaLists() {
+		return omekaLists;
+	}
+
+	public void setOmekaLists(final List<OmekaListDTO> omekaLists) {
+		this.omekaLists = omekaLists;
+	}
+
+	public boolean isOmekas() {
+		return omekas;
+	}
+
+	public void setOmekas(final boolean omekas) {
+		this.omekas = omekas;
+	}
+
+	public boolean isSftp() {
+		return sftp;
+	}
+
+	public void setSftp(final boolean sftp) {
+		this.sftp = sftp;
+	}
+
+	public boolean isZip() {
+		return zip;
+	}
+
+	public void setZip(final boolean zip) {
+		this.zip = zip;
+	}
+
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		final OmekaConfigurationDTO that = (OmekaConfigurationDTO) o;
+		return Objects.equals(identifier, that.identifier);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(identifier);
+	}
+
 }

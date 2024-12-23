@@ -35,151 +35,152 @@ import org.xml.sax.SAXException;
 @ExtendWith(MockitoExtension.class)
 public class ExportMetsServiceTest {
 
-    @Mock
-    private ExportEadService exportEadService;
+	@Mock
+	private ExportEadService exportEadService;
 
-    private ExportMetsService service;
+	private ExportMetsService service;
 
-    @Mock
-    private MetaDatasCheckService mdCheckService;
+	@Mock
+	private MetaDatasCheckService mdCheckService;
 
-    @Mock
-    private TableOfContentsService tocService;
+	@Mock
+	private TableOfContentsService tocService;
 
-    @BeforeEach
-    public void setUp() {
-        service = new ExportMetsService(exportEadService, mdCheckService, tocService);
-    }
+	@BeforeEach
+	public void setUp() {
+		service = new ExportMetsService(exportEadService, mdCheckService, tocService);
+	}
 
-    @Test
-    public void testWriteMetadataDocUnit() throws JAXBException, IOException, SAXException {
-        final DocUnit docUnit = GenerateDocUnitUtil.getDocUnit(GenerateDocUnitUtilEnum.COMPLIANT);
-        final File eadTmpFile = createEadTmpFile();
+	@Test
+	public void testWriteMetadataDocUnit() throws JAXBException, IOException, SAXException {
+		final DocUnit docUnit = GenerateDocUnitUtil.getDocUnit(GenerateDocUnitUtilEnum.COMPLIANT);
+		final File eadTmpFile = createEadTmpFile();
 
-        final BibliographicRecordDcDTO dcDto = new BibliographicRecordDcDTO();
-        dcDto.getIdentifier().add("TEST-001");
+		final BibliographicRecordDcDTO dcDto = new BibliographicRecordDcDTO();
+		dcDto.getIdentifier().add("TEST-001");
 
-        final fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory METS_FACTORY = new fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory();
-        final Mets mets = METS_FACTORY.createMets();
+		final fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory METS_FACTORY = new fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory();
+		final Mets mets = METS_FACTORY.createMets();
 
-        when(mdCheckService.getMetaDataMetsFile(any(), any())).thenReturn(Optional.of(mets));
-        when(mdCheckService.getMetaDataExcelFile(any(), any())).thenReturn(Optional.empty());
+		when(mdCheckService.getMetaDataMetsFile(any(), any())).thenReturn(Optional.of(mets));
+		when(mdCheckService.getMetaDataExcelFile(any(), any())).thenReturn(Optional.empty());
 
-        try (final OutputStream out = new ByteArrayOutputStream(); final OutputStream bufOut = new BufferedOutputStream(out)) {
+		try (final OutputStream out = new ByteArrayOutputStream();
+				final OutputStream bufOut = new BufferedOutputStream(out)) {
 
-            final List<CheckSummedStoredFile> sums = GenerateDocUnitUtil.getCheckSummedList();
-            service.writeMetadata(bufOut, docUnit, dcDto, false, sums);
-            bufOut.flush();
+			final List<CheckSummedStoredFile> sums = GenerateDocUnitUtil.getCheckSummedList();
+			service.writeMetadata(bufOut, docUnit, dcDto, false, sums);
+			bufOut.flush();
 
-            final String xml = out.toString();
+			final String xml = out.toString();
 
-            // Vérification de la génération des données bib
-            assertTrue(xml.contains("<mets:dmdSec ID=\"DMD-DC\">"));
-            // Métadonnées EAD
-            assertFalse(xml.contains("<ead:ead>"));
-            // Vérification de la présence des fichiers
-            assertTrue(xml.contains("<mets:file ID=\"master_0000\""));
-            assertTrue(xml.contains("<mets:file ID=\"master_0001\""));
-            // mets:structMap ID="structmap_physical"
-            // Vérification de la présence d'une structure physique
-            assertTrue(xml.contains("<mets:structMap ID=\"structmap_physical\""));
-            // Vérification de la présence du lien
-            assertTrue(xml.contains("<mets:div DMDID=\"DMD-DC\""));
+			// Vérification de la génération des données bib
+			assertTrue(xml.contains("<mets:dmdSec ID=\"DMD-DC\">"));
+			// Métadonnées EAD
+			assertFalse(xml.contains("<ead:ead>"));
+			// Vérification de la présence des fichiers
+			assertTrue(xml.contains("<mets:file ID=\"master_0000\""));
+			assertTrue(xml.contains("<mets:file ID=\"master_0001\""));
+			// mets:structMap ID="structmap_physical"
+			// Vérification de la présence d'une structure physique
+			assertTrue(xml.contains("<mets:structMap ID=\"structmap_physical\""));
+			// Vérification de la présence du lien
+			assertTrue(xml.contains("<mets:div DMDID=\"DMD-DC\""));
 
-        } finally {
-            FileUtils.deleteQuietly(eadTmpFile);
-        }
-    }
+		}
+		finally {
+			FileUtils.deleteQuietly(eadTmpFile);
+		}
+	}
 
-    @Test
-    public void testWriteMetadataDC() throws JAXBException, IOException, SAXException {
-        final DocUnit docUnit = GenerateDocUnitUtil.getDocUnit(GenerateDocUnitUtilEnum.COMPLIANT);
-        final File eadTmpFile = createEadTmpFile();
+	@Test
+	public void testWriteMetadataDC() throws JAXBException, IOException, SAXException {
+		final DocUnit docUnit = GenerateDocUnitUtil.getDocUnit(GenerateDocUnitUtilEnum.COMPLIANT);
+		final File eadTmpFile = createEadTmpFile();
 
-        final BibliographicRecordDcDTO dcDto = new BibliographicRecordDcDTO();
-        dcDto.getIdentifier().add("TEST-001");
+		final BibliographicRecordDcDTO dcDto = new BibliographicRecordDcDTO();
+		dcDto.getIdentifier().add("TEST-001");
 
-        final fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory METS_FACTORY = new fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory();
-        final Mets mets = METS_FACTORY.createMets();
+		final fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory METS_FACTORY = new fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory();
+		final Mets mets = METS_FACTORY.createMets();
 
-        when(mdCheckService.getMetaDataMetsFile(any(String.class), isNull())).thenReturn(Optional.of(mets));
-        when(mdCheckService.getMetaDataExcelFile(any(String.class), isNull())).thenReturn(Optional.empty());
+		when(mdCheckService.getMetaDataMetsFile(any(String.class), isNull())).thenReturn(Optional.of(mets));
+		when(mdCheckService.getMetaDataExcelFile(any(String.class), isNull())).thenReturn(Optional.empty());
 
-        try (final OutputStream out = new ByteArrayOutputStream(); final OutputStream bufOut = new BufferedOutputStream(out)) {
+		try (final OutputStream out = new ByteArrayOutputStream();
+				final OutputStream bufOut = new BufferedOutputStream(out)) {
 
-            final List<CheckSummedStoredFile> sums = GenerateDocUnitUtil.getCheckSummedList();
-            service.writeMetadata(bufOut, docUnit, dcDto, false, sums);
-            bufOut.flush();
+			final List<CheckSummedStoredFile> sums = GenerateDocUnitUtil.getCheckSummedList();
+			service.writeMetadata(bufOut, docUnit, dcDto, false, sums);
+			bufOut.flush();
 
-            final String xml = out.toString();
+			final String xml = out.toString();
 
-            // Vérification de la génération des données bib
-            assertTrue(xml.contains("<mets:dmdSec ID=\"DMD-DC\">"));
-            // Métadonnées EAD
-            assertFalse(xml.contains("<ead:ead>"));
-            // Vérification de la présence des fichiers
-            assertTrue(xml.contains("<mets:file ID=\"master_0000\""));
-            assertTrue(xml.contains("<mets:file ID=\"master_0001\""));
-            // Vérification de la présence du lien
-            assertTrue(xml.contains("<mets:div DMDID=\"DMD-DC\""));
+			// Vérification de la génération des données bib
+			assertTrue(xml.contains("<mets:dmdSec ID=\"DMD-DC\">"));
+			// Métadonnées EAD
+			assertFalse(xml.contains("<ead:ead>"));
+			// Vérification de la présence des fichiers
+			assertTrue(xml.contains("<mets:file ID=\"master_0000\""));
+			assertTrue(xml.contains("<mets:file ID=\"master_0001\""));
+			// Vérification de la présence du lien
+			assertTrue(xml.contains("<mets:div DMDID=\"DMD-DC\""));
 
-        } finally {
-            FileUtils.deleteQuietly(eadTmpFile);
-        }
-    }
+		}
+		finally {
+			FileUtils.deleteQuietly(eadTmpFile);
+		}
+	}
 
-    @Test
-    public void testWriteMetadataEAD() throws JAXBException, IOException, SAXException {
-        final DocUnit docUnit = GenerateDocUnitUtil.getDocUnit(GenerateDocUnitUtilEnum.COMPLIANT);
-        final File eadTmpFile = createEadTmpFile();
+	@Test
+	public void testWriteMetadataEAD() throws JAXBException, IOException, SAXException {
+		final DocUnit docUnit = GenerateDocUnitUtil.getDocUnit(GenerateDocUnitUtilEnum.COMPLIANT);
+		final File eadTmpFile = createEadTmpFile();
 
-        final fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory METS_FACTORY = new fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory();
-        final Mets mets = METS_FACTORY.createMets();
+		final fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory METS_FACTORY = new fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory();
+		final Mets mets = METS_FACTORY.createMets();
 
-        when(exportEadService.retrieveEad(docUnit.getIdentifier())).thenReturn(eadTmpFile);
-        when(mdCheckService.getMetaDataMetsFile(any(String.class), isNull())).thenReturn(Optional.of(mets));
-        when(mdCheckService.getMetaDataExcelFile(any(String.class), isNull())).thenReturn(Optional.empty());
+		when(exportEadService.retrieveEad(docUnit.getIdentifier())).thenReturn(eadTmpFile);
+		when(mdCheckService.getMetaDataMetsFile(any(String.class), isNull())).thenReturn(Optional.of(mets));
+		when(mdCheckService.getMetaDataExcelFile(any(String.class), isNull())).thenReturn(Optional.empty());
 
-        try (final OutputStream out = new ByteArrayOutputStream(); final OutputStream bufOut = new BufferedOutputStream(out)) {
+		try (final OutputStream out = new ByteArrayOutputStream();
+				final OutputStream bufOut = new BufferedOutputStream(out)) {
 
-            final List<CheckSummedStoredFile> sums = GenerateDocUnitUtil.getCheckSummedList();
-            service.writeMetadata(bufOut, docUnit, null, true, sums);
-            bufOut.flush();
+			final List<CheckSummedStoredFile> sums = GenerateDocUnitUtil.getCheckSummedList();
+			service.writeMetadata(bufOut, docUnit, null, true, sums);
+			bufOut.flush();
 
-            final String xml = out.toString();
+			final String xml = out.toString();
 
-            // Vérification de la génération des données bib
-            assertTrue(xml.contains("<mets:dmdSec ID=\"DMD-EAD\">"));
-            // Métadonnées EAD
-            assertTrue(xml.contains("<ead:ead>"));
-            // Vérification de la présence des fichiers
-            assertTrue(xml.contains("<mets:file ID=\"master_0000\""));
-            assertTrue(xml.contains("<mets:file ID=\"master_0001\""));
-            // Vérification de la présence du lien
-            assertTrue(xml.contains("<mets:div DMDID=\"DMD-EAD\""));
+			// Vérification de la génération des données bib
+			assertTrue(xml.contains("<mets:dmdSec ID=\"DMD-EAD\">"));
+			// Métadonnées EAD
+			assertTrue(xml.contains("<ead:ead>"));
+			// Vérification de la présence des fichiers
+			assertTrue(xml.contains("<mets:file ID=\"master_0000\""));
+			assertTrue(xml.contains("<mets:file ID=\"master_0001\""));
+			// Vérification de la présence du lien
+			assertTrue(xml.contains("<mets:div DMDID=\"DMD-EAD\""));
 
-        } finally {
-            FileUtils.deleteQuietly(eadTmpFile);
-        }
-    }
+		}
+		finally {
+			FileUtils.deleteQuietly(eadTmpFile);
+		}
+	}
 
-    private File createEadTmpFile() throws IOException {
-        final File tmpFile = new File(FileUtils.getTempDirectory(),
-                                      "ExportMetsServiceTest_EAD_" + System.currentTimeMillis()
-                                                                    + ".xml");
-        FileUtils.writeStringToFile(tmpFile, EAD_XML, StandardCharsets.UTF_8);
-        return tmpFile;
-    }
+	private File createEadTmpFile() throws IOException {
+		final File tmpFile = new File(FileUtils.getTempDirectory(),
+				"ExportMetsServiceTest_EAD_" + System.currentTimeMillis() + ".xml");
+		FileUtils.writeStringToFile(tmpFile, EAD_XML, StandardCharsets.UTF_8);
+		return tmpFile;
+	}
 
-    private static final String EAD_XML = "<ead xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns=\"urn:isbn:1-931666-22-9\">\n" + "  <eadheader>\n"
-                                          + "    <profiledesc>\n"
-                                          + "      <langusage>Instrument de recherche rédigé en<language>français</language></langusage>\n"
-                                          + "    </profiledesc>\n"
-                                          + "  </eadheader>\n"
-                                          + "  <archdesc level=\"class\" id=\"ligeo-31164\">"
-                                          + "    <dsc type=\"in-depth\">"
-                                          + "      <c id=\"ligeo-31165\"></c>"
-                                          + "    </dsc>"
-                                          + "  </archdesc>"
-                                          + "</ead>\n";
+	private static final String EAD_XML = "<ead xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns=\"urn:isbn:1-931666-22-9\">\n"
+			+ "  <eadheader>\n" + "    <profiledesc>\n"
+			+ "      <langusage>Instrument de recherche rédigé en<language>français</language></langusage>\n"
+			+ "    </profiledesc>\n" + "  </eadheader>\n" + "  <archdesc level=\"class\" id=\"ligeo-31164\">"
+			+ "    <dsc type=\"in-depth\">" + "      <c id=\"ligeo-31165\"></c>" + "    </dsc>" + "  </archdesc>"
+			+ "</ead>\n";
+
 }

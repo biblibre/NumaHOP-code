@@ -8,7 +8,8 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface ConditionReportAttachmentMapper {
 
-    ConditionReportAttachmentMapper INSTANCE = Mappers.getMapper(ConditionReportAttachmentMapper.class);
+	ConditionReportAttachmentMapper INSTANCE = Mappers.getMapper(ConditionReportAttachmentMapper.class);
 
-    ConditionReportAttachmentDTO attachmentToDTO(ConditionReportAttachment atachment);
+	ConditionReportAttachmentDTO attachmentToDTO(ConditionReportAttachment atachment);
+
 }

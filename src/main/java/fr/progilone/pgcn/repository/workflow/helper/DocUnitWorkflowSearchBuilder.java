@@ -12,138 +12,148 @@ import org.apache.commons.collections4.CollectionUtils;
  */
 public final class DocUnitWorkflowSearchBuilder {
 
-    private List<String> libraries;
-    private List<String> projects;
-    private List<String> lots;
-    private List<String> deliveries;
-    private List<String> roles;
-    private List<String> workflows;
-    private List<WorkflowStateKey> states;
-    private LocalDate fromDate;
-    private LocalDate toDate;
-    private List<String> types;
-    private List<String> collections;
+	private List<String> libraries;
 
-    private boolean withFailedStatuses = false;
+	private List<String> projects;
 
-    public Optional<List<String>> getLibraries() {
-        return ofEmptiable(libraries);
-    }
+	private List<String> lots;
 
-    public DocUnitWorkflowSearchBuilder setLibraries(final List<String> libraries) {
-        this.libraries = libraries;
-        return this;
-    }
+	private List<String> deliveries;
 
-    public Optional<List<String>> getProjects() {
-        return ofEmptiable(projects);
-    }
+	private List<String> roles;
 
-    public DocUnitWorkflowSearchBuilder setProjects(final List<String> projects) {
-        this.projects = projects;
-        return this;
-    }
+	private List<String> workflows;
 
-    public Optional<List<String>> getLots() {
-        return ofEmptiable(lots);
-    }
+	private List<WorkflowStateKey> states;
 
-    public DocUnitWorkflowSearchBuilder setLots(final List<String> lots) {
-        this.lots = lots;
-        return this;
-    }
+	private LocalDate fromDate;
 
-    public Optional<List<String>> getDeliveries() {
-        return ofEmptiable(deliveries);
-    }
+	private LocalDate toDate;
 
-    public DocUnitWorkflowSearchBuilder setDeliveries(final List<String> deliveries) {
-        this.deliveries = deliveries;
-        return this;
-    }
+	private List<String> types;
 
-    public Optional<List<String>> getRoles() {
-        return ofEmptiable(roles);
-    }
+	private List<String> collections;
 
-    public DocUnitWorkflowSearchBuilder setRoles(final List<String> roles) {
-        this.roles = roles;
-        return this;
-    }
+	private boolean withFailedStatuses = false;
 
-    public Optional<List<String>> getWorkflows() {
-        return ofEmptiable(workflows);
-    }
+	public Optional<List<String>> getLibraries() {
+		return ofEmptiable(libraries);
+	}
 
-    public DocUnitWorkflowSearchBuilder setWorkflows(final List<String> workflows) {
-        this.workflows = workflows;
-        return this;
-    }
+	public DocUnitWorkflowSearchBuilder setLibraries(final List<String> libraries) {
+		this.libraries = libraries;
+		return this;
+	}
 
-    public Optional<List<WorkflowStateKey>> getStates() {
-        return ofEmptiable(states);
-    }
+	public Optional<List<String>> getProjects() {
+		return ofEmptiable(projects);
+	}
 
-    public DocUnitWorkflowSearchBuilder setStates(final List<WorkflowStateKey> states) {
-        this.states = states;
-        return this;
-    }
+	public DocUnitWorkflowSearchBuilder setProjects(final List<String> projects) {
+		this.projects = projects;
+		return this;
+	}
 
-    public DocUnitWorkflowSearchBuilder addState(final WorkflowStateKey state) {
-        if (this.states == null) {
-            this.states = new ArrayList<>();
-        }
-        this.states.add(state);
-        return this;
-    }
+	public Optional<List<String>> getLots() {
+		return ofEmptiable(lots);
+	}
 
-    public Optional<LocalDate> getFromDate() {
-        return Optional.ofNullable(fromDate);
-    }
+	public DocUnitWorkflowSearchBuilder setLots(final List<String> lots) {
+		this.lots = lots;
+		return this;
+	}
 
-    public DocUnitWorkflowSearchBuilder setFromDate(final LocalDate fromDate) {
-        this.fromDate = fromDate;
-        return this;
-    }
+	public Optional<List<String>> getDeliveries() {
+		return ofEmptiable(deliveries);
+	}
 
-    public Optional<LocalDate> getToDate() {
-        return Optional.ofNullable(toDate);
-    }
+	public DocUnitWorkflowSearchBuilder setDeliveries(final List<String> deliveries) {
+		this.deliveries = deliveries;
+		return this;
+	}
 
-    public DocUnitWorkflowSearchBuilder setToDate(final LocalDate toDate) {
-        this.toDate = toDate;
-        return this;
-    }
+	public Optional<List<String>> getRoles() {
+		return ofEmptiable(roles);
+	}
 
-    public Optional<List<String>> getTypes() {
-        return ofEmptiable(types);
-    }
+	public DocUnitWorkflowSearchBuilder setRoles(final List<String> roles) {
+		this.roles = roles;
+		return this;
+	}
 
-    public DocUnitWorkflowSearchBuilder setTypes(final List<String> types) {
-        this.types = types;
-        return this;
-    }
+	public Optional<List<String>> getWorkflows() {
+		return ofEmptiable(workflows);
+	}
 
-    public Optional<List<String>> getCollections() {
-        return ofEmptiable(collections);
-    }
+	public DocUnitWorkflowSearchBuilder setWorkflows(final List<String> workflows) {
+		this.workflows = workflows;
+		return this;
+	}
 
-    public DocUnitWorkflowSearchBuilder setCollections(final List<String> collections) {
-        this.collections = collections;
-        return this;
-    }
+	public Optional<List<WorkflowStateKey>> getStates() {
+		return ofEmptiable(states);
+	}
 
-    public boolean isWithFailedStatuses() {
-        return this.withFailedStatuses;
-    }
+	public DocUnitWorkflowSearchBuilder setStates(final List<WorkflowStateKey> states) {
+		this.states = states;
+		return this;
+	}
 
-    public DocUnitWorkflowSearchBuilder setWithFailedStatuses(final boolean withFailedStatuses) {
-        this.withFailedStatuses = withFailedStatuses;
-        return this;
-    }
+	public DocUnitWorkflowSearchBuilder addState(final WorkflowStateKey state) {
+		if (this.states == null) {
+			this.states = new ArrayList<>();
+		}
+		this.states.add(state);
+		return this;
+	}
 
-    private static <T> Optional<List<T>> ofEmptiable(final List<T> list) {
-        return CollectionUtils.isEmpty(list) ? Optional.empty()
-                                             : Optional.of(list);
-    }
+	public Optional<LocalDate> getFromDate() {
+		return Optional.ofNullable(fromDate);
+	}
+
+	public DocUnitWorkflowSearchBuilder setFromDate(final LocalDate fromDate) {
+		this.fromDate = fromDate;
+		return this;
+	}
+
+	public Optional<LocalDate> getToDate() {
+		return Optional.ofNullable(toDate);
+	}
+
+	public DocUnitWorkflowSearchBuilder setToDate(final LocalDate toDate) {
+		this.toDate = toDate;
+		return this;
+	}
+
+	public Optional<List<String>> getTypes() {
+		return ofEmptiable(types);
+	}
+
+	public DocUnitWorkflowSearchBuilder setTypes(final List<String> types) {
+		this.types = types;
+		return this;
+	}
+
+	public Optional<List<String>> getCollections() {
+		return ofEmptiable(collections);
+	}
+
+	public DocUnitWorkflowSearchBuilder setCollections(final List<String> collections) {
+		this.collections = collections;
+		return this;
+	}
+
+	public boolean isWithFailedStatuses() {
+		return this.withFailedStatuses;
+	}
+
+	public DocUnitWorkflowSearchBuilder setWithFailedStatuses(final boolean withFailedStatuses) {
+		this.withFailedStatuses = withFailedStatuses;
+		return this;
+	}
+
+	private static <T> Optional<List<T>> ofEmptiable(final List<T> list) {
+		return CollectionUtils.isEmpty(list) ? Optional.empty() : Optional.of(list);
+	}
+
 }

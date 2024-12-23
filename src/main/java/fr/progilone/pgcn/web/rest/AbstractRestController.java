@@ -11,31 +11,36 @@ import org.springframework.http.ResponseEntity;
 
 public abstract class AbstractRestController {
 
-    public <T> ResponseEntity<T> createResponseEntity(final T result) {
-        return this.createResponseEntity(Optional.ofNullable(result));
-    }
+	public <T> ResponseEntity<T> createResponseEntity(final T result) {
+		return this.createResponseEntity(Optional.ofNullable(result));
+	}
 
-    public <T> ResponseEntity<T> createResponseEntity(final Optional<T> result) {
-        return result.map(r -> new ResponseEntity<>(r, HttpStatus.OK)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+	public <T> ResponseEntity<T> createResponseEntity(final Optional<T> result) {
+		return result.map(r -> new ResponseEntity<>(r, HttpStatus.OK))
+			.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
 
-    protected void writeResponseHeaderForDownload(final HttpServletResponse response, final String contentType, final Integer contentLength, final String filename) {
-        response.setContentType(contentType);
-        response.setHeader("Content-Disposition", "attachment; filename=" + filename);
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setHeader("Cache-Control", "must-revalidate");
+	protected void writeResponseHeaderForDownload(final HttpServletResponse response, final String contentType,
+			final Integer contentLength, final String filename) {
+		response.setContentType(contentType);
+		response.setHeader("Content-Disposition", "attachment; filename=" + filename);
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.setHeader("Cache-Control", "must-revalidate");
 
-        if (contentLength != null) {
-            response.setContentLength(contentLength);
-        }
-    }
+		if (contentLength != null) {
+			response.setContentLength(contentLength);
+		}
+	}
 
-    protected void writeResponseForDownload(final HttpServletResponse response, final File file, final String contentType, final String filename) throws PgcnTechnicalException {
-        writeResponseHeaderForDownload(response, contentType, (int) FileUtils.sizeOf(file), filename);
-        try {
-            FileUtils.copyFile(file, response.getOutputStream());
-        } catch (final IOException e) {
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	protected void writeResponseForDownload(final HttpServletResponse response, final File file,
+			final String contentType, final String filename) throws PgcnTechnicalException {
+		writeResponseHeaderForDownload(response, contentType, (int) FileUtils.sizeOf(file), filename);
+		try {
+			FileUtils.copyFile(file, response.getOutputStream());
+		}
+		catch (final IOException e) {
+			throw new PgcnTechnicalException(e);
+		}
+	}
+
 }

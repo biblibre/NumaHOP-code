@@ -35,110 +35,113 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @PermitAll
 public class StatisticsDocUnitCsvController extends AbstractRestController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StatisticsWorkflowCsvController.class);
-    private static final String FILENAME = "export.csv";
+	private static final Logger LOG = LoggerFactory.getLogger(StatisticsWorkflowCsvController.class);
 
-    private final AccessHelper accessHelper;
-    private final ExportCSVService statisticsCsvService;
-    private final StatisticsDocUnitController delegate;
+	private static final String FILENAME = "export.csv";
 
-    @Autowired
-    public StatisticsDocUnitCsvController(final AccessHelper accessHelper, final ExportCSVService statisticsCsvService, final StatisticsDocUnitController delegate) {
-        this.accessHelper = accessHelper;
-        this.statisticsCsvService = statisticsCsvService;
-        this.delegate = delegate;
-    }
+	private final AccessHelper accessHelper;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"average"}, produces = "text/csv")
-    @Timed
-    @ResponseStatus(HttpStatus.OK)
-    public void getDocUnitAverages(final HttpServletRequest request,
-                                   final HttpServletResponse response,
-                                   @RequestParam(value = "library", required = false) final List<String> libraries,
-                                   @RequestParam(value = "project", required = false) final List<String> projects,
-                                   @RequestParam(value = "lot", required = false) final List<String> lots,
-                                   @RequestParam(value = "delivery", required = false) final List<String> deliveries,
-                                   @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) final LocalDate fromDate,
-                                   @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
-                                   @RequestParam(value = "groupby", required = false, defaultValue = "PROJECT") final StatisticsService.GroupBy groupBy,
-                                   @RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
-                                   @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
-        final ResponseEntity<List<StatisticsDocUnitAverageDTO>> result = delegate.getDocUnitAverages(request, libraries, projects, lots, deliveries, fromDate, toDate, groupBy);
+	private final ExportCSVService statisticsCsvService;
 
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
-            statisticsCsvService.exportOrderedBeans(result.getBody(), response.getOutputStream(), encoding, separator);
+	private final StatisticsDocUnitController delegate;
 
-        } catch (IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	@Autowired
+	public StatisticsDocUnitCsvController(final AccessHelper accessHelper, final ExportCSVService statisticsCsvService,
+			final StatisticsDocUnitController delegate) {
+		this.accessHelper = accessHelper;
+		this.statisticsCsvService = statisticsCsvService;
+		this.delegate = delegate;
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"doc_published"}, produces = "text/csv")
-    @Timed
-    public void getDocPublishedStat(final HttpServletRequest request,
-                                    final HttpServletResponse response,
-                                    @RequestParam(value = "library", required = false) final List<String> libraries,
-                                    @RequestParam(value = "project", required = false) final List<String> projects,
-                                    @RequestParam(value = "lot", required = false) final List<String> lots,
-                                    @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) final LocalDate fromDate,
-                                    @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
-                                    @RequestParam(value = "type", required = false) final List<String> types,
-                                    @RequestParam(value = "collection", required = false) final List<String> collections,
-                                    @RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
-                                    @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
-        // Droits d'accès
-        if (accessHelper.checkUserIsPresta()) { // no presta
-            return;
-        }
-        final ResponseEntity<Page<StatisticsDocPublishedDTO>> result = delegate.getDocPublishedStat(request,
-                                                                                                    libraries,
-                                                                                                    projects,
-                                                                                                    lots,
-                                                                                                    fromDate,
-                                                                                                    toDate,
-                                                                                                    types,
-                                                                                                    collections,
-                                                                                                    0,
-                                                                                                    Integer.MAX_VALUE);
-        final List<StatisticsDocPublishedDTO> dtos = new ArrayList<>(result.getBody().getContent());
+	@RequestMapping(method = RequestMethod.GET, params = { "average" }, produces = "text/csv")
+	@Timed
+	@ResponseStatus(HttpStatus.OK)
+	public void getDocUnitAverages(final HttpServletRequest request, final HttpServletResponse response,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@RequestParam(value = "lot", required = false) final List<String> lots,
+			@RequestParam(value = "delivery", required = false) final List<String> deliveries,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from",
+					required = false) final LocalDate fromDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
+			@RequestParam(value = "groupby", required = false,
+					defaultValue = "PROJECT") final StatisticsService.GroupBy groupBy,
+			@RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+		final ResponseEntity<List<StatisticsDocUnitAverageDTO>> result = delegate.getDocUnitAverages(request, libraries,
+				projects, lots, deliveries, fromDate, toDate, groupBy);
 
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
-            statisticsCsvService.exportOrderedBeans(dtos, response.getOutputStream(), encoding, separator);
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
+			statisticsCsvService.exportOrderedBeans(result.getBody(), response.getOutputStream(), encoding, separator);
 
-        } catch (final IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+		}
+		catch (IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"doc_rejected"}, produces = "text/csv")
-    @Timed
-    public void getDocRejectedStat(final HttpServletRequest request,
-                                   final HttpServletResponse response,
-                                   @RequestParam(value = "library", required = false) final List<String> libraries,
-                                   @RequestParam(value = "project", required = false) final List<String> projects,
-                                   @RequestParam(value = "provider", required = false) final List<String> providers,
-                                   @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) final LocalDate fromDate,
-                                   @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
-                                   @RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
-                                   @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
-        // Droits d'accès
-        if (accessHelper.checkUserIsPresta()) { // no presta
-            return;
-        }
-        final ResponseEntity<Page<StatisticsDocRejectedDTO>> result = delegate.getDocRejectedStat(request, libraries, projects, providers, fromDate, toDate, 0, Integer.MAX_VALUE);
-        final List<StatisticsDocRejectedDTO> dtos = new ArrayList<>(result.getBody().getContent());
+	@RequestMapping(method = RequestMethod.GET, params = { "doc_published" }, produces = "text/csv")
+	@Timed
+	public void getDocPublishedStat(final HttpServletRequest request, final HttpServletResponse response,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@RequestParam(value = "lot", required = false) final List<String> lots,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from",
+					required = false) final LocalDate fromDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
+			@RequestParam(value = "type", required = false) final List<String> types,
+			@RequestParam(value = "collection", required = false) final List<String> collections,
+			@RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+		// Droits d'accès
+		if (accessHelper.checkUserIsPresta()) { // no presta
+			return;
+		}
+		final ResponseEntity<Page<StatisticsDocPublishedDTO>> result = delegate.getDocPublishedStat(request, libraries,
+				projects, lots, fromDate, toDate, types, collections, 0, Integer.MAX_VALUE);
+		final List<StatisticsDocPublishedDTO> dtos = new ArrayList<>(result.getBody().getContent());
 
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
-            statisticsCsvService.exportOrderedBeans(dtos, response.getOutputStream(), encoding, separator);
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
+			statisticsCsvService.exportOrderedBeans(dtos, response.getOutputStream(), encoding, separator);
 
-        } catch (final IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+		}
+		catch (final IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
+
+	@RequestMapping(method = RequestMethod.GET, params = { "doc_rejected" }, produces = "text/csv")
+	@Timed
+	public void getDocRejectedStat(final HttpServletRequest request, final HttpServletResponse response,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@RequestParam(value = "provider", required = false) final List<String> providers,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from",
+					required = false) final LocalDate fromDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
+			@RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+		// Droits d'accès
+		if (accessHelper.checkUserIsPresta()) { // no presta
+			return;
+		}
+		final ResponseEntity<Page<StatisticsDocRejectedDTO>> result = delegate.getDocRejectedStat(request, libraries,
+				projects, providers, fromDate, toDate, 0, Integer.MAX_VALUE);
+		final List<StatisticsDocRejectedDTO> dtos = new ArrayList<>(result.getBody().getContent());
+
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
+			statisticsCsvService.exportOrderedBeans(dtos, response.getOutputStream(), encoding, separator);
+
+		}
+		catch (final IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
+
 }

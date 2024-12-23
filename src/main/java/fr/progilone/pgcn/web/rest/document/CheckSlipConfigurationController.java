@@ -27,37 +27,42 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/checkslip_configuration")
 public class CheckSlipConfigurationController extends AbstractRestController {
 
-    private final CheckSlipConfigurationService confService;
-    private final AccessHelper accessHelper;
-    private final LibraryAccesssHelper libraryAccesssHelper;
+	private final CheckSlipConfigurationService confService;
 
-    @Autowired
-    public CheckSlipConfigurationController(final CheckSlipConfigurationService confService, final AccessHelper accessHelper, final LibraryAccesssHelper libraryAccesssHelper) {
-        this.confService = confService;
-        this.accessHelper = accessHelper;
-        this.libraryAccesssHelper = libraryAccesssHelper;
-    }
+	private final AccessHelper accessHelper;
 
-    @RolesAllowed(DEL_HAB0)
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<CheckSlipConfiguration> getById(final HttpServletRequest request, @PathVariable final String id) {
-        if (!libraryAccesssHelper.checkLibrary(request, id)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final Optional<CheckSlipConfiguration> checkSlipConfiguration = confService.getOneByLibrary(id);
-        return createResponseEntity(checkSlipConfiguration.get());
-    }
+	private final LibraryAccesssHelper libraryAccesssHelper;
 
-    @RolesAllowed({DEL_HAB2})
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    @Timed
-    public ResponseEntity<CheckSlipConfiguration> update(final HttpServletRequest request, @RequestBody final CheckSlipConfiguration checkSlipConfiguration) throws PgcnException {
+	@Autowired
+	public CheckSlipConfigurationController(final CheckSlipConfigurationService confService,
+			final AccessHelper accessHelper, final LibraryAccesssHelper libraryAccesssHelper) {
+		this.confService = confService;
+		this.accessHelper = accessHelper;
+		this.libraryAccesssHelper = libraryAccesssHelper;
+	}
 
-        if (!libraryAccesssHelper.checkLibrary(request, checkSlipConfiguration.getLibrary())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return createResponseEntity(confService.update(checkSlipConfiguration));
-    }
+	@RolesAllowedDEL_HAB0)RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@Timed
+	public ResponseEntity<CheckSlipConfiguration> getById(final HttpServletRequest request,
+			@PathVariable final String id) {
+		if (!libraryAccesssHelper.checkLibrary(request, id)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final Optional<CheckSlipConfiguration> checkSlipConfiguration = confService.getOneByLibrary(id);
+		return createResponseEntity(checkSlipConfiguration.get());
+	}
+
+	@RolesAllowed({ DEL_HAB2 })
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	@Timed
+	public ResponseEntity<CheckSlipConfiguration> update(final HttpServletRequest request,
+			@RequestBody final CheckSlipConfiguration checkSlipConfiguration) throws PgcnException {
+
+		if (!libraryAccesssHelper.checkLibrary(request, checkSlipConfiguration.getLibrary())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		return createResponseEntity(confService.update(checkSlipConfiguration));
+	}
 
 }

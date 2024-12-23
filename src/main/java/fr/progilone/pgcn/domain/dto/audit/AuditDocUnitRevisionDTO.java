@@ -2,59 +2,64 @@ package fr.progilone.pgcn.domain.dto.audit;
 
 public class AuditDocUnitRevisionDTO {
 
-    private int rev;
-    private long timestamp;
-    private String username;
+	private int rev;
 
-    private String identifier;
-    private String lotIdentifier;
-    private String lotLabel;
+	private long timestamp;
 
-    public int getRev() {
-        return rev;
-    }
+	private String username;
 
-    public void setRev(final int rev) {
-        this.rev = rev;
-    }
+	private String identifier;
 
-    public long getTimestamp() {
-        return timestamp;
-    }
+	private String lotIdentifier;
 
-    public void setTimestamp(final long timestamp) {
-        this.timestamp = timestamp;
-    }
+	private String lotLabel;
 
-    public String getUsername() {
-        return username;
-    }
+	public int getRev() {
+		return rev;
+	}
 
-    public void setUsername(final String username) {
-        this.username = username;
-    }
+	public void setRev(final int rev) {
+		this.rev = rev;
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public long getTimestamp() {
+		return timestamp;
+	}
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	public void setTimestamp(final long timestamp) {
+		this.timestamp = timestamp;
+	}
 
-    public String getLotIdentifier() {
-        return lotIdentifier;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public void setLotIdentifier(final String lotIdentifier) {
-        this.lotIdentifier = lotIdentifier;
-    }
+	public void setUsername(final String username) {
+		this.username = username;
+	}
 
-    public String getLotLabel() {
-        return lotLabel;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setLotLabel(final String lotLabel) {
-        this.lotLabel = lotLabel;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
+
+	public String getLotIdentifier() {
+		return lotIdentifier;
+	}
+
+	public void setLotIdentifier(final String lotIdentifier) {
+		this.lotIdentifier = lotIdentifier;
+	}
+
+	public String getLotLabel() {
+		return lotLabel;
+	}
+
+	public void setLotLabel(final String lotLabel) {
+		this.lotLabel = lotLabel;
+	}
+
 }

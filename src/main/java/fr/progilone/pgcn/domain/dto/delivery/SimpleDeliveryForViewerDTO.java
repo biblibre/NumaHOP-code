@@ -4,40 +4,44 @@ import fr.progilone.pgcn.domain.dto.lot.SimpleLotDTO;
 
 public class SimpleDeliveryForViewerDTO {
 
-    private String identifier;
-    private String label;
-    private String digitizingNotes;
-    private SimpleLotDTO lot;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String label;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private String digitizingNotes;
 
-    public String getLabel() {
-        return label;
-    }
+	private SimpleLotDTO lot;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public SimpleLotDTO getLot() {
-        return lot;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setLot(final SimpleLotDTO lot) {
-        this.lot = lot;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public String getDigitizingNotes() {
-        return digitizingNotes;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setDigitizingNotes(final String digitizingNotes) {
-        this.digitizingNotes = digitizingNotes;
-    }
+	public SimpleLotDTO getLot() {
+		return lot;
+	}
+
+	public void setLot(final SimpleLotDTO lot) {
+		this.lot = lot;
+	}
+
+	public String getDigitizingNotes() {
+		return digitizingNotes;
+	}
+
+	public void setDigitizingNotes(final String digitizingNotes) {
+		this.digitizingNotes = digitizingNotes;
+	}
+
 }

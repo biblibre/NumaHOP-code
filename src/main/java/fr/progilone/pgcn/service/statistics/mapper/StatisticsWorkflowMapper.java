@@ -7,5 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface StatisticsWorkflowMapper {
 
-    WorkflowProfileActivityDTO userToProfileDto(WorkflowUserActivityDTO userDto);
+	WorkflowProfileActivityDTO userToProfileDto(WorkflowUserActivityDTO userDto);
+
 }

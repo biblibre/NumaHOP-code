@@ -30,56 +30,63 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/ocrlangconfiguration")
 public class OcrLangConfigurationController extends AbstractRestController {
 
-    private final LibraryAccesssHelper libraryAccesssHelper;
-    private final UIOcrLangConfigurationService uiOcrLangConfigurationService;
+	private final LibraryAccesssHelper libraryAccesssHelper;
 
-    @Autowired
-    public OcrLangConfigurationController(final LibraryAccesssHelper libraryAccesssHelper, final UIOcrLangConfigurationService uiOcrLangConfigurationService) {
-        this.libraryAccesssHelper = libraryAccesssHelper;
-        this.uiOcrLangConfigurationService = uiOcrLangConfigurationService;
-    }
+	private final UIOcrLangConfigurationService uiOcrLangConfigurationService;
 
-    @RequestMapping(method = RequestMethod.POST)
-    @Timed
-    @RolesAllowed({OCR_LANG_HAB1})
-    public ResponseEntity<OcrLangConfigurationDTO> create(final HttpServletRequest request, @RequestBody final OcrLangConfigurationDTO configuration) throws PgcnException {
-        final OcrLangConfigurationDTO savedConfiguration = uiOcrLangConfigurationService.create(configuration);
-        return new ResponseEntity<>(savedConfiguration, HttpStatus.CREATED);
-    }
+	@Autowired
+	public OcrLangConfigurationController(final LibraryAccesssHelper libraryAccesssHelper,
+			final UIOcrLangConfigurationService uiOcrLangConfigurationService) {
+		this.libraryAccesssHelper = libraryAccesssHelper;
+		this.uiOcrLangConfigurationService = uiOcrLangConfigurationService;
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @Timed
-    @RolesAllowed({OCR_LANG_HAB2})
-    public ResponseEntity<?> delete(final HttpServletRequest request, @PathVariable final String id) {
-        uiOcrLangConfigurationService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.POST)
+	@Timed
+	@RolesAllowed(OCR_LANG_HAB1)
+	public ResponseEntity<OcrLangConfigurationDTO> create(final HttpServletRequest request,
+			@RequestBody final OcrLangConfigurationDTO configuration) throws PgcnException {
+		final OcrLangConfigurationDTO savedConfiguration = uiOcrLangConfigurationService.create(configuration);
+		return new ResponseEntity<>(savedConfiguration, HttpStatus.CREATED);
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({OCR_LANG_HAB0})
-    public ResponseEntity<OcrLangConfigurationDTO> getById(final HttpServletRequest request, @PathVariable final String id) {
-        final OcrLangConfigurationDTO configuration = uiOcrLangConfigurationService.getOne(id);
-        return createResponseEntity(configuration);
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@Timed
+	@RolesAllowed(OCR_LANG_HAB2)
+	public ResponseEntity<?> delete(final HttpServletRequest request, @PathVariable final String id) {
+		uiOcrLangConfigurationService.delete(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"search"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({OCR_LANG_HAB0})
-    public ResponseEntity<Page<SimpleOcrLangConfigDTO>> search(final HttpServletRequest request,
-                                                               @RequestParam(value = "search", required = false) final String search,
-                                                               @RequestParam(value = "libraries", required = false) final List<String> libraries,
-                                                               @RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
-                                                               @RequestParam(value = "size", required = false, defaultValue = "10") final Integer size) {
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(OCR_LANG_HAB0)
+	public ResponseEntity<OcrLangConfigurationDTO> getById(final HttpServletRequest request,
+			@PathVariable final String id) {
+		final OcrLangConfigurationDTO configuration = uiOcrLangConfigurationService.getOne(id);
+		return createResponseEntity(configuration);
+	}
 
-        final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request, libraries);
-        return new ResponseEntity<>(uiOcrLangConfigurationService.search(search, filteredLibraries, page, size), HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "search" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(OCR_LANG_HAB0)
+	public ResponseEntity<Page<SimpleOcrLangConfigDTO>> search(final HttpServletRequest request,
+			@RequestParam(value = "search", required = false) final String search,
+			@RequestParam(value = "libraries", required = false) final List<String> libraries,
+			@RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
+			@RequestParam(value = "size", required = false, defaultValue = "10") final Integer size) {
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    @Timed
-    @RolesAllowed({OCR_LANG_HAB1})
-    public ResponseEntity<OcrLangConfigurationDTO> update(final HttpServletRequest request, @RequestBody final OcrLangConfigurationDTO configuration) throws PgcnException {
-        return new ResponseEntity<>(uiOcrLangConfigurationService.update(configuration), HttpStatus.OK);
-    }
+		final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request, libraries);
+		return new ResponseEntity<>(uiOcrLangConfigurationService.search(search, filteredLibraries, page, size),
+				HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	@Timed
+	@RolesAllowed(OCR_LANG_HAB1)
+	public ResponseEntity<OcrLangConfigurationDTO> update(final HttpServletRequest request,
+			@RequestBody final OcrLangConfigurationDTO configuration) throws PgcnException {
+		return new ResponseEntity<>(uiOcrLangConfigurationService.update(configuration), HttpStatus.OK);
+	}
+
 }

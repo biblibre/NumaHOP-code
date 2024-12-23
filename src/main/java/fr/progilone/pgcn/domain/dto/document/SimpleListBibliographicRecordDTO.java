@@ -10,58 +10,64 @@ import fr.progilone.pgcn.domain.dto.train.SimpleTrainDTO;
  */
 public class SimpleListBibliographicRecordDTO extends AbstractDTO {
 
-    private String identifier;
-    private String title;
-    private SimpleDocUnitDTO docUnit;
-    private SimpleProjectDTO project;
-    private SimpleLotDTO lot;
-    private SimpleTrainDTO train;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String title;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private SimpleDocUnitDTO docUnit;
 
-    public String getTitle() {
-        return title;
-    }
+	private SimpleProjectDTO project;
 
-    public void setTitle(final String title) {
-        this.title = title;
-    }
+	private SimpleLotDTO lot;
 
-    public SimpleDocUnitDTO getDocUnit() {
-        return docUnit;
-    }
+	private SimpleTrainDTO train;
 
-    public void setDocUnit(final SimpleDocUnitDTO docUnit) {
-        this.docUnit = docUnit;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public SimpleProjectDTO getProject() {
-        return project;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setProject(final SimpleProjectDTO project) {
-        this.project = project;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public SimpleLotDTO getLot() {
-        return lot;
-    }
+	public void setTitle(final String title) {
+		this.title = title;
+	}
 
-    public void setLot(final SimpleLotDTO lot) {
-        this.lot = lot;
-    }
+	public SimpleDocUnitDTO getDocUnit() {
+		return docUnit;
+	}
 
-    public SimpleTrainDTO getTrain() {
-        return train;
-    }
+	public void setDocUnit(final SimpleDocUnitDTO docUnit) {
+		this.docUnit = docUnit;
+	}
 
-    public void setTrain(final SimpleTrainDTO train) {
-        this.train = train;
-    }
+	public SimpleProjectDTO getProject() {
+		return project;
+	}
+
+	public void setProject(final SimpleProjectDTO project) {
+		this.project = project;
+	}
+
+	public SimpleLotDTO getLot() {
+		return lot;
+	}
+
+	public void setLot(final SimpleLotDTO lot) {
+		this.lot = lot;
+	}
+
+	public SimpleTrainDTO getTrain() {
+		return train;
+	}
+
+	public void setTrain(final SimpleTrainDTO train) {
+		this.train = train;
+	}
+
 }

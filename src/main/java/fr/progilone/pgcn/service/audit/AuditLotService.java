@@ -19,73 +19,76 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AuditLotService {
 
-    private final AuditLotRepository auditLotRepository;
-    private final LotRepository lotRepository;
+	private final AuditLotRepository auditLotRepository;
 
-    @Autowired
-    public AuditLotService(final AuditLotRepository auditLotRepository, final LotRepository lotRepository) {
-        this.auditLotRepository = auditLotRepository;
-        this.lotRepository = lotRepository;
-    }
+	private final LotRepository lotRepository;
 
-    /**
-     * Liste des modification apportées sur un lot, à partir d'une date donnée
-     *
-     * @param fromDate
-     * @param libraries
-     * @param projects
-     * @param status
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public List<AuditLotRevisionDTO> getRevisions(final LocalDate fromDate, final List<String> libraries, final List<String> projects, final List<Lot.LotStatus> status) {
-        List<AuditLotRevisionDTO> revisions = auditLotRepository.getRevisions(fromDate, status);
-        revisions = updateRevisions(revisions, libraries, projects);
-        return revisions;
-    }
+	@Autowired
+	public AuditLotService(final AuditLotRepository auditLotRepository, final LotRepository lotRepository) {
+		this.auditLotRepository = auditLotRepository;
+		this.lotRepository = lotRepository;
+	}
 
-    /**
-     * Ajout des infos du lot (non auditées)
-     *
-     * @param revisions
-     * @param libraries
-     *            filtrage par bibliothèque
-     * @param projects
-     *            filtrage ar projet
-     */
-    private List<AuditLotRevisionDTO> updateRevisions(final List<AuditLotRevisionDTO> revisions, final List<String> libraries, final List<String> projects) {
-        final List<AuditLotRevisionDTO> updatedRevs = new ArrayList<>();
-        final List<String> lotIds = revisions.stream().map(AuditLotRevisionDTO::getIdentifier).collect(Collectors.toList());
-        final List<Lot> lots = lotRepository.findAllById(lotIds);
+	/**
+	 * Liste des modification apportées sur un lot, à partir d'une date donnée
+	 * @param fromDate
+	 * @param libraries
+	 * @param projects
+	 * @param status
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public List<AuditLotRevisionDTO> getRevisions(final LocalDate fromDate, final List<String> libraries,
+			final List<String> projects, final List<Lot.LotStatus> status) {
+		List<AuditLotRevisionDTO> revisions = auditLotRepository.getRevisions(fromDate, status);
+		revisions = updateRevisions(revisions, libraries, projects);
+		return revisions;
+	}
 
-        for (final AuditLotRevisionDTO revision : revisions) {
-            lots.stream()
-                // Lot correspondant la révision
-                .filter(lot -> StringUtils.equals(lot.getIdentifier(), revision.getIdentifier()))
-                // Filtrage par bibliothèque et par projet
-                .filter(lot -> {
-                    final Project project = lot.getProject();
-                    final Library library = project != null ? project.getLibrary()
-                                                            : null;
+	/**
+	 * Ajout des infos du lot (non auditées)
+	 * @param revisions
+	 * @param libraries filtrage par bibliothèque
+	 * @param projects filtrage ar projet
+	 */
+	private List<AuditLotRevisionDTO> updateRevisions(final List<AuditLotRevisionDTO> revisions,
+			final List<String> libraries, final List<String> projects) {
+		final List<AuditLotRevisionDTO> updatedRevs = new ArrayList<>();
+		final List<String> lotIds = revisions.stream()
+			.map(AuditLotRevisionDTO::getIdentifier)
+			.collect(Collectors.toList());
+		final List<Lot> lots = lotRepository.findAllById(lotIds);
 
-                    // Projet
-                    if (CollectionUtils.isNotEmpty(projects) && (project == null || !projects.contains(project.getIdentifier()))) {
-                        return false;
-                    }
-                    // Bibliothèque
-                    if (CollectionUtils.isNotEmpty(libraries) && (library == null || !libraries.contains(library.getIdentifier()))) {
-                        return false;
-                    }
-                    return true;
+		for (final AuditLotRevisionDTO revision : revisions) {
+			lots.stream()
+				// Lot correspondant la révision
+				.filter(lot -> StringUtils.equals(lot.getIdentifier(), revision.getIdentifier()))
+				// Filtrage par bibliothèque et par projet
+				.filter(lot -> {
+					final Project project = lot.getProject();
+					final Library library = project != null ? project.getLibrary() : null;
 
-                })
-                .findAny()
-                // alimentation liste résultats
-                .ifPresent(lot -> {
-                    revision.setLabel(lot.getLabel());
-                    updatedRevs.add(revision);
-                });
-        }
-        return updatedRevs;
-    }
+					// Projet
+					if (CollectionUtils.isNotEmpty(projects)
+							&& (project == null || !projects.contains(project.getIdentifier()))) {
+						return false;
+					}
+					// Bibliothèque
+					if (CollectionUtils.isNotEmpty(libraries)
+							&& (library == null || !libraries.contains(library.getIdentifier()))) {
+						return false;
+					}
+					return true;
+
+				})
+				.findAny()
+				// alimentation liste résultats
+				.ifPresent(lot -> {
+					revision.setLabel(lot.getLabel());
+					updatedRevs.add(revision);
+				});
+		}
+		return updatedRevs;
+	}
+
 }

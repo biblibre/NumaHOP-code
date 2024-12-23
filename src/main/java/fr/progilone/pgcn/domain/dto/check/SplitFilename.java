@@ -13,168 +13,179 @@ import org.apache.commons.lang3.math.NumberUtils;
 /**
  * Découpage des noms de fichiers pour les contrôles
  *
- * @author jbrunet
- *         Créé le 9 mars 2017
+ * @author jbrunet Créé le 9 mars 2017
  */
 public class SplitFilename {
 
-    private final String library;
-    private final String prefix;
-    private Integer number;
-    private final String extension;
-    private final String piece;
-    private final String directory;
+	private final String library;
 
-    public SplitFilename(final String library, final String prefix, final Integer number, final String extension, final String piece, final String directory) {
-        this.library = library;
-        this.prefix = prefix;
-        this.number = number;
-        this.extension = extension;
-        this.piece = piece;
-        this.directory = directory;
-    }
+	private final String prefix;
 
-    public String getLibrary() {
-        return library;
-    }
+	private Integer number;
 
-    public String getPrefix() {
-        return prefix;
-    }
+	private final String extension;
 
-    public String getExtension() {
-        return extension;
-    }
+	private final String piece;
 
-    public Integer getNumber() {
-        return number;
-    }
+	private final String directory;
 
-    public void setNumber(final Integer number) {
-        this.number = number;
-    }
+	public SplitFilename(final String library, final String prefix, final Integer number, final String extension,
+			final String piece, final String directory) {
+		this.library = library;
+		this.prefix = prefix;
+		this.number = number;
+		this.extension = extension;
+		this.piece = piece;
+		this.directory = directory;
+	}
 
-    public String getPiece() {
-        return piece;
-    }
+	public String getLibrary() {
+		return library;
+	}
 
-    public String getDirectory() {
-        return directory;
-    }
+	public String getPrefix() {
+		return prefix;
+	}
 
-    /**
-     * Sépare une chaîne de type BIBLIOTHEQUE_RAD1_RAD2_RADN_315.jpg
-     * en un SplitFilename
-     *
-     * <p>
-     * Ex : sc_002156_04564_0646_view_001_L_M.jpg
-     * </p>
-     * <p>
-     * <b>result : </b>
-     * <ul>
-     * <li>library : sc</li>
-     * <li>prefix : 002156_04564_0646_view</li>
-     * <li>number : 1</li>
-     * <li>extension : jpg</li>
-     * </ul>
-     * </p>
-     *
-     * @param filename
-     * @param splitNames
-     *            : map remplie sous la forme filename => SplitFilename
-     * @return
-     */
-    public static SplitFilename split(final String filename,
-                                      final Map<String, Optional<SplitFilename>> splitNames,
-                                      final boolean bibPrefixMandatory,
-                                      final String seqSeparator,
-                                      final boolean isPdfDelivery,
-                                      final boolean isJustOneEstampe,
-                                      final String prefixDirectory) throws PgcnTechnicalException {
-        // check cache
-        if (filename == null) {
-            throw new PgcnTechnicalException("[Livraison] Nom de fichier nul");
-        }
+	public String getExtension() {
+		return extension;
+	}
 
-        final Optional<SplitFilename> cache = splitNames.get(filename);
-        if (cache != null) {
-            if (cache.isPresent()) {
-                // on l'a déjà, donc pas besoin d'aller plus loin !
-                return cache.get();
-            } else {
-                throw new PgcnTechnicalException("[Livraison] Nom de fichier mal construit : " + filename);
-            }
-        }
-        // check point (il faut au moins un ".")
-        final String[] nameAndExtension = filename.split("\\.");
-        if (nameAndExtension.length < 2) {
-            splitNames.put(filename, Optional.empty());
-            throw new PgcnTechnicalException("[Livraison] Pas d'extension : " + filename);
-        }
-        // !! on peut avoir plusieurs points.
-        final StringBuilder rebuildedName = new StringBuilder();
-        for (int i = 0; i < nameAndExtension.length - 1; i++) {
-            if (i == 0) {
-                rebuildedName.append(nameAndExtension[i]);
-            } else {
-                rebuildedName.append(".").append(nameAndExtension[i]);
-            }
-        }
+	public Integer getNumber() {
+		return number;
+	}
 
-        // check separator
-        final String seqSep = Pattern.quote(seqSeparator);
-        final String[] splitName = rebuildedName.toString().split(seqSep);
-        final int minNbParts = bibPrefixMandatory ? isPdfDelivery ? 2 // Prefix de bibliothèque et livraison pdf -> prefix_nom.pdf
-                                                                  : isJustOneEstampe ? 2 // Prefix de bibliothèque et livraison estampe ->
-                                                                                         // prefix_nom.tif
-                                                                  : 3 // Prefix de bibliothèque -> prefix_nom_sequence.tif
-                                                  : isPdfDelivery ? 1  // Pas de prefix de bibliothèque et livraison pdf-> nom.pdf
-                                                  : isJustOneEstampe ? 1 // Pas de prefix de bibliothèque et livraison estampe -> nom.tif
-                                                  : 2; // Pas de prefix de bibliothèque -> nom_sequence.tif
-        if (splitName.length < minNbParts) {
-            splitNames.put(filename, Optional.empty());
-            throw new PgcnTechnicalException("[Livraison] Mauvais format de nom de fichier : " + filename);
-        }
-        String library = StringUtils.EMPTY;
-        int iPrefix = 0;
-        if (bibPrefixMandatory) {
-            library = splitName[0];
-            iPrefix = 1;
-        }
+	public void setNumber(final Integer number) {
+		this.number = number;
+	}
 
-        int number = -1;
-        final String prefix;
-        final int piece;
-        if (isPdfDelivery || isJustOneEstampe) {
-            // pas de sequence sur 1 pdf à priori.
-            prefix = String.join(seqSeparator, Arrays.copyOfRange(splitName, iPrefix, splitName.length));
-            number = 0;
-        } else {
-            prefix = String.join(seqSeparator, Arrays.copyOfRange(splitName, iPrefix, splitName.length - 1));
-            // check file sequence number
-            number = -1;
-            for (int position = splitName.length - 1; position > 0; position--) {
-                if (StringUtils.isNumeric(splitName[position])) {
-                    number = NumberUtils.toInt(splitName[position]);
-                    break;
-                }
-            }
-            if (number < 0) {
-                splitNames.put(filename, Optional.empty());
-                throw new PgcnTechnicalException("[Livraison] Impossible de trouver le numéro de séquence : " + filename);
-            }
-        }
+	public String getPiece() {
+		return piece;
+	}
 
-        final SplitFilename splitFilename = new SplitFilename(library, prefix, number, nameAndExtension[nameAndExtension.length - 1], prefix, prefixDirectory);
-        splitNames.put(filename, Optional.of(splitFilename));
-        return splitFilename;
-    }
+	public String getDirectory() {
+		return directory;
+	}
 
-    public static Set<String> getPiecesFromDirectory(final Map<String, Optional<SplitFilename>> splitNames, final String directory) {
-        return splitNames.values()
-                         .stream()
-                         .filter(splitFilename -> splitFilename.map(filename -> filename.getDirectory().equals(directory)).orElse(false))
-                         .map(splitFilename2 -> splitFilename2.map(SplitFilename::getPiece).orElse(null))
-                         .collect(Collectors.toSet());
-    }
+	/**
+	 * Sépare une chaîne de type BIBLIOTHEQUE_RAD1_RAD2_RADN_315.jpg en un SplitFilename
+	 * <p>
+	 * Ex : sc_002156_04564_0646_view_001_L_M.jpg
+	 * </p>
+	 * <p>
+	 * <b>result : </b>
+	 * <ul>
+	 * <li>library : sc</li>
+	 * <li>prefix : 002156_04564_0646_view</li>
+	 * <li>number : 1</li>
+	 * <li>extension : jpg</li>
+	 * </ul>
+	 * </p>
+	 * @param filename
+	 * @param splitNames : map remplie sous la forme filename => SplitFilename
+	 * @return
+	 */
+	public static SplitFilename split(final String filename, final Map<String, Optional<SplitFilename>> splitNames,
+			final boolean bibPrefixMandatory, final String seqSeparator, final boolean isPdfDelivery,
+			final boolean isJustOneEstampe, final String prefixDirectory) throws PgcnTechnicalException {
+		// check cache
+		if (filename == null) {
+			throw new PgcnTechnicalException("[Livraison] Nom de fichier nul");
+		}
+
+		final Optional<SplitFilename> cache = splitNames.get(filename);
+		if (cache != null) {
+			if (cache.isPresent()) {
+				// on l'a déjà, donc pas besoin d'aller plus loin !
+				return cache.get();
+			}
+			else {
+				throw new PgcnTechnicalException("[Livraison] Nom de fichier mal construit : " + filename);
+			}
+		}
+		// check point (il faut au moins un ".")
+		final String[] nameAndExtension = filename.split("\\.");
+		if (nameAndExtension.length < 2) {
+			splitNames.put(filename, Optional.empty());
+			throw new PgcnTechnicalException("[Livraison] Pas d'extension : " + filename);
+		}
+		// !! on peut avoir plusieurs points.
+		final StringBuilder rebuildedName = new StringBuilder();
+		for (int i = 0; i < nameAndExtension.length - 1; i++) {
+			if (i == 0) {
+				rebuildedName.append(nameAndExtension[i]);
+			}
+			else {
+				rebuildedName.append(".").append(nameAndExtension[i]);
+			}
+		}
+
+		// check separator
+		final String seqSep = Pattern.quote(seqSeparator);
+		final String[] splitName = rebuildedName.toString().split(seqSep);
+		final int minNbParts = bibPrefixMandatory ? isPdfDelivery ? 2 // Prefix de
+																		// bibliothèque et
+																		// livraison pdf
+																		// ->
+																		// prefix_nom.pdf
+				: isJustOneEstampe ? 2 // Prefix de bibliothèque et livraison estampe ->
+						// prefix_nom.tif
+						: 3 // Prefix de bibliothèque -> prefix_nom_sequence.tif
+				: isPdfDelivery ? 1 // Pas de prefix de bibliothèque et livraison pdf->
+									// nom.pdf
+						: isJustOneEstampe ? 1 // Pas de prefix de bibliothèque et
+												// livraison estampe -> nom.tif
+								: 2; // Pas de prefix de bibliothèque -> nom_sequence.tif
+		if (splitName.length < minNbParts) {
+			splitNames.put(filename, Optional.empty());
+			throw new PgcnTechnicalException("[Livraison] Mauvais format de nom de fichier : " + filename);
+		}
+		String library = StringUtils.EMPTY;
+		int iPrefix = 0;
+		if (bibPrefixMandatory) {
+			library = splitName[0];
+			iPrefix = 1;
+		}
+
+		int number = -1;
+		final String prefix;
+		final int piece;
+		if (isPdfDelivery || isJustOneEstampe) {
+			// pas de sequence sur 1 pdf à priori.
+			prefix = String.join(seqSeparator, Arrays.copyOfRange(splitName, iPrefix, splitName.length));
+			number = 0;
+		}
+		else {
+			prefix = String.join(seqSeparator, Arrays.copyOfRange(splitName, iPrefix, splitName.length - 1));
+			// check file sequence number
+			number = -1;
+			for (int position = splitName.length - 1; position > 0; position--) {
+				if (StringUtils.isNumeric(splitName[position])) {
+					number = NumberUtils.toInt(splitName[position]);
+					break;
+				}
+			}
+			if (number < 0) {
+				splitNames.put(filename, Optional.empty());
+				throw new PgcnTechnicalException(
+						"[Livraison] Impossible de trouver le numéro de séquence : " + filename);
+			}
+		}
+
+		final SplitFilename splitFilename = new SplitFilename(library, prefix, number,
+				nameAndExtension[nameAndExtension.length - 1], prefix, prefixDirectory);
+		splitNames.put(filename, Optional.of(splitFilename));
+		return splitFilename;
+	}
+
+	public static Set<String> getPiecesFromDirectory(final Map<String, Optional<SplitFilename>> splitNames,
+			final String directory) {
+		return splitNames.values()
+			.stream()
+			.filter(splitFilename -> splitFilename.map(filename -> filename.getDirectory().equals(directory))
+				.orElse(false))
+			.map(splitFilename2 -> splitFilename2.map(SplitFilename::getPiece).orElse(null))
+			.collect(Collectors.toSet());
+	}
+
 }

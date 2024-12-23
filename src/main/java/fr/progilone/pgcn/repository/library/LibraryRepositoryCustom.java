@@ -7,15 +7,16 @@ import org.springframework.data.domain.Pageable;
 
 public interface LibraryRepositoryCustom {
 
-    /**
-     * Recherche rapide des bibliothèques
-     *
-     * @param search
-     * @param libraries
-     * @param initiale
-     * @param institutions
-     * @param pageable
-     * @return
-     */
-    Page<Library> search(String search, List<String> libraries, String initiale, List<String> institutions, boolean isActive, Pageable pageable);
+	/**
+	 * Recherche rapide des bibliothèques
+	 * @param search
+	 * @param libraries
+	 * @param initiale
+	 * @param institutions
+	 * @param pageable
+	 * @return
+	 */
+	Page<Library> search(String search, List<String> libraries, String initiale, List<String> institutions,
+			boolean isActive, Pageable pageable);
+
 }

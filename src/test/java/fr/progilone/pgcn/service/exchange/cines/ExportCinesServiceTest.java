@@ -46,131 +46,143 @@ import org.xml.sax.SAXException;
 @ExtendWith(MockitoExtension.class)
 public class ExportCinesServiceTest {
 
-    private static final String WORKING_DIR = FileUtils.getTempDirectoryPath() + "/pgcn_test";
+	private static final String WORKING_DIR = FileUtils.getTempDirectoryPath() + "/pgcn_test";
 
-    @Mock
-    private ExportMetsService exportMetsService;
-    @Mock
-    private ExportSipService exportSipService;
-    @Mock
-    private BinaryStorageManager bm;
-    @Mock
-    private DocUnitService docUnitService;
-    @Mock
-    private UIExportDataMapper uiExportDataMapper;
-    @Mock
-    private UIBibliographicRecordService uiBibliographicRecordService;
-    @Mock
-    private SftpConfigurationService sftpConfigurationService;
-    @Mock
-    private CinesReportService cinesReportService;
-    @Mock
-    private EsDocUnitService esDocUnitService;
-    @Mock
-    private SftpService sftpService;
-    @Mock
-    private FileStorageManager fm;
-    @Mock
-    private LibraryService libraryService;
-    @Mock
-    private LibraryParameterService libraryParameterService;
-    @Mock
-    private TransactionService transactionService;
-    @Mock
-    private LotRepository lotRepository;
-    @Mock
-    private LibraryAccesssHelper libraryAccesssHelper;
+	@Mock
+	private ExportMetsService exportMetsService;
 
-    private ExportCinesService service;
+	@Mock
+	private ExportSipService exportSipService;
 
-    @BeforeAll
-    public static void init() throws IOException {
-        FileUtils.forceMkdir(new File(WORKING_DIR));
-    }
+	@Mock
+	private BinaryStorageManager bm;
 
-    @AfterAll
-    public static void clean() {
-        FileUtils.deleteQuietly(new File(WORKING_DIR));
-    }
+	@Mock
+	private DocUnitService docUnitService;
 
-    @BeforeEach
-    public void setUp() {
-        service = new ExportCinesService(exportMetsService,
-                                         exportSipService,
-                                         bm,
-                                         docUnitService,
-                                         uiExportDataMapper,
-                                         uiBibliographicRecordService,
-                                         libraryService,
-                                         sftpConfigurationService,
-                                         cinesReportService,
-                                         sftpService,
-                                         fm,
-                                         libraryParameterService,
-                                         transactionService,
-                                         lotRepository,
-                                         libraryAccesssHelper,
-                                         esDocUnitService);
-        ReflectionTestUtils.setField(service, "workingDir", WORKING_DIR);
-    }
+	@Mock
+	private UIExportDataMapper uiExportDataMapper;
 
-    @Test
-    public void testExportDocUnit() throws IOException, JAXBException, PgcnTechnicalException, SAXException, NoSuchAlgorithmException, ExportCinesException {
-        final DocUnit docUnit = getDocUnit();
-        service.exportDocUnit(docUnit, false, null, false, true);
+	@Mock
+	private UIBibliographicRecordService uiBibliographicRecordService;
 
-        assertTrue(Files.exists(Paths.get(WORKING_DIR, docUnit.getPgcnId(), "DEPOT")));
-        assertTrue(Files.exists(Paths.get(WORKING_DIR, docUnit.getPgcnId(), "DEPOT", "DESC")));
-        assertTrue(Files.exists(Paths.get(WORKING_DIR, docUnit.getPgcnId(), "DEPOT", "DESC", "mets.xml")));
-        assertTrue(Files.exists(Paths.get(WORKING_DIR, docUnit.getPgcnId(), "sip.xml")));
-    }
+	@Mock
+	private SftpConfigurationService sftpConfigurationService;
 
-    @Test
-    public void testTarDepot() throws IOException, JAXBException, PgcnTechnicalException, SAXException, NoSuchAlgorithmException, ExportCinesException {
+	@Mock
+	private CinesReportService cinesReportService;
 
-        final DocUnit docUnit = getDocUnit();
-        final Path depot = service.exportDocUnit(docUnit, false, null, false, true);
+	@Mock
+	private EsDocUnitService esDocUnitService;
 
-        final Path newPath = Paths.get(depot.getParent().toFile().getAbsolutePath(), depot.toFile().getName());
-        final Path tpath = service.tarDirectory(newPath);
-        assertTrue(Files.exists(tpath));  // il existe
-        assertTrue(Files.exists(Paths.get(WORKING_DIR, docUnit.getPgcnId() + ".tar"))); // et bien là ou on l'attend en +...
-    }
+	@Mock
+	private SftpService sftpService;
 
-    private DocUnit getDocUnit() {
-        final DocPropertyType dcCreator = new DocPropertyType();
-        dcCreator.setIdentifier("creator");
+	@Mock
+	private FileStorageManager fm;
 
-        final DocProperty creator = new DocProperty();
-        creator.setType(dcCreator);
-        creator.setValue("Bret Easton Ellis");
+	@Mock
+	private LibraryService libraryService;
 
-        final DocPropertyType dcTitle = new DocPropertyType();
-        dcTitle.setIdentifier("title");
-        final DocProperty title = new DocProperty();
-        title.setType(dcTitle);
-        title.setValue("American Psycho");
+	@Mock
+	private LibraryParameterService libraryParameterService;
 
-        final BibliographicRecord record1 = new BibliographicRecord();
-        record1.setIdentifier("REC-001");
-        record1.addProperty(creator);
-        record1.addProperty(title);
+	@Mock
+	private TransactionService transactionService;
 
-        final BibliographicRecord record2 = new BibliographicRecord();
-        record2.setIdentifier("REC-002");
-        record2.addProperty(creator);
-        record2.addProperty(title);
+	@Mock
+	private LotRepository lotRepository;
 
-        final Library lib = new Library();
-        lib.setIdentifier("");
+	@Mock
+	private LibraryAccesssHelper libraryAccesssHelper;
 
-        final DocUnit docUnit = new DocUnit();
-        docUnit.setLibrary(lib);
-        docUnit.setIdentifier("DOC-UNIT-001");
-        docUnit.setPgcnId("ID-DOC-UNIT-001");
-        docUnit.setLabel("toto fait du vélo");
-        docUnit.addRecord(record1);
-        docUnit.addRecord(record2);
-        return docUnit;
-    }
+	private ExportCinesService service;
+
+	@BeforeAll
+	public static void init() throws IOException {
+		FileUtils.forceMkdir(new File(WORKING_DIR));
+	}
+
+	@AfterAll
+	public static void clean() {
+		FileUtils.deleteQuietly(new File(WORKING_DIR));
+	}
+
+	@BeforeEach
+	public void setUp() {
+		service = new ExportCinesService(exportMetsService, exportSipService, bm, docUnitService, uiExportDataMapper,
+				uiBibliographicRecordService, libraryService, sftpConfigurationService, cinesReportService, sftpService,
+				fm, libraryParameterService, transactionService, lotRepository, libraryAccesssHelper, esDocUnitService);
+		ReflectionTestUtils.setField(service, "workingDir", WORKING_DIR);
+	}
+
+	@Test
+	public void testExportDocUnit() throws IOException, JAXBException, PgcnTechnicalException, SAXException,
+			NoSuchAlgorithmException, ExportCinesException {
+		final DocUnit docUnit = getDocUnit();
+		service.exportDocUnit(docUnit, false, null, false, true);
+
+		assertTrue(Files.exists(Paths.get(WORKING_DIR, docUnit.getPgcnId(), "DEPOT")));
+		assertTrue(Files.exists(Paths.get(WORKING_DIR, docUnit.getPgcnId(), "DEPOT", "DESC")));
+		assertTrue(Files.exists(Paths.get(WORKING_DIR, docUnit.getPgcnId(), "DEPOT", "DESC", "mets.xml")));
+		assertTrue(Files.exists(Paths.get(WORKING_DIR, docUnit.getPgcnId(), "sip.xml")));
+	}
+
+	@Test
+	public void testTarDepot() throws IOException, JAXBException, PgcnTechnicalException, SAXException,
+			NoSuchAlgorithmException, ExportCinesException {
+
+		final DocUnit docUnit = getDocUnit();
+		final Path depot = service.exportDocUnit(docUnit, false, null, false, true);
+
+		final Path newPath = Paths.get(depot.getParent().toFile().getAbsolutePath(), depot.toFile().getName());
+		final Path tpath = service.tarDirectory(newPath);
+		assertTrue(Files.exists(tpath)); // il existe
+		assertTrue(Files.exists(Paths.get(WORKING_DIR, docUnit.getPgcnId() + ".tar"))); // et
+																						// bien
+																						// là
+																						// ou
+																						// on
+																						// l'attend
+																						// en
+																						// +...
+	}
+
+	private DocUnit getDocUnit() {
+		final DocPropertyType dcCreator = new DocPropertyType();
+		dcCreator.setIdentifier("creator");
+
+		final DocProperty creator = new DocProperty();
+		creator.setType(dcCreator);
+		creator.setValue("Bret Easton Ellis");
+
+		final DocPropertyType dcTitle = new DocPropertyType();
+		dcTitle.setIdentifier("title");
+		final DocProperty title = new DocProperty();
+		title.setType(dcTitle);
+		title.setValue("American Psycho");
+
+		final BibliographicRecord record1 = new BibliographicRecord();
+		record1.setIdentifier("REC-001");
+		record1.addProperty(creator);
+		record1.addProperty(title);
+
+		final BibliographicRecord record2 = new BibliographicRecord();
+		record2.setIdentifier("REC-002");
+		record2.addProperty(creator);
+		record2.addProperty(title);
+
+		final Library lib = new Library();
+		lib.setIdentifier("");
+
+		final DocUnit docUnit = new DocUnit();
+		docUnit.setLibrary(lib);
+		docUnit.setIdentifier("DOC-UNIT-001");
+		docUnit.setPgcnId("ID-DOC-UNIT-001");
+		docUnit.setLabel("toto fait du vélo");
+		docUnit.addRecord(record1);
+		docUnit.addRecord(record2);
+		return docUnit;
+	}
+
 }

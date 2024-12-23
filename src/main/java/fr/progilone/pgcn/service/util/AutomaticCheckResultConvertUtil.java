@@ -9,19 +9,21 @@ import fr.progilone.pgcn.domain.jaxb.facile.ValidatorType;
  */
 public final class AutomaticCheckResultConvertUtil {
 
-    private AutomaticCheckResultConvertUtil() {
-    }
+	private AutomaticCheckResultConvertUtil() {
+	}
 
-    public static AutomaticCheckResult convert(ValidatorType response) {
-        if (response == null)
-            return null;
-        AutomaticCheckResult result = new AutomaticCheckResult();
-        if (response.isValid()) {
-            result.setResult(AutoCheckResult.OK);
-        } else {
-            result.setResult(AutoCheckResult.KO);
-            result.setMessage(response.getMessage());
-        }
-        return result;
-    }
+	public static AutomaticCheckResult convert(ValidatorType response) {
+		if (response == null)
+			return null;
+		AutomaticCheckResult result = new AutomaticCheckResult();
+		if (response.isValid()) {
+			result.setResult(AutoCheckResult.OK);
+		}
+		else {
+			result.setResult(AutoCheckResult.KO);
+			result.setMessage(response.getMessage());
+		}
+		return result;
+	}
+
 }

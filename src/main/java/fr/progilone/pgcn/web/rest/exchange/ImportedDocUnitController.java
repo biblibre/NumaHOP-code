@@ -31,64 +31,69 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/impdocunit")
 public class ImportedDocUnitController {
 
-    private final ImportDocUnitService importDocUnitService;
-    private final ImportReportService importReportService;
-    private final LibraryAccesssHelper libraryAccesssHelper;
+	private final ImportDocUnitService importDocUnitService;
 
-    @Autowired
-    public ImportedDocUnitController(final ImportDocUnitService importDocUnitService,
-                                     final ImportReportService importReportService,
-                                     final LibraryAccesssHelper libraryAccesssHelper) {
-        this.importDocUnitService = importDocUnitService;
-        this.importReportService = importReportService;
-        this.libraryAccesssHelper = libraryAccesssHelper;
-    }
+	private final ImportReportService importReportService;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"report"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({EXC_HAB0})
-    public ResponseEntity<Page<ImportedDocUnit>> findByImportReport(final HttpServletRequest request,
-                                                                    @RequestParam(value = "report") ImportReport report,
-                                                                    @RequestParam(value = "page", defaultValue = "0") int page,
-                                                                    @RequestParam(value = "size", defaultValue = "10") int size,
-                                                                    @RequestParam(value = "state", required = false) List<DocUnit.State> states,
-                                                                    @RequestParam(value = "errors", defaultValue = "false") final boolean withErrors,
-                                                                    @RequestParam(value = "duplicates", defaultValue = "false") final boolean withDuplicates) {
-        final ImportReport importReport = importReportService.findByIdentifier(report.getIdentifier());
-        // Non trouvé
-        if (importReport == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur
-        if (!libraryAccesssHelper.checkLibrary(request, importReport, ImportReport::getLibrary)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Recherche
-        return new ResponseEntity<>(importDocUnitService.findByImportReport(report, page, size, states, withErrors, withDuplicates), HttpStatus.OK);
-    }
+	private final LibraryAccesssHelper libraryAccesssHelper;
 
-    @RequestMapping(value = "/{id}", params = {"process"}, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({EXC_HAB2})
-    public ResponseEntity<?> updateProcess(final HttpServletRequest request,
-                                           @PathVariable(name = "id") final String identifier,
-                                           @RequestParam(value = "process", defaultValue = "false") String processStr) {
-        final ImportedDocUnit importedDocUnit = importDocUnitService.findByIdentifier(identifier);
-        // Non trouvé
-        if (importedDocUnit == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur
-        if (!libraryAccesssHelper.checkLibrary(request,
-                                               importedDocUnit,
-                                               imp -> imp.getDocUnit() != null ? imp.getDocUnit().getLibrary()
-                                                                               : null)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Mise à jour
-        ImportedDocUnit.Process process = StringUtils.equalsIgnoreCase(processStr, "false") ? null
-                                                                                            : ImportedDocUnit.Process.valueOf(processStr);
-        importDocUnitService.updateProcess(identifier, process);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	@Autowired
+	public ImportedDocUnitController(final ImportDocUnitService importDocUnitService,
+			final ImportReportService importReportService, final LibraryAccesssHelper libraryAccesssHelper) {
+		this.importDocUnitService = importDocUnitService;
+		this.importReportService = importReportService;
+		this.libraryAccesssHelper = libraryAccesssHelper;
+	}
+
+	@RequestMapping(method = RequestMethod.GET, params = { "report" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(EXC_HAB0)
+	public ResponseEntity<Page<ImportedDocUnit>> findByImportReport(final HttpServletRequest request,
+			@RequestParam(value = "report") ImportReport report,
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size,
+			@RequestParam(value = "state", required = false) List<DocUnit.State> states,
+			@RequestParam(value = "errors", defaultValue = "false") final boolean withErrors,
+			@RequestParam(value = "duplicates", defaultValue = "false") final boolean withDuplicates) {
+		final ImportReport importReport = importReportService.findByIdentifier(report.getIdentifier());
+		// Non trouvé
+		if (importReport == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// Vérification des droits d'accès par rapport à la bibliothèque de
+		// l'utilisateur
+		if (!libraryAccesssHelper.checkLibrary(request, importReport, ImportReport::getLibrary)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Recherche
+		return new ResponseEntity<>(
+				importDocUnitService.findByImportReport(report, page, size, states, withErrors, withDuplicates),
+				HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", params = { "process" }, method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(EXC_HAB2)
+	public ResponseEntity<?> updateProcess(final HttpServletRequest request,
+			@PathVariable(name = "id") final String identifier,
+			@RequestParam(value = "process", defaultValue = "false") String processStr) {
+		final ImportedDocUnit importedDocUnit = importDocUnitService.findByIdentifier(identifier);
+		// Non trouvé
+		if (importedDocUnit == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// Vérification des droits d'accès par rapport à la bibliothèque de
+		// l'utilisateur
+		if (!libraryAccesssHelper.checkLibrary(request, importedDocUnit,
+				imp -> imp.getDocUnit() != null ? imp.getDocUnit().getLibrary() : null)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Mise à jour
+		ImportedDocUnit.Process process = StringUtils.equalsIgnoreCase(processStr, "false") ? null
+				: ImportedDocUnit.Process.valueOf(processStr);
+		importDocUnitService.updateProcess(identifier, process);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
 }

@@ -8,50 +8,54 @@ import fr.progilone.pgcn.domain.dto.train.SimpleTrainDTO;
  */
 public class SimplePhysicalDocumentDTO extends AbstractDTO {
 
-    private String identifier;
-    private String name;
-    private String digitalId;
-    private SimpleTrainDTO train;
+	private String identifier;
 
-    public SimplePhysicalDocumentDTO() {
-    }
+	private String name;
 
-    public SimplePhysicalDocumentDTO(String identifier, String name, String digitalId, SimpleTrainDTO train) {
-        this.identifier = identifier;
-        this.name = name;
-        this.digitalId = digitalId;
-        this.train = train;
-    }
+	private String digitalId;
 
-    public String getDigitalId() {
-        return digitalId;
-    }
+	private SimpleTrainDTO train;
 
-    public void setDigitalId(String digitalId) {
-        this.digitalId = digitalId;
-    }
+	public SimplePhysicalDocumentDTO() {
+	}
 
-    public String getName() {
-        return name;
-    }
+	public SimplePhysicalDocumentDTO(String identifier, String name, String digitalId, SimpleTrainDTO train) {
+		this.identifier = identifier;
+		this.name = name;
+		this.digitalId = digitalId;
+		this.train = train;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getDigitalId() {
+		return digitalId;
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public void setDigitalId(String digitalId) {
+		this.digitalId = digitalId;
+	}
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public SimpleTrainDTO getTrain() {
-        return train;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setTrain(SimpleTrainDTO train) {
-        this.train = train;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
+
+	public SimpleTrainDTO getTrain() {
+		return train;
+	}
+
+	public void setTrain(SimpleTrainDTO train) {
+		this.train = train;
+	}
+
 }

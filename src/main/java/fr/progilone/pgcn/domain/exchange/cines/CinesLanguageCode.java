@@ -10,41 +10,42 @@ import jakarta.persistence.Table;
 @Table(name = CinesLanguageCode.TABLE_NAME)
 public class CinesLanguageCode extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "conf_cines_lang_code";
+	public static final String TABLE_NAME = "conf_cines_lang_code";
 
-    @Column(name = "label")
-    private String label;
+	@Column(name = "label")
+	private String label;
 
-    @Column(name = "langDC")
-    private String langDC;
+	@Column(name = "langDC")
+	private String langDC;
 
-    /**
-     * Etat
-     */
-    @Column(name = "active")
-    private boolean active;
+	/**
+	 * Etat
+	 */
+	@Column(name = "active")
+	private boolean active;
 
-    public String getLabel() {
-        return label;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
 
-    public String getlangDC() {
-        return langDC;
-    }
+	public String getlangDC() {
+		return langDC;
+	}
 
-    public void setlangDC(final String langDC) {
-        this.langDC = langDC;
-    }
+	public void setlangDC(final String langDC) {
+		this.langDC = langDC;
+	}
+
 }

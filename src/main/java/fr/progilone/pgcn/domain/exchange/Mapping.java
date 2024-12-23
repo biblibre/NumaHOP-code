@@ -29,109 +29,108 @@ import org.hibernate.envers.RelationTargetAuditMode;
 @AuditTable(value = Mapping.AUDIT_TABLE_NAME)
 public class Mapping extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "exc_mapping";
-    public static final String AUDIT_TABLE_NAME = "aud_exc_mapping";
+	public static final String TABLE_NAME = "exc_mapping";
 
-    /**
-     * Types de mapping
-     */
-    public enum Type {
-        EAD,
-        DC,
-        DCQ,
-        MARC
-    }
+	public static final String AUDIT_TABLE_NAME = "aud_exc_mapping";
 
-    /**
-     * Libellé de cet ensemble de règles de mapping
-     */
-    @Column(name = "label", nullable = false)
-    private String label;
+	/**
+	 * Types de mapping
+	 */
+	public enum Type {
 
-    /**
-     * Bibliothèque utilisant cet ensemble de règles
-     */
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "library")
-    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
-    private Library library;
+		EAD, DC, DCQ, MARC
 
-    /**
-     * Type de mapping
-     */
-    @Column(name = "type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Type type;
+	}
 
-    /**
-     * Expression, par défaut, permettant de faire le lien entre des unités parent / enfant
-     */
-    @Column(name = "join_expression", columnDefinition = "text")
-    private String joinExpression;
+	/**
+	 * Libellé de cet ensemble de règles de mapping
+	 */
+	@Column(name = "label", nullable = false)
+	private String label;
 
-    @OneToMany(mappedBy = "mapping", fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
-    private final List<MappingRule> rules = new ArrayList<>();
+	/**
+	 * Bibliothèque utilisant cet ensemble de règles
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "library")
+	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+	private Library library;
 
-    public String getLabel() {
-        return label;
-    }
+	/**
+	 * Type de mapping
+	 */
+	@Column(name = "type", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Type type;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	/**
+	 * Expression, par défaut, permettant de faire le lien entre des unités parent /
+	 * enfant
+	 */
+	@Column(name = "join_expression", columnDefinition = "text")
+	private String joinExpression;
 
-    public Library getLibrary() {
-        return library;
-    }
+	@OneToMany(mappedBy = "mapping", fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, orphanRemoval = true)
+	private final List<MappingRule> rules = new ArrayList<>();
 
-    public void setLibrary(final Library library) {
-        this.library = library;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public Type getType() {
-        return type;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setType(final Type type) {
-        this.type = type;
-    }
+	public Library getLibrary() {
+		return library;
+	}
 
-    public String getJoinExpression() {
-        return joinExpression;
-    }
+	public void setLibrary(final Library library) {
+		this.library = library;
+	}
 
-    public void setJoinExpression(final String joinExpression) {
-        this.joinExpression = joinExpression;
-    }
+	public Type getType() {
+		return type;
+	}
 
-    public List<MappingRule> getRules() {
-        return rules;
-    }
+	public void setType(final Type type) {
+		this.type = type;
+	}
 
-    public void setRules(final List<MappingRule> rules) {
-        this.rules.clear();
-        if (rules != null) {
-            rules.forEach(this::addRule);
-        }
-    }
+	public String getJoinExpression() {
+		return joinExpression;
+	}
 
-    public void addRule(final MappingRule rule) {
-        if (rule != null) {
-            this.rules.add(rule);
-            rule.setMapping(this);
-        }
-    }
+	public void setJoinExpression(final String joinExpression) {
+		this.joinExpression = joinExpression;
+	}
 
-    @Override
-    public String toString() {
-        String str = "Mapping{" + "label='"
-                     + label
-                     + '\'';
-        if (library != null) {
-            str += ", library=" + library.getName();
-        }
-        str += ", type=" + type
-               + '}';
-        return str;
-    }
+	public List<MappingRule> getRules() {
+		return rules;
+	}
+
+	public void setRules(final List<MappingRule> rules) {
+		this.rules.clear();
+		if (rules != null) {
+			rules.forEach(this::addRule);
+		}
+	}
+
+	public void addRule(final MappingRule rule) {
+		if (rule != null) {
+			this.rules.add(rule);
+			rule.setMapping(this);
+		}
+	}
+
+	@Override
+	public String toString() {
+		String str = "Mapping{" + "label='" + label + '\'';
+		if (library != null) {
+			str += ", library=" + library.getName();
+		}
+		str += ", type=" + type + '}';
+		return str;
+	}
+
 }

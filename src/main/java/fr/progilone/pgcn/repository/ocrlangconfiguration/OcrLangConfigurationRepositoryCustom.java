@@ -7,5 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface OcrLangConfigurationRepositoryCustom {
 
-    Page<OcrLangConfiguration> search(String search, List<String> libraries, Pageable pageable);
+	Page<OcrLangConfiguration> search(String search, List<String> libraries, Pageable pageable);
+
 }

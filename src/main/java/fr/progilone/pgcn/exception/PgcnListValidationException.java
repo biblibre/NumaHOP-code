@@ -5,14 +5,14 @@ import java.util.List;
 
 public class PgcnListValidationException extends PgcnException {
 
-    private final List<? extends AbstractDomainObject> invalidObjects;
+	private final List<? extends AbstractDomainObject> invalidObjects;
 
-    public PgcnListValidationException(final List<? extends AbstractDomainObject> invalidObjects) {
-        this.invalidObjects = invalidObjects;
-    }
+	public PgcnListValidationException(final List<? extends AbstractDomainObject> invalidObjects) {
+		this.invalidObjects = invalidObjects;
+	}
 
-    public List<? extends AbstractDomainObject> getInvalidObjects() {
-        return invalidObjects;
-    }
+	public List<? extends AbstractDomainObject> getInvalidObjects() {
+		return invalidObjects;
+	}
 
 }

@@ -23,45 +23,50 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/physicaldocument")
 public class PhysicalDocumentController extends AbstractRestController {
 
-    private final EsDocUnitService esDocUnitService;
-    private final UIPhysicalDocumentService uiPhysicalDocumentService;
+	private final EsDocUnitService esDocUnitService;
 
-    @Autowired
-    public PhysicalDocumentController(final EsDocUnitService esDocUnitService, final UIPhysicalDocumentService uiPhysicalDocumentService) {
-        super();
-        this.esDocUnitService = esDocUnitService;
-        this.uiPhysicalDocumentService = uiPhysicalDocumentService;
-    }
+	private final UIPhysicalDocumentService uiPhysicalDocumentService;
 
-    @RequestMapping(value = "/{identifier}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<PhysicalDocumentDTO> getById(@PathVariable final String identifier) {
-        final PhysicalDocumentDTO pddto = uiPhysicalDocumentService.findByIdentifier(identifier);
-        return createResponseEntity(pddto);
-    }
+	@Autowired
+	public PhysicalDocumentController(final EsDocUnitService esDocUnitService,
+			final UIPhysicalDocumentService uiPhysicalDocumentService) {
+		super();
+		this.esDocUnitService = esDocUnitService;
+		this.uiPhysicalDocumentService = uiPhysicalDocumentService;
+	}
 
-    @RequestMapping(value = "/{identifier}", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
-    @Timed
-    public ResponseEntity<PhysicalDocumentDTO> update(@RequestBody final PhysicalDocumentDTO doc) {
-        final PhysicalDocumentDTO savedPhysDoc = uiPhysicalDocumentService.update(doc);
-        esDocUnitService.indexPhysicalDocumentAsync(savedPhysDoc.getIdentifier());
-        return new ResponseEntity<>(savedPhysDoc, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/{identifier}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<PhysicalDocumentDTO> getById(@PathVariable final String identifier) {
+		final PhysicalDocumentDTO pddto = uiPhysicalDocumentService.findByIdentifier(identifier);
+		return createResponseEntity(pddto);
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"train"})
-    @ResponseStatus(HttpStatus.OK)
-    @Timed
-    public ResponseEntity<List<ListPhysicalDocumentDTO>> findByTrainIdentifier(@RequestParam(value = "train") final String trainId) {
-        final List<ListPhysicalDocumentDTO> documents = uiPhysicalDocumentService.findByTrainIdentifier(trainId);
-        return createResponseEntity(documents);
-    }
+	@RequestMapping(value = "/{identifier}", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	@Timed
+	public ResponseEntity<PhysicalDocumentDTO> update(@RequestBody final PhysicalDocumentDTO doc) {
+		final PhysicalDocumentDTO savedPhysDoc = uiPhysicalDocumentService.update(doc);
+		esDocUnitService.indexPhysicalDocumentAsync(savedPhysDoc.getIdentifier());
+		return new ResponseEntity<>(savedPhysDoc, HttpStatus.OK);
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"trainDocUnits"})
-    @ResponseStatus(HttpStatus.OK)
-    @Timed
-    public ResponseEntity<List<ListPhysicalDocumentDTO>> findByDocUnitIdentifiers(@RequestParam(name = "docUnitIds") final List<String> docUnitIds) {
-        final List<ListPhysicalDocumentDTO> documents = uiPhysicalDocumentService.findByDocUnitIds(docUnitIds);
-        return createResponseEntity(documents);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "train" })
+	@ResponseStatus(HttpStatus.OK)
+	@Timed
+	public ResponseEntity<List<ListPhysicalDocumentDTO>> findByTrainIdentifier(
+			@RequestParam(value = "train") final String trainId) {
+		final List<ListPhysicalDocumentDTO> documents = uiPhysicalDocumentService.findByTrainIdentifier(trainId);
+		return createResponseEntity(documents);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, params = { "trainDocUnits" })
+	@ResponseStatus(HttpStatus.OK)
+	@Timed
+	public ResponseEntity<List<ListPhysicalDocumentDTO>> findByDocUnitIdentifiers(
+			@RequestParam(name = "docUnitIds") final List<String> docUnitIds) {
+		final List<ListPhysicalDocumentDTO> documents = uiPhysicalDocumentService.findByDocUnitIds(docUnitIds);
+		return createResponseEntity(documents);
+	}
+
 }

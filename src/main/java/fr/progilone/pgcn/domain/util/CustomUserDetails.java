@@ -14,100 +14,103 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class CustomUserDetails implements UserDetails {
 
-    private final String identifier;
-    private final String login;
-    private final String password;
-    private final Collection<? extends GrantedAuthority> authorities;
-    private Lang lang;
-    private final String libraryId;
-    private final boolean superuser;
-    private final User.Category category;
+	private final String identifier;
 
-    public CustomUserDetails(final String identifier,
-                             final String login,
-                             final String password,
-                             final Lang lang,
-                             final String libraryId,
-                             final Collection<GrantedAuthority> authorities,
-                             final boolean superuser,
-                             final User.Category category) {
-        super();
-        this.identifier = identifier;
-        this.login = login;
-        this.password = password;
-        this.lang = lang;
-        this.libraryId = libraryId;
-        this.authorities = authorities;
-        this.superuser = superuser;
-        this.category = category;
-    }
+	private final String login;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
+	private final String password;
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
+	private final Collection<? extends GrantedAuthority> authorities;
 
-    @Override
-    public String getUsername() {
-        return login;
-    }
+	private Lang lang;
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+	private final String libraryId;
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+	private final boolean superuser;
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+	private final User.Category category;
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+	public CustomUserDetails(final String identifier, final String login, final String password, final Lang lang,
+			final String libraryId, final Collection<GrantedAuthority> authorities, final boolean superuser,
+			final User.Category category) {
+		super();
+		this.identifier = identifier;
+		this.login = login;
+		this.password = password;
+		this.lang = lang;
+		this.libraryId = libraryId;
+		this.authorities = authorities;
+		this.superuser = superuser;
+		this.category = category;
+	}
 
-    public Lang getLang() {
-        return lang;
-    }
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
 
-    public void setLang(final Lang lang) {
-        this.lang = lang;
-    }
+	@Override
+	public String getPassword() {
+		return password;
+	}
 
-    public String getLibraryId() {
-        return libraryId;
-    }
+	@Override
+	public String getUsername() {
+		return login;
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    public String getLogin() {
-        return login;
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
 
-    public boolean isSuperuser() {
-        return superuser;
-    }
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
 
-    public User.Category getCategory() {
-        return category;
-    }
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
-    public boolean isUserInRole(final String role) {
-        final String prefix = "ROLE_";
-        final SimpleGrantedAuthority authority = new SimpleGrantedAuthority(prefix + role);
-        return role == null || authorities.contains(authority);
-    }
+	public Lang getLang() {
+		return lang;
+	}
+
+	public void setLang(final Lang lang) {
+		this.lang = lang;
+	}
+
+	public String getLibraryId() {
+		return libraryId;
+	}
+
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public boolean isSuperuser() {
+		return superuser;
+	}
+
+	public User.Category getCategory() {
+		return category;
+	}
+
+	public boolean isUserInRole(final String role) {
+		final String prefix = "ROLE_";
+		final SimpleGrantedAuthority authority = new SimpleGrantedAuthority(prefix + role);
+		return role == null || authorities.contains(authority);
+	}
+
 }

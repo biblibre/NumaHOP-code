@@ -25,139 +25,148 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UILibraryParameterService {
 
-    private final LibraryParameterService libraryParameterService;
-    private final UILibraryParameterMapper uiLibraryParameterMapper;
+	private final LibraryParameterService libraryParameterService;
 
-    @Autowired
-    public UILibraryParameterService(final LibraryParameterService libraryParameterService, final UILibraryParameterMapper uiLibraryParameterMapper) {
-        this.libraryParameterService = libraryParameterService;
-        this.uiLibraryParameterMapper = uiLibraryParameterMapper;
+	private final UILibraryParameterMapper uiLibraryParameterMapper;
 
-    }
+	@Autowired
+	public UILibraryParameterService(final LibraryParameterService libraryParameterService,
+			final UILibraryParameterMapper uiLibraryParameterMapper) {
+		this.libraryParameterService = libraryParameterService;
+		this.uiLibraryParameterMapper = uiLibraryParameterMapper;
 
-    /**
-     * Création d'un paramétrage d'une bibliothèque. Le type de paramétrage est géré par le mapper.
-     *
-     * @param request
-     * @return
-     * @throws PgcnValidationException
-     */
-    @Transactional
-    public LibraryParameterDTO create(final LibraryParameterDTO request) throws PgcnValidationException {
-        final LibraryParameter libraryParameter = new LibraryParameter();
-        uiLibraryParameterMapper.mapInto(request, libraryParameter);
-        try {
-            return saveAndReturn(libraryParameter);
-        } catch (final PgcnBusinessException e) {
-            e.getErrors().forEach(semanthequeError -> request.addError(buildError(semanthequeError.getCode())));
-            throw new PgcnValidationException(request);
-        }
-    }
+	}
 
-    /**
-     * Création d'un paramétrage valorisé d'une bibliothèque.
-     *
-     * @param request
-     * @return
-     * @throws PgcnValidationException
-     */
-    @Transactional
-    public LibraryParameterValuedDTO create(final LibraryParameterValuedDTO request) throws PgcnValidationException {
-        final LibraryParameter libraryParameter = new LibraryParameter();
-        uiLibraryParameterMapper.mapValuedInto(request, libraryParameter);
-        try {
-            return saveAndReturnValued(libraryParameter);
-        } catch (final PgcnBusinessException e) {
-            e.getErrors().forEach(semanthequeError -> request.addError(buildError(semanthequeError.getCode())));
-            throw new PgcnValidationException(request);
-        }
-    }
+	/**
+	 * Création d'un paramétrage d'une bibliothèque. Le type de paramétrage est géré par
+	 * le mapper.
+	 * @param request
+	 * @return
+	 * @throws PgcnValidationException
+	 */
+	@Transactional
+	public LibraryParameterDTO create(final LibraryParameterDTO request) throws PgcnValidationException {
+		final LibraryParameter libraryParameter = new LibraryParameter();
+		uiLibraryParameterMapper.mapInto(request, libraryParameter);
+		try {
+			return saveAndReturn(libraryParameter);
+		}
+		catch (final PgcnBusinessException e) {
+			e.getErrors().forEach(semanthequeError -> request.addError(buildError(semanthequeError.getCode())));
+			throw new PgcnValidationException(request);
+		}
+	}
 
-    /**
-     * Mise à jour d'un paramétrage d'une bibliothèque.
-     *
-     * @param
-     * @return
-     * @throws PgcnValidationException
-     */
-    @Transactional
-    public LibraryParameterDTO update(final LibraryParameterDTO request) throws PgcnValidationException {
-        final LibraryParameter libraryParameter = libraryParameterService.findLibraryParameterWithDependencies(request.getIdentifier());
-        uiLibraryParameterMapper.mapInto(request, libraryParameter);
-        try {
-            return saveAndReturn(libraryParameter);
-        } catch (final PgcnBusinessException e) {
-            e.getErrors().forEach(semanthequeError -> request.addError(buildError(semanthequeError.getCode())));
-            throw new PgcnValidationException(request);
-        }
-    }
+	/**
+	 * Création d'un paramétrage valorisé d'une bibliothèque.
+	 * @param request
+	 * @return
+	 * @throws PgcnValidationException
+	 */
+	@Transactional
+	public LibraryParameterValuedDTO create(final LibraryParameterValuedDTO request) throws PgcnValidationException {
+		final LibraryParameter libraryParameter = new LibraryParameter();
+		uiLibraryParameterMapper.mapValuedInto(request, libraryParameter);
+		try {
+			return saveAndReturnValued(libraryParameter);
+		}
+		catch (final PgcnBusinessException e) {
+			e.getErrors().forEach(semanthequeError -> request.addError(buildError(semanthequeError.getCode())));
+			throw new PgcnValidationException(request);
+		}
+	}
 
-    /**
-     * Mise à jour d'un paramétrage valorise d'une bibliothèque.
-     *
-     * @param request
-     * @return
-     * @throws PgcnValidationException
-     */
-    @Transactional
-    public LibraryParameterValuedDTO update(final LibraryParameterValuedDTO request) throws PgcnValidationException {
-        final LibraryParameter libraryParameter = libraryParameterService.findLibraryParameterWithDependencies(request.getIdentifier());
-        uiLibraryParameterMapper.mapValuedInto(request, libraryParameter);
-        try {
-            return saveAndReturnValued(libraryParameter);
-        } catch (final PgcnBusinessException e) {
-            e.getErrors().forEach(semanthequeError -> request.addError(buildError(semanthequeError.getCode())));
-            throw new PgcnValidationException(request);
-        }
-    }
+	/**
+	 * Mise à jour d'un paramétrage d'une bibliothèque.
+	 * @param
+	 * @return
+	 * @throws PgcnValidationException
+	 */
+	@Transactional
+	public LibraryParameterDTO update(final LibraryParameterDTO request) throws PgcnValidationException {
+		final LibraryParameter libraryParameter = libraryParameterService
+			.findLibraryParameterWithDependencies(request.getIdentifier());
+		uiLibraryParameterMapper.mapInto(request, libraryParameter);
+		try {
+			return saveAndReturn(libraryParameter);
+		}
+		catch (final PgcnBusinessException e) {
+			e.getErrors().forEach(semanthequeError -> request.addError(buildError(semanthequeError.getCode())));
+			throw new PgcnValidationException(request);
+		}
+	}
 
-    private LibraryParameterDTO saveAndReturn(final LibraryParameter param) {
-        final LibraryParameter savedLibraryParameter = libraryParameterService.save(param);
-        final LibraryParameter libParamWithValues = libraryParameterService.findLibraryParameterWithDependencies(savedLibraryParameter.getIdentifier());
-        return LibraryParameterMapper.INSTANCE.libraryParameterToLibraryParameterDTO(libParamWithValues);
-    }
+	/**
+	 * Mise à jour d'un paramétrage valorise d'une bibliothèque.
+	 * @param request
+	 * @return
+	 * @throws PgcnValidationException
+	 */
+	@Transactional
+	public LibraryParameterValuedDTO update(final LibraryParameterValuedDTO request) throws PgcnValidationException {
+		final LibraryParameter libraryParameter = libraryParameterService
+			.findLibraryParameterWithDependencies(request.getIdentifier());
+		uiLibraryParameterMapper.mapValuedInto(request, libraryParameter);
+		try {
+			return saveAndReturnValued(libraryParameter);
+		}
+		catch (final PgcnBusinessException e) {
+			e.getErrors().forEach(semanthequeError -> request.addError(buildError(semanthequeError.getCode())));
+			throw new PgcnValidationException(request);
+		}
+	}
 
-    private LibraryParameterValuedDTO saveAndReturnValued(final LibraryParameter param) {
-        final LibraryParameter savedLibraryParameter = libraryParameterService.save(param);
-        final LibraryParameter libParamWithValues = libraryParameterService.findCinesDefaultValuesForLibrary(savedLibraryParameter.getLibrary());
-        final LibraryParameterValuedDTO dto = LibraryParameterMapper.INSTANCE.libParamToLibParamValuedDTO(libParamWithValues);
-        final List<LibraryParameterValueCinesDTO> valuesDto = new ArrayList<>();
-        libParamWithValues.getValues().stream().map(LibraryParameterValueCines.class::cast).forEach(val -> {
-            valuesDto.add(LibraryParameterMapper.INSTANCE.libParamCinesValueToDTO(val));
-        });
-        dto.setValues(valuesDto);
-        return dto;
-    }
+	private LibraryParameterDTO saveAndReturn(final LibraryParameter param) {
+		final LibraryParameter savedLibraryParameter = libraryParameterService.save(param);
+		final LibraryParameter libParamWithValues = libraryParameterService
+			.findLibraryParameterWithDependencies(savedLibraryParameter.getIdentifier());
+		return LibraryParameterMapper.INSTANCE.libraryParameterToLibraryParameterDTO(libParamWithValues);
+	}
 
-    @Transactional(readOnly = true)
-    public LibraryParameterDTO getOneDTO(final String id) {
-        final LibraryParameter libraryParameter = libraryParameterService.findLibraryParameterWithDependencies(id);
-        return LibraryParameterMapper.INSTANCE.libraryParameterToLibraryParameterDTO(libraryParameter);
-    }
+	private LibraryParameterValuedDTO saveAndReturnValued(final LibraryParameter param) {
+		final LibraryParameter savedLibraryParameter = libraryParameterService.save(param);
+		final LibraryParameter libParamWithValues = libraryParameterService
+			.findCinesDefaultValuesForLibrary(savedLibraryParameter.getLibrary());
+		final LibraryParameterValuedDTO dto = LibraryParameterMapper.INSTANCE
+			.libParamToLibParamValuedDTO(libParamWithValues);
+		final List<LibraryParameterValueCinesDTO> valuesDto = new ArrayList<>();
+		libParamWithValues.getValues().stream().map(LibraryParameterValueCines.class::cast).forEach(val -> {
+			valuesDto.add(LibraryParameterMapper.INSTANCE.libParamCinesValueToDTO(val));
+		});
+		dto.setValues(valuesDto);
+		return dto;
+	}
 
-    @Transactional(readOnly = true)
-    public LibraryParameterValuedDTO getCinesDefaultValues(final Library lib) {
+	@Transactional(readOnly = true)
+	public LibraryParameterDTO getOneDTO(final String id) {
+		final LibraryParameter libraryParameter = libraryParameterService.findLibraryParameterWithDependencies(id);
+		return LibraryParameterMapper.INSTANCE.libraryParameterToLibraryParameterDTO(libraryParameter);
+	}
 
-        final LibraryParameter libraryParameter = libraryParameterService.findCinesParameterForLibrary(lib);
-        if (libraryParameter != null) {
-            final List<LibraryParameterValueCinesDTO> valuesDto = new ArrayList<>();
-            final LibraryParameterValuedDTO dto = LibraryParameterMapper.INSTANCE.libParamToLibParamValuedDTO(libraryParameter);
-            libraryParameter.getValues().stream().map(LibraryParameterValueCines.class::cast).forEach(val -> {
-                valuesDto.add(LibraryParameterMapper.INSTANCE.libParamCinesValueToDTO(val));
-            });
-            dto.setValues(valuesDto);
-            return dto;
-        }
-        return null;
-    }
+	@Transactional(readOnly = true)
+	public LibraryParameterValuedDTO getCinesDefaultValues(final Library lib) {
 
-    private PgcnError buildError(final PgcnErrorCode pgcnErrorCode) {
-        final PgcnError.Builder builder = new PgcnError.Builder();
-        switch (pgcnErrorCode) {
-            default:
-                break;
-        }
-        return builder.build();
-    }
+		final LibraryParameter libraryParameter = libraryParameterService.findCinesParameterForLibrary(lib);
+		if (libraryParameter != null) {
+			final List<LibraryParameterValueCinesDTO> valuesDto = new ArrayList<>();
+			final LibraryParameterValuedDTO dto = LibraryParameterMapper.INSTANCE
+				.libParamToLibParamValuedDTO(libraryParameter);
+			libraryParameter.getValues().stream().map(LibraryParameterValueCines.class::cast).forEach(val -> {
+				valuesDto.add(LibraryParameterMapper.INSTANCE.libParamCinesValueToDTO(val));
+			});
+			dto.setValues(valuesDto);
+			return dto;
+		}
+		return null;
+	}
+
+	private PgcnError buildError(final PgcnErrorCode pgcnErrorCode) {
+		final PgcnError.Builder builder = new PgcnError.Builder();
+		switch (pgcnErrorCode) {
+			default:
+				break;
+		}
+		return builder.build();
+	}
 
 }

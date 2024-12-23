@@ -28,33 +28,40 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/audit/train")
 public class AuditTrainController {
 
-    private final AccessHelper accessHelper;
-    private final AuditTrainService auditTrainService;
+	private final AccessHelper accessHelper;
 
-    @Autowired
-    public AuditTrainController(final AccessHelper accessHelper, final AuditTrainService auditTrainService) {
-        this.accessHelper = accessHelper;
-        this.auditTrainService = auditTrainService;
-    }
+	private final AuditTrainService auditTrainService;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"from"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({TRA_HAB3})
-    public ResponseEntity<List<AuditTrainRevisionDTO>> getRevisions(@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from") final LocalDate fromDate,
-                                                                    @RequestParam(value = "library", required = false) final List<String> libraries,
-                                                                    @RequestParam(value = "project", required = false) final List<String> projects,
-                                                                    @RequestParam(value = "status", required = false) List<Train.TrainStatus> status) {
+	@Autowired
+	public AuditTrainController(final AccessHelper accessHelper, final AuditTrainService auditTrainService) {
+		this.accessHelper = accessHelper;
+		this.auditTrainService = auditTrainService;
+	}
 
-        // Chargement
-        List<AuditTrainRevisionDTO> revisions = auditTrainService.getRevisions(fromDate, libraries, projects, status);
-        // Droits d'accès
-        revisions = filterDTOs(revisions, AuditTrainRevisionDTO::getIdentifier);
-        // Réponse
-        return new ResponseEntity<>(revisions, HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "from" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(TRA_HAB3)
+	public ResponseEntity<List<AuditTrainRevisionDTO>> getRevisions(
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from") final LocalDate fromDate,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@RequestParam(value = "status", required = false) List<Train.TrainStatus> status) {
 
-    private <T> List<T> filterDTOs(final Collection<T> dtos, final Function<T, String> getIdentifierFn) {
-        final Collection<Train> okTrains = accessHelper.filterTrains(dtos.stream().map(getIdentifierFn).collect(Collectors.toList()));
-        return dtos.stream().filter(dto -> okTrains.stream().anyMatch(train -> StringUtils.equals(getIdentifierFn.apply(dto), train.getIdentifier()))).collect(Collectors.toList());
-    }
+		// Chargement
+		List<AuditTrainRevisionDTO> revisions = auditTrainService.getRevisions(fromDate, libraries, projects, status);
+		// Droits d'accès
+		revisions = filterDTOs(revisions, AuditTrainRevisionDTO::getIdentifier);
+		// Réponse
+		return new ResponseEntity<>(revisions, HttpStatus.OK);
+	}
+
+	private <T> List<T> filterDTOs(final Collection<T> dtos, final Function<T, String> getIdentifierFn) {
+		final Collection<Train> okTrains = accessHelper
+			.filterTrains(dtos.stream().map(getIdentifierFn).collect(Collectors.toList()));
+		return dtos.stream()
+			.filter(dto -> okTrains.stream()
+				.anyMatch(train -> StringUtils.equals(getIdentifierFn.apply(dto), train.getIdentifier())))
+			.collect(Collectors.toList());
+	}
+
 }

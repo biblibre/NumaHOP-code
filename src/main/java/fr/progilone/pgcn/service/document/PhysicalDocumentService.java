@@ -11,49 +11,50 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PhysicalDocumentService {
 
-    private final PhysicalDocumentRepository physicalDocumentRepository;
+	private final PhysicalDocumentRepository physicalDocumentRepository;
 
-    @Autowired
-    public PhysicalDocumentService(final PhysicalDocumentRepository physicalDocumentRepository) {
-        this.physicalDocumentRepository = physicalDocumentRepository;
-    }
+	@Autowired
+	public PhysicalDocumentService(final PhysicalDocumentRepository physicalDocumentRepository) {
+		this.physicalDocumentRepository = physicalDocumentRepository;
+	}
 
-    @Transactional
-    public PhysicalDocument save(final PhysicalDocument doc) {
-        setDefaultValues(doc);
-        return physicalDocumentRepository.save(doc);
-    }
+	@Transactional
+	public PhysicalDocument save(final PhysicalDocument doc) {
+		setDefaultValues(doc);
+		return physicalDocumentRepository.save(doc);
+	}
 
-    @Transactional(readOnly = true)
-    public PhysicalDocument findByIdentifier(final String identifier) {
-        return physicalDocumentRepository.findByIdentifier(identifier);
-    }
+	@Transactional(readOnly = true)
+	public PhysicalDocument findByIdentifier(final String identifier) {
+		return physicalDocumentRepository.findByIdentifier(identifier);
+	}
 
-    @Transactional
-    public List<PhysicalDocument> findByTrainIdentifier(final String identifier) {
-        return physicalDocumentRepository.findByTrainIdentifier(identifier);
-    }
+	@Transactional
+	public List<PhysicalDocument> findByTrainIdentifier(final String identifier) {
+		return physicalDocumentRepository.findByTrainIdentifier(identifier);
+	}
 
-    @Transactional
-    public List<PhysicalDocument> findByDocUnitIdentifiers(final List<String> identifiers) {
-        return physicalDocumentRepository.findByDocUnitIdentifierIn(identifiers);
-    }
+	@Transactional
+	public List<PhysicalDocument> findByDocUnitIdentifiers(final List<String> identifiers) {
+		return physicalDocumentRepository.findByDocUnitIdentifierIn(identifiers);
+	}
 
-    @Transactional(readOnly = true)
-    public List<PhysicalDocument> findAll() {
-        return physicalDocumentRepository.findAll();
-    }
+	@Transactional(readOnly = true)
+	public List<PhysicalDocument> findAll() {
+		return physicalDocumentRepository.findAll();
+	}
 
-    @Transactional
-    public void delete(final String identifier) {
-        physicalDocumentRepository.deleteById(identifier);
-    }
+	@Transactional
+	public void delete(final String identifier) {
+		physicalDocumentRepository.deleteById(identifier);
+	}
 
-    private void setDefaultValues(final PhysicalDocument doc) {
+	private void setDefaultValues(final PhysicalDocument doc) {
 
-        // initialisation du statut
-        if (doc.getStatus() == null) {
-            doc.setStatus(PhysicalDocumentStatus.CREATED);
-        }
-    }
+		// initialisation du statut
+		if (doc.getStatus() == null) {
+			doc.setStatus(PhysicalDocumentStatus.CREATED);
+		}
+	}
+
 }

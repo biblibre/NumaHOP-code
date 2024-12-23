@@ -19,68 +19,74 @@ import jakarta.persistence.Table;
 @Table(name = Template.TABLE_NAME)
 public class Template extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "exc_template";
+	public static final String TABLE_NAME = "exc_template";
 
-    /**
-     * Nom du template
-     */
-    @Column(name = "name", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Name name;
+	/**
+	 * Nom du template
+	 */
+	@Column(name = "name", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Name name;
 
-    /**
-     * Nom du fichier importé
-     */
-    @Column(name = "original_filename", nullable = false)
-    private String originalFilename;
+	/**
+	 * Nom du fichier importé
+	 */
+	@Column(name = "original_filename", nullable = false)
+	private String originalFilename;
 
-    /**
-     * Taille du fichier importé
-     */
-    @Column(name = "file_size")
-    private Long fileSize;
+	/**
+	 * Taille du fichier importé
+	 */
+	@Column(name = "file_size")
+	private Long fileSize;
 
-    /**
-     * Bibliothèque
-     */
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "library")
-    private Library library;
+	/**
+	 * Bibliothèque
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "library")
+	private Library library;
 
-    public Name getName() {
-        return name;
-    }
+	public Name getName() {
+		return name;
+	}
 
-    public void setName(final Name name) {
-        this.name = name;
-    }
+	public void setName(final Name name) {
+		this.name = name;
+	}
 
-    public String getOriginalFilename() {
-        return originalFilename;
-    }
+	public String getOriginalFilename() {
+		return originalFilename;
+	}
 
-    public void setOriginalFilename(final String originalFilename) {
-        this.originalFilename = originalFilename;
-    }
+	public void setOriginalFilename(final String originalFilename) {
+		this.originalFilename = originalFilename;
+	}
 
-    public Long getFileSize() {
-        return fileSize;
-    }
+	public Long getFileSize() {
+		return fileSize;
+	}
 
-    public void setFileSize(final Long fileSize) {
-        this.fileSize = fileSize;
-    }
+	public void setFileSize(final Long fileSize) {
+		this.fileSize = fileSize;
+	}
 
-    public Library getLibrary() {
-        return library;
-    }
+	public Library getLibrary() {
+		return library;
+	}
 
-    public void setLibrary(final Library library) {
-        this.library = library;
-    }
+	public void setLibrary(final Library library) {
+		this.library = library;
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("identifier", identifier).add("name", name).add("originalFilename", originalFilename).add("fileSize", fileSize).toString();
-    }
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+			.add("identifier", identifier)
+			.add("name", name)
+			.add("originalFilename", originalFilename)
+			.add("fileSize", fileSize)
+			.toString();
+	}
+
 }

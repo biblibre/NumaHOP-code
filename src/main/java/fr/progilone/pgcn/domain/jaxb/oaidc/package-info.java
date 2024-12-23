@@ -9,6 +9,6 @@
  * Oaidc package.
  */
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://purl.org/dc/elements/1.1/",
-                                       elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
-                                       xmlns = {@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://purl.org/dc/elements/1.1/", prefix = "")})
+		elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
+		xmlns = { @jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://purl.org/dc/elements/1.1/", prefix = "") })
 package fr.progilone.pgcn.domain.jaxb.oaidc;

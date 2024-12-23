@@ -4,7 +4,8 @@ import jakarta.servlet.ServletException;
 
 public class GzipResponseHeadersNotModifiableException extends ServletException {
 
-    public GzipResponseHeadersNotModifiableException(String message) {
-        super(message);
-    }
+	public GzipResponseHeadersNotModifiableException(String message) {
+		super(message);
+	}
+
 }

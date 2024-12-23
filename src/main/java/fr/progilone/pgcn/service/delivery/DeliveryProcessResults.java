@@ -10,95 +10,96 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Permet de faire transiter des données pour la livraison entre service synchrone/asynchrone
+ * Permet de faire transiter des données pour la livraison entre service
+ * synchrone/asynchrone
  *
- * @author jbrunet
- *         Créé le 19 mai 2017
+ * @author jbrunet Créé le 19 mai 2017
  */
 public class DeliveryProcessResults {
 
-    private Map<String, PrefixedDocumentsDTO> documentsDTOForPrefix = new HashMap<>();
-    private Map<String, Optional<SplitFilename>> splitNames = new HashMap<>();
+	private Map<String, PrefixedDocumentsDTO> documentsDTOForPrefix = new HashMap<>();
 
-    private Map<String, Set<PreDeliveryDocumentFileDTO>> metadatasDTOForPrefix = new HashMap<>();
-    private Map<AutoCheckType, AutomaticCheckRule> checkingRules = new HashMap<>();
+	private Map<String, Optional<SplitFilename>> splitNames = new HashMap<>();
 
-    private String samplingMode;
-    private Double samplingRate;
+	private Map<String, Set<PreDeliveryDocumentFileDTO>> metadatasDTOForPrefix = new HashMap<>();
 
-    private String libraryId;
+	private Map<AutoCheckType, AutomaticCheckRule> checkingRules = new HashMap<>();
 
-    public DeliveryProcessResults() {
-    }
+	private String samplingMode;
 
-    public Map<String, PrefixedDocumentsDTO> getDocumentsDTOForPrefix() {
-        return documentsDTOForPrefix;
-    }
+	private Double samplingRate;
 
-    public void setDocumentsDTOForPrefix(final Map<String, PrefixedDocumentsDTO> documentsDTOForPrefix) {
-        this.documentsDTOForPrefix = documentsDTOForPrefix;
-    }
+	private String libraryId;
 
-    public Map<String, Optional<SplitFilename>> getSplitNames() {
-        return splitNames;
-    }
+	public DeliveryProcessResults() {
+	}
 
-    public void setSplitNames(final Map<String, Optional<SplitFilename>> splitNames) {
-        this.splitNames = splitNames;
-    }
+	public Map<String, PrefixedDocumentsDTO> getDocumentsDTOForPrefix() {
+		return documentsDTOForPrefix;
+	}
 
-    public Map<String, Set<PreDeliveryDocumentFileDTO>> getMetadatasDTOForPrefix() {
-        return metadatasDTOForPrefix;
-    }
+	public void setDocumentsDTOForPrefix(final Map<String, PrefixedDocumentsDTO> documentsDTOForPrefix) {
+		this.documentsDTOForPrefix = documentsDTOForPrefix;
+	}
 
-    public void setMetadatasDTOForPrefix(final Map<String, Set<PreDeliveryDocumentFileDTO>> metadatasDTOForPrefix) {
-        this.metadatasDTOForPrefix = metadatasDTOForPrefix;
-    }
+	public Map<String, Optional<SplitFilename>> getSplitNames() {
+		return splitNames;
+	}
 
-    public Map<AutoCheckType, AutomaticCheckRule> getCheckingRules() {
-        return checkingRules;
-    }
+	public void setSplitNames(final Map<String, Optional<SplitFilename>> splitNames) {
+		this.splitNames = splitNames;
+	}
 
-    public void setCheckingRules(final Map<AutoCheckType, AutomaticCheckRule> checkingRules) {
-        this.checkingRules = checkingRules;
-    }
+	public Map<String, Set<PreDeliveryDocumentFileDTO>> getMetadatasDTOForPrefix() {
+		return metadatasDTOForPrefix;
+	}
 
-    /**
-     * @return the samplingMode
-     */
-    public String getSamplingMode() {
-        return samplingMode;
-    }
+	public void setMetadatasDTOForPrefix(final Map<String, Set<PreDeliveryDocumentFileDTO>> metadatasDTOForPrefix) {
+		this.metadatasDTOForPrefix = metadatasDTOForPrefix;
+	}
 
-    /**
-     * @param samplingMode
-     *            the samplingMode to set
-     */
-    public void setSamplingMode(final String samplingMode) {
-        this.samplingMode = samplingMode;
-    }
+	public Map<AutoCheckType, AutomaticCheckRule> getCheckingRules() {
+		return checkingRules;
+	}
 
-    /**
-     * @return the samplingRate
-     */
-    public Double getSamplingRate() {
-        return samplingRate;
-    }
+	public void setCheckingRules(final Map<AutoCheckType, AutomaticCheckRule> checkingRules) {
+		this.checkingRules = checkingRules;
+	}
 
-    /**
-     * @param samplingRate
-     *            the samplingRate to set
-     */
-    public void setSamplingRate(final Double samplingRate) {
-        this.samplingRate = samplingRate;
-    }
+	/**
+	 * @return the samplingMode
+	 */
+	public String getSamplingMode() {
+		return samplingMode;
+	}
 
-    public String getLibraryId() {
-        return libraryId;
-    }
+	/**
+	 * @param samplingMode the samplingMode to set
+	 */
+	public void setSamplingMode(final String samplingMode) {
+		this.samplingMode = samplingMode;
+	}
 
-    public void setLibraryId(final String libraryId) {
-        this.libraryId = libraryId;
-    }
+	/**
+	 * @return the samplingRate
+	 */
+	public Double getSamplingRate() {
+		return samplingRate;
+	}
+
+	/**
+	 * @param samplingRate the samplingRate to set
+	 */
+	public void setSamplingRate(final Double samplingRate) {
+		this.samplingRate = samplingRate;
+	}
+
+	public String getLibraryId() {
+		return libraryId;
+	}
+
+	public void setLibraryId(final String libraryId) {
+		this.libraryId = libraryId;
+	}
 
 }

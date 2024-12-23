@@ -16,53 +16,53 @@ import org.springframework.data.domain.Pageable;
 
 public class LibraryRepositoryImpl implements LibraryRepositoryCustom {
 
-    private final JPAQueryFactory queryFactory;
+	private final JPAQueryFactory queryFactory;
 
-    public LibraryRepositoryImpl(final JPAQueryFactory queryFactory) {
-        this.queryFactory = queryFactory;
-    }
+	public LibraryRepositoryImpl(final JPAQueryFactory queryFactory) {
+		this.queryFactory = queryFactory;
+	}
 
-    @Override
-    public Page<Library> search(final String search,
-                                final List<String> libraries,
-                                final String initiale,
-                                final List<String> institutions,
-                                final boolean isActive,
-                                final Pageable pageable) {
+	@Override
+	public Page<Library> search(final String search, final List<String> libraries, final String initiale,
+			final List<String> institutions, final boolean isActive, final Pageable pageable) {
 
-        final QLibrary library = QLibrary.library;
-        final BooleanBuilder builder = new BooleanBuilder();
+		final QLibrary library = QLibrary.library;
+		final BooleanBuilder builder = new BooleanBuilder();
 
-        if (CollectionUtils.isNotEmpty(libraries)) {
-            final BooleanExpression idFilter = library.identifier.in(libraries);
-            builder.and(idFilter);
-        }
-        if (StringUtils.isNotBlank(search)) {
-            final BooleanExpression nameFilter = library.name.containsIgnoreCase(search);
-            builder.andAnyOf(nameFilter);
-        }
-        // Filter initiale
-        QueryDSLBuilderUtils.addFilterForInitiale(builder, initiale, library.name);
-        builder.and(library.superuser.isFalse());
+		if (CollectionUtils.isNotEmpty(libraries)) {
+			final BooleanExpression idFilter = library.identifier.in(libraries);
+			builder.and(idFilter);
+		}
+		if (StringUtils.isNotBlank(search)) {
+			final BooleanExpression nameFilter = library.name.containsIgnoreCase(search);
+			builder.andAnyOf(nameFilter);
+		}
+		// Filter initiale
+		QueryDSLBuilderUtils.addFilterForInitiale(builder, initiale, library.name);
+		builder.and(library.superuser.isFalse());
 
-        if (CollectionUtils.isNotEmpty(institutions)) {
-            final BooleanExpression sitesFilter = library.institution.in(institutions);
-            builder.and(sitesFilter);
-        }
-        // remplacer institution par active et recuperer l'information
+		if (CollectionUtils.isNotEmpty(institutions)) {
+			final BooleanExpression sitesFilter = library.institution.in(institutions);
+			builder.and(sitesFilter);
+		}
+		// remplacer institution par active et recuperer l'information
 
-        if (isActive) {
-            builder.and(library.active.eq(true));
-        }
+		if (isActive) {
+			builder.and(library.active.eq(true));
+		}
 
-        final JPAQuery<Library> baseQuery = queryFactory.selectDistinct(library).from(library).where(builder).orderBy(library.name.asc());
+		final JPAQuery<Library> baseQuery = queryFactory.selectDistinct(library)
+			.from(library)
+			.where(builder)
+			.orderBy(library.name.asc());
 
-        if (pageable != null) {
-            baseQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
-        }
+		if (pageable != null) {
+			baseQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
+		}
 
-        final long total = queryFactory.select(library.countDistinct()).from(library).where(builder).fetchOne();
+		final long total = queryFactory.select(library.countDistinct()).from(library).where(builder).fetchOne();
 
-        return new PageImpl<>(baseQuery.fetch(), pageable, total);
-    }
+		return new PageImpl<>(baseQuery.fetch(), pageable, total);
+	}
+
 }

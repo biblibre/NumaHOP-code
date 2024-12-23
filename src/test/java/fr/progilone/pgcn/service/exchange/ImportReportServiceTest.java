@@ -35,125 +35,129 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @ExtendWith(MockitoExtension.class)
 public class ImportReportServiceTest {
 
-    @Mock
-    private DocUnitRepository docUnitRepository;
-    @Mock
-    private ConditionReportRepository conditionReportRepository;
-    @Mock
-    private FileStorageManager fm;
-    @Mock
-    private ImportReportRepository importReportRepository;
-    @Mock
-    private ImportedDocUnitRepository importedDocUnitRepository;
-    @Mock
-    private TransactionService transactionService;
-    @Mock
-    private WebsocketService websocketService;
-    @Mock
-    private ImageMetadataValuesRepository imageMetadataValuesRepository;
+	@Mock
+	private DocUnitRepository docUnitRepository;
 
-    private ImportReportService service;
+	@Mock
+	private ConditionReportRepository conditionReportRepository;
 
-    @BeforeEach
-    public void setUp() {
-        service = new ImportReportService(docUnitRepository,
-                                          fm,
-                                          importReportRepository,
-                                          importedDocUnitRepository,
-                                          transactionService,
-                                          websocketService,
-                                          conditionReportRepository,
-                                          imageMetadataValuesRepository);
+	@Mock
+	private FileStorageManager fm;
 
-        final CustomUserDetails customUserDetails = new CustomUserDetails(null, "tortor", null, null, null, null, false, User.Category.OTHER);
-        final TestingAuthenticationToken authenticationToken = new TestingAuthenticationToken(customUserDetails,
-                                                                                              "Mauris quis imperdiet libero. Aenean porttitor sem ac nibh euismod congue.");
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+	@Mock
+	private ImportReportRepository importReportRepository;
 
-        when(importReportRepository.save(any(ImportReport.class))).thenAnswer(new ReturnsArgumentAt(0));
-    }
+	@Mock
+	private ImportedDocUnitRepository importedDocUnitRepository;
 
-    @Test
-    public void testCreateImportReport() {
-        final String fileName = "filename.txt";
-        final Long fileSize = 1024L;
-        final FileFormat fileFormat = FileFormat.MARCXML;
-        final DataEncoding dataEncoding = DataEncoding.UTF_8;
-        final String libraryId = "library_bsg";
-        final String projectId = "project_bsg";
-        final String lotId = "lot_bsg";
-        final String mappingId = "6b378e41-8083-4b11-b83c-57a20f7fb432";
+	@Mock
+	private TransactionService transactionService;
 
-        final ImportReport actual = service.createSimpleImportReport(fileName, fileSize, fileFormat, dataEncoding, libraryId, projectId, lotId, mappingId);
+	@Mock
+	private WebsocketService websocketService;
 
-        assertNotNull(actual.getMapping());
-        assertEquals(mappingId, actual.getMapping().getIdentifier());
+	@Mock
+	private ImageMetadataValuesRepository imageMetadataValuesRepository;
 
-        assertEquals(1, actual.getFiles().size());
-        final ImportReport.ImportedFile actualFile = actual.getFiles().get(0);
-        assertEquals(fileName, actualFile.getOriginalFilename());
-        assertEquals(fileSize, actualFile.getFileSize());
-        assertEquals(fileFormat, actual.getFileFormat());
-        assertEquals(dataEncoding, actual.getDataEncoding());
-        assertEquals(ImportReport.Status.PENDING, actual.getStatus());
-        assertEquals("tortor", actual.getRunBy());
-        assertEquals(libraryId, actual.getLibrary().getIdentifier());
-        assertEquals(projectId, actual.getProject().getIdentifier());
-        assertEquals(mappingId, actual.getMapping().getIdentifier());
-    }
+	private ImportReportService service;
 
-    @Test
-    public void testStartReport() {
-        final ImportReport report = new ImportReport();
-        report.setIdentifier("Curabitur iaculis convallis dui");
+	@BeforeEach
+	public void setUp() {
+		service = new ImportReportService(docUnitRepository, fm, importReportRepository, importedDocUnitRepository,
+				transactionService, websocketService, conditionReportRepository, imageMetadataValuesRepository);
 
-        final ImportReport actual = service.startReport(report);
+		final CustomUserDetails customUserDetails = new CustomUserDetails(null, "tortor", null, null, null, null, false,
+				User.Category.OTHER);
+		final TestingAuthenticationToken authenticationToken = new TestingAuthenticationToken(customUserDetails,
+				"Mauris quis imperdiet libero. Aenean porttitor sem ac nibh euismod congue.");
+		SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-        assertNotNull(actual.getStart());
-        assertEquals(ImportReport.Status.PRE_IMPORTING, actual.getStatus());
-        verify(websocketService).sendObject(eq(report.getIdentifier()), any());
-    }
+		when(importReportRepository.save(any(ImportReport.class))).thenAnswer(new ReturnsArgumentAt(0));
+	}
 
-    @Test
-    public void testSetReportStatus() {
-        final ImportReport report = new ImportReport();
-        report.setIdentifier("Curabitur iaculis convallis dui");
-        final ImportReport.Status newStatus = ImportReport.Status.DEDUPLICATING;
+	@Test
+	public void testCreateImportReport() {
+		final String fileName = "filename.txt";
+		final Long fileSize = 1024L;
+		final FileFormat fileFormat = FileFormat.MARCXML;
+		final DataEncoding dataEncoding = DataEncoding.UTF_8;
+		final String libraryId = "library_bsg";
+		final String projectId = "project_bsg";
+		final String lotId = "lot_bsg";
+		final String mappingId = "6b378e41-8083-4b11-b83c-57a20f7fb432";
 
-        final ImportReport actual = service.setReportStatus(report, newStatus);
+		final ImportReport actual = service.createSimpleImportReport(fileName, fileSize, fileFormat, dataEncoding,
+				libraryId, projectId, lotId, mappingId);
 
-        assertEquals(newStatus, actual.getStatus());
-        verify(websocketService).sendObject(eq(report.getIdentifier()), any());
-    }
+		assertNotNull(actual.getMapping());
+		assertEquals(mappingId, actual.getMapping().getIdentifier());
 
-    @Test
-    public void testEndReport() {
-        final ImportReport report = new ImportReport();
-        report.setIdentifier("Curabitur iaculis convallis dui");
+		assertEquals(1, actual.getFiles().size());
+		final ImportReport.ImportedFile actualFile = actual.getFiles().get(0);
+		assertEquals(fileName, actualFile.getOriginalFilename());
+		assertEquals(fileSize, actualFile.getFileSize());
+		assertEquals(fileFormat, actual.getFileFormat());
+		assertEquals(dataEncoding, actual.getDataEncoding());
+		assertEquals(ImportReport.Status.PENDING, actual.getStatus());
+		assertEquals("tortor", actual.getRunBy());
+		assertEquals(libraryId, actual.getLibrary().getIdentifier());
+		assertEquals(projectId, actual.getProject().getIdentifier());
+		assertEquals(mappingId, actual.getMapping().getIdentifier());
+	}
 
-        final ImportReport actual = service.endReport(report);
+	@Test
+	public void testStartReport() {
+		final ImportReport report = new ImportReport();
+		report.setIdentifier("Curabitur iaculis convallis dui");
 
-        assertNotNull(actual.getStart());
-        assertNotNull(actual.getEnd());
-        assertEquals(ImportReport.Status.COMPLETED, actual.getStatus());
-        verify(websocketService).sendObject(eq(report.getIdentifier()), any());
-    }
+		final ImportReport actual = service.startReport(report);
 
-    @Test
-    public void testFailReport() {
-        final ImportReport report = new ImportReport();
-        report.setIdentifier("Curabitur iaculis convallis dui");
-        report.setStatus(ImportReport.Status.PRE_IMPORTING);
-        final String message = "Microsoft remplace son emoji de pistolet laser par un revolver";
+		assertNotNull(actual.getStart());
+		assertEquals(ImportReport.Status.PRE_IMPORTING, actual.getStatus());
+		verify(websocketService).sendObject(eq(report.getIdentifier()), any());
+	}
 
-        when(importReportRepository.findByIdentifier(report.getIdentifier())).thenReturn(report);
+	@Test
+	public void testSetReportStatus() {
+		final ImportReport report = new ImportReport();
+		report.setIdentifier("Curabitur iaculis convallis dui");
+		final ImportReport.Status newStatus = ImportReport.Status.DEDUPLICATING;
 
-        final ImportReport actual = service.failReport(report, message);
+		final ImportReport actual = service.setReportStatus(report, newStatus);
 
-        assertNotNull(actual.getStart());
-        assertNotNull(actual.getEnd());
-        assertEquals(ImportReport.Status.FAILED, actual.getStatus());
-        assertNotNull(report.getMessage());
-        verify(websocketService).sendObject(eq(report.getIdentifier()), any());
-    }
+		assertEquals(newStatus, actual.getStatus());
+		verify(websocketService).sendObject(eq(report.getIdentifier()), any());
+	}
+
+	@Test
+	public void testEndReport() {
+		final ImportReport report = new ImportReport();
+		report.setIdentifier("Curabitur iaculis convallis dui");
+
+		final ImportReport actual = service.endReport(report);
+
+		assertNotNull(actual.getStart());
+		assertNotNull(actual.getEnd());
+		assertEquals(ImportReport.Status.COMPLETED, actual.getStatus());
+		verify(websocketService).sendObject(eq(report.getIdentifier()), any());
+	}
+
+	@Test
+	public void testFailReport() {
+		final ImportReport report = new ImportReport();
+		report.setIdentifier("Curabitur iaculis convallis dui");
+		report.setStatus(ImportReport.Status.PRE_IMPORTING);
+		final String message = "Microsoft remplace son emoji de pistolet laser par un revolver";
+
+		when(importReportRepository.findByIdentifier(report.getIdentifier())).thenReturn(report);
+
+		final ImportReport actual = service.failReport(report, message);
+
+		assertNotNull(actual.getStart());
+		assertNotNull(actual.getEnd());
+		assertEquals(ImportReport.Status.FAILED, actual.getStatus());
+		assertNotNull(report.getMessage());
+		verify(websocketService).sendObject(eq(report.getIdentifier()), any());
+	}
+
 }

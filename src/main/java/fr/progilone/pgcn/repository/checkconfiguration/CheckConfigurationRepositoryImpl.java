@@ -14,38 +14,44 @@ import org.springframework.data.domain.Pageable;
 
 public class CheckConfigurationRepositoryImpl implements CheckConfigurationRepositoryCustom {
 
-    private final JPAQueryFactory queryFactory;
+	private final JPAQueryFactory queryFactory;
 
-    public CheckConfigurationRepositoryImpl(final JPAQueryFactory queryFactory) {
-        this.queryFactory = queryFactory;
-    }
+	public CheckConfigurationRepositoryImpl(final JPAQueryFactory queryFactory) {
+		this.queryFactory = queryFactory;
+	}
 
-    @Override
-    public Page<CheckConfiguration> search(final String search, final List<String> libraries, final Pageable pageable) {
+	@Override
+	public Page<CheckConfiguration> search(final String search, final List<String> libraries, final Pageable pageable) {
 
-        final QCheckConfiguration configuration = QCheckConfiguration.checkConfiguration;
+		final QCheckConfiguration configuration = QCheckConfiguration.checkConfiguration;
 
-        final BooleanBuilder builder = new BooleanBuilder();
+		final BooleanBuilder builder = new BooleanBuilder();
 
-        if (StringUtils.isNotBlank(search)) {
-            final BooleanExpression nameFilter = configuration.label.containsIgnoreCase(search);
-            builder.andAnyOf(nameFilter);
-        }
-        if (libraries != null && !libraries.isEmpty()) {
-            final BooleanExpression libraryFilter = configuration.library.identifier.in(libraries);
-            builder.and(libraryFilter);
-        }
+		if (StringUtils.isNotBlank(search)) {
+			final BooleanExpression nameFilter = configuration.label.containsIgnoreCase(search);
+			builder.andAnyOf(nameFilter);
+		}
+		if (libraries != null && !libraries.isEmpty()) {
+			final BooleanExpression libraryFilter = configuration.library.identifier.in(libraries);
+			builder.and(libraryFilter);
+		}
 
-        final JPAQuery<CheckConfiguration> baseQuery = queryFactory.selectDistinct(configuration).from(configuration).where(builder);
+		final JPAQuery<CheckConfiguration> baseQuery = queryFactory.selectDistinct(configuration)
+			.from(configuration)
+			.where(builder);
 
-        final long total = baseQuery.clone().select(configuration.identifier.countDistinct()).fetchOne();
+		final long total = baseQuery.clone().select(configuration.identifier.countDistinct()).fetchOne();
 
-        if (pageable != null) {
-            baseQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
-        }
+		if (pageable != null) {
+			baseQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
+		}
 
-        final List<CheckConfiguration> result = baseQuery.leftJoin(configuration.library).fetchJoin().orderBy(configuration.label.asc()).fetch();
+		final List<CheckConfiguration> result = baseQuery.leftJoin(configuration.library)
+			.fetchJoin()
+			.orderBy(configuration.label.asc())
+			.fetch();
 
-        return new PageImpl<>(result, pageable, total);
-    }
+		return new PageImpl<>(result, pageable, total);
+	}
+
 }

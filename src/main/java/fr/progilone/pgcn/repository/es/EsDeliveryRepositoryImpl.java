@@ -29,104 +29,106 @@ import org.springframework.data.elasticsearch.core.query.highlight.HighlightFiel
 
 public class EsDeliveryRepositoryImpl extends AbstractEsRepository<EsDelivery> implements EsDeliveryRepositoryCustom {
 
-    @Autowired
-    public EsDeliveryRepositoryImpl(final SearchOperations searchOperations) {
-        super(EsDelivery.class, searchOperations);
-    }
+	@Autowired
+	public EsDeliveryRepositoryImpl(final SearchOperations searchOperations) {
+		super(EsDelivery.class, searchOperations);
+	}
 
-    @Override
-    protected Query getSearchQueryBuilder(final EsSearchOperation searchOp, final boolean fuzzy) {
-        final EsQueryBuilder builder = new EsQueryBuilder();
-        final String search = searchOp.getSearch();
-        final String[] index = readIndex(searchOp.getIndex(), INDEX_DELIVERY);
-        final String obj = index[0];
-        final String field = index[1];
+	@Override
+	protected Query getSearchQueryBuilder(final EsSearchOperation searchOp, final boolean fuzzy) {
+		final EsQueryBuilder builder = new EsQueryBuilder();
+		final String search = searchOp.getSearch();
+		final String[] index = readIndex(searchOp.getIndex(), INDEX_DELIVERY);
+		final String obj = index[0];
+		final String field = index[1];
 
-        if (StringUtils.isNotBlank(search)) {
-            // Recherche par défaut
-            if (StringUtils.equals(field, "default")) {
-                addDefaultSearch(builder, search, fuzzy);
-            }
-            // Recherche sur les champs des livraisons
-            else if (StringUtils.equals(obj, INDEX_DELIVERY)) {
-                switch (field) {
-                    case "label":
-                        builder.should(getFullTextQueryBuilder(Delivery_.label.getName(), search, fuzzy));
-                        break;
-                    case "method":
-                        builder.should(getExactQueryBuilder(Delivery_.method.getName(), search));
-                        break;
-                    case "payment":
-                        builder.should(getExactQueryBuilder(Delivery_.payment.getName(), search));
-                        break;
-                    case "receptionDate":
-                        builder.should(getRangeQueryBuilder(Delivery_.receptionDate.getName(), search));
-                        break;
-                    case "status":
-                        builder.should(getExactQueryBuilder(Delivery_.status.getName(), search));
-                        break;
-                }
-            }
-        }
-        return builder.build();
-    }
+		if (StringUtils.isNotBlank(search)) {
+			// Recherche par défaut
+			if (StringUtils.equals(field, "default")) {
+				addDefaultSearch(builder, search, fuzzy);
+			}
+			// Recherche sur les champs des livraisons
+			else if (StringUtils.equals(obj, INDEX_DELIVERY)) {
+				switch (field) {
+					case "label":
+						builder.should(getFullTextQueryBuilder(Delivery_.label.getName(), search, fuzzy));
+						break;
+					case "method":
+						builder.should(getExactQueryBuilder(Delivery_.method.getName(), search));
+						break;
+					case "payment":
+						builder.should(getExactQueryBuilder(Delivery_.payment.getName(), search));
+						break;
+					case "receptionDate":
+						builder.should(getRangeQueryBuilder(Delivery_.receptionDate.getName(), search));
+						break;
+					case "status":
+						builder.should(getExactQueryBuilder(Delivery_.status.getName(), search));
+						break;
+				}
+			}
+		}
+		return builder.build();
+	}
 
-    @Override
-    protected Optional<Query> getLibraryQueryBuilder(final List<String> libraries) {
-        if (CollectionUtils.isNotEmpty(libraries)) {
-            return Optional.of(getExactQueryBuilder(EsConstant.FIELD_LIBRARY, libraries));
-        }
-        return Optional.empty();
-    }
+	@Override
+	protected Optional<Query> getLibraryQueryBuilder(final List<String> libraries) {
+		if (CollectionUtils.isNotEmpty(libraries)) {
+			return Optional.of(getExactQueryBuilder(EsConstant.FIELD_LIBRARY, libraries));
+		}
+		return Optional.empty();
+	}
 
-    @Override
-    protected HighlightQuery getHighlightField() {
-        return new HighlightQuery(new Highlight(List.of("label").stream().map(HighlightField::new).toList()), null);
-    }
+	@Override
+	protected HighlightQuery getHighlightField() {
+		return new HighlightQuery(new Highlight(List.of("label").stream().map(HighlightField::new).toList()), null);
+	}
 
-    @Override
-    protected Query getFilterQueryBuilder(final String searchField, final List<String> values) {
-        final int pos = searchField.indexOf(':');
-        // final String type = pos >= 0 ? searchField.substring(0, pos) : "DELIVERY";
-        final String field = pos >= 0 ? searchField.substring(pos + 1)
-                                      : searchField;
+	@Override
+	protected Query getFilterQueryBuilder(final String searchField, final List<String> values) {
+		final int pos = searchField.indexOf(':');
+		// final String type = pos >= 0 ? searchField.substring(0, pos) : "DELIVERY";
+		final String field = pos >= 0 ? searchField.substring(pos + 1) : searchField;
 
-        switch (searchField) {
-            case "DELIVERY:receptionDate":
-                return super.getDateFilterQueryBuilder(field, values);
-            default:
-                return super.getFilterQueryBuilder(field, values);
-        }
-    }
+		switch (searchField) {
+			case "DELIVERY:receptionDate":
+				return super.getDateFilterQueryBuilder(field, values);
+			default:
+				return super.getFilterQueryBuilder(field, values);
+		}
+	}
 
-    @Override
-    protected Map<String, Aggregation> getAggregationBuilders() {
-        return Stream.of("DELIVERY:status", "DELIVERY:payment", "DELIVERY:method", "DELIVERY:receptionDate", "DELIVERY:documentCount")
-                     .collect(Collectors.toMap(Function.identity(), this::getAggregationBuilder));
-    }
+	@Override
+	protected Map<String, Aggregation> getAggregationBuilders() {
+		return Stream
+			.of("DELIVERY:status", "DELIVERY:payment", "DELIVERY:method", "DELIVERY:receptionDate",
+					"DELIVERY:documentCount")
+			.collect(Collectors.toMap(Function.identity(), this::getAggregationBuilder));
+	}
 
-    protected Aggregation getAggregationBuilder(final String aggName) {
-        final int pos = aggName.indexOf(':');
-        // final String type = pos >= 0 ? aggName.substring(0, pos) : "DELIVERY";
-        final String field = pos >= 0 ? aggName.substring(pos + 1)
-                                      : aggName;
+	protected Aggregation getAggregationBuilder(final String aggName) {
+		final int pos = aggName.indexOf(':');
+		// final String type = pos >= 0 ? aggName.substring(0, pos) : "DELIVERY";
+		final String field = pos >= 0 ? aggName.substring(pos + 1) : aggName;
 
-        switch (aggName) {
-            case "DELIVERY:receptionDate":
-                return new DateHistogramAggregation.Builder().field(field)
-                                                             .fixedInterval(b -> b.time("1d"))
-                                                             .format("dd/MM/yyyy")
-                                                             .minDocCount(1)
-                                                             .order(List.of(NamedValue.of("_count", SortOrder.Desc)))
-                                                             .build()
-                                                             ._toAggregation();
-            default:
-                return TermsAggregation.of(b -> b.field(field).size(20).order(List.of(NamedValue.of("_count", SortOrder.Desc))))._toAggregation();
-        }
-    }
+		switch (aggName) {
+			case "DELIVERY:receptionDate":
+				return new DateHistogramAggregation.Builder().field(field)
+					.fixedInterval(b -> b.time("1d"))
+					.format("dd/MM/yyyy")
+					.minDocCount(1)
+					.order(List.of(NamedValue.of("_count", SortOrder.Desc)))
+					.build()
+					._toAggregation();
+			default:
+				return TermsAggregation
+					.of(b -> b.field(field).size(20).order(List.of(NamedValue.of("_count", SortOrder.Desc))))
+					._toAggregation();
+		}
+	}
 
-    private void addDefaultSearch(final EsQueryBuilder builder, final String search, final boolean fuzzy) {
-        builder.should(getFullTextQueryBuilder(Delivery_.label.getName(), search, fuzzy));
-    }
+	private void addDefaultSearch(final EsQueryBuilder builder, final String search, final boolean fuzzy) {
+		builder.should(getFullTextQueryBuilder(Delivery_.label.getName(), search, fuzzy));
+	}
 
 }

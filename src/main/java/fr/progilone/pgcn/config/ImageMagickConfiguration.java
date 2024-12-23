@@ -15,25 +15,26 @@ import org.springframework.core.env.Environment;
 @EnableMetrics(proxyTargetClass = true)
 public class ImageMagickConfiguration implements EnvironmentAware {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ImageMagickConfiguration.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ImageMagickConfiguration.class);
 
-    private Environment environment;
+	private Environment environment;
 
-    @Autowired
-    private ImageMagickService imageMagickService;
+	@Autowired
+	private ImageMagickService imageMagickService;
 
-    @Override
-    public void setEnvironment(final Environment environment) {
-        this.environment = environment;
-    }
+	@Override
+	public void setEnvironment(final Environment environment) {
+		this.environment = environment;
+	}
 
-    @PostConstruct
-    public void init() throws IOException {
-        LOG.debug("Configuring Image Magick");
-        final String IMConvertPath = environment.getProperty("imageMagick.convert");
-        final String IMIdentifyPath = environment.getProperty("imageMagick.identify");
-        LOG.debug("Image Magick convert path : {}", IMConvertPath);
-        LOG.debug("Image Magick identify path : {}", IMIdentifyPath);
-        imageMagickService.initialize(IMConvertPath, IMIdentifyPath);
-    }
+	@PostConstruct
+	public void init() throws IOException {
+		LOG.debug("Configuring Image Magick");
+		final String IMConvertPath = environment.getProperty("imageMagick.convert");
+		final String IMIdentifyPath = environment.getProperty("imageMagick.identify");
+		LOG.debug("Image Magick convert path : {}", IMConvertPath);
+		LOG.debug("Image Magick identify path : {}", IMIdentifyPath);
+		imageMagickService.initialize(IMConvertPath, IMIdentifyPath);
+	}
+
 }

@@ -12,187 +12,199 @@ import java.time.LocalDateTime;
  * Conserve un historique des contrôles de documents.
  *
  * @author Emmanuel RIZET
- *
  */
 @Entity
 @Table(name = DocCheckHistory.TABLE_NAME)
 public class DocCheckHistory extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "doc_check_history";
+	public static final String TABLE_NAME = "doc_check_history";
 
-    @Column(name = "pgcn_id")
-    private String pgcnId;
+	@Column(name = "pgcn_id")
+	private String pgcnId;
 
-    @Column(name = "library_id")
-    private String libraryId;
-    @Column(name = "library_label")
-    private String libraryLabel;
-    @Column(name = "project_id")
-    private String projectId;
-    @Column(name = "project_label")
-    private String projectLabel;
-    @Column(name = "lot_id")
-    private String lotId;
-    @Column(name = "lot_label")
-    private String lotLabel;
-    @Column(name = "train_id")
-    private String trainId;
-    @Column(name = "train_label")
-    private String trainLabel;
-    @Column(name = "delivery_id")
-    private String deliveryId;
-    @Column(name = "delivery_label")
-    private String deliveryLabel;
+	@Column(name = "library_id")
+	private String libraryId;
 
-    @Column(name = "user_login")
-    private String userLogin;
+	@Column(name = "library_label")
+	private String libraryLabel;
 
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private DigitalDocument.DigitalDocumentStatus status;
-    @Column(name = "start_check_date")
-    private LocalDateTime startCheckDate;
-    @Column(name = "end_check_date")
-    private LocalDateTime endCheckDate;
-    @Column(name = "page_number")
-    private Integer pageNumber;
-    @Column(name = "total_length")
-    private Long totalLength;
+	@Column(name = "project_id")
+	private String projectId;
 
-    public String getPgcnId() {
-        return pgcnId;
-    }
+	@Column(name = "project_label")
+	private String projectLabel;
 
-    public void setPgcnId(final String pgcnId) {
-        this.pgcnId = pgcnId;
-    }
+	@Column(name = "lot_id")
+	private String lotId;
 
-    public String getLibraryId() {
-        return libraryId;
-    }
+	@Column(name = "lot_label")
+	private String lotLabel;
 
-    public void setLibraryId(final String libraryId) {
-        this.libraryId = libraryId;
-    }
+	@Column(name = "train_id")
+	private String trainId;
 
-    public String getLibraryLabel() {
-        return libraryLabel;
-    }
+	@Column(name = "train_label")
+	private String trainLabel;
 
-    public void setLibraryLabel(final String libraryLabel) {
-        this.libraryLabel = libraryLabel;
-    }
+	@Column(name = "delivery_id")
+	private String deliveryId;
 
-    public String getProjectId() {
-        return projectId;
-    }
+	@Column(name = "delivery_label")
+	private String deliveryLabel;
 
-    public void setProjectId(final String projectId) {
-        this.projectId = projectId;
-    }
+	@Column(name = "user_login")
+	private String userLogin;
 
-    public String getProjectLabel() {
-        return projectLabel;
-    }
+	@Column(name = "status")
+	@Enumerated(EnumType.STRING)
+	private DigitalDocument.DigitalDocumentStatus status;
 
-    public void setProjectLabel(final String projectLabel) {
-        this.projectLabel = projectLabel;
-    }
+	@Column(name = "start_check_date")
+	private LocalDateTime startCheckDate;
 
-    public String getLotId() {
-        return lotId;
-    }
+	@Column(name = "end_check_date")
+	private LocalDateTime endCheckDate;
 
-    public void setLotId(final String lotId) {
-        this.lotId = lotId;
-    }
+	@Column(name = "page_number")
+	private Integer pageNumber;
 
-    public String getLotLabel() {
-        return lotLabel;
-    }
+	@Column(name = "total_length")
+	private Long totalLength;
 
-    public void setLotLabel(final String lotLabel) {
-        this.lotLabel = lotLabel;
-    }
+	public String getPgcnId() {
+		return pgcnId;
+	}
 
-    public String getTrainId() {
-        return trainId;
-    }
+	public void setPgcnId(final String pgcnId) {
+		this.pgcnId = pgcnId;
+	}
 
-    public void setTrainId(final String trainId) {
-        this.trainId = trainId;
-    }
+	public String getLibraryId() {
+		return libraryId;
+	}
 
-    public String getTrainLabel() {
-        return trainLabel;
-    }
+	public void setLibraryId(final String libraryId) {
+		this.libraryId = libraryId;
+	}
 
-    public void setTrainLabel(final String trainLabel) {
-        this.trainLabel = trainLabel;
-    }
+	public String getLibraryLabel() {
+		return libraryLabel;
+	}
 
-    public String getDeliveryId() {
-        return deliveryId;
-    }
+	public void setLibraryLabel(final String libraryLabel) {
+		this.libraryLabel = libraryLabel;
+	}
 
-    public void setDeliveryId(final String deliveryId) {
-        this.deliveryId = deliveryId;
-    }
+	public String getProjectId() {
+		return projectId;
+	}
 
-    public String getDeliveryLabel() {
-        return deliveryLabel;
-    }
+	public void setProjectId(final String projectId) {
+		this.projectId = projectId;
+	}
 
-    public void setDeliveryLabel(final String deliveryLabel) {
-        this.deliveryLabel = deliveryLabel;
-    }
+	public String getProjectLabel() {
+		return projectLabel;
+	}
 
-    public String getUserLogin() {
-        return userLogin;
-    }
+	public void setProjectLabel(final String projectLabel) {
+		this.projectLabel = projectLabel;
+	}
 
-    public void setUserLogin(final String userLogin) {
-        this.userLogin = userLogin;
-    }
+	public String getLotId() {
+		return lotId;
+	}
 
-    public DigitalDocument.DigitalDocumentStatus getStatus() {
-        return status;
-    }
+	public void setLotId(final String lotId) {
+		this.lotId = lotId;
+	}
 
-    public void setStatus(final DigitalDocument.DigitalDocumentStatus status) {
-        this.status = status;
-    }
+	public String getLotLabel() {
+		return lotLabel;
+	}
 
-    public LocalDateTime getStartCheckDate() {
-        return startCheckDate;
-    }
+	public void setLotLabel(final String lotLabel) {
+		this.lotLabel = lotLabel;
+	}
 
-    public void setStartCheckDate(final LocalDateTime startCheckDate) {
-        this.startCheckDate = startCheckDate;
-    }
+	public String getTrainId() {
+		return trainId;
+	}
 
-    public LocalDateTime getEndCheckDate() {
-        return endCheckDate;
-    }
+	public void setTrainId(final String trainId) {
+		this.trainId = trainId;
+	}
 
-    public void setEndCheckDate(final LocalDateTime endCheckDate) {
-        this.endCheckDate = endCheckDate;
-    }
+	public String getTrainLabel() {
+		return trainLabel;
+	}
 
-    public Integer getPageNumber() {
-        return pageNumber;
-    }
+	public void setTrainLabel(final String trainLabel) {
+		this.trainLabel = trainLabel;
+	}
 
-    public void setPageNumber(final Integer pageNumber) {
-        this.pageNumber = pageNumber;
-    }
+	public String getDeliveryId() {
+		return deliveryId;
+	}
 
-    public Long getTotalLength() {
-        return totalLength;
-    }
+	public void setDeliveryId(final String deliveryId) {
+		this.deliveryId = deliveryId;
+	}
 
-    public void setTotalLength(final Long totalLength) {
-        this.totalLength = totalLength;
-    }
+	public String getDeliveryLabel() {
+		return deliveryLabel;
+	}
+
+	public void setDeliveryLabel(final String deliveryLabel) {
+		this.deliveryLabel = deliveryLabel;
+	}
+
+	public String getUserLogin() {
+		return userLogin;
+	}
+
+	public void setUserLogin(final String userLogin) {
+		this.userLogin = userLogin;
+	}
+
+	public DigitalDocument.DigitalDocumentStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(final DigitalDocument.DigitalDocumentStatus status) {
+		this.status = status;
+	}
+
+	public LocalDateTime getStartCheckDate() {
+		return startCheckDate;
+	}
+
+	public void setStartCheckDate(final LocalDateTime startCheckDate) {
+		this.startCheckDate = startCheckDate;
+	}
+
+	public LocalDateTime getEndCheckDate() {
+		return endCheckDate;
+	}
+
+	public void setEndCheckDate(final LocalDateTime endCheckDate) {
+		this.endCheckDate = endCheckDate;
+	}
+
+	public Integer getPageNumber() {
+		return pageNumber;
+	}
+
+	public void setPageNumber(final Integer pageNumber) {
+		this.pageNumber = pageNumber;
+	}
+
+	public Long getTotalLength() {
+		return totalLength;
+	}
+
+	public void setTotalLength(final Long totalLength) {
+		this.totalLength = totalLength;
+	}
 
 }

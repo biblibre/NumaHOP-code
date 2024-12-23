@@ -48,463 +48,487 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ConditionReportImportService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ConditionReportImportService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ConditionReportImportService.class);
 
-    private static final String PROP_BINDING_OTHER = "BINDING_DESC";
-    private static final String PROP_BODY_DESC = "BODY_DESC";
-    private static final String PROP_DESC_OTHER = "OTHER";
-    private static final String PROP_DIMENSION = "DIMENSION";
-    private static final String PROP_INSURANCE = "INSURANCE";
-    private static final String PROP_NB_VIEW_BINDING = "nbViewBinding";
-    private static final String PROP_NB_VIEW_BODY = "nbViewBody";
-    private static final String PROP_NB_VIEW_ADDITIONNAL = "nbViewAdditionnal";
-    private static final String TYPE_DETAIL = "DETAIL";
+	private static final String PROP_BINDING_OTHER = "BINDING_DESC";
 
-    private final ConditionReportService conditionReportService;
-    private final ConditionReportDetailService conditionReportDetailService;
-    private final DescriptionPropertyService descriptionPropertyService;
-    private final DescriptionValueService descriptionValueService;
-    private final DocUnitService docUnitService;
-    private final MessageService messageService;
-    private final PropertyConfigurationService propertyConfigurationService;
+	private static final String PROP_BODY_DESC = "BODY_DESC";
 
-    @Autowired
-    public ConditionReportImportService(final ConditionReportService conditionReportService,
-                                        final ConditionReportDetailService conditionReportDetailService,
-                                        final DescriptionPropertyService descriptionPropertyService,
-                                        final DescriptionValueService descriptionValueService,
-                                        final DocUnitService docUnitService,
-                                        final MessageService messageService,
-                                        final PropertyConfigurationService propertyConfigurationService) {
-        this.conditionReportService = conditionReportService;
-        this.conditionReportDetailService = conditionReportDetailService;
-        this.descriptionPropertyService = descriptionPropertyService;
-        this.descriptionValueService = descriptionValueService;
-        this.docUnitService = docUnitService;
-        this.messageService = messageService;
-        this.propertyConfigurationService = propertyConfigurationService;
-    }
+	private static final String PROP_DESC_OTHER = "OTHER";
 
-    /**
-     * Import de constats d'état à partir du fichier excel
-     *
-     * @param in
-     * @throws IOException
-     * @throws InvalidFormatException
-     */
-    @Transactional
-    public List<ImportResult> importReport(final InputStream in, final Predicate<DocUnit> checkAccess) throws IOException, InvalidFormatException {
-        final List<ImportResult> importResults = new ArrayList<>();
-        final List<DescriptionProperty> descProperties = descriptionPropertyService.findAll();
-        final List<DescriptionValue> descValues = descriptionValueService.findAll();
-        final Map<Library, List<PropertyConfiguration>> confCache = Collections.synchronizedMap(new HashMap<>()); // cache des PropertyConfiguration
+	private static final String PROP_DIMENSION = "DIMENSION";
 
-        new SheetReader().setDescProperties(descProperties).setDescValues(descValues).filter(checkAccess).stream(in).process((report, detail) -> {
-            final List<PropertyConfiguration> confs = confCache.computeIfAbsent(report.getDocUnit().getLibrary(), propertyConfigurationService::findByLibrary);
-            final PgcnList<PgcnError> pgcnErrors = conditionReportDetailService.validateSave(detail, confs);
+	private static final String PROP_INSURANCE = "INSURANCE";
 
-            if (pgcnErrors.isEmpty()) {
-                final ConditionReport savedReport = conditionReportService.save(report);
-                detail.setReport(savedReport);
-                conditionReportDetailService.save(detail, false);
+	private static final String PROP_NB_VIEW_BINDING = "nbViewBinding";
 
-                final ImportResult importResult = new ImportResult();
-                importResult.setReportId(savedReport.getIdentifier());
-                importResult.setDocUnitId(report.getDocUnit().getIdentifier());
-                importResult.setPgcnId(report.getDocUnit().getPgcnId());
-                importResults.add(importResult);
+	private static final String PROP_NB_VIEW_BODY = "nbViewBody";
 
-            } else {
-                LOG.error("Le constat d'état {} ({}) n'est pas sauvegardé car il n'est pas valide: {}",
-                          report.getDocUnit().getPgcnId(),
-                          report.getDocUnit().getIdentifier(),
-                          StringUtils.join(pgcnErrors, ", "));
+	private static final String PROP_NB_VIEW_ADDITIONNAL = "nbViewAdditionnal";
 
-                final ImportResult importResult = new ImportResult();
-                importResult.setDocUnitId(report.getDocUnit().getIdentifier());
-                importResult.setPgcnId(report.getDocUnit().getPgcnId());
-                importResult.setErrors(pgcnErrors.get());
-                importResults.add(importResult);
-            }
-        });
-        return importResults;
-    }
+	private static final String TYPE_DETAIL = "DETAIL";
 
-    /**
-     * Classe gérant la lecture du fichier excel, et la création / mise à jour des constats d'état
-     */
-    private class SheetReader {
+	private final ConditionReportService conditionReportService;
 
-        private final List<DescriptionProperty> descProperties = new ArrayList<>();
-        private final List<DescriptionValue> descValues = new ArrayList<>();
+	private final ConditionReportDetailService conditionReportDetailService;
 
-        private Workbook wb;
-        private Predicate<DocUnit> filter = (report) -> true;
+	private final DescriptionPropertyService descriptionPropertyService;
 
-        /**
-         * Initialisation du workbook à partir d'un flux
-         *
-         * @param in
-         * @return
-         * @throws IOException
-         * @throws InvalidFormatException
-         */
-        public SheetReader stream(final InputStream in) throws IOException, InvalidFormatException {
-            this.wb = WorkbookFactory.create(in);
-            return this;
-        }
+	private final DescriptionValueService descriptionValueService;
 
-        /**
-         * Traitement du workbook
-         * Création/Mise à jour du constat d'état, puis appel de la fonction de mise à jour si tout s'est bien passé
-         *
-         * @param updateFn
-         * @return
-         */
-        public SheetReader process(final BiConsumer<ConditionReport, ConditionReportDetail> updateFn) {
-            this.wb.sheetIterator().forEachRemaining(sheet -> this.readSheet(sheet, updateFn));
-            return this;
-        }
+	private final DocUnitService docUnitService;
 
-        /**
-         * Lecture de la feuille et création / mise à jour du constat d'état
-         *
-         * @param sheet
-         */
-        private void readSheet(final Sheet sheet, final BiConsumer<ConditionReport, ConditionReportDetail> updateFn) {
-            // docunit identifier
-            final Optional<String> optId = getCell(sheet, 0, 0).map(Cell::getStringCellValue);
-            if (!optId.isPresent()) {
-                LOG.warn("L'identifiant de l'unité documentaire n'est pas renseigné; feuille {}, cellule [0;0]", sheet.getSheetName());
-                return;
-            }
-            final String docUnitId = optId.get();
+	private final MessageService messageService;
 
-            // import = oui
-            final Optional<String> optAction = getCell(sheet, 0, 3).map(Cell::getStringCellValue);
-            if (!optAction.isPresent() || !StringUtils.equals(optAction.get(), messageService.getMessage("condreport", "validation.boolean.true"))) {
-                LOG.debug("L'import du constat d'état pour l'unité documentaire {} est ignoré", docUnitId);
-                return;
-            }
+	private final PropertyConfigurationService propertyConfigurationService;
 
-            // Recherche de l'unité documentaire
-            final DocUnit docUnit = docUnitService.findOne(docUnitId);
-            if (docUnit == null) {
-                LOG.error("L'unité documentaire {} n'existe pas", docUnitId);
-                return;
-            }
-            // Vérification des droits d'accès
-            if (!filter.test(docUnit)) {
-                LOG.error("L'accès à l'unité documentaire {} n'est pas autorisé pour cet utilisateur", docUnitId);
-                return;
-            }
+	@Autowired
+	public ConditionReportImportService(final ConditionReportService conditionReportService,
+			final ConditionReportDetailService conditionReportDetailService,
+			final DescriptionPropertyService descriptionPropertyService,
+			final DescriptionValueService descriptionValueService, final DocUnitService docUnitService,
+			final MessageService messageService, final PropertyConfigurationService propertyConfigurationService) {
+		this.conditionReportService = conditionReportService;
+		this.conditionReportDetailService = conditionReportDetailService;
+		this.descriptionPropertyService = descriptionPropertyService;
+		this.descriptionValueService = descriptionValueService;
+		this.docUnitService = docUnitService;
+		this.messageService = messageService;
+		this.propertyConfigurationService = propertyConfigurationService;
+	}
 
-            // Création du constat d'état
-            ConditionReport report = conditionReportService.findByDocUnit(docUnitId);
-            if (report == null) {
-                report = conditionReportService.getNewConditionReport(docUnit);
-            }
-            final ConditionReport fReport = report;
-            // 1er étape du constat d'état
-            final ConditionReportDetail detail = report.getDetails()
-                                                       .stream()
-                                                       .filter(d -> d.getType() == LIBRARY_LEAVING)
-                                                       .findFirst()
-                                                       .orElseGet(() -> conditionReportDetailService.getNewDetail(LIBRARY_LEAVING, fReport, 0));
+	/**
+	 * Import de constats d'état à partir du fichier excel
+	 * @param in
+	 * @throws IOException
+	 * @throws InvalidFormatException
+	 */
+	@Transactional
+	public List<ImportResult> importReport(final InputStream in, final Predicate<DocUnit> checkAccess)
+			throws IOException, InvalidFormatException {
+		final List<ImportResult> importResults = new ArrayList<>();
+		final List<DescriptionProperty> descProperties = descriptionPropertyService.findAll();
+		final List<DescriptionValue> descValues = descriptionValueService.findAll();
+		final Map<Library, List<PropertyConfiguration>> confCache = Collections.synchronizedMap(new HashMap<>()); // cache
+																													// des
+																													// PropertyConfiguration
 
-            LOG.debug("Création/mise à jour du constat d'état de l'unité documentaire {} ({})", docUnit.getPgcnId(), docUnit.getIdentifier());
-            // Lecture des valeurs saisies
-            final List<ImportData> data = parseSheet(sheet);
+		new SheetReader().setDescProperties(descProperties)
+			.setDescValues(descValues)
+			.filter(checkAccess)
+			.stream(in)
+			.process((report, detail) -> {
+				final List<PropertyConfiguration> confs = confCache.computeIfAbsent(report.getDocUnit().getLibrary(),
+						propertyConfigurationService::findByLibrary);
+				final PgcnList<PgcnError> pgcnErrors = conditionReportDetailService.validateSave(detail, confs);
 
-            // Copie des données dans le constat d'état
-            setDescriptions(detail, data);
-            setDetails(detail, data);
+				if (pgcnErrors.isEmpty()) {
+					final ConditionReport savedReport = conditionReportService.save(report);
+					detail.setReport(savedReport);
+					conditionReportDetailService.save(detail, false);
 
-            updateFn.accept(report, detail);
-        }
+					final ImportResult importResult = new ImportResult();
+					importResult.setReportId(savedReport.getIdentifier());
+					importResult.setDocUnitId(report.getDocUnit().getIdentifier());
+					importResult.setPgcnId(report.getDocUnit().getPgcnId());
+					importResults.add(importResult);
 
-        /**
-         * Lecture des valeurs saisies dans la feuille
-         *
-         * @param sheet
-         * @return
-         */
-        private List<ImportData> parseSheet(final Sheet sheet) {
-            final Iterator<Row> rowIterator = sheet.rowIterator();
-            final List<ImportData> data = new ArrayList<>();
+				}
+				else {
+					LOG.error("Le constat d'état {} ({}) n'est pas sauvegardé car il n'est pas valide: {}",
+							report.getDocUnit().getPgcnId(), report.getDocUnit().getIdentifier(),
+							StringUtils.join(pgcnErrors, ", "));
 
-            while (rowIterator.hasNext()) {
-                final Row row = rowIterator.next();
-                // on bypass la 1e ligne (qui contient l'identifiant de l'unité documentaire)
-                if (row.getRowNum() == 0) {
-                    continue;
-                }
+					final ImportResult importResult = new ImportResult();
+					importResult.setDocUnitId(report.getDocUnit().getIdentifier());
+					importResult.setPgcnId(report.getDocUnit().getPgcnId());
+					importResult.setErrors(pgcnErrors.get());
+					importResults.add(importResult);
+				}
+			});
+		return importResults;
+	}
 
-                final Optional<String> optType = Optional.ofNullable(row.getCell(0)).map(Cell::getStringCellValue);
-                final Optional<String> optProp = Optional.ofNullable(row.getCell(1)).map(Cell::getStringCellValue);
-                // type, valeur doivent être définis
-                if (!optType.isPresent() || !optProp.isPresent()) {
-                    continue;
-                }
+	/**
+	 * Classe gérant la lecture du fichier excel, et la création / mise à jour des
+	 * constats d'état
+	 */
+	private class SheetReader {
 
-                final ImportData importData = new ImportData();
-                importData.setType(optType.get());
-                importData.setProp(optProp.get());
-                data.add(importData);
+		private final List<DescriptionProperty> descProperties = new ArrayList<>();
 
-                // Les valeurs sont dans les cellules 3 à 5
-                for (int i = 0; i < 3; i++) {
-                    final Cell cell = row.getCell(i + 3);
+		private final List<DescriptionValue> descValues = new ArrayList<>();
 
-                    if (cell != null) {
-                        switch (cell.getCellType()) {
-                            case STRING:
-                                importData.setValue(i, cell.getStringCellValue());
-                                break;
-                            case NUMERIC:
-                                importData.setDblValue(i, cell.getNumericCellValue());
-                                break;
-                        }
-                    }
-                }
-            }
-            return data;
-        }
+		private Workbook wb;
 
-        private void setDescriptions(final ConditionReportDetail detail, final List<ImportData> data) {
-            final Set<Description> descriptions = data.stream()
-                                                      // Filtrage sur le type de données importée
-                                                      .filter(d -> Arrays.stream(DescriptionProperty.Type.values()).anyMatch(type -> StringUtils.equals(type.name(), d.getType())))
-                                                      // Construction de l'objet Description
-                                                      .map(d -> {
-                                                          // Propriété
-                                                          final Optional<DescriptionProperty> propOpt = this.descProperties.stream()
-                                                                                                                           .filter(prop -> StringUtils.equals(prop.getIdentifier(),
-                                                                                                                                                              d.getProp()))
-                                                                                                                           .findAny();
+		private Predicate<DocUnit> filter = (report) -> true;
 
-                                                          if (!propOpt.isPresent()) {
-                                                              LOG.error("La propriété {} n'est pas supportée", d.getProp());
-                                                              return null;
-                                                          }
-                                                          final DescriptionProperty property = propOpt.get();
+		/**
+		 * Initialisation du workbook à partir d'un flux
+		 * @param in
+		 * @return
+		 * @throws IOException
+		 * @throws InvalidFormatException
+		 */
+		public SheetReader stream(final InputStream in) throws IOException, InvalidFormatException {
+			this.wb = WorkbookFactory.create(in);
+			return this;
+		}
 
-                                                          // Valeur (liste), Valeur (libre)
-                                                          final String listValue = d.getValues()[0];
-                                                          final String freeValue = d.getValue(1);
-                                                          if (StringUtils.isBlank(listValue) && StringUtils.isBlank(freeValue)) {
-                                                              return null;
-                                                          }
+		/**
+		 * Traitement du workbook Création/Mise à jour du constat d'état, puis appel de la
+		 * fonction de mise à jour si tout s'est bien passé
+		 * @param updateFn
+		 * @return
+		 */
+		public SheetReader process(final BiConsumer<ConditionReport, ConditionReportDetail> updateFn) {
+			this.wb.sheetIterator().forEachRemaining(sheet -> this.readSheet(sheet, updateFn));
+			return this;
+		}
 
-                                                          // Description de reliure
-                                                          final Description description = new Description();
-                                                          description.setProperty(property);
-                                                          getDescriptionValue(property, listValue).ifPresent(description::setValue);
-                                                          description.setComment(freeValue);
-                                                          return description;
+		/**
+		 * Lecture de la feuille et création / mise à jour du constat d'état
+		 * @param sheet
+		 */
+		private void readSheet(final Sheet sheet, final BiConsumer<ConditionReport, ConditionReportDetail> updateFn) {
+			// docunit identifier
+			final Optional<String> optId = getCell(sheet, 0, 0).map(Cell::getStringCellValue);
+			if (!optId.isPresent()) {
+				LOG.warn("L'identifiant de l'unité documentaire n'est pas renseigné; feuille {}, cellule [0;0]",
+						sheet.getSheetName());
+				return;
+			}
+			final String docUnitId = optId.get();
 
-                                                      })
-                                                      .filter(Objects::nonNull)
-                                                      .collect(Collectors.toSet());
-            detail.setDescriptions(descriptions);
-        }
+			// import = oui
+			final Optional<String> optAction = getCell(sheet, 0, 3).map(Cell::getStringCellValue);
+			if (!optAction.isPresent() || !StringUtils.equals(optAction.get(),
+					messageService.getMessage("condreport", "validation.boolean.true"))) {
+				LOG.debug("L'import du constat d'état pour l'unité documentaire {} est ignoré", docUnitId);
+				return;
+			}
 
-        private void setDetails(final ConditionReportDetail detail, final List<ImportData> data) {
-            data.stream()
-                // Filtrage dur le type de données importée
-                .filter(d -> StringUtils.equals(TYPE_DETAIL, d.getType()))
-                // Set values
-                .forEach(d -> {
-                    final String value = d.getValues()[0];
-                    final double dValue = d.getDblValues()[0];
+			// Recherche de l'unité documentaire
+			final DocUnit docUnit = docUnitService.findOne(docUnitId);
+			if (docUnit == null) {
+				LOG.error("L'unité documentaire {} n'existe pas", docUnitId);
+				return;
+			}
+			// Vérification des droits d'accès
+			if (!filter.test(docUnit)) {
+				LOG.error("L'accès à l'unité documentaire {} n'est pas autorisé pour cet utilisateur", docUnitId);
+				return;
+			}
 
-                    switch (d.getProp()) {
-                        case PROP_BINDING_OTHER:
-                            if (StringUtils.isNotBlank(value)) {
-                                detail.setBindingDesc(value);
-                            }
-                            break;
-                        case PROP_DESC_OTHER:
-                            if (StringUtils.isNotBlank(value)) {
-                                detail.setAdditionnalDesc(value);
-                            }
-                            break;
-                        case PROP_DIMENSION:
-                            final double[] dblValues = d.getDblValues();
-                            detail.setDim1((int) dblValues[0]);
-                            detail.setDim2((int) dblValues[1]);
-                            detail.setDim3((int) dblValues[2]);
-                            break;
-                        case PROP_INSURANCE:
-                            detail.setInsurance(dValue);
-                            break;
-                        case PROP_NB_VIEW_BINDING:
-                            detail.setNbViewBinding((int) dValue);
-                            break;
-                        case PROP_NB_VIEW_BODY:
-                            detail.setNbViewBody((int) dValue);
-                            break;
-                        case PROP_NB_VIEW_ADDITIONNAL:
-                            detail.setNbViewAdditionnal((int) dValue);
-                            break;
-                        case PROP_BODY_DESC:
-                            if (StringUtils.isNotBlank(value)) {
-                                detail.setBodyDesc(value);
-                            }
-                            break;
-                        default:
-                            LOG.error("La propriété {} n'est pas supportée", d.getProp());
-                    }
-                });
-        }
+			// Création du constat d'état
+			ConditionReport report = conditionReportService.findByDocUnit(docUnitId);
+			if (report == null) {
+				report = conditionReportService.getNewConditionReport(docUnit);
+			}
+			final ConditionReport fReport = report;
+			// 1er étape du constat d'état
+			final ConditionReportDetail detail = report.getDetails()
+				.stream()
+				.filter(d -> d.getType() == LIBRARY_LEAVING)
+				.findFirst()
+				.orElseGet(() -> conditionReportDetailService.getNewDetail(LIBRARY_LEAVING, fReport, 0));
 
-        private Optional<Cell> getCell(final Sheet sheet, final int rowNb, final int cellNb) {
-            final Row row = sheet.getRow(rowNb);
-            if (row == null) {
-                return Optional.empty();
-            }
-            final Cell cell = row.getCell(cellNb);
-            return Optional.ofNullable(cell);
-        }
+			LOG.debug("Création/mise à jour du constat d'état de l'unité documentaire {} ({})", docUnit.getPgcnId(),
+					docUnit.getIdentifier());
+			// Lecture des valeurs saisies
+			final List<ImportData> data = parseSheet(sheet);
 
-        public SheetReader filter(final Predicate<DocUnit> filter) {
-            this.filter = filter;
-            return this;
-        }
+			// Copie des données dans le constat d'état
+			setDescriptions(detail, data);
+			setDetails(detail, data);
 
-        public SheetReader setDescProperties(final List<DescriptionProperty> descProperties) {
-            this.descProperties.clear();
-            this.descProperties.addAll(descProperties);
-            return this;
-        }
+			updateFn.accept(report, detail);
+		}
 
-        public SheetReader setDescValues(final List<DescriptionValue> descValues) {
-            this.descValues.clear();
-            this.descValues.addAll(descValues);
-            return this;
-        }
+		/**
+		 * Lecture des valeurs saisies dans la feuille
+		 * @param sheet
+		 * @return
+		 */
+		private List<ImportData> parseSheet(final Sheet sheet) {
+			final Iterator<Row> rowIterator = sheet.rowIterator();
+			final List<ImportData> data = new ArrayList<>();
 
-        private Optional<DescriptionValue> getDescriptionValue(final DescriptionProperty property, final String value) {
-            if (StringUtils.isBlank(value)) {
-                return Optional.empty();
-            }
-            return this.descValues.stream()
-                                  .filter(descValue -> StringUtils.equals(descValue.getProperty().getIdentifier(), property.getIdentifier()) && StringUtils.equals(descValue
-                                                                                                                                                                            .getLabel(),
-                                                                                                                                                                   value))
-                                  .findAny();
-        }
-    }
+			while (rowIterator.hasNext()) {
+				final Row row = rowIterator.next();
+				// on bypass la 1e ligne (qui contient l'identifiant de l'unité
+				// documentaire)
+				if (row.getRowNum() == 0) {
+					continue;
+				}
 
-    /**
-     * Classe représentant les valeurs saisies dans le fichiers excel d'import
-     */
-    private static class ImportData {
+				final Optional<String> optType = Optional.ofNullable(row.getCell(0)).map(Cell::getStringCellValue);
+				final Optional<String> optProp = Optional.ofNullable(row.getCell(1)).map(Cell::getStringCellValue);
+				// type, valeur doivent être définis
+				if (!optType.isPresent() || !optProp.isPresent()) {
+					continue;
+				}
 
-        private String type;
-        private String prop;
-        private final String[] values = new String[3];
-        private final Double[] dblValues = new Double[3];
+				final ImportData importData = new ImportData();
+				importData.setType(optType.get());
+				importData.setProp(optProp.get());
+				data.add(importData);
 
-        public String getType() {
-            return type;
-        }
+				// Les valeurs sont dans les cellules 3 à 5
+				for (int i = 0; i < 3; i++) {
+					final Cell cell = row.getCell(i + 3);
 
-        public void setType(final String type) {
-            this.type = type;
-        }
+					if (cell != null) {
+						switch (cell.getCellType()) {
+							case STRING:
+								importData.setValue(i, cell.getStringCellValue());
+								break;
+							case NUMERIC:
+								importData.setDblValue(i, cell.getNumericCellValue());
+								break;
+						}
+					}
+				}
+			}
+			return data;
+		}
 
-        public String getProp() {
-            return prop;
-        }
+		private void setDescriptions(final ConditionReportDetail detail, final List<ImportData> data) {
+			final Set<Description> descriptions = data.stream()
+				// Filtrage sur le type de données importée
+				.filter(d -> Arrays.stream(DescriptionProperty.Type.values())
+					.anyMatch(type -> StringUtils.equals(type.name(), d.getType())))
+				// Construction de l'objet Description
+				.map(d -> {
+					// Propriété
+					final Optional<DescriptionProperty> propOpt = this.descProperties.stream()
+						.filter(prop -> StringUtils.equals(prop.getIdentifier(), d.getProp()))
+						.findAny();
 
-        public void setProp(final String prop) {
-            this.prop = prop;
-        }
+					if (!propOpt.isPresent()) {
+						LOG.error("La propriété {} n'est pas supportée", d.getProp());
+						return null;
+					}
+					final DescriptionProperty property = propOpt.get();
 
-        public String[] getValues() {
-            return values;
-        }
+					// Valeur (liste), Valeur (libre)
+					final String listValue = d.getValues()[0];
+					final String freeValue = d.getValue(1);
+					if (StringUtils.isBlank(listValue) && StringUtils.isBlank(freeValue)) {
+						return null;
+					}
 
-        public void setValue(final int idx, final String value) {
-            this.values[idx] = value;
-        }
+					// Description de reliure
+					final Description description = new Description();
+					description.setProperty(property);
+					getDescriptionValue(property, listValue).ifPresent(description::setValue);
+					description.setComment(freeValue);
+					return description;
 
-        public double[] getDblValues() {
-            return Arrays.stream(dblValues)
-                         .mapToDouble(dbl -> dbl == null ? 0D
-                                                         : dbl)
-                         .toArray();
-        }
+				})
+				.filter(Objects::nonNull)
+				.collect(Collectors.toSet());
+			detail.setDescriptions(descriptions);
+		}
 
-        public void setDblValue(final int idx, final Double dblValue) {
-            this.dblValues[idx] = dblValue;
-        }
+		private void setDetails(final ConditionReportDetail detail, final List<ImportData> data) {
+			data.stream()
+				// Filtrage dur le type de données importée
+				.filter(d -> StringUtils.equals(TYPE_DETAIL, d.getType()))
+				// Set values
+				.forEach(d -> {
+					final String value = d.getValues()[0];
+					final double dValue = d.getDblValues()[0];
 
-        public String getValue(final int idx) {
-            return values[idx] != null ? values[idx] : dblValues[idx] != null ? String.valueOf(dblValues[idx]) : null;
-        }
+					switch (d.getProp()) {
+						case PROP_BINDING_OTHER:
+							if (StringUtils.isNotBlank(value)) {
+								detail.setBindingDesc(value);
+							}
+							break;
+						case PROP_DESC_OTHER:
+							if (StringUtils.isNotBlank(value)) {
+								detail.setAdditionnalDesc(value);
+							}
+							break;
+						case PROP_DIMENSION:
+							final double[] dblValues = d.getDblValues();
+							detail.setDim1((int) dblValues[0]);
+							detail.setDim2((int) dblValues[1]);
+							detail.setDim3((int) dblValues[2]);
+							break;
+						case PROP_INSURANCE:
+							detail.setInsurance(dValue);
+							break;
+						case PROP_NB_VIEW_BINDING:
+							detail.setNbViewBinding((int) dValue);
+							break;
+						case PROP_NB_VIEW_BODY:
+							detail.setNbViewBody((int) dValue);
+							break;
+						case PROP_NB_VIEW_ADDITIONNAL:
+							detail.setNbViewAdditionnal((int) dValue);
+							break;
+						case PROP_BODY_DESC:
+							if (StringUtils.isNotBlank(value)) {
+								detail.setBodyDesc(value);
+							}
+							break;
+						default:
+							LOG.error("La propriété {} n'est pas supportée", d.getProp());
+					}
+				});
+		}
 
-        @Override
-        public String toString() {
-            return MoreObjects.toStringHelper(this)
-                              .omitNullValues()
-                              .add("type", type)
-                              .add("prop", prop)
-                              .add("values", streamToString(Stream.of(values)))
-                              .add("dblValues", streamToString(Stream.of(dblValues)))
-                              .toString();
-        }
+		private Optional<Cell> getCell(final Sheet sheet, final int rowNb, final int cellNb) {
+			final Row row = sheet.getRow(rowNb);
+			if (row == null) {
+				return Optional.empty();
+			}
+			final Cell cell = row.getCell(cellNb);
+			return Optional.ofNullable(cell);
+		}
 
-        private String streamToString(final Stream<?> values) {
-            return values.filter(Objects::nonNull)
-                         .map(String::valueOf)
-                         .reduce((a, b) -> a + ", "
-                                           + b)
-                         .orElse(null);
-        }
-    }
+		public SheetReader filter(final Predicate<DocUnit> filter) {
+			this.filter = filter;
+			return this;
+		}
 
-    /**
-     * Classe représentant le résultat de l'import
-     */
-    public static class ImportResult {
+		public SheetReader setDescProperties(final List<DescriptionProperty> descProperties) {
+			this.descProperties.clear();
+			this.descProperties.addAll(descProperties);
+			return this;
+		}
 
-        private String reportId;
-        private String docUnitId;
-        private String pgcnId;
-        private Collection<PgcnError> errors;
+		public SheetReader setDescValues(final List<DescriptionValue> descValues) {
+			this.descValues.clear();
+			this.descValues.addAll(descValues);
+			return this;
+		}
 
-        public String getReportId() {
-            return reportId;
-        }
+		private Optional<DescriptionValue> getDescriptionValue(final DescriptionProperty property, final String value) {
+			if (StringUtils.isBlank(value)) {
+				return Optional.empty();
+			}
+			return this.descValues.stream()
+				.filter(descValue -> StringUtils.equals(descValue.getProperty().getIdentifier(),
+						property.getIdentifier()) && StringUtils.equals(descValue.getLabel(), value))
+				.findAny();
+		}
 
-        public void setReportId(final String reportId) {
-            this.reportId = reportId;
-        }
+	}
 
-        public String getDocUnitId() {
-            return docUnitId;
-        }
+	/**
+	 * Classe représentant les valeurs saisies dans le fichiers excel d'import
+	 */
+	private static class ImportData {
 
-        public void setDocUnitId(final String docUnitId) {
-            this.docUnitId = docUnitId;
-        }
+		private String type;
 
-        public String getPgcnId() {
-            return pgcnId;
-        }
+		private String prop;
 
-        public void setPgcnId(final String pgcnId) {
-            this.pgcnId = pgcnId;
-        }
+		private final String[] values = new String[3];
 
-        public Collection<PgcnError> getErrors() {
-            return errors;
-        }
+		private final Double[] dblValues = new Double[3];
 
-        public void setErrors(final Collection<PgcnError> errors) {
-            this.errors = errors;
-        }
-    }
+		public String getType() {
+			return type;
+		}
+
+		public void setType(final String type) {
+			this.type = type;
+		}
+
+		public String getProp() {
+			return prop;
+		}
+
+		public void setProp(final String prop) {
+			this.prop = prop;
+		}
+
+		public String[] getValues() {
+			return values;
+		}
+
+		public void setValue(final int idx, final String value) {
+			this.values[idx] = value;
+		}
+
+		public double[] getDblValues() {
+			return Arrays.stream(dblValues).mapToDouble(dbl -> dbl == null ? 0D : dbl).toArray();
+		}
+
+		public void setDblValue(final int idx, final Double dblValue) {
+			this.dblValues[idx] = dblValue;
+		}
+
+		public String getValue(final int idx) {
+			return values[idx] != null ? values[idx] : dblValues[idx] != null ? String.valueOf(dblValues[idx]) : null;
+		}
+
+		@Override
+		public String toString() {
+			return MoreObjects.toStringHelper(this)
+				.omitNullValues()
+				.add("type", type)
+				.add("prop", prop)
+				.add("values", streamToString(Stream.of(values)))
+				.add("dblValues", streamToString(Stream.of(dblValues)))
+				.toString();
+		}
+
+		private String streamToString(final Stream<?> values) {
+			return values.filter(Objects::nonNull).map(String::valueOf).reduce((a, b) -> a + ", " + b).orElse(null);
+		}
+
+	}
+
+	/**
+	 * Classe représentant le résultat de l'import
+	 */
+	public static class ImportResult {
+
+		private String reportId;
+
+		private String docUnitId;
+
+		private String pgcnId;
+
+		private Collection<PgcnError> errors;
+
+		public String getReportId() {
+			return reportId;
+		}
+
+		public void setReportId(final String reportId) {
+			this.reportId = reportId;
+		}
+
+		public String getDocUnitId() {
+			return docUnitId;
+		}
+
+		public void setDocUnitId(final String docUnitId) {
+			this.docUnitId = docUnitId;
+		}
+
+		public String getPgcnId() {
+			return pgcnId;
+		}
+
+		public void setPgcnId(final String pgcnId) {
+			this.pgcnId = pgcnId;
+		}
+
+		public Collection<PgcnError> getErrors() {
+			return errors;
+		}
+
+		public void setErrors(final Collection<PgcnError> errors) {
+			this.errors = errors;
+		}
+
+	}
+
 }

@@ -7,77 +7,82 @@ import java.util.List;
 /**
  * DTO pour les documents numériques
  *
- * @author jbrunet
- *         Créé le 14 mars 2017
+ * @author jbrunet Créé le 14 mars 2017
  */
 public class DigitalDocumentDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String digitalId;
-    private String checkNotes;
-    private int nbPages;
-    private String status;
-    private SimpleDocUnitDTO docUnit;
+	private String identifier;
 
-    // Retours de contrôles
-    private List<AutomaticCheckResultDTO> automaticCheckResults;
+	private String digitalId;
 
-    public DigitalDocumentDTO() {
-    }
+	private String checkNotes;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private int nbPages;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private String status;
 
-    public String getDigitalId() {
-        return digitalId;
-    }
+	private SimpleDocUnitDTO docUnit;
 
-    public void setDigitalId(String digitalId) {
-        this.digitalId = digitalId;
-    }
+	// Retours de contrôles
+	private List<AutomaticCheckResultDTO> automaticCheckResults;
 
-    public String getCheckNotes() {
-        return checkNotes;
-    }
+	public DigitalDocumentDTO() {
+	}
 
-    public void setCheckNotes(String checkNotes) {
-        this.checkNotes = checkNotes;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public int getNbPages() {
-        return nbPages;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setNbPages(int nbPages) {
-        this.nbPages = nbPages;
-    }
+	public String getDigitalId() {
+		return digitalId;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public void setDigitalId(String digitalId) {
+		this.digitalId = digitalId;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	public String getCheckNotes() {
+		return checkNotes;
+	}
 
-    public SimpleDocUnitDTO getDocUnit() {
-        return docUnit;
-    }
+	public void setCheckNotes(String checkNotes) {
+		this.checkNotes = checkNotes;
+	}
 
-    public void setDocUnit(SimpleDocUnitDTO docUnit) {
-        this.docUnit = docUnit;
-    }
+	public int getNbPages() {
+		return nbPages;
+	}
 
-    public List<AutomaticCheckResultDTO> getAutomaticCheckResults() {
-        return automaticCheckResults;
-    }
+	public void setNbPages(int nbPages) {
+		this.nbPages = nbPages;
+	}
 
-    public void setAutomaticCheckResults(List<AutomaticCheckResultDTO> checkResults) {
-        this.automaticCheckResults = checkResults;
-    }
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public SimpleDocUnitDTO getDocUnit() {
+		return docUnit;
+	}
+
+	public void setDocUnit(SimpleDocUnitDTO docUnit) {
+		this.docUnit = docUnit;
+	}
+
+	public List<AutomaticCheckResultDTO> getAutomaticCheckResults() {
+		return automaticCheckResults;
+	}
+
+	public void setAutomaticCheckResults(List<AutomaticCheckResultDTO> checkResults) {
+		this.automaticCheckResults = checkResults;
+	}
+
 }

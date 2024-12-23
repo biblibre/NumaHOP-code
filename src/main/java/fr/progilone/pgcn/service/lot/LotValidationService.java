@@ -20,33 +20,34 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class LotValidationService {
 
-    private final LotRepository lotRepository;
+	private final LotRepository lotRepository;
 
-    @Autowired
-    public LotValidationService(final LotRepository lotRepository) {
-        this.lotRepository = lotRepository;
-    }
+	@Autowired
+	public LotValidationService(final LotRepository lotRepository) {
+		this.lotRepository = lotRepository;
+	}
 
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-    public PgcnList<PgcnError> validate(final Lot lot) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	public PgcnList<PgcnError> validate(final Lot lot) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
 
-        final PgcnError.Builder builder = new PgcnError.Builder();
+		final PgcnError.Builder builder = new PgcnError.Builder();
 
-        // Le label est unique par projet
-        if (StringUtils.isNotBlank(lot.getLabel()) && lot.getProject() != null) {
-            final List<Lot> duplicates = lotRepository.findByLabelAndProject(lot.getLabel(), lot.getProject());
+		// Le label est unique par projet
+		if (StringUtils.isNotBlank(lot.getLabel()) && lot.getProject() != null) {
+			final List<Lot> duplicates = lotRepository.findByLabelAndProject(lot.getLabel(), lot.getProject());
 
-            if (duplicates.stream().anyMatch(dup -> !Objects.equals(dup, lot))) {
-                errors.add(builder.reinit().setCode(PgcnErrorCode.LOT_DUPLICATE_LABEL).setField("label").build());
-            }
-        }
+			if (duplicates.stream().anyMatch(dup -> !Objects.equals(dup, lot))) {
+				errors.add(builder.reinit().setCode(PgcnErrorCode.LOT_DUPLICATE_LABEL).setField("label").build());
+			}
+		}
 
-        // Retour
-        if (!errors.isEmpty()) {
-            lot.setErrors(errors);
-            throw new PgcnValidationException(lot, errors);
-        }
-        return errors;
-    }
+		// Retour
+		if (!errors.isEmpty()) {
+			lot.setErrors(errors);
+			throw new PgcnValidationException(lot, errors);
+		}
+		return errors;
+	}
+
 }

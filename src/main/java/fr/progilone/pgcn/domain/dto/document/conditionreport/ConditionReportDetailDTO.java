@@ -6,251 +6,276 @@ import java.util.List;
 
 public class ConditionReportDetailDTO {
 
-    private String identifier;
-    private String type;
-    private String libWriterName;
-    private String libWriterFunction;
-    private String provWriterName;
-    private String provWriterFunction;
-    private String date;
-    private String comment;
-    private int nbViewBinding = 0;
-    private int nbViewBody = 0;
-    private int nbViewAdditionnal = 0;
-    private int nbViewTotal = 0;
-    private Integer dim1;
-    private Integer dim2;
-    private Integer dim3;
-    private String bindingDesc;
-    private String bodyDesc;
-    private String additionnalDesc;
-    private String insurance;
+	private String identifier;
 
-    private final List<ConditionReportValueDTO> descriptions = new ArrayList<>();
-    private final List<ConditionReportValueDTO> bindings = new ArrayList<>();
-    private final List<ConditionReportValueDTO> body = new ArrayList<>();
-    private final List<ConditionReportValueDTO> numberings = new ArrayList<>();
-    private final List<ConditionReportValueDTO> vigilances = new ArrayList<>();
-    private final List<ConditionReportValueDTO> states = new ArrayList<>();
-    private final List<ConditionReportValueDTO> types = new ArrayList<>();
+	private String type;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String libWriterName;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private String libWriterFunction;
 
-    public String getType() {
-        return type;
-    }
+	private String provWriterName;
 
-    public void setType(final String type) {
-        this.type = type;
-    }
+	private String provWriterFunction;
 
-    public String getLibWriterName() {
-        return libWriterName;
-    }
+	private String date;
 
-    public void setLibWriterName(final String libWriterName) {
-        this.libWriterName = libWriterName;
-    }
+	private String comment;
 
-    public String getLibWriterFunction() {
-        return libWriterFunction;
-    }
+	private int nbViewBinding = 0;
 
-    public void setLibWriterFunction(final String libWriterFunction) {
-        this.libWriterFunction = libWriterFunction;
-    }
+	private int nbViewBody = 0;
 
-    public String getProvWriterName() {
-        return provWriterName;
-    }
+	private int nbViewAdditionnal = 0;
 
-    public void setProvWriterName(final String provWriterName) {
-        this.provWriterName = provWriterName;
-    }
+	private int nbViewTotal = 0;
 
-    public String getProvWriterFunction() {
-        return provWriterFunction;
-    }
+	private Integer dim1;
 
-    public void setProvWriterFunction(final String provWriterFunction) {
-        this.provWriterFunction = provWriterFunction;
-    }
+	private Integer dim2;
 
-    public String getDate() {
-        return date;
-    }
+	private Integer dim3;
 
-    public void setDate(final String date) {
-        this.date = date;
-    }
+	private String bindingDesc;
 
-    public String getComment() {
-        return comment;
-    }
+	private String bodyDesc;
 
-    public void setComment(final String comment) {
-        this.comment = comment;
-    }
+	private String additionnalDesc;
 
-    public int getNbViewBinding() {
-        return nbViewBinding;
-    }
+	private String insurance;
 
-    public void setNbViewBinding(final int nbViewBinding) {
-        this.nbViewBinding = nbViewBinding;
-    }
+	private final List<ConditionReportValueDTO> descriptions = new ArrayList<>();
 
-    public int getNbViewBody() {
-        return nbViewBody;
-    }
+	private final List<ConditionReportValueDTO> bindings = new ArrayList<>();
 
-    public void setNbViewBody(final int nbViewBody) {
-        this.nbViewBody = nbViewBody;
-    }
+	private final List<ConditionReportValueDTO> body = new ArrayList<>();
 
-    public int getNbViewAdditionnal() {
-        return nbViewAdditionnal;
-    }
+	private final List<ConditionReportValueDTO> numberings = new ArrayList<>();
 
-    public void setNbViewAdditionnal(final int nbViewAdditionnal) {
-        this.nbViewAdditionnal = nbViewAdditionnal;
-    }
+	private final List<ConditionReportValueDTO> vigilances = new ArrayList<>();
 
-    public int getNbViewTotal() {
-        return nbViewTotal;
-    }
+	private final List<ConditionReportValueDTO> states = new ArrayList<>();
 
-    public void setNbViewTotal(final int nbViewTotal) {
-        this.nbViewTotal = nbViewTotal;
-    }
+	private final List<ConditionReportValueDTO> types = new ArrayList<>();
 
-    public Integer getDim1() {
-        return dim1;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setDim1(final Integer dim1) {
-        this.dim1 = dim1;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public Integer getDim2() {
-        return dim2;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public void setDim2(final Integer dim2) {
-        this.dim2 = dim2;
-    }
+	public void setType(final String type) {
+		this.type = type;
+	}
 
-    public Integer getDim3() {
-        return dim3;
-    }
+	public String getLibWriterName() {
+		return libWriterName;
+	}
 
-    public void setDim3(final Integer dim3) {
-        this.dim3 = dim3;
-    }
+	public void setLibWriterName(final String libWriterName) {
+		this.libWriterName = libWriterName;
+	}
 
-    public String getBindingDesc() {
-        return bindingDesc;
-    }
+	public String getLibWriterFunction() {
+		return libWriterFunction;
+	}
 
-    public void setBindingDesc(final String bindingDesc) {
-        this.bindingDesc = bindingDesc;
-    }
+	public void setLibWriterFunction(final String libWriterFunction) {
+		this.libWriterFunction = libWriterFunction;
+	}
 
-    public String getBodyDesc() {
-        return bodyDesc;
-    }
+	public String getProvWriterName() {
+		return provWriterName;
+	}
 
-    public void setBodyDesc(final String bodyDesc) {
-        this.bodyDesc = bodyDesc;
-    }
+	public void setProvWriterName(final String provWriterName) {
+		this.provWriterName = provWriterName;
+	}
 
-    public String getAdditionnalDesc() {
-        return additionnalDesc;
-    }
+	public String getProvWriterFunction() {
+		return provWriterFunction;
+	}
 
-    public void setAdditionnalDesc(final String additionnalDesc) {
-        this.additionnalDesc = additionnalDesc;
-    }
+	public void setProvWriterFunction(final String provWriterFunction) {
+		this.provWriterFunction = provWriterFunction;
+	}
 
-    public List<ConditionReportValueDTO> getDescriptions() {
-        return descriptions;
-    }
+	public String getDate() {
+		return date;
+	}
 
-    public void setDescriptions(final List<ConditionReportValueDTO> descriptions) {
-        this.descriptions.clear();
-        this.descriptions.addAll(descriptions);
-    }
+	public void setDate(final String date) {
+		this.date = date;
+	}
 
-    public List<ConditionReportValueDTO> getBindings() {
-        return bindings;
-    }
+	public String getComment() {
+		return comment;
+	}
 
-    public void setBindings(final List<ConditionReportValueDTO> bindings) {
-        this.bindings.clear();
-        this.bindings.addAll(bindings);
-    }
+	public void setComment(final String comment) {
+		this.comment = comment;
+	}
 
-    public List<ConditionReportValueDTO> getBody() {
-        return body;
-    }
+	public int getNbViewBinding() {
+		return nbViewBinding;
+	}
 
-    public void setBody(final List<ConditionReportValueDTO> body) {
-        this.body.clear();
-        this.body.addAll(body);
-    }
+	public void setNbViewBinding(final int nbViewBinding) {
+		this.nbViewBinding = nbViewBinding;
+	}
 
-    public List<ConditionReportValueDTO> getVigilances() {
-        return vigilances;
-    }
+	public int getNbViewBody() {
+		return nbViewBody;
+	}
 
-    public void setVigilances(final List<ConditionReportValueDTO> vigilances) {
-        this.vigilances.clear();
-        this.vigilances.addAll(vigilances);
-    }
+	public void setNbViewBody(final int nbViewBody) {
+		this.nbViewBody = nbViewBody;
+	}
 
-    public List<ConditionReportValueDTO> getNumberings() {
-        return numberings;
-    }
+	public int getNbViewAdditionnal() {
+		return nbViewAdditionnal;
+	}
 
-    public void setNumberings(final List<ConditionReportValueDTO> numberings) {
-        this.numberings.clear();
-        this.numberings.addAll(numberings);
-    }
+	public void setNbViewAdditionnal(final int nbViewAdditionnal) {
+		this.nbViewAdditionnal = nbViewAdditionnal;
+	}
 
-    public List<ConditionReportValueDTO> getStates() {
-        return states;
-    }
+	public int getNbViewTotal() {
+		return nbViewTotal;
+	}
 
-    public void setStates(final List<ConditionReportValueDTO> states) {
-        this.states.clear();
-        this.states.addAll(states);
-    }
+	public void setNbViewTotal(final int nbViewTotal) {
+		this.nbViewTotal = nbViewTotal;
+	}
 
-    public List<ConditionReportValueDTO> getTypes() {
-        return types;
-    }
+	public Integer getDim1() {
+		return dim1;
+	}
 
-    public void setTypes(final List<ConditionReportValueDTO> types) {
-        this.types.clear();
-        this.types.addAll(types);
-    }
+	public void setDim1(final Integer dim1) {
+		this.dim1 = dim1;
+	}
 
-    public String getInsurance() {
-        return insurance;
-    }
+	public Integer getDim2() {
+		return dim2;
+	}
 
-    public void setInsurance(final String insurance) {
-        this.insurance = insurance;
-    }
+	public void setDim2(final Integer dim2) {
+		this.dim2 = dim2;
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("identifier", identifier).toString();
-    }
+	public Integer getDim3() {
+		return dim3;
+	}
+
+	public void setDim3(final Integer dim3) {
+		this.dim3 = dim3;
+	}
+
+	public String getBindingDesc() {
+		return bindingDesc;
+	}
+
+	public void setBindingDesc(final String bindingDesc) {
+		this.bindingDesc = bindingDesc;
+	}
+
+	public String getBodyDesc() {
+		return bodyDesc;
+	}
+
+	public void setBodyDesc(final String bodyDesc) {
+		this.bodyDesc = bodyDesc;
+	}
+
+	public String getAdditionnalDesc() {
+		return additionnalDesc;
+	}
+
+	public void setAdditionnalDesc(final String additionnalDesc) {
+		this.additionnalDesc = additionnalDesc;
+	}
+
+	public List<ConditionReportValueDTO> getDescriptions() {
+		return descriptions;
+	}
+
+	public void setDescriptions(final List<ConditionReportValueDTO> descriptions) {
+		this.descriptions.clear();
+		this.descriptions.addAll(descriptions);
+	}
+
+	public List<ConditionReportValueDTO> getBindings() {
+		return bindings;
+	}
+
+	public void setBindings(final List<ConditionReportValueDTO> bindings) {
+		this.bindings.clear();
+		this.bindings.addAll(bindings);
+	}
+
+	public List<ConditionReportValueDTO> getBody() {
+		return body;
+	}
+
+	public void setBody(final List<ConditionReportValueDTO> body) {
+		this.body.clear();
+		this.body.addAll(body);
+	}
+
+	public List<ConditionReportValueDTO> getVigilances() {
+		return vigilances;
+	}
+
+	public void setVigilances(final List<ConditionReportValueDTO> vigilances) {
+		this.vigilances.clear();
+		this.vigilances.addAll(vigilances);
+	}
+
+	public List<ConditionReportValueDTO> getNumberings() {
+		return numberings;
+	}
+
+	public void setNumberings(final List<ConditionReportValueDTO> numberings) {
+		this.numberings.clear();
+		this.numberings.addAll(numberings);
+	}
+
+	public List<ConditionReportValueDTO> getStates() {
+		return states;
+	}
+
+	public void setStates(final List<ConditionReportValueDTO> states) {
+		this.states.clear();
+		this.states.addAll(states);
+	}
+
+	public List<ConditionReportValueDTO> getTypes() {
+		return types;
+	}
+
+	public void setTypes(final List<ConditionReportValueDTO> types) {
+		this.types.clear();
+		this.types.addAll(types);
+	}
+
+	public String getInsurance() {
+		return insurance;
+	}
+
+	public void setInsurance(final String insurance) {
+		this.insurance = insurance;
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this).add("identifier", identifier).toString();
+	}
+
 }

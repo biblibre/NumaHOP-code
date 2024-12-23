@@ -19,112 +19,81 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * This is the default type for all of the DC elements.
- * It permits text content only with optional
- * xml:lang attribute.
- * Text is allowed because mixed="true", but sub-elements
- * are disallowed because minOccurs="0" and maxOccurs="0"
- * are on the xs:any tag.
- *
- * This complexType allows for restriction or extension permitting
- * child elements.
- *
- *
+ * This is the default type for all of the DC elements. It permits text content only with
+ * optional xml:lang attribute. Text is allowed because mixed="true", but sub-elements are
+ * disallowed because minOccurs="0" and maxOccurs="0" are on the xs:any tag. This
+ * complexType allows for restriction or extension permitting child elements.
  * <p>
  * Classe Java pour SimpleLiteral complex type.
- *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
  *
  * <pre>
  * &lt;complexType name="SimpleLiteral"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;sequence&gt;
- *         &lt;any processContents='lax' maxOccurs="0" minOccurs="0"/&gt;
- *       &lt;/sequence&gt;
- *       &lt;attribute ref="{http://www.w3.org/XML/1998/namespace}lang"/&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
+ * &lt;complexContent&gt;
+ * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ * &lt;sequence&gt;
+ * &lt;any processContents='lax' maxOccurs="0" minOccurs="0"/&gt;
+ * &lt;/sequence&gt;
+ * &lt;attribute ref="{http://www.w3.org/XML/1998/namespace}lang"/&gt;
+ * &lt;/restriction&gt;
+ * &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SimpleLiteral", propOrder = {"content"})
+@XmlType(name = "SimpleLiteral", propOrder = { "content" })
 public class SimpleLiteral {
 
-    @XmlMixed
-    protected List<String> content;
-    @XmlAttribute(name = "lang", namespace = "http://www.w3.org/XML/1998/namespace")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "language")
-    protected String lang;
+	@XmlMixed
+	protected List<String> content;
 
-    /**
-     *
-     * This is the default type for all of the DC elements.
-     * It permits text content only with optional
-     * xml:lang attribute.
-     * Text is allowed because mixed="true", but sub-elements
-     * are disallowed because minOccurs="0" and maxOccurs="0"
-     * are on the xs:any tag.
-     *
-     * This complexType allows for restriction or extension permitting
-     * child elements.
-     * Gets the value of the content property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the content property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getContent().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getContent() {
-        if (content == null) {
-            content = new ArrayList<>();
-        }
-        return this.content;
-    }
+	@XmlAttribute(name = "lang", namespace = "http://www.w3.org/XML/1998/namespace")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlSchemaType(name = "language")
+	protected String lang;
 
-    /**
-     * Obtient la valeur de la propriété lang.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getLang() {
-        return lang;
-    }
+	/**
+	 * This is the default type for all of the DC elements. It permits text content only
+	 * with optional xml:lang attribute. Text is allowed because mixed="true", but
+	 * sub-elements are disallowed because minOccurs="0" and maxOccurs="0" are on the
+	 * xs:any tag. This complexType allows for restriction or extension permitting child
+	 * elements. Gets the value of the content property.
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the content
+	 * property.
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getContent ().add (newItem);
+	 * </pre>
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 */
+	public List<String> getContent() {
+		if (content == null) {
+			content = new ArrayList<>();
+		}
+		return this.content;
+	}
 
-    /**
-     * Définit la valeur de la propriété lang.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setLang(String value) {
-        this.lang = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété lang.
+	 * @return possible object is {@link String }
+	 */
+	public String getLang() {
+		return lang;
+	}
+
+	/**
+	 * Définit la valeur de la propriété lang.
+	 * @param value allowed object is {@link String }
+	 */
+	public void setLang(String value) {
+		this.lang = value;
+	}
 
 }

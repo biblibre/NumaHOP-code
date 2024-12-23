@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DescriptionPropertyRepository extends JpaRepository<DescriptionProperty, String> {
 
-    List<DescriptionProperty> findAllByOrderByOrderAsc();
+	List<DescriptionProperty> findAllByOrderByOrderAsc();
+
 }

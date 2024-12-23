@@ -24,165 +24,170 @@ import org.hibernate.envers.RelationTargetAuditMode;
 @AuditTable(value = MappingRule.AUDIT_TABLE_NAME)
 public class MappingRule extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "exc_mapping_rule";
-    public static final String AUDIT_TABLE_NAME = "aud_exc_mapping_rule";
+	public static final String TABLE_NAME = "exc_mapping_rule";
 
-    /**
-     * Champ de {@link fr.progilone.pgcn.domain.document.DocUnit} concerné par cette règle de mapping
-     */
-    @Column(name = "doc_unit_field")
-    private String docUnitField;
+	public static final String AUDIT_TABLE_NAME = "aud_exc_mapping_rule";
 
-    /**
-     * Champ de {@link fr.progilone.pgcn.domain.document.BibliographicRecord} concerné par cette règle de mapping
-     */
-    @Column(name = "bib_record_field")
-    private String bibRecordField;
+	/**
+	 * Champ de {@link fr.progilone.pgcn.domain.document.DocUnit} concerné par cette règle
+	 * de mapping
+	 */
+	@Column(name = "doc_unit_field")
+	private String docUnitField;
 
-    /**
-     * Propriété concernée par cette règle de mapping
-     */
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "property")
-    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
-    private DocPropertyType property;
+	/**
+	 * Champ de {@link fr.progilone.pgcn.domain.document.BibliographicRecord} concerné par
+	 * cette règle de mapping
+	 */
+	@Column(name = "bib_record_field")
+	private String bibRecordField;
 
-    /**
-     * Configuration de l'expression
-     * (code exécuté une seule fois à l'initialisation de la règle, pour initialiser la règle de formattage)
-     */
-    @Column(name = "expression_conf", columnDefinition = "text")
-    private String expressionConf;
+	/**
+	 * Propriété concernée par cette règle de mapping
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "property")
+	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+	private DocPropertyType property;
 
-    /**
-     * Expression permettant de calculer la valeur mappée
-     */
-    @Column(name = "expression", columnDefinition = "text")
-    private String expression;
+	/**
+	 * Configuration de l'expression (code exécuté une seule fois à l'initialisation de la
+	 * règle, pour initialiser la règle de formattage)
+	 */
+	@Column(name = "expression_conf", columnDefinition = "text")
+	private String expressionConf;
 
-    /**
-     * Configuration de la condition
-     * (code exécuté une seule fois à l'initialisation de la règle, pour initialiser la règle de filtrage)
-     */
-    @Column(name = "apply_if_conf", columnDefinition = "text")
-    private String conditionConf;
+	/**
+	 * Expression permettant de calculer la valeur mappée
+	 */
+	@Column(name = "expression", columnDefinition = "text")
+	private String expression;
 
-    /**
-     * Condition déterminant si cette règle de mapping doit être appliquée
-     */
-    @Column(name = "apply_if", columnDefinition = "text")
-    private String condition;
+	/**
+	 * Configuration de la condition (code exécuté une seule fois à l'initialisation de la
+	 * règle, pour initialiser la règle de filtrage)
+	 */
+	@Column(name = "apply_if_conf", columnDefinition = "text")
+	private String conditionConf;
 
-    /**
-     * Position de la règle
-     */
-    @Column(name = "position")
-    private Integer position;
+	/**
+	 * Condition déterminant si cette règle de mapping doit être appliquée
+	 */
+	@Column(name = "apply_if", columnDefinition = "text")
+	private String condition;
 
-    /**
-     * Cette règle s'applique par défaut si aucune valeur n'a été définie pour les champs docUnitField, bibRecordField ou property
-     */
-    @Column(name = "default_rule")
-    private boolean defaultRule = false;
+	/**
+	 * Position de la règle
+	 */
+	@Column(name = "position")
+	private Integer position;
 
-    /**
-     * Ensemble de règles de mapping auquel celle-ci appartient
-     */
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "mapping", nullable = false)
-    private Mapping mapping;
+	/**
+	 * Cette règle s'applique par défaut si aucune valeur n'a été définie pour les champs
+	 * docUnitField, bibRecordField ou property
+	 */
+	@Column(name = "default_rule")
+	private boolean defaultRule = false;
 
-    public String getDocUnitField() {
-        return docUnitField;
-    }
+	/**
+	 * Ensemble de règles de mapping auquel celle-ci appartient
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "mapping", nullable = false)
+	private Mapping mapping;
 
-    public void setDocUnitField(final String docUnitField) {
-        this.docUnitField = docUnitField;
-    }
+	public String getDocUnitField() {
+		return docUnitField;
+	}
 
-    public String getBibRecordField() {
-        return bibRecordField;
-    }
+	public void setDocUnitField(final String docUnitField) {
+		this.docUnitField = docUnitField;
+	}
 
-    public void setBibRecordField(final String bibRecordField) {
-        this.bibRecordField = bibRecordField;
-    }
+	public String getBibRecordField() {
+		return bibRecordField;
+	}
 
-    public DocPropertyType getProperty() {
-        return property;
-    }
+	public void setBibRecordField(final String bibRecordField) {
+		this.bibRecordField = bibRecordField;
+	}
 
-    public void setProperty(final DocPropertyType property) {
-        this.property = property;
-    }
+	public DocPropertyType getProperty() {
+		return property;
+	}
 
-    public String getExpressionConf() {
-        return expressionConf;
-    }
+	public void setProperty(final DocPropertyType property) {
+		this.property = property;
+	}
 
-    public void setExpressionConf(final String expressionConf) {
-        this.expressionConf = expressionConf;
-    }
+	public String getExpressionConf() {
+		return expressionConf;
+	}
 
-    public String getExpression() {
-        return expression;
-    }
+	public void setExpressionConf(final String expressionConf) {
+		this.expressionConf = expressionConf;
+	}
 
-    public void setExpression(final String expression) {
-        this.expression = expression;
-    }
+	public String getExpression() {
+		return expression;
+	}
 
-    public String getConditionConf() {
-        return conditionConf;
-    }
+	public void setExpression(final String expression) {
+		this.expression = expression;
+	}
 
-    public void setConditionConf(final String conditionConf) {
-        this.conditionConf = conditionConf;
-    }
+	public String getConditionConf() {
+		return conditionConf;
+	}
 
-    public String getCondition() {
-        return condition;
-    }
+	public void setConditionConf(final String conditionConf) {
+		this.conditionConf = conditionConf;
+	}
 
-    public void setCondition(final String condition) {
-        this.condition = condition;
-    }
+	public String getCondition() {
+		return condition;
+	}
 
-    public Integer getPosition() {
-        return position;
-    }
+	public void setCondition(final String condition) {
+		this.condition = condition;
+	}
 
-    public void setPosition(final Integer position) {
-        this.position = position;
-    }
+	public Integer getPosition() {
+		return position;
+	}
 
-    public boolean isDefaultRule() {
-        return defaultRule;
-    }
+	public void setPosition(final Integer position) {
+		this.position = position;
+	}
 
-    public void setDefaultRule(final boolean defaultRule) {
-        this.defaultRule = defaultRule;
-    }
+	public boolean isDefaultRule() {
+		return defaultRule;
+	}
 
-    public Mapping getMapping() {
-        return mapping;
-    }
+	public void setDefaultRule(final boolean defaultRule) {
+		this.defaultRule = defaultRule;
+	}
 
-    public void setMapping(final Mapping mapping) {
-        this.mapping = mapping;
-    }
+	public Mapping getMapping() {
+		return mapping;
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                          .add("docUnitField", docUnitField)
-                          .add("bibRecordField", bibRecordField)
-                          .add("property", property)
-                          .add("expressionConf", expressionConf)
-                          .add("expression", expression)
-                          .add("conditionConf", conditionConf)
-                          .add("condition", condition)
-                          .add("position", position)
-                          .toString();
-    }
+	public void setMapping(final Mapping mapping) {
+		this.mapping = mapping;
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+			.add("docUnitField", docUnitField)
+			.add("bibRecordField", bibRecordField)
+			.add("property", property)
+			.add("expressionConf", expressionConf)
+			.add("expression", expression)
+			.add("conditionConf", conditionConf)
+			.add("condition", condition)
+			.add("position", position)
+			.toString();
+	}
+
 }

@@ -5,43 +5,42 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
 /**
  * Fichier avec rôle
  *
- * @author jbrunet
- *         Créé le 10 mars 2017
+ * @author jbrunet Créé le 10 mars 2017
  */
 public class PreDeliveryDocumentFileDTO extends AbstractDTO {
 
-    private String name;
-    private FileRoleEnum role;
+	private String name;
 
-    public PreDeliveryDocumentFileDTO(final String name, final FileRoleEnum role) {
-        this.name = name;
-        this.role = role;
-    }
+	private FileRoleEnum role;
 
-    public PreDeliveryDocumentFileDTO() {
-    }
+	public PreDeliveryDocumentFileDTO(final String name, final FileRoleEnum role) {
+		this.name = name;
+		this.role = role;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public PreDeliveryDocumentFileDTO() {
+	}
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public FileRoleEnum getRole() {
-        return role;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public void setRole(final FileRoleEnum role) {
-        this.role = role;
-    }
+	public FileRoleEnum getRole() {
+		return role;
+	}
 
-    public enum FileRoleEnum {
-        NO_ROLE,
-        OTHER,
-        METS,
-        EXCEL,
-        PDF_MULTI
-    }
+	public void setRole(final FileRoleEnum role) {
+		this.role = role;
+	}
+
+	public enum FileRoleEnum {
+
+		NO_ROLE, OTHER, METS, EXCEL, PDF_MULTI
+
+	}
+
 }

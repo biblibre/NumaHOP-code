@@ -7,15 +7,15 @@ import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {SimpleLibraryMapper.class})
+@Mapper(uses = { SimpleLibraryMapper.class })
 public interface ExportFTPConfigurationMapper {
 
-    ExportFTPConfigurationMapper INSTANCE = Mappers.getMapper(ExportFTPConfigurationMapper.class);
+	ExportFTPConfigurationMapper INSTANCE = Mappers.getMapper(ExportFTPConfigurationMapper.class);
 
-    ExportFTPConfigurationDTO objectToDto(ExportFTPConfiguration config);
+	ExportFTPConfigurationDTO objectToDto(ExportFTPConfiguration config);
 
-    ExportFTPConfiguration dtoToObject(ExportFTPConfigurationDTO dto);
+	ExportFTPConfiguration dtoToObject(ExportFTPConfigurationDTO dto);
 
-    SimpleExportFTPConfDTO objectToSimpleDto(ExportFTPConfiguration config);
+	SimpleExportFTPConfDTO objectToSimpleDto(ExportFTPConfiguration config);
 
 }

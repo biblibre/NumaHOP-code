@@ -12,32 +12,30 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 /**
- * @author jbrunet
- *         Créé le 2 mai 2017
+ * @author jbrunet Créé le 2 mai 2017
  */
-public interface InternetArchiveReportRepository extends JpaRepository<InternetArchiveReport, String>, InternetArchiveReportRepositoryCustom {
+public interface InternetArchiveReportRepository
+		extends JpaRepository<InternetArchiveReport, String>, InternetArchiveReportRepositoryCustom {
 
-    InternetArchiveReport findByIdentifier(String identifier);
+	InternetArchiveReport findByIdentifier(String identifier);
 
-    List<InternetArchiveReport> findAllByIdentifierIn(List<String> identifiers);
+	List<InternetArchiveReport> findAllByIdentifierIn(List<String> identifiers);
 
-    List<InternetArchiveReport> findByStatusIn(InternetArchiveReport.Status... status);
+	List<InternetArchiveReport> findByStatusIn(InternetArchiveReport.Status... status);
 
-    List<InternetArchiveReport> findByDocUnitIdentifierOrderByLastModifiedDateDesc(String docUnitId);
+	List<InternetArchiveReport> findByDocUnitIdentifierOrderByLastModifiedDateDesc(String docUnitId);
 
-    List<InternetArchiveReport> findByDocUnitIdentifierIn(List<String> docUnitIds);
+	List<InternetArchiveReport> findByDocUnitIdentifierIn(List<String> docUnitIds);
 
-    Page<InternetArchiveReport> findAllByDocUnitState(DocUnit.State state, Pageable pageable);
+	Page<InternetArchiveReport> findAllByDocUnitState(DocUnit.State state, Pageable pageable);
 
-    @Modifying
-    void deleteByDocUnitIdentifier(String identifier);
+	@Modifying
+	void deleteByDocUnitIdentifier(String identifier);
 
-    long countByDocUnitLibraryAndStatusIn(Library library, InternetArchiveReport.Status... status);
+	long countByDocUnitLibraryAndStatusIn(Library library, InternetArchiveReport.Status... status);
 
-    @Query("select r " + "from InternetArchiveReport r "
-           + "left join fetch r.docUnit doc "
-           + "where r.status = 'ARCHIVED' "
-           + "AND doc.arkUrl is NULL "
-           + "AND r.dateArchived > ?1")
-    List<InternetArchiveReport> findAllByStatusArchivedAndEmptyDocUnitArk(final LocalDateTime date);
+	@Query("select r " + "from InternetArchiveReport r " + "left join fetch r.docUnit doc "
+			+ "where r.status = 'ARCHIVED' " + "AND doc.arkUrl is NULL " + "AND r.dateArchived > ?1")
+	List<InternetArchiveReport> findAllByStatusArchivedAndEmptyDocUnitArk(final LocalDateTime date);
+
 }

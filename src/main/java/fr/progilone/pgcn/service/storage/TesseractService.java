@@ -21,143 +21,137 @@ import org.springframework.stereotype.Service;
 @Service
 public class TesseractService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TesseractService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(TesseractService.class);
 
-    private ExecutorService executorService;
+	private ExecutorService executorService;
 
-    private final AltoService altoService;
+	private final AltoService altoService;
 
-    public TesseractService(final AltoService altoService) {
-        this.altoService = altoService;
-    }
+	public TesseractService(final AltoService altoService) {
+		this.altoService = altoService;
+	}
 
-    protected String tessProcessPath;
+	protected String tessProcessPath;
 
-    private boolean isConfigured;
+	private boolean isConfigured;
 
-    public void initialize(final String tessProcessPath) {
-        this.tessProcessPath = tessProcessPath;
-        this.isConfigured = getConfigurationState();
-    }
+	public void initialize(final String tessProcessPath) {
+		this.tessProcessPath = tessProcessPath;
+		this.isConfigured = getConfigurationState();
+	}
 
-    /**
-     * Vérification de la bonne configuration
-     */
-    @SuppressWarnings("findsecbugs:COMMAND_INJECTION")
-    protected boolean getConfigurationState() {
+	/**
+	 * Vérification de la bonne configuration
+	 */
+	@SuppressWarnings("findsecbugs:COMMAND_INJECTION")
+	protected boolean getConfigurationState() {
 
-        try {
-            final ProcessBuilder builder = new ProcessBuilder(tessProcessPath, "--version");
-            builder.redirectErrorStream(true);
-            final Process process = builder.start();
+		try {
+			final ProcessBuilder builder = new ProcessBuilder(tessProcessPath, "--version");
+			builder.redirectErrorStream(true);
+			final Process process = builder.start();
 
-            try (final InputStream is = process.getInputStream(); final InputStreamReader isr = new InputStreamReader(is); final BufferedReader br = new BufferedReader(isr)) {
+			try (final InputStream is = process.getInputStream();
+					final InputStreamReader isr = new InputStreamReader(is);
+					final BufferedReader br = new BufferedReader(isr)) {
 
-                String line;
-                final StringBuilder sb = new StringBuilder();
-                while ((line = br.readLine()) != null) {
-                    sb.append(line);
-                }
-                final String result = new String(sb);
-                // check the version message
-                if (result.contains("tesseract")) {
-                    LOG.info("Tesseract detected : {}", StringUtils.abbreviate(result, 100));
-                    return true;
-                } else {
-                    LOG.info("Tesseract not found");
-                }
-            }
-        } catch (final IOException e) {
-            LOG.error("unable to check Tesseract from System: {}", e.getMessage());
-            LOG.trace(e.getMessage(), e);
-        }
-        return false;
-    }
+				String line;
+				final StringBuilder sb = new StringBuilder();
+				while ((line = br.readLine()) != null) {
+					sb.append(line);
+				}
+				final String result = new String(sb);
+				// check the version message
+				if (result.contains("tesseract")) {
+					LOG.info("Tesseract detected : {}", StringUtils.abbreviate(result, 100));
+					return true;
+				}
+				else {
+					LOG.info("Tesseract not found");
+				}
+			}
+		}
+		catch (final IOException e) {
+			LOG.error("unable to check Tesseract from System: {}", e.getMessage());
+			LOG.trace(e.getMessage(), e);
+		}
+		return false;
+	}
 
-    protected boolean isConfigured() {
-        return isConfigured;
-    }
+	protected boolean isConfigured() {
+		return isConfigured;
+	}
 
-    @PostConstruct
-    public void init() {
-        executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-    }
+	@PostConstruct
+	public void init() {
+		executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+	}
 
-    /**
-     * Generation du PDF d'OCRisation et du Hocr éventuel.
-     *
-     * @param imgFile
-     * @param parentDirectory
-     * @param prefix
-     * @param outPath
-     * @param language
-     * @param pdfs
-     * @param generateHocr
-     * @return
-     * @throws PgcnTechnicalException
-     */
-    public Future<?> buildPdf(final File imgFile,
-                              final String parentDirectory,
-                              final String prefix,
-                              final String outPath,
-                              final String language,
-                              final List<File> pdfs,
-                              final boolean generateHocr,
-                              final String libraryId) throws PgcnTechnicalException {
+	/**
+	 * Generation du PDF d'OCRisation et du Hocr éventuel.
+	 * @param imgFile
+	 * @param parentDirectory
+	 * @param prefix
+	 * @param outPath
+	 * @param language
+	 * @param pdfs
+	 * @param generateHocr
+	 * @return
+	 * @throws PgcnTechnicalException
+	 */
+	public Future<?> buildPdf(final File imgFile, final String parentDirectory, final String prefix,
+			final String outPath, final String language, final List<File> pdfs, final boolean generateHocr,
+			final String libraryId) throws PgcnTechnicalException {
 
-        if (!this.isConfigured) {
-            throw new PgcnTechnicalException("Le service Tesseract n'est pas configuré, impossible de générer les pdf ocr-isés");
-        }
+		if (!this.isConfigured) {
+			throw new PgcnTechnicalException(
+					"Le service Tesseract n'est pas configuré, impossible de générer les pdf ocr-isés");
+		}
 
-        return executorService.submit(() -> {
+		return executorService.submit(() -> {
 
-            LOG.debug("Lancement de l'OCRisation pour le fichier {}", imgFile.getName());
+			LOG.debug("Lancement de l'OCRisation pour le fichier {}", imgFile.getName());
 
-            final ProcessBuilder builder = new ProcessBuilder(tessProcessPath,
-                                                              imgFile.getAbsolutePath(),
-                                                              outPath,
-                                                              "-l",
-                                                              language,
-                                                              "pdf",
-                                                              generateHocr ? "hocr"
-                                                                           : "");
+			final ProcessBuilder builder = new ProcessBuilder(tessProcessPath, imgFile.getAbsolutePath(), outPath, "-l",
+					language, "pdf", generateHocr ? "hocr" : "");
 
-            final String outputName = parentDirectory + File.separatorChar
-                                      + prefix;
+			final String outputName = parentDirectory + File.separatorChar + prefix;
 
-            builder.redirectError(Redirect.INHERIT);
-            builder.redirectOutput(Redirect.INHERIT);
-            try {
-                final Process process = builder.start();
-                if (process.waitFor(12, TimeUnit.HOURS) && process.exitValue() == 0) {
-                    // when pdf is done, write to the correct output
-                    // only if the size is not null
+			builder.redirectError(Redirect.INHERIT);
+			builder.redirectOutput(Redirect.INHERIT);
+			try {
+				final Process process = builder.start();
+				if (process.waitFor(12, TimeUnit.HOURS) && process.exitValue() == 0) {
+					// when pdf is done, write to the correct output
+					// only if the size is not null
 
-                    final File pdfFile = new File(outputName + ".pdf");
-                    if (pdfFile.exists() && pdfFile.canRead()
-                        && pdfFile.length() > 0L) {
-                        pdfs.add(pdfFile);
+					final File pdfFile = new File(outputName + ".pdf");
+					if (pdfFile.exists() && pdfFile.canRead() && pdfFile.length() > 0L) {
+						pdfs.add(pdfFile);
 
-                        LOG.debug("fichier pdf genere : {}", pdfFile.getName());
+						LOG.debug("fichier pdf genere : {}", pdfFile.getName());
 
-                        final File hocr = new File(outputName + ".hocr");
-                        if (hocr.exists() && hocr.canRead()) {
-                            altoService.transformHocrToAlto(hocr, prefix, libraryId);
-                            altoService.transformHocrToText(hocr, prefix, libraryId);
-                        } else {
-                            LOG.info("[Tesseract] Unable to generate alto {}", outputName + ".hocr");
-                        }
+						final File hocr = new File(outputName + ".hocr");
+						if (hocr.exists() && hocr.canRead()) {
+							altoService.transformHocrToAlto(hocr, prefix, libraryId);
+							altoService.transformHocrToText(hocr, prefix, libraryId);
+						}
+						else {
+							LOG.info("[Tesseract] Unable to generate alto {}", outputName + ".hocr");
+						}
 
-                    } else {
-                        LOG.info("[Tesseract] Unable to generate pdf and alto {}", pdfFile.getName());
-                    }
-                }
-            } catch (final IOException | InterruptedException e) {
-                LOG.error("[Tesseract] Unable to generate pdf and alto files", e);
-            }
+					}
+					else {
+						LOG.info("[Tesseract] Unable to generate pdf and alto {}", pdfFile.getName());
+					}
+				}
+			}
+			catch (final IOException | InterruptedException e) {
+				LOG.error("[Tesseract] Unable to generate pdf and alto files", e);
+			}
 
-            LOG.debug("Fin de l'OCRisation pour le fichier {}", imgFile.getName());
-        });
-    }
+			LOG.debug("Fin de l'OCRisation pour le fichier {}", imgFile.getName());
+		});
+	}
 
 }

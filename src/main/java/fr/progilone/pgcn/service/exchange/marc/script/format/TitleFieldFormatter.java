@@ -7,39 +7,32 @@ import org.marc4j.converter.CharConverter;
  */
 public class TitleFieldFormatter extends SubfieldsFormatter {
 
-    public static final String SCRIPT_NAME = "title";
+	public static final String SCRIPT_NAME = "title";
 
-    public TitleFieldFormatter(final String code, final CharConverter charConverter) {
-        super(code, charConverter);
-        add('a', "; ");
-        addGroup(" [", "]", "; ", "b");
-        add('c', ". ");
-        add('d', " = ");
-        add('e', " : ");
-        add('f', " /");
-        add('g', "; ");
-        addGroup(". ", null, ", ", "h", ", ", "i");
-        add('r');
-        add('7');
-    }
+	public TitleFieldFormatter(final String code, final CharConverter charConverter) {
+		super(code, charConverter);
+		add('a', "; ");
+		addGroup(" [", "]", "; ", "b");
+		add('c', ". ");
+		add('d', " = ");
+		add('e', " : ");
+		add('f', " /");
+		add('g', "; ");
+		addGroup(". ", null, ", ", "h", ", ", "i");
+		add('r');
+		add('7');
+	}
 
-    @Override
-    public String getConfigScript() {
-        return "def " + SCRIPT_NAME
-               + "Filter = {\n"
-               + "      String... codes -> script."
-               + getCode()
-               + ".setFilterCodes((char[])codes)\n"
-               + "}\n";
-    }
+	@Override
+	public String getConfigScript() {
+		return "def " + SCRIPT_NAME + "Filter = {\n" + "      String... codes -> script." + getCode()
+				+ ".setFilterCodes((char[])codes)\n" + "}\n";
+	}
 
-    @Override
-    public String getInitScript() {
-        return "def " + SCRIPT_NAME
-               + " = {\n"
-               + "      DataField field -> script."
-               + getCode()
-               + ".format(field)\n"
-               + "}\n";
-    }
+	@Override
+	public String getInitScript() {
+		return "def " + SCRIPT_NAME + " = {\n" + "      DataField field -> script." + getCode() + ".format(field)\n"
+				+ "}\n";
+	}
+
 }

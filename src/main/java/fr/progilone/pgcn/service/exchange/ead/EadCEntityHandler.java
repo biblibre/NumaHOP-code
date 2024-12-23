@@ -30,225 +30,242 @@ import org.xml.sax.helpers.XMLFilterImpl;
  */
 public class EadCEntityHandler {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EadCEntityHandler.class);
+	private static final Logger LOG = LoggerFactory.getLogger(EadCEntityHandler.class);
 
-    private static final String NS_EAD = "urn:isbn:1-931666-22-9";
-    private static final String TAG_C = "c";
-    private static final String TAG_EADHEADER = "eadheader";
+	private static final String NS_EAD = "urn:isbn:1-931666-22-9";
 
-    private final BiConsumer<Eadheader, C> process;
-    private Eadheader eadheader = null; // entête du fichier EAD parsé
+	private static final String TAG_C = "c";
 
-    public EadCEntityHandler(final BiConsumer<Eadheader, C> process) {
-        this.process = process;
-    }
+	private static final String TAG_EADHEADER = "eadheader";
 
-    /**
-     * Parse le fichier xml d'entrée à la recherche d'éléments "c".
-     * Chaque élément "c" de niveau supérieur donne lieu à un appel de process
-     *
-     * @param file
-     * @throws JAXBException
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
-     */
-    public void parse(final File file) throws JAXBException, ParserConfigurationException, SAXException, IOException {
-        final JAXBContext context = JAXBContext.newInstance(ObjectFactory.class); // EAD
+	private final BiConsumer<Eadheader, C> process;
 
-        // XML parser
-        final SAXParserFactory factory = SAXParserFactory.newInstance();
-        factory.setNamespaceAware(true);
-        final XMLReader reader = factory.newSAXParser().getXMLReader();
+	private Eadheader eadheader = null; // entête du fichier EAD parsé
 
-        // XML filter
-        final XMLFilter filter = new DefaultNamespaceFilter(NS_EAD);
-        filter.setParent(reader);
-        filter.setContentHandler(new CSplitter(context));
+	public EadCEntityHandler(final BiConsumer<Eadheader, C> process) {
+		this.process = process;
+	}
 
-        // Sécurisation du fichier d'entrée contre attaques XXE
-        // filter.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-        // filter.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-        filter.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-        filter.setFeature("http://xml.org/sax/features/validation", false);
+	/**
+	 * Parse le fichier xml d'entrée à la recherche d'éléments "c". Chaque élément "c" de
+	 * niveau supérieur donne lieu à un appel de process
+	 * @param file
+	 * @throws JAXBException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
+	public void parse(final File file) throws JAXBException, ParserConfigurationException, SAXException, IOException {
+		final JAXBContext context = JAXBContext.newInstance(ObjectFactory.class); // EAD
 
-        // Lecture du fichier
-        filter.parse(file.toURI().toURL().toExternalForm());
-    }
+		// XML parser
+		final SAXParserFactory factory = SAXParserFactory.newInstance();
+		factory.setNamespaceAware(true);
+		final XMLReader reader = factory.newSAXParser().getXMLReader();
 
-    /**
-     * This object implements XMLFilter and monitors the incoming SAX
-     * events. Once it hits a "c" element, it creates a new
-     * unmarshaller and unmarshals one {@link C}.
-     * <p>
-     * Once finished unmarshalling it, we will process it, then move
-     * on to the next {@link C}.
-     * <p>
-     * cf. \jaxb-ri\samples\partial-unmarshalling\src\Splitter.java
-     * Created by Sébastien on 16/05/2017.
-     */
-    private class CSplitter extends XMLFilterImpl {
+		// XML filter
+		final XMLFilter filter = new DefaultNamespaceFilter(NS_EAD);
+		filter.setParent(reader);
+		filter.setContentHandler(new CSplitter(context));
 
-        private final JAXBContext context;
-        private int depth;
-        private UnmarshallerHandler unmarshallerHandler;
-        private Locator locator;
-        private NamespaceSupport namespaces = new NamespaceSupport();
+		// Sécurisation du fichier d'entrée contre attaques XXE
+		// filter.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		// filter.setFeature("http://apache.org/xml/features/disallow-doctype-decl",
+		// true);
+		filter.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+		filter.setFeature("http://xml.org/sax/features/validation", false);
 
-        public CSplitter(JAXBContext context) {
-            this.context = context;
-        }
+		// Lecture du fichier
+		filter.parse(file.toURI().toURL().toExternalForm());
+	}
 
-        @Override
-        public void startElement(final String namespaceURI, final String localName, final String qName, final Attributes atts) throws SAXException {
-            if (depth != 0) {
-                // we are in the middle of forwarding events.
-                // continue to do so.
-                depth++;
-                super.startElement(namespaceURI, localName, qName, atts);
-                return;
-            }
+	/**
+	 * This object implements XMLFilter and monitors the incoming SAX events. Once it hits
+	 * a "c" element, it creates a new unmarshaller and unmarshals one {@link C}.
+	 * <p>
+	 * Once finished unmarshalling it, we will process it, then move on to the next
+	 * {@link C}.
+	 * <p>
+	 * cf. \jaxb-ri\samples\partial-unmarshalling\src\Splitter.java Created by Sébastien
+	 * on 16/05/2017.
+	 */
+	private class CSplitter extends XMLFilterImpl {
 
-            if (namespaceURI.equals(NS_EAD) && (TAG_C.equals(localName) || TAG_EADHEADER.equals(localName))) {
-                // start a new unmarshaller
-                final Unmarshaller unmarshaller;
-                try {
-                    unmarshaller = context.createUnmarshaller();
-                } catch (JAXBException e) {
-                    // there's no way to recover from this error.
-                    // we will abort the processing.
-                    throw new SAXException(e);
-                }
-                unmarshallerHandler = unmarshaller.getUnmarshallerHandler();
+		private final JAXBContext context;
 
-                // set it as the content handler so that it will receive
-                // SAX events from now on.
-                setContentHandler(unmarshallerHandler);
+		private int depth;
 
-                // fire SAX events to emulate the start of a new document.
-                unmarshallerHandler.startDocument();
-                unmarshallerHandler.setDocumentLocator(locator);
+		private UnmarshallerHandler unmarshallerHandler;
 
-                final Enumeration e = namespaces.getPrefixes();
-                while (e.hasMoreElements()) {
-                    final String prefix = (String) e.nextElement();
-                    final String uri = namespaces.getURI(prefix);
-                    unmarshallerHandler.startPrefixMapping(prefix, uri);
-                }
+		private Locator locator;
 
-                final String defaultURI = namespaces.getURI(NS_EAD);
-                if (defaultURI != null) {
-                    unmarshallerHandler.startPrefixMapping(NS_EAD, defaultURI);
-                }
+		private NamespaceSupport namespaces = new NamespaceSupport();
 
-                super.startElement(namespaceURI, localName, qName, atts);
+		public CSplitter(JAXBContext context) {
+			this.context = context;
+		}
 
-                // count the depth of elements and we will know when to stop.
-                depth = 1;
-            }
-        }
+		@Override
+		public void startElement(final String namespaceURI, final String localName, final String qName,
+				final Attributes atts) throws SAXException {
+			if (depth != 0) {
+				// we are in the middle of forwarding events.
+				// continue to do so.
+				depth++;
+				super.startElement(namespaceURI, localName, qName, atts);
+				return;
+			}
 
-        @Override
-        public void endElement(final String namespaceURI, final String localName, final String qName) throws SAXException {
-            // forward this event
-            super.endElement(namespaceURI, localName, qName);
+			if (namespaceURI.equals(NS_EAD) && (TAG_C.equals(localName) || TAG_EADHEADER.equals(localName))) {
+				// start a new unmarshaller
+				final Unmarshaller unmarshaller;
+				try {
+					unmarshaller = context.createUnmarshaller();
+				}
+				catch (JAXBException e) {
+					// there's no way to recover from this error.
+					// we will abort the processing.
+					throw new SAXException(e);
+				}
+				unmarshallerHandler = unmarshaller.getUnmarshallerHandler();
 
-            if (depth != 0) {
-                depth--;
+				// set it as the content handler so that it will receive
+				// SAX events from now on.
+				setContentHandler(unmarshallerHandler);
 
-                if (depth == 0) {
-                    // just finished sending one chunk.
+				// fire SAX events to emulate the start of a new document.
+				unmarshallerHandler.startDocument();
+				unmarshallerHandler.setDocumentLocator(locator);
 
-                    // emulate the end of a document.
-                    final Enumeration e = namespaces.getPrefixes();
-                    while (e.hasMoreElements()) {
-                        String prefix = (String) e.nextElement();
-                        unmarshallerHandler.endPrefixMapping(prefix);
-                    }
+				final Enumeration e = namespaces.getPrefixes();
+				while (e.hasMoreElements()) {
+					final String prefix = (String) e.nextElement();
+					final String uri = namespaces.getURI(prefix);
+					unmarshallerHandler.startPrefixMapping(prefix, uri);
+				}
 
-                    final String defaultURI = namespaces.getURI(NS_EAD);
-                    if (defaultURI != null) {
-                        unmarshallerHandler.endPrefixMapping(NS_EAD);
-                    }
+				final String defaultURI = namespaces.getURI(NS_EAD);
+				if (defaultURI != null) {
+					unmarshallerHandler.startPrefixMapping(NS_EAD, defaultURI);
+				}
 
-                    unmarshallerHandler.endDocument();
+				super.startElement(namespaceURI, localName, qName, atts);
 
-                    // stop forwarding events by setting a dummy handler.
-                    // XMLFilter doesn't accept null, so we have to give it something,
-                    // hence a DefaultHandler, which does nothing.
-                    setContentHandler(new DefaultHandler());
+				// count the depth of elements and we will know when to stop.
+				depth = 1;
+			}
+		}
 
-                    // then retrieve the fully unmarshalled object
-                    try {
-                        // process this new result
-                        final Object result = unmarshallerHandler.getResult();
+		@Override
+		public void endElement(final String namespaceURI, final String localName, final String qName)
+				throws SAXException {
+			// forward this event
+			super.endElement(namespaceURI, localName, qName);
 
-                        if (namespaceURI.equals(NS_EAD) && TAG_EADHEADER.equals(localName)) {
-                            eadheader = (Eadheader) result;
-                        } else {
-                            process.accept(eadheader, (C) result);
-                        }
+			if (depth != 0) {
+				depth--;
 
-                    } catch (JAXBException je) {
-                        // error was found during the unmarshalling.
-                        // you can either abort the processing by throwing a SAXException,
-                        // or you can continue processing by returning from this method.
-                        LOG.error("Erreur lors du traitement de l'élémment \"c\" à la ligne {}", locator.getLineNumber());
-                        return;
-                    }
+				if (depth == 0) {
+					// just finished sending one chunk.
 
-                    unmarshallerHandler = null;
-                }
-            }
-        }
+					// emulate the end of a document.
+					final Enumeration e = namespaces.getPrefixes();
+					while (e.hasMoreElements()) {
+						String prefix = (String) e.nextElement();
+						unmarshallerHandler.endPrefixMapping(prefix);
+					}
 
-        @Override
-        public void setDocumentLocator(Locator locator) {
-            super.setDocumentLocator(locator);
-            this.locator = locator;
-        }
+					final String defaultURI = namespaces.getURI(NS_EAD);
+					if (defaultURI != null) {
+						unmarshallerHandler.endPrefixMapping(NS_EAD);
+					}
 
-        @Override
-        public void startPrefixMapping(String prefix, String uri) throws SAXException {
-            namespaces.pushContext();
-            namespaces.declarePrefix(prefix, uri);
-            super.startPrefixMapping(prefix, uri);
-        }
+					unmarshallerHandler.endDocument();
 
-        @Override
-        public void endPrefixMapping(String prefix) throws SAXException {
-            namespaces.popContext();
-            super.endPrefixMapping(prefix);
-        }
-    }
+					// stop forwarding events by setting a dummy handler.
+					// XMLFilter doesn't accept null, so we have to give it something,
+					// hence a DefaultHandler, which does nothing.
+					setContentHandler(new DefaultHandler());
 
-    /**
-     * XMLFilter qui ajoute un namespace par défaut si celui-ci n'est pas renseigné
-     */
-    private static final class DefaultNamespaceFilter extends XMLFilterImpl {
+					// then retrieve the fully unmarshalled object
+					try {
+						// process this new result
+						final Object result = unmarshallerHandler.getResult();
 
-        private final String defaultNamespace;
+						if (namespaceURI.equals(NS_EAD) && TAG_EADHEADER.equals(localName)) {
+							eadheader = (Eadheader) result;
+						}
+						else {
+							process.accept(eadheader, (C) result);
+						}
 
-        private DefaultNamespaceFilter(final String defaultNamespace) {
-            this.defaultNamespace = defaultNamespace;
-        }
+					}
+					catch (JAXBException je) {
+						// error was found during the unmarshalling.
+						// you can either abort the processing by throwing a SAXException,
+						// or you can continue processing by returning from this method.
+						LOG.error("Erreur lors du traitement de l'élémment \"c\" à la ligne {}",
+								locator.getLineNumber());
+						return;
+					}
 
-        @Override
-        public void endElement(String uri, String localName, String qName) throws SAXException {
-            if (StringUtils.isEmpty(uri)) {
-                super.endElement(defaultNamespace, localName, qName);
-            } else {
-                super.endElement(uri, localName, qName);
-            }
-        }
+					unmarshallerHandler = null;
+				}
+			}
+		}
 
-        @Override
-        public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
-            if (StringUtils.isEmpty(uri)) {
-                super.startElement(defaultNamespace, localName, qName, atts);
-            } else {
-                super.startElement(uri, localName, qName, atts);
-            }
-        }
-    }
+		@Override
+		public void setDocumentLocator(Locator locator) {
+			super.setDocumentLocator(locator);
+			this.locator = locator;
+		}
+
+		@Override
+		public void startPrefixMapping(String prefix, String uri) throws SAXException {
+			namespaces.pushContext();
+			namespaces.declarePrefix(prefix, uri);
+			super.startPrefixMapping(prefix, uri);
+		}
+
+		@Override
+		public void endPrefixMapping(String prefix) throws SAXException {
+			namespaces.popContext();
+			super.endPrefixMapping(prefix);
+		}
+
+	}
+
+	/**
+	 * XMLFilter qui ajoute un namespace par défaut si celui-ci n'est pas renseigné
+	 */
+	private static final class DefaultNamespaceFilter extends XMLFilterImpl {
+
+		private final String defaultNamespace;
+
+		private DefaultNamespaceFilter(final String defaultNamespace) {
+			this.defaultNamespace = defaultNamespace;
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) throws SAXException {
+			if (StringUtils.isEmpty(uri)) {
+				super.endElement(defaultNamespace, localName, qName);
+			}
+			else {
+				super.endElement(uri, localName, qName);
+			}
+		}
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
+			if (StringUtils.isEmpty(uri)) {
+				super.startElement(defaultNamespace, localName, qName, atts);
+			}
+			else {
+				super.startElement(uri, localName, qName, atts);
+			}
+		}
+
+	}
+
 }

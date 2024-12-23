@@ -2,40 +2,44 @@ package fr.progilone.pgcn.domain.dto.imagemetadata;
 
 public class ImageMetadataValuesDTO {
 
-    private String identifier;
-    private String docUnitId;
-    private String metadataId;
-    private String value;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String docUnitId;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private String metadataId;
 
-    public String getDocUnitId() {
-        return docUnitId;
-    }
+	private String value;
 
-    public void setDocUnitId(String docUnitId) {
-        this.docUnitId = docUnitId;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getMetadataId() {
-        return metadataId;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setMetadataId(String metadataId) {
-        this.metadataId = metadataId;
-    }
+	public String getDocUnitId() {
+		return docUnitId;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public void setDocUnitId(String docUnitId) {
+		this.docUnitId = docUnitId;
+	}
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+	public String getMetadataId() {
+		return metadataId;
+	}
+
+	public void setMetadataId(String metadataId) {
+		this.metadataId = metadataId;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
 }

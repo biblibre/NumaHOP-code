@@ -7,31 +7,34 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
  */
 public class SimpleDocPageDTO extends AbstractDTO {
 
-    private String identifier;
-    private Integer number;
-    private String checkNotes;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private Integer number;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private String checkNotes;
 
-    public Integer getNumber() {
-        return number;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getCheckNotes() {
-        return checkNotes;
-    }
+	public Integer getNumber() {
+		return number;
+	}
 
-    public void setCheckNotes(String checkNotes) {
-        this.checkNotes = checkNotes;
-    }
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+
+	public String getCheckNotes() {
+		return checkNotes;
+	}
+
+	public void setCheckNotes(String checkNotes) {
+		this.checkNotes = checkNotes;
+	}
+
 }

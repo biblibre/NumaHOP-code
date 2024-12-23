@@ -22,66 +22,73 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = Authorization.TABLE_NAME)
-@JsonSubTypes({@JsonSubTypes.Type(name = "authorization", value = Authorization.class)})
+@JsonSubTypes({ @JsonSubTypes.Type(name = "authorization", value = Authorization.class) })
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Authorization extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "user_authorization";
+	public static final String TABLE_NAME = "user_authorization";
 
-    @Column(name = "code", updatable = false, nullable = false, unique = true)
-    private String code;
+	@Column(name = "code", updatable = false, nullable = false, unique = true)
+	private String code;
 
-    @Column(name = "label", unique = true)
-    private String label;
+	@Column(name = "label", unique = true)
+	private String label;
 
-    @Column(name = "description")
-    private String description;
+	@Column(name = "description")
+	private String description;
 
-    @Column(name = "module")
-    @Enumerated(EnumType.STRING)
-    private Module module;
+	@Column(name = "module")
+	@Enumerated(EnumType.STRING)
+	private Module module;
 
-    @ManyToMany(mappedBy = "authorizations", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
-    private final Set<Role> roles = new HashSet<>();
+	@ManyToMany(mappedBy = "authorizations", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE })
+	private final Set<Role> roles = new HashSet<>();
 
-    public String getCode() {
-        return code;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setCode(final String code) {
-        this.code = code;
-    }
+	public void setCode(final String code) {
+		this.code = code;
+	}
 
-    public String getLabel() {
-        return label;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public Module getModule() {
-        return module;
-    }
+	public Module getModule() {
+		return module;
+	}
 
-    public void setModule(final Module module) {
-        this.module = module;
-    }
+	public void setModule(final Module module) {
+		this.module = module;
+	}
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
+	public Set<Role> getRoles() {
+		return roles;
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).omitNullValues().add("identifier", identifier).add("code", code).add("label", label).add("module", module).toString();
-    }
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+			.omitNullValues()
+			.add("identifier", identifier)
+			.add("code", code)
+			.add("label", label)
+			.add("module", module)
+			.toString();
+	}
+
 }

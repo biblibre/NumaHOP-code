@@ -13,67 +13,66 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DocPropertyService {
 
-    private final DocPropertyRepository docPropertyRepository;
+	private final DocPropertyRepository docPropertyRepository;
 
-    @Autowired
-    public DocPropertyService(final DocPropertyRepository docPropertyRepository) {
-        this.docPropertyRepository = docPropertyRepository;
-    }
+	@Autowired
+	public DocPropertyService(final DocPropertyRepository docPropertyRepository) {
+		this.docPropertyRepository = docPropertyRepository;
+	}
 
-    @Transactional(readOnly = true)
-    public List<DocProperty> findAll() {
-        return docPropertyRepository.findAll();
-    }
+	@Transactional(readOnly = true)
+	public List<DocProperty> findAll() {
+		return docPropertyRepository.findAll();
+	}
 
-    @Transactional(readOnly = true)
-    public DocProperty findOne(final String identifier) {
-        return docPropertyRepository.findById(identifier).orElse(null);
-    }
+	@Transactional(readOnly = true)
+	public DocProperty findOne(final String identifier) {
+		return docPropertyRepository.findById(identifier).orElse(null);
+	}
 
-    /**
-     * Sauvegarde et gère le rank
-     *
-     * @param property
-     * @return
-     */
-    @Transactional
-    public DocProperty save(final DocProperty property) {
-        handleRank(property);
+	/**
+	 * Sauvegarde et gère le rank
+	 * @param property
+	 * @return
+	 */
+	@Transactional
+	public DocProperty save(final DocProperty property) {
+		handleRank(property);
 
-        return docPropertyRepository.save(property);
-    }
+		return docPropertyRepository.save(property);
+	}
 
-    /**
-     * Nombre de propriétés correspondant au type passé en paramètres
-     *
-     * @param type
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Integer countByType(final DocPropertyType type) {
-        return docPropertyRepository.countByType(type);
-    }
+	/**
+	 * Nombre de propriétés correspondant au type passé en paramètres
+	 * @param type
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Integer countByType(final DocPropertyType type) {
+		return docPropertyRepository.countByType(type);
+	}
 
-    /**
-     * Gére le rang si besoin
-     *
-     * @param property
-     */
-    private void handleRank(final DocProperty property) {
-        if (property.getRank() == null) {
-            final PropertyOrder propertyOrder = property.getRecord().getPropertyOrder();
-            Integer currentRank = null;
+	/**
+	 * Gére le rang si besoin
+	 * @param property
+	 */
+	private void handleRank(final DocProperty property) {
+		if (property.getRank() == null) {
+			final PropertyOrder propertyOrder = property.getRecord().getPropertyOrder();
+			Integer currentRank = null;
 
-            if (propertyOrder == PropertyOrder.BY_PROPERTY_TYPE) {
-                currentRank = docPropertyRepository.findCurrentRankForProperty(property.getRecord(), property.getType());
+			if (propertyOrder == PropertyOrder.BY_PROPERTY_TYPE) {
+				currentRank = docPropertyRepository.findCurrentRankForProperty(property.getRecord(),
+						property.getType());
 
-            } else if (propertyOrder == PropertyOrder.BY_CREATION) {
-                currentRank = docPropertyRepository.findCurrentRankForProperty(property.getRecord());
-            }
+			}
+			else if (propertyOrder == PropertyOrder.BY_CREATION) {
+				currentRank = docPropertyRepository.findCurrentRankForProperty(property.getRecord());
+			}
 
-            final Integer nextRank = currentRank != null ? currentRank + 1
-                                                         : 1;
-            property.setRank(nextRank);
-        }
-    }
+			final Integer nextRank = currentRank != null ? currentRank + 1 : 1;
+			property.setRank(nextRank);
+		}
+	}
+
 }

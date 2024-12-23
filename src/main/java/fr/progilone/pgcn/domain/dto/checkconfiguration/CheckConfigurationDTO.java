@@ -7,219 +7,224 @@ import java.util.List;
 
 public class CheckConfigurationDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String label;
-    private SimpleLibraryDTO library;
-    private Double minorErrorRate;
-    private Double majorErrorRate;
-    private Double definitionErrorRate;
-    private Double sampleRate;
-    private String sampleMode;
-    private String separators;
+	private String identifier;
 
-    // contrôles auto
-    private List<AutomaticCheckRuleDTO> automaticCheckRules;
+	private String label;
 
-    public CheckConfigurationDTO(String identifier,
-                                 String label,
-                                 SimpleLibraryDTO library,
-                                 Double minorErrorRate,
-                                 Double majorErrorRate,
-                                 Double definitionErrorRate,
-                                 Double sampleRate,
-                                 String sampleMode,
-                                 String separators,
-                                 List<AutomaticCheckRuleDTO> automaticCheckRules) {
-        this.identifier = identifier;
-        this.label = label;
-        this.library = library;
-        this.minorErrorRate = minorErrorRate;
-        this.majorErrorRate = majorErrorRate;
-        this.definitionErrorRate = definitionErrorRate;
-        this.sampleRate = sampleRate;
-        this.sampleMode = sampleMode;
-        this.separators = separators;
-        if (automaticCheckRules != null) {
-            this.automaticCheckRules = automaticCheckRules;
-        } else {
-            this.automaticCheckRules = new ArrayList<>();
-        }
-    }
+	private SimpleLibraryDTO library;
 
-    public CheckConfigurationDTO() {
+	private Double minorErrorRate;
 
-    }
+	private Double majorErrorRate;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private Double definitionErrorRate;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private Double sampleRate;
 
-    public String getLabel() {
-        return label;
-    }
+	private String sampleMode;
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+	private String separators;
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	// contrôles auto
+	private List<AutomaticCheckRuleDTO> automaticCheckRules;
 
-    public void setLibrary(SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	public CheckConfigurationDTO(String identifier, String label, SimpleLibraryDTO library, Double minorErrorRate,
+			Double majorErrorRate, Double definitionErrorRate, Double sampleRate, String sampleMode, String separators,
+			List<AutomaticCheckRuleDTO> automaticCheckRules) {
+		this.identifier = identifier;
+		this.label = label;
+		this.library = library;
+		this.minorErrorRate = minorErrorRate;
+		this.majorErrorRate = majorErrorRate;
+		this.definitionErrorRate = definitionErrorRate;
+		this.sampleRate = sampleRate;
+		this.sampleMode = sampleMode;
+		this.separators = separators;
+		if (automaticCheckRules != null) {
+			this.automaticCheckRules = automaticCheckRules;
+		}
+		else {
+			this.automaticCheckRules = new ArrayList<>();
+		}
+	}
 
-    public Double getMinorErrorRate() {
-        return minorErrorRate;
-    }
+	public CheckConfigurationDTO() {
 
-    public void setMinorErrorRate(Double minorErrorRate) {
-        this.minorErrorRate = minorErrorRate;
-    }
+	}
 
-    public Double getMajorErrorRate() {
-        return majorErrorRate;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setMajorErrorRate(Double majorErrorRate) {
-        this.majorErrorRate = majorErrorRate;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public Double getSampleRate() {
-        return sampleRate;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setSampleRate(Double sampleRate) {
-        this.sampleRate = sampleRate;
-    }
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
-    public String getSampleMode() {
-        return sampleMode;
-    }
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
 
-    public void setSampleMode(String sampleMode) {
-        this.sampleMode = sampleMode;
-    }
+	public void setLibrary(SimpleLibraryDTO library) {
+		this.library = library;
+	}
 
-    public Double getDefinitionErrorRate() {
-        return definitionErrorRate;
-    }
+	public Double getMinorErrorRate() {
+		return minorErrorRate;
+	}
 
-    public void setDefinitionErrorRate(Double definitionErrorRate) {
-        this.definitionErrorRate = definitionErrorRate;
-    }
+	public void setMinorErrorRate(Double minorErrorRate) {
+		this.minorErrorRate = minorErrorRate;
+	}
 
-    public String getSeparators() {
-        return separators;
-    }
+	public Double getMajorErrorRate() {
+		return majorErrorRate;
+	}
 
-    public void setSeparators(String separators) {
-        this.separators = separators;
-    }
+	public void setMajorErrorRate(Double majorErrorRate) {
+		this.majorErrorRate = majorErrorRate;
+	}
 
-    public List<AutomaticCheckRuleDTO> getAutomaticCheckRules() {
-        return automaticCheckRules;
-    }
+	public Double getSampleRate() {
+		return sampleRate;
+	}
 
-    public void setAutomaticCheckRules(List<AutomaticCheckRuleDTO> automaticCheckRules) {
-        this.automaticCheckRules = automaticCheckRules;
-    }
+	public void setSampleRate(Double sampleRate) {
+		this.sampleRate = sampleRate;
+	}
 
-    public static final class Builder {
+	public String getSampleMode() {
+		return sampleMode;
+	}
 
-        private String identifier;
-        private String label;
-        private SimpleLibraryDTO library;
-        private Double minorErrorRate;
-        private Double majorErrorRate;
-        private Double definitionErrorRate;
-        private Double sampleRate;
-        private String sampleMode;
-        private String separators;
-        private List<AutomaticCheckRuleDTO> automaticCheckRules;
+	public void setSampleMode(String sampleMode) {
+		this.sampleMode = sampleMode;
+	}
 
-        public Builder init() {
-            this.identifier = null;
-            this.label = null;
-            this.library = null;
-            this.minorErrorRate = null;
-            this.majorErrorRate = null;
-            this.sampleRate = null;
-            this.sampleMode = null;
-            this.separators = null;
-            this.automaticCheckRules = null;
-            return this;
-        }
+	public Double getDefinitionErrorRate() {
+		return definitionErrorRate;
+	}
 
-        public Builder setIdentifier(String identifier) {
-            this.identifier = identifier;
-            return this;
-        }
+	public void setDefinitionErrorRate(Double definitionErrorRate) {
+		this.definitionErrorRate = definitionErrorRate;
+	}
 
-        public Builder setLabel(String label) {
-            this.label = label;
-            return this;
-        }
+	public String getSeparators() {
+		return separators;
+	}
 
-        public Builder setLibrary(SimpleLibraryDTO library) {
-            this.library = library;
-            return this;
-        }
+	public void setSeparators(String separators) {
+		this.separators = separators;
+	}
 
-        public Builder setMinorErrorRate(Double minorErrorRate) {
-            this.minorErrorRate = minorErrorRate;
-            return this;
-        }
+	public List<AutomaticCheckRuleDTO> getAutomaticCheckRules() {
+		return automaticCheckRules;
+	}
 
-        public Builder setMajorErrorRate(Double majorErrorRate) {
-            this.majorErrorRate = majorErrorRate;
-            return this;
-        }
+	public void setAutomaticCheckRules(List<AutomaticCheckRuleDTO> automaticCheckRules) {
+		this.automaticCheckRules = automaticCheckRules;
+	}
 
-        public Builder setSampleRate(Double sampleRate) {
-            this.sampleRate = sampleRate;
-            return this;
-        }
+	public static final class Builder {
 
-        public Builder setSampleMode(String sampleMode) {
-            this.sampleMode = sampleMode;
-            return this;
-        }
+		private String identifier;
 
-        public Double getDefinitionErrorRate() {
-            return definitionErrorRate;
-        }
+		private String label;
 
-        public void setDefinitionErrorRate(Double definitionErrorRate) {
-            this.definitionErrorRate = definitionErrorRate;
-        }
+		private SimpleLibraryDTO library;
 
-        public Builder setSeparators(String separators) {
-            this.separators = separators;
-            return this;
-        }
+		private Double minorErrorRate;
 
-        public Builder setAutomaticCheckRules(List<AutomaticCheckRuleDTO> automaticCheckRules) {
-            this.automaticCheckRules = automaticCheckRules;
-            return this;
-        }
+		private Double majorErrorRate;
 
-        public CheckConfigurationDTO build() {
-            return new CheckConfigurationDTO(identifier,
-                                             label,
-                                             library,
-                                             minorErrorRate,
-                                             majorErrorRate,
-                                             definitionErrorRate,
-                                             sampleRate,
-                                             sampleMode,
-                                             separators,
-                                             automaticCheckRules);
-        }
-    }
+		private Double definitionErrorRate;
+
+		private Double sampleRate;
+
+		private String sampleMode;
+
+		private String separators;
+
+		private List<AutomaticCheckRuleDTO> automaticCheckRules;
+
+		public Builder init() {
+			this.identifier = null;
+			this.label = null;
+			this.library = null;
+			this.minorErrorRate = null;
+			this.majorErrorRate = null;
+			this.sampleRate = null;
+			this.sampleMode = null;
+			this.separators = null;
+			this.automaticCheckRules = null;
+			return this;
+		}
+
+		public Builder setIdentifier(String identifier) {
+			this.identifier = identifier;
+			return this;
+		}
+
+		public Builder setLabel(String label) {
+			this.label = label;
+			return this;
+		}
+
+		public Builder setLibrary(SimpleLibraryDTO library) {
+			this.library = library;
+			return this;
+		}
+
+		public Builder setMinorErrorRate(Double minorErrorRate) {
+			this.minorErrorRate = minorErrorRate;
+			return this;
+		}
+
+		public Builder setMajorErrorRate(Double majorErrorRate) {
+			this.majorErrorRate = majorErrorRate;
+			return this;
+		}
+
+		public Builder setSampleRate(Double sampleRate) {
+			this.sampleRate = sampleRate;
+			return this;
+		}
+
+		public Builder setSampleMode(String sampleMode) {
+			this.sampleMode = sampleMode;
+			return this;
+		}
+
+		public Double getDefinitionErrorRate() {
+			return definitionErrorRate;
+		}
+
+		public void setDefinitionErrorRate(Double definitionErrorRate) {
+			this.definitionErrorRate = definitionErrorRate;
+		}
+
+		public Builder setSeparators(String separators) {
+			this.separators = separators;
+			return this;
+		}
+
+		public Builder setAutomaticCheckRules(List<AutomaticCheckRuleDTO> automaticCheckRules) {
+			this.automaticCheckRules = automaticCheckRules;
+			return this;
+		}
+
+		public CheckConfigurationDTO build() {
+			return new CheckConfigurationDTO(identifier, label, library, minorErrorRate, majorErrorRate,
+					definitionErrorRate, sampleRate, sampleMode, separators, automaticCheckRules);
+		}
+
+	}
+
 }

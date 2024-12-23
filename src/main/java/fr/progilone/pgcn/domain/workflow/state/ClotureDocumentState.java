@@ -12,27 +12,27 @@ import java.util.List;
 @DiscriminatorValue(value = WorkflowStateKey.Values.CLOTURE_DOCUMENT)
 public class ClotureDocumentState extends DocUnitState {
 
-    @Override
-    public WorkflowStateKey getKey() {
-        return WorkflowStateKey.CLOTURE_DOCUMENT;
-    }
+	@Override
+	public WorkflowStateKey getKey() {
+		return WorkflowStateKey.CLOTURE_DOCUMENT;
+	}
 
-    @Override
-    public void process(User user) {
-        processEndDate();
-        processUser(user);
-        processStatus();
-    }
+	@Override
+	public void process(User user) {
+		processEndDate();
+		processUser(user);
+		processStatus();
+	}
 
-    @Override
-    protected List<DocUnitState> getNextStates() {
-        return new ArrayList<>();
-    }
+	@Override
+	protected List<DocUnitState> getNextStates() {
+		return new ArrayList<>();
+	}
 
-    @Override
-    public void reject(User user) {
-        // TODO Auto-generated method stub
+	@Override
+	public void reject(User user) {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
 }

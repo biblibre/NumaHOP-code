@@ -11,16 +11,12 @@ import fr.progilone.pgcn.service.user.mapper.RoleMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {AddressMapper.class,
-                SimpleFTPConfigurationMapper.class,
-                SimpleCheckConfigurationMapper.class,
-                SimpleViewsFormatConfigurationMapper.class,
-                RoleMapper.class,
-                OcrLangConfigurationMapper.class})
+@Mapper(uses = { AddressMapper.class, SimpleFTPConfigurationMapper.class, SimpleCheckConfigurationMapper.class,
+		SimpleViewsFormatConfigurationMapper.class, RoleMapper.class, OcrLangConfigurationMapper.class })
 public interface LibraryMapper {
 
-    LibraryMapper INSTANCE = Mappers.getMapper(LibraryMapper.class);
+	LibraryMapper INSTANCE = Mappers.getMapper(LibraryMapper.class);
 
-    LibraryDTO libraryToLibraryDTO(Library library);
+	LibraryDTO libraryToLibraryDTO(Library library);
 
 }

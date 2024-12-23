@@ -9,44 +9,45 @@ import jakarta.persistence.*;
  */
 @Entity
 @Table(name = GlobalCheck.TABLE_NAME)
-@JsonSubTypes({@JsonSubTypes.Type(name = "doc_global_check", value = GlobalCheck.class)})
+@JsonSubTypes({ @JsonSubTypes.Type(name = "doc_global_check", value = GlobalCheck.class) })
 public class GlobalCheck extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "doc_global_check";
+	public static final String TABLE_NAME = "doc_global_check";
 
-    @Column(name = "err_label")
-    @Enumerated(EnumType.STRING)
-    private Check.ErrorLabel errorLabel;
+	@Column(name = "err_label")
+	@Enumerated(EnumType.STRING)
+	private Check.ErrorLabel errorLabel;
 
-    @Column(name = "err_type")
-    @Enumerated(EnumType.STRING)
-    private Check.ErrorType errorType;
+	@Column(name = "err_type")
+	@Enumerated(EnumType.STRING)
+	private Check.ErrorType errorType;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "digital_document")
-    private DigitalDocument digitalDocument;
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "digital_document")
+	private DigitalDocument digitalDocument;
 
-    public Check.ErrorType getErrorType() {
-        return errorType;
-    }
+	public Check.ErrorType getErrorType() {
+		return errorType;
+	}
 
-    public void setErrorType(Check.ErrorType errorType) {
-        this.errorType = errorType;
-    }
+	public void setErrorType(Check.ErrorType errorType) {
+		this.errorType = errorType;
+	}
 
-    public Check.ErrorLabel getErrorLabel() {
-        return errorLabel;
-    }
+	public Check.ErrorLabel getErrorLabel() {
+		return errorLabel;
+	}
 
-    public void setErrorLabel(Check.ErrorLabel errorLabel) {
-        this.errorLabel = errorLabel;
-    }
+	public void setErrorLabel(Check.ErrorLabel errorLabel) {
+		this.errorLabel = errorLabel;
+	}
 
-    public DigitalDocument getDigitalDocument() {
-        return digitalDocument;
-    }
+	public DigitalDocument getDigitalDocument() {
+		return digitalDocument;
+	}
 
-    public void setDigitalDocument(DigitalDocument digitalDocument) {
-        this.digitalDocument = digitalDocument;
-    }
+	public void setDigitalDocument(DigitalDocument digitalDocument) {
+		this.digitalDocument = digitalDocument;
+	}
+
 }

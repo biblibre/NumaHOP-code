@@ -11,5 +11,7 @@ import org.springframework.data.domain.Pageable;
  */
 public interface ImportedDocUnitRepositoryCustom {
 
-    Page<String> findIdentifiersByImportReport(ImportReport report, List<DocUnit.State> states, boolean withErrors, boolean withDuplicates, Pageable pageable);
+	Page<String> findIdentifiersByImportReport(ImportReport report, List<DocUnit.State> states, boolean withErrors,
+			boolean withDuplicates, Pageable pageable);
+
 }

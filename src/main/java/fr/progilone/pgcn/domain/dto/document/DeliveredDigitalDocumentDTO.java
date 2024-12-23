@@ -10,94 +10,104 @@ import java.util.Set;
 
 public class DeliveredDigitalDocumentDTO {
 
-    private String identifier;
-    private String digitalId;
-    private LocalDate deliveryDate;
-    private Integer nbPages;
-    private Long totalLength;
-    private DigitalDocument.DigitalDocumentStatus status;
-    private Set<AutomaticCheckResult> automaticCheckResults;
-    private Set<DocPage> pages;
-    private Set<StoredFile> files;
-    private SimpleDeliveryDTO delivery;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String digitalId;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private LocalDate deliveryDate;
 
-    public String getDigitalId() {
-        return digitalId;
-    }
+	private Integer nbPages;
 
-    public void setDigitalId(String digitalId) {
-        this.digitalId = digitalId;
-    }
+	private Long totalLength;
 
-    public LocalDate getDeliveryDate() {
-        return deliveryDate;
-    }
+	private DigitalDocument.DigitalDocumentStatus status;
 
-    public void setDeliveryDate(final LocalDate deliveryDate) {
-        this.deliveryDate = deliveryDate;
-    }
+	private Set<AutomaticCheckResult> automaticCheckResults;
 
-    public Integer getNbPages() {
-        return nbPages;
-    }
+	private Set<DocPage> pages;
 
-    public void setNbPages(final Integer nbPages) {
-        this.nbPages = nbPages;
-    }
+	private Set<StoredFile> files;
 
-    public Long getTotalLength() {
-        return totalLength;
-    }
+	private SimpleDeliveryDTO delivery;
 
-    public void setTotalLength(final Long totalLength) {
-        this.totalLength = totalLength;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public DigitalDocument.DigitalDocumentStatus getStatus() {
-        return status;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setStatus(DigitalDocument.DigitalDocumentStatus status) {
-        this.status = status;
-    }
+	public String getDigitalId() {
+		return digitalId;
+	}
 
-    public SimpleDeliveryDTO getDelivery() {
-        return delivery;
-    }
+	public void setDigitalId(String digitalId) {
+		this.digitalId = digitalId;
+	}
 
-    public void setDelivery(SimpleDeliveryDTO delivery) {
-        this.delivery = delivery;
-    }
+	public LocalDate getDeliveryDate() {
+		return deliveryDate;
+	}
 
-    public Set<AutomaticCheckResult> getAutomaticCheckResults() {
-        return automaticCheckResults;
-    }
+	public void setDeliveryDate(final LocalDate deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
 
-    public void setAutomaticCheckResults(Set<AutomaticCheckResult> automaticCheckResults) {
-        this.automaticCheckResults = automaticCheckResults;
-    }
+	public Integer getNbPages() {
+		return nbPages;
+	}
 
-    public Set<DocPage> getPages() {
-        return pages;
-    }
+	public void setNbPages(final Integer nbPages) {
+		this.nbPages = nbPages;
+	}
 
-    public void setPages(Set<DocPage> pages) {
-        this.pages = pages;
-    }
+	public Long getTotalLength() {
+		return totalLength;
+	}
 
-    public Set<StoredFile> getFiles() {
-        return files;
-    }
+	public void setTotalLength(final Long totalLength) {
+		this.totalLength = totalLength;
+	}
 
-    public void setFiles(Set<StoredFile> files) {
-        this.files = files;
-    }
+	public DigitalDocument.DigitalDocumentStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(DigitalDocument.DigitalDocumentStatus status) {
+		this.status = status;
+	}
+
+	public SimpleDeliveryDTO getDelivery() {
+		return delivery;
+	}
+
+	public void setDelivery(SimpleDeliveryDTO delivery) {
+		this.delivery = delivery;
+	}
+
+	public Set<AutomaticCheckResult> getAutomaticCheckResults() {
+		return automaticCheckResults;
+	}
+
+	public void setAutomaticCheckResults(Set<AutomaticCheckResult> automaticCheckResults) {
+		this.automaticCheckResults = automaticCheckResults;
+	}
+
+	public Set<DocPage> getPages() {
+		return pages;
+	}
+
+	public void setPages(Set<DocPage> pages) {
+		this.pages = pages;
+	}
+
+	public Set<StoredFile> getFiles() {
+		return files;
+	}
+
+	public void setFiles(Set<StoredFile> files) {
+		this.files = files;
+	}
+
 }

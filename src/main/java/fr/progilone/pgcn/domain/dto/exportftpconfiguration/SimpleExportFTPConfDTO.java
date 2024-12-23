@@ -4,31 +4,32 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
 
 public class SimpleExportFTPConfDTO extends AbstractDTO {
 
-    private String identifier;
-    private String label;
+	private String identifier;
 
-    public SimpleExportFTPConfDTO(final String identifier, final String label) {
-        this.identifier = identifier;
-        this.label = label;
-    }
+	private String label;
 
-    public SimpleExportFTPConfDTO() {
-    }
+	public SimpleExportFTPConfDTO(final String identifier, final String label) {
+		this.identifier = identifier;
+		this.label = label;
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public SimpleExportFTPConfDTO() {
+	}
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getLabel() {
-        return label;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
 }

@@ -9,153 +9,163 @@ import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
  */
 public class SimpleProjectDTO {
 
-    private String identifier;
-    private String name;
-    private String description;
-    private String status;
-    private SimpleLibraryDTO library;
-    private String cancelingComment;
-    private boolean filesArchived;
+	private String identifier;
 
-    public SimpleProjectDTO() {
-    }
+	private String name;
 
-    public SimpleProjectDTO(final String identifier,
-                            final String name,
-                            final String description,
-                            final String status,
-                            final SimpleLibraryDTO library,
-                            final String cancelingComment,
-                            final boolean filesArchived) {
-        super();
-        this.identifier = identifier;
-        this.name = name;
-        this.description = description;
-        this.status = status;
-        this.library = library;
-        this.cancelingComment = cancelingComment;
-        this.filesArchived = filesArchived;
-    }
+	private String description;
 
-    public String getName() {
-        return name;
-    }
+	private String status;
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	private SimpleLibraryDTO library;
 
-    public final String getIdentifier() {
-        return identifier;
-    }
+	private String cancelingComment;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private boolean filesArchived;
 
-    public String getDescription() {
-        return description;
-    }
+	public SimpleProjectDTO() {
+	}
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	public SimpleProjectDTO(final String identifier, final String name, final String description, final String status,
+			final SimpleLibraryDTO library, final String cancelingComment, final boolean filesArchived) {
+		super();
+		this.identifier = identifier;
+		this.name = name;
+		this.description = description;
+		this.status = status;
+		this.library = library;
+		this.cancelingComment = cancelingComment;
+		this.filesArchived = filesArchived;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setStatus(final String status) {
-        this.status = status;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	public final String getIdentifier() {
+		return identifier;
+	}
 
-    public void setLibrary(final SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getCancelingComment() {
-        return cancelingComment;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setCancelingComment(final String cancelingComment) {
-        this.cancelingComment = cancelingComment;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public boolean isFilesArchived() {
-        return filesArchived;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public void setFilesArchived(final boolean filesArchived) {
-        this.filesArchived = filesArchived;
-    }
+	public void setStatus(final String status) {
+		this.status = status;
+	}
 
-    /**
-     * Builder pour la classe SimpleProjectDTO
-     *
-     * @author jbrunet
-     */
-    public static final class Builder {
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
 
-        private String identifier;
-        private String name;
-        private String description;
-        private String status;
-        private SimpleLibraryDTO library;
-        private String cancelingComment;
-        private boolean filesArchived;
+	public void setLibrary(final SimpleLibraryDTO library) {
+		this.library = library;
+	}
 
-        public Builder reinit() {
-            this.identifier = null;
-            this.name = null;
-            this.description = null;
-            this.status = null;
-            this.library = null;
-            this.cancelingComment = null;
-            this.filesArchived = false;
-            return this;
-        }
+	public String getCancelingComment() {
+		return cancelingComment;
+	}
 
-        public Builder setLibrary(final SimpleLibraryDTO library) {
-            this.library = library;
-            return this;
-        }
+	public void setCancelingComment(final String cancelingComment) {
+		this.cancelingComment = cancelingComment;
+	}
 
-        public Builder setIdentifier(final String identifier) {
-            this.identifier = identifier;
-            return this;
-        }
+	public boolean isFilesArchived() {
+		return filesArchived;
+	}
 
-        public Builder setName(final String name) {
-            this.name = name;
-            return this;
-        }
+	public void setFilesArchived(final boolean filesArchived) {
+		this.filesArchived = filesArchived;
+	}
 
-        public Builder setDescription(final String description) {
-            this.description = description;
-            return this;
-        }
+	/**
+	 * Builder pour la classe SimpleProjectDTO
+	 *
+	 * @author jbrunet
+	 */
+	public static final class Builder {
 
-        public Builder setCancelingComment(final String comment) {
-            this.cancelingComment = comment;
-            return this;
-        }
+		private String identifier;
 
-        public Builder setFilesArchived(final boolean archived) {
-            this.filesArchived = archived;
-            return this;
-        }
+		private String name;
 
-        public SimpleProjectDTO build() {
-            return new SimpleProjectDTO(identifier, name, description, status, library, cancelingComment, filesArchived);
-        }
+		private String description;
 
-        public Builder setStatus(final String status) {
-            this.status = status;
-            return this;
-        }
-    }
+		private String status;
+
+		private SimpleLibraryDTO library;
+
+		private String cancelingComment;
+
+		private boolean filesArchived;
+
+		public Builder reinit() {
+			this.identifier = null;
+			this.name = null;
+			this.description = null;
+			this.status = null;
+			this.library = null;
+			this.cancelingComment = null;
+			this.filesArchived = false;
+			return this;
+		}
+
+		public Builder setLibrary(final SimpleLibraryDTO library) {
+			this.library = library;
+			return this;
+		}
+
+		public Builder setIdentifier(final String identifier) {
+			this.identifier = identifier;
+			return this;
+		}
+
+		public Builder setName(final String name) {
+			this.name = name;
+			return this;
+		}
+
+		public Builder setDescription(final String description) {
+			this.description = description;
+			return this;
+		}
+
+		public Builder setCancelingComment(final String comment) {
+			this.cancelingComment = comment;
+			return this;
+		}
+
+		public Builder setFilesArchived(final boolean archived) {
+			this.filesArchived = archived;
+			return this;
+		}
+
+		public SimpleProjectDTO build() {
+			return new SimpleProjectDTO(identifier, name, description, status, library, cancelingComment,
+					filesArchived);
+		}
+
+		public Builder setStatus(final String status) {
+			this.status = status;
+			return this;
+		}
+
+	}
+
 }

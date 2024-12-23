@@ -12,42 +12,42 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Service de gestion des {@link InternetArchiveConfiguration}
  *
- * @author Progilone
- *         Créé le 29 aout 2018
+ * @author Progilone Créé le 29 aout 2018
  */
 @Service
 public class OmekaListService {
 
-    private final OmekaListRepository omekaListRepository;
+	private final OmekaListRepository omekaListRepository;
 
-    @Autowired
-    public OmekaListService(final OmekaListRepository omekaListRepository) {
-        this.omekaListRepository = omekaListRepository;
-    }
+	@Autowired
+	public OmekaListService(final OmekaListRepository omekaListRepository) {
+		this.omekaListRepository = omekaListRepository;
+	}
 
-    @Transactional(readOnly = true)
-    public OmekaList findOne(final String identifier) {
-        return omekaListRepository.findById(identifier).orElse(null);
-    }
+	@Transactional(readOnly = true)
+	public OmekaList findOne(final String identifier) {
+		return omekaListRepository.findById(identifier).orElse(null);
+	}
 
-    @Transactional(readOnly = true)
-    public List<OmekaList> findAllByConfOmekaAndType(final String identifier, final OmekaList.ListType type) {
-        return omekaListRepository.findAllByConfOmekaAndType(identifier, type);
-    }
+	@Transactional(readOnly = true)
+	public List<OmekaList> findAllByConfOmekaAndType(final String identifier, final OmekaList.ListType type) {
+		return omekaListRepository.findAllByConfOmekaAndType(identifier, type);
+	}
 
-    @Transactional(readOnly = true)
-    public List<OmekaList> findAllByLibraryAndType(final String identifier, final OmekaList.ListType type) {
-        return omekaListRepository.findAllByLibraryAndType(identifier, type);
-    }
+	@Transactional(readOnly = true)
+	public List<OmekaList> findAllByLibraryAndType(final String identifier, final OmekaList.ListType type) {
+		return omekaListRepository.findAllByLibraryAndType(identifier, type);
+	}
 
-    @Transactional
-    public void delete(final List<OmekaList> ols) {
-        omekaListRepository.deleteAll(ols);
-    }
+	@Transactional
+	public void delete(final List<OmekaList> ols) {
+		omekaListRepository.deleteAll(ols);
+	}
 
-    @Transactional
-    public OmekaList findByName(final String name) {
-        final String libraryId = SecurityUtils.getCurrentUserLibraryId();
-        return omekaListRepository.findByNameAndLibrary(name, libraryId);
-    }
+	@Transactional
+	public OmekaList findByName(final String name) {
+		final String libraryId = SecurityUtils.getCurrentUserLibraryId();
+		return omekaListRepository.findByNameAndLibrary(name, libraryId);
+	}
+
 }

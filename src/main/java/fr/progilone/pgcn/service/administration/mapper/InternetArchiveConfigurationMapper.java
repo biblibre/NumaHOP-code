@@ -8,17 +8,15 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
- *
- * @author jbrunet
- *         Créé le 19 avr. 2017
+ * @author jbrunet Créé le 19 avr. 2017
  */
-@Mapper(uses = {SimpleLibraryMapper.class,
-                InternetArchiveCollectionMapper.class})
+@Mapper(uses = { SimpleLibraryMapper.class, InternetArchiveCollectionMapper.class })
 public interface InternetArchiveConfigurationMapper {
 
-    InternetArchiveConfigurationMapper INSTANCE = Mappers.getMapper(InternetArchiveConfigurationMapper.class);
+	InternetArchiveConfigurationMapper INSTANCE = Mappers.getMapper(InternetArchiveConfigurationMapper.class);
 
-    InternetArchiveConfigurationDTO configurationIAToDto(InternetArchiveConfiguration conf);
+	InternetArchiveConfigurationDTO configurationIAToDto(InternetArchiveConfiguration conf);
 
-    Set<InternetArchiveConfigurationDTO> configurationIAToDtos(Set<InternetArchiveConfiguration> conf);
+	Set<InternetArchiveConfigurationDTO> configurationIAToDtos(Set<InternetArchiveConfiguration> conf);
+
 }

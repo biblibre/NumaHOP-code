@@ -4,31 +4,34 @@ import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
 
 public class OmekaListDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String name;
-    private String type;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String name;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private String type;
 
-    public String getName() {
-        return name;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setType(final String type) {
-        this.type = type;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(final String type) {
+		this.type = type;
+	}
+
 }

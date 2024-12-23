@@ -34,183 +34,224 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ExtendWith(MockitoExtension.class)
 public class TemplateControllerTest {
 
-    private static final String TEMPLATE_DIR = FileUtils.getTempDirectoryPath() + "/pgcn_test";
+	private static final String TEMPLATE_DIR = FileUtils.getTempDirectoryPath() + "/pgcn_test";
 
-    @Mock
-    private LibraryAccesssHelper libraryAccesssHelper;
-    @Mock
-    private TemplateService templateService;
+	@Mock
+	private LibraryAccesssHelper libraryAccesssHelper;
 
-    private MockMvc restMockMvc;
+	@Mock
+	private TemplateService templateService;
 
-    @BeforeEach
-    public void setUp() {
-        final TemplateController controller = new TemplateController(libraryAccesssHelper, templateService);
-        final FormattingConversionService convService = new DefaultFormattingConversionService();
-        convService.addConverter(String.class, Library.class, TestConverterFactory.getConverter(Library.class));
-        this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).setConversionService(convService).build();
-    }
+	private MockMvc restMockMvc;
 
-    @BeforeAll
-    public static void init() throws IOException {
-        FileUtils.forceMkdir(new File(TEMPLATE_DIR));
-    }
+	@BeforeEach
+	public void setUp() {
+		final TemplateController controller = new TemplateController(libraryAccesssHelper, templateService);
+		final FormattingConversionService convService = new DefaultFormattingConversionService();
+		convService.addConverter(String.class, Library.class, TestConverterFactory.getConverter(Library.class));
+		this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).setConversionService(convService).build();
+	}
 
-    @AfterAll
-    public static void clean() {
-        FileUtils.deleteQuietly(new File(TEMPLATE_DIR));
-    }
+	@BeforeAll
+	public static void init() throws IOException {
+		FileUtils.forceMkdir(new File(TEMPLATE_DIR));
+	}
 
-    @Test
-    public void testCreate() throws Exception {
-        final Template template = getTemplate();
+	@AfterAll
+	public static void clean() {
+		FileUtils.deleteQuietly(new File(TEMPLATE_DIR));
+	}
 
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(false, true);
-        when(templateService.save(any(Template.class))).thenReturn(template);
+	@Test
+	public void testCreate() throws Exception {
+		final Template template = getTemplate();
 
-        // 403
-        this.restMockMvc.perform(post("/api/rest/template").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(new Template())))
-                        .andExpect(status().isForbidden());
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(false,
+				true);
+		when(templateService.save(any(Template.class))).thenReturn(template);
 
-        // 201
-        this.restMockMvc.perform(post("/api/rest/template").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(new Template())))
-                        .andExpect(status().isCreated())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("identifier").value(template.getIdentifier()));
-    }
+		// 403
+		this.restMockMvc
+			.perform(post("/api/rest/template").contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(new Template())))
+			.andExpect(status().isForbidden());
 
-    @Test
-    public void testDelete() throws Exception {
-        final Template template = getTemplate();
-        final String identifier = template.getIdentifier();
+		// 201
+		this.restMockMvc
+			.perform(post("/api/rest/template").contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(new Template())))
+			.andExpect(status().isCreated())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("identifier").value(template.getIdentifier()));
+	}
 
-        when(templateService.findByIdentifier(identifier)).thenReturn(null, template);
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(Library.class))).thenReturn(false, true);
+	@Test
+	public void testDelete() throws Exception {
+		final Template template = getTemplate();
+		final String identifier = template.getIdentifier();
 
-        // 404
-        this.restMockMvc.perform(delete("/api/rest/template/{id}", identifier).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
-        verify(templateService, never()).delete(identifier);
+		when(templateService.findByIdentifier(identifier)).thenReturn(null, template);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(Library.class))).thenReturn(false,
+				true);
 
-        // 403
-        this.restMockMvc.perform(delete("/api/rest/template/{id}", identifier).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isForbidden());
-        verify(templateService, never()).delete(identifier);
+		// 404
+		this.restMockMvc.perform(delete("/api/rest/template/{id}", identifier).contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isNotFound());
+		verify(templateService, never()).delete(identifier);
 
-        // 200
-        this.restMockMvc.perform(delete("/api/rest/template/{id}", identifier).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-        verify(templateService).delete(identifier);
-    }
+		// 403
+		this.restMockMvc.perform(delete("/api/rest/template/{id}", identifier).contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isForbidden());
+		verify(templateService, never()).delete(identifier);
 
-    @Test
-    public void testFindTemplates() throws Exception {
-        final Template template = getTemplate();
-        final Library library = template.getLibrary();
+		// 200
+		this.restMockMvc.perform(delete("/api/rest/template/{id}", identifier).contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk());
+		verify(templateService).delete(identifier);
+	}
 
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(Library.class))).thenReturn(false, true);
-        when(templateService.findTemplate(library)).thenReturn(Collections.singletonList(template));
+	@Test
+	public void testFindTemplates() throws Exception {
+		final Template template = getTemplate();
+		final Library library = template.getLibrary();
 
-        // 403
-        this.restMockMvc.perform(get("/api/rest/template").param("engine", "Velocity").param("library", library.getIdentifier()).contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(status().isForbidden());
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(Library.class))).thenReturn(false,
+				true);
+		when(templateService.findTemplate(library)).thenReturn(Collections.singletonList(template));
 
-        // 200
-        this.restMockMvc.perform(get("/api/rest/template").param("engine", "Velocity").param("library", library.getIdentifier()).contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("$[0].identifier").value(template.getIdentifier()));
-    }
+		// 403
+		this.restMockMvc
+			.perform(get("/api/rest/template").param("engine", "Velocity")
+				.param("library", library.getIdentifier())
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isForbidden());
 
-    @Test
-    public void testDownloadAttachment() throws Exception {
-        final Template template = getTemplate();
-        final String templateId = template.getIdentifier();
-        final File file = createTmpFile(templateId);
+		// 200
+		this.restMockMvc
+			.perform(get("/api/rest/template").param("engine", "Velocity")
+				.param("library", library.getIdentifier())
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("$[0].identifier").value(template.getIdentifier()));
+	}
 
-        when(templateService.findByIdentifier(templateId)).thenReturn(null, template);
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(Library.class))).thenReturn(false, true);
-        when(templateService.getTemplateFile(template)).thenReturn(file);
+	@Test
+	public void testDownloadAttachment() throws Exception {
+		final Template template = getTemplate();
+		final String templateId = template.getIdentifier();
+		final File file = createTmpFile(templateId);
 
-        // 404
-        this.restMockMvc.perform(get("/api/rest/template/{id}", templateId).param("download", "true").accept(MediaType.APPLICATION_OCTET_STREAM_VALUE))
-                        .andExpect(status().isNotFound());
+		when(templateService.findByIdentifier(templateId)).thenReturn(null, template);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(Library.class))).thenReturn(false,
+				true);
+		when(templateService.getTemplateFile(template)).thenReturn(file);
 
-        // 403
-        this.restMockMvc.perform(get("/api/rest/template/{id}", templateId).param("download", "true").accept(MediaType.APPLICATION_OCTET_STREAM_VALUE))
-                        .andExpect(status().isForbidden());
+		// 404
+		this.restMockMvc
+			.perform(get("/api/rest/template/{id}", templateId).param("download", "true")
+				.accept(MediaType.APPLICATION_OCTET_STREAM_VALUE))
+			.andExpect(status().isNotFound());
 
-        // 200
-        this.restMockMvc.perform(get("/api/rest/template/{id}", templateId).param("download", "true").accept(MediaType.APPLICATION_OCTET_STREAM_VALUE))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
-                        .andExpect(content().string("Duis ut risus finibus, blandit orci in, convallis dolor."));
-    }
+		// 403
+		this.restMockMvc
+			.perform(get("/api/rest/template/{id}", templateId).param("download", "true")
+				.accept(MediaType.APPLICATION_OCTET_STREAM_VALUE))
+			.andExpect(status().isForbidden());
 
-    @Test
-    public void testUploadAttachments() throws Exception {
-        final Template template = getTemplate();
-        final MockMultipartFile file = new MockMultipartFile("file",
-                                                             "test.txt",
-                                                             "text/plain",
-                                                             "Duis ut risus finibus, blandit orci in, convallis dolor.".getBytes(StandardCharsets.UTF_8));
+		// 200
+		this.restMockMvc
+			.perform(get("/api/rest/template/{id}", templateId).param("download", "true")
+				.accept(MediaType.APPLICATION_OCTET_STREAM_VALUE))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
+			.andExpect(content().string("Duis ut risus finibus, blandit orci in, convallis dolor."));
+	}
 
-        when(templateService.findByIdentifier(template.getIdentifier())).thenReturn(null, template);
-        when(templateService.save(template, file)).thenReturn(template);
+	@Test
+	public void testUploadAttachments() throws Exception {
+		final Template template = getTemplate();
+		final MockMultipartFile file = new MockMultipartFile("file", "test.txt", "text/plain",
+				"Duis ut risus finibus, blandit orci in, convallis dolor.".getBytes(StandardCharsets.UTF_8));
 
-        // 404
-        this.restMockMvc.perform(multipart("/api/rest/template/{id}", template.getIdentifier()).file(file).param("upload", "true").accept(MediaType.APPLICATION_JSON))
-                        .andExpect(status().isNotFound());
+		when(templateService.findByIdentifier(template.getIdentifier())).thenReturn(null, template);
+		when(templateService.save(template, file)).thenReturn(template);
 
-        // 403
-        this.restMockMvc.perform(multipart("/api/rest/template/{id}", template.getIdentifier()).file(file).param("upload", "true").accept(MediaType.APPLICATION_JSON))
-                        .andExpect(status().isForbidden());
+		// 404
+		this.restMockMvc
+			.perform(multipart("/api/rest/template/{id}", template.getIdentifier()).file(file)
+				.param("upload", "true")
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isNotFound());
 
-        when(libraryAccesssHelper.checkLibrary(any(), any(Library.class))).thenReturn(true);
+		// 403
+		this.restMockMvc
+			.perform(multipart("/api/rest/template/{id}", template.getIdentifier()).file(file)
+				.param("upload", "true")
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isForbidden());
 
-        // 200
-        this.restMockMvc.perform(multipart("/api/rest/template/{id}", template.getIdentifier()).file(file).param("upload", "true").accept(MediaType.APPLICATION_JSON))
-                        .andExpect(status().isOk());
-    }
+		when(libraryAccesssHelper.checkLibrary(any(), any(Library.class))).thenReturn(true);
 
-    @Test
-    public void testUpdate() throws Exception {
-        final Template template = getTemplate();
-        final Template dbTemplate = getTemplate();
+		// 200
+		this.restMockMvc
+			.perform(multipart("/api/rest/template/{id}", template.getIdentifier()).file(file)
+				.param("upload", "true")
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk());
+	}
 
-        when(templateService.save(any(Template.class))).thenReturn(template);
-        when(templateService.findByIdentifier(template.getIdentifier())).thenReturn(null, dbTemplate);
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(false, true, true, false, true);
+	@Test
+	public void testUpdate() throws Exception {
+		final Template template = getTemplate();
+		final Template dbTemplate = getTemplate();
 
-        // 403
-        this.restMockMvc.perform(post("/api/rest/template/{id}", template.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
-                                                                                          .content(TestUtil.convertObjectToJsonBytes(template))).andExpect(status().isForbidden());
+		when(templateService.save(any(Template.class))).thenReturn(template);
+		when(templateService.findByIdentifier(template.getIdentifier())).thenReturn(null, dbTemplate);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(false,
+				true, true, false, true);
 
-        // 404
-        this.restMockMvc.perform(post("/api/rest/template/{id}", template.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
-                                                                                          .content(TestUtil.convertObjectToJsonBytes(template))).andExpect(status().isNotFound());
+		// 403
+		this.restMockMvc
+			.perform(post("/api/rest/template/{id}", template.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(template)))
+			.andExpect(status().isForbidden());
 
-        // 403
-        this.restMockMvc.perform(post("/api/rest/template/{id}", template.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
-                                                                                          .content(TestUtil.convertObjectToJsonBytes(template))).andExpect(status().isForbidden());
+		// 404
+		this.restMockMvc
+			.perform(post("/api/rest/template/{id}", template.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(template)))
+			.andExpect(status().isNotFound());
 
-        // 200
-        this.restMockMvc.perform(post("/api/rest/template/{id}", template.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
-                                                                                          .content(TestUtil.convertObjectToJsonBytes(template)))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("identifier").value(template.getIdentifier()));
-    }
+		// 403
+		this.restMockMvc
+			.perform(post("/api/rest/template/{id}", template.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(template)))
+			.andExpect(status().isForbidden());
 
-    private Template getTemplate() {
-        final Library library = new Library();
-        library.setIdentifier("ae0db278-4e83-4eab-81ef-b35b3e1ce2da");
-        final Template template = new Template();
-        template.setIdentifier("7ef8fdae-062d-4b03-bc0b-80eddb82b9ee");
-        template.setLibrary(library);
-        return template;
-    }
+		// 200
+		this.restMockMvc
+			.perform(post("/api/rest/template/{id}", template.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(template)))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("identifier").value(template.getIdentifier()));
+	}
 
-    private File createTmpFile(final String id) throws IOException {
-        final File file = new File(TEMPLATE_DIR, id);
-        FileUtils.writeStringToFile(file, "Duis ut risus finibus, blandit orci in, convallis dolor.", StandardCharsets.UTF_8);
-        return file;
-    }
+	private Template getTemplate() {
+		final Library library = new Library();
+		library.setIdentifier("ae0db278-4e83-4eab-81ef-b35b3e1ce2da");
+		final Template template = new Template();
+		template.setIdentifier("7ef8fdae-062d-4b03-bc0b-80eddb82b9ee");
+		template.setLibrary(library);
+		return template;
+	}
+
+	private File createTmpFile(final String id) throws IOException {
+		final File file = new File(TEMPLATE_DIR, id);
+		FileUtils.writeStringToFile(file, "Duis ut risus finibus, blandit orci in, convallis dolor.",
+				StandardCharsets.UTF_8);
+		return file;
+	}
+
 }

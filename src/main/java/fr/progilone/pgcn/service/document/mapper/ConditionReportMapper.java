@@ -11,27 +11,30 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {ConditionReportValueMapper.class})
+@Mapper(uses = { ConditionReportValueMapper.class })
 public abstract class ConditionReportMapper {
 
-    public static final ConditionReportMapper INSTANCE = Mappers.getMapper(ConditionReportMapper.class);
-    public static final ConditionReportValueMapper INSTANCE_VALUE = Mappers.getMapper(ConditionReportValueMapper.class);
+	public static final ConditionReportMapper INSTANCE = Mappers.getMapper(ConditionReportMapper.class);
 
-    public abstract ConditionReportDTO reportToDTO(ConditionReport report);
+	public static final ConditionReportValueMapper INSTANCE_VALUE = Mappers.getMapper(ConditionReportValueMapper.class);
 
-    public abstract ConditionReportSearchDTO reportToSearchDTO(ConditionReport report);
+	public abstract ConditionReportDTO reportToDTO(ConditionReport report);
 
-    @AfterMapping
-    protected void updateSearchDTO(final ConditionReport report, @MappingTarget final ConditionReportSearchDTO dto) {
-        // Tri par type
-        report.getDetails()
-              .stream()
-              .max(Comparator.comparing(ConditionReportDetail::getPosition))
-              // Alimentation du DTO
-              .ifPresent(det -> {
-                  dto.setDate(det.getDate());
-                  dto.setType(det.getType().name());
-                  dto.setProperties(det.getDescriptions().stream().map(INSTANCE_VALUE::bindingToDTO).collect(Collectors.toList()));
-              });
-    }
+	public abstract ConditionReportSearchDTO reportToSearchDTO(ConditionReport report);
+
+	@AfterMapping
+	protected void updateSearchDTO(final ConditionReport report, @MappingTarget final ConditionReportSearchDTO dto) {
+		// Tri par type
+		report.getDetails()
+			.stream()
+			.max(Comparator.comparing(ConditionReportDetail::getPosition))
+			// Alimentation du DTO
+			.ifPresent(det -> {
+				dto.setDate(det.getDate());
+				dto.setType(det.getType().name());
+				dto.setProperties(
+						det.getDescriptions().stream().map(INSTANCE_VALUE::bindingToDTO).collect(Collectors.toList()));
+			});
+	}
+
 }

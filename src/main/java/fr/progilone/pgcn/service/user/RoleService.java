@@ -22,142 +22,160 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class RoleService {
 
-    private final LibraryRepository libraryRepository;
-    private final RoleRepository roleRepository;
-    private final UserRepository userRepository;
+	private final LibraryRepository libraryRepository;
 
-    @Autowired
-    public RoleService(final LibraryRepository libraryRepository, final RoleRepository roleRepository, final UserRepository userRepository) {
-        this.libraryRepository = libraryRepository;
-        this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
-    }
+	private final RoleRepository roleRepository;
 
-    @Transactional(readOnly = true)
-    public List<RoleDTO> findAllDTO() {
-        final List<Role> roles = roleRepository.findAll();
-        final RoleDTO.Builder builder = new RoleDTO.Builder();
-        return roles.stream()
-                    .map(role -> builder.reinit().setCode(role.getCode()).setIdentifier(role.getIdentifier()).setLabel(role.getLabel()).build())
-                    .collect(Collectors.toList());
-    }
+	private final UserRepository userRepository;
 
-    @Transactional(readOnly = true)
-    public List<Role> findAll() {
-        return roleRepository.findAllWithAuthorizations();
-    }
+	@Autowired
+	public RoleService(final LibraryRepository libraryRepository, final RoleRepository roleRepository,
+			final UserRepository userRepository) {
+		this.libraryRepository = libraryRepository;
+		this.roleRepository = roleRepository;
+		this.userRepository = userRepository;
+	}
 
-    @Transactional(readOnly = true)
-    public Role findOne(final String identifier) {
-        return roleRepository.findOneWithAuthorizations(identifier);
-    }
+	@Transactional(readOnly = true)
+	public List<RoleDTO> findAllDTO() {
+		final List<Role> roles = roleRepository.findAll();
+		final RoleDTO.Builder builder = new RoleDTO.Builder();
+		return roles.stream()
+			.map(role -> builder.reinit()
+				.setCode(role.getCode())
+				.setIdentifier(role.getIdentifier())
+				.setLabel(role.getLabel())
+				.build())
+			.collect(Collectors.toList());
+	}
 
-    /**
-     * Permet de savoir si l'autorisation est dans le role
-     *
-     * @param role
-     * @param authorization
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public boolean isAuthorized(Role role, Authorization authorization) {
-        return role != null && authorization != null
-               && CollectionUtils.isNotEmpty(role.getAuthorizations())
-               && role.getAuthorizations().contains(authorization);
-    }
+	@Transactional(readOnly = true)
+	public List<Role> findAll() {
+		return roleRepository.findAllWithAuthorizations();
+	}
 
-    @Transactional
-    public void delete(final String identifier) throws PgcnValidationException {
-        // Validation de la suppresion
-        final Role role = roleRepository.getOne(identifier);
-        validateDelete(role);
+	@Transactional(readOnly = true)
+	public Role findOne(final String identifier) {
+		return roleRepository.findOneWithAuthorizations(identifier);
+	}
 
-        // Suppression
-        roleRepository.deleteById(identifier);
-    }
+	/**
+	 * Permet de savoir si l'autorisation est dans le role
+	 * @param role
+	 * @param authorization
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public boolean isAuthorized(Role role, Authorization authorization) {
+		return role != null && authorization != null && CollectionUtils.isNotEmpty(role.getAuthorizations())
+				&& role.getAuthorizations().contains(authorization);
+	}
 
-    private void validateDelete(final Role role) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
+	@Transactional
+	public void delete(final String identifier) throws PgcnValidationException {
+		// Validation de la suppresion
+		final Role role = roleRepository.getOne(identifier);
+		validateDelete(role);
 
-        // Bibliothèque
-        final Long libCount = libraryRepository.countByDefaultRole(role);
-        if (libCount > 0) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.ROLE_DEL_EXITS_LIB).setAdditionalComplement(libCount).build());
-        }
-        // Utilisateur
-        final Long userCount = userRepository.countByRole(role);
-        if (userCount > 0) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.ROLE_DEL_EXITS_USER).setAdditionalComplement(userCount).build());
-        }
+		// Suppression
+		roleRepository.deleteById(identifier);
+	}
 
-        if (!errors.isEmpty()) {
-            role.setErrors(errors);
-            throw new PgcnValidationException(role, errors);
-        }
-    }
+	private void validateDelete(final Role role) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
 
-    @Transactional
-    public Role save(final Role role) throws PgcnValidationException {
-        setDefaultValues(role);
-        validate(role);
-        return roleRepository.save(role);
-    }
+		// Bibliothèque
+		final Long libCount = libraryRepository.countByDefaultRole(role);
+		if (libCount > 0) {
+			errors.add(builder.reinit()
+				.setCode(PgcnErrorCode.ROLE_DEL_EXITS_LIB)
+				.setAdditionalComplement(libCount)
+				.build());
+		}
+		// Utilisateur
+		final Long userCount = userRepository.countByRole(role);
+		if (userCount > 0) {
+			errors.add(builder.reinit()
+				.setCode(PgcnErrorCode.ROLE_DEL_EXITS_USER)
+				.setAdditionalComplement(userCount)
+				.build());
+		}
 
-    private void setDefaultValues(final Role role) {
-        final String code = role.getCode();
+		if (!errors.isEmpty()) {
+			role.setErrors(errors);
+			throw new PgcnValidationException(role, errors);
+		}
+	}
 
-        role.setSuperuser(false);
-        // code en majuscules
-        if (code != null) {
-            role.setCode(StringUtils.upperCase(code));
-        }
-    }
+	@Transactional
+	public Role save(final Role role) throws PgcnValidationException {
+		setDefaultValues(role);
+		validate(role);
+		return roleRepository.save(role);
+	}
 
-    private PgcnList<PgcnError> validate(final Role role) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
+	private void setDefaultValues(final Role role) {
+		final String code = role.getCode();
 
-        /* Validation non paramétrable **/
-        final String id = role.getIdentifier();
-        final String code = role.getCode();
-        final String label = role.getLabel();
+		role.setSuperuser(false);
+		// code en majuscules
+		if (code != null) {
+			role.setCode(StringUtils.upperCase(code));
+		}
+	}
 
-        // le code est obligatoire
-        if (StringUtils.isBlank(code)) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.USER_ROLE_CODE_MANDATORY).setField("code").build());
-        }
-        // le code est unique
-        else {
-            final Role dup = id != null ? roleRepository.findByCodeAndIdentifierNot(code, id)
-                                        : roleRepository.findByCode(code);
-            if (dup != null) {
-                errors.add(builder.reinit().setCode(PgcnErrorCode.USER_ROLE_UNIQUE_CODE_VIOLATION).setField("code").build());
-            }
-        }
-        // le label est obligatoire
-        if (StringUtils.isBlank(label)) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.USER_ROLE_LABEL_MANDATORY).setField("label").build());
-        }
-        // le label est unique
-        else {
-            final Role dup = id != null ? roleRepository.findOneByLabelAndIdentifierNot(label, id)
-                                        : roleRepository.findOneByLabel(label);
-            if (dup != null) {
-                errors.add(builder.reinit().setCode(PgcnErrorCode.USER_ROLE_UNIQUE_LABEL_VIOLATION).setField("label").build());
-            }
-        }
+	private PgcnList<PgcnError> validate(final Role role) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
 
-        /* Retour **/
-        if (!errors.isEmpty()) {
-            role.setErrors(errors);
-            throw new PgcnValidationException(role, errors);
-        }
-        return errors;
-    }
+		/* Validation non paramétrable **/
+		final String id = role.getIdentifier();
+		final String code = role.getCode();
+		final String label = role.getLabel();
 
-    public List<RoleDTO> search(String search, List<String> authorizations) {
-        List<Role> roles = roleRepository.search(search, authorizations);
-        return roles.stream().map(RoleMapper.INSTANCE::roleToRoleDTO).collect(Collectors.toList());
-    }
+		// le code est obligatoire
+		if (StringUtils.isBlank(code)) {
+			errors.add(builder.reinit().setCode(PgcnErrorCode.USER_ROLE_CODE_MANDATORY).setField("code").build());
+		}
+		// le code est unique
+		else {
+			final Role dup = id != null ? roleRepository.findByCodeAndIdentifierNot(code, id)
+					: roleRepository.findByCode(code);
+			if (dup != null) {
+				errors.add(builder.reinit()
+					.setCode(PgcnErrorCode.USER_ROLE_UNIQUE_CODE_VIOLATION)
+					.setField("code")
+					.build());
+			}
+		}
+		// le label est obligatoire
+		if (StringUtils.isBlank(label)) {
+			errors.add(builder.reinit().setCode(PgcnErrorCode.USER_ROLE_LABEL_MANDATORY).setField("label").build());
+		}
+		// le label est unique
+		else {
+			final Role dup = id != null ? roleRepository.findOneByLabelAndIdentifierNot(label, id)
+					: roleRepository.findOneByLabel(label);
+			if (dup != null) {
+				errors.add(builder.reinit()
+					.setCode(PgcnErrorCode.USER_ROLE_UNIQUE_LABEL_VIOLATION)
+					.setField("label")
+					.build());
+			}
+		}
+
+		/* Retour **/
+		if (!errors.isEmpty()) {
+			role.setErrors(errors);
+			throw new PgcnValidationException(role, errors);
+		}
+		return errors;
+	}
+
+	public List<RoleDTO> search(String search, List<String> authorizations) {
+		List<Role> roles = roleRepository.search(search, authorizations);
+		return roles.stream().map(RoleMapper.INSTANCE::roleToRoleDTO).collect(Collectors.toList());
+	}
+
 }

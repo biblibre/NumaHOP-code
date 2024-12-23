@@ -17,385 +17,393 @@ import java.util.List;
  */
 public class UserDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String login;
-    private String firstname;
-    private String surname;
-    private Boolean active;
-    private String category;
-    private Lang lang;
-    private RoleDTO role;
-    private AddressDTO address;
-    private SimpleLibraryDTO library;
-    private String phoneNumber;
-    private String email;
-    private String companyName;
-    private String function;
-    /**
-     * Groupe de workflow liés
-     */
-    private List<SimpleWorkflowGroupDTO> groups;
-    /**
-     * Ajout des infos de création
-     */
-    private String createdBy;
-    private LocalDateTime createdDate;
-    /**
-     * Ajout des infos de modifications
-     */
-    private String lastModifiedBy;
-    private LocalDateTime lastModifiedDate;
+	private String identifier;
 
-    public UserDTO(String identifier,
-                   String login,
-                   String firstname,
-                   String surname,
-                   Boolean active,
-                   String category,
-                   Lang lang,
-                   RoleDTO role,
-                   AddressDTO address,
-                   SimpleLibraryDTO library,
-                   String phoneNumber,
-                   String email,
-                   String companyName,
-                   String function,
-                   String createdBy,
-                   LocalDateTime createdDate,
-                   String lastModifiedBy,
-                   LocalDateTime lastModifiedDate) {
-        this.identifier = identifier;
-        this.login = login;
-        this.firstname = firstname;
-        this.surname = surname;
-        this.active = active;
-        this.category = category;
-        this.lang = lang;
-        this.role = role;
-        this.address = address;
-        this.library = library;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.companyName = companyName;
-        this.function = function;
-        this.createdBy = createdBy;
-        this.createdDate = createdDate;
-        this.lastModifiedBy = lastModifiedBy;
-        this.lastModifiedDate = lastModifiedDate;
-    }
+	private String login;
 
-    public UserDTO() {
-    }
+	private String firstname;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String surname;
 
-    public final Lang getLang() {
-        return lang;
-    }
+	private Boolean active;
 
-    public final RoleDTO getRole() {
-        return role;
-    }
+	private String category;
 
-    public String getLogin() {
-        return login;
-    }
+	private Lang lang;
 
-    public String getFirstname() {
-        return firstname;
-    }
+	private RoleDTO role;
 
-    public String getSurname() {
-        return surname;
-    }
+	private AddressDTO address;
 
-    public final Boolean getActive() {
-        return active;
-    }
+	private SimpleLibraryDTO library;
 
-    public final String getCategory() {
-        return category;
-    }
+	private String phoneNumber;
 
-    public final AddressDTO getAddress() {
-        return address;
-    }
+	private String email;
 
-    public final String getPhoneNumber() {
-        return phoneNumber;
-    }
+	private String companyName;
 
-    public final String getCompanyName() {
-        return companyName;
-    }
+	private String function;
 
-    public final String getEmail() {
-        return email;
-    }
+	/**
+	 * Groupe de workflow liés
+	 */
+	private List<SimpleWorkflowGroupDTO> groups;
 
-    public final String getFunction() {
-        return function;
-    }
+	/**
+	 * Ajout des infos de création
+	 */
+	private String createdBy;
 
-    public final SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	private LocalDateTime createdDate;
 
-    public void setLibrary(SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	/**
+	 * Ajout des infos de modifications
+	 */
+	private String lastModifiedBy;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private LocalDateTime lastModifiedDate;
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+	public UserDTO(String identifier, String login, String firstname, String surname, Boolean active, String category,
+			Lang lang, RoleDTO role, AddressDTO address, SimpleLibraryDTO library, String phoneNumber, String email,
+			String companyName, String function, String createdBy, LocalDateTime createdDate, String lastModifiedBy,
+			LocalDateTime lastModifiedDate) {
+		this.identifier = identifier;
+		this.login = login;
+		this.firstname = firstname;
+		this.surname = surname;
+		this.active = active;
+		this.category = category;
+		this.lang = lang;
+		this.role = role;
+		this.address = address;
+		this.library = library;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+		this.companyName = companyName;
+		this.function = function;
+		this.createdBy = createdBy;
+		this.createdDate = createdDate;
+		this.lastModifiedBy = lastModifiedBy;
+		this.lastModifiedDate = lastModifiedDate;
+	}
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+	public UserDTO() {
+	}
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+	public final Lang getLang() {
+		return lang;
+	}
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+	public final RoleDTO getRole() {
+		return role;
+	}
 
-    public void setLang(Lang lang) {
-        this.lang = lang;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public void setRole(RoleDTO role) {
-        this.role = role;
-    }
+	public String getFirstname() {
+		return firstname;
+	}
 
-    public void setAddress(AddressDTO address) {
-        this.address = address;
-    }
+	public String getSurname() {
+		return surname;
+	}
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+	public final Boolean getActive() {
+		return active;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public final String getCategory() {
+		return category;
+	}
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
+	public final AddressDTO getAddress() {
+		return address;
+	}
 
-    public void setFunction(String function) {
-        this.function = function;
-    }
+	public final String getPhoneNumber() {
+		return phoneNumber;
+	}
 
-    public List<SimpleWorkflowGroupDTO> getGroups() {
-        return groups;
-    }
+	public final String getCompanyName() {
+		return companyName;
+	}
 
-    public void setGroups(List<SimpleWorkflowGroupDTO> groups) {
-        this.groups = groups;
-    }
+	public final String getEmail() {
+		return email;
+	}
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	public final String getFunction() {
+		return function;
+	}
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
+	public final SimpleLibraryDTO getLibrary() {
+		return library;
+	}
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
+	public void setLibrary(SimpleLibraryDTO library) {
+		this.library = library;
+	}
 
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
 
-    public LocalDateTime getLastModifiedDate() {
-        return lastModifiedDate;
-    }
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
 
-    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 
-    /**
-     * Builder pour la classe UserDTO
-     *
-     * @author jbrunet
-     */
-    public static final class Builder {
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
-        private String identifier;
-        private String login;
-        private String firstname;
-        private String surname;
-        private Boolean active;
-        private String category;
-        private SimpleLibraryDTO library;
-        private Lang lang;
-        private RoleDTO role;
-        private AddressDTO address;
-        private String phoneNumber;
-        private String email;
-        private String companyName;
-        private String function;
-        private String createdBy;
-        private LocalDateTime createdDate;
-        private String lastModifiedBy;
-        private LocalDateTime lastModifiedDate;
+	public void setLang(Lang lang) {
+		this.lang = lang;
+	}
 
-        public Builder reinit() {
-            this.identifier = null;
-            this.login = null;
-            this.firstname = null;
-            this.surname = null;
-            this.active = null;
-            this.category = null;
-            this.library = null;
-            this.lang = null;
-            this.role = null;
-            this.address = null;
-            this.email = null;
-            this.phoneNumber = null;
-            this.companyName = null;
-            this.function = null;
-            this.createdBy = null;
-            this.createdDate = null;
-            this.lastModifiedBy = null;
-            this.lastModifiedDate = null;
-            return this;
-        }
+	public void setRole(RoleDTO role) {
+		this.role = role;
+	}
 
-        public Builder setIdentifier(final String identifier) {
-            this.identifier = identifier;
-            return this;
-        }
+	public void setAddress(AddressDTO address) {
+		this.address = address;
+	}
 
-        public Builder setLogin(final String login) {
-            this.login = login;
-            return this;
-        }
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
-        public Builder setFirstname(final String firstname) {
-            this.firstname = firstname;
-            return this;
-        }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-        public Builder setActive(final Boolean active) {
-            this.active = active;
-            return this;
-        }
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
 
-        public Builder setCategory(final Category category) {
-            this.category = category.name();
-            return this;
-        }
+	public void setFunction(String function) {
+		this.function = function;
+	}
 
-        public Builder setSurname(final String surname) {
-            this.surname = surname;
-            return this;
-        }
+	public List<SimpleWorkflowGroupDTO> getGroups() {
+		return groups;
+	}
 
-        public Builder setRole(final RoleDTO role) {
-            this.role = role;
-            return this;
-        }
+	public void setGroups(List<SimpleWorkflowGroupDTO> groups) {
+		this.groups = groups;
+	}
 
-        public Builder setLibrary(final SimpleLibraryDTO library) {
-            this.library = library;
-            return this;
-        }
+	public String getCreatedBy() {
+		return createdBy;
+	}
 
-        public Builder setLang(final Lang lang) {
-            this.lang = lang;
-            return this;
-        }
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
 
-        public Builder setAddress(final AddressDTO address) {
-            this.address = address;
-            return this;
-        }
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
 
-        public Builder setPhoneNumber(final String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-            return this;
-        }
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
 
-        public Builder setEmail(final String email) {
-            this.email = email;
-            return this;
-        }
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
 
-        public Builder setCompanyName(final String companyName) {
-            this.companyName = companyName;
-            return this;
-        }
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
 
-        public Builder setFunction(final String function) {
-            this.function = function;
-            return this;
-        }
+	public LocalDateTime getLastModifiedDate() {
+		return lastModifiedDate;
+	}
 
-        public Builder setCreatedBy(String createdBy) {
-            this.createdBy = createdBy;
-            return this;
-        }
+	public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
 
-        public Builder setCreatedDate(LocalDateTime createdDate) {
-            this.createdDate = createdDate;
-            return this;
-        }
+	/**
+	 * Builder pour la classe UserDTO
+	 *
+	 * @author jbrunet
+	 */
+	public static final class Builder {
 
-        public Builder setLastModifiedBy(String lastModifiedBy) {
-            this.lastModifiedBy = lastModifiedBy;
-            return this;
-        }
+		private String identifier;
 
-        public Builder setLastModifiedDate(LocalDateTime lastModifiedDate) {
-            this.lastModifiedDate = lastModifiedDate;
-            return this;
-        }
+		private String login;
 
-        public UserDTO build() {
-            return new UserDTO(identifier,
-                               login,
-                               firstname,
-                               surname,
-                               active,
-                               category,
-                               lang,
-                               role,
-                               address,
-                               library,
-                               phoneNumber,
-                               email,
-                               companyName,
-                               function,
-                               createdBy,
-                               createdDate,
-                               lastModifiedBy,
-                               lastModifiedDate);
-        }
-    }
+		private String firstname;
+
+		private String surname;
+
+		private Boolean active;
+
+		private String category;
+
+		private SimpleLibraryDTO library;
+
+		private Lang lang;
+
+		private RoleDTO role;
+
+		private AddressDTO address;
+
+		private String phoneNumber;
+
+		private String email;
+
+		private String companyName;
+
+		private String function;
+
+		private String createdBy;
+
+		private LocalDateTime createdDate;
+
+		private String lastModifiedBy;
+
+		private LocalDateTime lastModifiedDate;
+
+		public Builder reinit() {
+			this.identifier = null;
+			this.login = null;
+			this.firstname = null;
+			this.surname = null;
+			this.active = null;
+			this.category = null;
+			this.library = null;
+			this.lang = null;
+			this.role = null;
+			this.address = null;
+			this.email = null;
+			this.phoneNumber = null;
+			this.companyName = null;
+			this.function = null;
+			this.createdBy = null;
+			this.createdDate = null;
+			this.lastModifiedBy = null;
+			this.lastModifiedDate = null;
+			return this;
+		}
+
+		public Builder setIdentifier(final String identifier) {
+			this.identifier = identifier;
+			return this;
+		}
+
+		public Builder setLogin(final String login) {
+			this.login = login;
+			return this;
+		}
+
+		public Builder setFirstname(final String firstname) {
+			this.firstname = firstname;
+			return this;
+		}
+
+		public Builder setActive(final Boolean active) {
+			this.active = active;
+			return this;
+		}
+
+		public Builder setCategory(final Category category) {
+			this.category = category.name();
+			return this;
+		}
+
+		public Builder setSurname(final String surname) {
+			this.surname = surname;
+			return this;
+		}
+
+		public Builder setRole(final RoleDTO role) {
+			this.role = role;
+			return this;
+		}
+
+		public Builder setLibrary(final SimpleLibraryDTO library) {
+			this.library = library;
+			return this;
+		}
+
+		public Builder setLang(final Lang lang) {
+			this.lang = lang;
+			return this;
+		}
+
+		public Builder setAddress(final AddressDTO address) {
+			this.address = address;
+			return this;
+		}
+
+		public Builder setPhoneNumber(final String phoneNumber) {
+			this.phoneNumber = phoneNumber;
+			return this;
+		}
+
+		public Builder setEmail(final String email) {
+			this.email = email;
+			return this;
+		}
+
+		public Builder setCompanyName(final String companyName) {
+			this.companyName = companyName;
+			return this;
+		}
+
+		public Builder setFunction(final String function) {
+			this.function = function;
+			return this;
+		}
+
+		public Builder setCreatedBy(String createdBy) {
+			this.createdBy = createdBy;
+			return this;
+		}
+
+		public Builder setCreatedDate(LocalDateTime createdDate) {
+			this.createdDate = createdDate;
+			return this;
+		}
+
+		public Builder setLastModifiedBy(String lastModifiedBy) {
+			this.lastModifiedBy = lastModifiedBy;
+			return this;
+		}
+
+		public Builder setLastModifiedDate(LocalDateTime lastModifiedDate) {
+			this.lastModifiedDate = lastModifiedDate;
+			return this;
+		}
+
+		public UserDTO build() {
+			return new UserDTO(identifier, login, firstname, surname, active, category, lang, role, address, library,
+					phoneNumber, email, companyName, function, createdBy, createdDate, lastModifiedBy,
+					lastModifiedDate);
+		}
+
+	}
+
 }

@@ -20,98 +20,100 @@ import org.springframework.data.domain.Pageable;
 
 public class UserRepositoryImpl implements UserRepositoryCustom {
 
-    private final JPAQueryFactory queryFactory;
+	private final JPAQueryFactory queryFactory;
 
-    public UserRepositoryImpl(final JPAQueryFactory queryFactory) {
-        this.queryFactory = queryFactory;
-    }
+	public UserRepositoryImpl(final JPAQueryFactory queryFactory) {
+		this.queryFactory = queryFactory;
+	}
 
-    @Override
-    public Page<User> search(final String search,
-                             final String initiale,
-                             final boolean active,
-                             final boolean filterProviders,
-                             final List<String> libraries,
-                             final List<User.Category> categories,
-                             final List<String> roles,
-                             final Pageable pageable) {
+	@Override
+	public Page<User> search(final String search, final String initiale, final boolean active,
+			final boolean filterProviders, final List<String> libraries, final List<User.Category> categories,
+			final List<String> roles, final Pageable pageable) {
 
-        final QUser user = QUser.user;
-        final BooleanBuilder builder = new BooleanBuilder();
+		final QUser user = QUser.user;
+		final BooleanBuilder builder = new BooleanBuilder();
 
-        if (StringUtils.isNotBlank(search)) {
-            final BooleanExpression nameFilter = user.login.containsIgnoreCase(search).or(user.surname.containsIgnoreCase(search).or(user.firstname.containsIgnoreCase(search)));
-            builder.andAnyOf(nameFilter);
-        }
-        // Filter initiale
-        QueryDSLBuilderUtils.addFilterForInitiale(builder, initiale, user.surname);
-        builder.and(user.superuser.isFalse());
+		if (StringUtils.isNotBlank(search)) {
+			final BooleanExpression nameFilter = user.login.containsIgnoreCase(search)
+				.or(user.surname.containsIgnoreCase(search).or(user.firstname.containsIgnoreCase(search)));
+			builder.andAnyOf(nameFilter);
+		}
+		// Filter initiale
+		QueryDSLBuilderUtils.addFilterForInitiale(builder, initiale, user.surname);
+		builder.and(user.superuser.isFalse());
 
-        // active
-        if (active) {
-            builder.and(user.active.eq(true));
-        }
-        if (CollectionUtils.isNotEmpty(libraries)) {
-            final BooleanExpression sitesFilter = user.library.identifier.in(libraries);
-            builder.and(sitesFilter);
-        }
-        if (CollectionUtils.isNotEmpty(categories)) {
-            final BooleanExpression categoryFilter = user.category.in(categories);
-            builder.and(categoryFilter);
-        }
-        if (CollectionUtils.isNotEmpty(roles)) {
-            final BooleanExpression rolesFilter = user.role.identifier.in(roles);
-            builder.and(rolesFilter);
-        }
-        // On ne remonte pas les prestataires, sauf l'utilisateur courant
-        if (filterProviders) {
-            BooleanExpression filterPresta = user.category.ne(User.Category.PROVIDER);
+		// active
+		if (active) {
+			builder.and(user.active.eq(true));
+		}
+		if (CollectionUtils.isNotEmpty(libraries)) {
+			final BooleanExpression sitesFilter = user.library.identifier.in(libraries);
+			builder.and(sitesFilter);
+		}
+		if (CollectionUtils.isNotEmpty(categories)) {
+			final BooleanExpression categoryFilter = user.category.in(categories);
+			builder.and(categoryFilter);
+		}
+		if (CollectionUtils.isNotEmpty(roles)) {
+			final BooleanExpression rolesFilter = user.role.identifier.in(roles);
+			builder.and(rolesFilter);
+		}
+		// On ne remonte pas les prestataires, sauf l'utilisateur courant
+		if (filterProviders) {
+			BooleanExpression filterPresta = user.category.ne(User.Category.PROVIDER);
 
-            final String currentUserId = SecurityUtils.getCurrentUserId();
-            if (currentUserId != null) {
-                filterPresta = filterPresta.or(user.identifier.eq(currentUserId));
-            }
-            builder.and(filterPresta);
-        }
+			final String currentUserId = SecurityUtils.getCurrentUserId();
+			if (currentUserId != null) {
+				filterPresta = filterPresta.or(user.identifier.eq(currentUserId));
+			}
+			builder.and(filterPresta);
+		}
 
-        final JPAQuery<User> baseQuery = queryFactory.selectDistinct(user)
-                                                     .from(user)
-                                                     .leftJoin(user.library)
-                                                     .fetchJoin()
-                                                     .leftJoin(user.role)
-                                                     .fetchJoin()
-                                                     .where(builder)
-                                                     .orderBy(user.surname.asc())
-                                                     .orderBy(user.firstname.asc());
+		final JPAQuery<User> baseQuery = queryFactory.selectDistinct(user)
+			.from(user)
+			.leftJoin(user.library)
+			.fetchJoin()
+			.leftJoin(user.role)
+			.fetchJoin()
+			.where(builder)
+			.orderBy(user.surname.asc())
+			.orderBy(user.firstname.asc());
 
-        if (pageable != null) {
-            baseQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
-        }
+		if (pageable != null) {
+			baseQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
+		}
 
-        final long total = queryFactory.select(user.countDistinct()).from(user).leftJoin(user.library).leftJoin(user.role).where(builder).fetchOne();
+		final long total = queryFactory.select(user.countDistinct())
+			.from(user)
+			.leftJoin(user.library)
+			.leftJoin(user.role)
+			.where(builder)
+			.fetchOne();
 
-        return new PageImpl<>(baseQuery.fetch(), pageable, total);
-    }
+		return new PageImpl<>(baseQuery.fetch(), pageable, total);
+	}
 
-    @Override
-    public List<Object[]> getUsersGroupByLibrary(final List<String> libraries) {
-        final QUser qUser = QUser.user;
-        final QLibrary qLibrary = QLibrary.library;
-        final BooleanBuilder builder = new BooleanBuilder();
+	@Override
+	public List<Object[]> getUsersGroupByLibrary(final List<String> libraries) {
+		final QUser qUser = QUser.user;
+		final QLibrary qLibrary = QLibrary.library;
+		final BooleanBuilder builder = new BooleanBuilder();
 
-        // Bibliothèques
-        if (CollectionUtils.isNotEmpty(libraries)) {
-            builder.and(qLibrary.identifier.in(libraries));
-        }
-        builder.and(qLibrary.superuser.isFalse());
+		// Bibliothèques
+		if (CollectionUtils.isNotEmpty(libraries)) {
+			builder.and(qLibrary.identifier.in(libraries));
+		}
+		builder.and(qLibrary.superuser.isFalse());
 
-        return queryFactory.select(qLibrary.identifier, qLibrary.name, qUser.countDistinct())
-                           .from(qUser)
-                           .innerJoin(qUser.library, qLibrary)
-                           .where(builder.getValue())
-                           .groupBy(qLibrary.identifier, qLibrary.name)
-                           .stream()
-                           .map(Tuple::toArray)
-                           .collect(Collectors.toList());
-    }
+		return queryFactory.select(qLibrary.identifier, qLibrary.name, qUser.countDistinct())
+			.from(qUser)
+			.innerJoin(qUser.library, qLibrary)
+			.where(builder.getValue())
+			.groupBy(qLibrary.identifier, qLibrary.name)
+			.stream()
+			.map(Tuple::toArray)
+			.collect(Collectors.toList());
+	}
+
 }

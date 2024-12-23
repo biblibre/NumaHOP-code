@@ -19,97 +19,96 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class WorkflowGroupService {
 
-    private final WorkflowGroupRepository repository;
-    private final WorkflowGroupValidationService validationService;
+	private final WorkflowGroupRepository repository;
 
-    @Autowired
-    public WorkflowGroupService(final WorkflowGroupRepository repository, final WorkflowGroupValidationService validationService) {
-        this.repository = repository;
-        this.validationService = validationService;
-    }
+	private final WorkflowGroupValidationService validationService;
 
-    /**
-     * Sauvegarde un groupe
-     *
-     * @param group
-     * @return
-     * @throws PgcnValidationException
-     */
-    @Transactional
-    public WorkflowGroup save(final WorkflowGroup group) throws PgcnValidationException {
-        validationService.validate(group);
-        final WorkflowGroup savedGroup = repository.save(group);
-        return getOne(savedGroup.getIdentifier());
-    }
+	@Autowired
+	public WorkflowGroupService(final WorkflowGroupRepository repository,
+			final WorkflowGroupValidationService validationService) {
+		this.repository = repository;
+		this.validationService = validationService;
+	}
 
-    /**
-     * Retourne un groupe
-     *
-     * @param identifier
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public WorkflowGroup getOne(final String identifier) {
-        return repository.findByIdentifier(identifier);
-    }
+	/**
+	 * Sauvegarde un groupe
+	 * @param group
+	 * @return
+	 * @throws PgcnValidationException
+	 */
+	@Transactional
+	public WorkflowGroup save(final WorkflowGroup group) throws PgcnValidationException {
+		validationService.validate(group);
+		final WorkflowGroup savedGroup = repository.save(group);
+		return getOne(savedGroup.getIdentifier());
+	}
 
-    /**
-     * Indique si un utilisateur est présent dans le groupe
-     *
-     * @param identifier
-     * @param user
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public boolean isUserAuthorized(final String identifier, final User user) {
-        return isUserAuthorized(getOne(identifier), user.getIdentifier());
-    }
+	/**
+	 * Retourne un groupe
+	 * @param identifier
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public WorkflowGroup getOne(final String identifier) {
+		return repository.findByIdentifier(identifier);
+	}
 
-    /**
-     * Retourne vrai si le userId appartient au {@link WorkflowGroup}
-     *
-     * @param group
-     * @param userId
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public boolean isUserAuthorized(final WorkflowGroup group, final String userId) {
-        if (userId == null || group == null) {
-            return false;
-        }
-        for (final User userInGroup : group.getUsers()) {
-            if (StringUtils.equalsIgnoreCase(userId, userInGroup.getIdentifier())) {
-                return true;
-            }
-        }
-        return false;
-    }
+	/**
+	 * Indique si un utilisateur est présent dans le groupe
+	 * @param identifier
+	 * @param user
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public boolean isUserAuthorized(final String identifier, final User user) {
+		return isUserAuthorized(getOne(identifier), user.getIdentifier());
+	}
 
-    @Transactional(readOnly = true)
-    public Page<WorkflowGroup> search(final String search, final String initiale, final List<String> libraries, final Integer page, final Integer size, final List<String> sorts) {
+	/**
+	 * Retourne vrai si le userId appartient au {@link WorkflowGroup}
+	 * @param group
+	 * @param userId
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public boolean isUserAuthorized(final WorkflowGroup group, final String userId) {
+		if (userId == null || group == null) {
+			return false;
+		}
+		for (final User userInGroup : group.getUsers()) {
+			if (StringUtils.equalsIgnoreCase(userId, userInGroup.getIdentifier())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-        final Sort sort = SortUtils.getSort(sorts);
-        final Pageable pageRequest = PageRequest.of(page, size, sort);
+	@Transactional(readOnly = true)
+	public Page<WorkflowGroup> search(final String search, final String initiale, final List<String> libraries,
+			final Integer page, final Integer size, final List<String> sorts) {
 
-        return repository.search(search, initiale, libraries, pageRequest);
-    }
+		final Sort sort = SortUtils.getSort(sorts);
+		final Pageable pageRequest = PageRequest.of(page, size, sort);
 
-    /**
-     * Suppression de groupe
-     *
-     * @param identifier
-     */
-    @Transactional
-    public void delete(final String identifier) {
-        repository.deleteById(identifier);
-    }
+		return repository.search(search, initiale, libraries, pageRequest);
+	}
 
-    @Transactional(readOnly = true)
-    public Collection<WorkflowGroup> findAllForLibrary(final String identifier) {
-        return repository.findAllByLibraryIdentifier(identifier);
-    }
+	/**
+	 * Suppression de groupe
+	 * @param identifier
+	 */
+	@Transactional
+	public void delete(final String identifier) {
+		repository.deleteById(identifier);
+	}
 
-    public List<WorkflowGroup> findAllGroupsByUser(final User user) {
-        return repository.findAllGroupsByUser(user);
-    }
+	@Transactional(readOnly = true)
+	public Collection<WorkflowGroup> findAllForLibrary(final String identifier) {
+		return repository.findAllByLibraryIdentifier(identifier);
+	}
+
+	public List<WorkflowGroup> findAllGroupsByUser(final User user) {
+		return repository.findAllGroupsByUser(user);
+	}
+
 }

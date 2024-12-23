@@ -20,73 +20,75 @@ import org.hibernate.envers.query.order.internal.PropertyAuditOrder;
 
 public class AbstractAuditRepository<T extends AbstractDomainObject> {
 
-    private final Class<T> clazz;
+	private final Class<T> clazz;
 
-    public AbstractAuditRepository(final Class<T> clazz) {
-        this.clazz = clazz;
-    }
+	public AbstractAuditRepository(final Class<T> clazz) {
+		this.clazz = clazz;
+	}
 
-    /**
-     * Recherche la liste des dernières révisions depuis une date donnée
-     *
-     * @param fromDate
-     * @param em
-     * @param resultFn
-     * @param <U>
-     * @return
-     */
-    protected <U> List<U> getRevisions(final LocalDate fromDate, final EntityManager em, final BiFunction<T, AuditRevision, U> resultFn) {
-        return getRevisions(fromDate, em, null, resultFn);
-    }
+	/**
+	 * Recherche la liste des dernières révisions depuis une date donnée
+	 * @param fromDate
+	 * @param em
+	 * @param resultFn
+	 * @param <U>
+	 * @return
+	 */
+	protected <U> List<U> getRevisions(final LocalDate fromDate, final EntityManager em,
+			final BiFunction<T, AuditRevision, U> resultFn) {
+		return getRevisions(fromDate, em, null, resultFn);
+	}
 
-    /**
-     * Recherche la liste des dernières révisions depuis une date donnée
-     *
-     * @param fromDate
-     * @param em
-     * @param criterion
-     * @param resultFn
-     * @param <U>
-     * @return
-     */
-    protected <U> List<U> getRevisions(final LocalDate fromDate, final EntityManager em, final List<AuditCriterion> criterion, final BiFunction<T, AuditRevision, U> resultFn) {
+	/**
+	 * Recherche la liste des dernières révisions depuis une date donnée
+	 * @param fromDate
+	 * @param em
+	 * @param criterion
+	 * @param resultFn
+	 * @param <U>
+	 * @return
+	 */
+	protected <U> List<U> getRevisions(final LocalDate fromDate, final EntityManager em,
+			final List<AuditCriterion> criterion, final BiFunction<T, AuditRevision, U> resultFn) {
 
-        final AuditQuery auditQuery = AuditReaderFactory.get(em)
-                                                        .createQuery()
-                                                        .forRevisionsOfEntity(clazz, false, false)
-                                                        // Tri par n° de révision desc
-                                                        .addOrder(new PropertyAuditOrder(null, new RevisionNumberPropertyName(), false));
-        // Filtre sur le timestamp de la révision
-        if (fromDate != null) {
-            auditQuery.add(AuditEntity.revisionProperty("timestamp").ge(fromDate.atStartOfDay().atZone(ZoneId.systemDefault()).toEpochSecond() * 1000));
-        }
-        // Filtres additionnels
-        if (CollectionUtils.isNotEmpty(criterion)) {
-            criterion.forEach(auditQuery::add);
-        }
-        // Résultat
-        final List<?> revisions = auditQuery.getResultList();
-        final Set<String> distinctEntities = new HashSet<>();
+		final AuditQuery auditQuery = AuditReaderFactory.get(em)
+			.createQuery()
+			.forRevisionsOfEntity(clazz, false, false)
+			// Tri par n° de révision desc
+			.addOrder(new PropertyAuditOrder(null, new RevisionNumberPropertyName(), false));
+		// Filtre sur le timestamp de la révision
+		if (fromDate != null) {
+			auditQuery.add(AuditEntity.revisionProperty("timestamp")
+				.ge(fromDate.atStartOfDay().atZone(ZoneId.systemDefault()).toEpochSecond() * 1000));
+		}
+		// Filtres additionnels
+		if (CollectionUtils.isNotEmpty(criterion)) {
+			criterion.forEach(auditQuery::add);
+		}
+		// Résultat
+		final List<?> revisions = auditQuery.getResultList();
+		final Set<String> distinctEntities = new HashSet<>();
 
-        return revisions.stream()
-                        // distinct par entité
-                        .filter(obj -> {
-                            final T entity = (T) ((Object[]) obj)[0];
-                            boolean found = distinctEntities.contains(entity.getIdentifier());
+		return revisions.stream()
+			// distinct par entité
+			.filter(obj -> {
+				final T entity = (T) ((Object[]) obj)[0];
+				boolean found = distinctEntities.contains(entity.getIdentifier());
 
-                            if (!found) {
-                                distinctEntities.add(entity.getIdentifier());
-                            }
-                            return !found;
-                        })
-                        // Construction des DTOs à partir des résultats de la recherche
-                        .map(obj -> {
-                            final T entity = (T) ((Object[]) obj)[0];
-                            final AuditRevision rev = (AuditRevision) ((Object[]) obj)[1];
+				if (!found) {
+					distinctEntities.add(entity.getIdentifier());
+				}
+				return !found;
+			})
+			// Construction des DTOs à partir des résultats de la recherche
+			.map(obj -> {
+				final T entity = (T) ((Object[]) obj)[0];
+				final AuditRevision rev = (AuditRevision) ((Object[]) obj)[1];
 
-                            return resultFn.apply(entity, rev);
+				return resultFn.apply(entity, rev);
 
-                        })
-                        .collect(Collectors.toList());
-    }
+			})
+			.collect(Collectors.toList());
+	}
+
 }

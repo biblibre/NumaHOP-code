@@ -13,195 +13,214 @@ import java.util.Set;
  */
 public class LibraryDTO extends SimpleLibraryDTO {
 
-    private String website;
-    private String phoneNumber;
-    private String email;
-    private String number;
-    private boolean active;
-    private String institution;
-    private AddressDTO address;
-    // responsable bibliotheque
-    private String cinesService;
-    private Set<SimpleFTPConfigurationDTO> ftpConfigurations;
-    private SimpleFTPConfigurationDTO activeFTPConfiguration;
-    private Set<SimpleCheckConfigurationDTO> checkConfigurations;
-    private SimpleCheckConfigurationDTO activeCheckConfiguration;
-    private Set<SimpleViewsFormatConfigurationDTO> viewsFormatConfigurations;
-    private SimpleViewsFormatConfigurationDTO activeFormatConfiguration;
-    private Set<SimpleOcrLangConfigDTO> ocrLangConfigurations;
-    private SimpleOcrLangConfigDTO activeOcrLangConfiguration;
+	private String website;
 
-    /**
-     * Ajout des infos de création
-     */
-    private String createdBy;
-    private LocalDateTime createdDate;
-    /**
-     * Ajout des infos de modifications
-     */
-    private String lastModifiedBy;
-    private LocalDateTime lastModifiedDate;
+	private String phoneNumber;
 
-    public LibraryDTO() {
-    }
+	private String email;
 
-    public final String getWebsite() {
-        return website;
-    }
+	private String number;
 
-    public void setWebsite(final String website) {
-        this.website = website;
-    }
+	private boolean active;
 
-    public final String getPhoneNumber() {
-        return phoneNumber;
-    }
+	private String institution;
 
-    public void setPhoneNumber(final String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+	private AddressDTO address;
 
-    public final String getEmail() {
-        return email;
-    }
+	// responsable bibliotheque
+	private String cinesService;
 
-    public void setEmail(final String email) {
-        this.email = email;
-    }
+	private Set<SimpleFTPConfigurationDTO> ftpConfigurations;
 
-    public final String getNumber() {
-        return number;
-    }
+	private SimpleFTPConfigurationDTO activeFTPConfiguration;
 
-    public void setNumber(final String number) {
-        this.number = number;
-    }
+	private Set<SimpleCheckConfigurationDTO> checkConfigurations;
 
-    public final boolean isActive() {
-        return active;
-    }
+	private SimpleCheckConfigurationDTO activeCheckConfiguration;
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	private Set<SimpleViewsFormatConfigurationDTO> viewsFormatConfigurations;
 
-    public final AddressDTO getAddress() {
-        return address;
-    }
+	private SimpleViewsFormatConfigurationDTO activeFormatConfiguration;
 
-    public void setAddress(final AddressDTO address) {
-        this.address = address;
-    }
+	private Set<SimpleOcrLangConfigDTO> ocrLangConfigurations;
 
-    public final String getCinesService() {
-        return cinesService;
-    }
+	private SimpleOcrLangConfigDTO activeOcrLangConfiguration;
 
-    public void setCinesService(final String cinesService) {
-        this.cinesService = cinesService;
-    }
+	/**
+	 * Ajout des infos de création
+	 */
+	private String createdBy;
 
-    public void setActiveFTPConfiguration(final SimpleFTPConfigurationDTO activeFTPConfiguration) {
-        this.activeFTPConfiguration = activeFTPConfiguration;
-    }
+	private LocalDateTime createdDate;
 
-    public SimpleFTPConfigurationDTO getActiveFTPConfiguration() {
-        return activeFTPConfiguration;
-    }
+	/**
+	 * Ajout des infos de modifications
+	 */
+	private String lastModifiedBy;
 
-    public Set<SimpleFTPConfigurationDTO> getFtpConfigurations() {
-        return ftpConfigurations;
-    }
+	private LocalDateTime lastModifiedDate;
 
-    public void setFtpConfigurations(final Set<SimpleFTPConfigurationDTO> ftpConfigurations) {
-        this.ftpConfigurations = ftpConfigurations;
-    }
+	public LibraryDTO() {
+	}
 
-    public Set<SimpleCheckConfigurationDTO> getCheckConfigurations() {
-        return checkConfigurations;
-    }
+	public final String getWebsite() {
+		return website;
+	}
 
-    public void setCheckConfigurations(final Set<SimpleCheckConfigurationDTO> checkConfigurations) {
-        this.checkConfigurations = checkConfigurations;
-    }
+	public void setWebsite(final String website) {
+		this.website = website;
+	}
 
-    public SimpleCheckConfigurationDTO getActiveCheckConfiguration() {
-        return activeCheckConfiguration;
-    }
+	public final String getPhoneNumber() {
+		return phoneNumber;
+	}
 
-    public void setActiveCheckConfiguration(final SimpleCheckConfigurationDTO activeCheckConfiguration) {
-        this.activeCheckConfiguration = activeCheckConfiguration;
-    }
+	public void setPhoneNumber(final String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	public final String getEmail() {
+		return email;
+	}
 
-    public void setCreatedBy(final String createdBy) {
-        this.createdBy = createdBy;
-    }
+	public void setEmail(final String email) {
+		this.email = email;
+	}
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
+	public final String getNumber() {
+		return number;
+	}
 
-    public void setCreatedDate(final LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
+	public void setNumber(final String number) {
+		this.number = number;
+	}
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
+	public final boolean isActive() {
+		return active;
+	}
 
-    public void setLastModifiedBy(final String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
 
-    public LocalDateTime getLastModifiedDate() {
-        return lastModifiedDate;
-    }
+	public final AddressDTO getAddress() {
+		return address;
+	}
 
-    public void setLastModifiedDate(final LocalDateTime lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
+	public void setAddress(final AddressDTO address) {
+		this.address = address;
+	}
 
-    public String getInstitution() {
-        return institution;
-    }
+	public final String getCinesService() {
+		return cinesService;
+	}
 
-    public void setInstitution(final String institution) {
-        this.institution = institution;
-    }
+	public void setCinesService(final String cinesService) {
+		this.cinesService = cinesService;
+	}
 
-    public Set<SimpleViewsFormatConfigurationDTO> getViewsFormatConfigurations() {
-        return viewsFormatConfigurations;
-    }
+	public void setActiveFTPConfiguration(final SimpleFTPConfigurationDTO activeFTPConfiguration) {
+		this.activeFTPConfiguration = activeFTPConfiguration;
+	}
 
-    public void setViewsFormatConfigurations(final Set<SimpleViewsFormatConfigurationDTO> viewFormatConfigurations) {
-        this.viewsFormatConfigurations = viewFormatConfigurations;
-    }
+	public SimpleFTPConfigurationDTO getActiveFTPConfiguration() {
+		return activeFTPConfiguration;
+	}
 
-    public SimpleViewsFormatConfigurationDTO getActiveFormatConfiguration() {
-        return activeFormatConfiguration;
-    }
+	public Set<SimpleFTPConfigurationDTO> getFtpConfigurations() {
+		return ftpConfigurations;
+	}
 
-    public void setActiveFormatConfiguration(final SimpleViewsFormatConfigurationDTO activeFormatConfiguration) {
-        this.activeFormatConfiguration = activeFormatConfiguration;
-    }
+	public void setFtpConfigurations(final Set<SimpleFTPConfigurationDTO> ftpConfigurations) {
+		this.ftpConfigurations = ftpConfigurations;
+	}
 
-    public Set<SimpleOcrLangConfigDTO> getOcrLangConfigurations() {
-        return ocrLangConfigurations;
-    }
+	public Set<SimpleCheckConfigurationDTO> getCheckConfigurations() {
+		return checkConfigurations;
+	}
 
-    public void setOcrLangConfigurations(final Set<SimpleOcrLangConfigDTO> ocrLangConfigurations) {
-        this.ocrLangConfigurations = ocrLangConfigurations;
-    }
+	public void setCheckConfigurations(final Set<SimpleCheckConfigurationDTO> checkConfigurations) {
+		this.checkConfigurations = checkConfigurations;
+	}
 
-    public SimpleOcrLangConfigDTO getActiveOcrLangConfiguration() {
-        return activeOcrLangConfiguration;
-    }
+	public SimpleCheckConfigurationDTO getActiveCheckConfiguration() {
+		return activeCheckConfiguration;
+	}
 
-    public void setActiveOcrLangConfiguration(final SimpleOcrLangConfigDTO activeOcrLangConfiguration) {
-        this.activeOcrLangConfiguration = activeOcrLangConfiguration;
-    }
+	public void setActiveCheckConfiguration(final SimpleCheckConfigurationDTO activeCheckConfiguration) {
+		this.activeCheckConfiguration = activeCheckConfiguration;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(final String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(final LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(final String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public LocalDateTime getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(final LocalDateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public String getInstitution() {
+		return institution;
+	}
+
+	public void setInstitution(final String institution) {
+		this.institution = institution;
+	}
+
+	public Set<SimpleViewsFormatConfigurationDTO> getViewsFormatConfigurations() {
+		return viewsFormatConfigurations;
+	}
+
+	public void setViewsFormatConfigurations(final Set<SimpleViewsFormatConfigurationDTO> viewFormatConfigurations) {
+		this.viewsFormatConfigurations = viewFormatConfigurations;
+	}
+
+	public SimpleViewsFormatConfigurationDTO getActiveFormatConfiguration() {
+		return activeFormatConfiguration;
+	}
+
+	public void setActiveFormatConfiguration(final SimpleViewsFormatConfigurationDTO activeFormatConfiguration) {
+		this.activeFormatConfiguration = activeFormatConfiguration;
+	}
+
+	public Set<SimpleOcrLangConfigDTO> getOcrLangConfigurations() {
+		return ocrLangConfigurations;
+	}
+
+	public void setOcrLangConfigurations(final Set<SimpleOcrLangConfigDTO> ocrLangConfigurations) {
+		this.ocrLangConfigurations = ocrLangConfigurations;
+	}
+
+	public SimpleOcrLangConfigDTO getActiveOcrLangConfiguration() {
+		return activeOcrLangConfiguration;
+	}
+
+	public void setActiveOcrLangConfiguration(final SimpleOcrLangConfigDTO activeOcrLangConfiguration) {
+		this.activeOcrLangConfiguration = activeOcrLangConfiguration;
+	}
+
 }

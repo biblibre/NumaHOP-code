@@ -35,387 +35,387 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Library extends AbstractDomainObject {
 
-    /**
-     * Nom des tables dans la base de données.
-     */
-    public static final String TABLE_NAME = "lib_library";
-
-    /**
-     * Nom de la bibliothèque
-     */
-    @Column(name = "name", unique = true)
-    private String name;
-
-    /**
-     * Adresse de la bibliothèque
-     */
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "address")
-    private Address address;
-
-    /**
-     * Site internet
-     */
-    @Column(name = "website")
-    private String website;
-
-    /**
-     * Numéro de téléphone
-     */
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
-    /**
-     * Courriel
-     */
-    @Column(name = "email")
-    private String email;
-
-    /**
-     * Préfixe
-     */
-    @Column(name = "prefix")
-    private String prefix;
-
-    /**
-     * Numéro Z39.50
-     */
-    @Column(name = "number")
-    private String number;
-
-    /**
-     * Etat
-     */
-    @Column(name = "active")
-    private boolean active;
-
-    /**
-     * Institution
-     */
-    @Column(name = "institution")
-    private String institution;
-
-    /**
-     * Identifiant service versant Cines
-     */
-    @Column(name = "cines_service")
-    private String cinesService;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role")
-    private Role defaultRole;
-
-    @Column(name = "superuser")
-    private Boolean superuser = Boolean.FALSE;
-
-    /**
-     * Responsable bibliothèque: nom
-     */
-    @Column(name = "lib_resp_name")
-    private String libRespName;
-
-    /**
-     * Responsable bibliothèque: téléphone
-     */
-    @Column(name = "lib_resp_phone")
-    private String libRespPhone;
-
-    /**
-     * Responsable bibliothèque: email
-     */
-    @Column(name = "lib_resp_email")
-    private String libRespEmail;
-
-    /**
-     * Liste des plateformes associées à la bibliothèque
-     */
-    @OneToMany(mappedBy = "library", fetch = FetchType.LAZY)
-    private final Set<Platform> platforms = new HashSet<>();
-
-    @OneToMany(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Set<FTPConfiguration> ftpConfigurations = new HashSet<>();
-
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "active_configuration_ftp")
-    private FTPConfiguration activeFTPConfiguration;
+	/**
+	 * Nom des tables dans la base de données.
+	 */
+	public static final String TABLE_NAME = "lib_library";
+
+	/**
+	 * Nom de la bibliothèque
+	 */
+	@Column(name = "name", unique = true)
+	private String name;
+
+	/**
+	 * Adresse de la bibliothèque
+	 */
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "address")
+	private Address address;
+
+	/**
+	 * Site internet
+	 */
+	@Column(name = "website")
+	private String website;
+
+	/**
+	 * Numéro de téléphone
+	 */
+	@Column(name = "phone_number")
+	private String phoneNumber;
+
+	/**
+	 * Courriel
+	 */
+	@Column(name = "email")
+	private String email;
+
+	/**
+	 * Préfixe
+	 */
+	@Column(name = "prefix")
+	private String prefix;
+
+	/**
+	 * Numéro Z39.50
+	 */
+	@Column(name = "number")
+	private String number;
+
+	/**
+	 * Etat
+	 */
+	@Column(name = "active")
+	private boolean active;
+
+	/**
+	 * Institution
+	 */
+	@Column(name = "institution")
+	private String institution;
+
+	/**
+	 * Identifiant service versant Cines
+	 */
+	@Column(name = "cines_service")
+	private String cinesService;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "role")
+	private Role defaultRole;
+
+	@Column(name = "superuser")
+	private Boolean superuser = Boolean.FALSE;
+
+	/**
+	 * Responsable bibliothèque: nom
+	 */
+	@Column(name = "lib_resp_name")
+	private String libRespName;
+
+	/**
+	 * Responsable bibliothèque: téléphone
+	 */
+	@Column(name = "lib_resp_phone")
+	private String libRespPhone;
+
+	/**
+	 * Responsable bibliothèque: email
+	 */
+	@Column(name = "lib_resp_email")
+	private String libRespEmail;
+
+	/**
+	 * Liste des plateformes associées à la bibliothèque
+	 */
+	@OneToMany(mappedBy = "library", fetch = FetchType.LAZY)
+	private final Set<Platform> platforms = new HashSet<>();
+
+	@OneToMany(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private Set<FTPConfiguration> ftpConfigurations = new HashSet<>();
+
+	@OneToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "active_configuration_ftp")
+	private FTPConfiguration activeFTPConfiguration;
 
-    @OneToMany(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Set<CheckConfiguration> checkConfigurations = new HashSet<>();
+	@OneToMany(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private Set<CheckConfiguration> checkConfigurations = new HashSet<>();
 
-    @OneToOne(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private DeliverySlipConfiguration deliverySlipConfiguration;
+	@OneToOne(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private DeliverySlipConfiguration deliverySlipConfiguration;
 
-    @OneToOne(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private CheckSlipConfiguration checkSlipConfiguration;
+	@OneToOne(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private CheckSlipConfiguration checkSlipConfiguration;
 
-    @OneToOne(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private ConditionReportSlipConfiguration condReportSlipConfiguration;
+	@OneToOne(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private ConditionReportSlipConfiguration condReportSlipConfiguration;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "active_configuration_check")
-    private CheckConfiguration activeCheckConfiguration;
+	@OneToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "active_configuration_check")
+	private CheckConfiguration activeCheckConfiguration;
 
-    @OneToMany(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private final Set<ViewsFormatConfiguration> viewsFormatConfigurations = new HashSet<>();
+	@OneToMany(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private final Set<ViewsFormatConfiguration> viewsFormatConfigurations = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "active_format_configuration")
-    private ViewsFormatConfiguration activeFormatConfiguration;
+	@OneToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "active_format_configuration")
+	private ViewsFormatConfiguration activeFormatConfiguration;
 
-    @OneToMany(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Set<ExportFTPConfiguration> exportFtpConfigurations = new HashSet<>();
-
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "active_configuration_export_ftp")
-    private ExportFTPConfiguration activeExportFTPConfiguration;
-
-    @OneToMany(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Set<OcrLangConfiguration> ocrLangConfigurations = new HashSet<>();
+	@OneToMany(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private Set<ExportFTPConfiguration> exportFtpConfigurations = new HashSet<>();
+
+	@OneToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "active_configuration_export_ftp")
+	private ExportFTPConfiguration activeExportFTPConfiguration;
+
+	@OneToMany(mappedBy = "library", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private Set<OcrLangConfiguration> ocrLangConfigurations = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "active_configuration_ocr_lang")
-    private OcrLangConfiguration activeOcrLangConfiguration;
+	@OneToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "active_configuration_ocr_lang")
+	private OcrLangConfiguration activeOcrLangConfiguration;
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public Address getAddress() {
-        return address;
-    }
+	public Address getAddress() {
+		return address;
+	}
 
-    public void setAddress(final Address address) {
-        this.address = address;
-    }
+	public void setAddress(final Address address) {
+		this.address = address;
+	}
 
-    public String getWebsite() {
-        return website;
-    }
+	public String getWebsite() {
+		return website;
+	}
 
-    public void setWebsite(final String website) {
-        this.website = website;
-    }
+	public void setWebsite(final String website) {
+		this.website = website;
+	}
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
 
-    public void setPhoneNumber(final String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+	public void setPhoneNumber(final String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(final String email) {
-        this.email = email;
-    }
+	public void setEmail(final String email) {
+		this.email = email;
+	}
 
-    public String getPrefix() {
-        return prefix;
-    }
+	public String getPrefix() {
+		return prefix;
+	}
 
-    public void setPrefix(final String prefix) {
-        this.prefix = prefix;
-    }
+	public void setPrefix(final String prefix) {
+		this.prefix = prefix;
+	}
 
-    public String getNumber() {
-        return number;
-    }
+	public String getNumber() {
+		return number;
+	}
 
-    public void setNumber(final String number) {
-        this.number = number;
-    }
+	public void setNumber(final String number) {
+		this.number = number;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
 
-    public Set<Platform> getPlatforms() {
-        return platforms;
-    }
+	public Set<Platform> getPlatforms() {
+		return platforms;
+	}
 
-    public void setPlatforms(final Set<Platform> platforms) {
-        this.platforms.clear();
-        if (platforms != null) {
-            platforms.forEach(this::addPlatform);
-        }
-    }
+	public void setPlatforms(final Set<Platform> platforms) {
+		this.platforms.clear();
+		if (platforms != null) {
+			platforms.forEach(this::addPlatform);
+		}
+	}
 
-    public void addPlatform(final Platform platform) {
-        if (platform != null) {
-            this.platforms.add(platform);
-        }
-    }
-
-    public String getCinesService() {
-        return cinesService;
-    }
-
-    public void setCinesService(final String cinesService) {
-        this.cinesService = cinesService;
-    }
-
-    public FTPConfiguration getActiveFTPConfiguration() {
-        return activeFTPConfiguration;
-    }
-
-    public void setActiveFTPConfiguration(final FTPConfiguration activeFTPConfiguration) {
-        this.activeFTPConfiguration = activeFTPConfiguration;
-    }
-
-    public Set<FTPConfiguration> getFtpConfigurations() {
-        return ftpConfigurations;
-    }
-
-    public void setFtpConfigurations(final Set<FTPConfiguration> ftpConfigurations) {
-        this.ftpConfigurations = ftpConfigurations;
-    }
-
-    public CheckConfiguration getActiveCheckConfiguration() {
-        return activeCheckConfiguration;
-    }
-
-    public void setActiveCheckConfiguration(final CheckConfiguration activeCheckConfiguration) {
-        this.activeCheckConfiguration = activeCheckConfiguration;
-    }
-
-    public Set<CheckConfiguration> getCheckConfigurations() {
-        return checkConfigurations;
-    }
-
-    public void setCheckConfigurations(final Set<CheckConfiguration> checkConfigurations) {
-        this.checkConfigurations = checkConfigurations;
-    }
-
-    public Role getDefaultRole() {
-        return defaultRole;
-    }
-
-    public void setDefaultRole(final Role defaultRole) {
-        this.defaultRole = defaultRole;
-    }
-
-    public Boolean getSuperuser() {
-        return superuser;
-    }
-
-    public void setSuperuser(final Boolean superuser) {
-        this.superuser = superuser;
-    }
-
-    public String getLibRespName() {
-        return libRespName;
-    }
-
-    public void setLibRespName(final String libRespName) {
-        this.libRespName = libRespName;
-    }
-
-    public String getLibRespPhone() {
-        return libRespPhone;
-    }
-
-    public void setLibRespPhone(final String libRespPhone) {
-        this.libRespPhone = libRespPhone;
-    }
-
-    public String getLibRespEmail() {
-        return libRespEmail;
-    }
-
-    public void setLibRespEmail(final String libRespEmail) {
-        this.libRespEmail = libRespEmail;
-    }
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("name", name).add("identifier", identifier).toString();
-    }
-
-    public String getInstitution() {
-        return institution;
-    }
-
-    public void setInstitution(final String institution) {
-        this.institution = institution;
-    }
-
-    public DeliverySlipConfiguration getDeliverySlipConfiguration() {
-        return deliverySlipConfiguration;
-    }
-
-    public void setDeliverySlipConfiguration(final DeliverySlipConfiguration deliverySlipConfiguration) {
-        this.deliverySlipConfiguration = deliverySlipConfiguration;
-    }
-
-    public CheckSlipConfiguration getCheckSlipConfiguration() {
-        return checkSlipConfiguration;
-    }
-
-    public void setCheckSlipConfiguration(final CheckSlipConfiguration checkSlipConfiguration) {
-        this.checkSlipConfiguration = checkSlipConfiguration;
-    }
-
-    public ConditionReportSlipConfiguration getCondReportSlipConfiguration() {
-        return condReportSlipConfiguration;
-    }
-
-    public void setCondReportSlipConfiguration(final ConditionReportSlipConfiguration condReportSlipConfiguration) {
-        this.condReportSlipConfiguration = condReportSlipConfiguration;
-    }
-
-    public ViewsFormatConfiguration getActiveFormatConfiguration() {
-        return activeFormatConfiguration;
-    }
-
-    public void setActiveFormatConfiguration(final ViewsFormatConfiguration activeFormatConfiguration) {
-        this.activeFormatConfiguration = activeFormatConfiguration;
-    }
-
-    public Set<ViewsFormatConfiguration> getViewsFormatConfigurations() {
-        return viewsFormatConfigurations;
-    }
-
-    public Set<ExportFTPConfiguration> getExportFtpConfigurations() {
-        return exportFtpConfigurations;
-    }
-
-    public void setExportFtpConfigurations(final Set<ExportFTPConfiguration> exportFtpConfigurations) {
-        this.exportFtpConfigurations = exportFtpConfigurations;
-    }
-
-    public ExportFTPConfiguration getActiveExportFTPConfiguration() {
-        return activeExportFTPConfiguration;
-    }
-
-    public void setActiveExportFTPConfiguration(final ExportFTPConfiguration activeExportFTPConfiguration) {
-        this.activeExportFTPConfiguration = activeExportFTPConfiguration;
-    }
-
-    public Set<OcrLangConfiguration> getOcrLangConfigurations() {
-        return ocrLangConfigurations;
-    }
-
-    public void setOcrLangConfigurations(final Set<OcrLangConfiguration> ocrLangConfigurations) {
-        this.ocrLangConfigurations = ocrLangConfigurations;
-    }
-
-    public OcrLangConfiguration getActiveOcrLangConfiguration() {
-        return activeOcrLangConfiguration;
-    }
-
-    public void setActiveOcrLangConfiguration(final OcrLangConfiguration activeOcrLangConfiguration) {
-        this.activeOcrLangConfiguration = activeOcrLangConfiguration;
-    }
+	public void addPlatform(final Platform platform) {
+		if (platform != null) {
+			this.platforms.add(platform);
+		}
+	}
+
+	public String getCinesService() {
+		return cinesService;
+	}
+
+	public void setCinesService(final String cinesService) {
+		this.cinesService = cinesService;
+	}
+
+	public FTPConfiguration getActiveFTPConfiguration() {
+		return activeFTPConfiguration;
+	}
+
+	public void setActiveFTPConfiguration(final FTPConfiguration activeFTPConfiguration) {
+		this.activeFTPConfiguration = activeFTPConfiguration;
+	}
+
+	public Set<FTPConfiguration> getFtpConfigurations() {
+		return ftpConfigurations;
+	}
+
+	public void setFtpConfigurations(final Set<FTPConfiguration> ftpConfigurations) {
+		this.ftpConfigurations = ftpConfigurations;
+	}
+
+	public CheckConfiguration getActiveCheckConfiguration() {
+		return activeCheckConfiguration;
+	}
+
+	public void setActiveCheckConfiguration(final CheckConfiguration activeCheckConfiguration) {
+		this.activeCheckConfiguration = activeCheckConfiguration;
+	}
+
+	public Set<CheckConfiguration> getCheckConfigurations() {
+		return checkConfigurations;
+	}
+
+	public void setCheckConfigurations(final Set<CheckConfiguration> checkConfigurations) {
+		this.checkConfigurations = checkConfigurations;
+	}
+
+	public Role getDefaultRole() {
+		return defaultRole;
+	}
+
+	public void setDefaultRole(final Role defaultRole) {
+		this.defaultRole = defaultRole;
+	}
+
+	public Boolean getSuperuser() {
+		return superuser;
+	}
+
+	public void setSuperuser(final Boolean superuser) {
+		this.superuser = superuser;
+	}
+
+	public String getLibRespName() {
+		return libRespName;
+	}
+
+	public void setLibRespName(final String libRespName) {
+		this.libRespName = libRespName;
+	}
+
+	public String getLibRespPhone() {
+		return libRespPhone;
+	}
+
+	public void setLibRespPhone(final String libRespPhone) {
+		this.libRespPhone = libRespPhone;
+	}
+
+	public String getLibRespEmail() {
+		return libRespEmail;
+	}
+
+	public void setLibRespEmail(final String libRespEmail) {
+		this.libRespEmail = libRespEmail;
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this).add("name", name).add("identifier", identifier).toString();
+	}
+
+	public String getInstitution() {
+		return institution;
+	}
+
+	public void setInstitution(final String institution) {
+		this.institution = institution;
+	}
+
+	public DeliverySlipConfiguration getDeliverySlipConfiguration() {
+		return deliverySlipConfiguration;
+	}
+
+	public void setDeliverySlipConfiguration(final DeliverySlipConfiguration deliverySlipConfiguration) {
+		this.deliverySlipConfiguration = deliverySlipConfiguration;
+	}
+
+	public CheckSlipConfiguration getCheckSlipConfiguration() {
+		return checkSlipConfiguration;
+	}
+
+	public void setCheckSlipConfiguration(final CheckSlipConfiguration checkSlipConfiguration) {
+		this.checkSlipConfiguration = checkSlipConfiguration;
+	}
+
+	public ConditionReportSlipConfiguration getCondReportSlipConfiguration() {
+		return condReportSlipConfiguration;
+	}
+
+	public void setCondReportSlipConfiguration(final ConditionReportSlipConfiguration condReportSlipConfiguration) {
+		this.condReportSlipConfiguration = condReportSlipConfiguration;
+	}
+
+	public ViewsFormatConfiguration getActiveFormatConfiguration() {
+		return activeFormatConfiguration;
+	}
+
+	public void setActiveFormatConfiguration(final ViewsFormatConfiguration activeFormatConfiguration) {
+		this.activeFormatConfiguration = activeFormatConfiguration;
+	}
+
+	public Set<ViewsFormatConfiguration> getViewsFormatConfigurations() {
+		return viewsFormatConfigurations;
+	}
+
+	public Set<ExportFTPConfiguration> getExportFtpConfigurations() {
+		return exportFtpConfigurations;
+	}
+
+	public void setExportFtpConfigurations(final Set<ExportFTPConfiguration> exportFtpConfigurations) {
+		this.exportFtpConfigurations = exportFtpConfigurations;
+	}
+
+	public ExportFTPConfiguration getActiveExportFTPConfiguration() {
+		return activeExportFTPConfiguration;
+	}
+
+	public void setActiveExportFTPConfiguration(final ExportFTPConfiguration activeExportFTPConfiguration) {
+		this.activeExportFTPConfiguration = activeExportFTPConfiguration;
+	}
+
+	public Set<OcrLangConfiguration> getOcrLangConfigurations() {
+		return ocrLangConfigurations;
+	}
+
+	public void setOcrLangConfigurations(final Set<OcrLangConfiguration> ocrLangConfigurations) {
+		this.ocrLangConfigurations = ocrLangConfigurations;
+	}
+
+	public OcrLangConfiguration getActiveOcrLangConfiguration() {
+		return activeOcrLangConfiguration;
+	}
+
+	public void setActiveOcrLangConfiguration(final OcrLangConfiguration activeOcrLangConfiguration) {
+		this.activeOcrLangConfiguration = activeOcrLangConfiguration;
+	}
 
 }

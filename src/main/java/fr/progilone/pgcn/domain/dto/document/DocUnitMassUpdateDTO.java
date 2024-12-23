@@ -5,37 +5,40 @@ import java.util.List;
 
 public class DocUnitMassUpdateDTO {
 
-    private final List<String> docUnitIds = new ArrayList<>();
-    private boolean archivable;
-    private boolean distributable;
-    private String condReportType;
+	private final List<String> docUnitIds = new ArrayList<>();
 
-    public boolean isArchivable() {
-        return archivable;
-    }
+	private boolean archivable;
 
-    public void setArchivable(boolean archivable) {
-        this.archivable = archivable;
-    }
+	private boolean distributable;
 
-    public boolean isDistributable() {
-        return distributable;
-    }
+	private String condReportType;
 
-    public void setDistributable(boolean distributable) {
-        this.distributable = distributable;
-    }
+	public boolean isArchivable() {
+		return archivable;
+	}
 
-    public String getCondReportType() {
-        return condReportType;
-    }
+	public void setArchivable(boolean archivable) {
+		this.archivable = archivable;
+	}
 
-    public void setCondReportType(String condReportType) {
-        this.condReportType = condReportType;
-    }
+	public boolean isDistributable() {
+		return distributable;
+	}
 
-    public List<String> getDocUnitIds() {
-        return docUnitIds;
-    }
+	public void setDistributable(boolean distributable) {
+		this.distributable = distributable;
+	}
+
+	public String getCondReportType() {
+		return condReportType;
+	}
+
+	public void setCondReportType(String condReportType) {
+		this.condReportType = condReportType;
+	}
+
+	public List<String> getDocUnitIds() {
+		return docUnitIds;
+	}
 
 }

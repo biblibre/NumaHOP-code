@@ -9,105 +9,111 @@ import java.util.Objects;
 
 public class SimpleDigitalDocumentDTO extends AbstractDTO implements Comparable<SimpleDigitalDocumentDTO> {
 
-    private String identifier;
-    private String digitalId;
-    private DigitalDocument.DigitalDocumentStatus status;
-    private int totalDelivery;
-    private String checkNotes;
-    // Retours de contrôles
-    private List<AutomaticCheckResultDTO> automaticCheckResults;
-    private DocUnitDTO docUnit;
+	private String identifier;
 
-    private List<SimpleDeliveredDigitalDocDTO> deliveries;
+	private String digitalId;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private DigitalDocument.DigitalDocumentStatus status;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private int totalDelivery;
 
-    public String getDigitalId() {
-        return digitalId;
-    }
+	private String checkNotes;
 
-    public void setDigitalId(final String digitalId) {
-        this.digitalId = digitalId;
-    }
+	// Retours de contrôles
+	private List<AutomaticCheckResultDTO> automaticCheckResults;
 
-    public SimpleDigitalDocumentDTO() {
-    }
+	private DocUnitDTO docUnit;
 
-    public int getTotalDelivery() {
-        return totalDelivery;
-    }
+	private List<SimpleDeliveredDigitalDocDTO> deliveries;
 
-    public void setTotalDelivery(final int totalDelivery) {
-        this.totalDelivery = totalDelivery;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getCheckNotes() {
-        return checkNotes;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setCheckNotes(final String checkNotes) {
-        this.checkNotes = checkNotes;
-    }
+	public String getDigitalId() {
+		return digitalId;
+	}
 
-    public DigitalDocument.DigitalDocumentStatus getStatus() {
-        return status;
-    }
+	public void setDigitalId(final String digitalId) {
+		this.digitalId = digitalId;
+	}
 
-    public void setStatus(final DigitalDocument.DigitalDocumentStatus status) {
-        this.status = status;
-    }
+	public SimpleDigitalDocumentDTO() {
+	}
 
-    public List<AutomaticCheckResultDTO> getAutomaticCheckResults() {
-        return automaticCheckResults;
-    }
+	public int getTotalDelivery() {
+		return totalDelivery;
+	}
 
-    public void setAutomaticCheckResults(final List<AutomaticCheckResultDTO> checkResults) {
-        this.automaticCheckResults = checkResults;
-    }
+	public void setTotalDelivery(final int totalDelivery) {
+		this.totalDelivery = totalDelivery;
+	}
 
-    public List<SimpleDeliveredDigitalDocDTO> getDeliveries() {
-        deliveries.sort(Collections.reverseOrder());
-        return deliveries;
-    }
+	public String getCheckNotes() {
+		return checkNotes;
+	}
 
-    public void setDeliveries(final List<SimpleDeliveredDigitalDocDTO> deliveries) {
-        this.deliveries = deliveries;
-    }
+	public void setCheckNotes(final String checkNotes) {
+		this.checkNotes = checkNotes;
+	}
 
-    public DocUnitDTO getDocUnit() {
-        return docUnit;
-    }
+	public DigitalDocument.DigitalDocumentStatus getStatus() {
+		return status;
+	}
 
-    public void setDocUnit(final DocUnitDTO docUnit) {
-        this.docUnit = docUnit;
-    }
+	public void setStatus(final DigitalDocument.DigitalDocumentStatus status) {
+		this.status = status;
+	}
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final SimpleDigitalDocumentDTO that = (SimpleDigitalDocumentDTO) o;
-        return Objects.equals(digitalId, that.digitalId);
-    }
+	public List<AutomaticCheckResultDTO> getAutomaticCheckResults() {
+		return automaticCheckResults;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(digitalId);
-    }
+	public void setAutomaticCheckResults(final List<AutomaticCheckResultDTO> checkResults) {
+		this.automaticCheckResults = checkResults;
+	}
 
-    @Override
-    public int compareTo(final SimpleDigitalDocumentDTO comparedDto) {
-        return this.digitalId.compareTo(comparedDto.getDigitalId());
-    }
+	public List<SimpleDeliveredDigitalDocDTO> getDeliveries() {
+		deliveries.sort(Collections.reverseOrder());
+		return deliveries;
+	}
+
+	public void setDeliveries(final List<SimpleDeliveredDigitalDocDTO> deliveries) {
+		this.deliveries = deliveries;
+	}
+
+	public DocUnitDTO getDocUnit() {
+		return docUnit;
+	}
+
+	public void setDocUnit(final DocUnitDTO docUnit) {
+		this.docUnit = docUnit;
+	}
+
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		final SimpleDigitalDocumentDTO that = (SimpleDigitalDocumentDTO) o;
+		return Objects.equals(digitalId, that.digitalId);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(digitalId);
+	}
+
+	@Override
+	public int compareTo(final SimpleDigitalDocumentDTO comparedDto) {
+		return this.digitalId.compareTo(comparedDto.getDigitalId());
+	}
 
 }

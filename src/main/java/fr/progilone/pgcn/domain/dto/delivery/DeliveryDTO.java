@@ -12,281 +12,310 @@ import java.util.List;
  */
 public class DeliveryDTO extends AbstractDTO {
 
-    private String identifier;
-    private SimpleLotForDeliveryDTO lot;
-    private String label;
-    private Integer documentCount;
-    private String description;
-    private String payment;
-    private String status;
-    private String method;
-    private LocalDate receptionDate;
-    private LocalDate depositDate;
-    private String folderPath;
-    private String imgFormat;
-    private String digitizingNotes;
-    private Boolean fileFormatOK;
-    private Boolean sequentialNumbers;
-    private Boolean numberOfFilesOK;
-    private Boolean numberOfFilesMatching;
-    private Boolean mirePresent;
-    private Boolean mireOK;
-    private Boolean tableOfContentsPresent;
-    private Boolean tableOfContentsOK;
-    private Boolean altoPresent;
-    private String controlNotes;
-    // Retours de contrôles
-    private List<AutomaticCheckResultDTO> automaticCheckResults;
-    /** Ajout des infos de création */
-    private String createdBy;
-    private LocalDateTime createdDate;
-    /** Ajout des infos de modifications */
-    private String lastModifiedBy;
-    private LocalDateTime lastModifiedDate;
-    private String multiLotsDelId;
-    private String multiLotsDelLabel;
+	private String identifier;
 
-    public DeliveryDTO() {
-    }
+	private SimpleLotForDeliveryDTO lot;
 
-    public SimpleLotForDeliveryDTO getLot() {
-        return lot;
-    }
+	private String label;
 
-    public void setLot(final SimpleLotForDeliveryDTO lot) {
-        this.lot = lot;
-    }
+	private Integer documentCount;
 
-    public Integer getDocumentCount() {
-        return documentCount;
-    }
+	private String description;
 
-    public void setDocumentCount(final Integer documentCount) {
-        this.documentCount = documentCount;
-    }
+	private String payment;
 
-    public String getDescription() {
-        return description;
-    }
+	private String status;
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	private String method;
 
-    public String getPayment() {
-        return payment;
-    }
+	private LocalDate receptionDate;
 
-    public void setPayment(final String payment) {
-        this.payment = payment;
-    }
+	private LocalDate depositDate;
 
-    public String getStatus() {
-        return status;
-    }
+	private String folderPath;
 
-    public void setStatus(final String status) {
-        this.status = status;
-    }
+	private String imgFormat;
 
-    public String getMethod() {
-        return method;
-    }
+	private String digitizingNotes;
 
-    public void setMethod(final String method) {
-        this.method = method;
-    }
+	private Boolean fileFormatOK;
 
-    public LocalDate getReceptionDate() {
-        return receptionDate;
-    }
+	private Boolean sequentialNumbers;
 
-    public void setReceptionDate(final LocalDate receptionDate) {
-        this.receptionDate = receptionDate;
-    }
+	private Boolean numberOfFilesOK;
 
-    public LocalDate getDepositDate() {
-        return depositDate;
-    }
+	private Boolean numberOfFilesMatching;
 
-    public void setDepositDate(final LocalDate depositDate) {
-        this.depositDate = depositDate;
-    }
+	private Boolean mirePresent;
 
-    public String getFolderPath() {
-        return folderPath;
-    }
+	private Boolean mireOK;
 
-    public void setFolderPath(final String folderPath) {
-        this.folderPath = folderPath;
-    }
+	private Boolean tableOfContentsPresent;
 
-    public String getImgFormat() {
-        return imgFormat;
-    }
+	private Boolean tableOfContentsOK;
 
-    public void setImgFormat(final String imgFormat) {
-        this.imgFormat = imgFormat;
-    }
+	private Boolean altoPresent;
 
-    public String getDigitizingNotes() {
-        return digitizingNotes;
-    }
+	private String controlNotes;
 
-    public void setDigitizingNotes(final String digitizingNotes) {
-        this.digitizingNotes = digitizingNotes;
-    }
+	// Retours de contrôles
+	private List<AutomaticCheckResultDTO> automaticCheckResults;
 
-    public Boolean getFileFormatOK() {
-        return fileFormatOK;
-    }
+	/** Ajout des infos de création */
+	private String createdBy;
 
-    public void setFileFormatOK(final Boolean fileFormatOK) {
-        this.fileFormatOK = fileFormatOK;
-    }
+	private LocalDateTime createdDate;
 
-    public Boolean getNumberOfFilesOK() {
-        return numberOfFilesOK;
-    }
+	/** Ajout des infos de modifications */
+	private String lastModifiedBy;
 
-    public void setNumberOfFilesOK(final Boolean numberOfFilesOK) {
-        this.numberOfFilesOK = numberOfFilesOK;
-    }
+	private LocalDateTime lastModifiedDate;
 
-    public Boolean getNumberOfFilesMatching() {
-        return numberOfFilesMatching;
-    }
+	private String multiLotsDelId;
 
-    public void setNumberOfFilesMatching(final Boolean numberOfFilesMatching) {
-        this.numberOfFilesMatching = numberOfFilesMatching;
-    }
+	private String multiLotsDelLabel;
 
-    public Boolean getMirePresent() {
-        return mirePresent;
-    }
+	public DeliveryDTO() {
+	}
 
-    public void setMirePresent(final Boolean mirePresent) {
-        this.mirePresent = mirePresent;
-    }
+	public SimpleLotForDeliveryDTO getLot() {
+		return lot;
+	}
 
-    public Boolean getMireOK() {
-        return mireOK;
-    }
+	public void setLot(final SimpleLotForDeliveryDTO lot) {
+		this.lot = lot;
+	}
 
-    public void setMireOK(final Boolean mireOK) {
-        this.mireOK = mireOK;
-    }
+	public Integer getDocumentCount() {
+		return documentCount;
+	}
 
-    public Boolean getTableOfContentsPresent() {
-        return tableOfContentsPresent;
-    }
+	public void setDocumentCount(final Integer documentCount) {
+		this.documentCount = documentCount;
+	}
 
-    public void setTableOfContentsPresent(final Boolean tableOfContentsPresent) {
-        this.tableOfContentsPresent = tableOfContentsPresent;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public Boolean getTableOfContentsOK() {
-        return tableOfContentsOK;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public void setTableOfContentsOK(final Boolean tableOfContentsOK) {
-        this.tableOfContentsOK = tableOfContentsOK;
-    }
+	public String getPayment() {
+		return payment;
+	}
 
-    public Boolean getAltoPresent() {
-        return altoPresent;
-    }
+	public void setPayment(final String payment) {
+		this.payment = payment;
+	}
 
-    public void setAltoPresent(final Boolean altoPresent) {
-        this.altoPresent = altoPresent;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public String getControlNotes() {
-        return controlNotes;
-    }
+	public void setStatus(final String status) {
+		this.status = status;
+	}
 
-    public void setControlNotes(final String controlNotes) {
-        this.controlNotes = controlNotes;
-    }
+	public String getMethod() {
+		return method;
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public void setMethod(final String method) {
+		this.method = method;
+	}
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	public LocalDate getReceptionDate() {
+		return receptionDate;
+	}
 
-    public String getLabel() {
-        return label;
-    }
+	public void setReceptionDate(final LocalDate receptionDate) {
+		this.receptionDate = receptionDate;
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public LocalDate getDepositDate() {
+		return depositDate;
+	}
 
-    public Boolean getSequentialNumbers() {
-        return sequentialNumbers;
-    }
+	public void setDepositDate(final LocalDate depositDate) {
+		this.depositDate = depositDate;
+	}
 
-    public void setSequentialNumbers(final Boolean sequentialNumbers) {
-        this.sequentialNumbers = sequentialNumbers;
-    }
+	public String getFolderPath() {
+		return folderPath;
+	}
 
-    public List<AutomaticCheckResultDTO> getAutomaticCheckResults() {
-        return automaticCheckResults;
-    }
+	public void setFolderPath(final String folderPath) {
+		this.folderPath = folderPath;
+	}
 
-    public void setAutomaticCheckResults(final List<AutomaticCheckResultDTO> checkResults) {
-        this.automaticCheckResults = checkResults;
-    }
+	public String getImgFormat() {
+		return imgFormat;
+	}
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	public void setImgFormat(final String imgFormat) {
+		this.imgFormat = imgFormat;
+	}
 
-    public void setCreatedBy(final String createdBy) {
-        this.createdBy = createdBy;
-    }
+	public String getDigitizingNotes() {
+		return digitizingNotes;
+	}
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
+	public void setDigitizingNotes(final String digitizingNotes) {
+		this.digitizingNotes = digitizingNotes;
+	}
 
-    public void setCreatedDate(final LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
+	public Boolean getFileFormatOK() {
+		return fileFormatOK;
+	}
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
+	public void setFileFormatOK(final Boolean fileFormatOK) {
+		this.fileFormatOK = fileFormatOK;
+	}
 
-    public void setLastModifiedBy(final String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
+	public Boolean getNumberOfFilesOK() {
+		return numberOfFilesOK;
+	}
 
-    public LocalDateTime getLastModifiedDate() {
-        return lastModifiedDate;
-    }
+	public void setNumberOfFilesOK(final Boolean numberOfFilesOK) {
+		this.numberOfFilesOK = numberOfFilesOK;
+	}
 
-    public void setLastModifiedDate(final LocalDateTime lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
+	public Boolean getNumberOfFilesMatching() {
+		return numberOfFilesMatching;
+	}
 
-    public String getMultiLotsDelId() {
-        return multiLotsDelId;
-    }
+	public void setNumberOfFilesMatching(final Boolean numberOfFilesMatching) {
+		this.numberOfFilesMatching = numberOfFilesMatching;
+	}
 
-    public void setMultiLotsDelId(final String multiLotsDelId) {
-        this.multiLotsDelId = multiLotsDelId;
-    }
+	public Boolean getMirePresent() {
+		return mirePresent;
+	}
 
-    public String getMultiLotsDelLabel() {
-        return multiLotsDelLabel;
-    }
+	public void setMirePresent(final Boolean mirePresent) {
+		this.mirePresent = mirePresent;
+	}
 
-    public void setMultiLotsDelLabel(final String multiLotsDelLabel) {
-        this.multiLotsDelLabel = multiLotsDelLabel;
-    }
+	public Boolean getMireOK() {
+		return mireOK;
+	}
+
+	public void setMireOK(final Boolean mireOK) {
+		this.mireOK = mireOK;
+	}
+
+	public Boolean getTableOfContentsPresent() {
+		return tableOfContentsPresent;
+	}
+
+	public void setTableOfContentsPresent(final Boolean tableOfContentsPresent) {
+		this.tableOfContentsPresent = tableOfContentsPresent;
+	}
+
+	public Boolean getTableOfContentsOK() {
+		return tableOfContentsOK;
+	}
+
+	public void setTableOfContentsOK(final Boolean tableOfContentsOK) {
+		this.tableOfContentsOK = tableOfContentsOK;
+	}
+
+	public Boolean getAltoPresent() {
+		return altoPresent;
+	}
+
+	public void setAltoPresent(final Boolean altoPresent) {
+		this.altoPresent = altoPresent;
+	}
+
+	public String getControlNotes() {
+		return controlNotes;
+	}
+
+	public void setControlNotes(final String controlNotes) {
+		this.controlNotes = controlNotes;
+	}
+
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(final String label) {
+		this.label = label;
+	}
+
+	public Boolean getSequentialNumbers() {
+		return sequentialNumbers;
+	}
+
+	public void setSequentialNumbers(final Boolean sequentialNumbers) {
+		this.sequentialNumbers = sequentialNumbers;
+	}
+
+	public List<AutomaticCheckResultDTO> getAutomaticCheckResults() {
+		return automaticCheckResults;
+	}
+
+	public void setAutomaticCheckResults(final List<AutomaticCheckResultDTO> checkResults) {
+		this.automaticCheckResults = checkResults;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(final String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(final LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(final String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public LocalDateTime getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(final LocalDateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public String getMultiLotsDelId() {
+		return multiLotsDelId;
+	}
+
+	public void setMultiLotsDelId(final String multiLotsDelId) {
+		this.multiLotsDelId = multiLotsDelId;
+	}
+
+	public String getMultiLotsDelLabel() {
+		return multiLotsDelLabel;
+	}
+
+	public void setMultiLotsDelLabel(final String multiLotsDelLabel) {
+		this.multiLotsDelLabel = multiLotsDelLabel;
+	}
 
 }

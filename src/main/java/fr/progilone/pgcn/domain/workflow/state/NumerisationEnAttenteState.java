@@ -12,38 +12,39 @@ import java.util.List;
 @DiscriminatorValue(value = WorkflowStateKey.Values.NUMERISATION_EN_ATTENTE)
 public class NumerisationEnAttenteState extends DocUnitState {
 
-    @Override
-    public WorkflowStateKey getKey() {
-        return WorkflowStateKey.NUMERISATION_EN_ATTENTE;
-    }
+	@Override
+	public WorkflowStateKey getKey() {
+		return WorkflowStateKey.NUMERISATION_EN_ATTENTE;
+	}
 
-    @Override
-    public void process(final User user) {
-        processEndDate();
-        processUser(user);
-        processStatus();
+	@Override
+	public void process(final User user) {
+		processEndDate();
+		processUser(user);
+		processStatus();
 
-        // Initialisation de la prochaine étape si applicable (aucune étape en cours)
-        final List<DocUnitState> currentStates = getWorkflow().getCurrentStates();
-        if (currentStates.isEmpty() || (currentStates.size() == 1 && WorkflowStateKey.VALIDATION_NOTICES == currentStates.get(0).getKey())) {
-            getNextStates().forEach(state -> state.initializeState(null, null, null));
-        }
-    }
+		// Initialisation de la prochaine étape si applicable (aucune étape en cours)
+		final List<DocUnitState> currentStates = getWorkflow().getCurrentStates();
+		if (currentStates.isEmpty() || (currentStates.size() == 1
+				&& WorkflowStateKey.VALIDATION_NOTICES == currentStates.get(0).getKey())) {
+			getNextStates().forEach(state -> state.initializeState(null, null, null));
+		}
+	}
 
-    @Override
-    protected List<DocUnitState> getNextStates() {
-        final List<DocUnitState> states = new ArrayList<>();
-        if (getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.CONSTAT_ETAT_APRES_NUMERISATION) != null) {
-            states.add(getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.CONSTAT_ETAT_APRES_NUMERISATION));
-        }
-        cleanNullStates(states);
-        return states;
-    }
+	@Override
+	protected List<DocUnitState> getNextStates() {
+		final List<DocUnitState> states = new ArrayList<>();
+		if (getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.CONSTAT_ETAT_APRES_NUMERISATION) != null) {
+			states.add(getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.CONSTAT_ETAT_APRES_NUMERISATION));
+		}
+		cleanNullStates(states);
+		return states;
+	}
 
-    @Override
-    public void reject(final User user) {
-        // TODO Auto-generated method stub
+	@Override
+	public void reject(final User user) {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
 }

@@ -12,18 +12,18 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {SimpleLibraryMapper.class})
+@Mapper(uses = { SimpleLibraryMapper.class })
 public interface LibraryParameterMapper {
 
-    LibraryParameterMapper INSTANCE = Mappers.getMapper(LibraryParameterMapper.class);
+	LibraryParameterMapper INSTANCE = Mappers.getMapper(LibraryParameterMapper.class);
 
-    LibraryParameterValueCinesDTO libParamCinesValueToDTO(LibraryParameterValueCines libraryParameterValueCines);
+	LibraryParameterValueCinesDTO libParamCinesValueToDTO(LibraryParameterValueCines libraryParameterValueCines);
 
-    LibraryParameterDTO libraryParameterToLibraryParameterDTO(LibraryParameter libraryParameter);
+	LibraryParameterDTO libraryParameterToLibraryParameterDTO(LibraryParameter libraryParameter);
 
-    @Mappings({@Mapping(target = "values", ignore = true)})
-    LibraryParameterValuedDTO libParamToLibParamValuedDTO(LibraryParameter libraryParameter);
+	@Mappings({ @Mapping(target = "values", ignore = true) })
+	LibraryParameterValuedDTO libParamToLibParamValuedDTO(LibraryParameter libraryParameter);
 
-    AbstractLibraryParameterValueDTO abstractParameterValueToDTO(AbstractLibraryParameterValue libraryParameterValue);
+	AbstractLibraryParameterValueDTO abstractParameterValueToDTO(AbstractLibraryParameterValue libraryParameterValue);
 
 }

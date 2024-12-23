@@ -9,15 +9,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class UIPhysicalDocumentMapper {
 
-    @Autowired
-    private TrainService trainService;
+	@Autowired
+	private TrainService trainService;
 
-    public void mapInto(final PhysicalDocumentDTO docDTO, final PhysicalDocument doc) {
-        doc.setDigitalId(docDTO.getDigitalId());
-        doc.setTotalPage(docDTO.getTotalPage());
-        doc.setName(docDTO.getName());
-        if (docDTO.getTrain() != null) {
-            doc.setTrain(trainService.getOne(docDTO.getTrain().getIdentifier()));
-        }
-    }
+	public void mapInto(final PhysicalDocumentDTO docDTO, final PhysicalDocument doc) {
+		doc.setDigitalId(docDTO.getDigitalId());
+		doc.setTotalPage(docDTO.getTotalPage());
+		doc.setName(docDTO.getName());
+		if (docDTO.getTrain() != null) {
+			doc.setTrain(trainService.getOne(docDTO.getTrain().getIdentifier()));
+		}
+	}
+
 }

@@ -35,102 +35,113 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class MailboxServiceTest {
 
-    private MailboxService service;
-    private CinesRequestHandlerService cinesRHandlerService;
+	private MailboxService service;
 
-    @Mock
-    private CryptoService cryptoService;
-    @Mock
-    private CinesReportRepository cinesReportRepository;
-    @Mock
-    private WebsocketService websocketService;
-    @Mock
-    private MailboxConfigurationService mailboxConfigurationService;
-    @Mock
-    private FileStorageManager fm;
-    @Mock
-    private ExportCinesService exportCinesService;
-    @Mock
-    private DocUnitService docUnitService;
-    @Mock
-    private TransactionService transactionService;
-    @Mock
-    private WorkflowService workflowService;
+	private CinesRequestHandlerService cinesRHandlerService;
 
-    @BeforeEach
-    public void setUp() throws PgcnTechnicalException {
+	@Mock
+	private CryptoService cryptoService;
 
-        service = new MailboxService(cryptoService);
-        when(cryptoService.decrypt(anyString())).thenAnswer(new ReturnsArgumentAt(0));
+	@Mock
+	private CinesReportRepository cinesReportRepository;
 
-        final CinesReportService cinesReportService = new CinesReportService(cinesReportRepository, websocketService, workflowService);
-        cinesRHandlerService = new CinesRequestHandlerService(exportCinesService, cinesReportService, service, mailboxConfigurationService, fm, docUnitService, transactionService);
-    }
+	@Mock
+	private WebsocketService websocketService;
 
-    @Disabled
-    @Test
-    public void testReceptionMsgCines() throws PgcnTechnicalException {
+	@Mock
+	private MailboxConfigurationService mailboxConfigurationService;
 
-        final MailboxConfiguration conf = getMsgConfig();
-        final List<MailboxConfiguration> confs = new ArrayList<>();
-        confs.add(conf);
-        cinesRHandlerService.updateExportedDocUnits(confs);
-    }
+	@Mock
+	private FileStorageManager fm;
 
-    @Disabled
-    @Test
-    public void testGetMails() throws PgcnTechnicalException, MessagingException {
+	@Mock
+	private ExportCinesService exportCinesService;
 
-        final MailboxConfiguration conf = getMsgConfig();
-        service.readMailbox(conf, messages -> {
-            for (final Message message : messages) {
-                try {
-                    System.out.println("Mail de " + message.getFrom()[0]
-                                       + ", reçu le "
-                                       + message.getReceivedDate()
-                                       + ": "
-                                       + message.getSubject());
-                } catch (final MessagingException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+	@Mock
+	private DocUnitService docUnitService;
 
-    private MailboxConfiguration getMsgConfig() {
+	@Mock
+	private TransactionService transactionService;
 
-        final MailboxConfiguration conf = new MailboxConfiguration();
-        conf.setHost("mail.gandi.net");
-        conf.setUsername("pgcn@progilone.com");
-        conf.setPassword("maw1QuoQuoravGi");
-        conf.setInbox("Inbox");
+	@Mock
+	private WorkflowService workflowService;
 
-        final Library lib = new Library();
-        lib.setActive(true);
-        lib.setName("Librairie Sciences PO");
-        lib.setIdentifier("library_sciencespo");
+	@BeforeEach
+	public void setUp() throws PgcnTechnicalException {
 
-        conf.setLibrary(lib);
+		service = new MailboxService(cryptoService);
+		when(cryptoService.decrypt(anyString())).thenAnswer(new ReturnsArgumentAt(0));
 
-        // IMAP
-        // conf.setPort(144);
-        // conf.addProperty("mail.store.protocol", "imap");
+		final CinesReportService cinesReportService = new CinesReportService(cinesReportRepository, websocketService,
+				workflowService);
+		cinesRHandlerService = new CinesRequestHandlerService(exportCinesService, cinesReportService, service,
+				mailboxConfigurationService, fm, docUnitService, transactionService);
+	}
 
-        // IMAP SSL
-        conf.setPort(993);
-        conf.addProperty("mail.store.protocol", "imaps");
-        conf.addProperty("mail.imaps.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        conf.addProperty("mail.imaps.socketFactory.fallback", "false");
+	@Disabled
+	@Test
+	public void testReceptionMsgCines() throws PgcnTechnicalException {
 
-        // POP3
-        // conf.setPort(110);
-        // conf.addProperty("mail.store.protocol", "pop3");
+		final MailboxConfiguration conf = getMsgConfig();
+		final List<MailboxConfiguration> confs = new ArrayList<>();
+		confs.add(conf);
+		cinesRHandlerService.updateExportedDocUnits(confs);
+	}
 
-        // POP3 SSL
-        // conf.setPort(995);
-        // conf.addProperty("mail.store.protocol", "pop3s");
-        // conf.addProperty("mail.pop3s.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        // conf.addProperty("mail.pop3s.socketFactory.fallback", "false");
-        return conf;
-    }
+	@Disabled
+	@Test
+	public void testGetMails() throws PgcnTechnicalException, MessagingException {
+
+		final MailboxConfiguration conf = getMsgConfig();
+		service.readMailbox(conf, messages -> {
+			for (final Message message : messages) {
+				try {
+					System.out.println("Mail de " + message.getFrom()[0] + ", reçu le " + message.getReceivedDate()
+							+ ": " + message.getSubject());
+				}
+				catch (final MessagingException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	private MailboxConfiguration getMsgConfig() {
+
+		final MailboxConfiguration conf = new MailboxConfiguration();
+		conf.setHost("mail.gandi.net");
+		conf.setUsername("pgcn@progilone.com");
+		conf.setPassword("maw1QuoQuoravGi");
+		conf.setInbox("Inbox");
+
+		final Library lib = new Library();
+		lib.setActive(true);
+		lib.setName("Librairie Sciences PO");
+		lib.setIdentifier("library_sciencespo");
+
+		conf.setLibrary(lib);
+
+		// IMAP
+		// conf.setPort(144);
+		// conf.addProperty("mail.store.protocol", "imap");
+
+		// IMAP SSL
+		conf.setPort(993);
+		conf.addProperty("mail.store.protocol", "imaps");
+		conf.addProperty("mail.imaps.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		conf.addProperty("mail.imaps.socketFactory.fallback", "false");
+
+		// POP3
+		// conf.setPort(110);
+		// conf.addProperty("mail.store.protocol", "pop3");
+
+		// POP3 SSL
+		// conf.setPort(995);
+		// conf.addProperty("mail.store.protocol", "pop3s");
+		// conf.addProperty("mail.pop3s.socketFactory.class",
+		// "javax.net.ssl.SSLSocketFactory");
+		// conf.addProperty("mail.pop3s.socketFactory.fallback", "false");
+		return conf;
+	}
+
 }

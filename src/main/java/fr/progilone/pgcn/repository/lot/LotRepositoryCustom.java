@@ -11,24 +11,24 @@ import org.springframework.data.domain.Pageable;
 
 public interface LotRepositoryCustom {
 
-    /**
-     * récupère les lots attachés aux projets.
-     *
-     * @param projectIds
-     * @return
-     */
-    List<SimpleLotDTO> findAllIdentifiersInProjectIds(Collection<String> projectIds);
+	/**
+	 * récupère les lots attachés aux projets.
+	 * @param projectIds
+	 * @return
+	 */
+	List<SimpleLotDTO> findAllIdentifiersInProjectIds(Collection<String> projectIds);
 
-    List<Object[]> getLotGroupByStatus(List<String> libraries, List<String> projects);
+	List<Object[]> getLotGroupByStatus(List<String> libraries, List<String> projects);
 
-    /**
-     * Recherche rapide de lots
-     *
-     * @param searchBuilder
-     * @param pageable
-     * @return
-     */
-    Page<Lot> search(LotSearchBuilder searchBuilder, Pageable pageable);
+	/**
+	 * Recherche rapide de lots
+	 * @param searchBuilder
+	 * @param pageable
+	 * @return
+	 */
+	Page<Lot> search(LotSearchBuilder searchBuilder, Pageable pageable);
 
-    List<Lot> findLotsForWidget(LocalDate fromDate, List<String> libraries, List<String> projects, List<Lot.LotStatus> statuses);
+	List<Lot> findLotsForWidget(LocalDate fromDate, List<String> libraries, List<String> projects,
+			List<Lot.LotStatus> statuses);
+
 }

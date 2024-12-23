@@ -23,30 +23,38 @@ import org.springframework.web.bind.annotation.RestController;
 @PermitAll
 public class StatisticsDeliveryController {
 
-    private final AccessHelper accessHelper;
-    private final LibraryAccesssHelper libraryAccesssHelper;
-    private final UIDeliveryService uiDeliveryService;
+	private final AccessHelper accessHelper;
 
-    public StatisticsDeliveryController(final AccessHelper accessHelper, final LibraryAccesssHelper libraryAccesssHelper, final UIDeliveryService uiDeliveryService) {
-        this.accessHelper = accessHelper;
-        this.libraryAccesssHelper = libraryAccesssHelper;
-        this.uiDeliveryService = uiDeliveryService;
-    }
+	private final LibraryAccesssHelper libraryAccesssHelper;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"provider_delivery"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<List<StatisticsProviderDeliveryDTO>> getProviderDeliveryStats(final HttpServletRequest request,
-                                                                                        @RequestParam(value = "library", required = false) final List<String> libraries,
-                                                                                        @RequestParam(value = "provider", required = false) final List<String> providers,
-                                                                                        @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from",
-                                                                                                                                              required = false) final LocalDate fromDate,
-                                                                                        @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to",
-                                                                                                                                              required = false) final LocalDate toDate) {
-        // Droits d'accès
-        if (accessHelper.checkUserIsPresta()) { // no presta
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request, libraries);
-        return new ResponseEntity<>(uiDeliveryService.getProviderDeliveryStats(filteredLibraries, providers, fromDate, toDate), HttpStatus.OK);
-    }
+	private final UIDeliveryService uiDeliveryService;
+
+	public StatisticsDeliveryController(final AccessHelper accessHelper,
+			final LibraryAccesssHelper libraryAccesssHelper, final UIDeliveryService uiDeliveryService) {
+		this.accessHelper = accessHelper;
+		this.libraryAccesssHelper = libraryAccesssHelper;
+		this.uiDeliveryService = uiDeliveryService;
+	}
+
+	@RequestMapping(method = RequestMethod.GET, params = { "provider_delivery" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<List<StatisticsProviderDeliveryDTO>> getProviderDeliveryStats(
+			final HttpServletRequest request,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "provider", required = false) final List<String> providers,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from",
+					required = false) final LocalDate fromDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to",
+					required = false) final LocalDate toDate) {
+		// Droits d'accès
+		if (accessHelper.checkUserIsPresta()) { // no presta
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request, libraries);
+		return new ResponseEntity<>(
+				uiDeliveryService.getProviderDeliveryStats(filteredLibraries, providers, fromDate, toDate),
+				HttpStatus.OK);
+	}
+
 }

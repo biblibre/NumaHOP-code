@@ -8,99 +8,80 @@ import org.hibernate.validator.constraints.Email;
 
 public class UserAccountDTO {
 
-    public static final int PASSWORD_MIN_LENGTH = 5;
-    public static final int PASSWORD_MAX_LENGTH = 100;
+	public static final int PASSWORD_MIN_LENGTH = 5;
 
-    @Pattern(regexp = "^[a-z0-9]*$")
-    @NotNull
-    @Size(min = 1, max = 50)
-    private String login;
+	public static final int PASSWORD_MAX_LENGTH = 100;
 
-    @NotNull
-    @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
-    private String password;
+	@Pattern(regexp = "^[a-z0-9]*$")
+	@NotNull
+	@Size(min = 1, max = 50)
+	private String login;
 
-    @Size(max = 50)
-    private String firstName;
+	@NotNull
+	@Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
+	private String password;
 
-    @Size(max = 50)
-    private String lastName;
+	@Size(max = 50)
+	private String firstName;
 
-    @Email
-    @Size(min = 5, max = 100)
-    private String email;
+	@Size(max = 50)
+	private String lastName;
 
-    @Size(min = 2, max = 5)
-    private String langKey;
+	@Email
+	@Size(min = 5, max = 100)
+	private String email;
 
-    private List<String> roles;
+	@Size(min = 2, max = 5)
+	private String langKey;
 
-    public UserAccountDTO() {
-    }
+	private List<String> roles;
 
-    public UserAccountDTO(final String login,
-                          final String password,
-                          final String firstName,
-                          final String lastName,
-                          final String email,
-                          final String langKey,
-                          final List<String> roles) {
-        this.login = login;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.langKey = langKey;
-        this.roles = roles;
-    }
+	public UserAccountDTO() {
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public UserAccountDTO(final String login, final String password, final String firstName, final String lastName,
+			final String email, final String langKey, final List<String> roles) {
+		this.login = login;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.langKey = langKey;
+		this.roles = roles;
+	}
 
-    public String getLogin() {
-        return login;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public String getLangKey() {
-        return langKey;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public List<String> getRoles() {
-        return roles;
-    }
+	public String getLangKey() {
+		return langKey;
+	}
 
-    @Override
-    public String toString() {
-        return "UserDTO{" + "login='"
-               + login
-               + '\''
-               + ", firstName='"
-               + firstName
-               + '\''
-               + ", lastName='"
-               + lastName
-               + '\''
-               + ", email='"
-               + email
-               + '\''
-               + ", langKey='"
-               + langKey
-               + '\''
-               + ", roles="
-               + roles
-               + '}';
-    }
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDTO{" + "login='" + login + '\'' + ", firstName='" + firstName + '\'' + ", lastName='" + lastName
+				+ '\'' + ", email='" + email + '\'' + ", langKey='" + langKey + '\'' + ", roles=" + roles + '}';
+	}
+
 }

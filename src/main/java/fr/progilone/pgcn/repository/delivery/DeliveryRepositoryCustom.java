@@ -10,32 +10,28 @@ import org.springframework.data.domain.Pageable;
 
 public interface DeliveryRepositoryCustom {
 
-    /**
-     * Recherche rapide de livraisons
-     *
-     * @param searchBuilder
-     * @param pageable
-     * @return
-     */
-    Page<Delivery> search(DeliverySearchBuilder searchBuilder, Pageable pageable);
+	/**
+	 * Recherche rapide de livraisons
+	 * @param searchBuilder
+	 * @param pageable
+	 * @return
+	 */
+	Page<Delivery> search(DeliverySearchBuilder searchBuilder, Pageable pageable);
 
-    /**
-     * Recherche de livraisons par lot et projets
-     *
-     * @param projectIds
-     * @param lotIds
-     * @return
-     */
-    List<Delivery> findByProjectsAndLots(List<String> projectIds, List<String> lotIds);
+	/**
+	 * Recherche de livraisons par lot et projets
+	 * @param projectIds
+	 * @param lotIds
+	 * @return
+	 */
+	List<Delivery> findByProjectsAndLots(List<String> projectIds, List<String> lotIds);
 
-    List<Delivery> findByProviders(List<String> libraries, List<String> providers, List<DeliveryStatus> statuses, LocalDate fromDate, LocalDate toDate);
+	List<Delivery> findByProviders(List<String> libraries, List<String> providers, List<DeliveryStatus> statuses,
+			LocalDate fromDate, LocalDate toDate);
 
-    List<Object[]> getDeliveryGroupByStatus(List<String> libraries, List<String> projects, List<String> lots);
+	List<Object[]> getDeliveryGroupByStatus(List<String> libraries, List<String> projects, List<String> lots);
 
-    List<Delivery> findDeliveriesForWidget(LocalDate fromDate,
-                                           List<String> libraries,
-                                           List<String> projects,
-                                           List<String> lots,
-                                           List<Delivery.DeliveryStatus> status,
-                                           boolean sampled);
+	List<Delivery> findDeliveriesForWidget(LocalDate fromDate, List<String> libraries, List<String> projects,
+			List<String> lots, List<Delivery.DeliveryStatus> status, boolean sampled);
+
 }

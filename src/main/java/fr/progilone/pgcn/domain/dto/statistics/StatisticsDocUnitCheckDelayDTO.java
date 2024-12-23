@@ -2,79 +2,84 @@ package fr.progilone.pgcn.domain.dto.statistics;
 
 public class StatisticsDocUnitCheckDelayDTO {
 
-    private String projectIdentifier;
-    private String projectName;
+	private String projectIdentifier;
 
-    private String lotIdentifier;
-    private String lotLabel;
+	private String projectName;
 
-    private String deliveryIdentifier;
-    private String deliveryLabel;
+	private String lotIdentifier;
 
-    private long minRemainingCheckDelay;    // j
-    private long maxCheckDelay; // j
+	private String lotLabel;
 
-    public String getProjectIdentifier() {
-        return projectIdentifier;
-    }
+	private String deliveryIdentifier;
 
-    public void setProjectIdentifier(final String projectIdentifier) {
-        this.projectIdentifier = projectIdentifier;
-    }
+	private String deliveryLabel;
 
-    public String getProjectName() {
-        return projectName;
-    }
+	private long minRemainingCheckDelay; // j
 
-    public void setProjectName(final String projectName) {
-        this.projectName = projectName;
-    }
+	private long maxCheckDelay; // j
 
-    public String getLotIdentifier() {
-        return lotIdentifier;
-    }
+	public String getProjectIdentifier() {
+		return projectIdentifier;
+	}
 
-    public void setLotIdentifier(final String lotIdentifier) {
-        this.lotIdentifier = lotIdentifier;
-    }
+	public void setProjectIdentifier(final String projectIdentifier) {
+		this.projectIdentifier = projectIdentifier;
+	}
 
-    public String getLotLabel() {
-        return lotLabel;
-    }
+	public String getProjectName() {
+		return projectName;
+	}
 
-    public void setLotLabel(final String lotLabel) {
-        this.lotLabel = lotLabel;
-    }
+	public void setProjectName(final String projectName) {
+		this.projectName = projectName;
+	}
 
-    public String getDeliveryIdentifier() {
-        return deliveryIdentifier;
-    }
+	public String getLotIdentifier() {
+		return lotIdentifier;
+	}
 
-    public void setDeliveryIdentifier(final String deliveryIdentifier) {
-        this.deliveryIdentifier = deliveryIdentifier;
-    }
+	public void setLotIdentifier(final String lotIdentifier) {
+		this.lotIdentifier = lotIdentifier;
+	}
 
-    public String getDeliveryLabel() {
-        return deliveryLabel;
-    }
+	public String getLotLabel() {
+		return lotLabel;
+	}
 
-    public void setDeliveryLabel(final String deliveryLabel) {
-        this.deliveryLabel = deliveryLabel;
-    }
+	public void setLotLabel(final String lotLabel) {
+		this.lotLabel = lotLabel;
+	}
 
-    public long getMinRemainingCheckDelay() {
-        return minRemainingCheckDelay;
-    }
+	public String getDeliveryIdentifier() {
+		return deliveryIdentifier;
+	}
 
-    public void setMinRemainingCheckDelay(final long minRemainingCheckDelay) {
-        this.minRemainingCheckDelay = minRemainingCheckDelay;
-    }
+	public void setDeliveryIdentifier(final String deliveryIdentifier) {
+		this.deliveryIdentifier = deliveryIdentifier;
+	}
 
-    public long getMaxCheckDelay() {
-        return maxCheckDelay;
-    }
+	public String getDeliveryLabel() {
+		return deliveryLabel;
+	}
 
-    public void setMaxCheckDelay(final long maxCheckDelay) {
-        this.maxCheckDelay = maxCheckDelay;
-    }
+	public void setDeliveryLabel(final String deliveryLabel) {
+		this.deliveryLabel = deliveryLabel;
+	}
+
+	public long getMinRemainingCheckDelay() {
+		return minRemainingCheckDelay;
+	}
+
+	public void setMinRemainingCheckDelay(final long minRemainingCheckDelay) {
+		this.minRemainingCheckDelay = minRemainingCheckDelay;
+	}
+
+	public long getMaxCheckDelay() {
+		return maxCheckDelay;
+	}
+
+	public void setMaxCheckDelay(final long maxCheckDelay) {
+		this.maxCheckDelay = maxCheckDelay;
+	}
+
 }

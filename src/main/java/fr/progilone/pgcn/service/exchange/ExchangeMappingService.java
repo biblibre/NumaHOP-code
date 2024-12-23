@@ -22,106 +22,113 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class ExchangeMappingService {
 
-    private static final MappingJacksonMapper MAPPER = new MappingJacksonMapper();
+	private static final MappingJacksonMapper MAPPER = new MappingJacksonMapper();
 
-    private final DocPropertyTypeService docPropertyTypeService;
-    private final MappingService mappingService;
+	private final DocPropertyTypeService docPropertyTypeService;
 
-    @Autowired
-    public ExchangeMappingService(final DocPropertyTypeService docPropertyTypeService, final MappingService mappingService) {
-        this.docPropertyTypeService = docPropertyTypeService;
-        this.mappingService = mappingService;
-    }
+	private final MappingService mappingService;
 
-    @Transactional(readOnly = true)
-    public String exportMapping(final String mappingId) throws PgcnTechnicalException {
-        final Mapping mapping = mappingService.findOne(mappingId);
-        try {
-            return MAPPER.mapToString(mapping);
+	@Autowired
+	public ExchangeMappingService(final DocPropertyTypeService docPropertyTypeService,
+			final MappingService mappingService) {
+		this.docPropertyTypeService = docPropertyTypeService;
+		this.mappingService = mappingService;
+	}
 
-        } catch (IOException e) {
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	@Transactional(readOnly = true)
+	public String exportMapping(final String mappingId) throws PgcnTechnicalException {
+		final Mapping mapping = mappingService.findOne(mappingId);
+		try {
+			return MAPPER.mapToString(mapping);
 
-    @Transactional
-    public Mapping importMapping(final MultipartFile file, final String toMappingId) throws PgcnTechnicalException {
-        // Mapping destination
-        final Mapping toMapping = mappingService.findOne(toMappingId);
-        if (toMapping == null) {
-            return null;
-        }
-        // Mapping à importer
-        final Mapping importedMapping = readMapping(file);
+		}
+		catch (IOException e) {
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-        // Copie du mapping à importer dans le mapping destination
-        toMapping.setJoinExpression(importedMapping.getJoinExpression());
-        copyRules(importedMapping, toMapping);
+	@Transactional
+	public Mapping importMapping(final MultipartFile file, final String toMappingId) throws PgcnTechnicalException {
+		// Mapping destination
+		final Mapping toMapping = mappingService.findOne(toMappingId);
+		if (toMapping == null) {
+			return null;
+		}
+		// Mapping à importer
+		final Mapping importedMapping = readMapping(file);
 
-        // Sauvegarde sans validation
-        return mappingService.save(toMapping, false);
-    }
+		// Copie du mapping à importer dans le mapping destination
+		toMapping.setJoinExpression(importedMapping.getJoinExpression());
+		copyRules(importedMapping, toMapping);
 
-    @Transactional
-    public Mapping importNewMapping(final MultipartFile file, final String libraryId) throws PgcnTechnicalException {
-        // Mapping destination
-        final Mapping toMapping = new Mapping();
-        // Mapping à importer
-        final Mapping importedMapping = readMapping(file);
+		// Sauvegarde sans validation
+		return mappingService.save(toMapping, false);
+	}
 
-        final Library library = new Library();
-        library.setIdentifier(libraryId);
-        toMapping.setLibrary(library);
+	@Transactional
+	public Mapping importNewMapping(final MultipartFile file, final String libraryId) throws PgcnTechnicalException {
+		// Mapping destination
+		final Mapping toMapping = new Mapping();
+		// Mapping à importer
+		final Mapping importedMapping = readMapping(file);
 
-        // Copie du mapping à importer dans le mapping destination
-        copyProperties(importedMapping, toMapping);
-        copyRules(importedMapping, toMapping);
+		final Library library = new Library();
+		library.setIdentifier(libraryId);
+		toMapping.setLibrary(library);
 
-        // Sauvegarde sans validation
-        return mappingService.save(toMapping, false);
-    }
+		// Copie du mapping à importer dans le mapping destination
+		copyProperties(importedMapping, toMapping);
+		copyRules(importedMapping, toMapping);
 
-    private Mapping readMapping(final MultipartFile file) throws PgcnTechnicalException {
-        final Mapping importedMapping;
-        try (InputStream in = file.getInputStream()) {
-            final String mappingJson = IOUtils.toString(in, StandardCharsets.UTF_8);
-            importedMapping = MAPPER.mapToMapping(mappingJson);
+		// Sauvegarde sans validation
+		return mappingService.save(toMapping, false);
+	}
 
-        } catch (IOException e) {
-            throw new PgcnTechnicalException(e);
-        }
-        return importedMapping;
-    }
+	private Mapping readMapping(final MultipartFile file) throws PgcnTechnicalException {
+		final Mapping importedMapping;
+		try (InputStream in = file.getInputStream()) {
+			final String mappingJson = IOUtils.toString(in, StandardCharsets.UTF_8);
+			importedMapping = MAPPER.mapToMapping(mappingJson);
 
-    private void copyProperties(final Mapping source, final Mapping destination) {
-        destination.setLabel(source.getLabel());
-        destination.setType(source.getType());
-        destination.setJoinExpression(source.getJoinExpression());
-    }
+		}
+		catch (IOException e) {
+			throw new PgcnTechnicalException(e);
+		}
+		return importedMapping;
+	}
 
-    private void copyRules(final Mapping source, final Mapping destination) {
-        final List<DocPropertyType> properties = docPropertyTypeService.findAll();
+	private void copyProperties(final Mapping source, final Mapping destination) {
+		destination.setLabel(source.getLabel());
+		destination.setType(source.getType());
+		destination.setJoinExpression(source.getJoinExpression());
+	}
 
-        destination.getRules().clear();
-        source.getRules()
-              .stream()
-              .sorted(Comparator.comparing(MappingRule::getPosition))
-              // màj des DocPropertyType avec celles trouvée en bd
-              .peek(rule -> {
-                  final DocPropertyType property = rule.getProperty();
-                  if (property != null) {
-                      properties.stream()
-                                // On importe les pptés à partir de leur libellé, l'identifiant pouvant être différent entre 2 installations
-                                // différentes
-                                .filter(p -> StringUtils.equalsIgnoreCase(p.getLabel(), property.getLabel()))
-                                .findAny()
-                                .ifPresent(rule::setProperty);
-                  }
-              })
-              // Ajout des règles au mapping cible
-              .forEach(rule -> {
-                  rule.setMapping(destination);
-                  destination.getRules().add(rule);
-              });
-    }
+	private void copyRules(final Mapping source, final Mapping destination) {
+		final List<DocPropertyType> properties = docPropertyTypeService.findAll();
+
+		destination.getRules().clear();
+		source.getRules()
+			.stream()
+			.sorted(Comparator.comparing(MappingRule::getPosition))
+			// màj des DocPropertyType avec celles trouvée en bd
+			.peek(rule -> {
+				final DocPropertyType property = rule.getProperty();
+				if (property != null) {
+					properties.stream()
+						// On importe les pptés à partir de leur libellé, l'identifiant
+						// pouvant être
+						// différent entre 2 installations
+						// différentes
+						.filter(p -> StringUtils.equalsIgnoreCase(p.getLabel(), property.getLabel()))
+						.findAny()
+						.ifPresent(rule::setProperty);
+				}
+			})
+			// Ajout des règles au mapping cible
+			.forEach(rule -> {
+				rule.setMapping(destination);
+				destination.getRules().add(rule);
+			});
+	}
+
 }

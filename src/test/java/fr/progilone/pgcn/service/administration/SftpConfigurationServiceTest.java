@@ -31,101 +31,106 @@ import org.springframework.test.util.ReflectionTestUtils;
 @ExtendWith(MockitoExtension.class)
 public class SftpConfigurationServiceTest {
 
-    @Mock
-    private SftpConfigurationRepository sftpConfigurationRepository;
-    @Mock
-    private CryptoService cryptoService;
+	@Mock
+	private SftpConfigurationRepository sftpConfigurationRepository;
 
-    private SftpConfigurationService service;
+	@Mock
+	private CryptoService cryptoService;
 
-    @BeforeEach
-    public void setUp() {
-        final SftpConfigurationMapper mapper = SftpConfigurationMapper.INSTANCE;
-        ReflectionTestUtils.setField(mapper, "simpleLibraryMapper", SimpleLibraryMapper.INSTANCE);
-        service = new SftpConfigurationService(sftpConfigurationRepository, cryptoService);
-    }
+	private SftpConfigurationService service;
 
-    @Test
-    public void testFindAll() {
-        final Set<SftpConfiguration> configurationSftps = new HashSet<>();
-        final String identifier = "M001";
-        configurationSftps.add(getConfigurationSftp(identifier));
+	@BeforeEach
+	public void setUp() {
+		final SftpConfigurationMapper mapper = SftpConfigurationMapper.INSTANCE;
+		ReflectionTestUtils.setField(mapper, "simpleLibraryMapper", SimpleLibraryMapper.INSTANCE);
+		service = new SftpConfigurationService(sftpConfigurationRepository, cryptoService);
+	}
 
-        when(sftpConfigurationRepository.findAllWithDependencies()).thenReturn(configurationSftps);
+	@Test
+	public void testFindAll() {
+		final Set<SftpConfiguration> configurationSftps = new HashSet<>();
+		final String identifier = "M001";
+		configurationSftps.add(getConfigurationSftp(identifier));
 
-        final Set<SftpConfigurationDTO> actual = service.findAllDto(null);
-        assertEquals(1, actual.size());
-        assertEquals(identifier, actual.iterator().next().getIdentifier());
-    }
+		when(sftpConfigurationRepository.findAllWithDependencies()).thenReturn(configurationSftps);
 
-    @Test
-    public void testFindByLibrary() {
-        final Library library = new Library();
-        final Set<SftpConfiguration> configurationSftps = new HashSet<>();
-        final String identifier = "M002";
-        configurationSftps.add(getConfigurationSftp(identifier));
+		final Set<SftpConfigurationDTO> actual = service.findAllDto(null);
+		assertEquals(1, actual.size());
+		assertEquals(identifier, actual.iterator().next().getIdentifier());
+	}
 
-        when(sftpConfigurationRepository.findByLibrary(library)).thenReturn(configurationSftps);
+	@Test
+	public void testFindByLibrary() {
+		final Library library = new Library();
+		final Set<SftpConfiguration> configurationSftps = new HashSet<>();
+		final String identifier = "M002";
+		configurationSftps.add(getConfigurationSftp(identifier));
 
-        final Set<SftpConfigurationDTO> actual = service.findDtoByLibrary(library, null);
-        assertEquals(1, actual.size());
-        assertEquals(identifier, actual.iterator().next().getIdentifier());
-    }
+		when(sftpConfigurationRepository.findByLibrary(library)).thenReturn(configurationSftps);
 
-    @Test
-    public void testFindOne() {
-        final String id = "ConfigurationSftp-001";
-        final SftpConfiguration configurationSftp = getConfigurationSftp(id);
+		final Set<SftpConfigurationDTO> actual = service.findDtoByLibrary(library, null);
+		assertEquals(1, actual.size());
+		assertEquals(identifier, actual.iterator().next().getIdentifier());
+	}
 
-        when(sftpConfigurationRepository.findOneWithDependencies(id)).thenReturn(configurationSftp);
+	@Test
+	public void testFindOne() {
+		final String id = "ConfigurationSftp-001";
+		final SftpConfiguration configurationSftp = getConfigurationSftp(id);
 
-        final SftpConfiguration actual = service.findOne(id);
-        assertSame(configurationSftp, actual);
-    }
+		when(sftpConfigurationRepository.findOneWithDependencies(id)).thenReturn(configurationSftp);
 
-    @Test
-    public void testDelete() {
-        final String id = "ConfigurationSftp-001";
-        service.delete(id);
-        verify(sftpConfigurationRepository).deleteById(id);
-    }
+		final SftpConfiguration actual = service.findOne(id);
+		assertSame(configurationSftp, actual);
+	}
 
-    @Test
-    public void testSave() throws PgcnTechnicalException {
-        final SftpConfiguration configurationSftp = new SftpConfiguration();
-        configurationSftp.setIdentifier("ConfigurationSftp-001");
-        when(sftpConfigurationRepository.save(any(SftpConfiguration.class))).then(new ReturnsArgumentAt(0));
-        when(sftpConfigurationRepository.findOneWithDependencies("ConfigurationSftp-001")).thenReturn(configurationSftp);
+	@Test
+	public void testDelete() {
+		final String id = "ConfigurationSftp-001";
+		service.delete(id);
+		verify(sftpConfigurationRepository).deleteById(id);
+	}
 
-        // #1: validation failed
-        try {
-            service.save(configurationSftp);
-            fail("test Save should have failed !");
-        } catch (final PgcnTechnicalException e) {
-            fail("test Save should have failed with PgcnTechnicalException !");
-        } catch (final PgcnValidationException e) {
-            TestUtil.checkPgcnException(e, CONF_SFTP_LABEL_MANDATORY, CONF_SFTP_LIBRARY_MANDATORY);
-        }
+	@Test
+	public void testSave() throws PgcnTechnicalException {
+		final SftpConfiguration configurationSftp = new SftpConfiguration();
+		configurationSftp.setIdentifier("ConfigurationSftp-001");
+		when(sftpConfigurationRepository.save(any(SftpConfiguration.class))).then(new ReturnsArgumentAt(0));
+		when(sftpConfigurationRepository.findOneWithDependencies("ConfigurationSftp-001"))
+			.thenReturn(configurationSftp);
 
-        // #2 validation ok
-        configurationSftp.setLabel("ConfigurationSftp des monographies");
-        final Library lib = new Library();
-        lib.setIdentifier("LIB-001");
-        configurationSftp.setLibrary(lib);
-        final SftpConfiguration actual = service.save(configurationSftp);
+		// #1: validation failed
+		try {
+			service.save(configurationSftp);
+			fail("test Save should have failed !");
+		}
+		catch (final PgcnTechnicalException e) {
+			fail("test Save should have failed with PgcnTechnicalException !");
+		}
+		catch (final PgcnValidationException e) {
+			TestUtil.checkPgcnException(e, CONF_SFTP_LABEL_MANDATORY, CONF_SFTP_LIBRARY_MANDATORY);
+		}
 
-        assertEquals(configurationSftp.getIdentifier(), actual.getIdentifier());
-        assertNotNull(actual.getLabel());
-    }
+		// #2 validation ok
+		configurationSftp.setLabel("ConfigurationSftp des monographies");
+		final Library lib = new Library();
+		lib.setIdentifier("LIB-001");
+		configurationSftp.setLibrary(lib);
+		final SftpConfiguration actual = service.save(configurationSftp);
 
-    private SftpConfiguration getConfigurationSftp(final String identifier) {
-        final Library library = new Library();
-        library.setIdentifier("LIBRARY-001");
+		assertEquals(configurationSftp.getIdentifier(), actual.getIdentifier());
+		assertNotNull(actual.getLabel());
+	}
 
-        final SftpConfiguration configurationSftp = new SftpConfiguration();
-        configurationSftp.setIdentifier(identifier);
-        configurationSftp.setLabel("Chou-fleur");
-        configurationSftp.setLibrary(library);
-        return configurationSftp;
-    }
+	private SftpConfiguration getConfigurationSftp(final String identifier) {
+		final Library library = new Library();
+		library.setIdentifier("LIBRARY-001");
+
+		final SftpConfiguration configurationSftp = new SftpConfiguration();
+		configurationSftp.setIdentifier(identifier);
+		configurationSftp.setLabel("Chou-fleur");
+		configurationSftp.setLibrary(library);
+		return configurationSftp;
+	}
+
 }

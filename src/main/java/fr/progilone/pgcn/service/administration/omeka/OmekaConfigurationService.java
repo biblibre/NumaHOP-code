@@ -23,135 +23,134 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OmekaConfigurationService {
 
-    private final OmekaConfigurationRepository omekaConfigurationRepository;
+	private final OmekaConfigurationRepository omekaConfigurationRepository;
 
-    @Autowired
-    public OmekaConfigurationService(final OmekaConfigurationRepository repository) {
-        this.omekaConfigurationRepository = repository;
-    }
+	@Autowired
+	public OmekaConfigurationService(final OmekaConfigurationRepository repository) {
+		this.omekaConfigurationRepository = repository;
+	}
 
-    @Transactional(readOnly = true)
-    public Set<OmekaConfigurationDTO> findAllDto(final Boolean active) {
-        final Set<OmekaConfiguration> confs = Boolean.TRUE.equals(active) ? omekaConfigurationRepository.findByActiveWithDependencies(true)
-                                                                          : omekaConfigurationRepository.findAllWithDependencies();
+	@Transactional(readOnly = true)
+	public Set<OmekaConfigurationDTO> findAllDto(final Boolean active) {
+		final Set<OmekaConfiguration> confs = Boolean.TRUE.equals(active)
+				? omekaConfigurationRepository.findByActiveWithDependencies(true)
+				: omekaConfigurationRepository.findAllWithDependencies();
 
-        return OmekaConfigurationMapper.INSTANCE.confOmekaToDtos(confs);
-    }
+		return OmekaConfigurationMapper.INSTANCE.confOmekaToDtos(confs);
+	}
 
-    /**
-     * Liste par bibliothèque
-     *
-     * @param libraryId
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Set<OmekaConfiguration> findByLibrary(final String libraryId) {
-        final Library library = new Library();
-        library.setIdentifier(libraryId);
-        return omekaConfigurationRepository.findByLibrary(library);
-    }
+	/**
+	 * Liste par bibliothèque
+	 * @param libraryId
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Set<OmekaConfiguration> findByLibrary(final String libraryId) {
+		final Library library = new Library();
+		library.setIdentifier(libraryId);
+		return omekaConfigurationRepository.findByLibrary(library);
+	}
 
-    /**
-     * Liste par bibliothèque et actif/inactif
-     *
-     * @param library
-     * @param active
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Set<OmekaConfiguration> findByLibraryAndActive(final Library library, final boolean active) {
-        return Boolean.TRUE.equals(active) ? omekaConfigurationRepository.findByLibraryAndActive(library, true)
-                                           : omekaConfigurationRepository.findByLibrary(library);
+	/**
+	 * Liste par bibliothèque et actif/inactif
+	 * @param library
+	 * @param active
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Set<OmekaConfiguration> findByLibraryAndActive(final Library library, final boolean active) {
+		return Boolean.TRUE.equals(active) ? omekaConfigurationRepository.findByLibraryAndActive(library, true)
+				: omekaConfigurationRepository.findByLibrary(library);
 
-    }
+	}
 
-    /**
-     * Récupération sous la forme de DTO
-     *
-     * @param library
-     * @param active
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Set<OmekaConfigurationDTO> findDtoByLibrary(final Library library, final Boolean active) {
-        final Set<OmekaConfiguration> confs = Boolean.TRUE.equals(active) ? omekaConfigurationRepository.findByLibraryAndActive(library, true)
-                                                                          : omekaConfigurationRepository.findByLibrary(library);
-        return OmekaConfigurationMapper.INSTANCE.confOmekaToDtos(confs);
-    }
+	/**
+	 * Récupération sous la forme de DTO
+	 * @param library
+	 * @param active
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Set<OmekaConfigurationDTO> findDtoByLibrary(final Library library, final Boolean active) {
+		final Set<OmekaConfiguration> confs = Boolean.TRUE.equals(active)
+				? omekaConfigurationRepository.findByLibraryAndActive(library, true)
+				: omekaConfigurationRepository.findByLibrary(library);
+		return OmekaConfigurationMapper.INSTANCE.confOmekaToDtos(confs);
+	}
 
-    /**
-     * Récupération d'un élément
-     *
-     * @param id
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public OmekaConfiguration findOne(final String id) {
-        return omekaConfigurationRepository.findOneWithDependencies(id);
-    }
+	/**
+	 * Récupération d'un élément
+	 * @param id
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public OmekaConfiguration findOne(final String id) {
+		return omekaConfigurationRepository.findOneWithDependencies(id);
+	}
 
-    /**
-     * Récupération des résultats de recherche
-     *
-     * @param search
-     * @param libraries
-     * @param page
-     * @param size
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Page<OmekaConfigurationDTO> search(final String search, final List<String> libraries, final Boolean omekas, final Integer page, final Integer size) {
+	/**
+	 * Récupération des résultats de recherche
+	 * @param search
+	 * @param libraries
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Page<OmekaConfigurationDTO> search(final String search, final List<String> libraries, final Boolean omekas,
+			final Integer page, final Integer size) {
 
-        final Pageable pageRequest = PageRequest.of(page, size);
+		final Pageable pageRequest = PageRequest.of(page, size);
 
-        return omekaConfigurationRepository.search(search, libraries, omekas, pageRequest).map(OmekaConfigurationMapper.INSTANCE::confOmekaToDto);
-    }
+		return omekaConfigurationRepository.search(search, libraries, omekas, pageRequest)
+			.map(OmekaConfigurationMapper.INSTANCE::confOmekaToDto);
+	}
 
-    @Transactional
-    public void delete(final String id) {
-        omekaConfigurationRepository.deleteById(id);
-    }
+	@Transactional
+	public void delete(final String id) {
+		omekaConfigurationRepository.deleteById(id);
+	}
 
-    /**
-     * Sauvegarde avec validation
-     *
-     * @param conf
-     * @return
-     * @throws PgcnValidationException
-     * @throws PgcnTechnicalException
-     */
-    @Transactional
-    public OmekaConfiguration save(final OmekaConfiguration conf) throws PgcnValidationException, PgcnTechnicalException {
-        validate(conf);
-        final OmekaConfiguration savedConf = omekaConfigurationRepository.save(conf);
-        return omekaConfigurationRepository.findOneWithDependencies(savedConf.getIdentifier());
-    }
+	/**
+	 * Sauvegarde avec validation
+	 * @param conf
+	 * @return
+	 * @throws PgcnValidationException
+	 * @throws PgcnTechnicalException
+	 */
+	@Transactional
+	public OmekaConfiguration save(final OmekaConfiguration conf)
+			throws PgcnValidationException, PgcnTechnicalException {
+		validate(conf);
+		final OmekaConfiguration savedConf = omekaConfigurationRepository.save(conf);
+		return omekaConfigurationRepository.findOneWithDependencies(savedConf.getIdentifier());
+	}
 
-    /**
-     * Validation des champs requis
-     *
-     * @param conf
-     * @return
-     * @throws PgcnValidationException
-     */
-    private PgcnList<PgcnError> validate(final OmekaConfiguration conf) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
+	/**
+	 * Validation des champs requis
+	 * @param conf
+	 * @return
+	 * @throws PgcnValidationException
+	 */
+	private PgcnList<PgcnError> validate(final OmekaConfiguration conf) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
 
-        // le libellé est obligatoire
-        if (StringUtils.isEmpty(conf.getLabel())) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_OMEKA_LABEL_MANDATORY).setField("label").build());
-        }
-        // la bibliothèque est obligatoire
-        if (conf.getLibrary() == null) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_OMEKA_LIBRARY_MANDATORY).setField("library").build());
-        }
-        // Retour
-        if (!errors.isEmpty()) {
-            conf.setErrors(errors);
-            throw new PgcnValidationException(conf, errors);
-        }
-        return errors;
-    }
+		// le libellé est obligatoire
+		if (StringUtils.isEmpty(conf.getLabel())) {
+			errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_OMEKA_LABEL_MANDATORY).setField("label").build());
+		}
+		// la bibliothèque est obligatoire
+		if (conf.getLibrary() == null) {
+			errors
+				.add(builder.reinit().setCode(PgcnErrorCode.CONF_OMEKA_LIBRARY_MANDATORY).setField("library").build());
+		}
+		// Retour
+		if (!errors.isEmpty()) {
+			conf.setErrors(errors);
+			throw new PgcnValidationException(conf, errors);
+		}
+		return errors;
+	}
 
 }

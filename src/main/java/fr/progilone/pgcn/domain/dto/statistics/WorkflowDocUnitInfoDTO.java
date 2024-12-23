@@ -2,32 +2,34 @@ package fr.progilone.pgcn.domain.dto.statistics;
 
 public class WorkflowDocUnitInfoDTO {
 
-    private String record;
-    private String lot;
-    private String radical;
+	private String record;
 
-    public String getRecord() {
-        return record;
-    }
+	private String lot;
 
-    public void setRecord(final String record) {
-        this.record = record;
-    }
+	private String radical;
 
-    public String getLot() {
-        return lot;
-    }
+	public String getRecord() {
+		return record;
+	}
 
-    public void setLot(final String lot) {
-        this.lot = lot;
-    }
+	public void setRecord(final String record) {
+		this.record = record;
+	}
 
-    public String getRadical() {
-        return radical;
-    }
+	public String getLot() {
+		return lot;
+	}
 
-    public void setRadical(final String radical) {
-        this.radical = radical;
-    }
+	public void setLot(final String lot) {
+		this.lot = lot;
+	}
+
+	public String getRadical() {
+		return radical;
+	}
+
+	public void setRadical(final String radical) {
+		this.radical = radical;
+	}
 
 }

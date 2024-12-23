@@ -6,199 +6,202 @@ import java.util.List;
 
 public class ExportFTPConfigurationDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String label;
-    private SimpleLibraryDTO library;
-    private String address;
-    private String login;
-    private String password;
-    private String storageServer;
-    private String port;
-    private boolean active;
+	private String identifier;
 
-    private boolean exportMets;
-    private boolean exportMaster;
-    private boolean exportView;
-    private boolean exportThumb;
-    private boolean exportPdf;
-    private boolean exportAipSip;
-    private boolean exportAlto;
+	private String label;
 
-    private List<ExportFTPConfigurationDeliveryFolderDTO> deliveryFolders;
+	private SimpleLibraryDTO library;
 
-    public ExportFTPConfigurationDTO(final String identifier,
-                                     final String label,
-                                     final SimpleLibraryDTO library,
-                                     final String address,
-                                     final String login,
-                                     final String password,
-                                     final String storageServer,
-                                     final String port,
-                                     final boolean active,
-                                     final boolean exportAipSip,
-                                     final boolean exportMets,
-                                     final boolean exportMaster,
-                                     final boolean exportView,
-                                     final boolean exportThumb,
-                                     final boolean exportPdf,
-                                     final boolean exportAlto,
-                                     final List<ExportFTPConfigurationDeliveryFolderDTO> deliveryFolders) {
-        this.identifier = identifier;
-        this.label = label;
-        this.library = library;
-        this.address = address;
-        this.login = login;
-        this.password = password;
-        this.storageServer = storageServer;
-        this.port = port;
-        this.active = active;
-        this.exportAipSip = exportAipSip;
-        this.exportMets = exportMets;
-        this.exportMaster = exportMaster;
-        this.exportView = exportView;
-        this.exportThumb = exportThumb;
-        this.exportPdf = exportPdf;
-        this.exportAlto = exportAlto;
-        this.deliveryFolders = deliveryFolders;
-    }
+	private String address;
 
-    public ExportFTPConfigurationDTO() {
+	private String login;
 
-    }
+	private String password;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String storageServer;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private String port;
 
-    public String getLabel() {
-        return label;
-    }
+	private boolean active;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	private boolean exportMets;
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	private boolean exportMaster;
 
-    public void setLibrary(final SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	private boolean exportView;
 
-    public String getAddress() {
-        return address;
-    }
+	private boolean exportThumb;
 
-    public void setAddress(final String address) {
-        this.address = address;
-    }
+	private boolean exportPdf;
 
-    public String getLogin() {
-        return login;
-    }
+	private boolean exportAipSip;
 
-    public void setLogin(final String login) {
-        this.login = login;
-    }
+	private boolean exportAlto;
 
-    public String getPassword() {
-        return password;
-    }
+	private List<ExportFTPConfigurationDeliveryFolderDTO> deliveryFolders;
 
-    public void setPassword(final String password) {
-        this.password = password;
-    }
+	public ExportFTPConfigurationDTO(final String identifier, final String label, final SimpleLibraryDTO library,
+			final String address, final String login, final String password, final String storageServer,
+			final String port, final boolean active, final boolean exportAipSip, final boolean exportMets,
+			final boolean exportMaster, final boolean exportView, final boolean exportThumb, final boolean exportPdf,
+			final boolean exportAlto, final List<ExportFTPConfigurationDeliveryFolderDTO> deliveryFolders) {
+		this.identifier = identifier;
+		this.label = label;
+		this.library = library;
+		this.address = address;
+		this.login = login;
+		this.password = password;
+		this.storageServer = storageServer;
+		this.port = port;
+		this.active = active;
+		this.exportAipSip = exportAipSip;
+		this.exportMets = exportMets;
+		this.exportMaster = exportMaster;
+		this.exportView = exportView;
+		this.exportThumb = exportThumb;
+		this.exportPdf = exportPdf;
+		this.exportAlto = exportAlto;
+		this.deliveryFolders = deliveryFolders;
+	}
 
-    public String getStorageServer() {
-        return storageServer;
-    }
+	public ExportFTPConfigurationDTO() {
 
-    public void setStorageServer(final String storageServer) {
-        this.storageServer = storageServer;
-    }
+	}
 
-    public String getPort() {
-        return port;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setPort(final String port) {
-        this.port = port;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public boolean isExportMets() {
-        return exportMets;
-    }
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
 
-    public void setExportMets(final boolean exportMets) {
-        this.exportMets = exportMets;
-    }
+	public void setLibrary(final SimpleLibraryDTO library) {
+		this.library = library;
+	}
 
-    public boolean isExportMaster() {
-        return exportMaster;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setExportMaster(final boolean exportMaster) {
-        this.exportMaster = exportMaster;
-    }
+	public void setAddress(final String address) {
+		this.address = address;
+	}
 
-    public boolean isExportView() {
-        return exportView;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public void setExportView(final boolean exportView) {
-        this.exportView = exportView;
-    }
+	public void setLogin(final String login) {
+		this.login = login;
+	}
 
-    public boolean isExportThumb() {
-        return exportThumb;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setExportThumb(final boolean exportThumb) {
-        this.exportThumb = exportThumb;
-    }
+	public void setPassword(final String password) {
+		this.password = password;
+	}
 
-    public boolean isExportPdf() {
-        return exportPdf;
-    }
+	public String getStorageServer() {
+		return storageServer;
+	}
 
-    public void setExportPdf(final boolean exportPdf) {
-        this.exportPdf = exportPdf;
-    }
+	public void setStorageServer(final String storageServer) {
+		this.storageServer = storageServer;
+	}
 
-    public boolean isExportAipSip() {
-        return exportAipSip;
-    }
+	public String getPort() {
+		return port;
+	}
 
-    public void setExportAipSip(final boolean exportAipSip) {
-        this.exportAipSip = exportAipSip;
-    }
+	public void setPort(final String port) {
+		this.port = port;
+	}
 
-    public boolean isExportAlto() {
-        return exportAlto;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public void setExportAlto(boolean exportAlto) {
-        this.exportAlto = exportAlto;
-    }
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
 
-    public List<ExportFTPConfigurationDeliveryFolderDTO> getDeliveryFolders() {
-        return deliveryFolders;
-    }
+	public boolean isExportMets() {
+		return exportMets;
+	}
 
-    public void setDeliveryFolders(List<ExportFTPConfigurationDeliveryFolderDTO> deliveryFolders) {
-        this.deliveryFolders = deliveryFolders;
-    }
+	public void setExportMets(final boolean exportMets) {
+		this.exportMets = exportMets;
+	}
+
+	public boolean isExportMaster() {
+		return exportMaster;
+	}
+
+	public void setExportMaster(final boolean exportMaster) {
+		this.exportMaster = exportMaster;
+	}
+
+	public boolean isExportView() {
+		return exportView;
+	}
+
+	public void setExportView(final boolean exportView) {
+		this.exportView = exportView;
+	}
+
+	public boolean isExportThumb() {
+		return exportThumb;
+	}
+
+	public void setExportThumb(final boolean exportThumb) {
+		this.exportThumb = exportThumb;
+	}
+
+	public boolean isExportPdf() {
+		return exportPdf;
+	}
+
+	public void setExportPdf(final boolean exportPdf) {
+		this.exportPdf = exportPdf;
+	}
+
+	public boolean isExportAipSip() {
+		return exportAipSip;
+	}
+
+	public void setExportAipSip(final boolean exportAipSip) {
+		this.exportAipSip = exportAipSip;
+	}
+
+	public boolean isExportAlto() {
+		return exportAlto;
+	}
+
+	public void setExportAlto(boolean exportAlto) {
+		this.exportAlto = exportAlto;
+	}
+
+	public List<ExportFTPConfigurationDeliveryFolderDTO> getDeliveryFolders() {
+		return deliveryFolders;
+	}
+
+	public void setDeliveryFolders(List<ExportFTPConfigurationDeliveryFolderDTO> deliveryFolders) {
+		this.deliveryFolders = deliveryFolders;
+	}
+
 }

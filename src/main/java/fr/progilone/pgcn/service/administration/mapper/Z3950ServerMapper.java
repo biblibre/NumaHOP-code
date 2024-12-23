@@ -12,9 +12,10 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface Z3950ServerMapper {
 
-    Z3950ServerMapper INSTANCE = Mappers.getMapper(Z3950ServerMapper.class);
+	Z3950ServerMapper INSTANCE = Mappers.getMapper(Z3950ServerMapper.class);
 
-    Z3950ServerDTO z3950ServerToDto(Z3950Server z3950Server);
+	Z3950ServerDTO z3950ServerToDto(Z3950Server z3950Server);
 
-    List<Z3950ServerDTO> z3950ServerToDtos(List<Z3950Server> z3950Servers);
+	List<Z3950ServerDTO> z3950ServerToDtos(List<Z3950Server> z3950Servers);
+
 }

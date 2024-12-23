@@ -25,145 +25,150 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class EadMappingEvaluationServiceTest {
 
-    // on ne mock pas le moteur de script, on utilise sa configuration réelle dans l'application
-    private static final ScriptEngine SCRIPT_ENGINE = new ScriptEngineConfiguration().getGroovyScriptEngine();
-    // private static final ScriptEngine SCRIPT_ENGINE = new GroovyScriptEngineImpl();
+	// on ne mock pas le moteur de script, on utilise sa configuration réelle dans
+	// l'application
+	private static final ScriptEngine SCRIPT_ENGINE = new ScriptEngineConfiguration().getGroovyScriptEngine();
 
-    @Mock
-    private TransliterationService transliterationService;
-    private EadMappingEvaluationService service;
+	// private static final ScriptEngine SCRIPT_ENGINE = new
+	// GroovyScriptEngineImpl();
 
-    @BeforeEach
-    public void setUp() {
-        service = new EadMappingEvaluationService(SCRIPT_ENGINE, transliterationService);
-    }
+	@Mock
+	private TransliterationService transliterationService;
 
-    @Test
-    public void testEvalExpression0() {
-        final String expression = "\\did.unitid.content";
-        final CompiledMapping compiledMapping = getCompiledMapping(expression, null);
-        assertEquals(1, compiledMapping.getCompiledRules().size());
+	private EadMappingEvaluationService service;
 
-        final Map<String, Object> bindings = new HashMap<>();
-        bindings.put("var_did_unitid_content", "Hello you !");
+	@BeforeEach
+	public void setUp() {
+		service = new EadMappingEvaluationService(SCRIPT_ENGINE, transliterationService);
+	}
 
-        final Object actual = service.evalExpression(compiledMapping.getCompiledRules().get(0), bindings);
-        assertEquals("Hello you !", String.valueOf(actual));
-    }
+	@Test
+	public void testEvalExpression0() {
+		final String expression = "\\did.unitid.content";
+		final CompiledMapping compiledMapping = getCompiledMapping(expression, null);
+		assertEquals(1, compiledMapping.getCompiledRules().size());
 
-    @Test
-    public void testEvalExpression1() {
-        final String expression = "\\{did.unitid.content}.substring(6, 9)";
-        final CompiledMapping compiledMapping = getCompiledMapping(expression, null);
-        assertEquals(1, compiledMapping.getCompiledRules().size());
+		final Map<String, Object> bindings = new HashMap<>();
+		bindings.put("var_did_unitid_content", "Hello you !");
 
-        final Map<String, Object> bindings = new HashMap<>();
-        bindings.put("var_did_unitid_content", "Hello you !");
+		final Object actual = service.evalExpression(compiledMapping.getCompiledRules().get(0), bindings);
+		assertEquals("Hello you !", String.valueOf(actual));
+	}
 
-        final Object actual = service.evalExpression(compiledMapping.getCompiledRules().get(0), bindings);
-        assertEquals("you", String.valueOf(actual));
-    }
+	@Test
+	public void testEvalExpression1() {
+		final String expression = "\\{did.unitid.content}.substring(6, 9)";
+		final CompiledMapping compiledMapping = getCompiledMapping(expression, null);
+		assertEquals(1, compiledMapping.getCompiledRules().size());
 
-    @Test
-    public void testEvalExpression2() {
-        final String expression = "\\all:did.unitid.content";
-        final CompiledMapping compiledMapping = getCompiledMapping(expression, null);
-        assertEquals(1, compiledMapping.getCompiledRules().size());
+		final Map<String, Object> bindings = new HashMap<>();
+		bindings.put("var_did_unitid_content", "Hello you !");
 
-        final Map<String, Object> bindings = new HashMap<>();
-        bindings.put("var_all_did_unitid_content", "Hello you !");
+		final Object actual = service.evalExpression(compiledMapping.getCompiledRules().get(0), bindings);
+		assertEquals("you", String.valueOf(actual));
+	}
 
-        final Object actual = service.evalExpression(compiledMapping.getCompiledRules().get(0), bindings);
-        assertEquals("Hello you !", String.valueOf(actual));
-    }
+	@Test
+	public void testEvalExpression2() {
+		final String expression = "\\all:did.unitid.content";
+		final CompiledMapping compiledMapping = getCompiledMapping(expression, null);
+		assertEquals(1, compiledMapping.getCompiledRules().size());
 
-    @Test
-    public void testEvalCondition0() {
-        final String condition = "\\did.unitid.content == \"Hello you !\"";
-        final CompiledMapping compiledMapping = getCompiledMapping(null, condition);
-        assertEquals(1, compiledMapping.getCompiledRules().size());
+		final Map<String, Object> bindings = new HashMap<>();
+		bindings.put("var_all_did_unitid_content", "Hello you !");
 
-        final Map<String, Object> bindings = new HashMap<>();
-        bindings.put("var_did_unitid_content", "Hello you !");
+		final Object actual = service.evalExpression(compiledMapping.getCompiledRules().get(0), bindings);
+		assertEquals("Hello you !", String.valueOf(actual));
+	}
 
-        final boolean actual = service.evalCondition(compiledMapping.getCompiledRules().get(0), bindings);
-        assertTrue(actual);
-    }
+	@Test
+	public void testEvalCondition0() {
+		final String condition = "\\did.unitid.content == \"Hello you !\"";
+		final CompiledMapping compiledMapping = getCompiledMapping(null, condition);
+		assertEquals(1, compiledMapping.getCompiledRules().size());
 
-    @Test
-    public void testEvalCondition1() {
-        final String condition = "\\{did.unitid.content}.equals(\"Hello you !\")";
-        final CompiledMapping compiledMapping = getCompiledMapping(null, condition);
-        assertEquals(1, compiledMapping.getCompiledRules().size());
+		final Map<String, Object> bindings = new HashMap<>();
+		bindings.put("var_did_unitid_content", "Hello you !");
 
-        final Map<String, Object> bindings = new HashMap<>();
-        bindings.put("var_did_unitid_content", "Hello you !");
+		final boolean actual = service.evalCondition(compiledMapping.getCompiledRules().get(0), bindings);
+		assertTrue(actual);
+	}
 
-        final boolean actual = service.evalCondition(compiledMapping.getCompiledRules().get(0), bindings);
-        assertTrue(actual);
-    }
+	@Test
+	public void testEvalCondition1() {
+		final String condition = "\\{did.unitid.content}.equals(\"Hello you !\")";
+		final CompiledMapping compiledMapping = getCompiledMapping(null, condition);
+		assertEquals(1, compiledMapping.getCompiledRules().size());
 
-    @Test
-    public void testSecurity() throws ScriptException {
-        final String dangerousExpression = "new File('.').listFiles()";
+		final Map<String, Object> bindings = new HashMap<>();
+		bindings.put("var_did_unitid_content", "Hello you !");
 
-        final CompiledMapping compiledMapping = getCompiledMapping(dangerousExpression, null);
-        assertEquals(1, compiledMapping.getCompiledRules().size());
+		final boolean actual = service.evalCondition(compiledMapping.getCompiledRules().get(0), bindings);
+		assertTrue(actual);
+	}
 
-        final Object actual = service.evalExpression(compiledMapping.getCompiledRules().get(0), new HashMap<>());
-        assertNull(actual); // l'expression a lancé une exception et n'a pas été évaluée
-    }
+	@Test
+	public void testSecurity() throws ScriptException {
+		final String dangerousExpression = "new File('.').listFiles()";
 
-    @Test
-    public void test2165() {
-        final String expression = "\"BSG_\" + text(\\did.unitid).toUpperCase().replaceAll('[.)\\\\s]', '').replaceAll('[(]','_')";
+		final CompiledMapping compiledMapping = getCompiledMapping(dangerousExpression, null);
+		assertEquals(1, compiledMapping.getCompiledRules().size());
 
-        final CompiledMapping compiledMapping = getCompiledMapping(expression, null);
-        assertEquals(1, compiledMapping.getCompiledRules().size());
+		final Object actual = service.evalExpression(compiledMapping.getCompiledRules().get(0), new HashMap<>());
+		assertNull(actual); // l'expression a lancé une exception et n'a pas été évaluée
+	}
 
-        final Unitid unitid = new Unitid();
-        unitid.getContent().add("Ms. 1086");
-        final Map<String, Object> bindings = new HashMap<>();
-        bindings.put("var_did_unitid", unitid);
+	@Test
+	public void test2165() {
+		final String expression = "\"BSG_\" + text(\\did.unitid).toUpperCase().replaceAll('[.)\\\\s]', '').replaceAll('[(]','_')";
 
-        final Object actual = service.evalExpression(compiledMapping.getCompiledRules().get(0), bindings);
-        assertEquals("BSG_MS1086", String.valueOf(actual));
-    }
+		final CompiledMapping compiledMapping = getCompiledMapping(expression, null);
+		assertEquals(1, compiledMapping.getCompiledRules().size());
 
-    @Test
-    public void testTransliterationInCondition() {
-        final String condition = "'cornichon'.equals(transliterate.getFunction('test'))";
+		final Unitid unitid = new Unitid();
+		unitid.getContent().add("Ms. 1086");
+		final Map<String, Object> bindings = new HashMap<>();
+		bindings.put("var_did_unitid", unitid);
 
-        final CompiledMapping compiledMapping = getCompiledMapping(null, condition);
-        assertEquals(1, compiledMapping.getCompiledRules().size());
+		final Object actual = service.evalExpression(compiledMapping.getCompiledRules().get(0), bindings);
+		assertEquals("BSG_MS1086", String.valueOf(actual));
+	}
 
-        when(transliterationService.getFunction("test")).thenReturn("cornichon");
+	@Test
+	public void testTransliterationInCondition() {
+		final String condition = "'cornichon'.equals(transliterate.getFunction('test'))";
 
-        final boolean actual = service.evalCondition(compiledMapping.getCompiledRules().get(0), new HashMap<>());
-        assertTrue(actual);
-    }
+		final CompiledMapping compiledMapping = getCompiledMapping(null, condition);
+		assertEquals(1, compiledMapping.getCompiledRules().size());
 
-    @Test
-    public void testTransliterationInExpression() {
-        final String expression = "transliterate.getFunction('070')";
+		when(transliterationService.getFunction("test")).thenReturn("cornichon");
 
-        final CompiledMapping compiledMapping = getCompiledMapping(expression, null);
-        assertEquals(1, compiledMapping.getCompiledRules().size());
+		final boolean actual = service.evalCondition(compiledMapping.getCompiledRules().get(0), new HashMap<>());
+		assertTrue(actual);
+	}
 
-        when(transliterationService.getFunction("070")).thenReturn("Auteur");
+	@Test
+	public void testTransliterationInExpression() {
+		final String expression = "transliterate.getFunction('070')";
 
-        final Object actual = service.evalExpression(compiledMapping.getCompiledRules().get(0), new HashMap<>());
-        assertEquals("Auteur", actual);
-    }
+		final CompiledMapping compiledMapping = getCompiledMapping(expression, null);
+		assertEquals(1, compiledMapping.getCompiledRules().size());
 
-    private CompiledMapping getCompiledMapping(String expression, String condition) {
-        final MappingRule rule = new MappingRule();
-        rule.setExpression(expression);
-        rule.setCondition(condition);
+		when(transliterationService.getFunction("070")).thenReturn("Auteur");
 
-        Mapping mapping = new Mapping();
-        mapping.addRule(rule);
+		final Object actual = service.evalExpression(compiledMapping.getCompiledRules().get(0), new HashMap<>());
+		assertEquals("Auteur", actual);
+	}
 
-        return service.compileMapping(mapping);
-    }
+	private CompiledMapping getCompiledMapping(String expression, String condition) {
+		final MappingRule rule = new MappingRule();
+		rule.setExpression(expression);
+		rule.setCondition(condition);
+
+		Mapping mapping = new Mapping();
+		mapping.addRule(rule);
+
+		return service.compileMapping(mapping);
+	}
+
 }

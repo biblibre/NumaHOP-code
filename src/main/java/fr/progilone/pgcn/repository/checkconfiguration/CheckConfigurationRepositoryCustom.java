@@ -10,5 +10,6 @@ import org.springframework.data.domain.Pageable;
  */
 public interface CheckConfigurationRepositoryCustom {
 
-    Page<CheckConfiguration> search(String search, List<String> libraries, Pageable pageable);
+	Page<CheckConfiguration> search(String search, List<String> libraries, Pageable pageable);
+
 }

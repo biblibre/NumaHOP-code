@@ -4,59 +4,64 @@ import fr.progilone.pgcn.domain.train.Train;
 
 public class AuditTrainRevisionDTO {
 
-    private int rev;
-    private long timestamp;
-    private String username;
+	private int rev;
 
-    private String identifier;
-    private String label;
-    private Train.TrainStatus status;
+	private long timestamp;
 
-    public int getRev() {
-        return rev;
-    }
+	private String username;
 
-    public void setRev(final int rev) {
-        this.rev = rev;
-    }
+	private String identifier;
 
-    public long getTimestamp() {
-        return timestamp;
-    }
+	private String label;
 
-    public void setTimestamp(final long timestamp) {
-        this.timestamp = timestamp;
-    }
+	private Train.TrainStatus status;
 
-    public String getUsername() {
-        return username;
-    }
+	public int getRev() {
+		return rev;
+	}
 
-    public void setUsername(final String username) {
-        this.username = username;
-    }
+	public void setRev(final int rev) {
+		this.rev = rev;
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public long getTimestamp() {
+		return timestamp;
+	}
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	public void setTimestamp(final long timestamp) {
+		this.timestamp = timestamp;
+	}
 
-    public String getLabel() {
-        return label;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public void setUsername(final String username) {
+		this.username = username;
+	}
 
-    public Train.TrainStatus getStatus() {
-        return status;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setStatus(final Train.TrainStatus status) {
-        this.status = status;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(final String label) {
+		this.label = label;
+	}
+
+	public Train.TrainStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(final Train.TrainStatus status) {
+		this.status = status;
+	}
+
 }

@@ -8,14 +8,10 @@ import org.springframework.data.domain.PageRequest;
 
 public interface EsDeliveryRepositoryCustom {
 
-    /**
-     * Recherche paginée
-     */
-    SearchResultPage<EsDelivery> search(final EsSearchOperation[] search,
-                                        final List<String> libraries,
-                                        final boolean fuzzy,
-                                        final EsSearchOperation[] filters,
-                                        final PageRequest pageable,
-                                        final boolean facet);
+	/**
+	 * Recherche paginée
+	 */
+	SearchResultPage<EsDelivery> search(final EsSearchOperation[] search, final List<String> libraries,
+			final boolean fuzzy, final EsSearchOperation[] filters, final PageRequest pageable, final boolean facet);
 
 }

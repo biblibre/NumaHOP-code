@@ -28,33 +28,40 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/audit/lot")
 public class AuditLotController {
 
-    private final AccessHelper accessHelper;
-    private final AuditLotService auditLotService;
+	private final AccessHelper accessHelper;
 
-    @Autowired
-    public AuditLotController(final AccessHelper accessHelper, final AuditLotService auditLotService) {
-        this.accessHelper = accessHelper;
-        this.auditLotService = auditLotService;
-    }
+	private final AuditLotService auditLotService;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"from"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({LOT_HAB3})
-    public ResponseEntity<List<AuditLotRevisionDTO>> getRevisions(@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from") final LocalDate fromDate,
-                                                                  @RequestParam(value = "library", required = false) final List<String> libraries,
-                                                                  @RequestParam(value = "project", required = false) final List<String> projects,
-                                                                  @RequestParam(value = "status", required = false) List<Lot.LotStatus> status) {
+	@Autowired
+	public AuditLotController(final AccessHelper accessHelper, final AuditLotService auditLotService) {
+		this.accessHelper = accessHelper;
+		this.auditLotService = auditLotService;
+	}
 
-        // Chargement
-        List<AuditLotRevisionDTO> revisions = auditLotService.getRevisions(fromDate, libraries, projects, status);
-        // Droits d'accès
-        revisions = filterDTOs(revisions, AuditLotRevisionDTO::getIdentifier);
-        // Réponse
-        return new ResponseEntity<>(revisions, HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "from" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(LOT_HAB3)
+	public ResponseEntity<List<AuditLotRevisionDTO>> getRevisions(
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from") final LocalDate fromDate,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@RequestParam(value = "status", required = false) List<Lot.LotStatus> status) {
 
-    private <T> List<T> filterDTOs(final Collection<T> dtos, final Function<T, String> getIdentifierFn) {
-        final Collection<Lot> okLots = accessHelper.filterLots(dtos.stream().map(getIdentifierFn).collect(Collectors.toList()));
-        return dtos.stream().filter(dto -> okLots.stream().anyMatch(lot -> StringUtils.equals(getIdentifierFn.apply(dto), lot.getIdentifier()))).collect(Collectors.toList());
-    }
+		// Chargement
+		List<AuditLotRevisionDTO> revisions = auditLotService.getRevisions(fromDate, libraries, projects, status);
+		// Droits d'accès
+		revisions = filterDTOs(revisions, AuditLotRevisionDTO::getIdentifier);
+		// Réponse
+		return new ResponseEntity<>(revisions, HttpStatus.OK);
+	}
+
+	private <T> List<T> filterDTOs(final Collection<T> dtos, final Function<T, String> getIdentifierFn) {
+		final Collection<Lot> okLots = accessHelper
+			.filterLots(dtos.stream().map(getIdentifierFn).collect(Collectors.toList()));
+		return dtos.stream()
+			.filter(dto -> okLots.stream()
+				.anyMatch(lot -> StringUtils.equals(getIdentifierFn.apply(dto), lot.getIdentifier())))
+			.collect(Collectors.toList());
+	}
+
 }

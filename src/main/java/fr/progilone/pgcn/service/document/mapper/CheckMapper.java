@@ -5,10 +5,11 @@ import fr.progilone.pgcn.domain.dto.document.CheckDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {DocPageMapper.class})
+@Mapper(uses = { DocPageMapper.class })
 public interface CheckMapper {
 
-    CheckMapper INSTANCE = Mappers.getMapper(CheckMapper.class);
+	CheckMapper INSTANCE = Mappers.getMapper(CheckMapper.class);
 
-    CheckDTO checkToCheckDTO(Check check);
+	CheckDTO checkToCheckDTO(Check check);
+
 }

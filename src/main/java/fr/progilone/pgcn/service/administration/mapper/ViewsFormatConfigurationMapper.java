@@ -8,29 +8,33 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {SimpleLibraryMapper.class})
+@Mapper(uses = { SimpleLibraryMapper.class })
 public abstract class ViewsFormatConfigurationMapper {
 
-    public static final ViewsFormatConfigurationMapper INSTANCE = Mappers.getMapper(ViewsFormatConfigurationMapper.class);
+	public static final ViewsFormatConfigurationMapper INSTANCE = Mappers
+		.getMapper(ViewsFormatConfigurationMapper.class);
 
-    public abstract ViewsFormatConfigurationDTO formatConfigToDto(ViewsFormatConfiguration formatConfiguration);
+	public abstract ViewsFormatConfigurationDTO formatConfigToDto(ViewsFormatConfiguration formatConfiguration);
 
-    public abstract ViewsFormatConfiguration dtoToFormatConfig(ViewsFormatConfigurationDTO formatConfigDto);
+	public abstract ViewsFormatConfiguration dtoToFormatConfig(ViewsFormatConfigurationDTO formatConfigDto);
 
-    @AfterMapping
-    protected void updateDto(final ViewsFormatConfiguration conf, @MappingTarget final ViewsFormatConfigurationDTO dto) {
+	@AfterMapping
+	protected void updateDto(final ViewsFormatConfiguration conf,
+			@MappingTarget final ViewsFormatConfigurationDTO dto) {
 
-        if (conf.getDefaultFormats() != null) {
-            dto.setThumbDefaultValue(String.valueOf(conf.getDefaultFormats().getDefThumbHeight())
-                                           .concat(" x ")
-                                           .concat(String.valueOf(conf.getDefaultFormats().getDefThumbWidth())));
+		if (conf.getDefaultFormats() != null) {
+			dto.setThumbDefaultValue(String.valueOf(conf.getDefaultFormats().getDefThumbHeight())
+				.concat(" x ")
+				.concat(String.valueOf(conf.getDefaultFormats().getDefThumbWidth())));
 
-            dto.setViewDefaultValue(String.valueOf(conf.getDefaultFormats().getDefViewHeight()).concat(" x ").concat(String.valueOf(conf.getDefaultFormats().getDefViewWidth())));
+			dto.setViewDefaultValue(String.valueOf(conf.getDefaultFormats().getDefViewHeight())
+				.concat(" x ")
+				.concat(String.valueOf(conf.getDefaultFormats().getDefViewWidth())));
 
-            dto.setPrintDefaultValue(String.valueOf(conf.getDefaultFormats().getDefPrintHeight())
-                                           .concat(" x ")
-                                           .concat(String.valueOf(conf.getDefaultFormats().getDefPrintWidth())));
-        }
-    }
+			dto.setPrintDefaultValue(String.valueOf(conf.getDefaultFormats().getDefPrintHeight())
+				.concat(" x ")
+				.concat(String.valueOf(conf.getDefaultFormats().getDefPrintWidth())));
+		}
+	}
 
 }

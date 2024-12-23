@@ -42,469 +42,499 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping(value = "/api/rest/condreport")
 public class ConditionReportController extends AbstractRestController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ConditionReportController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ConditionReportController.class);
 
-    private final AccessHelper accessHelper;
-    private final LibraryAccesssHelper libraryAccesssHelper;
-    private final WorkflowAccessHelper workflowAccessHelper;
-    private final ConditionReportExportService conditionReportExchangeService;
-    private final ConditionReportImportService conditionReportImportService;
-    private final ConditionReportService conditionReportService;
-    private final EsConditionReportService esConditionReportService;
+	private final AccessHelper accessHelper;
 
-    @Autowired
-    public ConditionReportController(final AccessHelper accessHelper,
-                                     final LibraryAccesssHelper libraryAccesssHelper,
-                                     final WorkflowAccessHelper workflowAccessHelper,
-                                     final ConditionReportExportService conditionReportExchangeService,
-                                     final ConditionReportImportService conditionReportImportService,
-                                     final ConditionReportService conditionReportService,
-                                     final EsConditionReportService esConditionReportService) {
-        this.accessHelper = accessHelper;
-        this.libraryAccesssHelper = libraryAccesssHelper;
-        this.workflowAccessHelper = workflowAccessHelper;
-        this.conditionReportExchangeService = conditionReportExchangeService;
-        this.conditionReportImportService = conditionReportImportService;
-        this.conditionReportService = conditionReportService;
-        this.esConditionReportService = esConditionReportService;
-    }
+	private final LibraryAccesssHelper libraryAccesssHelper;
 
-    @RequestMapping(method = RequestMethod.POST, params = {"docUnit"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB1)
-    public ResponseEntity<ConditionReport> create(@RequestParam(name = "docUnit") final String docUnitId) throws PgcnException {
-        // droits d'accès à l'ud
-        if (!accessHelper.checkDocUnit(docUnitId)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final ConditionReport savedReport = conditionReportService.create(docUnitId);
-        esConditionReportService.indexAsync(savedReport.getIdentifier());
-        return new ResponseEntity<>(savedReport, HttpStatus.CREATED);
-    }
+	private final WorkflowAccessHelper workflowAccessHelper;
 
-    @RequestMapping(value = "/{identifier}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB3)
-    public void delete(final HttpServletResponse response, @PathVariable final String identifier) {
-        final DocUnit docUnit = conditionReportService.findDocUnitByIdentifier(identifier);
-        // non trouvé
-        if (docUnit == null) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return;
-        }
-        // droits d'accès à l'ud
-        if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return;
-        }
-        // Droit par rapport au workflow
-        if (!workflowAccessHelper.canConstatBeDeleted(docUnit.getIdentifier())) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return;
-        }
-        conditionReportService.delete(identifier);
-        response.setStatus(HttpServletResponse.SC_OK);
-    }
+	private final ConditionReportExportService conditionReportExchangeService;
 
-    @RequestMapping(value = "/{identifier}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB0)
-    public ResponseEntity<ConditionReport> findByIdentifier(@PathVariable final String identifier) {
-        final ConditionReport report = conditionReportService.findByIdentifier(identifier);
-        // non trouvé
-        if (report == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // droits d'accès à l'ud
-        if (!accessHelper.checkDocUnit(report.getDocUnit().getIdentifier())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return createResponseEntity(report);
-    }
+	private final ConditionReportImportService conditionReportImportService;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"docUnit"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB0)
-    public ResponseEntity<ConditionReport> findByDocUnit(@RequestParam(name = "docUnit") final String docUnitId) {
-        // droits d'accès à l'ud
-        if (!accessHelper.checkDocUnit(docUnitId)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final ConditionReport report = conditionReportService.findByDocUnit(docUnitId);
-        return new ResponseEntity<>(report, HttpStatus.OK); // toujours 200
-    }
+	private final ConditionReportService conditionReportService;
 
-    @RequestMapping(method = RequestMethod.GET,
-                    params = {"summary",
-                              "docUnit"},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB0)
-    public ResponseEntity<Set<String>> getSummaryByDocUnit(@RequestParam(name = "docUnit") final String docUnitId) {
-        // droits d'accès à l'ud
-        if (!accessHelper.checkDocUnit(docUnitId)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final ConditionReport report = conditionReportService.findByDocUnit(docUnitId);
-        return new ResponseEntity<>(conditionReportService.getSummary(report), HttpStatus.OK);
-    }
+	private final EsConditionReportService esConditionReportService;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"sampleId"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB0)
-    public ResponseEntity<Set<String>> getSummaryBySample(@RequestParam(name = "sampleId") final String docUnitId) {
-        // droits d'accès à l'ud
-        if (!accessHelper.checkDocUnit(docUnitId)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final ConditionReport report = conditionReportService.findByDocUnit(docUnitId);
-        return new ResponseEntity<>(conditionReportService.getSummary(report), HttpStatus.OK);
-    }
+	@Autowired
+	public ConditionReportController(final AccessHelper accessHelper, final LibraryAccesssHelper libraryAccesssHelper,
+			final WorkflowAccessHelper workflowAccessHelper,
+			final ConditionReportExportService conditionReportExchangeService,
+			final ConditionReportImportService conditionReportImportService,
+			final ConditionReportService conditionReportService,
+			final EsConditionReportService esConditionReportService) {
+		this.accessHelper = accessHelper;
+		this.libraryAccesssHelper = libraryAccesssHelper;
+		this.workflowAccessHelper = workflowAccessHelper;
+		this.conditionReportExchangeService = conditionReportExchangeService;
+		this.conditionReportImportService = conditionReportImportService;
+		this.conditionReportService = conditionReportService;
+		this.esConditionReportService = esConditionReportService;
+	}
 
-    @RequestMapping(value = "/{identifier}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB2)
-    public ResponseEntity<ConditionReport> update(@RequestBody final ConditionReport report) throws PgcnException {
-        final DocUnit docUnit = conditionReportService.findDocUnitByIdentifier(report.getIdentifier());
-        // non trouvé
-        if (docUnit == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // droits d'accès à l'ud
-        if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final ConditionReport savedReport = conditionReportService.save(report);
-        return new ResponseEntity<>(savedReport, HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.POST, params = { "docUnit" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB1)
+	public ResponseEntity<ConditionReport> create(@RequestParam(name = "docUnit") final String docUnitId)
+			throws PgcnException {
+		// droits d'accès à l'ud
+		if (!accessHelper.checkDocUnit(docUnitId)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final ConditionReport savedReport = conditionReportService.create(docUnitId);
+		esConditionReportService.indexAsync(savedReport.getIdentifier());
+		return new ResponseEntity<>(savedReport, HttpStatus.CREATED);
+	}
 
-    @RequestMapping(method = RequestMethod.POST, params = {"search"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB0)
-    public ResponseEntity<Page<SearchResult>> search(final HttpServletRequest request,
-                                                     @RequestBody final SearchRequest requestParams,
-                                                     @RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
-                                                     @RequestParam(value = "size", required = false, defaultValue = "" + Integer.MAX_VALUE) final Integer size,
-                                                     @RequestParam(value = "sorts", required = false) final List<String> sorts) {
+	@RequestMapping(value = "/{identifier}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB3)
+	public void delete(final HttpServletResponse response, @PathVariable final String identifier) {
+		final DocUnit docUnit = conditionReportService.findDocUnitByIdentifier(identifier);
+		// non trouvé
+		if (docUnit == null) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
+		}
+		// droits d'accès à l'ud
+		if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
+		// Droit par rapport au workflow
+		if (!workflowAccessHelper.canConstatBeDeleted(docUnit.getIdentifier())) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
+		conditionReportService.delete(identifier);
+		response.setStatus(HttpServletResponse.SC_OK);
+	}
 
-        final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request, requestParams.getLibraries());
-        final Page<SearchResult> results = conditionReportService.search(filteredLibraries,
-                                                                         requestParams.getProjects(),
-                                                                         requestParams.getLots(),
-                                                                         requestParams.getDimensions(),
-                                                                         requestParams.getFrom(),
-                                                                         requestParams.getTo(),
-                                                                         requestParams.getDescriptions(),
-                                                                         requestParams.getFilter(),
-                                                                         requestParams.isValidateOnly(),
-                                                                         page,
-                                                                         size,
-                                                                         sorts);
+	@RequestMapping(value = "/{identifier}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB0)
+	public ResponseEntity<ConditionReport> findByIdentifier(@PathVariable final String identifier) {
+		final ConditionReport report = conditionReportService.findByIdentifier(identifier);
+		// non trouvé
+		if (report == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// droits d'accès à l'ud
+		if (!accessHelper.checkDocUnit(report.getDocUnit().getIdentifier())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		return createResponseEntity(report);
+	}
 
-        results.forEach(res -> res.getDocUnit().setChangeTrainAuthorized(workflowAccessHelper.canChangeTrain(res.getDocUnit().getIdentifier()).isDone()));
-        return new ResponseEntity<>(results, HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "docUnit" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB0)
+	public ResponseEntity<ConditionReport> findByDocUnit(@RequestParam(name = "docUnit") final String docUnitId) {
+		// droits d'accès à l'ud
+		if (!accessHelper.checkDocUnit(docUnitId)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final ConditionReport report = conditionReportService.findByDocUnit(docUnitId);
+		return new ResponseEntity<>(report, HttpStatus.OK); // toujours 200
+	}
 
-    /**
-     * Export d'un constat d'état ODT
-     *
-     * @param response
-     * @param identifier
-     * @return
-     */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, params = {"exportto"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB4)
-    public void exportReportOdt(final HttpServletResponse response,
-                                @PathVariable("id") final String identifier,
-                                @RequestParam(name = "exportto", defaultValue = "PDF") final ConditionReportService.ConvertType type) throws PgcnTechnicalException {
-        final ConditionReport report = conditionReportService.findByIdentifier(identifier);
-        // non trouvé
-        if (report == null) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return;
-        }
-        // droits d'accès à l'ud
-        if (!accessHelper.checkDocUnit(report.getDocUnit().getIdentifier())) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return;
-        }
-        try {
-            final String filename = "condition_report_" + report.getDocUnit().getPgcnId().replaceAll("\\W+", "_");
-            // Entête ODT
-            if (type == ConditionReportService.ConvertType.ODT) {
-                writeResponseHeaderForDownload(response, "application/vnd.oasis.opendocument.text", null, filename + ".odt");
-            }
-            // Entête PDF
-            else {
-                writeResponseHeaderForDownload(response, "application/pdf", null, filename + ".pdf");
-            }
-            // Export du constat d'état
-            conditionReportService.exportDocument(identifier, response.getOutputStream(), type);
+	@RequestMapping(method = RequestMethod.GET, params = { "summary", "docUnit" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB0)
+	public ResponseEntity<Set<String>> getSummaryByDocUnit(@RequestParam(name = "docUnit") final String docUnitId) {
+		// droits d'accès à l'ud
+		if (!accessHelper.checkDocUnit(docUnitId)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final ConditionReport report = conditionReportService.findByDocUnit(docUnitId);
+		return new ResponseEntity<>(conditionReportService.getSummary(report), HttpStatus.OK);
+	}
 
-        } catch (final IOException e) {
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "sampleId" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB0)
+	public ResponseEntity<Set<String>> getSummaryBySample(@RequestParam(name = "sampleId") final String docUnitId) {
+		// droits d'accès à l'ud
+		if (!accessHelper.checkDocUnit(docUnitId)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final ConditionReport report = conditionReportService.findByDocUnit(docUnitId);
+		return new ResponseEntity<>(conditionReportService.getSummary(report), HttpStatus.OK);
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"import-template"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB1)
-    public void getReportImportTemplate(final HttpServletResponse response,
-                                        @RequestParam(name = "import-template") final List<String> docUnitIds,
-                                        @RequestParam(name = "format", defaultValue = "XLSX") final ConditionReportExportService.WorkbookFormat format,
-                                        @RequestParam(name = "sortAttributes") final List<String> sortAttributes) throws PgcnTechnicalException {
-        // droits d'accès à l'ud
-        final Collection<DocUnit> filteredDocUnits = accessHelper.filterDocUnits(docUnitIds);
-        if (filteredDocUnits.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return;
-        }
-        // export du modèle de doc d'import
-        try {
-            // entête
-            switch (format) {
-                case XLS:
-                    writeResponseHeaderForDownload(response, "application/vnd.ms-excel", null, "condition_report_import.xls");
-                    break;
-                case XLSX:
-                    writeResponseHeaderForDownload(response, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", null, "condition_report_import.xlsx");
-                    break;
-            }
-            // réponse
-            final List<String> identifiers = filteredDocUnits.stream().map(AbstractDomainObject::getIdentifier).collect(Collectors.toList());
-            conditionReportExchangeService.writeReportTemplate(response.getOutputStream(), identifiers, format);
+	@RequestMapping(value = "/{identifier}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB2)
+	public ResponseEntity<ConditionReport> update(@RequestBody final ConditionReport report) throws PgcnException {
+		final DocUnit docUnit = conditionReportService.findDocUnitByIdentifier(report.getIdentifier());
+		// non trouvé
+		if (docUnit == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// droits d'accès à l'ud
+		if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final ConditionReport savedReport = conditionReportService.save(report);
+		return new ResponseEntity<>(savedReport, HttpStatus.OK);
+	}
 
-        } catch (final IOException e) {
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	@RequestMapping(method = RequestMethod.POST, params = { "search" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB0)
+	public ResponseEntity<Page<SearchResult>> search(final HttpServletRequest request,
+			@RequestBody final SearchRequest requestParams,
+			@RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
+			@RequestParam(value = "size", required = false, defaultValue = "" + Integer.MAX_VALUE) final Integer size,
+			@RequestParam(value = "sorts", required = false) final List<String> sorts) {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/csv", produces = "text/csv")
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB0)
-    public void generateSlip(final HttpServletRequest request,
-                             final HttpServletResponse response,
-                             @RequestParam(value = "reports") final List<String> reportIds,
-                             @RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
-                             @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+		final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request,
+				requestParams.getLibraries());
+		final Page<SearchResult> results = conditionReportService.search(filteredLibraries, requestParams.getProjects(),
+				requestParams.getLots(), requestParams.getDimensions(), requestParams.getFrom(), requestParams.getTo(),
+				requestParams.getDescriptions(), requestParams.getFilter(), requestParams.isValidateOnly(), page, size,
+				sorts);
 
-        // droits d'accès à l'ud
-        final List<ConditionReportDetail> reports = accessHelper.filterConditionReportDetails(reportIds);
-        if (reports.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        }
+		results.forEach(res -> res.getDocUnit()
+			.setChangeTrainAuthorized(workflowAccessHelper.canChangeTrain(res.getDocUnit().getIdentifier()).isDone()));
+		return new ResponseEntity<>(results, HttpStatus.OK);
+	}
 
-        final List<String> reportIdentifiers = reports.stream().map(report -> report.getIdentifier()).collect(Collectors.toList());
+	/**
+	 * Export d'un constat d'état ODT
+	 * @param response
+	 * @param identifier
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, params = { "exportto" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB4)
+	public void exportReportOdt(final HttpServletResponse response, @PathVariable("id") final String identifier,
+			@RequestParam(name = "exportto", defaultValue = "PDF") final ConditionReportService.ConvertType type)
+			throws PgcnTechnicalException {
+		final ConditionReport report = conditionReportService.findByIdentifier(identifier);
+		// non trouvé
+		if (report == null) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
+		}
+		// droits d'accès à l'ud
+		if (!accessHelper.checkDocUnit(report.getDocUnit().getIdentifier())) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
+		try {
+			final String filename = "condition_report_" + report.getDocUnit().getPgcnId().replaceAll("\\W+", "_");
+			// Entête ODT
+			if (type == ConditionReportService.ConvertType.ODT) {
+				writeResponseHeaderForDownload(response, "application/vnd.oasis.opendocument.text", null,
+						filename + ".odt");
+			}
+			// Entête PDF
+			else {
+				writeResponseHeaderForDownload(response, "application/pdf", null, filename + ".pdf");
+			}
+			// Export du constat d'état
+			conditionReportService.exportDocument(identifier, response.getOutputStream(), type);
 
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, "bordereau.csv");
-            conditionReportService.writeSlip(response.getOutputStream(), reportIdentifiers, encoding, separator);
-        } catch (final IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+		}
+		catch (final IOException e) {
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-    @RequestMapping(method = RequestMethod.GET, value = "/pdf", produces = "application/pdf")
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB0)
-    public void generateSlipPdf(final HttpServletRequest request, final HttpServletResponse response, @RequestParam(value = "reports") final List<String> reportIds)
-                                                                                                                                                                     throws PgcnTechnicalException {
+	@RequestMapping(method = RequestMethod.GET, params = { "import-template" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB1)
+	public void getReportImportTemplate(final HttpServletResponse response,
+			@RequestParam(name = "import-template") final List<String> docUnitIds,
+			@RequestParam(name = "format",
+					defaultValue = "XLSX") final ConditionReportExportService.WorkbookFormat format,
+			@RequestParam(name = "sortAttributes") final List<String> sortAttributes) throws PgcnTechnicalException {
+		// droits d'accès à l'ud
+		final Collection<DocUnit> filteredDocUnits = accessHelper.filterDocUnits(docUnitIds);
+		if (filteredDocUnits.isEmpty()) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
+		}
+		// export du modèle de doc d'import
+		try {
+			// entête
+			switch (format) {
+				case XLS:
+					writeResponseHeaderForDownload(response, "application/vnd.ms-excel", null,
+							"condition_report_import.xls");
+					break;
+				case XLSX:
+					writeResponseHeaderForDownload(response,
+							"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", null,
+							"condition_report_import.xlsx");
+					break;
+			}
+			// réponse
+			final List<String> identifiers = filteredDocUnits.stream()
+				.map(AbstractDomainObject::getIdentifier)
+				.collect(Collectors.toList());
+			conditionReportExchangeService.writeReportTemplate(response.getOutputStream(), identifiers, format);
 
-        // droits d'accès à l'ud
-        final List<ConditionReportDetail> reports = accessHelper.filterConditionReportDetails(reportIds);
-        if (reports.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        }
+		}
+		catch (final IOException e) {
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-        final List<String> reportIdentifiers = reports.stream().map(report -> report.getIdentifier()).collect(Collectors.toList());
+	@RequestMapping(method = RequestMethod.GET, value = "/csv", produces = "text/csv")
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB0)
+	public void generateSlip(final HttpServletRequest request, final HttpServletResponse response,
+			@RequestParam(value = "reports") final List<String> reportIds,
+			@RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
 
-        try {
-            writeResponseHeaderForDownload(response, "application/pdf", null, "bordereau.pdf");
-            conditionReportService.writeSlipPDF(response.getOutputStream(), reportIdentifiers, "Liste des unités documentaires");
-        } catch (final IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+		// droits d'accès à l'ud
+		final List<ConditionReportDetail> reports = accessHelper.filterConditionReportDetails(reportIds);
+		if (reports.isEmpty()) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		}
 
-    @RequestMapping(method = RequestMethod.POST, params = {"import-report"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB1)
-    public ResponseEntity<List<ConditionReportImportService.ImportResult>> updateReport(@RequestParam(value = "file") final List<MultipartFile> files) {
+		final List<String> reportIdentifiers = reports.stream()
+			.map(report -> report.getIdentifier())
+			.collect(Collectors.toList());
 
-        if (files.isEmpty()) {
-            LOG.warn("Aucun fichier n'a été reçu pour l'import des constats d'état");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            final MultipartFile file = files.get(0);
-            if (file.getSize() == 0) {
-                LOG.warn("L'import du fichier {} est annulé car il est vide", file.getOriginalFilename());
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            } else {
-                LOG.info("Import du fichier {} (taille {})", file.getOriginalFilename(), file.getSize());
-                try (final InputStream in = file.getInputStream()) {
-                    final List<ConditionReportImportService.ImportResult> importResults = conditionReportImportService.importReport(in,
-                                                                                                                                    docUnit -> accessHelper.checkDocUnit(docUnit.getIdentifier()));
-                    // Indexation des constats importés
-                    final List<String> reportIds = importResults.stream()
-                                                                .filter(res -> res.getReportId() != null)
-                                                                .map(ConditionReportImportService.ImportResult::getReportId)
-                                                                .collect(Collectors.toList());
-                    esConditionReportService.indexAsync(reportIds);
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, "bordereau.csv");
+			conditionReportService.writeSlip(response.getOutputStream(), reportIdentifiers, encoding, separator);
+		}
+		catch (final IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-                    return new ResponseEntity<>(importResults, HttpStatus.OK);
+	@RequestMapping(method = RequestMethod.GET, value = "/pdf", produces = "application/pdf")
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB0)
+	public void generateSlipPdf(final HttpServletRequest request, final HttpServletResponse response,
+			@RequestParam(value = "reports") final List<String> reportIds) throws PgcnTechnicalException {
 
-                } catch (final InvalidFormatException | IOException e) {
-                    LOG.error(e.getMessage(), e);
-                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-            }
-        }
-    }
+		// droits d'accès à l'ud
+		final List<ConditionReportDetail> reports = accessHelper.filterConditionReportDetails(reportIds);
+		if (reports.isEmpty()) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		}
 
-    /**
-     * Propagation du constat d'etat du parent vers les relations filles.
-     *
-     * @param request
-     * @param response
-     * @param docUnitId
-     * @param detailId
-     * @return
-     */
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST, params = {"propagate"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB0)
-    public ResponseEntity<?> propagateReport(final HttpServletRequest request,
-                                             final HttpServletResponse response,
-                                             @RequestParam(name = "docUnit") final String docUnitId,
-                                             @PathVariable(name = "id") final String detailId) {
+		final List<String> reportIdentifiers = reports.stream()
+			.map(report -> report.getIdentifier())
+			.collect(Collectors.toList());
 
-        // droits d'accès à l'ud
-        if (!accessHelper.checkDocUnit(docUnitId)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final Map<String, String> results = conditionReportService.propagateReport(docUnitId, detailId);
-        // es indexation des nouveaux reports
-        esConditionReportService.indexAsync(new ArrayList<>(results.keySet()));
+		try {
+			writeResponseHeaderForDownload(response, "application/pdf", null, "bordereau.pdf");
+			conditionReportService.writeSlipPDF(response.getOutputStream(), reportIdentifiers,
+					"Liste des unités documentaires");
+		}
+		catch (final IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-        return new ResponseEntity<>(results.values(), HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.POST, params = { "import-report" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB1)
+	public ResponseEntity<List<ConditionReportImportService.ImportResult>> updateReport(
+			@RequestParam(value = "file") final List<MultipartFile> files) {
 
-    private static final class SearchRequest {
+		if (files.isEmpty()) {
+			LOG.warn("Aucun fichier n'a été reçu pour l'import des constats d'état");
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		else {
+			final MultipartFile file = files.get(0);
+			if (file.getSize() == 0) {
+				LOG.warn("L'import du fichier {} est annulé car il est vide", file.getOriginalFilename());
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			else {
+				LOG.info("Import du fichier {} (taille {})", file.getOriginalFilename(), file.getSize());
+				try (final InputStream in = file.getInputStream()) {
+					final List<ConditionReportImportService.ImportResult> importResults = conditionReportImportService
+						.importReport(in, docUnit -> accessHelper.checkDocUnit(docUnit.getIdentifier()));
+					// Indexation des constats importés
+					final List<String> reportIds = importResults.stream()
+						.filter(res -> res.getReportId() != null)
+						.map(ConditionReportImportService.ImportResult::getReportId)
+						.collect(Collectors.toList());
+					esConditionReportService.indexAsync(reportIds);
 
-        private List<String> libraries;
-        private List<String> projects;
-        private List<String> lots;
-        private DimensionFilter.Operator op;
-        private Integer dim1;
-        private Integer dim2;
-        private Integer dim3;
-        private LocalDate from;
-        private LocalDate to;
-        private List<String> descriptions;
-        private List<String> filter;
-        private boolean validateOnly;
+					return new ResponseEntity<>(importResults, HttpStatus.OK);
 
-        public List<String> getLibraries() {
-            return libraries;
-        }
+				}
+				catch (final InvalidFormatException | IOException e) {
+					LOG.error(e.getMessage(), e);
+					return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+		}
+	}
 
-        public void setLibraries(final List<String> libraries) {
-            this.libraries = libraries;
-        }
+	/**
+	 * Propagation du constat d'etat du parent vers les relations filles.
+	 * @param request
+	 * @param response
+	 * @param docUnitId
+	 * @param detailId
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST, params = { "propagate" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB0)
+	public ResponseEntity<?> propagateReport(final HttpServletRequest request, final HttpServletResponse response,
+			@RequestParam(name = "docUnit") final String docUnitId, @PathVariable(name = "id") final String detailId) {
 
-        public List<String> getProjects() {
-            return projects;
-        }
+		// droits d'accès à l'ud
+		if (!accessHelper.checkDocUnit(docUnitId)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final Map<String, String> results = conditionReportService.propagateReport(docUnitId, detailId);
+		// es indexation des nouveaux reports
+		esConditionReportService.indexAsync(new ArrayList<>(results.keySet()));
 
-        public void setProjects(final List<String> projects) {
-            this.projects = projects;
-        }
+		return new ResponseEntity<>(results.values(), HttpStatus.OK);
+	}
 
-        public List<String> getLots() {
-            return lots;
-        }
+	private static final class SearchRequest {
 
-        public void setLots(final List<String> lots) {
-            this.lots = lots;
-        }
+		private List<String> libraries;
 
-        public DimensionFilter.Operator getOp() {
-            return op;
-        }
+		private List<String> projects;
 
-        public void setOp(final DimensionFilter.Operator op) {
-            this.op = op;
-        }
+		private List<String> lots;
 
-        public Integer getDim1() {
-            return dim1;
-        }
+		private DimensionFilter.Operator op;
 
-        public void setDim1(final Integer dim1) {
-            this.dim1 = dim1;
-        }
+		private Integer dim1;
 
-        public Integer getDim2() {
-            return dim2;
-        }
+		private Integer dim2;
 
-        public void setDim2(final Integer dim2) {
-            this.dim2 = dim2;
-        }
+		private Integer dim3;
 
-        public Integer getDim3() {
-            return dim3;
-        }
+		private LocalDate from;
 
-        public void setDim3(final Integer dim3) {
-            this.dim3 = dim3;
-        }
+		private LocalDate to;
 
-        public LocalDate getFrom() {
-            return from;
-        }
+		private List<String> descriptions;
 
-        public void setFrom(final LocalDate from) {
-            this.from = from;
-        }
+		private List<String> filter;
 
-        public LocalDate getTo() {
-            return to;
-        }
+		private boolean validateOnly;
 
-        public void setTo(final LocalDate to) {
-            this.to = to;
-        }
+		public List<String> getLibraries() {
+			return libraries;
+		}
 
-        public List<String> getDescriptions() {
-            return descriptions;
-        }
+		public void setLibraries(final List<String> libraries) {
+			this.libraries = libraries;
+		}
 
-        public void setDescriptions(final List<String> descriptions) {
-            this.descriptions = descriptions;
-        }
+		public List<String> getProjects() {
+			return projects;
+		}
 
-        public List<String> getFilter() {
-            return filter;
-        }
+		public void setProjects(final List<String> projects) {
+			this.projects = projects;
+		}
 
-        public void setFilters(final List<String> filter) {
-            this.filter = filter;
-        }
+		public List<String> getLots() {
+			return lots;
+		}
 
-        public DimensionFilter getDimensions() {
-            return new DimensionFilter(op, dim1, dim2, dim3);
-        }
+		public void setLots(final List<String> lots) {
+			this.lots = lots;
+		}
 
-        public void setValidateOnly(final boolean validateOnly) {
-            this.validateOnly = validateOnly;
-        }
+		public DimensionFilter.Operator getOp() {
+			return op;
+		}
 
-        public boolean isValidateOnly() {
-            return validateOnly;
-        }
-    }
+		public void setOp(final DimensionFilter.Operator op) {
+			this.op = op;
+		}
+
+		public Integer getDim1() {
+			return dim1;
+		}
+
+		public void setDim1(final Integer dim1) {
+			this.dim1 = dim1;
+		}
+
+		public Integer getDim2() {
+			return dim2;
+		}
+
+		public void setDim2(final Integer dim2) {
+			this.dim2 = dim2;
+		}
+
+		public Integer getDim3() {
+			return dim3;
+		}
+
+		public void setDim3(final Integer dim3) {
+			this.dim3 = dim3;
+		}
+
+		public LocalDate getFrom() {
+			return from;
+		}
+
+		public void setFrom(final LocalDate from) {
+			this.from = from;
+		}
+
+		public LocalDate getTo() {
+			return to;
+		}
+
+		public void setTo(final LocalDate to) {
+			this.to = to;
+		}
+
+		public List<String> getDescriptions() {
+			return descriptions;
+		}
+
+		public void setDescriptions(final List<String> descriptions) {
+			this.descriptions = descriptions;
+		}
+
+		public List<String> getFilter() {
+			return filter;
+		}
+
+		public void setFilters(final List<String> filter) {
+			this.filter = filter;
+		}
+
+		public DimensionFilter getDimensions() {
+			return new DimensionFilter(op, dim1, dim2, dim3);
+		}
+
+		public void setValidateOnly(final boolean validateOnly) {
+			this.validateOnly = validateOnly;
+		}
+
+		public boolean isValidateOnly() {
+			return validateOnly;
+		}
+
+	}
+
 }

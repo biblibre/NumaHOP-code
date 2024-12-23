@@ -18,209 +18,216 @@ import java.util.Set;
  */
 @Entity
 @Table(name = ArchiveItem.TABLE_NAME)
-@JsonSubTypes({@JsonSubTypes.Type(name = "doc_archive_item", value = ArchiveItem.class)})
+@JsonSubTypes({ @JsonSubTypes.Type(name = "doc_archive_item", value = ArchiveItem.class) })
 public class ArchiveItem extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "doc_archive_item";
+	public static final String TABLE_NAME = "doc_archive_item";
 
-    @OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final Set<ArchiveCollection> collections = new LinkedHashSet<>();
-    @OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final Set<ArchiveSubject> subjects = new LinkedHashSet<>();
-    @OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final Set<ArchiveHeader> headers = new LinkedHashSet<>();
-    @OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final Set<ArchiveCoverage> coverages = new LinkedHashSet<>();
-    @OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final Set<ArchiveContributor> contributors = new LinkedHashSet<>();
-    @OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final Set<ArchiveCreator> creators = new LinkedHashSet<>();
-    @OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final Set<ArchiveLanguage> languages = new LinkedHashSet<>();
+	@OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private final Set<ArchiveCollection> collections = new LinkedHashSet<>();
 
-    @Column(name = "archive_identifier")
-    private String archiveIdentifier;
+	@OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private final Set<ArchiveSubject> subjects = new LinkedHashSet<>();
 
-    @Column(name = "credits")
-    private String credits;
+	@OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private final Set<ArchiveHeader> headers = new LinkedHashSet<>();
 
-    @Column(name = "date")
-    private String date;
+	@OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private final Set<ArchiveCoverage> coverages = new LinkedHashSet<>();
 
-    @Column(name = "description")
-    private String description;
+	@OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private final Set<ArchiveContributor> contributors = new LinkedHashSet<>();
 
-    @Column(name = "license_url")
-    private String licenseUrl;
+	@OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private final Set<ArchiveCreator> creators = new LinkedHashSet<>();
 
-    @Column(name = "mediatype")
-    private String mediatype;
+	@OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private final Set<ArchiveLanguage> languages = new LinkedHashSet<>();
 
-    @Column(name = "customMediatype")
-    private String customMediatype;
+	@Column(name = "archive_identifier")
+	private String archiveIdentifier;
 
-    @Column(name = "notes")
-    private String notes;
+	@Column(name = "credits")
+	private String credits;
 
-    @Column(name = "publisher")
-    private String publisher;
+	@Column(name = "date")
+	private String date;
 
-    @Column(name = "rights")
-    private String rights;
+	@Column(name = "description")
+	private String description;
 
-    @Column(name = "title")
-    private String title;
+	@Column(name = "license_url")
+	private String licenseUrl;
 
-    @Column(name = "type")
-    private String type;
+	@Column(name = "mediatype")
+	private String mediatype;
 
-    @Column(name = "source")
-    private String source;
+	@Column(name = "customMediatype")
+	private String customMediatype;
 
-    /**
-     * Unité documentaire rattachée
-     */
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doc_unit")
-    private DocUnit docUnit;
+	@Column(name = "notes")
+	private String notes;
 
-    public DocUnit getDocUnit() {
-        return docUnit;
-    }
+	@Column(name = "publisher")
+	private String publisher;
 
-    public void setDocUnit(final DocUnit docUnit) {
-        this.docUnit = docUnit;
-    }
+	@Column(name = "rights")
+	private String rights;
 
-    public Set<ArchiveCollection> getCollections() {
-        return collections;
-    }
+	@Column(name = "title")
+	private String title;
 
-    public Set<ArchiveSubject> getSubjects() {
-        return subjects;
-    }
+	@Column(name = "type")
+	private String type;
 
-    public Set<ArchiveHeader> getHeaders() {
-        return headers;
-    }
+	@Column(name = "source")
+	private String source;
 
-    public Set<ArchiveCoverage> getCoverages() {
-        return coverages;
-    }
+	/**
+	 * Unité documentaire rattachée
+	 */
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "doc_unit")
+	private DocUnit docUnit;
 
-    public Set<ArchiveContributor> getContributors() {
-        return contributors;
-    }
+	public DocUnit getDocUnit() {
+		return docUnit;
+	}
 
-    public Set<ArchiveCreator> getCreators() {
-        return creators;
-    }
+	public void setDocUnit(final DocUnit docUnit) {
+		this.docUnit = docUnit;
+	}
 
-    public String getCredits() {
-        return credits;
-    }
+	public Set<ArchiveCollection> getCollections() {
+		return collections;
+	}
 
-    public void setCredits(final String credits) {
-        this.credits = credits;
-    }
+	public Set<ArchiveSubject> getSubjects() {
+		return subjects;
+	}
 
-    public String getDate() {
-        return date;
-    }
+	public Set<ArchiveHeader> getHeaders() {
+		return headers;
+	}
 
-    public void setDate(final String date) {
-        this.date = date;
-    }
+	public Set<ArchiveCoverage> getCoverages() {
+		return coverages;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public Set<ArchiveContributor> getContributors() {
+		return contributors;
+	}
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	public Set<ArchiveCreator> getCreators() {
+		return creators;
+	}
 
-    public Set<ArchiveLanguage> getLanguages() {
-        return languages;
-    }
+	public String getCredits() {
+		return credits;
+	}
 
-    public String getLicenseUrl() {
-        return licenseUrl;
-    }
+	public void setCredits(final String credits) {
+		this.credits = credits;
+	}
 
-    public void setLicenseUrl(final String licenseUrl) {
-        this.licenseUrl = licenseUrl;
-    }
+	public String getDate() {
+		return date;
+	}
 
-    public String getMediatype() {
-        return mediatype;
-    }
+	public void setDate(final String date) {
+		this.date = date;
+	}
 
-    public void setMediatype(final String mediatype) {
-        this.mediatype = mediatype;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public String getCustomMediatype() {
-        return customMediatype;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public void setCustomMediatype(final String customMediatype) {
-        this.customMediatype = customMediatype;
-    }
+	public Set<ArchiveLanguage> getLanguages() {
+		return languages;
+	}
 
-    public String getNotes() {
-        return notes;
-    }
+	public String getLicenseUrl() {
+		return licenseUrl;
+	}
 
-    public void setNotes(final String notes) {
-        this.notes = notes;
-    }
+	public void setLicenseUrl(final String licenseUrl) {
+		this.licenseUrl = licenseUrl;
+	}
 
-    public String getPublisher() {
-        return publisher;
-    }
+	public String getMediatype() {
+		return mediatype;
+	}
 
-    public void setPublisher(final String publisher) {
-        this.publisher = publisher;
-    }
+	public void setMediatype(final String mediatype) {
+		this.mediatype = mediatype;
+	}
 
-    public String getRights() {
-        return rights;
-    }
+	public String getCustomMediatype() {
+		return customMediatype;
+	}
 
-    public void setRights(final String rights) {
-        this.rights = rights;
-    }
+	public void setCustomMediatype(final String customMediatype) {
+		this.customMediatype = customMediatype;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getNotes() {
+		return notes;
+	}
 
-    public void setTitle(final String title) {
-        this.title = title;
-    }
+	public void setNotes(final String notes) {
+		this.notes = notes;
+	}
 
-    public String getArchiveIdentifier() {
-        return archiveIdentifier;
-    }
+	public String getPublisher() {
+		return publisher;
+	}
 
-    public void setArchiveIdentifier(final String archiveIdentifier) {
-        this.archiveIdentifier = archiveIdentifier;
-    }
+	public void setPublisher(final String publisher) {
+		this.publisher = publisher;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public String getRights() {
+		return rights;
+	}
 
-    public void setType(final String type) {
-        this.type = type;
-    }
+	public void setRights(final String rights) {
+		this.rights = rights;
+	}
 
-    public String getSource() {
-        return source;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setSource(final String source) {
-        this.source = source;
-    }
+	public void setTitle(final String title) {
+		this.title = title;
+	}
+
+	public String getArchiveIdentifier() {
+		return archiveIdentifier;
+	}
+
+	public void setArchiveIdentifier(final String archiveIdentifier) {
+		this.archiveIdentifier = archiveIdentifier;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(final String type) {
+		this.type = type;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(final String source) {
+		this.source = source;
+	}
+
 }
