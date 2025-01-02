@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.web.rest.filesgestion;
+package fr.progilone.pgcn.web.rest.filesgestionconfiguration;
 
 import static fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants.FILES_GEST_HAB0;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.filesgestion.FilesGestionConfigDTO;
-import fr.progilone.pgcn.service.filesgestion.FilesGestionConfigMapper;
-import fr.progilone.pgcn.service.filesgestion.FilesGestionConfigService;
+import fr.progilone.pgcn.domain.dto.filesgestionconfiguration.FilesGestionConfigDTO;
+import fr.progilone.pgcn.service.filesgestionconfiguration.FilesGestionConfigMapper;
+import fr.progilone.pgcn.service.filesgestionconfiguration.FilesGestionConfigService;
 import fr.progilone.pgcn.web.rest.AbstractRestController;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;

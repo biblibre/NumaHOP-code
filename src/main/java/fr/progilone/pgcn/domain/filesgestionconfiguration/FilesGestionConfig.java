@@ -1,61 +1,73 @@
-package fr.progilone.pgcn.domain.dto.filesgestion;
+package fr.progilone.pgcn.domain.filesgestionconfiguration;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
-import fr.progilone.pgcn.domain.dto.exportftpconfiguration.ExportFTPConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.exportftpconfiguration.ExportFTPConfigurationDeliveryFolderDTO;
-import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
+import fr.progilone.pgcn.domain.AbstractDomainObject;
+import fr.progilone.pgcn.domain.administration.ExportFTPDeliveryFolder;
+import fr.progilone.pgcn.domain.exportftpconfiguration.ExportFTPConfiguration;
+import fr.progilone.pgcn.domain.library.Library;
+import jakarta.persistence.*;
 
-public class FilesGestionConfigDTO extends AbstractVersionedDTO {
+@Entity
+@Table(name = FilesGestionConfig.TABLE_NAME)
+public class FilesGestionConfig extends AbstractDomainObject {
 
-	private String identifier;
+	public static final String TABLE_NAME = "conf_files_gestion";
 
+	@Column(name = "trigger_type")
 	private String triggerType;
 
+	@Column(name = "delay")
 	private int delay;
 
+	@Column(name = "export_ftp")
 	private boolean useExportFtp;
 
+	@Column(name = "destination_dir")
 	private String destinationDir;
 
+	@Column(name = "delete_master")
 	private boolean deleteMaster;
 
+	@Column(name = "delete_pdf")
 	private boolean deletePdf;
 
+	@Column(name = "delete_print")
 	private boolean deletePrint;
 
+	@Column(name = "delete_view")
 	private boolean deleteView;
 
+	@Column(name = "delete_thumb")
 	private boolean deleteThumb;
 
+	@Column(name = "save_master")
 	private boolean saveMaster;
 
+	@Column(name = "save_pdf")
 	private boolean savePdf;
 
+	@Column(name = "save_print")
 	private boolean savePrint;
 
+	@Column(name = "save_view")
 	private boolean saveView;
 
+	@Column(name = "save_thumb")
 	private boolean saveThumb;
 
+	@Column(name = "save_aip_sip")
 	private boolean saveAipSip;
 
-	private ExportFTPConfigurationDTO activeExportFTPConfiguration;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "library")
+	private Library library;
 
-	private ExportFTPConfigurationDeliveryFolderDTO activeExportFTPDeliveryFolder;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "active_export_ftp_conf")
+	private ExportFTPConfiguration activeExportFTPConfiguration;
 
-	private SimpleLibraryDTO library;
-
-	public String getIdentifier() {
-		return identifier;
-	}
-
-	public void setIdentifier(final String identifier) {
-		this.identifier = identifier;
-	}
-
-	public FilesGestionConfigDTO() {
-		super();
-	}
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "active_export_ftp_delivery_folder")
+	private ExportFTPDeliveryFolder activeExportFTPDeliveryFolder;
 
 	public String getTriggerType() {
 		return triggerType;
@@ -177,28 +189,27 @@ public class FilesGestionConfigDTO extends AbstractVersionedDTO {
 		this.saveAipSip = saveAipSip;
 	}
 
-	public SimpleLibraryDTO getLibrary() {
+	public Library getLibrary() {
 		return library;
 	}
 
-	public void setLibrary(final SimpleLibraryDTO library) {
+	public void setLibrary(final Library library) {
 		this.library = library;
 	}
 
-	public ExportFTPConfigurationDTO getActiveExportFTPConfiguration() {
+	public ExportFTPConfiguration getActiveExportFTPConfiguration() {
 		return activeExportFTPConfiguration;
 	}
 
-	public void setActiveExportFTPConfiguration(ExportFTPConfigurationDTO activeExportFTPConfiguration) {
+	public void setActiveExportFTPConfiguration(ExportFTPConfiguration activeExportFTPConfiguration) {
 		this.activeExportFTPConfiguration = activeExportFTPConfiguration;
 	}
 
-	public ExportFTPConfigurationDeliveryFolderDTO getActiveExportFTPDeliveryFolder() {
+	public ExportFTPDeliveryFolder getActiveExportFTPDeliveryFolder() {
 		return activeExportFTPDeliveryFolder;
 	}
 
-	public void setActiveExportFTPDeliveryFolder(
-			ExportFTPConfigurationDeliveryFolderDTO activeExportFTPDeliveryFolder) {
+	public void setActiveExportFTPDeliveryFolder(ExportFTPDeliveryFolder activeExportFTPDeliveryFolder) {
 		this.activeExportFTPDeliveryFolder = activeExportFTPDeliveryFolder;
 	}
 

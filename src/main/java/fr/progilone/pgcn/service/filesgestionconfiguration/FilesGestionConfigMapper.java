@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.filesgestion;
+package fr.progilone.pgcn.service.filesgestionconfiguration;
 
-import fr.progilone.pgcn.domain.dto.filesgestion.FilesGestionConfigDTO;
-import fr.progilone.pgcn.domain.filesgestion.FilesGestionConfig;
+import fr.progilone.pgcn.domain.dto.filesgestionconfiguration.FilesGestionConfigDTO;
+import fr.progilone.pgcn.domain.filesgestionconfiguration.FilesGestionConfig;
 import fr.progilone.pgcn.service.exportftpconfiguration.mapper.ExportFTPConfigurationMapper;
 import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
 import java.util.List;

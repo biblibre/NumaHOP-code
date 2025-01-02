@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.filesgestion;
+package fr.progilone.pgcn.repository.filesgestionconfiguration;
 
-import fr.progilone.pgcn.domain.filesgestion.FilesGestionConfig;
+import fr.progilone.pgcn.domain.filesgestionconfiguration.FilesGestionConfig;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

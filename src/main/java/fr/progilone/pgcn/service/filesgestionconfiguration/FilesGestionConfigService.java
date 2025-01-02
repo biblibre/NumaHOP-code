@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.filesgestion;
+package fr.progilone.pgcn.service.filesgestionconfiguration;
 
-import fr.progilone.pgcn.domain.dto.filesgestion.FilesGestionConfigDTO;
-import fr.progilone.pgcn.domain.filesgestion.FilesGestionConfig;
+import fr.progilone.pgcn.domain.dto.filesgestionconfiguration.FilesGestionConfigDTO;
+import fr.progilone.pgcn.domain.filesgestionconfiguration.FilesGestionConfig;
 import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.repository.filesgestion.FilesGestionConfigRepository;
+import fr.progilone.pgcn.repository.filesgestionconfiguration.FilesGestionConfigRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
