@@ -41,8 +41,8 @@ public class CheckSlipConfigurationController extends AbstractRestController {
 		this.libraryAccesssHelper = libraryAccesssHelper;
 	}
 
-	@RolesAllowedDEL_HAB0)RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-
+	@RolesAllowed(DEL_HAB0)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@Timed
 	public ResponseEntity<CheckSlipConfiguration> getById(final HttpServletRequest request,
 			@PathVariable final String id) {

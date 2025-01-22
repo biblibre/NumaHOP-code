@@ -163,8 +163,7 @@ public class ExportMetsService {
 		final Marshaller m = context.createMarshaller();
 		// Validation
 		final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		m.setSchema(
-				sf.newSchema(new StreamSource(getClass().getClassLoader().getResourceAsStream("config/xsd/mets.xsd"))));
+		m.setSchema(sf.newSchema(ExportMetsService.class.getResource("/config/xsd/mets.xsd")));
 		m.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8.name());
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		m.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, METS_SCHEMA_LOCATION);

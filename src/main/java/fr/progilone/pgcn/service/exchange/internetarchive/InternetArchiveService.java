@@ -407,7 +407,7 @@ public class InternetArchiveService {
 			final AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(awsCreds))
 				.withClientConfiguration(new ClientConfiguration().withSignerOverride("S3SignerType"))
-				.withEndpointConfiguration(new EndpointConfiguration("http://s3.us.archive.org", ""))
+				.withEndpointConfiguration(new EndpointConfiguration("https://s3.us.archive.org", ""))
 				.build();
 
 			// Handle Metadata
@@ -535,8 +535,7 @@ public class InternetArchiveService {
 					}
 					catch (final AmazonServiceException ase) {
 						// cas particulier erreur 503 SlowDown => on pause 30sec et on re
-						// essaie 1
-						// fois....
+						// essaie 1 fois....
 						if (ase.getStatusCode() == 503 && StringUtils.contains(ase.getErrorCode(), "SlowDown")) {
 							LOG.error(
 									"Caught AmazonServiceException 503 : SlowDown - retries to put file {} in {} seconds",
