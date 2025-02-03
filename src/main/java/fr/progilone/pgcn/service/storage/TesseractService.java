@@ -1,13 +1,12 @@
 package fr.progilone.pgcn.service.storage;
 
 import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import jakarta.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.ProcessBuilder.Redirect;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,17 +22,18 @@ public class TesseractService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(TesseractService.class);
 
-	private ExecutorService executorService;
-
 	private final AltoService altoService;
 
-	public TesseractService(final AltoService altoService) {
-		this.altoService = altoService;
-	}
+	private final ExecutorService executorService;
 
 	protected String tessProcessPath;
 
 	private boolean isConfigured;
+
+	public TesseractService(final AltoService altoService) {
+		this.altoService = altoService;
+		this.executorService = Executors.newFixedThreadPool(2);
+	}
 
 	public void initialize(final String tessProcessPath) {
 		this.tessProcessPath = tessProcessPath;
@@ -82,11 +82,6 @@ public class TesseractService {
 		return isConfigured;
 	}
 
-	@PostConstruct
-	public void init() {
-		executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-	}
-
 	/**
 	 * Generation du PDF d'OCRisation et du Hocr éventuel.
 	 * @param imgFile
@@ -110,18 +105,19 @@ public class TesseractService {
 
 		return executorService.submit(() -> {
 
-			LOG.debug("Lancement de l'OCRisation pour le fichier {}", imgFile.getName());
-
 			final ProcessBuilder builder = new ProcessBuilder(tessProcessPath, imgFile.getAbsolutePath(), outPath, "-l",
 					language, "pdf", generateHocr ? "hocr" : "");
 
+			LOG.debug("Lancement de l'OCRisation pour le fichier {} : {}", imgFile.getName(), builder.command());
+
 			final String outputName = parentDirectory + File.separatorChar + prefix;
 
-			builder.redirectError(Redirect.INHERIT);
-			builder.redirectOutput(Redirect.INHERIT);
 			try {
 				final Process process = builder.start();
-				if (process.waitFor(12, TimeUnit.HOURS) && process.exitValue() == 0) {
+				consumeStream(process.getInputStream(), false, imgFile.getName());
+				consumeStream(process.getErrorStream(), true, imgFile.getName());
+
+				if (process.waitFor(24, TimeUnit.HOURS) && process.exitValue() == 0) {
 					// when pdf is done, write to the correct output
 					// only if the size is not null
 
@@ -145,6 +141,13 @@ public class TesseractService {
 						LOG.info("[Tesseract] Unable to generate pdf and alto {}", pdfFile.getName());
 					}
 				}
+				else {
+					if (process.isAlive()) {
+						process.destroyForcibly().waitFor(1, TimeUnit.MINUTES);
+					}
+					LOG.error("Aucune génération réalisée pour le fichier {} : {}", imgFile.getName(),
+							process.isAlive() ? "processus non terminé..." : process.exitValue());
+				}
 			}
 			catch (final IOException | InterruptedException e) {
 				LOG.error("[Tesseract] Unable to generate pdf and alto files", e);
@@ -152,6 +155,22 @@ public class TesseractService {
 
 			LOG.debug("Fin de l'OCRisation pour le fichier {}", imgFile.getName());
 		});
+	}
+
+	private void consumeStream(final InputStream stream, final boolean isError, final String context) {
+		new Thread(() -> {
+			try (final BufferedReader reader = new BufferedReader(
+					new InputStreamReader(stream, StandardCharsets.UTF_8))) {
+				String line;
+				while ((line = reader.readLine()) != null) {
+					LOG.debug("{} : {}", context, line);
+				}
+			}
+			catch (final IOException e) {
+				LOG.error("{} : Erreur lors de la lecture du flux {} : {}", context, isError ? "erreur" : "standard",
+						e.getMessage());
+			}
+		}).start();
 	}
 
 }
