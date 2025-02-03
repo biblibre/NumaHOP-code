@@ -18,127 +18,137 @@ import org.slf4j.LoggerFactory;
  */
 public class CompiledStatement {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CompiledStatement.class);
-    // Cette regex extrait les sous-chaines de la forme \<field>, en exluant les sous-chaînes de la forme \\<quelque_chose>,
-    // représentant des champs d'une notice EAD
-    private static final Pattern EXPRESSION_PATTERN = Pattern.compile("(?<!\\\\)(?:\\\\)(?<field>(?:[\\w.:]+|(?:\\{)[\\w.:]+(?:})))");
+	private static final Logger LOG = LoggerFactory.getLogger(CompiledStatement.class);
 
-    /**
-     * Champs utilisés dans ce script
-     */
-    private final Set<RuleKey> ruleKeys = new HashSet<>();
-    /**
-     * Script de configuration de ce statement
-     */
-    private String configScript;
-    /**
-     * Script saisi dans le mapping
-     */
-    private String userScript;
-    /**
-     * Script d'initialisation, nécessaire pour l'exécution de userScript
-     */
-    private String initScript;
-    /**
-     * Script principal compilé
-     */
-    private CompiledScript compiledScript;
-    /**
-     * {@link CustomScript} utilisés dans ce script
-     */
-    private final List<CustomScript> customScripts = new ArrayList<>();
+	// Cette regex extrait les sous-chaines de la forme \<field>, en exluant les
+	// sous-chaînes de la forme \\<quelque_chose>,
+	// représentant des champs d'une notice EAD
+	private static final Pattern EXPRESSION_PATTERN = Pattern
+		.compile("(?<!\\\\)(?:\\\\)(?<field>(?:[\\w.:]+|(?:\\{)[\\w.:]+(?:})))");
 
-    public CompiledStatement(final String statement, final String configStatement) {
-        this.configScript = configStatement;
-        this.userScript = statement;
-        this.ruleKeys.addAll(getRuleKeys(statement));
-        initialize();
-    }
+	/**
+	 * Champs utilisés dans ce script
+	 */
+	private final Set<RuleKey> ruleKeys = new HashSet<>();
 
-    public Set<RuleKey> getRuleKeys() {
-        return ruleKeys;
-    }
+	/**
+	 * Script de configuration de ce statement
+	 */
+	private String configScript;
 
-    public String getConfigScript() {
-        return configScript;
-    }
+	/**
+	 * Script saisi dans le mapping
+	 */
+	private String userScript;
 
-    public String getInitScript() {
-        return initScript;
-    }
+	/**
+	 * Script d'initialisation, nécessaire pour l'exécution de userScript
+	 */
+	private String initScript;
 
-    public String getUserScript() {
-        return userScript;
-    }
+	/**
+	 * Script principal compilé
+	 */
+	private CompiledScript compiledScript;
 
-    public List<CustomScript> getCustomScripts() {
-        return customScripts;
-    }
+	/**
+	 * {@link CustomScript} utilisés dans ce script
+	 */
+	private final List<CustomScript> customScripts = new ArrayList<>();
 
-    public CompiledScript getCompiledScript() {
-        return compiledScript;
-    }
+	public CompiledStatement(final String statement, final String configStatement) {
+		this.configScript = configStatement;
+		this.userScript = statement;
+		this.ruleKeys.addAll(getRuleKeys(statement));
+		initialize();
+	}
 
-    public void setCompiledScript(final CompiledScript compiledScript) {
-        this.compiledScript = compiledScript;
-    }
+	public Set<RuleKey> getRuleKeys() {
+		return ruleKeys;
+	}
 
-    /**
-     * Initialisation des scripts personnalisés
-     *
-     * @return
-     */
-    private void initialize() {
-        if (this.userScript != null) {
-            final Set<String> scriptsImports = new HashSet<>();
-            final List<String> initScripts = new ArrayList<>();
+	public String getConfigScript() {
+		return configScript;
+	}
 
-            // Ajout des customScripts
-            CustomScript.getScripts().forEach((scriptName, fmtClass) -> {
-                // le script peut être multilignes: (?s).* matche tous les caractères, y compris les sauts de ligne
-                if (this.userScript.matches("^(?s).*\\b" + scriptName
-                                            + "\\((?s).*$")) {
-                    try {
-                        final CustomScript customScript = fmtClass.getConstructor(String.class).newInstance(scriptName.toLowerCase());
-                        scriptsImports.addAll(Arrays.asList(customScript.getScriptImport()));
-                        initScripts.add(customScript.getInitScript());
-                        this.customScripts.add(customScript);
-                    } catch (ReflectiveOperationException e) {
-                        LOG.error(e.getMessage(), e);
-                    }
-                }
-            });
-            // Construction du script d'initialisation
-            if (!scriptsImports.isEmpty() || !initScripts.isEmpty()) {
-                final StringBuilder scrBuilder = new StringBuilder();
-                scriptsImports.forEach(scr -> scrBuilder.append(scr).append('\n'));
-                initScripts.forEach(scr -> scrBuilder.append(scr).append('\n'));
-                this.initScript = scrBuilder.toString();
-            }
-        }
-    }
+	public String getInitScript() {
+		return initScript;
+	}
 
-    /**
-     * Recherche les RuleKey présents dans le statement passé en paramètre (expression ou condition d'une règle de mapping)
-     *
-     * @param statement
-     * @return
-     */
-    private Set<RuleKey> getRuleKeys(final String statement) {
-        if (statement == null) {
-            return Collections.emptySet();
-        }
-        final Set<RuleKey> innerRuleKeys = new HashSet<>();
-        final Matcher matcher = EXPRESSION_PATTERN.matcher(statement);
+	public String getUserScript() {
+		return userScript;
+	}
 
-        while (matcher.find()) {
-            String field = matcher.group("field");
-            // variable entre accolades
-            if (field.startsWith("{")) {
-                field = field.substring(1, field.length() - 1);
-            }
-            innerRuleKeys.add(new RuleKey(field));
-        }
-        return innerRuleKeys;
-    }
+	public List<CustomScript> getCustomScripts() {
+		return customScripts;
+	}
+
+	public CompiledScript getCompiledScript() {
+		return compiledScript;
+	}
+
+	public void setCompiledScript(final CompiledScript compiledScript) {
+		this.compiledScript = compiledScript;
+	}
+
+	/**
+	 * Initialisation des scripts personnalisés
+	 * @return
+	 */
+	private void initialize() {
+		if (this.userScript != null) {
+			final Set<String> scriptsImports = new HashSet<>();
+			final List<String> initScripts = new ArrayList<>();
+
+			// Ajout des customScripts
+			CustomScript.getScripts().forEach((scriptName, fmtClass) -> {
+				// le script peut être multilignes: (?s).* matche tous les caractères, y
+				// compris les sauts de ligne
+				if (this.userScript.matches("^(?s).*\\b" + scriptName + "\\((?s).*$")) {
+					try {
+						final CustomScript customScript = fmtClass.getConstructor(String.class)
+							.newInstance(scriptName.toLowerCase());
+						scriptsImports.addAll(Arrays.asList(customScript.getScriptImport()));
+						initScripts.add(customScript.getInitScript());
+						this.customScripts.add(customScript);
+					}
+					catch (ReflectiveOperationException e) {
+						LOG.error(e.getMessage(), e);
+					}
+				}
+			});
+			// Construction du script d'initialisation
+			if (!scriptsImports.isEmpty() || !initScripts.isEmpty()) {
+				final StringBuilder scrBuilder = new StringBuilder();
+				scriptsImports.forEach(scr -> scrBuilder.append(scr).append('\n'));
+				initScripts.forEach(scr -> scrBuilder.append(scr).append('\n'));
+				this.initScript = scrBuilder.toString();
+			}
+		}
+	}
+
+	/**
+	 * Recherche les RuleKey présents dans le statement passé en paramètre (expression ou
+	 * condition d'une règle de mapping)
+	 * @param statement
+	 * @return
+	 */
+	private Set<RuleKey> getRuleKeys(final String statement) {
+		if (statement == null) {
+			return Collections.emptySet();
+		}
+		final Set<RuleKey> innerRuleKeys = new HashSet<>();
+		final Matcher matcher = EXPRESSION_PATTERN.matcher(statement);
+
+		while (matcher.find()) {
+			String field = matcher.group("field");
+			// variable entre accolades
+			if (field.startsWith("{")) {
+				field = field.substring(1, field.length() - 1);
+			}
+			innerRuleKeys.add(new RuleKey(field));
+		}
+		return innerRuleKeys;
+	}
+
 }

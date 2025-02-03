@@ -35,62 +35,52 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "stringNotNULLtext", propOrder = {"value"})
+@XmlType(name = "stringNotNULLtext", propOrder = { "value" })
 public class StringNotNULLtext {
 
-    @XmlValue
-    protected String value;
-    @XmlAttribute(name = "language")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String language;
+	@XmlValue
+	protected String value;
 
-    /**
-     * Chaine de caractères composée d'au moins 1 caractère imprimable ou non exclusivement composé d'espace et/ou de tabulations et/ou de nouvelle
-     * ligne et/ou de retour chariot
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "language")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String language;
 
-    /**
-     * Définit la valeur de la propriété value.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	/**
+	 * Chaine de caractères composée d'au moins 1 caractère imprimable ou non
+	 * exclusivement composé d'espace et/ou de tabulations et/ou de nouvelle ligne et/ou
+	 * de retour chariot
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getValue() {
+		return value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété language.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getLanguage() {
-        return language;
-    }
+	/**
+	 * Définit la valeur de la propriété value.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété language.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setLanguage(String value) {
-        this.language = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété language.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getLanguage() {
+		return language;
+	}
+
+	/**
+	 * Définit la valeur de la propriété language.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setLanguage(String value) {
+		this.language = value;
+	}
 
 }

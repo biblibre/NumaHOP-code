@@ -9,16 +9,15 @@ import fr.progilone.pgcn.service.train.mapper.SimpleTrainMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {ProjectMapper.class,
-                SimpleTrainMapper.class,
-                SimpleDocUnitMapper.class})
+@Mapper(uses = { ProjectMapper.class, SimpleTrainMapper.class, SimpleDocUnitMapper.class })
 public interface PhysicalDocumentMapper {
 
-    PhysicalDocumentMapper INSTANCE = Mappers.getMapper(PhysicalDocumentMapper.class);
+	PhysicalDocumentMapper INSTANCE = Mappers.getMapper(PhysicalDocumentMapper.class);
 
-    SimplePhysicalDocumentDTO physicalDocumentToSimplePhysicalDocumentDTO(PhysicalDocument physicalDocument);
+	SimplePhysicalDocumentDTO physicalDocumentToSimplePhysicalDocumentDTO(PhysicalDocument physicalDocument);
 
-    PhysicalDocumentDTO physicalDocumentToPhysicalDocumentDTO(PhysicalDocument physicalDocument);
+	PhysicalDocumentDTO physicalDocumentToPhysicalDocumentDTO(PhysicalDocument physicalDocument);
 
-    ListPhysicalDocumentDTO physicalDocumentToListPhysicalDocumentDTO(PhysicalDocument pd);
+	ListPhysicalDocumentDTO physicalDocumentToListPhysicalDocumentDTO(PhysicalDocument pd);
+
 }

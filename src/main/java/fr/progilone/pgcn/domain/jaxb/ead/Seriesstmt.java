@@ -46,154 +46,131 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "seriesstmt", propOrder = {"titleproperOrNumOrP"})
+@XmlType(name = "seriesstmt", propOrder = { "titleproperOrNumOrP" })
 public class Seriesstmt {
 
-    @XmlElements({@XmlElement(name = "titleproper", type = Titleproper.class),
-                  @XmlElement(name = "num", type = Num.class),
-                  @XmlElement(name = "p", type = P.class)})
-    protected List<Object> titleproperOrNumOrP;
-    @XmlAttribute(name = "encodinganalog")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String encodinganalog;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	@XmlElements({ @XmlElement(name = "titleproper", type = Titleproper.class),
+			@XmlElement(name = "num", type = Num.class), @XmlElement(name = "p", type = P.class) })
+	protected List<Object> titleproperOrNumOrP;
 
-    /**
-     * Gets the value of the titleproperOrNumOrP property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the titleproperOrNumOrP property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getTitleproperOrNumOrP().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Titleproper }
-     * {@link Num }
-     * {@link P }
-     *
-     *
-     */
-    public List<Object> getTitleproperOrNumOrP() {
-        if (titleproperOrNumOrP == null) {
-            titleproperOrNumOrP = new ArrayList<>();
-        }
-        return this.titleproperOrNumOrP;
-    }
+	@XmlAttribute(name = "encodinganalog")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String encodinganalog;
 
-    /**
-     * Obtient la valeur de la propriété encodinganalog.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getEncodinganalog() {
-        return encodinganalog;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Définit la valeur de la propriété encodinganalog.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setEncodinganalog(String value) {
-        this.encodinganalog = value;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	/**
+	 * Gets the value of the titleproperOrNumOrP property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * titleproperOrNumOrP property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getTitleproperOrNumOrP().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link Titleproper }
+	 * {@link Num } {@link P }
+	 *
+	 *
+	 */
+	public List<Object> getTitleproperOrNumOrP() {
+		if (titleproperOrNumOrP == null) {
+			titleproperOrNumOrP = new ArrayList<>();
+		}
+		return this.titleproperOrNumOrP;
+	}
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Obtient la valeur de la propriété encodinganalog.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getEncodinganalog() {
+		return encodinganalog;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Définit la valeur de la propriété encodinganalog.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setEncodinganalog(String value) {
+		this.encodinganalog = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

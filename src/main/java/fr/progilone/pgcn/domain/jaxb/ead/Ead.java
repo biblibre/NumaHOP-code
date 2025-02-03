@@ -44,199 +44,160 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "",
-         propOrder = {"eadheader",
-                      "frontmatter",
-                      "archdesc"})
+@XmlType(name = "", propOrder = { "eadheader", "frontmatter", "archdesc" })
 @XmlRootElement(name = "ead")
 public class Ead {
 
-    @XmlElement(required = true)
-    protected Eadheader eadheader;
-    protected Frontmatter frontmatter;
-    @XmlElement(required = true)
-    protected Archdesc archdesc;
-    @XmlAttribute(name = "relatedencoding")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String relatedencoding;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	@XmlElement(required = true)
+	protected Eadheader eadheader;
 
-    /**
-     * Obtient la valeur de la propriété eadheader.
-     *
-     * @return
-     *         possible object is
-     *         {@link Eadheader }
-     *
-     */
-    public Eadheader getEadheader() {
-        return eadheader;
-    }
+	protected Frontmatter frontmatter;
 
-    /**
-     * Définit la valeur de la propriété eadheader.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Eadheader }
-     *
-     */
-    public void setEadheader(Eadheader value) {
-        this.eadheader = value;
-    }
+	@XmlElement(required = true)
+	protected Archdesc archdesc;
 
-    /**
-     * Obtient la valeur de la propriété frontmatter.
-     *
-     * @return
-     *         possible object is
-     *         {@link Frontmatter }
-     *
-     */
-    public Frontmatter getFrontmatter() {
-        return frontmatter;
-    }
+	@XmlAttribute(name = "relatedencoding")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String relatedencoding;
 
-    /**
-     * Définit la valeur de la propriété frontmatter.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Frontmatter }
-     *
-     */
-    public void setFrontmatter(Frontmatter value) {
-        this.frontmatter = value;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Obtient la valeur de la propriété archdesc.
-     *
-     * @return
-     *         possible object is
-     *         {@link Archdesc }
-     *
-     */
-    public Archdesc getArchdesc() {
-        return archdesc;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Définit la valeur de la propriété archdesc.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Archdesc }
-     *
-     */
-    public void setArchdesc(Archdesc value) {
-        this.archdesc = value;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Obtient la valeur de la propriété relatedencoding.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getRelatedencoding() {
-        return relatedencoding;
-    }
+	/**
+	 * Obtient la valeur de la propriété eadheader.
+	 * @return possible object is {@link Eadheader }
+	 *
+	 */
+	public Eadheader getEadheader() {
+		return eadheader;
+	}
 
-    /**
-     * Définit la valeur de la propriété relatedencoding.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setRelatedencoding(String value) {
-        this.relatedencoding = value;
-    }
+	/**
+	 * Définit la valeur de la propriété eadheader.
+	 * @param value allowed object is {@link Eadheader }
+	 *
+	 */
+	public void setEadheader(Eadheader value) {
+		this.eadheader = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	/**
+	 * Obtient la valeur de la propriété frontmatter.
+	 * @return possible object is {@link Frontmatter }
+	 *
+	 */
+	public Frontmatter getFrontmatter() {
+		return frontmatter;
+	}
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	/**
+	 * Définit la valeur de la propriété frontmatter.
+	 * @param value allowed object is {@link Frontmatter }
+	 *
+	 */
+	public void setFrontmatter(Frontmatter value) {
+		this.frontmatter = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Obtient la valeur de la propriété archdesc.
+	 * @return possible object is {@link Archdesc }
+	 *
+	 */
+	public Archdesc getArchdesc() {
+		return archdesc;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Définit la valeur de la propriété archdesc.
+	 * @param value allowed object is {@link Archdesc }
+	 *
+	 */
+	public void setArchdesc(Archdesc value) {
+		this.archdesc = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Obtient la valeur de la propriété relatedencoding.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getRelatedencoding() {
+		return relatedencoding;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Définit la valeur de la propriété relatedencoding.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setRelatedencoding(String value) {
+		this.relatedencoding = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

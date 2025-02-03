@@ -32,26 +32,26 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum StatusType {
 
-    @XmlEnumValue("deleted")
-    DELETED("deleted");
+	@XmlEnumValue("deleted")
+	DELETED("deleted");
 
-    private final String value;
+	private final String value;
 
-    StatusType(String v) {
-        value = v;
-    }
+	StatusType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static StatusType fromValue(String v) {
-        for (StatusType c : StatusType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static StatusType fromValue(String v) {
+		for (StatusType c : StatusType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

@@ -10,5 +10,6 @@ import org.springframework.data.domain.Pageable;
  */
 public interface FTPConfigurationRepositoryCustom {
 
-    Page<FTPConfiguration> search(String search, final List<String> libraries, Pageable pageable);
+	Page<FTPConfiguration> search(String search, final List<String> libraries, Pageable pageable);
+
 }

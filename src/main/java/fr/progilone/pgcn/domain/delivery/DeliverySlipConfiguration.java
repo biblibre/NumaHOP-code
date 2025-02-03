@@ -16,89 +16,95 @@ import jakarta.persistence.Table;
 @Table(name = DeliverySlipConfiguration.TABLE_NAME)
 public class DeliverySlipConfiguration extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "del_slip_config";
+	public static final String TABLE_NAME = "del_slip_config";
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "library")
-    private Library library;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "library")
+	private Library library;
 
-    @Column(name = "pgcn_id")
-    private boolean pgcnId;
-    @Column(name = "lot")
-    private boolean lot;
-    @Column(name = "train")
-    private boolean train;
-    @Column(name = "radical")
-    private boolean radical;
-    @Column(name = "title")
-    private boolean title;
-    @Column(name = "nb_pages")
-    private boolean nbPages;
-    @Column(name = "date")
-    private boolean date;
+	@Column(name = "pgcn_id")
+	private boolean pgcnId;
 
-    public Library getLibrary() {
-        return library;
-    }
+	@Column(name = "lot")
+	private boolean lot;
 
-    public void setLibrary(Library library) {
-        this.library = library;
-    }
+	@Column(name = "train")
+	private boolean train;
 
-    public boolean getPgcnId() {
-        return pgcnId;
-    }
+	@Column(name = "radical")
+	private boolean radical;
 
-    public void setPgcnId(boolean pgcnId) {
-        this.pgcnId = pgcnId;
-    }
+	@Column(name = "title")
+	private boolean title;
 
-    public boolean getLot() {
-        return lot;
-    }
+	@Column(name = "nb_pages")
+	private boolean nbPages;
 
-    public void setLot(boolean lot) {
-        this.lot = lot;
-    }
+	@Column(name = "date")
+	private boolean date;
 
-    public boolean getTrain() {
-        return train;
-    }
+	public Library getLibrary() {
+		return library;
+	}
 
-    public void setTrain(boolean train) {
-        this.train = train;
-    }
+	public void setLibrary(Library library) {
+		this.library = library;
+	}
 
-    public boolean getRadical() {
-        return radical;
-    }
+	public boolean getPgcnId() {
+		return pgcnId;
+	}
 
-    public void setRadical(boolean radical) {
-        this.radical = radical;
-    }
+	public void setPgcnId(boolean pgcnId) {
+		this.pgcnId = pgcnId;
+	}
 
-    public boolean getTitle() {
-        return title;
-    }
+	public boolean getLot() {
+		return lot;
+	}
 
-    public void setTitle(boolean title) {
-        this.title = title;
-    }
+	public void setLot(boolean lot) {
+		this.lot = lot;
+	}
 
-    public boolean getNbPages() {
-        return nbPages;
-    }
+	public boolean getTrain() {
+		return train;
+	}
 
-    public void setNbPages(boolean nbPages) {
-        this.nbPages = nbPages;
-    }
+	public void setTrain(boolean train) {
+		this.train = train;
+	}
 
-    public boolean getDate() {
-        return date;
-    }
+	public boolean getRadical() {
+		return radical;
+	}
 
-    public void setDate(boolean date) {
-        this.date = date;
-    }
+	public void setRadical(boolean radical) {
+		this.radical = radical;
+	}
+
+	public boolean getTitle() {
+		return title;
+	}
+
+	public void setTitle(boolean title) {
+		this.title = title;
+	}
+
+	public boolean getNbPages() {
+		return nbPages;
+	}
+
+	public void setNbPages(boolean nbPages) {
+		this.nbPages = nbPages;
+	}
+
+	public boolean getDate() {
+		return date;
+	}
+
+	public void setDate(boolean date) {
+		this.date = date;
+	}
 
 }

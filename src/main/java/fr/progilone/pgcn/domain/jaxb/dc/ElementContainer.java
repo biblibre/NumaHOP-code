@@ -17,8 +17,8 @@ import java.util.List;
 
 /**
  *
- * This complexType is included as a convenience for schema authors who need to define a root
- * or container element for all of the DC elements.
+ * This complexType is included as a convenience for schema authors who need to define a
+ * root or container element for all of the DC elements.
  *
  *
  * <p>
@@ -42,55 +42,56 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "elementContainer", propOrder = {"any"})
+@XmlType(name = "elementContainer", propOrder = { "any" })
 public class ElementContainer {
 
-    @XmlElementRef(name = "any", namespace = "http://purl.org/dc/elements/1.1/", type = JAXBElement.class, required = false)
-    protected List<JAXBElement<SimpleLiteral>> any;
+	@XmlElementRef(name = "any", namespace = "http://purl.org/dc/elements/1.1/", type = JAXBElement.class,
+			required = false)
+	protected List<JAXBElement<SimpleLiteral>> any;
 
-    /**
-     * Gets the value of the any property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the any property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getAny().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     * {@link JAXBElement }{@code <}{@link SimpleLiteral }{@code >}
-     *
-     *
-     */
-    public List<JAXBElement<SimpleLiteral>> getAny() {
-        if (any == null) {
-            any = new ArrayList<>();
-        }
-        return this.any;
-    }
+	/**
+	 * Gets the value of the any property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the any
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getAny().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >} {@link JAXBElement
+	 * }{@code <}{@link SimpleLiteral }{@code >}
+	 *
+	 *
+	 */
+	public List<JAXBElement<SimpleLiteral>> getAny() {
+		if (any == null) {
+			any = new ArrayList<>();
+		}
+		return this.any;
+	}
 
 }

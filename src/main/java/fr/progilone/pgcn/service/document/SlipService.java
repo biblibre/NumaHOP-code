@@ -41,496 +41,513 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Séparation de la gestion des bordereau
  *
- * @author jbrunet
- *         Créé le 8 févr. 2018
+ * @author jbrunet Créé le 8 févr. 2018
  */
 @Service
 public class SlipService {
 
-    public static final String PGCN_ID = "pgcnId";
-    private static final Logger LOG = LoggerFactory.getLogger(SlipService.class);
+	public static final String PGCN_ID = "pgcnId";
 
-    private final DeliveryService deliveryService;
-    private final LibraryService libraryService;
-    private final CheckSlipConfigurationService checkSlipConfigurationService;
-    private final JasperReportsService jasperReportService;
-    private final CheckSlipRepository checkSlipRepository;
+	private static final Logger LOG = LoggerFactory.getLogger(SlipService.class);
 
-    @Autowired
-    public SlipService(final DeliveryService deliveryService,
-                       final LibraryService libraryService,
-                       final CheckSlipConfigurationService checkSlipConfigurationService,
-                       final JasperReportsService jasperReportService,
-                       final CheckSlipRepository checkSlipRepository) {
-        this.deliveryService = deliveryService;
-        this.libraryService = libraryService;
-        this.checkSlipConfigurationService = checkSlipConfigurationService;
-        this.jasperReportService = jasperReportService;
-        this.checkSlipRepository = checkSlipRepository;
-    }
+	private final DeliveryService deliveryService;
 
-    /**
-     * Vrai si au moins 1 doc de la livraison n'est pas controlé.
-     *
-     * @param delivery
-     * @return
-     */
-    private boolean isDeliveryChecksUncompleted(final Delivery delivery) {
-        return delivery.getDocuments()
-                       .stream()
-                       .anyMatch(delivDoc -> DigitalDocumentStatus.REJECTED != delivDoc.getStatus() && DigitalDocumentStatus.PRE_REJECTED != delivDoc.getStatus()
-                                             && DigitalDocumentStatus.VALIDATED != delivDoc.getStatus());
-    }
+	private final LibraryService libraryService;
 
-    /**
-     * Faux si si bordereau de controle a deja ete cree.
-     *
-     * @param delivery
-     * @return
-     */
-    private boolean isCheckSlipAbsent(final Delivery delivery) {
+	private final CheckSlipConfigurationService checkSlipConfigurationService;
 
-        return delivery.getDocuments().stream().anyMatch(delivDoc -> delivDoc.getCheckSlip() == null);
-    }
+	private final JasperReportsService jasperReportService;
 
-    /**
-     * Edition du bordereau de controle CSV.
-     */
-    @Transactional
-    public void writeSlip(final OutputStream out, final String deliveryId, final String encoding, final char separator) throws IOException {
+	private final CheckSlipRepository checkSlipRepository;
 
-        final Delivery delivery = deliveryService.findOneWithDep(deliveryId);
-        if (delivery.getLot() != null && delivery.getLot().getProject() != null) {
+	@Autowired
+	public SlipService(final DeliveryService deliveryService, final LibraryService libraryService,
+			final CheckSlipConfigurationService checkSlipConfigurationService,
+			final JasperReportsService jasperReportService, final CheckSlipRepository checkSlipRepository) {
+		this.deliveryService = deliveryService;
+		this.libraryService = libraryService;
+		this.checkSlipConfigurationService = checkSlipConfigurationService;
+		this.jasperReportService = jasperReportService;
+		this.checkSlipRepository = checkSlipRepository;
+	}
 
-            final Library library = delivery.getLot().getProject().getLibrary();
-            // Recup config bordereau de controle
-            final Optional<CheckSlipConfiguration> config = checkSlipConfigurationService.getOneByLibrary(library.getIdentifier());
-            // Si 1ere fois ou si livraison pas completement controlee, on construit le bordereau.
-            if (isCheckSlipAbsent(delivery) || isDeliveryChecksUncompleted(delivery)) {
-                createCheckSlip(deliveryId);
-            }
+	/**
+	 * Vrai si au moins 1 doc de la livraison n'est pas controlé.
+	 * @param delivery
+	 * @return
+	 */
+	private boolean isDeliveryChecksUncompleted(final Delivery delivery) {
+		return delivery.getDocuments()
+			.stream()
+			.anyMatch(delivDoc -> DigitalDocumentStatus.REJECTED != delivDoc.getStatus()
+					&& DigitalDocumentStatus.PRE_REJECTED != delivDoc.getStatus()
+					&& DigitalDocumentStatus.VALIDATED != delivDoc.getStatus());
+	}
 
-            writeCsv(out, getSlipParams(delivery, config, false, null), encoding, separator, config);
-        } else {
-            LOG.warn("Aucune bibliothèque rattachée à cette livraison: le bordereau ne peut pas être généré");
-            return;
-        }
-    }
+	/**
+	 * Faux si si bordereau de controle a deja ete cree.
+	 * @param delivery
+	 * @return
+	 */
+	private boolean isCheckSlipAbsent(final Delivery delivery) {
 
-    public void writeCsv(final OutputStream out, final Map<String, Object> params, final String encoding, final char separator, final Optional<CheckSlipConfiguration> slipConfig)
-                                                                                                                                                                                   throws IOException {
+		return delivery.getDocuments().stream().anyMatch(delivDoc -> delivDoc.getCheckSlip() == null);
+	}
 
-        // Alimentation du CSV
-        try (final Writer writer = new OutputStreamWriter(out, encoding);
-             final CSVWriter csvWriter = new CSVWriter(writer, separator, DEFAULT_QUOTE_CHARACTER, DEFAULT_ESCAPE_CHARACTER, RFC4180_LINE_END)) {
-            // Entête
-            writeHeader(csvWriter, slipConfig);
-            final List<Map<String, String>> lines = (List<Map<String, String>>) params.get("slipLines");
-            final List<Map<String, String>> sortedLines = lines.stream().sorted(Comparator.comparing(l -> l.get(PGCN_ID))).toList();
-            sortedLines.forEach(line -> writeBody(csvWriter, line, slipConfig));
-        }
-    }
+	/**
+	 * Edition du bordereau de controle CSV.
+	 */
+	@Transactional
+	public void writeSlip(final OutputStream out, final String deliveryId, final String encoding, final char separator)
+			throws IOException {
 
-    /**
-     * Ecriture entete fichier CSV.
-     *
-     * @param csvWriter
-     * @param slipConfig
-     */
-    private void writeHeader(final CSVWriter csvWriter, final Optional<CheckSlipConfiguration> slipConfig) {
+		final Delivery delivery = deliveryService.findOneWithDep(deliveryId);
+		if (delivery.getLot() != null && delivery.getLot().getProject() != null) {
 
-        final List<String> listTypes = new ArrayList<>();
-        if (!slipConfig.isPresent() || slipConfig.get().isPgcnId()) {
-            listTypes.add("Cote");
-        }
-        if (!slipConfig.isPresent() || slipConfig.get().isTitle()) {
-            listTypes.add("Titre");
-        }
-        if (!slipConfig.isPresent() || slipConfig.get().isState()) {
-            listTypes.add("Etat");
-        }
-        if (!slipConfig.isPresent() || slipConfig.get().isErrs()) {
-            listTypes.add("Erreurs");
-        }
-        if (!slipConfig.isPresent() || slipConfig.get().isNbPages()) {
-            listTypes.add("Nombre de pages");
-        }
-        if (!slipConfig.isPresent() || slipConfig.get().isNbPagesToBill()) {
-            listTypes.add("Pages à facturer");
-        }
+			final Library library = delivery.getLot().getProject().getLibrary();
+			// Recup config bordereau de controle
+			final Optional<CheckSlipConfiguration> config = checkSlipConfigurationService
+				.getOneByLibrary(library.getIdentifier());
+			// Si 1ere fois ou si livraison pas completement controlee, on construit le
+			// bordereau.
+			if (isCheckSlipAbsent(delivery) || isDeliveryChecksUncompleted(delivery)) {
+				createCheckSlip(deliveryId);
+			}
 
-        String[] types = new String[listTypes.size()];
-        types = listTypes.toArray(types);
-        csvWriter.writeNext(types);
-    }
+			writeCsv(out, getSlipParams(delivery, config, false, null), encoding, separator, config);
+		}
+		else {
+			LOG.warn("Aucune bibliothèque rattachée à cette livraison: le bordereau ne peut pas être généré");
+			return;
+		}
+	}
 
-    private void writeBody(final CSVWriter csvWriter, final Map<String, String> slipLine, final Optional<CheckSlipConfiguration> slipConfig) {
-        final List<String> line = new ArrayList<>();
-        if (!slipConfig.isPresent() || slipConfig.get().isPgcnId()) {
-            line.add(slipLine.get(PGCN_ID));
-        }
-        if (!slipConfig.isPresent() || slipConfig.get().isTitle()) {
-            line.add(slipLine.get("title"));
-        }
-        if (!slipConfig.isPresent() || slipConfig.get().isState()) {
-            line.add(slipLine.get("status"));
-        }
-        if (!slipConfig.isPresent() || slipConfig.get().isErrs()) {
-            line.add(slipLine.get("errors"));
-        }
-        if (!slipConfig.isPresent() || slipConfig.get().isNbPages()) {
-            line.add(slipLine.get("pageCount"));
-        }
-        if (!slipConfig.isPresent() || slipConfig.get().isNbPagesToBill()) {
-            line.add(slipLine.get("pagesToBill"));
-        }
-        csvWriter.writeNext(line.toArray(new String[0]));
-    }
+	public void writeCsv(final OutputStream out, final Map<String, Object> params, final String encoding,
+			final char separator, final Optional<CheckSlipConfiguration> slipConfig) throws IOException {
 
-    /**
-     * Génération / persistence du bordereau de controle.
-     *
-     * @param deliveryId
-     * @throws PgcnTechnicalException
-     */
-    @Transactional
-    public void createCheckSlip(final String deliveryId) {
+		// Alimentation du CSV
+		try (final Writer writer = new OutputStreamWriter(out, encoding);
+				final CSVWriter csvWriter = new CSVWriter(writer, separator, DEFAULT_QUOTE_CHARACTER,
+						DEFAULT_ESCAPE_CHARACTER, RFC4180_LINE_END)) {
+			// Entête
+			writeHeader(csvWriter, slipConfig);
+			final List<Map<String, String>> lines = (List<Map<String, String>>) params.get("slipLines");
+			final List<Map<String, String>> sortedLines = lines.stream()
+				.sorted(Comparator.comparing(l -> l.get(PGCN_ID)))
+				.toList();
+			sortedLines.forEach(line -> writeBody(csvWriter, line, slipConfig));
+		}
+	}
 
-        LOG.debug("Construction du bordereau de controle");
-        final Delivery delivery = deliveryService.findOneWithDep(deliveryId);
-        final Library library;
-        if (delivery.getLot() != null && delivery.getLot().getProject() != null) {
-            library = delivery.getLot().getProject().getLibrary();
-        } else {
-            LOG.warn("Aucune bibliothèque rattachée à cette livraison: le bordereau ne peut pas être généré");
-            return;
-        }
-        final Optional<CheckSlipConfiguration> config = checkSlipConfigurationService.getOneByLibrary(library.getIdentifier());
-        // Construction
-        final CheckSlip bordereau = createCheckSlipLines(delivery, config);
-        // et on persiste..
-        checkSlipRepository.save(bordereau);
-    }
+	/**
+	 * Ecriture entete fichier CSV.
+	 * @param csvWriter
+	 * @param slipConfig
+	 */
+	private void writeHeader(final CSVWriter csvWriter, final Optional<CheckSlipConfiguration> slipConfig) {
 
-    /**
-     * Construit et persiste les donnees du bordereau de controle.
-     *
-     * @param delivery
-     * @param config
-     */
-    private CheckSlip createCheckSlipLines(final Delivery delivery, final Optional<CheckSlipConfiguration> config) {
+		final List<String> listTypes = new ArrayList<>();
+		if (!slipConfig.isPresent() || slipConfig.get().isPgcnId()) {
+			listTypes.add("Cote");
+		}
+		if (!slipConfig.isPresent() || slipConfig.get().isTitle()) {
+			listTypes.add("Titre");
+		}
+		if (!slipConfig.isPresent() || slipConfig.get().isState()) {
+			listTypes.add("Etat");
+		}
+		if (!slipConfig.isPresent() || slipConfig.get().isErrs()) {
+			listTypes.add("Erreurs");
+		}
+		if (!slipConfig.isPresent() || slipConfig.get().isNbPages()) {
+			listTypes.add("Nombre de pages");
+		}
+		if (!slipConfig.isPresent() || slipConfig.get().isNbPagesToBill()) {
+			listTypes.add("Pages à facturer");
+		}
 
-        final Optional<DeliveredDocument> deliveredDoc = delivery.getDocuments()
-                                                                 .stream()
-                                                                 .filter(delivDoc -> delivDoc.getCheckSlip() != null && delivDoc.getCheckSlip().getIdentifier() != null)
-                                                                 .findAny();
-        final CheckSlip bordereau;
-        if (deliveredDoc.isPresent()) {
-            bordereau = checkSlipRepository.findOneWithDep(deliveredDoc.get().getCheckSlip().getIdentifier());
-            bordereau.deleteAllSlipLines();
-            bordereau.deleteAllDocuments();
-        } else {
-            bordereau = new CheckSlip();
-        }
-        // Controle completement effectué ou bien ?
-        bordereau.setUncompleted(isDeliveryChecksUncompleted(delivery));
+		String[] types = new String[listTypes.size()];
+		types = listTypes.toArray(types);
+		csvWriter.writeNext(types);
+	}
 
-        delivery.getDocuments().forEach(delivDoc -> {
+	private void writeBody(final CSVWriter csvWriter, final Map<String, String> slipLine,
+			final Optional<CheckSlipConfiguration> slipConfig) {
+		final List<String> line = new ArrayList<>();
+		if (!slipConfig.isPresent() || slipConfig.get().isPgcnId()) {
+			line.add(slipLine.get(PGCN_ID));
+		}
+		if (!slipConfig.isPresent() || slipConfig.get().isTitle()) {
+			line.add(slipLine.get("title"));
+		}
+		if (!slipConfig.isPresent() || slipConfig.get().isState()) {
+			line.add(slipLine.get("status"));
+		}
+		if (!slipConfig.isPresent() || slipConfig.get().isErrs()) {
+			line.add(slipLine.get("errors"));
+		}
+		if (!slipConfig.isPresent() || slipConfig.get().isNbPages()) {
+			line.add(slipLine.get("pageCount"));
+		}
+		if (!slipConfig.isPresent() || slipConfig.get().isNbPagesToBill()) {
+			line.add(slipLine.get("pagesToBill"));
+		}
+		csvWriter.writeNext(line.toArray(new String[0]));
+	}
 
-            final DigitalDocument doc = delivDoc.getDigitalDocument();
-            final CheckSlipLine slipLine = new CheckSlipLine();
-            delivDoc.setCheckSlip(bordereau);
-            bordereau.addDocument(delivDoc);
-            slipLine.setCheckSlip(bordereau);
+	/**
+	 * Génération / persistence du bordereau de controle.
+	 * @param deliveryId
+	 * @throws PgcnTechnicalException
+	 */
+	@Transactional
+	public void createCheckSlip(final String deliveryId) {
 
-            if (!config.isPresent() || config.get().isPgcnId()) {
-                slipLine.setPgcnId(doc.getDocUnit().getPgcnId());
-            }
-            if (!config.isPresent() || config.get().isTitle()) {
-                final Set<BibliographicRecord> records = doc.getDocUnit().getRecords();
-                if (records.isEmpty()) {
-                    slipLine.setTitle(doc.getDocUnit().getLabel());
-                } else {
-                    slipLine.setTitle(StringUtils.abbreviate(records.iterator().next().getTitle(), 255));
-                }
-            }
-            if (!config.isPresent() || config.get().isState()) {
-                slipLine.setStatus(getStatusForReport(delivDoc.getStatus()));
-            }
-            if (!config.isPresent() || config.get().isErrs()) {
-                // on evite ainsi de recuperer les erreurs d'un précédent controle.
-                slipLine.setDocErrors(null);
-                if (DigitalDocumentStatus.REJECTED == doc.getStatus() || DigitalDocumentStatus.PRE_REJECTED == doc.getStatus()) {
-                    slipLine.setDocErrors(writeErrors(doc));
-                }
-            }
-            if (!config.isPresent() || config.get().isNbPages()) {
-                slipLine.setNbPages(delivDoc.getNbPages());
-            }
-            if (!config.isPresent() || config.get().isNbPagesToBill()) {
-                if (DigitalDocumentStatus.REJECTED == doc.getStatus() || DigitalDocumentStatus.PRE_REJECTED == doc.getStatus()) {
-                    slipLine.setNbPagesToBill(0);
-                } else if (DigitalDocumentStatus.VALIDATED == doc.getStatus()) {
-                    slipLine.setNbPagesToBill(delivDoc.getNbPages());
-                }
-            }
+		LOG.debug("Construction du bordereau de controle");
+		final Delivery delivery = deliveryService.findOneWithDep(deliveryId);
+		final Library library;
+		if (delivery.getLot() != null && delivery.getLot().getProject() != null) {
+			library = delivery.getLot().getProject().getLibrary();
+		}
+		else {
+			LOG.warn("Aucune bibliothèque rattachée à cette livraison: le bordereau ne peut pas être généré");
+			return;
+		}
+		final Optional<CheckSlipConfiguration> config = checkSlipConfigurationService
+			.getOneByLibrary(library.getIdentifier());
+		// Construction
+		final CheckSlip bordereau = createCheckSlipLines(delivery, config);
+		// et on persiste..
+		checkSlipRepository.save(bordereau);
+	}
 
-            bordereau.addSlipLine(slipLine);
-        });
-        bordereau.setLotLabel(delivery.getLot().getLabel());
-        bordereau.setDepositDate(delivery.getDepositDate());
-        return bordereau;
-    }
+	/**
+	 * Construit et persiste les donnees du bordereau de controle.
+	 * @param delivery
+	 * @param config
+	 */
+	private CheckSlip createCheckSlipLines(final Delivery delivery, final Optional<CheckSlipConfiguration> config) {
 
-    private String getStatusForReport(final DigitalDocumentStatus status) {
-        String strStatus = null;
-        switch (status) {
-            case TO_CHECK:
-                strStatus = "A contrôler";
-                break;
-            case PRE_REJECTED:
-            case REJECTED:
-                strStatus = "Rejeté";
-                break;
-            case VALIDATED:
-                strStatus = "Validé";
-                break;
-            case CHECKING:
-                strStatus = "En cours de contrôle";
-                break;
-            case CREATING:
-                strStatus = "En cours de création";
-                break;
-            case DELIVERING:
-                strStatus = "En cours de livraison";
-                break;
-            case WAITING_FOR_REPAIR:
-                strStatus = "En attente de réfection";
-                break;
-        }
-        return strStatus;
-    }
+		final Optional<DeliveredDocument> deliveredDoc = delivery.getDocuments()
+			.stream()
+			.filter(delivDoc -> delivDoc.getCheckSlip() != null && delivDoc.getCheckSlip().getIdentifier() != null)
+			.findAny();
+		final CheckSlip bordereau;
+		if (deliveredDoc.isPresent()) {
+			bordereau = checkSlipRepository.findOneWithDep(deliveredDoc.get().getCheckSlip().getIdentifier());
+			bordereau.deleteAllSlipLines();
+			bordereau.deleteAllDocuments();
+		}
+		else {
+			bordereau = new CheckSlip();
+		}
+		// Controle completement effectué ou bien ?
+		bordereau.setUncompleted(isDeliveryChecksUncompleted(delivery));
 
-    /**
-     * Génération du bordereau de controle PDF via Jasper.
-     *
-     * @param out
-     * @param deliveryId
-     * @throws PgcnTechnicalException
-     */
-    @Transactional
-    public void writePdfCheckSlip(final OutputStream out, final String deliveryId) throws PgcnTechnicalException {
+		delivery.getDocuments().forEach(delivDoc -> {
 
-        LOG.debug("Génération du bordereau de controle PDF");
-        final Delivery delivery = deliveryService.findOneWithDep(deliveryId);
-        final Library library;
-        if (delivery.getLot() != null && delivery.getLot().getProject() != null) {
-            library = delivery.getLot().getProject().getLibrary();
-        } else {
-            LOG.warn("La bibliothèque est null, le bordereau ne peut pas être généré");
-            return;
-        }
-        final File logo = libraryService.getLibraryLogo(library);
-        final Optional<CheckSlipConfiguration> config = checkSlipConfigurationService.getOneByLibrary(library.getIdentifier());
+			final DigitalDocument doc = delivDoc.getDigitalDocument();
+			final CheckSlipLine slipLine = new CheckSlipLine();
+			delivDoc.setCheckSlip(bordereau);
+			bordereau.addDocument(delivDoc);
+			slipLine.setCheckSlip(bordereau);
 
-        // S1 1ere fois ou si livraison pas completement controlee, on remet à jour le bordereau.
-        if (isCheckSlipAbsent(delivery) || isDeliveryChecksUncompleted(delivery)) {
-            createCheckSlip(deliveryId);
-        }
-        final Map<String, Object> params = getSlipParams(delivery, config, true, logo);
-        final List<Map<String, String>> lines = (List<Map<String, String>>) params.remove("slipLines");
-        final List<Map<String, String>> sortedLines = lines.stream().sorted(Comparator.comparing(l -> l.get(PGCN_ID))).toList();
-        try {
-            jasperReportService.exportReportToStream(JasperReportsService.REPORT_CHECK_SLIP,
-                                                     JasperReportsService.ExportType.PDF,
-                                                     params,
-                                                     sortedLines,
-                                                     out,
-                                                     library.getIdentifier());
-        } catch (final PgcnException e) {
-            LOG.error("Erreur a la generation du bordereau de livraison: {}", e.getLocalizedMessage());
-            throw new PgcnTechnicalException(e);
-        }
-    }
+			if (!config.isPresent() || config.get().isPgcnId()) {
+				slipLine.setPgcnId(doc.getDocUnit().getPgcnId());
+			}
+			if (!config.isPresent() || config.get().isTitle()) {
+				final Set<BibliographicRecord> records = doc.getDocUnit().getRecords();
+				if (records.isEmpty()) {
+					slipLine.setTitle(doc.getDocUnit().getLabel());
+				}
+				else {
+					slipLine.setTitle(StringUtils.abbreviate(records.iterator().next().getTitle(), 255));
+				}
+			}
+			if (!config.isPresent() || config.get().isState()) {
+				slipLine.setStatus(getStatusForReport(delivDoc.getStatus()));
+			}
+			if (!config.isPresent() || config.get().isErrs()) {
+				// on evite ainsi de recuperer les erreurs d'un précédent controle.
+				slipLine.setDocErrors(null);
+				if (DigitalDocumentStatus.REJECTED == doc.getStatus()
+						|| DigitalDocumentStatus.PRE_REJECTED == doc.getStatus()) {
+					slipLine.setDocErrors(writeErrors(doc));
+				}
+			}
+			if (!config.isPresent() || config.get().isNbPages()) {
+				slipLine.setNbPages(delivDoc.getNbPages());
+			}
+			if (!config.isPresent() || config.get().isNbPagesToBill()) {
+				if (DigitalDocumentStatus.REJECTED == doc.getStatus()
+						|| DigitalDocumentStatus.PRE_REJECTED == doc.getStatus()) {
+					slipLine.setNbPagesToBill(0);
+				}
+				else if (DigitalDocumentStatus.VALIDATED == doc.getStatus()) {
+					slipLine.setNbPagesToBill(delivDoc.getNbPages());
+				}
+			}
 
-    /**
-     * Renvoie une map contenant les données du bordereau controle.
-     *
-     * @param delivery
-     * @param config
-     * @param isPdf
-     * @param logo
-     * @return
-     */
-    private Map<String, Object> getSlipParams(final Delivery delivery, final Optional<CheckSlipConfiguration> config, final boolean isPdf, final File logo) {
+			bordereau.addSlipLine(slipLine);
+		});
+		bordereau.setLotLabel(delivery.getLot().getLabel());
+		bordereau.setDepositDate(delivery.getDepositDate());
+		return bordereau;
+	}
 
-        final Map<String, Object> params = new HashMap<>();
-        final List<Map<String, String>> slipLines = new ArrayList<>();
-        final Optional<DeliveredDocument> delivDoc = delivery.getDocuments().stream().filter(doc -> doc.getCheckSlip() != null).findAny();
-        delivDoc.ifPresent(doc -> {
-            final CheckSlip bordereau = checkSlipRepository.findOneWithDep(doc.getCheckSlip().getIdentifier());
-            if (isPdf) {
-                params.put("isUncompleted", bordereau.isUncompleted());
-                params.put("lot", bordereau.getLotLabel());
-                params.put("dtLivraison", DateUtils.formatDateToString(bordereau.getDepositDate(), "dd/MM/yyyy"));
-                if (logo != null) {
-                    params.put("logoPath", logo.getName());
-                }
-                // Entetes
-                params.put("isPgcnIdPresent",
-                           config.isPresent() ? config.get().isPgcnId()
-                                              : true);
-                params.put("isTitlePresent",
-                           config.isPresent() ? config.get().isTitle()
-                                              : true);
-                params.put("isStatusPresent",
-                           config.isPresent() ? config.get().isState()
-                                              : true);
-                params.put("isErrorsPresent",
-                           config.isPresent() ? config.get().isErrs()
-                                              : true);
-                params.put("isPagesPresent",
-                           config.isPresent() ? config.get().isNbPages()
-                                              : true);
-                params.put("isPagesToBillPresent",
-                           config.isPresent() ? config.get().isNbPagesToBill()
-                                              : true);
-            }
-            bordereau.getSlipLines().stream().forEach(sLine -> {
+	private String getStatusForReport(final DigitalDocumentStatus status) {
+		String strStatus = null;
+		switch (status) {
+			case TO_CHECK:
+				strStatus = "A contrôler";
+				break;
+			case PRE_REJECTED:
+			case REJECTED:
+				strStatus = "Rejeté";
+				break;
+			case VALIDATED:
+				strStatus = "Validé";
+				break;
+			case CHECKING:
+				strStatus = "En cours de contrôle";
+				break;
+			case CREATING:
+				strStatus = "En cours de création";
+				break;
+			case DELIVERING:
+				strStatus = "En cours de livraison";
+				break;
+			case WAITING_FOR_REPAIR:
+				strStatus = "En attente de réfection";
+				break;
+		}
+		return strStatus;
+	}
 
-                final Map<String, String> line = new HashMap<>();
-                if (!config.isPresent() || config.get().isPgcnId()) {
-                    line.put(PGCN_ID, sLine.getPgcnId());
-                }
-                if (!config.isPresent() || config.get().isTitle()) {
-                    line.put("title", sLine.getTitle());
-                }
-                if (!config.isPresent() || config.get().isState()) {
-                    line.put("status", sLine.getStatus());
-                }
-                if (!config.isPresent() || config.get().isErrs()) {
-                    line.put("errors", sLine.getDocErrors());
-                }
-                if (!config.isPresent() || config.get().isNbPages()) {
-                    line.put("pageCount", String.valueOf(sLine.getNbPages()));
-                }
-                if (!config.isPresent() || config.get().isNbPagesToBill()) {
-                    line.put("pagesToBill", String.valueOf(sLine.getNbPagesToBill()));
-                }
-                slipLines.add(line);
-            });
-            params.put("slipLines", slipLines);
-        });
+	/**
+	 * Génération du bordereau de controle PDF via Jasper.
+	 * @param out
+	 * @param deliveryId
+	 * @throws PgcnTechnicalException
+	 */
+	@Transactional
+	public void writePdfCheckSlip(final OutputStream out, final String deliveryId) throws PgcnTechnicalException {
 
-        return params;
-    }
+		LOG.debug("Génération du bordereau de controle PDF");
+		final Delivery delivery = deliveryService.findOneWithDep(deliveryId);
+		final Library library;
+		if (delivery.getLot() != null && delivery.getLot().getProject() != null) {
+			library = delivery.getLot().getProject().getLibrary();
+		}
+		else {
+			LOG.warn("La bibliothèque est null, le bordereau ne peut pas être généré");
+			return;
+		}
+		final File logo = libraryService.getLibraryLogo(library);
+		final Optional<CheckSlipConfiguration> config = checkSlipConfigurationService
+			.getOneByLibrary(library.getIdentifier());
 
-    /**
-     * Retourne les erreurs présentées proprement pour l'edition.
-     *
-     * @param doc
-     * @return
-     */
-    public String writeErrors(final DigitalDocument doc) {
+		// S1 1ere fois ou si livraison pas completement controlee, on remet à jour le
+		// bordereau.
+		if (isCheckSlipAbsent(delivery) || isDeliveryChecksUncompleted(delivery)) {
+			createCheckSlip(deliveryId);
+		}
+		final Map<String, Object> params = getSlipParams(delivery, config, true, logo);
+		final List<Map<String, String>> lines = (List<Map<String, String>>) params.remove("slipLines");
+		final List<Map<String, String>> sortedLines = lines.stream()
+			.sorted(Comparator.comparing(l -> l.get(PGCN_ID)))
+			.toList();
+		try {
+			jasperReportService.exportReportToStream(JasperReportsService.REPORT_CHECK_SLIP,
+					JasperReportsService.ExportType.PDF, params, sortedLines, out, library.getIdentifier());
+		}
+		catch (final PgcnException e) {
+			LOG.error("Erreur a la generation du bordereau de livraison: {}", e.getLocalizedMessage());
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-        final String CRLF = "\r\n";
-        final StringBuilder summary = new StringBuilder();
-        final Set<ErrorLabel> globalErrorLabels = new HashSet<>();
+	/**
+	 * Renvoie une map contenant les données du bordereau controle.
+	 * @param delivery
+	 * @param config
+	 * @param isPdf
+	 * @param logo
+	 * @return
+	 */
+	private Map<String, Object> getSlipParams(final Delivery delivery, final Optional<CheckSlipConfiguration> config,
+			final boolean isPdf, final File logo) {
 
-        // Document errors
-        if (!doc.getChecks().isEmpty()) {
-            summary.append("Document global : ");
-            for (final GlobalCheck check : doc.getChecks()) {
-                summary.append(check.getErrorLabel().getLabel()).append(CRLF);
-                globalErrorLabels.add(check.getErrorLabel());
-            }
-        }
-        if (StringUtils.isNotBlank(doc.getCheckNotes())) {
-            summary.append(" Note de contrôle globale : ").append(doc.getCheckNotes()).append(CRLF);
-        }
-        for (final AutomaticCheckResult result : doc.getAutomaticCheckResults()) {
-            if (AutomaticCheckResult.AutoCheckResult.KO == result.getResult()) {
-                summary.append(result.getCheck().getLabel()).append(": KO").append(CRLF);
-            }
-        }
-        // Page errors
-        doc.getOrderedPages().stream().forEach(page -> {
+		final Map<String, Object> params = new HashMap<>();
+		final List<Map<String, String>> slipLines = new ArrayList<>();
+		final Optional<DeliveredDocument> delivDoc = delivery.getDocuments()
+			.stream()
+			.filter(doc -> doc.getCheckSlip() != null)
+			.findAny();
+		delivDoc.ifPresent(doc -> {
+			final CheckSlip bordereau = checkSlipRepository.findOneWithDep(doc.getCheckSlip().getIdentifier());
+			if (isPdf) {
+				params.put("isUncompleted", bordereau.isUncompleted());
+				params.put("lot", bordereau.getLotLabel());
+				params.put("dtLivraison", DateUtils.formatDateToString(bordereau.getDepositDate(), "dd/MM/yyyy"));
+				if (logo != null) {
+					params.put("logoPath", logo.getName());
+				}
+				// Entetes
+				params.put("isPgcnIdPresent", config.isPresent() ? config.get().isPgcnId() : true);
+				params.put("isTitlePresent", config.isPresent() ? config.get().isTitle() : true);
+				params.put("isStatusPresent", config.isPresent() ? config.get().isState() : true);
+				params.put("isErrorsPresent", config.isPresent() ? config.get().isErrs() : true);
+				params.put("isPagesPresent", config.isPresent() ? config.get().isNbPages() : true);
+				params.put("isPagesToBillPresent", config.isPresent() ? config.get().isNbPagesToBill() : true);
+			}
+			bordereau.getSlipLines().stream().forEach(sLine -> {
 
-            page.getChecks().stream().filter(check -> !globalErrorLabels.contains(check.getErrorLabel())).forEach(check -> {
+				final Map<String, String> line = new HashMap<>();
+				if (!config.isPresent() || config.get().isPgcnId()) {
+					line.put(PGCN_ID, sLine.getPgcnId());
+				}
+				if (!config.isPresent() || config.get().isTitle()) {
+					line.put("title", sLine.getTitle());
+				}
+				if (!config.isPresent() || config.get().isState()) {
+					line.put("status", sLine.getStatus());
+				}
+				if (!config.isPresent() || config.get().isErrs()) {
+					line.put("errors", sLine.getDocErrors());
+				}
+				if (!config.isPresent() || config.get().isNbPages()) {
+					line.put("pageCount", String.valueOf(sLine.getNbPages()));
+				}
+				if (!config.isPresent() || config.get().isNbPagesToBill()) {
+					line.put("pagesToBill", String.valueOf(sLine.getNbPagesToBill()));
+				}
+				slipLines.add(line);
+			});
+			params.put("slipLines", slipLines);
+		});
 
-                summary.append("Page ").append(page.getNumber()).append(": ").append(check.getErrorLabel().getLabel()).append(CRLF);
-            });
+		return params;
+	}
 
-            if (StringUtils.isNotBlank(page.getCheckNotes())) {
-                summary.append("Note p.").append(page.getNumber()).append(": ").append(page.getCheckNotes()).append(CRLF);
-            }
-        });
-        return summary.toString();
-    }
+	/**
+	 * Retourne les erreurs présentées proprement pour l'edition.
+	 * @param doc
+	 * @return
+	 */
+	public String writeErrors(final DigitalDocument doc) {
 
-    @Transactional(readOnly = true)
-    public void writeSlipForLot(final OutputStream outputStream, final String id, final String encoding, final char separator) throws IOException {
-        final Delivery delivery = deliveryService.findByLot(id)
-                                                 .stream()
-                                                 .filter(d -> DeliveryStatus.SAVED != d.getStatus())
-                                                 .reduce((delivery1, delivery2) -> delivery1.getCreatedDate().isAfter(delivery2.getCreatedDate()) ? delivery1
-                                                                                                                                                  : delivery2)
-                                                 .get();
-        if (delivery != null) {
-            writeSlip(outputStream, delivery.getIdentifier(), encoding, separator);
-        }
-    }
+		final String CRLF = "\r\n";
+		final StringBuilder summary = new StringBuilder();
+		final Set<ErrorLabel> globalErrorLabels = new HashSet<>();
 
-    @Transactional(readOnly = true)
-    public void writeSlipForLotPDF(final OutputStream outputStream, final String id) throws PgcnTechnicalException {
-        final Delivery delivery = deliveryService.findByLot(id)
-                                                 .stream()
-                                                 .filter(d -> DeliveryStatus.SAVED != d.getStatus())
-                                                 .reduce((delivery1, delivery2) -> delivery1.getCreatedDate().isAfter(delivery2.getCreatedDate()) ? delivery1
-                                                                                                                                                  : delivery2)
-                                                 .get();
-        if (delivery != null) {
-            writePdfCheckSlip(outputStream, delivery.getIdentifier());
-        }
-    }
+		// Document errors
+		if (!doc.getChecks().isEmpty()) {
+			summary.append("Document global : ");
+			for (final GlobalCheck check : doc.getChecks()) {
+				summary.append(check.getErrorLabel().getLabel()).append(CRLF);
+				globalErrorLabels.add(check.getErrorLabel());
+			}
+		}
+		if (StringUtils.isNotBlank(doc.getCheckNotes())) {
+			summary.append(" Note de contrôle globale : ").append(doc.getCheckNotes()).append(CRLF);
+		}
+		for (final AutomaticCheckResult result : doc.getAutomaticCheckResults()) {
+			if (AutomaticCheckResult.AutoCheckResult.KO == result.getResult()) {
+				summary.append(result.getCheck().getLabel()).append(": KO").append(CRLF);
+			}
+		}
+		// Page errors
+		doc.getOrderedPages().stream().forEach(page -> {
 
-    /**
-     * Renvoie les données de controle d'un document en particulier.
-     *
-     * @param deliveryId
-     * @param documentId
-     * @return
-     */
-    public Map<String, Object> getDocumentSummaryResults(final String deliveryId, final String documentId) {
+			page.getChecks()
+				.stream()
+				.filter(check -> !globalErrorLabels.contains(check.getErrorLabel()))
+				.forEach(check -> {
 
-        final String CRLF = "\r\n";
-        final DeliveredDocument delivDoc = deliveryService.getOneWithSlip(deliveryId, documentId);
-        final Map<String, Object> line = new HashMap<>();
+					summary.append("Page ")
+						.append(page.getNumber())
+						.append(": ")
+						.append(check.getErrorLabel().getLabel())
+						.append(CRLF);
+				});
 
-        if (delivDoc != null && delivDoc.getCheckSlip() != null) {
+			if (StringUtils.isNotBlank(page.getCheckNotes())) {
+				summary.append("Note p.")
+					.append(page.getNumber())
+					.append(": ")
+					.append(page.getCheckNotes())
+					.append(CRLF);
+			}
+		});
+		return summary.toString();
+	}
 
-            delivDoc.getCheckSlip()
-                    .getSlipLines()
-                    .stream()
-                    .filter(sLine -> StringUtils.equals(delivDoc.getDigitalDocument().getDocUnit().getPgcnId(), sLine.getPgcnId()))
-                    .forEach(sLine -> {
+	@Transactional(readOnly = true)
+	public void writeSlipForLot(final OutputStream outputStream, final String id, final String encoding,
+			final char separator) throws IOException {
+		final Delivery delivery = deliveryService.findByLot(id)
+			.stream()
+			.filter(d -> DeliveryStatus.SAVED != d.getStatus())
+			.reduce((delivery1, delivery2) -> delivery1.getCreatedDate().isAfter(delivery2.getCreatedDate()) ? delivery1
+					: delivery2)
+			.get();
+		if (delivery != null) {
+			writeSlip(outputStream, delivery.getIdentifier(), encoding, separator);
+		}
+	}
 
-                        line.put(PGCN_ID, sLine.getPgcnId());
-                        line.put("title", sLine.getTitle());
-                        if (StringUtils.isBlank(sLine.getStatus())) {
-                            line.put("status", getStatusForReport(delivDoc.getStatus()));
-                        } else {
-                            line.put("status", sLine.getStatus());
-                        }
-                        String[] allErrors = {"Aucune erreur trouvée"};
-                        if (StringUtils.isNotBlank(sLine.getDocErrors())) {
-                            allErrors = sLine.getDocErrors().split(CRLF);
-                        }
-                        line.put("errors", Arrays.asList(allErrors));
-                        line.put("pageCount", String.valueOf(sLine.getNbPages()));
-                    });
-        }
-        return line;
-    }
+	@Transactional(readOnly = true)
+	public void writeSlipForLotPDF(final OutputStream outputStream, final String id) throws PgcnTechnicalException {
+		final Delivery delivery = deliveryService.findByLot(id)
+			.stream()
+			.filter(d -> DeliveryStatus.SAVED != d.getStatus())
+			.reduce((delivery1, delivery2) -> delivery1.getCreatedDate().isAfter(delivery2.getCreatedDate()) ? delivery1
+					: delivery2)
+			.get();
+		if (delivery != null) {
+			writePdfCheckSlip(outputStream, delivery.getIdentifier());
+		}
+	}
+
+	/**
+	 * Renvoie les données de controle d'un document en particulier.
+	 * @param deliveryId
+	 * @param documentId
+	 * @return
+	 */
+	public Map<String, Object> getDocumentSummaryResults(final String deliveryId, final String documentId) {
+
+		final String CRLF = "\r\n";
+		final DeliveredDocument delivDoc = deliveryService.getOneWithSlip(deliveryId, documentId);
+		final Map<String, Object> line = new HashMap<>();
+
+		if (delivDoc != null && delivDoc.getCheckSlip() != null) {
+
+			delivDoc.getCheckSlip()
+				.getSlipLines()
+				.stream()
+				.filter(sLine -> StringUtils.equals(delivDoc.getDigitalDocument().getDocUnit().getPgcnId(),
+						sLine.getPgcnId()))
+				.forEach(sLine -> {
+
+					line.put(PGCN_ID, sLine.getPgcnId());
+					line.put("title", sLine.getTitle());
+					if (StringUtils.isBlank(sLine.getStatus())) {
+						line.put("status", getStatusForReport(delivDoc.getStatus()));
+					}
+					else {
+						line.put("status", sLine.getStatus());
+					}
+					String[] allErrors = { "Aucune erreur trouvée" };
+					if (StringUtils.isNotBlank(sLine.getDocErrors())) {
+						allErrors = sLine.getDocErrors().split(CRLF);
+					}
+					line.put("errors", Arrays.asList(allErrors));
+					line.put("pageCount", String.valueOf(sLine.getNbPages()));
+				});
+		}
+		return line;
+	}
 
 }

@@ -26,75 +26,81 @@ import org.springframework.transaction.annotation.Transactional;
 @Component("userDetailsService")
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UserDetailsService.class);
-    private static final String ROLE_PREFIX = "ROLE_";
+	private static final Logger LOG = LoggerFactory.getLogger(UserDetailsService.class);
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private AuthorizationRepository authorizationRepository;
+	private static final String ROLE_PREFIX = "ROLE_";
 
-    @Value("${admin.login}")
-    private String adminLogin;
-    @Value("${admin.password}")
-    private String adminPassword;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Override
-    @Transactional
-    public CustomUserDetails loadUserByUsername(final String login) {
-        LOG.debug("Authenticating {}", login);
+	@Autowired
+	private AuthorizationRepository authorizationRepository;
 
-        final String lowercaseLogin = login.toLowerCase();
+	@Value("${admin.login}")
+	private String adminLogin;
 
-        Collection<GrantedAuthority> grantedAuthorities;
-        String userId;
-        Lang lang = null;
-        String password;
-        String library = null;
-        boolean superuser = false;
-        User.Category category = null;
+	@Value("${admin.password}")
+	private String adminPassword;
 
-        final User userFromDatabase = userRepository.findByLogin(lowercaseLogin);
-        if (userFromDatabase == null) {
-            if (adminLogin != null && lowercaseLogin.equalsIgnoreCase(adminLogin)) {
-                grantedAuthorities = authorizationRepository.findAll()
-                                                            .stream()
-                                                            .map(authorization -> new SimpleGrantedAuthority(ROLE_PREFIX + authorization.getCode()))
-                                                            .collect(Collectors.toList());
-                grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + AuthorizationConstants.SUPER_ADMIN));
-                grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + AuthorizationConstants.ACTUATOR));
-                password = adminPassword;
-                userId = UserService.SUPER_ADMIN_ID;
-            } else {
-                throw new UsernameNotFoundException("User " + lowercaseLogin
-                                                    + " was not found in the database");
-            }
-        } else {
-            if (userFromDatabase.isSuperuser()) {
-                superuser = true;
-            }
-            final Role role = userFromDatabase.getRole();
-            if (role != null) {
-                grantedAuthorities = role.getAuthorizations()
-                                         .stream()
-                                         .map(authorization -> new SimpleGrantedAuthority(ROLE_PREFIX + authorization.getCode()))
-                                         .collect(Collectors.toList());
-            } else {
-                throw new UserWithoutRoleException("User " + lowercaseLogin
-                                                   + " has no role in the database");
-            }
-            if (userFromDatabase.getLang() != null) {
-                lang = userFromDatabase.getLang();
-            }
-            library = userFromDatabase.getLibrary().getIdentifier();
-            password = userFromDatabase.getPassword();
-            userId = userFromDatabase.getIdentifier();
-            category = userFromDatabase.getCategory();
-        }
-        if (lang == null) {
-            lang = Lang.FR;
-        }
+	@Override
+	@Transactional
+	public CustomUserDetails loadUserByUsername(final String login) {
+		LOG.debug("Authenticating {}", login);
 
-        return new CustomUserDetails(userId, lowercaseLogin, password, lang, library, grantedAuthorities, superuser, category);
-    }
+		final String lowercaseLogin = login.toLowerCase();
+
+		Collection<GrantedAuthority> grantedAuthorities;
+		String userId;
+		Lang lang = null;
+		String password;
+		String library = null;
+		boolean superuser = false;
+		User.Category category = null;
+
+		final User userFromDatabase = userRepository.findByLogin(lowercaseLogin);
+		if (userFromDatabase == null) {
+			if (adminLogin != null && lowercaseLogin.equalsIgnoreCase(adminLogin)) {
+				grantedAuthorities = authorizationRepository.findAll()
+					.stream()
+					.map(authorization -> new SimpleGrantedAuthority(ROLE_PREFIX + authorization.getCode()))
+					.collect(Collectors.toList());
+				grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + AuthorizationConstants.SUPER_ADMIN));
+				grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + AuthorizationConstants.ACTUATOR));
+				password = adminPassword;
+				userId = UserService.SUPER_ADMIN_ID;
+			}
+			else {
+				throw new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database");
+			}
+		}
+		else {
+			if (userFromDatabase.isSuperuser()) {
+				superuser = true;
+			}
+			final Role role = userFromDatabase.getRole();
+			if (role != null) {
+				grantedAuthorities = role.getAuthorizations()
+					.stream()
+					.map(authorization -> new SimpleGrantedAuthority(ROLE_PREFIX + authorization.getCode()))
+					.collect(Collectors.toList());
+			}
+			else {
+				throw new UserWithoutRoleException("User " + lowercaseLogin + " has no role in the database");
+			}
+			if (userFromDatabase.getLang() != null) {
+				lang = userFromDatabase.getLang();
+			}
+			library = userFromDatabase.getLibrary().getIdentifier();
+			password = userFromDatabase.getPassword();
+			userId = userFromDatabase.getIdentifier();
+			category = userFromDatabase.getCategory();
+		}
+		if (lang == null) {
+			lang = Lang.FR;
+		}
+
+		return new CustomUserDetails(userId, lowercaseLogin, password, lang, library, grantedAuthorities, superuser,
+				category);
+	}
+
 }

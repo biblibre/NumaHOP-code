@@ -23,67 +23,75 @@ import org.springframework.test.util.ReflectionTestUtils;
 @ExtendWith(MockitoExtension.class)
 public class CinesRequestHandlerServiceTest {
 
-    private final String[] instanceLibraries = {"lib_test"};
-    private static final String WORKING_DIR = FileUtils.getTempDirectoryPath() + "/pgcn_test";
+	private final String[] instanceLibraries = { "lib_test" };
 
-    private final String aipFile = "aip.xml";
+	private static final String WORKING_DIR = FileUtils.getTempDirectoryPath() + "/pgcn_test";
 
-    @Mock
-    private CinesReportService cinesReportService;
-    @Mock
-    private ExportCinesService exportCinesService;
-    @Mock
-    private MailboxService mailboxService;
-    @Mock
-    private MailboxConfigurationService mailboxConfigurationService;
-    @Mock
-    private FileStorageManager fm;
-    @Mock
-    private DocUnitService docUnitService;
-    @Mock
-    private TransactionService transactionService;
+	private final String aipFile = "aip.xml";
 
-    private CinesRequestHandlerService service;
+	@Mock
+	private CinesReportService cinesReportService;
 
-    @BeforeEach
-    public void setUp() {
-        service = new CinesRequestHandlerService(exportCinesService, cinesReportService, mailboxService, mailboxConfigurationService, fm, docUnitService, transactionService);
-        ReflectionTestUtils.setField(service, "instanceLibraries", instanceLibraries);
-        ReflectionTestUtils.setField(service, "cinesUpdatingEnabled", true);
-        ReflectionTestUtils.setField(service, "workingDir", WORKING_DIR);
-        ReflectionTestUtils.setField(service, "cacheDir", WORKING_DIR + "/cache");
+	@Mock
+	private ExportCinesService exportCinesService;
 
-    }
+	@Mock
+	private MailboxService mailboxService;
 
-    /**
-     * Utile pour tester la validite d'un fichier AIP.
-     * pas d'interet pour le build
-     */
-    @Disabled
-    @Test
-    public void unmarshallingAipTest() {
+	@Mock
+	private MailboxConfigurationService mailboxConfigurationService;
 
-        final File aip = new File("C:/Temp", aipFile);
+	@Mock
+	private FileStorageManager fm;
 
-        fr.progilone.pgcn.domain.jaxb.aip.PacType pac = null;
-        assertTrue(aip.exists() && aip.canRead());
+	@Mock
+	private DocUnitService docUnitService;
 
-        final JAXBContext context;
-        try {
+	@Mock
+	private TransactionService transactionService;
 
-            context = JAXBContext.newInstance(fr.progilone.pgcn.domain.jaxb.aip.ObjectFactory.class);
-            final Unmarshaller unmarshaller = context.createUnmarshaller();
-            final Object ob = unmarshaller.unmarshal(aip);
-            pac = (fr.progilone.pgcn.domain.jaxb.aip.PacType) ob;
+	private CinesRequestHandlerService service;
 
-        } catch (final JAXBException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+	@BeforeEach
+	public void setUp() {
+		service = new CinesRequestHandlerService(exportCinesService, cinesReportService, mailboxService,
+				mailboxConfigurationService, fm, docUnitService, transactionService);
+		ReflectionTestUtils.setField(service, "instanceLibraries", instanceLibraries);
+		ReflectionTestUtils.setField(service, "cinesUpdatingEnabled", true);
+		ReflectionTestUtils.setField(service, "workingDir", WORKING_DIR);
+		ReflectionTestUtils.setField(service, "cacheDir", WORKING_DIR + "/cache");
 
-        assertTrue(pac != null);
-        assertTrue("sc_0000129768_00000001704685".equals(pac.getDocMeta().getIdentifiantDocProducteur()));
+	}
 
-    }
+	/**
+	 * Utile pour tester la validite d'un fichier AIP. pas d'interet pour le build
+	 */
+	@Disabled
+	@Test
+	public void unmarshallingAipTest() {
+
+		final File aip = new File("C:/Temp", aipFile);
+
+		fr.progilone.pgcn.domain.jaxb.aip.PacType pac = null;
+		assertTrue(aip.exists() && aip.canRead());
+
+		final JAXBContext context;
+		try {
+
+			context = JAXBContext.newInstance(fr.progilone.pgcn.domain.jaxb.aip.ObjectFactory.class);
+			final Unmarshaller unmarshaller = context.createUnmarshaller();
+			final Object ob = unmarshaller.unmarshal(aip);
+			pac = (fr.progilone.pgcn.domain.jaxb.aip.PacType) ob;
+
+		}
+		catch (final JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		assertTrue(pac != null);
+		assertTrue("sc_0000129768_00000001704685".equals(pac.getDocMeta().getIdentifiantDocProducteur()));
+
+	}
 
 }

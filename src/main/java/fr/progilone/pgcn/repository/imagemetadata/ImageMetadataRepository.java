@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ImageMetadataRepository extends JpaRepository<ImageMetadataProperty, String> {
 
-    ImageMetadataProperty findOneImageMetadataPropertyByIdentifier(String label);
+	ImageMetadataProperty findOneImageMetadataPropertyByIdentifier(String label);
+
 }

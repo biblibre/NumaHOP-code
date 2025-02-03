@@ -5,5 +5,6 @@ import java.util.List;
 
 public interface MailboxConfigurationRepositoryCustom {
 
-    List<MailboxConfiguration> search(String search, List<String> libraries, boolean active);
+	List<MailboxConfiguration> search(String search, List<String> libraries, boolean active);
+
 }

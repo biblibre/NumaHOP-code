@@ -13,9 +13,8 @@ import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 /**
- * Metadata must be expressed in XML that complies
- * with another XML Schema (namespace=#other). Metadata must be
- * explicitly qualified in the response.
+ * Metadata must be expressed in XML that complies with another XML Schema
+ * (namespace=#other). Metadata must be explicitly qualified in the response.
  *
  * <p>
  * Classe Java pour metadataType complex type.
@@ -38,34 +37,28 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "metadataType", propOrder = {"any"})
+@XmlType(name = "metadataType", propOrder = { "any" })
 public class MetadataType {
 
-    @XmlAnyElement(lax = true)
-    protected Object any;
+	@XmlAnyElement(lax = true)
+	protected Object any;
 
-    /**
-     * Obtient la valeur de la propriété any.
-     *
-     * @return
-     *         possible object is
-     *         {@link Object }
-     *
-     */
-    public Object getAny() {
-        return any;
-    }
+	/**
+	 * Obtient la valeur de la propriété any.
+	 * @return possible object is {@link Object }
+	 *
+	 */
+	public Object getAny() {
+		return any;
+	}
 
-    /**
-     * Définit la valeur de la propriété any.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Object }
-     *
-     */
-    public void setAny(Object value) {
-        this.any = value;
-    }
+	/**
+	 * Définit la valeur de la propriété any.
+	 * @param value allowed object is {@link Object }
+	 *
+	 */
+	public void setAny(Object value) {
+		this.any = value;
+	}
 
 }

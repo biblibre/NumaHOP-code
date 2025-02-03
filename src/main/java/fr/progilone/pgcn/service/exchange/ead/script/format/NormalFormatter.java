@@ -13,54 +13,40 @@ import java.util.List;
  */
 public class NormalFormatter extends CustomScript {
 
-    public static final String SCRIPT_NAME = "normal";
+	public static final String SCRIPT_NAME = "normal";
 
-    public NormalFormatter(final String code) {
-        super(code);
-    }
+	public NormalFormatter(final String code) {
+		super(code);
+	}
 
-    /**
-     * Formattage d'un objet
-     *
-     * @param o
-     * @return
-     */
-    public String format(final Object o) {
-        if (o == null) {
-            return "";
-        }
-        List<?> values = EadCParser.getObjectValues(o, ATTR_NORMAL);
-        if (values.isEmpty()) {
-            values = EadCParser.getObjectValues(o, ATTR_CONTENT);
-        }
-        return values.stream()
-                     .map(String::valueOf)
-                     .reduce((a, b) -> a + " "
-                                       + b)
-                     .orElse("");
-    }
+	/**
+	 * Formattage d'un objet
+	 * @param o
+	 * @return
+	 */
+	public String format(final Object o) {
+		if (o == null) {
+			return "";
+		}
+		List<?> values = EadCParser.getObjectValues(o, ATTR_NORMAL);
+		if (values.isEmpty()) {
+			values = EadCParser.getObjectValues(o, ATTR_CONTENT);
+		}
+		return values.stream().map(String::valueOf).reduce((a, b) -> a + " " + b).orElse("");
+	}
 
-    /**
-     * Formattage d'une liste d'objets
-     *
-     * @param list
-     * @return
-     */
-    public String format(final List<?> list) {
-        return list.stream()
-                   .map(this::format)
-                   .reduce((a, b) -> a + " "
-                                     + b)
-                   .orElse("");
-    }
+	/**
+	 * Formattage d'une liste d'objets
+	 * @param list
+	 * @return
+	 */
+	public String format(final List<?> list) {
+		return list.stream().map(this::format).reduce((a, b) -> a + " " + b).orElse("");
+	}
 
-    @Override
-    public String getInitScript() {
-        return "def " + SCRIPT_NAME
-               + " = {\n"
-               + "      Object o -> script."
-               + getCode()
-               + ".format(o)\n"
-               + "}\n";
-    }
+	@Override
+	public String getInitScript() {
+		return "def " + SCRIPT_NAME + " = {\n" + "      Object o -> script." + getCode() + ".format(o)\n" + "}\n";
+	}
+
 }

@@ -4,36 +4,43 @@ import com.google.common.base.MoreObjects;
 
 public class ConditionReportAttachmentDTO {
 
-    private String identifier;
-    private String originalFilename;
-    private Long fileSize;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String originalFilename;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private Long fileSize;
 
-    public String getOriginalFilename() {
-        return originalFilename;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setOriginalFilename(final String originalFilename) {
-        this.originalFilename = originalFilename;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public Long getFileSize() {
-        return fileSize;
-    }
+	public String getOriginalFilename() {
+		return originalFilename;
+	}
 
-    public void setFileSize(final Long fileSize) {
-        this.fileSize = fileSize;
-    }
+	public void setOriginalFilename(final String originalFilename) {
+		this.originalFilename = originalFilename;
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("identifier", identifier).add("originalFilename", originalFilename).add("fileSize", fileSize).toString();
-    }
+	public Long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(final Long fileSize) {
+		this.fileSize = fileSize;
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+			.add("identifier", identifier)
+			.add("originalFilename", originalFilename)
+			.add("fileSize", fileSize)
+			.toString();
+	}
+
 }

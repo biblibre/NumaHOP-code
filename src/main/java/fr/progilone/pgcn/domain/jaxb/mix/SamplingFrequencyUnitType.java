@@ -34,30 +34,28 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum SamplingFrequencyUnitType {
 
-    @XmlEnumValue("no absolute unit of measurement")
-    NO_ABSOLUTE_UNIT_OF_MEASUREMENT("no absolute unit of measurement"),
-    @XmlEnumValue("in.")
-    IN("in."),
-    @XmlEnumValue("cm")
-    CM("cm");
+	@XmlEnumValue("no absolute unit of measurement")
+	NO_ABSOLUTE_UNIT_OF_MEASUREMENT("no absolute unit of measurement"), @XmlEnumValue("in.")
+	IN("in."), @XmlEnumValue("cm")
+	CM("cm");
 
-    private final String value;
+	private final String value;
 
-    SamplingFrequencyUnitType(String v) {
-        value = v;
-    }
+	SamplingFrequencyUnitType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static SamplingFrequencyUnitType fromValue(String v) {
-        for (SamplingFrequencyUnitType c : SamplingFrequencyUnitType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static SamplingFrequencyUnitType fromValue(String v) {
+		for (SamplingFrequencyUnitType c : SamplingFrequencyUnitType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

@@ -48,233 +48,221 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ArchivageType",
-         propOrder = {"cadre",
-                      "dateArchivage",
-                      "contexteLegal",
-                      "classeService",
-                      "infoPreserv",
-                      "acces",
-                      "reproduction"})
+@XmlType(name = "ArchivageType", propOrder = { "cadre", "dateArchivage", "contexteLegal", "classeService",
+		"infoPreserv", "acces", "reproduction" })
 public class ArchivageType {
 
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "string")
-    protected List<CadreType> cadre;
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar dateArchivage;
-    protected List<String> contexteLegal;
-    @XmlElement(required = true)
-    protected List<String> classeService;
-    @XmlElement(required = true)
-    protected List<String> infoPreserv;
-    @XmlElement(required = true)
-    protected List<String> acces;
-    protected List<String> reproduction;
+	@XmlElement(required = true)
+	@XmlSchemaType(name = "string")
+	protected List<CadreType> cadre;
 
-    /**
-     * Gets the value of the cadre property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the cadre property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getCadre().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link CadreType }
-     *
-     *
-     */
-    public List<CadreType> getCadre() {
-        if (cadre == null) {
-            cadre = new ArrayList<>();
-        }
-        return this.cadre;
-    }
+	@XmlElement(required = true)
+	@XmlSchemaType(name = "date")
+	protected XMLGregorianCalendar dateArchivage;
 
-    /**
-     * Obtient la valeur de la propriété dateArchivage.
-     *
-     * @return
-     *         possible object is
-     *         {@link XMLGregorianCalendar }
-     *
-     */
-    public XMLGregorianCalendar getDateArchivage() {
-        return dateArchivage;
-    }
+	protected List<String> contexteLegal;
 
-    /**
-     * Définit la valeur de la propriété dateArchivage.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link XMLGregorianCalendar }
-     *
-     */
-    public void setDateArchivage(final XMLGregorianCalendar value) {
-        this.dateArchivage = value;
-    }
+	@XmlElement(required = true)
+	protected List<String> classeService;
 
-    /**
-     * Gets the value of the contexteLegal property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the contexteLegal property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getContexteLegal().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getContexteLegal() {
-        if (contexteLegal == null) {
-            contexteLegal = new ArrayList<>();
-        }
-        return this.contexteLegal;
-    }
+	@XmlElement(required = true)
+	protected List<String> infoPreserv;
 
-    /**
-     * Gets the value of the classeService property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the classeService property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getClasseService().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getClasseService() {
-        if (classeService == null) {
-            classeService = new ArrayList<>();
-        }
-        return this.classeService;
-    }
+	@XmlElement(required = true)
+	protected List<String> acces;
 
-    /**
-     * Gets the value of the infoPreserv property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the infoPreserv property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getInfoPreserv().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getInfoPreserv() {
-        if (infoPreserv == null) {
-            infoPreserv = new ArrayList<>();
-        }
-        return this.infoPreserv;
-    }
+	protected List<String> reproduction;
 
-    /**
-     * Gets the value of the acces property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the acces property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getAcces().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getAcces() {
-        if (acces == null) {
-            acces = new ArrayList<>();
-        }
-        return this.acces;
-    }
+	/**
+	 * Gets the value of the cadre property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the cadre
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getCadre().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link CadreType }
+	 *
+	 *
+	 */
+	public List<CadreType> getCadre() {
+		if (cadre == null) {
+			cadre = new ArrayList<>();
+		}
+		return this.cadre;
+	}
 
-    /**
-     * Gets the value of the reproduction property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the reproduction property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getReproduction().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getReproduction() {
-        if (reproduction == null) {
-            reproduction = new ArrayList<>();
-        }
-        return this.reproduction;
-    }
+	/**
+	 * Obtient la valeur de la propriété dateArchivage.
+	 * @return possible object is {@link XMLGregorianCalendar }
+	 *
+	 */
+	public XMLGregorianCalendar getDateArchivage() {
+		return dateArchivage;
+	}
+
+	/**
+	 * Définit la valeur de la propriété dateArchivage.
+	 * @param value allowed object is {@link XMLGregorianCalendar }
+	 *
+	 */
+	public void setDateArchivage(final XMLGregorianCalendar value) {
+		this.dateArchivage = value;
+	}
+
+	/**
+	 * Gets the value of the contexteLegal property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * contexteLegal property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getContexteLegal().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getContexteLegal() {
+		if (contexteLegal == null) {
+			contexteLegal = new ArrayList<>();
+		}
+		return this.contexteLegal;
+	}
+
+	/**
+	 * Gets the value of the classeService property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * classeService property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getClasseService().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getClasseService() {
+		if (classeService == null) {
+			classeService = new ArrayList<>();
+		}
+		return this.classeService;
+	}
+
+	/**
+	 * Gets the value of the infoPreserv property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the infoPreserv
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getInfoPreserv().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getInfoPreserv() {
+		if (infoPreserv == null) {
+			infoPreserv = new ArrayList<>();
+		}
+		return this.infoPreserv;
+	}
+
+	/**
+	 * Gets the value of the acces property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the acces
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getAcces().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getAcces() {
+		if (acces == null) {
+			acces = new ArrayList<>();
+		}
+		return this.acces;
+	}
+
+	/**
+	 * Gets the value of the reproduction property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * reproduction property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getReproduction().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getReproduction() {
+		if (reproduction == null) {
+			reproduction = new ArrayList<>();
+		}
+		return this.reproduction;
+	}
 
 }

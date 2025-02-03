@@ -32,15 +32,14 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum GpsTrackRefType {
 
-    T,
-    M;
+	T, M;
 
-    public String value() {
-        return name();
-    }
+	public String value() {
+		return name();
+	}
 
-    public static GpsTrackRefType fromValue(String v) {
-        return valueOf(v);
-    }
+	public static GpsTrackRefType fromValue(String v) {
+		return valueOf(v);
+	}
 
 }

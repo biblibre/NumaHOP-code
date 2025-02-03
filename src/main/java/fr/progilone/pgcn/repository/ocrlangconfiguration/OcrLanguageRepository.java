@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OcrLanguageRepository extends JpaRepository<OcrLanguage, String> {
 
-    List<OcrLanguage> findAllByOrderByLabelAsc();
+	List<OcrLanguage> findAllByOrderByLabelAsc();
 
 }

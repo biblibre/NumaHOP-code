@@ -57,88 +57,73 @@ import jakarta.xml.bind.annotation.XmlValue;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {"value"})
+@XmlType(name = "", propOrder = { "value" })
 @XmlRootElement(name = "structureFichier")
 public class StructureFichier {
 
-    @XmlValue
-    protected String value;
-    @XmlAttribute(name = "type")
-    protected String type;
-    @XmlAttribute(name = "hash")
-    protected String hash;
+	@XmlValue
+	protected String value;
 
-    /**
-     * Chaine de caractères composée d'au moins 1 caractère imprimable ou non exclusivement composé d'espace et/ou de tabulations et/ou de nouvelle
-     * ligne et/ou de retour chariot
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "type")
+	protected String type;
 
-    /**
-     * Définit la valeur de la propriété value.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	@XmlAttribute(name = "hash")
+	protected String hash;
 
-    /**
-     * Obtient la valeur de la propriété type.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getType() {
-        return type;
-    }
+	/**
+	 * Chaine de caractères composée d'au moins 1 caractère imprimable ou non
+	 * exclusivement composé d'espace et/ou de tabulations et/ou de nouvelle ligne et/ou
+	 * de retour chariot
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getValue() {
+		return value;
+	}
 
-    /**
-     * Définit la valeur de la propriété type.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setType(String value) {
-        this.type = value;
-    }
+	/**
+	 * Définit la valeur de la propriété value.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété hash.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getHash() {
-        return hash;
-    }
+	/**
+	 * Obtient la valeur de la propriété type.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getType() {
+		return type;
+	}
 
-    /**
-     * Définit la valeur de la propriété hash.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setHash(String value) {
-        this.hash = value;
-    }
+	/**
+	 * Définit la valeur de la propriété type.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setType(String value) {
+		this.type = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété hash.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getHash() {
+		return hash;
+	}
+
+	/**
+	 * Définit la valeur de la propriété hash.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setHash(String value) {
+		this.hash = value;
+	}
 
 }

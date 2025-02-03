@@ -36,34 +36,30 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ComponentUseType {
 
-    @XmlEnumValue("image data")
-    IMAGE_DATA("image data"),
-    @XmlEnumValue("associated alpha data")
-    ASSOCIATED_ALPHA_DATA("associated alpha data"),
-    @XmlEnumValue("unassociated alpha data")
-    UNASSOCIATED_ALPHA_DATA("unassociated alpha data"),
-    @XmlEnumValue("range data")
-    RANGE_DATA("range data"),
-    @XmlEnumValue("unspecified data")
-    UNSPECIFIED_DATA("unspecified data");
+	@XmlEnumValue("image data")
+	IMAGE_DATA("image data"), @XmlEnumValue("associated alpha data")
+	ASSOCIATED_ALPHA_DATA("associated alpha data"), @XmlEnumValue("unassociated alpha data")
+	UNASSOCIATED_ALPHA_DATA("unassociated alpha data"), @XmlEnumValue("range data")
+	RANGE_DATA("range data"), @XmlEnumValue("unspecified data")
+	UNSPECIFIED_DATA("unspecified data");
 
-    private final String value;
+	private final String value;
 
-    ComponentUseType(String v) {
-        value = v;
-    }
+	ComponentUseType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static ComponentUseType fromValue(String v) {
-        for (ComponentUseType c : ComponentUseType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static ComponentUseType fromValue(String v) {
+		for (ComponentUseType c : ComponentUseType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

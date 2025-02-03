@@ -33,28 +33,27 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ByteOrderType {
 
-    @XmlEnumValue("big endian")
-    BIG_ENDIAN("big endian"),
-    @XmlEnumValue("little endian")
-    LITTLE_ENDIAN("little endian");
+	@XmlEnumValue("big endian")
+	BIG_ENDIAN("big endian"), @XmlEnumValue("little endian")
+	LITTLE_ENDIAN("little endian");
 
-    private final String value;
+	private final String value;
 
-    ByteOrderType(String v) {
-        value = v;
-    }
+	ByteOrderType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static ByteOrderType fromValue(String v) {
-        for (ByteOrderType c : ByteOrderType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static ByteOrderType fromValue(String v) {
+		for (ByteOrderType c : ByteOrderType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

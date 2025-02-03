@@ -31,217 +31,224 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/workflow")
 public class WorkflowController extends AbstractRestController {
 
-    private final UIWorkflowService uiService;
-    private final AccessHelper accessHelper;
+	private final UIWorkflowService uiService;
 
-    @Autowired
-    public WorkflowController(final UIWorkflowService uiService, final AccessHelper accessHelper) {
-        this.uiService = uiService;
-        this.accessHelper = accessHelper;
-    }
+	private final AccessHelper accessHelper;
 
-    @RequestMapping(value = "/{identifier}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<DocUnitWorkflowDTO> findByIdentifier(@PathVariable final String identifier) {
-        final DocUnitWorkflowDTO workflow = uiService.findWorkflowByIdentifier(identifier);
-        // non trouvé
-        if (workflow == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return createResponseEntity(workflow);
-    }
+	@Autowired
+	public WorkflowController(final UIWorkflowService uiService, final AccessHelper accessHelper) {
+		this.uiService = uiService;
+		this.accessHelper = accessHelper;
+	}
 
-    @RequestMapping(method = RequestMethod.GET,
-                    params = {"canProcess",
-                              "docUnit"},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<BooleanValueDTO> canCurrentUserProcessState(final HttpServletRequest request,
-                                                                      @RequestParam(value = "docUnit") final String identifier,
-                                                                      @RequestParam(value = "key") final WorkflowStateKey key) {
-        if (!accessHelper.checkDocUnit(identifier)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return createResponseEntity(uiService.canCurrentUserProcessState(identifier, key, accessHelper.checkUserIsPresta()));
-    }
+	@RequestMapping(value = "/{identifier}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<DocUnitWorkflowDTO> findByIdentifier(@PathVariable final String identifier) {
+		final DocUnitWorkflowDTO workflow = uiService.findWorkflowByIdentifier(identifier);
+		// non trouvé
+		if (workflow == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return createResponseEntity(workflow);
+	}
 
-    @RequestMapping(method = RequestMethod.GET,
-                    params = {"process",
-                              "docUnitId"},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<?> processState(final HttpServletRequest request,
-                                          @RequestParam(value = "docUnitId") final String identifier,
-                                          @RequestParam(value = "key") final WorkflowStateKey key) {
-        if (!accessHelper.checkDocUnit(identifier)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        uiService.processState(identifier, key);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "canProcess", "docUnit" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<BooleanValueDTO> canCurrentUserProcessState(final HttpServletRequest request,
+			@RequestParam(value = "docUnit") final String identifier,
+			@RequestParam(value = "key") final WorkflowStateKey key) {
+		if (!accessHelper.checkDocUnit(identifier)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		return createResponseEntity(
+				uiService.canCurrentUserProcessState(identifier, key, accessHelper.checkUserIsPresta()));
+	}
 
-    @RequestMapping(params = {"docUnit"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<DocUnitWorkflowDTO> findByDocUnitIdentifier(@RequestParam(value = "docUnit", required = true) final String identifier) {
-        final DocUnitWorkflowDTO workflow = uiService.findWorkflowByDocUnitIdentifier(identifier);
-        // non trouvé
-        if (workflow == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return createResponseEntity(workflow);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "process", "docUnitId" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<?> processState(final HttpServletRequest request,
+			@RequestParam(value = "docUnitId") final String identifier,
+			@RequestParam(value = "key") final WorkflowStateKey key) {
+		if (!accessHelper.checkDocUnit(identifier)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		uiService.processState(identifier, key);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"isDone"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<StateIsDoneDTO> isStateDone(final HttpServletRequest request,
-                                                      @RequestParam(value = "doc") final String identifier,
-                                                      @RequestParam(value = "key") final WorkflowStateKey key) {
-        if (!accessHelper.checkDocUnit(identifier)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return createResponseEntity(uiService.isStateDone(identifier, key));
-    }
+	@RequestMapping(params = { "docUnit" }, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<DocUnitWorkflowDTO> findByDocUnitIdentifier(
+			@RequestParam(value = "docUnit", required = true) final String identifier) {
+		final DocUnitWorkflowDTO workflow = uiService.findWorkflowByDocUnitIdentifier(identifier);
+		// non trouvé
+		if (workflow == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return createResponseEntity(workflow);
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"isWorkflowStarted"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<StateIsDoneDTO> isWorkflowStarted(final HttpServletRequest request, @RequestParam(value = "doc") final String identifier) {
-        if (!accessHelper.checkDocUnit(identifier)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return createResponseEntity(uiService.isWorkflowStarted(identifier));
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "isDone" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<StateIsDoneDTO> isStateDone(final HttpServletRequest request,
+			@RequestParam(value = "doc") final String identifier,
+			@RequestParam(value = "key") final WorkflowStateKey key) {
+		if (!accessHelper.checkDocUnit(identifier)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		return createResponseEntity(uiService.isStateDone(identifier, key));
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"isCheckStarted"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<StateIsDoneDTO> isCheckStarted(final HttpServletRequest request, @RequestParam(value = "doc") final String identifier) {
-        if (!accessHelper.checkDocUnit(identifier)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return createResponseEntity(uiService.isCheckStarted(identifier));
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "isWorkflowStarted" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<StateIsDoneDTO> isWorkflowStarted(final HttpServletRequest request,
+			@RequestParam(value = "doc") final String identifier) {
+		if (!accessHelper.checkDocUnit(identifier)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		return createResponseEntity(uiService.isWorkflowStarted(identifier));
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"isWaitingRedelivering"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<StateIsDoneDTO> isWaitingForRedelivering(final HttpServletRequest request, @RequestParam(value = "doc") final String identifier) {
-        if (!accessHelper.checkDocUnit(identifier)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return createResponseEntity(uiService.isWaitingForRedelivering(identifier));
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "isCheckStarted" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<StateIsDoneDTO> isCheckStarted(final HttpServletRequest request,
+			@RequestParam(value = "doc") final String identifier) {
+		if (!accessHelper.checkDocUnit(identifier)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		return createResponseEntity(uiService.isCheckStarted(identifier));
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"canReportBeValidated"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<StateIsDoneDTO> canReportBeValidated(final HttpServletRequest request, @RequestParam(value = "doc") final String identifier) {
-        if (!accessHelper.checkDocUnit(identifier)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return createResponseEntity(uiService.canReportBeValidated(identifier));
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "isWaitingRedelivering" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<StateIsDoneDTO> isWaitingForRedelivering(final HttpServletRequest request,
+			@RequestParam(value = "doc") final String identifier) {
+		if (!accessHelper.checkDocUnit(identifier)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		return createResponseEntity(uiService.isWaitingForRedelivering(identifier));
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"isRejectDefinitive"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<StateIsDoneDTO> isRejectDefinitive(final HttpServletRequest request, @RequestParam(value = "doc") final String identifier) {
-        if (!accessHelper.checkDocUnit(identifier)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return createResponseEntity(uiService.isRejectDefinitive(identifier));
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "canReportBeValidated" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<StateIsDoneDTO> canReportBeValidated(final HttpServletRequest request,
+			@RequestParam(value = "doc") final String identifier) {
+		if (!accessHelper.checkDocUnit(identifier)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		return createResponseEntity(uiService.canReportBeValidated(identifier));
+	}
 
-    /**
-     * Force les docs au statut 'En attente de nenumerisation'
-     * à la création d'un train de renumerisation.
-     *
-     * @param docIds
-     * @return
-     */
-    @RequestMapping(method = RequestMethod.POST, params = {"resetNumWaiting"})
-    @ResponseStatus(HttpStatus.OK)
-    @Timed
-    public ResponseEntity<?> resetToNumWaiting(@RequestBody final List<String> docIds) {
-        uiService.resetToNumWaiting(docIds);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "isRejectDefinitive" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<StateIsDoneDTO> isRejectDefinitive(final HttpServletRequest request,
+			@RequestParam(value = "doc") final String identifier) {
+		if (!accessHelper.checkDocUnit(identifier)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		return createResponseEntity(uiService.isRejectDefinitive(identifier));
+	}
 
-    /**
-     * Validation constats d'etat en masse.
-     *
-     * @param request
-     * @param datas
-     * @return
-     */
-    @RequestMapping(method = RequestMethod.POST, params = {"massValidate"})
-    @ResponseStatus(HttpStatus.OK)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB2)
-    public ResponseEntity<?> massValidate(final HttpServletRequest request, @RequestBody final List<String> docUnitIds) {
+	/**
+	 * Force les docs au statut 'En attente de nenumerisation' à la création d'un train de
+	 * renumerisation.
+	 * @param docIds
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST, params = { "resetNumWaiting" })
+	@ResponseStatus(HttpStatus.OK)
+	@Timed
+	public ResponseEntity<?> resetToNumWaiting(@RequestBody final List<String> docIds) {
+		uiService.resetToNumWaiting(docIds);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-        // droits d'accès à l'ud
-        for (final String docUnitId : docUnitIds) {
-            if (!accessHelper.checkDocUnit(docUnitId)) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-        }
-        uiService.massValidateCondReports(docUnitIds);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	/**
+	 * Validation constats d'etat en masse.
+	 * @param request
+	 * @param datas
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST, params = { "massValidate" })
+	@ResponseStatus(HttpStatus.OK)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB2)
+	public ResponseEntity<?> massValidate(final HttpServletRequest request,
+			@RequestBody final List<String> docUnitIds) {
 
-    /**
-     * Validation constats d'etat en masse.
-     *
-     * @param request
-     * @param datas
-     * @return
-     */
-    @RequestMapping(method = RequestMethod.POST, params = {"massValidateRecords"})
-    @ResponseStatus(HttpStatus.OK)
-    @Timed
-    @RolesAllowed(DOC_UNIT_HAB3)
-    public ResponseEntity<?> massValidateRecords(final HttpServletRequest request, @RequestBody final List<String> docUnitIds) {
+		// droits d'accès à l'ud
+		for (final String docUnitId : docUnitIds) {
+			if (!accessHelper.checkDocUnit(docUnitId)) {
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		}
+		uiService.massValidateCondReports(docUnitIds);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-        // droits d'accès à l'ud
-        for (final String docUnitId : docUnitIds) {
-            if (!accessHelper.checkDocUnit(docUnitId)) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-        }
-        uiService.massValidateRecords(docUnitIds);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	/**
+	 * Validation constats d'etat en masse.
+	 * @param request
+	 * @param datas
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST, params = { "massValidateRecords" })
+	@ResponseStatus(HttpStatus.OK)
+	@Timed
+	@RolesAllowed(DOC_UNIT_HAB3)
+	public ResponseEntity<?> massValidateRecords(final HttpServletRequest request,
+			@RequestBody final List<String> docUnitIds) {
 
-    /**
-     * Termine tous les docWorkflows des docUnits en parametre.
-     * Les etapes en cours ou en attente sont annulées et chaque wkf est terminé.
-     *
-     * @param docUnitIds
-     * @return
-     */
-    @RequestMapping(method = RequestMethod.POST, params = {"endAllDocWorkflows"})
-    @ResponseStatus(HttpStatus.OK)
-    @RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
-    @Timed
-    public ResponseEntity<?> endAllDocWorkflows(@RequestBody final List<String> docUnitIds) {
-        uiService.endAllDocWorkflows(docUnitIds);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+		// droits d'accès à l'ud
+		for (final String docUnitId : docUnitIds) {
+			if (!accessHelper.checkDocUnit(docUnitId)) {
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		}
+		uiService.massValidateRecords(docUnitIds);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-    @RequestMapping(method = RequestMethod.POST, params = {"validDocWorkflowState"})
-    @ResponseStatus(HttpStatus.OK)
-    @RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
-    public ResponseEntity<?> validDocWorkflowState(@RequestBody final List<String> docUnitIds) {
+	/**
+	 * Termine tous les docWorkflows des docUnits en parametre. Les etapes en cours ou en
+	 * attente sont annulées et chaque wkf est terminé.
+	 * @param docUnitIds
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST, params = { "endAllDocWorkflows" })
+	@ResponseStatus(HttpStatus.OK)
+	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	@Timed
+	public ResponseEntity<?> endAllDocWorkflows(@RequestBody final List<String> docUnitIds) {
+		uiService.endAllDocWorkflows(docUnitIds);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-        final String stateId = docUnitIds.remove(docUnitIds.size() - 1);
-        uiService.validDocWorkflowState(stateId, docUnitIds);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.POST, params = { "validDocWorkflowState" })
+	@ResponseStatus(HttpStatus.OK)
+	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	public ResponseEntity<?> validDocWorkflowState(@RequestBody final List<String> docUnitIds) {
 
-    @RequestMapping(method = RequestMethod.POST, params = {"reinitDocWorkflowState"})
-    @ResponseStatus(HttpStatus.OK)
-    @RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
-    public ResponseEntity<?> reinitDocWorkflowState(@RequestBody final List<String> docUnitIds) {
+		final String stateId = docUnitIds.remove(docUnitIds.size() - 1);
+		uiService.validDocWorkflowState(stateId, docUnitIds);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-        final String stateId = docUnitIds.remove(docUnitIds.size() - 1);
-        uiService.reinitDocWorkflowState(stateId, docUnitIds);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.POST, params = { "reinitDocWorkflowState" })
+	@ResponseStatus(HttpStatus.OK)
+	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	public ResponseEntity<?> reinitDocWorkflowState(@RequestBody final List<String> docUnitIds) {
+
+		final String stateId = docUnitIds.remove(docUnitIds.size() - 1);
+		uiService.reinitDocWorkflowState(stateId, docUnitIds);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
 }

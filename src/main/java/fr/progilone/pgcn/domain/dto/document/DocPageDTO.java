@@ -5,72 +5,76 @@ import org.apache.commons.lang3.StringUtils;
 
 public class DocPageDTO extends AbstractDTO implements Comparable<DocPageDTO> {
 
-    private String identifier;
-    private Integer number;
-    private String checkNotes;
-    private SimpleDigitalDocumentDTO digitalDocument;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private Integer number;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private String checkNotes;
 
-    public Integer getNumber() {
-        return number;
-    }
+	private SimpleDigitalDocumentDTO digitalDocument;
 
-    public void setNumber(final Integer number) {
-        this.number = number;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getCheckNotes() {
-        return checkNotes;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setCheckNotes(final String checkNotes) {
-        this.checkNotes = checkNotes;
-    }
+	public Integer getNumber() {
+		return number;
+	}
 
-    public SimpleDigitalDocumentDTO getDigitalDocument() {
-        return digitalDocument;
-    }
+	public void setNumber(final Integer number) {
+		this.number = number;
+	}
 
-    public void setDigitalDocument(final SimpleDigitalDocumentDTO digitalDocument) {
-        this.digitalDocument = digitalDocument;
-    }
+	public String getCheckNotes() {
+		return checkNotes;
+	}
 
-    @Override
-    public int compareTo(final DocPageDTO o) {
+	public void setCheckNotes(final String checkNotes) {
+		this.checkNotes = checkNotes;
+	}
 
-        if (getDigitalDocument().getDigitalId().equals(o.getDigitalDocument().getDigitalId())) {
-            return getNumber().compareTo(o.getNumber());
-        } else {
-            return getDigitalDocument().getDigitalId().compareTo(o.getDigitalDocument().getDigitalId());
-        }
-    }
+	public SimpleDigitalDocumentDTO getDigitalDocument() {
+		return digitalDocument;
+	}
 
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || this.getClass() != obj.getClass()) {
-            return false;
-        }
+	public void setDigitalDocument(final SimpleDigitalDocumentDTO digitalDocument) {
+		this.digitalDocument = digitalDocument;
+	}
 
-        final DocPageDTO otherDto = (DocPageDTO) obj;
-        if (!StringUtils.equals(identifier, otherDto.getIdentifier())) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public int compareTo(final DocPageDTO o) {
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
+		if (getDigitalDocument().getDigitalId().equals(o.getDigitalDocument().getDigitalId())) {
+			return getNumber().compareTo(o.getNumber());
+		}
+		else {
+			return getDigitalDocument().getDigitalId().compareTo(o.getDigitalDocument().getDigitalId());
+		}
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || this.getClass() != obj.getClass()) {
+			return false;
+		}
+
+		final DocPageDTO otherDto = (DocPageDTO) obj;
+		if (!StringUtils.equals(identifier, otherDto.getIdentifier())) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
 
 }

@@ -22,35 +22,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/filecleaning")
 public class FileCleaningController extends AbstractRestController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FileCleaningController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(FileCleaningController.class);
 
-    private final FileCleaningManager fileCleaningManager;
+	private final FileCleaningManager fileCleaningManager;
 
-    @Autowired
-    public FileCleaningController(final FileCleaningManager fileCleaningManager) {
+	@Autowired
+	public FileCleaningController(final FileCleaningManager fileCleaningManager) {
 
-        super();
-        this.fileCleaningManager = fileCleaningManager;
+		super();
+		this.fileCleaningManager = fileCleaningManager;
 
-    }
+	}
 
-    /**
-     * Recherche les fichiers binaires orphelins => delete
-     *
-     * @param request
-     * @param libraryId
-     * @return
-     * @throws PgcnException
-     */
-    @RequestMapping(value = "/deleteorphans", method = RequestMethod.GET)
-    @Timed
-    @Async
-    @RolesAllowed(AuthorizationConstants.FILES_GEST_HAB0)
-    @ResponseStatus(HttpStatus.OK)
-    public void cleanOrphanFiles(final HttpServletRequest request, @RequestParam(name = "library") final String libraryId) throws PgcnException {
+	/**
+	 * Recherche les fichiers binaires orphelins => delete
+	 * @param request
+	 * @param libraryId
+	 * @return
+	 * @throws PgcnException
+	 */
+	@RequestMapping(value = "/deleteorphans", method = RequestMethod.GET)
+	@Timed
+	@Async
+	@RolesAllowed(AuthorizationConstants.FILES_GEST_HAB0)
+	@ResponseStatus(HttpStatus.OK)
+	public void cleanOrphanFiles(final HttpServletRequest request,
+			@RequestParam(name = "library") final String libraryId) throws PgcnException {
 
-        fileCleaningManager.cleanOrphanFiles(libraryId);
+		fileCleaningManager.cleanOrphanFiles(libraryId);
 
-    }
+	}
 
 }

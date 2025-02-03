@@ -8,184 +8,203 @@ import java.util.List;
 
 public class WorkflowDocUnitProgressDTO {
 
-    private String libraryIdentifier;
-    private String libraryName;
-    private String projectIdentifier;
-    private String projectName;
-    private String lotIdentifier;
-    private String lotLabel;
-    private String trainIdentifier;
-    private String trainLabel;
-    private String docIdentifier;
-    private String docPgcnId;
-    private String docLabel;
-    private String docStatus;
-    private Integer totalPage;
-    private final List<WorkflowState> workflow = new ArrayList<>();
-    private WorkflowDocUnitInfoDTO infos;
+	private String libraryIdentifier;
 
-    public String getLibraryIdentifier() {
-        return libraryIdentifier;
-    }
+	private String libraryName;
 
-    public void setLibraryIdentifier(final String libraryIdentifier) {
-        this.libraryIdentifier = libraryIdentifier;
-    }
+	private String projectIdentifier;
 
-    public String getLibraryName() {
-        return libraryName;
-    }
+	private String projectName;
 
-    public void setLibraryName(final String libraryName) {
-        this.libraryName = libraryName;
-    }
+	private String lotIdentifier;
 
-    public String getProjectIdentifier() {
-        return projectIdentifier;
-    }
+	private String lotLabel;
 
-    public void setProjectIdentifier(final String projectIdentifier) {
-        this.projectIdentifier = projectIdentifier;
-    }
+	private String trainIdentifier;
 
-    public String getProjectName() {
-        return projectName;
-    }
+	private String trainLabel;
 
-    public void setProjectName(final String projectName) {
-        this.projectName = projectName;
-    }
+	private String docIdentifier;
 
-    public String getLotIdentifier() {
-        return lotIdentifier;
-    }
+	private String docPgcnId;
 
-    public void setLotIdentifier(final String lotIdentifier) {
-        this.lotIdentifier = lotIdentifier;
-    }
+	private String docLabel;
 
-    public String getLotLabel() {
-        return lotLabel;
-    }
+	private String docStatus;
 
-    public void setLotLabel(final String lotLabel) {
-        this.lotLabel = lotLabel;
-    }
+	private Integer totalPage;
 
-    public String getTrainIdentifier() {
-        return trainIdentifier;
-    }
+	private final List<WorkflowState> workflow = new ArrayList<>();
 
-    public void setTrainIdentifier(final String trainIdentifier) {
-        this.trainIdentifier = trainIdentifier;
-    }
+	private WorkflowDocUnitInfoDTO infos;
 
-    public String getTrainLabel() {
-        return trainLabel;
-    }
+	public String getLibraryIdentifier() {
+		return libraryIdentifier;
+	}
 
-    public void setTrainLabel(final String trainLabel) {
-        this.trainLabel = trainLabel;
-    }
+	public void setLibraryIdentifier(final String libraryIdentifier) {
+		this.libraryIdentifier = libraryIdentifier;
+	}
 
-    public String getDocIdentifier() {
-        return docIdentifier;
-    }
+	public String getLibraryName() {
+		return libraryName;
+	}
 
-    public void setDocIdentifier(final String docIdentifier) {
-        this.docIdentifier = docIdentifier;
-    }
+	public void setLibraryName(final String libraryName) {
+		this.libraryName = libraryName;
+	}
 
-    public String getDocPgcnId() {
-        return docPgcnId;
-    }
+	public String getProjectIdentifier() {
+		return projectIdentifier;
+	}
 
-    public void setDocPgcnId(final String docPgcnId) {
-        this.docPgcnId = docPgcnId;
-    }
+	public void setProjectIdentifier(final String projectIdentifier) {
+		this.projectIdentifier = projectIdentifier;
+	}
 
-    public String getDocLabel() {
-        return docLabel;
-    }
+	public String getProjectName() {
+		return projectName;
+	}
 
-    public void setDocLabel(final String docLabel) {
-        this.docLabel = docLabel;
-    }
+	public void setProjectName(final String projectName) {
+		this.projectName = projectName;
+	}
 
-    public String getDocStatus() {
-        return docStatus;
-    }
+	public String getLotIdentifier() {
+		return lotIdentifier;
+	}
 
-    public void setDocStatus(final String docStatus) {
-        this.docStatus = docStatus;
-    }
+	public void setLotIdentifier(final String lotIdentifier) {
+		this.lotIdentifier = lotIdentifier;
+	}
 
-    public Integer getTotalPage() {
-        return totalPage;
-    }
+	public String getLotLabel() {
+		return lotLabel;
+	}
 
-    public void setTotalPage(final Integer totalPage) {
-        this.totalPage = totalPage;
-    }
+	public void setLotLabel(final String lotLabel) {
+		this.lotLabel = lotLabel;
+	}
 
-    public List<WorkflowState> getWorkflow() {
-        return workflow;
-    }
+	public String getTrainIdentifier() {
+		return trainIdentifier;
+	}
 
-    public void setWorkflow(final List<WorkflowState> workflow) {
-        this.workflow.clear();
-        this.workflow.addAll(workflow);
-    }
+	public void setTrainIdentifier(final String trainIdentifier) {
+		this.trainIdentifier = trainIdentifier;
+	}
 
-    public void addWorkflow(final WorkflowState workflow) {
-        this.workflow.add(workflow);
-    }
+	public String getTrainLabel() {
+		return trainLabel;
+	}
 
-    public WorkflowDocUnitInfoDTO getInfos() {
-        return infos;
-    }
+	public void setTrainLabel(final String trainLabel) {
+		this.trainLabel = trainLabel;
+	}
 
-    public void setInfos(final WorkflowDocUnitInfoDTO infos) {
-        this.infos = infos;
-    }
+	public String getDocIdentifier() {
+		return docIdentifier;
+	}
 
-    public static final class WorkflowState {
+	public void setDocIdentifier(final String docIdentifier) {
+		this.docIdentifier = docIdentifier;
+	}
 
-        private WorkflowStateKey key;
-        private WorkflowStateStatus status;
-        private LocalDateTime startDate;
-        private LocalDateTime endDate;
+	public String getDocPgcnId() {
+		return docPgcnId;
+	}
 
-        public WorkflowStateKey getKey() {
-            return key;
-        }
+	public void setDocPgcnId(final String docPgcnId) {
+		this.docPgcnId = docPgcnId;
+	}
 
-        public void setKey(final WorkflowStateKey key) {
-            this.key = key;
-        }
+	public String getDocLabel() {
+		return docLabel;
+	}
 
-        public WorkflowStateStatus getStatus() {
-            return status;
-        }
+	public void setDocLabel(final String docLabel) {
+		this.docLabel = docLabel;
+	}
 
-        public void setStatus(final WorkflowStateStatus status) {
-            this.status = status;
-        }
+	public String getDocStatus() {
+		return docStatus;
+	}
 
-        public LocalDateTime getStartDate() {
-            return startDate;
-        }
+	public void setDocStatus(final String docStatus) {
+		this.docStatus = docStatus;
+	}
 
-        public void setStartDate(final LocalDateTime startDate) {
-            this.startDate = startDate;
-        }
+	public Integer getTotalPage() {
+		return totalPage;
+	}
 
-        public LocalDateTime getEndDate() {
-            return endDate;
-        }
+	public void setTotalPage(final Integer totalPage) {
+		this.totalPage = totalPage;
+	}
 
-        public void setEndDate(final LocalDateTime endDate) {
-            this.endDate = endDate;
-        }
-    }
+	public List<WorkflowState> getWorkflow() {
+		return workflow;
+	}
+
+	public void setWorkflow(final List<WorkflowState> workflow) {
+		this.workflow.clear();
+		this.workflow.addAll(workflow);
+	}
+
+	public void addWorkflow(final WorkflowState workflow) {
+		this.workflow.add(workflow);
+	}
+
+	public WorkflowDocUnitInfoDTO getInfos() {
+		return infos;
+	}
+
+	public void setInfos(final WorkflowDocUnitInfoDTO infos) {
+		this.infos = infos;
+	}
+
+	public static final class WorkflowState {
+
+		private WorkflowStateKey key;
+
+		private WorkflowStateStatus status;
+
+		private LocalDateTime startDate;
+
+		private LocalDateTime endDate;
+
+		public WorkflowStateKey getKey() {
+			return key;
+		}
+
+		public void setKey(final WorkflowStateKey key) {
+			this.key = key;
+		}
+
+		public WorkflowStateStatus getStatus() {
+			return status;
+		}
+
+		public void setStatus(final WorkflowStateStatus status) {
+			this.status = status;
+		}
+
+		public LocalDateTime getStartDate() {
+			return startDate;
+		}
+
+		public void setStartDate(final LocalDateTime startDate) {
+			this.startDate = startDate;
+		}
+
+		public LocalDateTime getEndDate() {
+			return endDate;
+		}
+
+		public void setEndDate(final LocalDateTime endDate) {
+			this.endDate = endDate;
+		}
+
+	}
+
 }

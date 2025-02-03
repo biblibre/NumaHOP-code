@@ -4,59 +4,64 @@ import fr.progilone.pgcn.domain.project.Project;
 
 public class AuditProjectRevisionDTO {
 
-    private int rev;
-    private long timestamp;
-    private String username;
+	private int rev;
 
-    private String identifier;
-    private String name;
-    private Project.ProjectStatus status;
+	private long timestamp;
 
-    public int getRev() {
-        return rev;
-    }
+	private String username;
 
-    public void setRev(final int rev) {
-        this.rev = rev;
-    }
+	private String identifier;
 
-    public long getTimestamp() {
-        return timestamp;
-    }
+	private String name;
 
-    public void setTimestamp(final long timestamp) {
-        this.timestamp = timestamp;
-    }
+	private Project.ProjectStatus status;
 
-    public String getUsername() {
-        return username;
-    }
+	public int getRev() {
+		return rev;
+	}
 
-    public void setUsername(final String username) {
-        this.username = username;
-    }
+	public void setRev(final int rev) {
+		this.rev = rev;
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public long getTimestamp() {
+		return timestamp;
+	}
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	public void setTimestamp(final long timestamp) {
+		this.timestamp = timestamp;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	public void setUsername(final String username) {
+		this.username = username;
+	}
 
-    public Project.ProjectStatus getStatus() {
-        return status;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setStatus(final Project.ProjectStatus status) {
-        this.status = status;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public Project.ProjectStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(final Project.ProjectStatus status) {
+		this.status = status;
+	}
+
 }

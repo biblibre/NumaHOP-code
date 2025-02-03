@@ -15,30 +15,33 @@ import org.springframework.jdbc.support.DatabaseStartupValidator;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"fr.progilone.pgcn.repository"}, excludeFilters = @Filter(type = FilterType.ASPECTJ, pattern = "fr.progilone.pgcn.repository.es.*"))
+@EnableJpaRepositories(basePackages = { "fr.progilone.pgcn.repository" },
+		excludeFilters = @Filter(type = FilterType.ASPECTJ, pattern = "fr.progilone.pgcn.repository.es.*"))
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 public class DatabaseConfiguration {
 
-    private static final int STARTUP_INTERVAL = 1;
-    private static final int STARTUP_TIMEOUT = 1800;
+	private static final int STARTUP_INTERVAL = 1;
 
-    @Bean
-    @Profile("!" + Constants.SPRING_PROFILE_TEST)
-    public DatabaseStartupValidator databaseStartupValidator(final DataSource dataSource) {
-        final var dsv = new DatabaseStartupValidator();
-        dsv.setDataSource(dataSource);
-        dsv.setInterval(STARTUP_INTERVAL);
-        dsv.setTimeout(STARTUP_TIMEOUT);
-        return dsv;
-    }
+	private static final int STARTUP_TIMEOUT = 1800;
 
-    @Bean
-    @Profile("!" + Constants.SPRING_PROFILE_TEST)
-    public static BeanFactoryPostProcessor dependsOnPostProcessor() {
-        return bf -> {
-            final String[] liquibase = bf.getBeanNamesForType(SpringLiquibase.class);
-            Stream.of(liquibase).map(bf::getBeanDefinition).forEach(it -> it.setDependsOn("databaseStartupValidator"));
-        };
-    }
+	@Bean
+	@Profile("!" + Constants.SPRING_PROFILE_TEST)
+	public DatabaseStartupValidator databaseStartupValidator(final DataSource dataSource) {
+		final var dsv = new DatabaseStartupValidator();
+		dsv.setDataSource(dataSource);
+		dsv.setInterval(STARTUP_INTERVAL);
+		dsv.setTimeout(STARTUP_TIMEOUT);
+		return dsv;
+	}
+
+	@Bean
+	@Profile("!" + Constants.SPRING_PROFILE_TEST)
+	public static BeanFactoryPostProcessor dependsOnPostProcessor() {
+		return bf -> {
+			final String[] liquibase = bf.getBeanNamesForType(SpringLiquibase.class);
+			Stream.of(liquibase).map(bf::getBeanDefinition).forEach(it -> it.setDependsOn("databaseStartupValidator"));
+		};
+	}
+
 }

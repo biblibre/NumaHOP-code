@@ -21,248 +21,253 @@ import java.util.List;
 @Table(name = OmekaConfiguration.TABLE_NAME)
 public class OmekaConfiguration extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "conf_omeka";
+	public static final String TABLE_NAME = "conf_omeka";
 
-    /**
-     * Libellé
-     */
-    @Column(name = "label", nullable = false)
-    private String label;
+	/**
+	 * Libellé
+	 */
+	@Column(name = "label", nullable = false)
+	private String label;
 
-    /**
-     * Bibliothèque à laquelle appartient cette configuration
-     */
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "library")
-    private Library library;
+	/**
+	 * Bibliothèque à laquelle appartient cette configuration
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "library")
+	private Library library;
 
-    /**
-     * La configuration est active / inactive
-     */
-    @Column(name = "active", nullable = false)
-    private boolean active = true;
+	/**
+	 * La configuration est active / inactive
+	 */
+	@Column(name = "active", nullable = false)
+	private boolean active = true;
 
-    /**
-     * serveur de stockage Omeka
-     */
-    @Column(name = "storage_server")
-    private String storageServer;
+	/**
+	 * serveur de stockage Omeka
+	 */
+	@Column(name = "storage_server")
+	private String storageServer;
 
-    /**
-     * port pour acces au serveur de stockage Omeka
-     */
-    @Column(name = "port")
-    private String port;
+	/**
+	 * port pour acces au serveur de stockage Omeka
+	 */
+	@Column(name = "port")
+	private String port;
 
-    /**
-     * Serveur de dépot FTP
-     */
-    @Column(name = "address")
-    private String address;
+	/**
+	 * Serveur de dépot FTP
+	 */
+	@Column(name = "address")
+	private String address;
 
-    /**
-     * Login FTP
-     */
-    @Column(name = "login")
-    private String login;
+	/**
+	 * Login FTP
+	 */
+	@Column(name = "login")
+	private String login;
 
-    /**
-     * Mot de passe FTP
-     */
-    @Column(name = "password")
-    private String password;
+	/**
+	 * Mot de passe FTP
+	 */
+	@Column(name = "password")
+	private String password;
 
-    /**
-     * Url d'acces aux fichiers via Omeka.
-     */
-    @Column(name = "access_url")
-    private String accessUrl;
+	/**
+	 * Url d'acces aux fichiers via Omeka.
+	 */
+	@Column(name = "access_url")
+	private String accessUrl;
 
-    /**
-     * mail destination du fichier csv.
-     */
-    @Column(name = "mail_csv")
-    private String mailCsv;
+	/**
+	 * mail destination du fichier csv.
+	 */
+	@Column(name = "mail_csv")
+	private String mailCsv;
 
-    /**
-     * envoi des fichiers en SFTP
-     */
-    @Column(name = "sftp")
-    private boolean sftp;
+	/**
+	 * envoi des fichiers en SFTP
+	 */
+	@Column(name = "sftp")
+	private boolean sftp;
 
-    /**
-     * Types de fichiers à exporter.
-     */
-    @Column(name = "export_mets")
-    private boolean exportMets;
-    @Column(name = "export_master")
-    private boolean exportMaster;
-    @Column(name = "export_view")
-    private boolean exportView;
-    @Column(name = "export_thumb")
-    private boolean exportThumb;
-    @Column(name = "export_pdf")
-    private boolean exportPdf;
+	/**
+	 * Types de fichiers à exporter.
+	 */
+	@Column(name = "export_mets")
+	private boolean exportMets;
 
-    @OneToMany(mappedBy = "confOmeka", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OmekaList> omekaLists;
+	@Column(name = "export_master")
+	private boolean exportMaster;
 
-    @Column(name = "omekas")
-    private boolean omekas;
+	@Column(name = "export_view")
+	private boolean exportView;
 
-    public String getLabel() {
-        return label;
-    }
+	@Column(name = "export_thumb")
+	private boolean exportThumb;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	@Column(name = "export_pdf")
+	private boolean exportPdf;
 
-    public Library getLibrary() {
-        return library;
-    }
+	@OneToMany(mappedBy = "confOmeka", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<OmekaList> omekaLists;
 
-    public void setLibrary(final Library library) {
-        this.library = library;
-    }
+	@Column(name = "omekas")
+	private boolean omekas;
 
-    public boolean isActive() {
-        return active;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public String getStorageServer() {
-        return storageServer;
-    }
+	public Library getLibrary() {
+		return library;
+	}
 
-    public void setStorageServer(final String storageServer) {
-        this.storageServer = storageServer;
-    }
+	public void setLibrary(final Library library) {
+		this.library = library;
+	}
 
-    public String getPort() {
-        return port;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public void setPort(final String port) {
-        this.port = port;
-    }
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public String getStorageServer() {
+		return storageServer;
+	}
 
-    public void setAddress(final String address) {
-        this.address = address;
-    }
+	public void setStorageServer(final String storageServer) {
+		this.storageServer = storageServer;
+	}
 
-    public String getLogin() {
-        return login;
-    }
+	public String getPort() {
+		return port;
+	}
 
-    public void setLogin(final String login) {
-        this.login = login;
-    }
+	public void setPort(final String port) {
+		this.port = port;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setPassword(final String password) {
-        this.password = password;
-    }
+	public void setAddress(final String address) {
+		this.address = address;
+	}
 
-    public String getAccessUrl() {
-        return accessUrl;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public void setAccessUrl(final String accessUrl) {
-        this.accessUrl = accessUrl;
-    }
+	public void setLogin(final String login) {
+		this.login = login;
+	}
 
-    public String getMailCsv() {
-        return mailCsv;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setMailCsv(final String mailCsv) {
-        this.mailCsv = mailCsv;
-    }
+	public void setPassword(final String password) {
+		this.password = password;
+	}
 
-    public boolean isExportMets() {
-        return exportMets;
-    }
+	public String getAccessUrl() {
+		return accessUrl;
+	}
 
-    public void setExportMets(final boolean exportMets) {
-        this.exportMets = exportMets;
-    }
+	public void setAccessUrl(final String accessUrl) {
+		this.accessUrl = accessUrl;
+	}
 
-    public boolean isExportMaster() {
-        return exportMaster;
-    }
+	public String getMailCsv() {
+		return mailCsv;
+	}
 
-    public void setExportMaster(final boolean exportMaster) {
-        this.exportMaster = exportMaster;
-    }
+	public void setMailCsv(final String mailCsv) {
+		this.mailCsv = mailCsv;
+	}
 
-    public boolean isExportView() {
-        return exportView;
-    }
+	public boolean isExportMets() {
+		return exportMets;
+	}
 
-    public void setExportView(final boolean exportView) {
-        this.exportView = exportView;
-    }
+	public void setExportMets(final boolean exportMets) {
+		this.exportMets = exportMets;
+	}
 
-    public boolean isExportThumb() {
-        return exportThumb;
-    }
+	public boolean isExportMaster() {
+		return exportMaster;
+	}
 
-    public void setExportThumb(final boolean exportThumb) {
-        this.exportThumb = exportThumb;
-    }
+	public void setExportMaster(final boolean exportMaster) {
+		this.exportMaster = exportMaster;
+	}
 
-    public boolean isExportPdf() {
-        return exportPdf;
-    }
+	public boolean isExportView() {
+		return exportView;
+	}
 
-    public void setExportPdf(final boolean exportPdf) {
-        this.exportPdf = exportPdf;
-    }
+	public void setExportView(final boolean exportView) {
+		this.exportView = exportView;
+	}
 
-    public List<OmekaList> getOmekaLists() {
-        return omekaLists;
-    }
+	public boolean isExportThumb() {
+		return exportThumb;
+	}
 
-    public void setOmekaLists(final List<OmekaList> omekaLists) {
-        this.omekaLists = omekaLists;
-    }
+	public void setExportThumb(final boolean exportThumb) {
+		this.exportThumb = exportThumb;
+	}
 
-    public boolean isOmekas() {
-        return omekas;
-    }
+	public boolean isExportPdf() {
+		return exportPdf;
+	}
 
-    public void setOmekas(final boolean omekas) {
-        this.omekas = omekas;
-    }
+	public void setExportPdf(final boolean exportPdf) {
+		this.exportPdf = exportPdf;
+	}
 
-    public boolean isSftp() {
-        return sftp;
-    }
+	public List<OmekaList> getOmekaLists() {
+		return omekaLists;
+	}
 
-    public void setSftp(final boolean sftp) {
-        this.sftp = sftp;
-    }
+	public void setOmekaLists(final List<OmekaList> omekaLists) {
+		this.omekaLists = omekaLists;
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                          .omitNullValues()
-                          .add("label", label)
-                          .add("active", active)
-                          .add("server omeka", storageServer)
-                          .add("port", port)
-                          .add("server depot FTP", address)
-                          .toString();
-    }
+	public boolean isOmekas() {
+		return omekas;
+	}
+
+	public void setOmekas(final boolean omekas) {
+		this.omekas = omekas;
+	}
+
+	public boolean isSftp() {
+		return sftp;
+	}
+
+	public void setSftp(final boolean sftp) {
+		this.sftp = sftp;
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+			.omitNullValues()
+			.add("label", label)
+			.add("active", active)
+			.add("server omeka", storageServer)
+			.add("port", port)
+			.add("server depot FTP", address)
+			.toString();
+	}
+
 }

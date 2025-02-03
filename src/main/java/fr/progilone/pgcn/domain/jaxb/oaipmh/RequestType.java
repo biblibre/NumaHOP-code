@@ -15,10 +15,9 @@ import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.XmlValue;
 
 /**
- * Define requestType, indicating the protocol request that
- * led to the response. Element content is BASE-URL, attributes are arguments
- * of protocol request, attribute-values are values of arguments of protocol
- * request
+ * Define requestType, indicating the protocol request that led to the response. Element
+ * content is BASE-URL, attributes are arguments of protocol request, attribute-values are
+ * values of arguments of protocol request
  *
  * <p>
  * Classe Java pour requestType complex type.
@@ -45,217 +44,176 @@ import jakarta.xml.bind.annotation.XmlValue;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "requestType", propOrder = {"value"})
+@XmlType(name = "requestType", propOrder = { "value" })
 public class RequestType {
 
-    @XmlValue
-    @XmlSchemaType(name = "anyURI")
-    protected String value;
-    @XmlAttribute(name = "verb")
-    protected VerbType verb;
-    @XmlAttribute(name = "identifier")
-    protected String identifier;
-    @XmlAttribute(name = "metadataPrefix")
-    protected String metadataPrefix;
-    @XmlAttribute(name = "from")
-    protected String from;
-    @XmlAttribute(name = "until")
-    protected String until;
-    @XmlAttribute(name = "set")
-    protected String set;
-    @XmlAttribute(name = "resumptionToken")
-    protected String resumptionToken;
+	@XmlValue
+	@XmlSchemaType(name = "anyURI")
+	protected String value;
 
-    /**
-     * Obtient la valeur de la propriété value.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "verb")
+	protected VerbType verb;
 
-    /**
-     * Définit la valeur de la propriété value.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	@XmlAttribute(name = "identifier")
+	protected String identifier;
 
-    /**
-     * Obtient la valeur de la propriété verb.
-     *
-     * @return
-     *         possible object is
-     *         {@link VerbType }
-     *
-     */
-    public VerbType getVerb() {
-        return verb;
-    }
+	@XmlAttribute(name = "metadataPrefix")
+	protected String metadataPrefix;
 
-    /**
-     * Définit la valeur de la propriété verb.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link VerbType }
-     *
-     */
-    public void setVerb(VerbType value) {
-        this.verb = value;
-    }
+	@XmlAttribute(name = "from")
+	protected String from;
 
-    /**
-     * Obtient la valeur de la propriété identifier.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getIdentifier() {
-        return identifier;
-    }
+	@XmlAttribute(name = "until")
+	protected String until;
 
-    /**
-     * Définit la valeur de la propriété identifier.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setIdentifier(String value) {
-        this.identifier = value;
-    }
+	@XmlAttribute(name = "set")
+	protected String set;
 
-    /**
-     * Obtient la valeur de la propriété metadataPrefix.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getMetadataPrefix() {
-        return metadataPrefix;
-    }
+	@XmlAttribute(name = "resumptionToken")
+	protected String resumptionToken;
 
-    /**
-     * Définit la valeur de la propriété metadataPrefix.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setMetadataPrefix(String value) {
-        this.metadataPrefix = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété value.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getValue() {
+		return value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété from.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getFrom() {
-        return from;
-    }
+	/**
+	 * Définit la valeur de la propriété value.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété from.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setFrom(String value) {
-        this.from = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété verb.
+	 * @return possible object is {@link VerbType }
+	 *
+	 */
+	public VerbType getVerb() {
+		return verb;
+	}
 
-    /**
-     * Obtient la valeur de la propriété until.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getUntil() {
-        return until;
-    }
+	/**
+	 * Définit la valeur de la propriété verb.
+	 * @param value allowed object is {@link VerbType }
+	 *
+	 */
+	public void setVerb(VerbType value) {
+		this.verb = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété until.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setUntil(String value) {
-        this.until = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété identifier.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    /**
-     * Obtient la valeur de la propriété set.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getSet() {
-        return set;
-    }
+	/**
+	 * Définit la valeur de la propriété identifier.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdentifier(String value) {
+		this.identifier = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété set.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setSet(String value) {
-        this.set = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété metadataPrefix.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getMetadataPrefix() {
+		return metadataPrefix;
+	}
 
-    /**
-     * Obtient la valeur de la propriété resumptionToken.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getResumptionToken() {
-        return resumptionToken;
-    }
+	/**
+	 * Définit la valeur de la propriété metadataPrefix.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setMetadataPrefix(String value) {
+		this.metadataPrefix = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété resumptionToken.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setResumptionToken(String value) {
-        this.resumptionToken = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété from.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getFrom() {
+		return from;
+	}
+
+	/**
+	 * Définit la valeur de la propriété from.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setFrom(String value) {
+		this.from = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété until.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getUntil() {
+		return until;
+	}
+
+	/**
+	 * Définit la valeur de la propriété until.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setUntil(String value) {
+		this.until = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété set.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getSet() {
+		return set;
+	}
+
+	/**
+	 * Définit la valeur de la propriété set.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setSet(String value) {
+		this.set = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété resumptionToken.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getResumptionToken() {
+		return resumptionToken;
+	}
+
+	/**
+	 * Définit la valeur de la propriété resumptionToken.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setResumptionToken(String value) {
+		this.resumptionToken = value;
+	}
 
 }

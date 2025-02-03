@@ -5,16 +5,16 @@ package fr.progilone.pgcn.domain.administration.exchange.z3950;
  */
 public enum DataFormat {
 
-    INTERMARC("1.2.840.10003.5.2"),
-    UNIMARC("1.2.840.10003.5.1");
+	INTERMARC("1.2.840.10003.5.2"), UNIMARC("1.2.840.10003.5.1");
 
-    private String formatCode;
+	private String formatCode;
 
-    DataFormat(String formatCode) {
-        this.formatCode = formatCode;
-    }
+	DataFormat(String formatCode) {
+		this.formatCode = formatCode;
+	}
 
-    public String getFormatCode() {
-        return formatCode;
-    }
+	public String getFormatCode() {
+		return formatCode;
+	}
+
 }

@@ -35,32 +35,29 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum CaptureDeviceType {
 
-    @XmlEnumValue("transmission scanner")
-    TRANSMISSION_SCANNER("transmission scanner"),
-    @XmlEnumValue("reflection print scanner")
-    REFLECTION_PRINT_SCANNER("reflection print scanner"),
-    @XmlEnumValue("digital still camera")
-    DIGITAL_STILL_CAMERA("digital still camera"),
-    @XmlEnumValue("still from video")
-    STILL_FROM_VIDEO("still from video");
+	@XmlEnumValue("transmission scanner")
+	TRANSMISSION_SCANNER("transmission scanner"), @XmlEnumValue("reflection print scanner")
+	REFLECTION_PRINT_SCANNER("reflection print scanner"), @XmlEnumValue("digital still camera")
+	DIGITAL_STILL_CAMERA("digital still camera"), @XmlEnumValue("still from video")
+	STILL_FROM_VIDEO("still from video");
 
-    private final String value;
+	private final String value;
 
-    CaptureDeviceType(String v) {
-        value = v;
-    }
+	CaptureDeviceType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static CaptureDeviceType fromValue(String v) {
-        for (CaptureDeviceType c : CaptureDeviceType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static CaptureDeviceType fromValue(String v) {
+		for (CaptureDeviceType c : CaptureDeviceType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

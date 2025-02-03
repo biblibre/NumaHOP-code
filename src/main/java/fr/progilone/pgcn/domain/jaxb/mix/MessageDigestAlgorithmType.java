@@ -43,44 +43,33 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum MessageDigestAlgorithmType {
 
-    @XmlEnumValue("Adler-32")
-    ADLER_32("Adler-32"),
-    @XmlEnumValue("CRC32")
-    CRC_32("CRC32"),
-    HAVAL("HAVAL"),
-    @XmlEnumValue("MD5")
-    MD_5("MD5"),
-    MNP("MNP"),
-    @XmlEnumValue("SHA-1")
-    SHA_1("SHA-1"),
-    @XmlEnumValue("SHA-256")
-    SHA_256("SHA-256"),
-    @XmlEnumValue("SHA-384")
-    SHA_384("SHA-384"),
-    @XmlEnumValue("SHA-512")
-    SHA_512("SHA-512"),
-    TIGER("TIGER"),
-    WHIRLPOOL("WHIRLPOOL"),
-    @XmlEnumValue("unknown")
-    UNKNOWN("unknown");
+	@XmlEnumValue("Adler-32")
+	ADLER_32("Adler-32"), @XmlEnumValue("CRC32")
+	CRC_32("CRC32"), HAVAL("HAVAL"), @XmlEnumValue("MD5")
+	MD_5("MD5"), MNP("MNP"), @XmlEnumValue("SHA-1")
+	SHA_1("SHA-1"), @XmlEnumValue("SHA-256")
+	SHA_256("SHA-256"), @XmlEnumValue("SHA-384")
+	SHA_384("SHA-384"), @XmlEnumValue("SHA-512")
+	SHA_512("SHA-512"), TIGER("TIGER"), WHIRLPOOL("WHIRLPOOL"), @XmlEnumValue("unknown")
+	UNKNOWN("unknown");
 
-    private final String value;
+	private final String value;
 
-    MessageDigestAlgorithmType(String v) {
-        value = v;
-    }
+	MessageDigestAlgorithmType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static MessageDigestAlgorithmType fromValue(String v) {
-        for (MessageDigestAlgorithmType c : MessageDigestAlgorithmType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static MessageDigestAlgorithmType fromValue(String v) {
+		for (MessageDigestAlgorithmType c : MessageDigestAlgorithmType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

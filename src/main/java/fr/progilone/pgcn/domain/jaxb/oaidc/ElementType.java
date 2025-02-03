@@ -36,62 +36,51 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "elementType", propOrder = {"value"})
+@XmlType(name = "elementType", propOrder = { "value" })
 public class ElementType {
 
-    @XmlValue
-    protected String value;
-    @XmlAttribute(name = "lang", namespace = "http://www.w3.org/XML/1998/namespace")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "language")
-    protected String lang;
+	@XmlValue
+	protected String value;
 
-    /**
-     * Obtient la valeur de la propriété value.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "lang", namespace = "http://www.w3.org/XML/1998/namespace")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlSchemaType(name = "language")
+	protected String lang;
 
-    /**
-     * Définit la valeur de la propriété value.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété value.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getValue() {
+		return value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété lang.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getLang() {
-        return lang;
-    }
+	/**
+	 * Définit la valeur de la propriété value.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété lang.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setLang(String value) {
-        this.lang = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété lang.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getLang() {
+		return lang;
+	}
+
+	/**
+	 * Définit la valeur de la propriété lang.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setLang(String value) {
+		this.lang = value;
+	}
 
 }

@@ -26,166 +26,181 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CheckConfigurationService {
 
-    @Autowired
-    private CheckConfigurationRepository checkConfigurationRepository;
-    @Autowired
-    private LibraryRepository libraryRepository;
-    @Autowired
-    private LotRepository lotRepository;
-    @Autowired
-    private ProjectRepository projectRepository;
-    @Autowired
-    private AutomaticCheckRuleService automaticCheckRuleService;
-    @Autowired
-    private AutomaticCheckTypeRepository checkTypeRepository;
+	@Autowired
+	private CheckConfigurationRepository checkConfigurationRepository;
 
-    /**
-     * Suppression
-     *
-     * @param id
-     */
-    @Transactional
-    public void delete(final String id) throws PgcnValidationException {
-        // Validation de la suppression
-        final CheckConfiguration conf = checkConfigurationRepository.getOne(id);
-        validateDelete(conf);
+	@Autowired
+	private LibraryRepository libraryRepository;
 
-        // Suppression
-        checkConfigurationRepository.deleteById(id);
-    }
+	@Autowired
+	private LotRepository lotRepository;
 
-    private void validateDelete(final CheckConfiguration conf) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
+	@Autowired
+	private ProjectRepository projectRepository;
 
-        // Bibliothèque
-        final Long libCount = libraryRepository.countByActiveCheckConfiguration(conf);
-        if (libCount > 0) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_CHECK_DEL_EXITS_LIB).setAdditionalComplement(libCount).build());
-        }
-        // Lot
-        final Long lotCount = lotRepository.countByActiveCheckConfiguration(conf);
-        if (lotCount > 0) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_CHECK_DEL_EXITS_LOT).setAdditionalComplement(lotCount).build());
-        }
-        // Projet
-        final Long projCount = projectRepository.countByActiveCheckConfiguration(conf);
-        if (projCount > 0) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_CHECK_DEL_EXITS_PROJECT).setAdditionalComplement(projCount).build());
-        }
+	@Autowired
+	private AutomaticCheckRuleService automaticCheckRuleService;
 
-        if (!errors.isEmpty()) {
-            conf.setErrors(errors);
-            throw new PgcnValidationException(conf, errors);
-        }
-    }
+	@Autowired
+	private AutomaticCheckTypeRepository checkTypeRepository;
 
-    /**
-     * Sauvegarde
-     *
-     * @param checkConfiguration
-     * @return
-     */
-    @Transactional
-    public CheckConfiguration save(final CheckConfiguration checkConfiguration) {
-        return checkConfigurationRepository.saveAndFlush(checkConfiguration);
-    }
+	/**
+	 * Suppression
+	 * @param id
+	 */
+	@Transactional
+	public void delete(final String id) throws PgcnValidationException {
+		// Validation de la suppression
+		final CheckConfiguration conf = checkConfigurationRepository.getOne(id);
+		validateDelete(conf);
 
-    /**
-     * Récupération d'une {@link CheckConfiguration}
-     *
-     * @param identifier
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public CheckConfiguration findOne(final String identifier) {
-        if (identifier == null) {
-            return null;
-        }
-        return checkConfigurationRepository.findOneWithDependencies(identifier);
-    }
+		// Suppression
+		checkConfigurationRepository.deleteById(id);
+	}
 
-    /**
-     * Recherche paginée paramétrée
-     *
-     * @param search
-     * @param libraries
-     * @param pageRequest
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Page<CheckConfiguration> search(final String search, final List<String> libraries, final Pageable pageRequest) {
-        return checkConfigurationRepository.search(search, libraries, pageRequest);
-    }
+	private void validateDelete(final CheckConfiguration conf) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
 
-    public CheckConfiguration duplicateCheckConfiguration(final String id) {
-        final CheckConfiguration original = findOne(id);
-        final CheckConfiguration duplicated = new CheckConfiguration();
-        copyAttributes(original, duplicated);
-        return duplicated;
-    }
+		// Bibliothèque
+		final Long libCount = libraryRepository.countByActiveCheckConfiguration(conf);
+		if (libCount > 0) {
+			errors.add(builder.reinit()
+				.setCode(PgcnErrorCode.CONF_CHECK_DEL_EXITS_LIB)
+				.setAdditionalComplement(libCount)
+				.build());
+		}
+		// Lot
+		final Long lotCount = lotRepository.countByActiveCheckConfiguration(conf);
+		if (lotCount > 0) {
+			errors.add(builder.reinit()
+				.setCode(PgcnErrorCode.CONF_CHECK_DEL_EXITS_LOT)
+				.setAdditionalComplement(lotCount)
+				.build());
+		}
+		// Projet
+		final Long projCount = projectRepository.countByActiveCheckConfiguration(conf);
+		if (projCount > 0) {
+			errors.add(builder.reinit()
+				.setCode(PgcnErrorCode.CONF_CHECK_DEL_EXITS_PROJECT)
+				.setAdditionalComplement(projCount)
+				.build());
+		}
 
-    private void copyAttributes(final CheckConfiguration source, final CheckConfiguration destination) {
-        destination.setLibrary(source.getLibrary());
-        destination.setMajorErrorRate(source.getMajorErrorRate());
-        destination.setMinorErrorRate(source.getMinorErrorRate());
-        destination.setDefinitionErrorRate(source.getDefinitionErrorRate());
-        destination.setSampleMode(source.getSampleMode());
-        destination.setSampleRate(source.getSampleRate());
-        destination.setSeparators(source.getSeparators());
-        destination.setAutomaticCheckRules(new ArrayList<>());
-        for (final AutomaticCheckRule acr : source.getAutomaticCheckRules()) {
-            destination.getAutomaticCheckRules().add(automaticCheckRuleService.duplicateAutomaticCheckRule(acr));
-        }
-    }
+		if (!errors.isEmpty()) {
+			conf.setErrors(errors);
+			throw new PgcnValidationException(conf, errors);
+		}
+	}
 
-    /**
-     * Permet d'ajouter le controle du radical dans toutes les configurations de contrôles
-     */
-    @Transactional
-    public void updateCheckConfigurationAddRadicalControl() {
+	/**
+	 * Sauvegarde
+	 * @param checkConfiguration
+	 * @return
+	 */
+	@Transactional
+	public CheckConfiguration save(final CheckConfiguration checkConfiguration) {
+		return checkConfigurationRepository.saveAndFlush(checkConfiguration);
+	}
 
-        final List<CheckConfiguration> checkConfigurations = checkConfigurationRepository.findAll();
+	/**
+	 * Récupération d'une {@link CheckConfiguration}
+	 * @param identifier
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public CheckConfiguration findOne(final String identifier) {
+		if (identifier == null) {
+			return null;
+		}
+		return checkConfigurationRepository.findOneWithDependencies(identifier);
+	}
 
-        checkConfigurations.forEach(checkConfiguration -> {
-            final List<AutomaticCheckRule> automaticCheckRules = checkConfiguration.getAutomaticCheckRules();
-            final AutomaticCheckRule fileRadicalRule = automaticCheckRules.stream()
-                                                                          .filter(rule -> rule.getAutomaticCheckType()
-                                                                                              .getType()
-                                                                                              .equals(AutomaticCheckType.AutoCheckType.FILE_RADICAL))
-                                                                          .findAny()
-                                                                          .orElse(null);
+	/**
+	 * Recherche paginée paramétrée
+	 * @param search
+	 * @param libraries
+	 * @param pageRequest
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Page<CheckConfiguration> search(final String search, final List<String> libraries,
+			final Pageable pageRequest) {
+		return checkConfigurationRepository.search(search, libraries, pageRequest);
+	}
 
-            if (fileRadicalRule == null) {
-                final AutomaticCheckRule newFileRadicalRule = new AutomaticCheckRule();
-                newFileRadicalRule.setActive(true);
-                newFileRadicalRule.setBlocking(true);
-                newFileRadicalRule.setAutomaticCheckType(checkTypeRepository.findById("automatic_file_radical").orElse(null));
-                checkConfiguration.addAutomaticCheckRule(newFileRadicalRule);
-            }
-        });
-    }
+	public CheckConfiguration duplicateCheckConfiguration(final String id) {
+		final CheckConfiguration original = findOne(id);
+		final CheckConfiguration duplicated = new CheckConfiguration();
+		copyAttributes(original, duplicated);
+		return duplicated;
+	}
 
-    /**
-     * Renvoie la configuration de contrôle complétée avec les éventuelles étapes manquante
-     */
-    @Transactional(readOnly = true)
-    public CheckConfiguration findAndEnrich(final String identifier) {
-        final CheckConfiguration checkConfiguration = findOne(identifier);
-        if (checkConfiguration != null) {
-            checkTypeRepository.findAllConfigurable().forEach(t -> {
-                // pas de controle auto facile pour le moment..
-                if (t.getType() != AutomaticCheckType.AutoCheckType.FACILE && checkConfiguration.getAutomaticCheckRules()
-                                                                                                .stream()
-                                                                                                .noneMatch(rule -> rule.getAutomaticCheckType().getType() == t.getType())) {
-                    final AutomaticCheckRule newRule = new AutomaticCheckRule();
-                    newRule.setActive(false);
-                    newRule.setBlocking(false);
-                    newRule.setAutomaticCheckType(t);
-                    checkConfiguration.addAutomaticCheckRule(newRule);
-                }
-            });
-        }
-        return checkConfiguration;
-    }
+	private void copyAttributes(final CheckConfiguration source, final CheckConfiguration destination) {
+		destination.setLibrary(source.getLibrary());
+		destination.setMajorErrorRate(source.getMajorErrorRate());
+		destination.setMinorErrorRate(source.getMinorErrorRate());
+		destination.setDefinitionErrorRate(source.getDefinitionErrorRate());
+		destination.setSampleMode(source.getSampleMode());
+		destination.setSampleRate(source.getSampleRate());
+		destination.setSeparators(source.getSeparators());
+		destination.setAutomaticCheckRules(new ArrayList<>());
+		for (final AutomaticCheckRule acr : source.getAutomaticCheckRules()) {
+			destination.getAutomaticCheckRules().add(automaticCheckRuleService.duplicateAutomaticCheckRule(acr));
+		}
+	}
+
+	/**
+	 * Permet d'ajouter le controle du radical dans toutes les configurations de contrôles
+	 */
+	@Transactional
+	public void updateCheckConfigurationAddRadicalControl() {
+
+		final List<CheckConfiguration> checkConfigurations = checkConfigurationRepository.findAll();
+
+		checkConfigurations.forEach(checkConfiguration -> {
+			final List<AutomaticCheckRule> automaticCheckRules = checkConfiguration.getAutomaticCheckRules();
+			final AutomaticCheckRule fileRadicalRule = automaticCheckRules.stream()
+				.filter(rule -> rule.getAutomaticCheckType()
+					.getType()
+					.equals(AutomaticCheckType.AutoCheckType.FILE_RADICAL))
+				.findAny()
+				.orElse(null);
+
+			if (fileRadicalRule == null) {
+				final AutomaticCheckRule newFileRadicalRule = new AutomaticCheckRule();
+				newFileRadicalRule.setActive(true);
+				newFileRadicalRule.setBlocking(true);
+				newFileRadicalRule
+					.setAutomaticCheckType(checkTypeRepository.findById("automatic_file_radical").orElse(null));
+				checkConfiguration.addAutomaticCheckRule(newFileRadicalRule);
+			}
+		});
+	}
+
+	/**
+	 * Renvoie la configuration de contrôle complétée avec les éventuelles étapes
+	 * manquante
+	 */
+	@Transactional(readOnly = true)
+	public CheckConfiguration findAndEnrich(final String identifier) {
+		final CheckConfiguration checkConfiguration = findOne(identifier);
+		if (checkConfiguration != null) {
+			checkTypeRepository.findAllConfigurable().forEach(t -> {
+				// pas de controle auto facile pour le moment..
+				if (t.getType() != AutomaticCheckType.AutoCheckType.FACILE
+						&& checkConfiguration.getAutomaticCheckRules()
+							.stream()
+							.noneMatch(rule -> rule.getAutomaticCheckType().getType() == t.getType())) {
+					final AutomaticCheckRule newRule = new AutomaticCheckRule();
+					newRule.setActive(false);
+					newRule.setBlocking(false);
+					newRule.setAutomaticCheckType(t);
+					checkConfiguration.addAutomaticCheckRule(newRule);
+				}
+			});
+		}
+		return checkConfiguration;
+	}
+
 }

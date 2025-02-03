@@ -27,86 +27,89 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class FileStorageManagerTest {
 
-    public static final String TEST_FILE = "test.txt";
-    private static final String TEST_DIR = FileUtils.getTempDirectoryPath() + "/pgcn_test";
+	public static final String TEST_FILE = "test.txt";
 
-    private static final String DATAS = "Donec efficitur elit gravida arcu tristique, vel ullamcorper nunc finibus. "
-                                        + "Ut id quam ultricies ipsum porta volutpat sit amet nec odio.";
+	private static final String TEST_DIR = FileUtils.getTempDirectoryPath() + "/pgcn_test";
 
-    @Mock
-    private ImageDispatcherService imageDispatcherService;
+	private static final String DATAS = "Donec efficitur elit gravida arcu tristique, vel ullamcorper nunc finibus. "
+			+ "Ut id quam ultricies ipsum porta volutpat sit amet nec odio.";
 
-    @Mock
-    private DefaultFileFormats defautFileFormats;
+	@Mock
+	private ImageDispatcherService imageDispatcherService;
 
-    @Mock
-    private UserRepository userRepository;
+	@Mock
+	private DefaultFileFormats defautFileFormats;
 
-    private FileStorageManager service;
+	@Mock
+	private UserRepository userRepository;
 
-    @BeforeAll
-    public static void init() throws IOException {
-        FileUtils.forceMkdir(new File(TEST_DIR));
-    }
+	private FileStorageManager service;
 
-    @AfterAll
-    public static void clean() {
-        FileUtils.deleteQuietly(new File(TEST_DIR));
-    }
+	@BeforeAll
+	public static void init() throws IOException {
+		FileUtils.forceMkdir(new File(TEST_DIR));
+	}
 
-    @BeforeEach
-    public void setUp() {
-        service = new FileStorageManager(imageDispatcherService, defautFileFormats, userRepository);
-    }
+	@AfterAll
+	public static void clean() {
+		FileUtils.deleteQuietly(new File(TEST_DIR));
+	}
 
-    @Test
-    public void testCreateFileFromInputStream() throws IOException {
+	@BeforeEach
+	public void setUp() {
+		service = new FileStorageManager(imageDispatcherService, defautFileFormats, userRepository);
+	}
 
-        final String TEST_DIR_LIB = TEST_DIR;
+	@Test
+	public void testCreateFileFromInputStream() throws IOException {
 
-        final ByteArrayInputStream in = new ByteArrayInputStream(DATAS.getBytes(StandardCharsets.UTF_8));
-        service.copyInputStreamToFile(in, new File(TEST_DIR), TEST_FILE, true, false);
+		final String TEST_DIR_LIB = TEST_DIR;
 
-        assertTrue(Files.exists(Paths.get(TEST_DIR_LIB, TEST_FILE)));
-        final String actualRead = FileUtils.readFileToString(new File(TEST_DIR_LIB, TEST_FILE), StandardCharsets.UTF_8);
-        assertEquals(DATAS, actualRead);
-    }
+		final ByteArrayInputStream in = new ByteArrayInputStream(DATAS.getBytes(StandardCharsets.UTF_8));
+		service.copyInputStreamToFile(in, new File(TEST_DIR), TEST_FILE, true, false);
 
-    @Test
-    public void testCreateFileFromInputStreamWithMoreDirs() throws IOException {
-        final User user = getUserWithLib();
-        final String TEST_DIR_LIB = TEST_DIR + "/fakeLib/dir1/dir2";
-        when(userRepository.findOneWithLibrary(isNull())).thenReturn(user);
+		assertTrue(Files.exists(Paths.get(TEST_DIR_LIB, TEST_FILE)));
+		final String actualRead = FileUtils.readFileToString(new File(TEST_DIR_LIB, TEST_FILE), StandardCharsets.UTF_8);
+		assertEquals(DATAS, actualRead);
+	}
 
-        final ByteArrayInputStream in = new ByteArrayInputStream(DATAS.getBytes(StandardCharsets.UTF_8));
-        service.copyInputStreamToFileWithOtherDirs(in, new File(TEST_DIR), Arrays.asList("dir1", "dir2"), TEST_FILE, true, true);
+	@Test
+	public void testCreateFileFromInputStreamWithMoreDirs() throws IOException {
+		final User user = getUserWithLib();
+		final String TEST_DIR_LIB = TEST_DIR + "/fakeLib/dir1/dir2";
+		when(userRepository.findOneWithLibrary(isNull())).thenReturn(user);
 
-        assertTrue(Files.exists(Paths.get(TEST_DIR_LIB, TEST_FILE)));
-        final String actualRead = FileUtils.readFileToString(new File(TEST_DIR_LIB, TEST_FILE), StandardCharsets.UTF_8);
-        assertEquals(DATAS, actualRead);
-    }
+		final ByteArrayInputStream in = new ByteArrayInputStream(DATAS.getBytes(StandardCharsets.UTF_8));
+		service.copyInputStreamToFileWithOtherDirs(in, new File(TEST_DIR), Arrays.asList("dir1", "dir2"), TEST_FILE,
+				true, true);
 
-    @Test
-    public void testRetrieveFile() throws IOException {
-        final String data = "Morbi aliquet, massa eget elementum mattis, elit ex fermentum elit, et lobortis velit nulla nec turpis. "
-                            + "Integer mollis quam neque, nec convallis risus euismod eget.";
-        FileUtils.writeStringToFile(new File(TEST_DIR, TEST_FILE), data, StandardCharsets.UTF_8);
+		assertTrue(Files.exists(Paths.get(TEST_DIR_LIB, TEST_FILE)));
+		final String actualRead = FileUtils.readFileToString(new File(TEST_DIR_LIB, TEST_FILE), StandardCharsets.UTF_8);
+		assertEquals(DATAS, actualRead);
+	}
 
-        File actual = service.retrieveFile(new File(TEST_DIR), "unknown_file.txt");
-        assertNull(actual);
+	@Test
+	public void testRetrieveFile() throws IOException {
+		final String data = "Morbi aliquet, massa eget elementum mattis, elit ex fermentum elit, et lobortis velit nulla nec turpis. "
+				+ "Integer mollis quam neque, nec convallis risus euismod eget.";
+		FileUtils.writeStringToFile(new File(TEST_DIR, TEST_FILE), data, StandardCharsets.UTF_8);
 
-        actual = service.retrieveFile((File) null, null);
-        assertNull(actual);
+		File actual = service.retrieveFile(new File(TEST_DIR), "unknown_file.txt");
+		assertNull(actual);
 
-        actual = service.retrieveFile(new File(TEST_DIR), TEST_FILE);
-        assertNotNull(actual);
-    }
+		actual = service.retrieveFile((File) null, null);
+		assertNull(actual);
 
-    private User getUserWithLib() {
-        final User user = new User();
-        final Library lib = new Library();
-        lib.setIdentifier("fakeLib");
-        user.setLibrary(lib);
-        return user;
-    }
+		actual = service.retrieveFile(new File(TEST_DIR), TEST_FILE);
+		assertNotNull(actual);
+	}
+
+	private User getUserWithLib() {
+		final User user = new User();
+		final Library lib = new Library();
+		lib.setIdentifier("fakeLib");
+		user.setLibrary(lib);
+		return user;
+	}
+
 }

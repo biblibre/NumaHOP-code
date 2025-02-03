@@ -17,9 +17,8 @@ import java.math.BigInteger;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
- * A resumptionToken may have 3 optional attributes
- * and can be used in ListSets, ListIdentifiers, ListRecords
- * responses.
+ * A resumptionToken may have 3 optional attributes and can be used in ListSets,
+ * ListIdentifiers, ListRecords responses.
  *
  * <p>
  * Classe Java pour resumptionTokenType complex type.
@@ -42,115 +41,94 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "resumptionTokenType", propOrder = {"value"})
+@XmlType(name = "resumptionTokenType", propOrder = { "value" })
 public class ResumptionTokenType {
 
-    @XmlValue
-    protected String value;
-    @XmlAttribute(name = "expirationDate")
-    @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar expirationDate;
-    @XmlAttribute(name = "completeListSize")
-    @XmlSchemaType(name = "positiveInteger")
-    protected BigInteger completeListSize;
-    @XmlAttribute(name = "cursor")
-    @XmlSchemaType(name = "nonNegativeInteger")
-    protected BigInteger cursor;
+	@XmlValue
+	protected String value;
 
-    /**
-     * Obtient la valeur de la propriété value.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "expirationDate")
+	@XmlSchemaType(name = "dateTime")
+	protected XMLGregorianCalendar expirationDate;
 
-    /**
-     * Définit la valeur de la propriété value.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	@XmlAttribute(name = "completeListSize")
+	@XmlSchemaType(name = "positiveInteger")
+	protected BigInteger completeListSize;
 
-    /**
-     * Obtient la valeur de la propriété expirationDate.
-     *
-     * @return
-     *         possible object is
-     *         {@link XMLGregorianCalendar }
-     *
-     */
-    public XMLGregorianCalendar getExpirationDate() {
-        return expirationDate;
-    }
+	@XmlAttribute(name = "cursor")
+	@XmlSchemaType(name = "nonNegativeInteger")
+	protected BigInteger cursor;
 
-    /**
-     * Définit la valeur de la propriété expirationDate.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link XMLGregorianCalendar }
-     *
-     */
-    public void setExpirationDate(XMLGregorianCalendar value) {
-        this.expirationDate = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété value.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getValue() {
+		return value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété completeListSize.
-     *
-     * @return
-     *         possible object is
-     *         {@link BigInteger }
-     *
-     */
-    public BigInteger getCompleteListSize() {
-        return completeListSize;
-    }
+	/**
+	 * Définit la valeur de la propriété value.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété completeListSize.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link BigInteger }
-     *
-     */
-    public void setCompleteListSize(BigInteger value) {
-        this.completeListSize = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété expirationDate.
+	 * @return possible object is {@link XMLGregorianCalendar }
+	 *
+	 */
+	public XMLGregorianCalendar getExpirationDate() {
+		return expirationDate;
+	}
 
-    /**
-     * Obtient la valeur de la propriété cursor.
-     *
-     * @return
-     *         possible object is
-     *         {@link BigInteger }
-     *
-     */
-    public BigInteger getCursor() {
-        return cursor;
-    }
+	/**
+	 * Définit la valeur de la propriété expirationDate.
+	 * @param value allowed object is {@link XMLGregorianCalendar }
+	 *
+	 */
+	public void setExpirationDate(XMLGregorianCalendar value) {
+		this.expirationDate = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété cursor.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link BigInteger }
-     *
-     */
-    public void setCursor(BigInteger value) {
-        this.cursor = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété completeListSize.
+	 * @return possible object is {@link BigInteger }
+	 *
+	 */
+	public BigInteger getCompleteListSize() {
+		return completeListSize;
+	}
+
+	/**
+	 * Définit la valeur de la propriété completeListSize.
+	 * @param value allowed object is {@link BigInteger }
+	 *
+	 */
+	public void setCompleteListSize(BigInteger value) {
+		this.completeListSize = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété cursor.
+	 * @return possible object is {@link BigInteger }
+	 *
+	 */
+	public BigInteger getCursor() {
+		return cursor;
+	}
+
+	/**
+	 * Définit la valeur de la propriété cursor.
+	 * @param value allowed object is {@link BigInteger }
+	 *
+	 */
+	public void setCursor(BigInteger value) {
+		this.cursor = value;
+	}
 
 }

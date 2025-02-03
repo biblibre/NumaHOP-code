@@ -45,172 +45,169 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ContexteType",
-         propOrder = {"fonds",
-                      "producteur",
-                      "serviceVersant",
-                      "circuitProduction",
-                      "archivage"})
+		propOrder = { "fonds", "producteur", "serviceVersant", "circuitProduction", "archivage" })
 public class ContexteType {
 
-    @XmlElement(name = "Fonds", required = true)
-    protected List<FondsType> fonds;
-    @XmlElement(name = "Producteur")
-    protected List<ProducteurType> producteur;
-    @XmlElement(name = "ServiceVersant", required = true)
-    protected List<ServiceVersantType> serviceVersant;
-    @XmlElement(name = "CircuitProduction", required = true)
-    protected List<CircuitProductionType> circuitProduction;
-    @XmlElement(name = "Archivage", required = true)
-    protected List<ArchivageType> archivage;
+	@XmlElement(name = "Fonds", required = true)
+	protected List<FondsType> fonds;
 
-    /**
-     * Gets the value of the fonds property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the fonds property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getFonds().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link FondsType }
-     *
-     *
-     */
-    public List<FondsType> getFonds() {
-        if (fonds == null) {
-            fonds = new ArrayList<>();
-        }
-        return this.fonds;
-    }
+	@XmlElement(name = "Producteur")
+	protected List<ProducteurType> producteur;
 
-    /**
-     * Gets the value of the producteur property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the producteur property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getProducteur().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ProducteurType }
-     *
-     *
-     */
-    public List<ProducteurType> getProducteur() {
-        if (producteur == null) {
-            producteur = new ArrayList<>();
-        }
-        return this.producteur;
-    }
+	@XmlElement(name = "ServiceVersant", required = true)
+	protected List<ServiceVersantType> serviceVersant;
 
-    /**
-     * Gets the value of the serviceVersant property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the serviceVersant property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getServiceVersant().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ServiceVersantType }
-     *
-     *
-     */
-    public List<ServiceVersantType> getServiceVersant() {
-        if (serviceVersant == null) {
-            serviceVersant = new ArrayList<>();
-        }
-        return this.serviceVersant;
-    }
+	@XmlElement(name = "CircuitProduction", required = true)
+	protected List<CircuitProductionType> circuitProduction;
 
-    /**
-     * Gets the value of the circuitProduction property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the circuitProduction property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getCircuitProduction().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link CircuitProductionType }
-     *
-     *
-     */
-    public List<CircuitProductionType> getCircuitProduction() {
-        if (circuitProduction == null) {
-            circuitProduction = new ArrayList<>();
-        }
-        return this.circuitProduction;
-    }
+	@XmlElement(name = "Archivage", required = true)
+	protected List<ArchivageType> archivage;
 
-    /**
-     * Gets the value of the archivage property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the archivage property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getArchivage().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ArchivageType }
-     *
-     *
-     */
-    public List<ArchivageType> getArchivage() {
-        if (archivage == null) {
-            archivage = new ArrayList<>();
-        }
-        return this.archivage;
-    }
+	/**
+	 * Gets the value of the fonds property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the fonds
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getFonds().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link FondsType }
+	 *
+	 *
+	 */
+	public List<FondsType> getFonds() {
+		if (fonds == null) {
+			fonds = new ArrayList<>();
+		}
+		return this.fonds;
+	}
+
+	/**
+	 * Gets the value of the producteur property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the producteur
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getProducteur().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link ProducteurType }
+	 *
+	 *
+	 */
+	public List<ProducteurType> getProducteur() {
+		if (producteur == null) {
+			producteur = new ArrayList<>();
+		}
+		return this.producteur;
+	}
+
+	/**
+	 * Gets the value of the serviceVersant property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * serviceVersant property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getServiceVersant().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link ServiceVersantType
+	 * }
+	 *
+	 *
+	 */
+	public List<ServiceVersantType> getServiceVersant() {
+		if (serviceVersant == null) {
+			serviceVersant = new ArrayList<>();
+		}
+		return this.serviceVersant;
+	}
+
+	/**
+	 * Gets the value of the circuitProduction property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * circuitProduction property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getCircuitProduction().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link CircuitProductionType }
+	 *
+	 *
+	 */
+	public List<CircuitProductionType> getCircuitProduction() {
+		if (circuitProduction == null) {
+			circuitProduction = new ArrayList<>();
+		}
+		return this.circuitProduction;
+	}
+
+	/**
+	 * Gets the value of the archivage property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the archivage
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getArchivage().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link ArchivageType }
+	 *
+	 *
+	 */
+	public List<ArchivageType> getArchivage() {
+		if (archivage == null) {
+			archivage = new ArrayList<>();
+		}
+		return this.archivage;
+	}
 
 }

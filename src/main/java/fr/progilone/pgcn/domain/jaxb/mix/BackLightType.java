@@ -34,30 +34,28 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum BackLightType {
 
-    @XmlEnumValue("Front light")
-    FRONT_LIGHT("Front light"),
-    @XmlEnumValue("Backlight 1")
-    BACKLIGHT_1("Backlight 1"),
-    @XmlEnumValue("Backlight 2")
-    BACKLIGHT_2("Backlight 2");
+	@XmlEnumValue("Front light")
+	FRONT_LIGHT("Front light"), @XmlEnumValue("Backlight 1")
+	BACKLIGHT_1("Backlight 1"), @XmlEnumValue("Backlight 2")
+	BACKLIGHT_2("Backlight 2");
 
-    private final String value;
+	private final String value;
 
-    BackLightType(String v) {
-        value = v;
-    }
+	BackLightType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static BackLightType fromValue(String v) {
-        for (BackLightType c : BackLightType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static BackLightType fromValue(String v) {
+		for (BackLightType c : BackLightType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

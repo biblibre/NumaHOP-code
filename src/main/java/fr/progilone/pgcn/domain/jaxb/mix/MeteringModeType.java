@@ -37,36 +37,31 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum MeteringModeType {
 
-    @XmlEnumValue("Average")
-    AVERAGE("Average"),
-    @XmlEnumValue("Center weighted average")
-    CENTER_WEIGHTED_AVERAGE("Center weighted average"),
-    @XmlEnumValue("Spot")
-    SPOT("Spot"),
-    @XmlEnumValue("Multispot")
-    MULTISPOT("Multispot"),
-    @XmlEnumValue("Pattern")
-    PATTERN("Pattern"),
-    @XmlEnumValue("Partial")
-    PARTIAL("Partial");
+	@XmlEnumValue("Average")
+	AVERAGE("Average"), @XmlEnumValue("Center weighted average")
+	CENTER_WEIGHTED_AVERAGE("Center weighted average"), @XmlEnumValue("Spot")
+	SPOT("Spot"), @XmlEnumValue("Multispot")
+	MULTISPOT("Multispot"), @XmlEnumValue("Pattern")
+	PATTERN("Pattern"), @XmlEnumValue("Partial")
+	PARTIAL("Partial");
 
-    private final String value;
+	private final String value;
 
-    MeteringModeType(String v) {
-        value = v;
-    }
+	MeteringModeType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static MeteringModeType fromValue(String v) {
-        for (MeteringModeType c : MeteringModeType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static MeteringModeType fromValue(String v) {
+		for (MeteringModeType c : MeteringModeType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

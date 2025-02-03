@@ -9,116 +9,116 @@ import org.apache.commons.lang3.StringUtils;
 
 public final class CompiledMappingRule {
 
-    /**
-     * Règle de mapping initiale
-     */
-    private MappingRule rule;
-    private CompiledStatement conditionStatement;
-    private CompiledStatement expressionStatement;
+	/**
+	 * Règle de mapping initiale
+	 */
+	private MappingRule rule;
 
-    public CompiledMappingRule(final MappingRule rule) {
-        this.rule = rule;
+	private CompiledStatement conditionStatement;
 
-        if (StringUtils.isNotBlank(rule.getCondition())) {
-            this.conditionStatement = new CompiledStatement(rule.getCondition(), rule.getConditionConf());
-        }
-        if (StringUtils.isNotBlank(rule.getExpression())) {
-            this.expressionStatement = new CompiledStatement(rule.getExpression(), rule.getExpressionConf());
-        }
-    }
+	private CompiledStatement expressionStatement;
 
-    public CompiledStatement getConditionStatement() {
-        return conditionStatement;
-    }
+	public CompiledMappingRule(final MappingRule rule) {
+		this.rule = rule;
 
-    public CompiledStatement getExpressionStatement() {
-        return expressionStatement;
-    }
+		if (StringUtils.isNotBlank(rule.getCondition())) {
+			this.conditionStatement = new CompiledStatement(rule.getCondition(), rule.getConditionConf());
+		}
+		if (StringUtils.isNotBlank(rule.getExpression())) {
+			this.expressionStatement = new CompiledStatement(rule.getExpression(), rule.getExpressionConf());
+		}
+	}
 
-    public MappingRule getRule() {
-        return rule;
-    }
+	public CompiledStatement getConditionStatement() {
+		return conditionStatement;
+	}
 
-    public boolean hasCondition() {
-        return this.conditionStatement != null;
-    }
+	public CompiledStatement getExpressionStatement() {
+		return expressionStatement;
+	}
 
-    public boolean hasExpression() {
-        return this.expressionStatement != null;
-    }
+	public MappingRule getRule() {
+		return rule;
+	}
 
-    public void setCompiledCondition(final CompiledScript compiledCondition) {
-        if (hasCondition()) {
-            this.conditionStatement.setCompiledScript(compiledCondition);
-        }
-    }
+	public boolean hasCondition() {
+		return this.conditionStatement != null;
+	}
 
-    public void setCompiledExpression(final CompiledScript compiledExpression) {
-        if (hasExpression()) {
-            this.expressionStatement.setCompiledScript(compiledExpression);
-        }
-    }
+	public boolean hasExpression() {
+		return this.expressionStatement != null;
+	}
 
-    /**
-     * @return Tous les {@link RuleKey} présents dans la condition et l'expression
-     */
-    public Set<RuleKey> getRuleKeys() {
-        final Set<RuleKey> ruleKeys = new HashSet<>();
-        if (hasCondition()) {
-            ruleKeys.addAll(conditionStatement.getRuleKeys());
-        }
-        if (hasExpression()) {
-            ruleKeys.addAll(expressionStatement.getRuleKeys());
-        }
-        return ruleKeys;
-    }
+	public void setCompiledCondition(final CompiledScript compiledCondition) {
+		if (hasCondition()) {
+			this.conditionStatement.setCompiledScript(compiledCondition);
+		}
+	}
 
-    /**
-     * Filtrage des champs:
-     * - les champs présents dans les expressions sont repris tels quels
-     * - les champs présents dans les conditions sont repris s'ils ne sont pas trouvés exactement dans les expressions
-     *
-     * @return
-     */
-    public Set<RuleKey> getBindableRuleKeys() {
-        final Set<RuleKey> ruleKeys = new HashSet<>();
-        if (hasExpression()) {
-            ruleKeys.addAll(expressionStatement.getRuleKeys());
-        }
-        if (hasCondition()) {
-            conditionStatement.getRuleKeys()
-                              .stream()
-                              .filter(key -> expressionStatement == null || expressionStatement.getRuleKeys()
-                                                                                               .stream()
-                                                                                               // les tags sont identiques
-                                                                                               .noneMatch(exprKey -> Objects.equals(exprKey, key)))
-                              .forEach(ruleKeys::add);
-        }
-        return ruleKeys;
-    }
+	public void setCompiledExpression(final CompiledScript compiledExpression) {
+		if (hasExpression()) {
+			this.expressionStatement.setCompiledScript(compiledExpression);
+		}
+	}
 
-    /**
-     * true si cette règle n'a pas besoin de définir de bindings pour être évaluée
-     *
-     * @return
-     */
-    public boolean isConstant() {
-        return (conditionStatement == null || conditionStatement.getRuleKeys().isEmpty()) && (expressionStatement == null || expressionStatement.getRuleKeys().isEmpty());
-    }
+	/**
+	 * @return Tous les {@link RuleKey} présents dans la condition et l'expression
+	 */
+	public Set<RuleKey> getRuleKeys() {
+		final Set<RuleKey> ruleKeys = new HashSet<>();
+		if (hasCondition()) {
+			ruleKeys.addAll(conditionStatement.getRuleKeys());
+		}
+		if (hasExpression()) {
+			ruleKeys.addAll(expressionStatement.getRuleKeys());
+		}
+		return ruleKeys;
+	}
 
-    /**
-     * true si la partie expression de cette règle n'a pas besoin de définir de bindings pour être évaluée
-     *
-     * @return
-     */
-    public boolean isConstantExpression() {
-        return expressionStatement == null || expressionStatement.getRuleKeys().isEmpty();
-    }
+	/**
+	 * Filtrage des champs: - les champs présents dans les expressions sont repris tels
+	 * quels - les champs présents dans les conditions sont repris s'ils ne sont pas
+	 * trouvés exactement dans les expressions
+	 * @return
+	 */
+	public Set<RuleKey> getBindableRuleKeys() {
+		final Set<RuleKey> ruleKeys = new HashSet<>();
+		if (hasExpression()) {
+			ruleKeys.addAll(expressionStatement.getRuleKeys());
+		}
+		if (hasCondition()) {
+			conditionStatement.getRuleKeys()
+				.stream()
+				.filter(key -> expressionStatement == null || expressionStatement.getRuleKeys()
+					.stream()
+					// les tags sont identiques
+					.noneMatch(exprKey -> Objects.equals(exprKey, key)))
+				.forEach(ruleKeys::add);
+		}
+		return ruleKeys;
+	}
 
-    @Override
-    public String toString() {
-        return "CompiledMappingRule{" + "rule="
-               + rule
-               + '}';
-    }
+	/**
+	 * true si cette règle n'a pas besoin de définir de bindings pour être évaluée
+	 * @return
+	 */
+	public boolean isConstant() {
+		return (conditionStatement == null || conditionStatement.getRuleKeys().isEmpty())
+				&& (expressionStatement == null || expressionStatement.getRuleKeys().isEmpty());
+	}
+
+	/**
+	 * true si la partie expression de cette règle n'a pas besoin de définir de bindings
+	 * pour être évaluée
+	 * @return
+	 */
+	public boolean isConstantExpression() {
+		return expressionStatement == null || expressionStatement.getRuleKeys().isEmpty();
+	}
+
+	@Override
+	public String toString() {
+		return "CompiledMappingRule{" + "rule=" + rule + '}';
+	}
+
 }

@@ -36,34 +36,30 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum AutoFocusType {
 
-    @XmlEnumValue("Auto Focus Used")
-    AUTO_FOCUS_USED("Auto Focus Used"),
-    @XmlEnumValue("Auto Focus Interrupted")
-    AUTO_FOCUS_INTERRUPTED("Auto Focus Interrupted"),
-    @XmlEnumValue("Near Focused")
-    NEAR_FOCUSED("Near Focused"),
-    @XmlEnumValue("Soft Focused")
-    SOFT_FOCUSED("Soft Focused"),
-    @XmlEnumValue("Manual")
-    MANUAL("Manual");
+	@XmlEnumValue("Auto Focus Used")
+	AUTO_FOCUS_USED("Auto Focus Used"), @XmlEnumValue("Auto Focus Interrupted")
+	AUTO_FOCUS_INTERRUPTED("Auto Focus Interrupted"), @XmlEnumValue("Near Focused")
+	NEAR_FOCUSED("Near Focused"), @XmlEnumValue("Soft Focused")
+	SOFT_FOCUSED("Soft Focused"), @XmlEnumValue("Manual")
+	MANUAL("Manual");
 
-    private final String value;
+	private final String value;
 
-    AutoFocusType(String v) {
-        value = v;
-    }
+	AutoFocusType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static AutoFocusType fromValue(String v) {
-        for (AutoFocusType c : AutoFocusType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static AutoFocusType fromValue(String v) {
+		for (AutoFocusType c : AutoFocusType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

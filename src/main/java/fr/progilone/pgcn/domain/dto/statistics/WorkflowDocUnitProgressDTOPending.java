@@ -4,103 +4,114 @@ import java.util.List;
 
 public class WorkflowDocUnitProgressDTOPending {
 
-    private String projectIdentifier;
-    private String projectName;
-    private String docIdentifier;
-    private String docPgcnId;
-    private String docLabel;
-    private String docStatus;
-    private String lotIdentifier;
-    private String lotLabel;
-    private Integer totalPage;
-    private List<String> workflowStateKeys;
-    private WorkflowDocUnitInfoDTO infos;
+	private String projectIdentifier;
 
-    public String getProjectIdentifier() {
-        return projectIdentifier;
-    }
+	private String projectName;
 
-    public void setProjectIdentifier(String projectIdentifier) {
-        this.projectIdentifier = projectIdentifier;
-    }
+	private String docIdentifier;
 
-    public String getProjectName() {
-        return projectName;
-    }
+	private String docPgcnId;
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
+	private String docLabel;
 
-    public String getDocIdentifier() {
-        return docIdentifier;
-    }
+	private String docStatus;
 
-    public void setDocIdentifier(String docIdentifier) {
-        this.docIdentifier = docIdentifier;
-    }
+	private String lotIdentifier;
 
-    public String getDocPgcnId() {
-        return docPgcnId;
-    }
+	private String lotLabel;
 
-    public void setDocPgcnId(String docPgcnId) {
-        this.docPgcnId = docPgcnId;
-    }
+	private Integer totalPage;
 
-    public String getDocLabel() {
-        return docLabel;
-    }
+	private List<String> workflowStateKeys;
 
-    public void setDocLabel(String docLabel) {
-        this.docLabel = docLabel;
-    }
+	private WorkflowDocUnitInfoDTO infos;
 
-    public String getDocStatus() {
-        return docStatus;
-    }
+	public String getProjectIdentifier() {
+		return projectIdentifier;
+	}
 
-    public void setDocStatus(String docStatus) {
-        this.docStatus = docStatus;
-    }
+	public void setProjectIdentifier(String projectIdentifier) {
+		this.projectIdentifier = projectIdentifier;
+	}
 
-    public Integer getTotalPage() {
-        return totalPage;
-    }
+	public String getProjectName() {
+		return projectName;
+	}
 
-    public void setTotalPage(Integer totalPage) {
-        this.totalPage = totalPage;
-    }
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
 
-    public List<String> getWorkflowStateKeys() {
-        return workflowStateKeys;
-    }
+	public String getDocIdentifier() {
+		return docIdentifier;
+	}
 
-    public void setWorkflowStateKeys(List<String> workflowStateKeys) {
-        this.workflowStateKeys = workflowStateKeys;
-    }
+	public void setDocIdentifier(String docIdentifier) {
+		this.docIdentifier = docIdentifier;
+	}
 
-    public WorkflowDocUnitInfoDTO getInfos() {
-        return infos;
-    }
+	public String getDocPgcnId() {
+		return docPgcnId;
+	}
 
-    public void setInfos(WorkflowDocUnitInfoDTO infos) {
-        this.infos = infos;
-    }
+	public void setDocPgcnId(String docPgcnId) {
+		this.docPgcnId = docPgcnId;
+	}
 
-    public String getLotIdentifier() {
-        return lotIdentifier;
-    }
+	public String getDocLabel() {
+		return docLabel;
+	}
 
-    public void setLotIdentifier(String lotIdentifier) {
-        this.lotIdentifier = lotIdentifier;
-    }
+	public void setDocLabel(String docLabel) {
+		this.docLabel = docLabel;
+	}
 
-    public String getLotLabel() {
-        return lotLabel;
-    }
+	public String getDocStatus() {
+		return docStatus;
+	}
 
-    public void setLotLabel(String lotLabel) {
-        this.lotLabel = lotLabel;
-    }
+	public void setDocStatus(String docStatus) {
+		this.docStatus = docStatus;
+	}
+
+	public Integer getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(Integer totalPage) {
+		this.totalPage = totalPage;
+	}
+
+	public List<String> getWorkflowStateKeys() {
+		return workflowStateKeys;
+	}
+
+	public void setWorkflowStateKeys(List<String> workflowStateKeys) {
+		this.workflowStateKeys = workflowStateKeys;
+	}
+
+	public WorkflowDocUnitInfoDTO getInfos() {
+		return infos;
+	}
+
+	public void setInfos(WorkflowDocUnitInfoDTO infos) {
+		this.infos = infos;
+	}
+
+	public String getLotIdentifier() {
+		return lotIdentifier;
+	}
+
+	public void setLotIdentifier(String lotIdentifier) {
+		this.lotIdentifier = lotIdentifier;
+	}
+
+	public String getLotLabel() {
+		return lotLabel;
+	}
+
+	public void setLotLabel(String lotLabel) {
+		this.lotLabel = lotLabel;
+	}
+
 }

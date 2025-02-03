@@ -50,309 +50,273 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "unitid", propOrder = {"content"})
+@XmlType(name = "unitid", propOrder = { "content" })
 public class Unitid {
 
-    @XmlElementRefs({@XmlElementRef(name = "lb", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "ptr", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "title", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "emph", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "extref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "bibref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "abbr", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "archref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "expan", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "ref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "extptr", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "linkgrp", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false)})
-    @XmlMixed
-    protected List<Serializable> content;
-    @XmlAttribute(name = "label")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String label;
-    @XmlAttribute(name = "type")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String type;
-    @XmlAttribute(name = "repositorycode")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String repositorycode;
-    @XmlAttribute(name = "identifier")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String identifier;
-    @XmlAttribute(name = "encodinganalog")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String encodinganalog;
-    @XmlAttribute(name = "countrycode")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String countrycode;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	@XmlElementRefs({
+			@XmlElementRef(name = "lb", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "ptr", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "title", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "emph", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "extref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "bibref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "abbr", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "archref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "expan", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "ref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "extptr", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "linkgrp", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false) })
+	@XmlMixed
+	protected List<Serializable> content;
 
-    /**
-     * Gets the value of the content property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the content property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getContent().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link Extref }{@code >}
-     * {@link JAXBElement }{@code <}{@link Bibref }{@code >}
-     * {@link JAXBElement }{@code <}{@link Ref }{@code >}
-     * {@link JAXBElement }{@code <}{@link Lb }{@code >}
-     * {@link JAXBElement }{@code <}{@link Ptr }{@code >}
-     * {@link JAXBElement }{@code <}{@link Title }{@code >}
-     * {@link JAXBElement }{@code <}{@link Emph }{@code >}
-     * {@link String }
-     * {@link JAXBElement }{@code <}{@link Abbr }{@code >}
-     * {@link JAXBElement }{@code <}{@link Archref }{@code >}
-     * {@link JAXBElement }{@code <}{@link Expan }{@code >}
-     * {@link JAXBElement }{@code <}{@link Extptr }{@code >}
-     * {@link JAXBElement }{@code <}{@link Linkgrp }{@code >}
-     *
-     *
-     */
-    public List<Serializable> getContent() {
-        if (content == null) {
-            content = new ArrayList<>();
-        }
-        return this.content;
-    }
+	@XmlAttribute(name = "label")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String label;
 
-    /**
-     * Obtient la valeur de la propriété label.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getLabel() {
-        return label;
-    }
+	@XmlAttribute(name = "type")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String type;
 
-    /**
-     * Définit la valeur de la propriété label.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setLabel(String value) {
-        this.label = value;
-    }
+	@XmlAttribute(name = "repositorycode")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String repositorycode;
 
-    /**
-     * Obtient la valeur de la propriété type.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getType() {
-        return type;
-    }
+	@XmlAttribute(name = "identifier")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String identifier;
 
-    /**
-     * Définit la valeur de la propriété type.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setType(String value) {
-        this.type = value;
-    }
+	@XmlAttribute(name = "encodinganalog")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String encodinganalog;
 
-    /**
-     * Obtient la valeur de la propriété repositorycode.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getRepositorycode() {
-        return repositorycode;
-    }
+	@XmlAttribute(name = "countrycode")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String countrycode;
 
-    /**
-     * Définit la valeur de la propriété repositorycode.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setRepositorycode(String value) {
-        this.repositorycode = value;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Obtient la valeur de la propriété identifier.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getIdentifier() {
-        return identifier;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Définit la valeur de la propriété identifier.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setIdentifier(String value) {
-        this.identifier = value;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Obtient la valeur de la propriété encodinganalog.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getEncodinganalog() {
-        return encodinganalog;
-    }
+	/**
+	 * Gets the value of the content property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the content
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getContent().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link JAXBElement
+	 * }{@code <}{@link Extref }{@code >} {@link JAXBElement }{@code <}{@link Bibref
+	 * }{@code >} {@link JAXBElement }{@code <}{@link Ref }{@code >} {@link JAXBElement
+	 * }{@code <}{@link Lb }{@code >} {@link JAXBElement }{@code <}{@link Ptr }{@code >}
+	 * {@link JAXBElement }{@code <}{@link Title }{@code >} {@link JAXBElement
+	 * }{@code <}{@link Emph }{@code >} {@link String } {@link JAXBElement
+	 * }{@code <}{@link Abbr }{@code >} {@link JAXBElement }{@code <}{@link Archref
+	 * }{@code >} {@link JAXBElement }{@code <}{@link Expan }{@code >} {@link JAXBElement
+	 * }{@code <}{@link Extptr }{@code >} {@link JAXBElement }{@code <}{@link Linkgrp
+	 * }{@code >}
+	 *
+	 *
+	 */
+	public List<Serializable> getContent() {
+		if (content == null) {
+			content = new ArrayList<>();
+		}
+		return this.content;
+	}
 
-    /**
-     * Définit la valeur de la propriété encodinganalog.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setEncodinganalog(String value) {
-        this.encodinganalog = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété label.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getLabel() {
+		return label;
+	}
 
-    /**
-     * Obtient la valeur de la propriété countrycode.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getCountrycode() {
-        return countrycode;
-    }
+	/**
+	 * Définit la valeur de la propriété label.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setLabel(String value) {
+		this.label = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété countrycode.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setCountrycode(String value) {
-        this.countrycode = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété type.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getType() {
+		return type;
+	}
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	/**
+	 * Définit la valeur de la propriété type.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setType(String value) {
+		this.type = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété repositorycode.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getRepositorycode() {
+		return repositorycode;
+	}
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Définit la valeur de la propriété repositorycode.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setRepositorycode(String value) {
+		this.repositorycode = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété identifier.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Définit la valeur de la propriété identifier.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdentifier(String value) {
+		this.identifier = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété encodinganalog.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getEncodinganalog() {
+		return encodinganalog;
+	}
+
+	/**
+	 * Définit la valeur de la propriété encodinganalog.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setEncodinganalog(String value) {
+		this.encodinganalog = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété countrycode.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getCountrycode() {
+		return countrycode;
+	}
+
+	/**
+	 * Définit la valeur de la propriété countrycode.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setCountrycode(String value) {
+		this.countrycode = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

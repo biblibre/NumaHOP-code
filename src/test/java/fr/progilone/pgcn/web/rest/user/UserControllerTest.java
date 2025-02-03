@@ -33,120 +33,147 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ExtendWith(MockitoExtension.class)
 public class UserControllerTest {
 
-    private static final String USER_ID = "90cdcf40-ff39-4d8d-aad5-249c29a94b3a";
+	private static final String USER_ID = "90cdcf40-ff39-4d8d-aad5-249c29a94b3a";
 
-    @Mock
-    private AccessHelper accessHelper;
-    @Mock
-    private LibraryAccesssHelper libraryAccesssHelper;
-    @Mock
-    private UserService userService;
-    @Mock
-    private UIUserService uiUserService;
+	@Mock
+	private AccessHelper accessHelper;
 
-    private MockMvc restMockMvc;
+	@Mock
+	private LibraryAccesssHelper libraryAccesssHelper;
 
-    private final RequestPostProcessor role_admin = roles(USER_HAB0, USER_HAB2);
-    private final RequestPostProcessor role_user = roles(USER_HAB6);
+	@Mock
+	private UserService userService;
 
-    @BeforeEach
-    public void setUp() {
-        final UserController controller = new UserController(userService, uiUserService, accessHelper, libraryAccesssHelper);
-        this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+	@Mock
+	private UIUserService uiUserService;
 
-        final CustomUserDetails customUserDetails = new CustomUserDetails(USER_ID, null, null, null, null, null, false, User.Category.OTHER);
-        final TestingAuthenticationToken authenticationToken = new TestingAuthenticationToken(customUserDetails, "3b03c8c5-c552-450e-a91d-7bb850fd8186");
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-    }
+	private MockMvc restMockMvc;
 
-    @Test
-    public void testGetById() throws Exception {
-        final User user = new User();
-        user.setIdentifier("49521b8a-4f46-4724-831c-1d24d6deecc4");
-        final UserDTO dto = new UserDTO();
-        dto.setIdentifier(user.getIdentifier());
+	private final RequestPostProcessor role_admin = roles(USER_HAB0, USER_HAB2);
 
-        when(accessHelper.checkUser(anyString())).thenReturn(false, true, false, true);
-        when(uiUserService.getOne(anyString())).thenReturn(dto);
+	private final RequestPostProcessor role_user = roles(USER_HAB6);
 
-        // pas de droits HAB0, mauvais user
-        this.restMockMvc.perform(get("/api/rest/user/{id}", user.getIdentifier()).accept(MediaType.APPLICATION_JSON)).andExpect(status().isForbidden());
+	@BeforeEach
+	public void setUp() {
+		final UserController controller = new UserController(userService, uiUserService, accessHelper,
+				libraryAccesssHelper);
+		this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
-        // pas de droits HAB0, bon user, check ko
-        user.setIdentifier(USER_ID);
-        this.restMockMvc.perform(get("/api/rest/user/{id}", user.getIdentifier()).accept(MediaType.APPLICATION_JSON).with(role_user)).andExpect(status().isForbidden());
+		final CustomUserDetails customUserDetails = new CustomUserDetails(USER_ID, null, null, null, null, null, false,
+				User.Category.OTHER);
+		final TestingAuthenticationToken authenticationToken = new TestingAuthenticationToken(customUserDetails,
+				"3b03c8c5-c552-450e-a91d-7bb850fd8186");
+		SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+	}
 
-        // pas de droits HAB0, bon user, check ok
-        user.setIdentifier(USER_ID);
-        dto.setIdentifier(user.getIdentifier());
-        this.restMockMvc.perform(get("/api/rest/user/{id}", user.getIdentifier()).accept(MediaType.APPLICATION_JSON).with(role_user))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("$.identifier").value(user.getIdentifier()));
+	@Test
+	public void testGetById() throws Exception {
+		final User user = new User();
+		user.setIdentifier("49521b8a-4f46-4724-831c-1d24d6deecc4");
+		final UserDTO dto = new UserDTO();
+		dto.setIdentifier(user.getIdentifier());
 
-        // droits HAB0, check ko
-        user.setIdentifier("49521b8a-4f46-4724-831c-1d24d6deecc4");
-        dto.setIdentifier(user.getIdentifier());
-        this.restMockMvc.perform(get("/api/rest/user/{id}", user.getIdentifier()).accept(MediaType.APPLICATION_JSON).with(role_admin)).andExpect(status().isForbidden());
+		when(accessHelper.checkUser(anyString())).thenReturn(false, true, false, true);
+		when(uiUserService.getOne(anyString())).thenReturn(dto);
 
-        // droits HAB0, check ok
-        this.restMockMvc.perform(get("/api/rest/user/{id}", user.getIdentifier()).accept(MediaType.APPLICATION_JSON).with(role_admin))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("$.identifier").value(user.getIdentifier()));
-    }
+		// pas de droits HAB0, mauvais user
+		this.restMockMvc.perform(get("/api/rest/user/{id}", user.getIdentifier()).accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isForbidden());
 
-    @Test
-    public void testUpdate() throws Exception {
-        final UserDTO user = new UserDTO();
-        user.setIdentifier("49521b8a-4f46-4724-831c-1d24d6deecc4");
-        final User dbUser = new User();
-        dbUser.setIdentifier(user.getIdentifier());
-        // roles
-        final RoleDTO role1 = new RoleDTO();
-        role1.setIdentifier("353bd4f7-4bb5-4303-a110-ee3694cb4aaa");
-        final Role role2 = new Role();
-        role1.setIdentifier("89e4d093-d2e0-4a5b-b7c1-63414f5ce00f");
+		// pas de droits HAB0, bon user, check ko
+		user.setIdentifier(USER_ID);
+		this.restMockMvc
+			.perform(
+					get("/api/rest/user/{id}", user.getIdentifier()).accept(MediaType.APPLICATION_JSON).with(role_user))
+			.andExpect(status().isForbidden());
 
-        when(accessHelper.checkUser(user.getIdentifier())).thenReturn(false, true);
-        when(uiUserService.update(any(UserDTO.class))).then(new ReturnsArgumentAt(0));
-        when(userService.getOne(anyString())).thenReturn(dbUser);
+		// pas de droits HAB0, bon user, check ok
+		user.setIdentifier(USER_ID);
+		dto.setIdentifier(user.getIdentifier());
+		this.restMockMvc
+			.perform(
+					get("/api/rest/user/{id}", user.getIdentifier()).accept(MediaType.APPLICATION_JSON).with(role_user))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("$.identifier").value(user.getIdentifier()));
 
-        // USER_HAB2 ko
-        this.restMockMvc.perform(post("/api/rest/user/{id}", user.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
-                                                                                  .content(TestUtil.convertObjectToJsonBytes(user))
-                                                                                  .with(role_admin)).andExpect(status().isForbidden());
+		// droits HAB0, check ko
+		user.setIdentifier("49521b8a-4f46-4724-831c-1d24d6deecc4");
+		dto.setIdentifier(user.getIdentifier());
+		this.restMockMvc
+			.perform(get("/api/rest/user/{id}", user.getIdentifier()).accept(MediaType.APPLICATION_JSON)
+				.with(role_admin))
+			.andExpect(status().isForbidden());
 
-        // USER_HAB2 ok
-        this.restMockMvc.perform(post("/api/rest/user/{id}", user.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
-                                                                                  .content(TestUtil.convertObjectToJsonBytes(user))
-                                                                                  .with(role_admin))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("$.identifier").value(user.getIdentifier()));
+		// droits HAB0, check ok
+		this.restMockMvc
+			.perform(get("/api/rest/user/{id}", user.getIdentifier()).accept(MediaType.APPLICATION_JSON)
+				.with(role_admin))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("$.identifier").value(user.getIdentifier()));
+	}
 
-        // USER_HAB6 ko -> autre user
-        this.restMockMvc.perform(post("/api/rest/user/{id}", user.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
-                                                                                  .content(TestUtil.convertObjectToJsonBytes(user))
-                                                                                  .with(role_user)).andExpect(status().isForbidden());
+	@Test
+	public void testUpdate() throws Exception {
+		final UserDTO user = new UserDTO();
+		user.setIdentifier("49521b8a-4f46-4724-831c-1d24d6deecc4");
+		final User dbUser = new User();
+		dbUser.setIdentifier(user.getIdentifier());
+		// roles
+		final RoleDTO role1 = new RoleDTO();
+		role1.setIdentifier("353bd4f7-4bb5-4303-a110-ee3694cb4aaa");
+		final Role role2 = new Role();
+		role1.setIdentifier("89e4d093-d2e0-4a5b-b7c1-63414f5ce00f");
 
-        // USER_HAB6 ko -> profil
-        user.setIdentifier(USER_ID);
-        user.setRole(role1);
-        dbUser.setRole(role2);
+		when(accessHelper.checkUser(user.getIdentifier())).thenReturn(false, true);
+		when(uiUserService.update(any(UserDTO.class))).then(new ReturnsArgumentAt(0));
+		when(userService.getOne(anyString())).thenReturn(dbUser);
 
-        this.restMockMvc.perform(post("/api/rest/user/{id}", user.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
-                                                                                  .content(TestUtil.convertObjectToJsonBytes(user))
-                                                                                  .with(role_user)).andExpect(status().isForbidden());
+		// USER_HAB2 ko
+		this.restMockMvc
+			.perform(post("/api/rest/user/{id}", user.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(user))
+				.with(role_admin))
+			.andExpect(status().isForbidden());
 
-        // USER_HAB6 ok
-        role2.setIdentifier(role1.getIdentifier());
+		// USER_HAB2 ok
+		this.restMockMvc
+			.perform(post("/api/rest/user/{id}", user.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(user))
+				.with(role_admin))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("$.identifier").value(user.getIdentifier()));
 
-        this.restMockMvc.perform(post("/api/rest/user/{id}", user.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
-                                                                                  .content(TestUtil.convertObjectToJsonBytes(user))
-                                                                                  .with(role_user))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("$.identifier").value(user.getIdentifier()));
-    }
+		// USER_HAB6 ko -> autre user
+		this.restMockMvc
+			.perform(post("/api/rest/user/{id}", user.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(user))
+				.with(role_user))
+			.andExpect(status().isForbidden());
+
+		// USER_HAB6 ko -> profil
+		user.setIdentifier(USER_ID);
+		user.setRole(role1);
+		dbUser.setRole(role2);
+
+		this.restMockMvc
+			.perform(post("/api/rest/user/{id}", user.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(user))
+				.with(role_user))
+			.andExpect(status().isForbidden());
+
+		// USER_HAB6 ok
+		role2.setIdentifier(role1.getIdentifier());
+
+		this.restMockMvc
+			.perform(post("/api/rest/user/{id}", user.getIdentifier()).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(user))
+				.with(role_user))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("$.identifier").value(user.getIdentifier()));
+	}
+
 }

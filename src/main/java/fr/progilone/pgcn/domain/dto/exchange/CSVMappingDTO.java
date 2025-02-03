@@ -8,57 +8,61 @@ import java.util.Objects;
  */
 public class CSVMappingDTO {
 
-    private String identifier;
-    private String joinExpression;
-    private String label;
-    private SimpleLibraryDTO library;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String joinExpression;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private String label;
 
-    public String getJoinExpression() {
-        return joinExpression;
-    }
+	private SimpleLibraryDTO library;
 
-    public void setJoinExpression(final String joinExpression) {
-        this.joinExpression = joinExpression;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getLabel() {
-        return label;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public String getJoinExpression() {
+		return joinExpression;
+	}
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	public void setJoinExpression(final String joinExpression) {
+		this.joinExpression = joinExpression;
+	}
 
-    public void setLibrary(final SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final CSVMappingDTO that = (CSVMappingDTO) o;
-        return Objects.equals(identifier, that.identifier);
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(identifier);
-    }
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
+
+	public void setLibrary(final SimpleLibraryDTO library) {
+		this.library = library;
+	}
+
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		final CSVMappingDTO that = (CSVMappingDTO) o;
+		return Objects.equals(identifier, that.identifier);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(identifier);
+	}
+
 }

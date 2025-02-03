@@ -55,279 +55,252 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UIDigitalDocumentService {
 
-    private final DigitalDocumentService digitalDocumentService;
-    private final UIDigitalDocumentMapper uiDigitalDocumentMapper;
-    private final ConditionReportDetailService reportDetailService;
-    private final SampleService sampleService;
-    private final UserService userService;
-    private final WorkflowService workflowService;
-    private final DocUnitService docUnitService;
-    private final DeliveryRepository deliveryRepository;
-    private final DocCheckHistoryService docCheckHistoryService;
+	private final DigitalDocumentService digitalDocumentService;
 
-    private final NumberFormat numFormatter = NumberFormat.getNumberInstance(Locale.FRENCH);
+	private final UIDigitalDocumentMapper uiDigitalDocumentMapper;
 
-    @Autowired
-    public UIDigitalDocumentService(final DigitalDocumentService digitalDocumentService,
-                                    final UIDigitalDocumentMapper uiDigitalDocumentMapper,
-                                    final ConditionReportDetailService reportDetailService,
-                                    final SampleService sampleService,
-                                    final UserService userService,
-                                    final WorkflowService workflowService,
-                                    final DocUnitService docUnitService,
-                                    final DeliveryRepository deliveryRepository,
-                                    final DocCheckHistoryService docCheckHistoryService) {
-        this.digitalDocumentService = digitalDocumentService;
-        this.uiDigitalDocumentMapper = uiDigitalDocumentMapper;
-        this.reportDetailService = reportDetailService;
-        this.sampleService = sampleService;
-        this.workflowService = workflowService;
-        this.docUnitService = docUnitService;
-        this.deliveryRepository = deliveryRepository;
-        this.userService = userService;
-        this.docCheckHistoryService = docCheckHistoryService;
-    }
+	private final ConditionReportDetailService reportDetailService;
 
-    /**
-     * Retourne un document avec ses pages
-     *
-     * @param identifier
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public DigitalDocumentDTO getDigitalDocumentWithNumberOfPages(final String identifier) {
-        final DigitalDocument dd = digitalDocumentService.getOneWithPages(identifier);
-        return DigitalDocumentMapper.INSTANCE.digitalDocumentToDigitalDocumentDTO(dd);
-    }
+	private final SampleService sampleService;
 
-    @Transactional
-    public DigitalDocumentDTO update(final DigitalDocumentDTO dto) {
-        final DigitalDocument doc = digitalDocumentService.findOne(dto.getIdentifier());
+	private final UserService userService;
 
-        // Contrôle d'accès concurrents
-        VersionValidationService.checkForStateObject(doc, dto);
+	private final WorkflowService workflowService;
 
-        uiDigitalDocumentMapper.mapInto(dto, doc);
+	private final DocUnitService docUnitService;
 
-        final DigitalDocument savedDoc = digitalDocumentService.save(doc);
-        return getDigitalDocumentWithNumberOfPages(savedDoc.getIdentifier());
-    }
+	private final DeliveryRepository deliveryRepository;
 
-    /**
-     * Retourne la liste des documents à contrôler
-     *
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Collection<SimpleDigitalDocumentDTO> getAllDocumentsToCheck() {
-        final Set<DigitalDocument> digitalDocuments = digitalDocumentService.getAllDocumentsToCheck();
-        return digitalDocuments.stream().map(DigitalDocumentMapper.INSTANCE::digitalDocumentToSimpleDigitalDocumentDTO).collect(Collectors.toSet());
-    }
+	private final DocCheckHistoryService docCheckHistoryService;
 
-    /**
-     * Récupère une page
-     *
-     * @param identifier
-     * @param pageNumber
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public SimpleDocPageDTO getPage(final String identifier, final int pageNumber) {
-        return DocPageMapper.INSTANCE.docPageToSimpleDocPageDTO(digitalDocumentService.getPageByOrder(identifier, pageNumber));
-    }
+	private final NumberFormat numFormatter = NumberFormat.getNumberInstance(Locale.FRENCH);
 
-    /**
-     * Recherche par filtres.
-     */
-    @Transactional(readOnly = true)
-    public Page<SimpleListDigitalDocumentDTO> search(final String search,
-                                                     final List<String> status,
-                                                     final List<String> filteredLibraries,
-                                                     final List<String> projects,
-                                                     final List<String> lots,
-                                                     final List<String> trains,
-                                                     final List<String> libraries,
-                                                     final LocalDate dateFrom,
-                                                     final LocalDate dateTo,
-                                                     final LocalDate dateLimitFrom,
-                                                     final LocalDate dateLimitTo,
-                                                     final String searchPgcnId,
-                                                     final String searchTitre,
-                                                     final String searchRadical,
-                                                     final List<String> searchFileFormats,
-                                                     final List<String> searchMaxAngles,
-                                                     final Integer searchPageFrom,
-                                                     final Integer searchPageTo,
-                                                     final Long searchPageCheckFrom,
-                                                     final Long searchPageCheckTo,
-                                                     final Double searchMinSize,
-                                                     final Double searchMaxSize,
-                                                     final boolean validated,
-                                                     final Integer page,
-                                                     final Integer size,
-                                                     final List<String> sorts) {
+	@Autowired
+	public UIDigitalDocumentService(final DigitalDocumentService digitalDocumentService,
+			final UIDigitalDocumentMapper uiDigitalDocumentMapper,
+			final ConditionReportDetailService reportDetailService, final SampleService sampleService,
+			final UserService userService, final WorkflowService workflowService, final DocUnitService docUnitService,
+			final DeliveryRepository deliveryRepository, final DocCheckHistoryService docCheckHistoryService) {
+		this.digitalDocumentService = digitalDocumentService;
+		this.uiDigitalDocumentMapper = uiDigitalDocumentMapper;
+		this.reportDetailService = reportDetailService;
+		this.sampleService = sampleService;
+		this.workflowService = workflowService;
+		this.docUnitService = docUnitService;
+		this.deliveryRepository = deliveryRepository;
+		this.userService = userService;
+		this.docCheckHistoryService = docCheckHistoryService;
+	}
 
-        final Sort sort = SortUtils.getSort(sorts);
-        final Pageable pageRequest = PageRequest.of(page, size, sort);
+	/**
+	 * Retourne un document avec ses pages
+	 * @param identifier
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public DigitalDocumentDTO getDigitalDocumentWithNumberOfPages(final String identifier) {
+		final DigitalDocument dd = digitalDocumentService.getOneWithPages(identifier);
+		return DigitalDocumentMapper.INSTANCE.digitalDocumentToDigitalDocumentDTO(dd);
+	}
 
-        // Statut en attente de relivraison
-        boolean relivraison = false;
-        if (status != null && status.contains("RELIVRAISON_DOCUMENT_EN_COURS")) {
-            relivraison = true;
-            // Le statut en attente de relivraison n'est pas un statut de document numérique de l'unité documentaire
-            status.remove("RELIVRAISON_DOCUMENT_EN_COURS");
-        }
+	@Transactional
+	public DigitalDocumentDTO update(final DigitalDocumentDTO dto) {
+		final DigitalDocument doc = digitalDocumentService.findOne(dto.getIdentifier());
 
-        final Page<DigitalDocument> docs = digitalDocumentService.search(search,
-                                                                         status,
-                                                                         filteredLibraries,
-                                                                         projects,
-                                                                         lots,
-                                                                         trains,
-                                                                         libraries,
-                                                                         dateFrom,
-                                                                         dateTo,
-                                                                         dateLimitFrom,
-                                                                         dateLimitTo,
-                                                                         relivraison,
-                                                                         searchPgcnId,
-                                                                         searchTitre,
-                                                                         searchRadical,
-                                                                         searchFileFormats,
-                                                                         searchMaxAngles,
-                                                                         searchPageFrom,
-                                                                         searchPageTo,
-                                                                         searchPageCheckFrom,
-                                                                         searchPageCheckTo,
-                                                                         searchMinSize,
-                                                                         searchMaxSize,
-                                                                         validated,
-                                                                         pageRequest);
+		// Contrôle d'accès concurrents
+		VersionValidationService.checkForStateObject(doc, dto);
 
-        final Page<SimpleListDigitalDocumentDTO> docDtos = docs.map(DigitalDocumentMapper.INSTANCE::digitalDocumentToSimpleListDigitalDocumentDTO);
-        docDtos.forEach(doc -> {
-            final Optional<ConditionReportDetail> det = reportDetailService.getLastDetailByDocUnitId(doc.getDocUnit().getIdentifier());
-            det.ifPresent(conditionReportDetail -> doc.setReportDetail(getLightReportDetail(conditionReportDetail)));
-            final List<LightDeliveredDigitalDocDTO> deliveredDigitalDocDTOS = doc.getDeliveries()
-                                                                                 .stream()
-                                                                                 .sorted(Comparator.comparing(LightDeliveredDigitalDocDTO::getDeliveryDate).reversed())
-                                                                                 .collect(Collectors.toList());
-            doc.setDeliveries(deliveredDigitalDocDTOS);
-        });
-        return docDtos;
-    }
+		uiDigitalDocumentMapper.mapInto(dto, doc);
 
-    private LightCondReportDetailDTO getLightReportDetail(final ConditionReportDetail detail) {
-        final LightCondReportDetailDTO detailDto = new LightCondReportDetailDTO();
-        detailDto.setDim1(detail.getDim1());
-        detailDto.setDim2(detail.getDim2());
-        detailDto.setDim3(detail.getDim3());
-        detailDto.setNbViewTotal(detail.getNbViewTotal());
-        if (detail.getInsurance() != null) {
-            detailDto.setInsurance(numFormatter.format(detail.getInsurance()));
-        } else {
-            detailDto.setInsurance("0,00");
-        }
-        return detailDto;
-    }
+		final DigitalDocument savedDoc = digitalDocumentService.save(doc);
+		return getDigitalDocumentWithNumberOfPages(savedDoc.getIdentifier());
+	}
 
-    /**
-     * Finalise le process de livraison en cas de rejet automatique.
-     *
-     * @param delivery
-     */
-    @Transactional
-    public void endAutoChecks(final Delivery delivery) {
+	/**
+	 * Retourne la liste des documents à contrôler
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Collection<SimpleDigitalDocumentDTO> getAllDocumentsToCheck() {
+		final Set<DigitalDocument> digitalDocuments = digitalDocumentService.getAllDocumentsToCheck();
+		return digitalDocuments.stream()
+			.map(DigitalDocumentMapper.INSTANCE::digitalDocumentToSimpleDigitalDocumentDTO)
+			.collect(Collectors.toSet());
+	}
 
-        // si livraison rejetee automatiquement (donc tous ses docs sont rejetes)
-        if (Delivery.DeliveryStatus.AUTOMATICALLY_REJECTED.equals(delivery.getStatus())) {
+	/**
+	 * Récupère une page
+	 * @param identifier
+	 * @param pageNumber
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public SimpleDocPageDTO getPage(final String identifier, final int pageNumber) {
+		return DocPageMapper.INSTANCE
+			.docPageToSimpleDocPageDTO(digitalDocumentService.getPageByOrder(identifier, pageNumber));
+	}
 
-            final Optional<DeliveredDocument> oneDoc = delivery.getDocuments().stream().findFirst();
-            if (oneDoc.isPresent()) {
-                final String docUnitId = oneDoc.get().getDigitalDocument().getDocUnit().getIdentifier();
-                digitalDocumentService.generateAndSendCheckSlip(docUnitId, oneDoc);
-            }
-        }
-    }
+	/**
+	 * Recherche par filtres.
+	 */
+	@Transactional(readOnly = true)
+	public Page<SimpleListDigitalDocumentDTO> search(final String search, final List<String> status,
+			final List<String> filteredLibraries, final List<String> projects, final List<String> lots,
+			final List<String> trains, final List<String> libraries, final LocalDate dateFrom, final LocalDate dateTo,
+			final LocalDate dateLimitFrom, final LocalDate dateLimitTo, final String searchPgcnId,
+			final String searchTitre, final String searchRadical, final List<String> searchFileFormats,
+			final List<String> searchMaxAngles, final Integer searchPageFrom, final Integer searchPageTo,
+			final Long searchPageCheckFrom, final Long searchPageCheckTo, final Double searchMinSize,
+			final Double searchMaxSize, final boolean validated, final Integer page, final Integer size,
+			final List<String> sorts) {
 
-    /**
-     * Fin de controle d'un échantillon.
-     *
-     * @param identifier
-     * @param checksOK
-     */
-    @Transactional
-    public void endChecksForSampling(final String identifier, final boolean checksOK) {
-        final SampleDTO sample = sampleService.getOne(identifier);
-        sample.getDocuments().forEach(doc -> endChecks(doc.getIdentifier(), checksOK));
-    }
+		final Sort sort = SortUtils.getSort(sorts);
+		final Pageable pageRequest = PageRequest.of(page, size, sort);
 
-    /**
-     * Fin de controle d'un document.
-     *
-     * @param identifier
-     * @param checksOK
-     */
-    @Transactional
-    public void endChecks(final String identifier, final boolean checksOK) {
+		// Statut en attente de relivraison
+		boolean relivraison = false;
+		if (status != null && status.contains("RELIVRAISON_DOCUMENT_EN_COURS")) {
+			relivraison = true;
+			// Le statut en attente de relivraison n'est pas un statut de document
+			// numérique de l'unité documentaire
+			status.remove("RELIVRAISON_DOCUMENT_EN_COURS");
+		}
 
-        final DigitalDocument digitalDocument = digitalDocumentService.findOne(identifier);
-        final CustomUserDetails currentUser = SecurityUtils.getCurrentUser();
-        final String docUnitId = digitalDocument.getDocUnit().getIdentifier();
+		final Page<DigitalDocument> docs = digitalDocumentService.search(search, status, filteredLibraries, projects,
+				lots, trains, libraries, dateFrom, dateTo, dateLimitFrom, dateLimitTo, relivraison, searchPgcnId,
+				searchTitre, searchRadical, searchFileFormats, searchMaxAngles, searchPageFrom, searchPageTo,
+				searchPageCheckFrom, searchPageCheckTo, searchMinSize, searchMaxSize, validated, pageRequest);
 
-        final DocUnit docUnit = docUnitService.findOneWithAllDependenciesForWorkflow(docUnitId);
-        final User user = userService.findByIdentifier(currentUser.getIdentifier());
+		final Page<SimpleListDigitalDocumentDTO> docDtos = docs
+			.map(DigitalDocumentMapper.INSTANCE::digitalDocumentToSimpleListDigitalDocumentDTO);
+		docDtos.forEach(doc -> {
+			final Optional<ConditionReportDetail> det = reportDetailService
+				.getLastDetailByDocUnitId(doc.getDocUnit().getIdentifier());
+			det.ifPresent(conditionReportDetail -> doc.setReportDetail(getLightReportDetail(conditionReportDetail)));
+			final List<LightDeliveredDigitalDocDTO> deliveredDigitalDocDTOS = doc.getDeliveries()
+				.stream()
+				.sorted(Comparator.comparing(LightDeliveredDigitalDocDTO::getDeliveryDate).reversed())
+				.collect(Collectors.toList());
+			doc.setDeliveries(deliveredDigitalDocDTOS);
+		});
+		return docDtos;
+	}
 
-        if (checksOK) {  // Accepter
-            if (workflowService.isStateRunning(docUnit, WorkflowStateKey.CONTROLE_QUALITE_EN_COURS)) {
-                workflowService.processState(docUnit, WorkflowStateKey.CONTROLE_QUALITE_EN_COURS, user);
-            }
-            if (workflowService.isStateRunning(docUnit, WorkflowStateKey.PREVALIDATION_DOCUMENT)) {
-                digitalDocument.setStatus(DigitalDocumentStatus.PRE_VALIDATED);
-                workflowService.processState(docUnit, WorkflowStateKey.PREVALIDATION_DOCUMENT, user);
-            } else if (workflowService.isStateRunning(docUnit, WorkflowStateKey.VALIDATION_DOCUMENT)) {
-                digitalDocument.setStatus(DigitalDocumentStatus.VALIDATED);
-                workflowService.processState(docUnit, WorkflowStateKey.VALIDATION_DOCUMENT, user);
-            } else {
-                digitalDocument.setStatus(DigitalDocumentStatus.VALIDATED);
-            }
+	private LightCondReportDetailDTO getLightReportDetail(final ConditionReportDetail detail) {
+		final LightCondReportDetailDTO detailDto = new LightCondReportDetailDTO();
+		detailDto.setDim1(detail.getDim1());
+		detailDto.setDim2(detail.getDim2());
+		detailDto.setDim3(detail.getDim3());
+		detailDto.setNbViewTotal(detail.getNbViewTotal());
+		if (detail.getInsurance() != null) {
+			detailDto.setInsurance(numFormatter.format(detail.getInsurance()));
+		}
+		else {
+			detailDto.setInsurance("0,00");
+		}
+		return detailDto;
+	}
 
-        } else { // Rejeter
-            if (workflowService.isStateRunning(docUnit, WorkflowStateKey.CONTROLE_QUALITE_EN_COURS)) {
-                workflowService.rejectState(docUnit, WorkflowStateKey.CONTROLE_QUALITE_EN_COURS, user);
-            }
-            if (workflowService.isStateRunning(docUnit, WorkflowStateKey.PREREJET_DOCUMENT)) {
-                digitalDocument.setStatus(DigitalDocumentStatus.PRE_REJECTED);
-                workflowService.processState(docUnit, WorkflowStateKey.PREREJET_DOCUMENT, user);
-            } else if (workflowService.isStateRunning(docUnit, WorkflowStateKey.VALIDATION_DOCUMENT)) {
-                digitalDocument.setStatus(DigitalDocumentStatus.REJECTED);
-                workflowService.rejectState(docUnit, WorkflowStateKey.VALIDATION_DOCUMENT, user);
-            } else {
-                digitalDocument.setStatus(DigitalDocumentStatus.REJECTED);
-            }
-        }
+	/**
+	 * Finalise le process de livraison en cas de rejet automatique.
+	 * @param delivery
+	 */
+	@Transactional
+	public void endAutoChecks(final Delivery delivery) {
 
-        // on met à jour le doc livré le plus récent
-        final Optional<DeliveredDocument> lastDeliveredDoc = digitalDocument.getDeliveries()
-                                                                            .stream()
-                                                                            .max(Comparator.nullsLast(Comparator.comparing(DeliveredDocument::getCreatedDate)));
+		// si livraison rejetee automatiquement (donc tous ses docs sont rejetes)
+		if (Delivery.DeliveryStatus.AUTOMATICALLY_REJECTED.equals(delivery.getStatus())) {
 
-        lastDeliveredDoc.ifPresent(doc -> {
-            doc.setStatus(digitalDocument.getStatus());
-            if (DigitalDocumentStatus.PRE_REJECTED != doc.getStatus()) {
-                final Set<DeliveredDocument> documents = deliveryRepository.findSimpleDeliveredDocumentsByDeliveryIdentifier(doc.getDelivery().getIdentifier());
-                if (digitalDocumentService.allDeliveryDocsChecked(documents, doc)) {
-                    doc.getDelivery().setStatus(Delivery.DeliveryStatus.TREATED);
-                }
-            }
-            deliveryRepository.save(doc.getDelivery());
-        });
+			final Optional<DeliveredDocument> oneDoc = delivery.getDocuments().stream().findFirst();
+			if (oneDoc.isPresent()) {
+				final String docUnitId = oneDoc.get().getDigitalDocument().getDocUnit().getIdentifier();
+				digitalDocumentService.generateAndSendCheckSlip(docUnitId, oneDoc);
+			}
+		}
+	}
 
-        // MAJ historique.
-        docCheckHistoryService.update(digitalDocument, user, lastDeliveredDoc);
+	/**
+	 * Fin de controle d'un échantillon.
+	 * @param identifier
+	 * @param checksOK
+	 */
+	@Transactional
+	public void endChecksForSampling(final String identifier, final boolean checksOK) {
+		final SampleDTO sample = sampleService.getOne(identifier);
+		sample.getDocuments().forEach(doc -> endChecks(doc.getIdentifier(), checksOK));
+	}
 
-        digitalDocumentService.generateAndSendCheckSlip(docUnitId, lastDeliveredDoc);
-        digitalDocumentService.save(digitalDocument);
-    }
+	/**
+	 * Fin de controle d'un document.
+	 * @param identifier
+	 * @param checksOK
+	 */
+	@Transactional
+	public void endChecks(final String identifier, final boolean checksOK) {
+
+		final DigitalDocument digitalDocument = digitalDocumentService.findOne(identifier);
+		final CustomUserDetails currentUser = SecurityUtils.getCurrentUser();
+		final String docUnitId = digitalDocument.getDocUnit().getIdentifier();
+
+		final DocUnit docUnit = docUnitService.findOneWithAllDependenciesForWorkflow(docUnitId);
+		final User user = userService.findByIdentifier(currentUser.getIdentifier());
+
+		if (checksOK) { // Accepter
+			if (workflowService.isStateRunning(docUnit, WorkflowStateKey.CONTROLE_QUALITE_EN_COURS)) {
+				workflowService.processState(docUnit, WorkflowStateKey.CONTROLE_QUALITE_EN_COURS, user);
+			}
+			if (workflowService.isStateRunning(docUnit, WorkflowStateKey.PREVALIDATION_DOCUMENT)) {
+				digitalDocument.setStatus(DigitalDocumentStatus.PRE_VALIDATED);
+				workflowService.processState(docUnit, WorkflowStateKey.PREVALIDATION_DOCUMENT, user);
+			}
+			else if (workflowService.isStateRunning(docUnit, WorkflowStateKey.VALIDATION_DOCUMENT)) {
+				digitalDocument.setStatus(DigitalDocumentStatus.VALIDATED);
+				workflowService.processState(docUnit, WorkflowStateKey.VALIDATION_DOCUMENT, user);
+			}
+			else {
+				digitalDocument.setStatus(DigitalDocumentStatus.VALIDATED);
+			}
+
+		}
+		else { // Rejeter
+			if (workflowService.isStateRunning(docUnit, WorkflowStateKey.CONTROLE_QUALITE_EN_COURS)) {
+				workflowService.rejectState(docUnit, WorkflowStateKey.CONTROLE_QUALITE_EN_COURS, user);
+			}
+			if (workflowService.isStateRunning(docUnit, WorkflowStateKey.PREREJET_DOCUMENT)) {
+				digitalDocument.setStatus(DigitalDocumentStatus.PRE_REJECTED);
+				workflowService.processState(docUnit, WorkflowStateKey.PREREJET_DOCUMENT, user);
+			}
+			else if (workflowService.isStateRunning(docUnit, WorkflowStateKey.VALIDATION_DOCUMENT)) {
+				digitalDocument.setStatus(DigitalDocumentStatus.REJECTED);
+				workflowService.rejectState(docUnit, WorkflowStateKey.VALIDATION_DOCUMENT, user);
+			}
+			else {
+				digitalDocument.setStatus(DigitalDocumentStatus.REJECTED);
+			}
+		}
+
+		// on met à jour le doc livré le plus récent
+		final Optional<DeliveredDocument> lastDeliveredDoc = digitalDocument.getDeliveries()
+			.stream()
+			.max(Comparator.nullsLast(Comparator.comparing(DeliveredDocument::getCreatedDate)));
+
+		lastDeliveredDoc.ifPresent(doc -> {
+			doc.setStatus(digitalDocument.getStatus());
+			if (DigitalDocumentStatus.PRE_REJECTED != doc.getStatus()) {
+				final Set<DeliveredDocument> documents = deliveryRepository
+					.findSimpleDeliveredDocumentsByDeliveryIdentifier(doc.getDelivery().getIdentifier());
+				if (digitalDocumentService.allDeliveryDocsChecked(documents, doc)) {
+					doc.getDelivery().setStatus(Delivery.DeliveryStatus.TREATED);
+				}
+			}
+			deliveryRepository.save(doc.getDelivery());
+		});
+
+		// MAJ historique.
+		docCheckHistoryService.update(digitalDocument, user, lastDeliveredDoc);
+
+		digitalDocumentService.generateAndSendCheckSlip(docUnitId, lastDeliveredDoc);
+		digitalDocumentService.save(digitalDocument);
+	}
 
 }

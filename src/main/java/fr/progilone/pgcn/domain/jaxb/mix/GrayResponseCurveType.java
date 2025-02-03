@@ -31,14 +31,14 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum GrayResponseCurveType {
 
-    N;
+	N;
 
-    public String value() {
-        return name();
-    }
+	public String value() {
+		return name();
+	}
 
-    public static GrayResponseCurveType fromValue(String v) {
-        return valueOf(v);
-    }
+	public static GrayResponseCurveType fromValue(String v) {
+		return valueOf(v);
+	}
 
 }

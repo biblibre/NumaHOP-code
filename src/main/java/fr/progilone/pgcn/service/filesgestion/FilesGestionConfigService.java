@@ -12,28 +12,30 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class FilesGestionConfigService {
 
-    @Autowired
-    private FilesGestionConfigRepository filesGestionConfigRepository;
+	@Autowired
+	private FilesGestionConfigRepository filesGestionConfigRepository;
 
-    @Transactional
-    public FilesGestionConfigDTO getConfigByLibrary(final String libraryIdentifier) {
-        return FilesGestionConfigMapper.INSTANCE.configToConfigDto(filesGestionConfigRepository.getOneByLibraryIdentifier(libraryIdentifier));
-    }
+	@Transactional
+	public FilesGestionConfigDTO getConfigByLibrary(final String libraryIdentifier) {
+		return FilesGestionConfigMapper.INSTANCE
+			.configToConfigDto(filesGestionConfigRepository.getOneByLibraryIdentifier(libraryIdentifier));
+	}
 
-    @Transactional
-    public List<FilesGestionConfig> getConfigs() {
-        return filesGestionConfigRepository.findAll();
-    }
+	@Transactional
+	public List<FilesGestionConfig> getConfigs() {
+		return filesGestionConfigRepository.findAll();
+	}
 
-    @Transactional
-    public FilesGestionConfig getOne(final String id) {
-        return filesGestionConfigRepository.findById(id).orElse(null);
-    }
+	@Transactional
+	public FilesGestionConfig getOne(final String id) {
+		return filesGestionConfigRepository.findById(id).orElse(null);
+	}
 
-    @Transactional
-    public FilesGestionConfigDTO save(final FilesGestionConfig config) throws PgcnValidationException {
-        final FilesGestionConfig saved = filesGestionConfigRepository.save(config);
+	@Transactional
+	public FilesGestionConfigDTO save(final FilesGestionConfig config) throws PgcnValidationException {
+		final FilesGestionConfig saved = filesGestionConfigRepository.save(config);
 
-        return FilesGestionConfigMapper.INSTANCE.configToConfigDto(getOne(saved.getIdentifier()));
-    }
+		return FilesGestionConfigMapper.INSTANCE.configToConfigDto(getOne(saved.getIdentifier()));
+	}
+
 }

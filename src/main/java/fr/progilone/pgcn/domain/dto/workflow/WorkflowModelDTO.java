@@ -7,105 +7,114 @@ import java.util.List;
 
 public class WorkflowModelDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String name;
-    private SimpleLibraryDTO library;
-    private String description;
-    private boolean active;
-    private List<WorkflowModelStateDTO> states;
+	private String identifier;
 
-    /**
-     * Ajout des infos de création
-     */
-    private String createdBy;
-    private LocalDateTime createdDate;
-    /**
-     * Ajout des infos de modifications
-     */
-    private String lastModifiedBy;
-    private LocalDateTime lastModifiedDate;
+	private String name;
 
-    public WorkflowModelDTO() {
+	private SimpleLibraryDTO library;
 
-    }
+	private String description;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private boolean active;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private List<WorkflowModelStateDTO> states;
 
-    public String getName() {
-        return name;
-    }
+	/**
+	 * Ajout des infos de création
+	 */
+	private String createdBy;
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	private LocalDateTime createdDate;
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	/**
+	 * Ajout des infos de modifications
+	 */
+	private String lastModifiedBy;
 
-    public void setLibrary(final SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	private LocalDateTime lastModifiedDate;
 
-    public String getDescription() {
-        return description;
-    }
+	public WorkflowModelDTO() {
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public List<WorkflowModelStateDTO> getStates() {
-        return states;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setStates(final List<WorkflowModelStateDTO> states) {
-        this.states = states;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
 
-    public void setCreatedBy(final String createdBy) {
-        this.createdBy = createdBy;
-    }
+	public void setLibrary(final SimpleLibraryDTO library) {
+		this.library = library;
+	}
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setCreatedDate(final LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public void setLastModifiedBy(final String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
 
-    public LocalDateTime getLastModifiedDate() {
-        return lastModifiedDate;
-    }
+	public List<WorkflowModelStateDTO> getStates() {
+		return states;
+	}
 
-    public void setLastModifiedDate(final LocalDateTime lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
+	public void setStates(final List<WorkflowModelStateDTO> states) {
+		this.states = states;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(final String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(final LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(final String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public LocalDateTime getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(final LocalDateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
 }

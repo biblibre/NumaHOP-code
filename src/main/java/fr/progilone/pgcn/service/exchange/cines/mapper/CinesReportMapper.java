@@ -8,7 +8,8 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface CinesReportMapper {
 
-    CinesReportMapper INSTANCE = Mappers.getMapper(CinesReportMapper.class);
+	CinesReportMapper INSTANCE = Mappers.getMapper(CinesReportMapper.class);
 
-    CinesReportDTO cinesReportToCinesReportDTO(CinesReport report);
+	CinesReportDTO cinesReportToCinesReportDTO(CinesReport report);
+
 }

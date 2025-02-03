@@ -14,38 +14,45 @@ import org.springframework.data.domain.Pageable;
 
 public class InternetArchiveConfigurationRepositoryImpl implements InternetArchiveConfigurationRepositoryCustom {
 
-    private final JPAQueryFactory queryFactory;
+	private final JPAQueryFactory queryFactory;
 
-    public InternetArchiveConfigurationRepositoryImpl(final JPAQueryFactory queryFactory) {
-        this.queryFactory = queryFactory;
-    }
+	public InternetArchiveConfigurationRepositoryImpl(final JPAQueryFactory queryFactory) {
+		this.queryFactory = queryFactory;
+	}
 
-    @Override
-    public Page<InternetArchiveConfiguration> search(final String search, final List<String> libraries, final Pageable pageable) {
+	@Override
+	public Page<InternetArchiveConfiguration> search(final String search, final List<String> libraries,
+			final Pageable pageable) {
 
-        final QInternetArchiveConfiguration configuration = QInternetArchiveConfiguration.internetArchiveConfiguration;
+		final QInternetArchiveConfiguration configuration = QInternetArchiveConfiguration.internetArchiveConfiguration;
 
-        final BooleanBuilder builder = new BooleanBuilder();
+		final BooleanBuilder builder = new BooleanBuilder();
 
-        if (StringUtils.isNotBlank(search)) {
-            final BooleanExpression nameFilter = configuration.label.containsIgnoreCase(search);
-            builder.andAnyOf(nameFilter);
-        }
-        if (libraries != null && !libraries.isEmpty()) {
-            final BooleanExpression libraryFilter = configuration.library.identifier.in(libraries);
-            builder.and(libraryFilter);
-        }
+		if (StringUtils.isNotBlank(search)) {
+			final BooleanExpression nameFilter = configuration.label.containsIgnoreCase(search);
+			builder.andAnyOf(nameFilter);
+		}
+		if (libraries != null && !libraries.isEmpty()) {
+			final BooleanExpression libraryFilter = configuration.library.identifier.in(libraries);
+			builder.and(libraryFilter);
+		}
 
-        final JPAQuery<InternetArchiveConfiguration> baseQuery = queryFactory.selectDistinct(configuration).from(configuration).where(builder);
+		final JPAQuery<InternetArchiveConfiguration> baseQuery = queryFactory.selectDistinct(configuration)
+			.from(configuration)
+			.where(builder);
 
-        final long total = baseQuery.clone().select(configuration.identifier.countDistinct()).fetchOne();
+		final long total = baseQuery.clone().select(configuration.identifier.countDistinct()).fetchOne();
 
-        if (pageable != null) {
-            baseQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
-        }
+		if (pageable != null) {
+			baseQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
+		}
 
-        final List<InternetArchiveConfiguration> result = baseQuery.leftJoin(configuration.library).fetchJoin().orderBy(configuration.label.asc()).fetch();
+		final List<InternetArchiveConfiguration> result = baseQuery.leftJoin(configuration.library)
+			.fetchJoin()
+			.orderBy(configuration.label.asc())
+			.fetch();
 
-        return new PageImpl<>(result, pageable, total);
-    }
+		return new PageImpl<>(result, pageable, total);
+	}
+
 }

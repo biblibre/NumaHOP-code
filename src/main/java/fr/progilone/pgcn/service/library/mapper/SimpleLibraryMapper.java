@@ -8,13 +8,14 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {RoleMapper.class})
+@Mapper(uses = { RoleMapper.class })
 public interface SimpleLibraryMapper {
 
-    SimpleLibraryMapper INSTANCE = Mappers.getMapper(SimpleLibraryMapper.class);
+	SimpleLibraryMapper INSTANCE = Mappers.getMapper(SimpleLibraryMapper.class);
 
-    SimpleLibraryDTO libraryToSimpleLibraryDTO(Library library);
+	SimpleLibraryDTO libraryToSimpleLibraryDTO(Library library);
 
-    @Mappings({@Mapping(ignore = true, target = "defaultRole")})
-    Library dtoToLibrary(SimpleLibraryDTO dto);
+	@Mappings({ @Mapping(ignore = true, target = "defaultRole") })
+	Library dtoToLibrary(SimpleLibraryDTO dto);
+
 }

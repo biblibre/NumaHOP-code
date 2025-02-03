@@ -32,58 +32,63 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api_int")
 public class InternalAccountResource {
 
-    private final Logger LOG = LoggerFactory.getLogger(InternalAccountResource.class);
+	private final Logger LOG = LoggerFactory.getLogger(InternalAccountResource.class);
 
-    private final PersistentTokenRepository persistentTokenRepository;
+	private final PersistentTokenRepository persistentTokenRepository;
 
-    @Value("${admin.login}")
-    private String adminLogin;
+	@Value("${admin.login}")
+	private String adminLogin;
 
-    @Autowired
-    public InternalAccountResource(final PersistentTokenRepository persistentTokenRepository) {
-        this.persistentTokenRepository = persistentTokenRepository;
-    }
+	@Autowired
+	public InternalAccountResource(final PersistentTokenRepository persistentTokenRepository) {
+		this.persistentTokenRepository = persistentTokenRepository;
+	}
 
-    /**
-     * GET /authenticate -> check if the user is authenticated, and return its login.
-     */
-    @RequestMapping(value = "/authenticate", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public String isAuthenticated(final HttpServletRequest request) {
-        LOG.debug("REST request to check if the current user is authenticated");
-        return request.getRemoteUser();
-    }
+	/**
+	 * GET /authenticate -> check if the user is authenticated, and return its login.
+	 */
+	@RequestMapping(value = "/authenticate", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public String isAuthenticated(final HttpServletRequest request) {
+		LOG.debug("REST request to check if the current user is authenticated");
+		return request.getRemoteUser();
+	}
 
-    /**
-     * Retourne un utilisateur ayant le role ADMIN si l'utilisateur est connecté avec le compte admin de l'application, rien sinon.
-     */
-    @RequestMapping(value = "/account", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
-    public ResponseEntity<UserAccountDTO> getAccount() {
-        final String currentLogin = SecurityUtils.getCurrentLogin();
-        if (StringUtils.equals(currentLogin, adminLogin)) {
-            return new ResponseEntity<>(new UserAccountDTO(currentLogin, null, "Admin", "Pgcn", null, null, Collections.singletonList("ROLE_ADMIN")), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-    }
+	/**
+	 * Retourne un utilisateur ayant le role ADMIN si l'utilisateur est connecté avec le
+	 * compte admin de l'application, rien sinon.
+	 */
+	@RequestMapping(value = "/account", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	public ResponseEntity<UserAccountDTO> getAccount() {
+		final String currentLogin = SecurityUtils.getCurrentLogin();
+		if (StringUtils.equals(currentLogin, adminLogin)) {
+			return new ResponseEntity<>(new UserAccountDTO(currentLogin, null, "Admin", "Pgcn", null, null,
+					Collections.singletonList("ROLE_ADMIN")), HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+	}
 
-    /**
-     * GET /account/sessions -> get the current open sessions.
-     */
-    @RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
-    @RequestMapping(value = "/account/sessions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<List<PersistentToken>> getCurrentSessions() {
-        return new ResponseEntity<>(persistentTokenRepository.findByAllWithUser(), HttpStatus.OK);
-    }
+	/**
+	 * GET /account/sessions -> get the current open sessions.
+	 */
+	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	@RequestMapping(value = "/account/sessions", method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<List<PersistentToken>> getCurrentSessions() {
+		return new ResponseEntity<>(persistentTokenRepository.findByAllWithUser(), HttpStatus.OK);
+	}
 
-    @RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
-    @RequestMapping(value = "/account/sessions/{series}", method = RequestMethod.DELETE)
-    @Timed
-    public void invalidateSession(@PathVariable final String series) throws UnsupportedEncodingException {
-        final String decodedSeries = URLDecoder.decode(series, "UTF-8");
-        persistentTokenRepository.deleteById(decodedSeries);
-    }
+	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	@RequestMapping(value = "/account/sessions/{series}", method = RequestMethod.DELETE)
+	@Timed
+	public void invalidateSession(@PathVariable final String series) throws UnsupportedEncodingException {
+		final String decodedSeries = URLDecoder.decode(series, "UTF-8");
+		persistentTokenRepository.deleteById(decodedSeries);
+	}
+
 }

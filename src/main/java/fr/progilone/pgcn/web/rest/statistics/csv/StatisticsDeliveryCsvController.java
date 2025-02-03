@@ -29,43 +29,50 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @PermitAll
 public class StatisticsDeliveryCsvController extends AbstractRestController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StatisticsDeliveryCsvController.class);
-    private static final String FILENAME = "export.csv";
+	private static final Logger LOG = LoggerFactory.getLogger(StatisticsDeliveryCsvController.class);
 
-    private final ExportCSVService statisticsCsvService;
-    private final StatisticsDeliveryController delegate;
-    private final AccessHelper accessHelper;
+	private static final String FILENAME = "export.csv";
 
-    public StatisticsDeliveryCsvController(final ExportCSVService statisticsCsvService, final StatisticsDeliveryController delegate, final AccessHelper accessHelper) {
-        this.statisticsCsvService = statisticsCsvService;
-        this.delegate = delegate;
-        this.accessHelper = accessHelper;
-    }
+	private final ExportCSVService statisticsCsvService;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"provider_delivery"}, produces = "text/csv")
-    @Timed
-    @ResponseStatus(HttpStatus.OK)
-    public void getProviderDeliveryStats(final HttpServletRequest request,
-                                         final HttpServletResponse response,
-                                         @RequestParam(value = "library", required = false) final List<String> libraries,
-                                         @RequestParam(value = "provider", required = false) final List<String> providers,
-                                         @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) final LocalDate fromDate,
-                                         @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
-                                         @RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
-                                         @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+	private final StatisticsDeliveryController delegate;
 
-        if (accessHelper.checkUserIsPresta()) { // no presta
-            return;
-        }
-        final ResponseEntity<List<StatisticsProviderDeliveryDTO>> result = delegate.getProviderDeliveryStats(request, libraries, providers, fromDate, toDate);
+	private final AccessHelper accessHelper;
 
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
-            statisticsCsvService.exportOrderedBeans(result.getBody(), response.getOutputStream(), encoding, separator);
+	public StatisticsDeliveryCsvController(final ExportCSVService statisticsCsvService,
+			final StatisticsDeliveryController delegate, final AccessHelper accessHelper) {
+		this.statisticsCsvService = statisticsCsvService;
+		this.delegate = delegate;
+		this.accessHelper = accessHelper;
+	}
 
-        } catch (final IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "provider_delivery" }, produces = "text/csv")
+	@Timed
+	@ResponseStatus(HttpStatus.OK)
+	public void getProviderDeliveryStats(final HttpServletRequest request, final HttpServletResponse response,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "provider", required = false) final List<String> providers,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from",
+					required = false) final LocalDate fromDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
+			@RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+
+		if (accessHelper.checkUserIsPresta()) { // no presta
+			return;
+		}
+		final ResponseEntity<List<StatisticsProviderDeliveryDTO>> result = delegate.getProviderDeliveryStats(request,
+				libraries, providers, fromDate, toDate);
+
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
+			statisticsCsvService.exportOrderedBeans(result.getBody(), response.getOutputStream(), encoding, separator);
+
+		}
+		catch (final IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
+
 }

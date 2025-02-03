@@ -16,170 +16,174 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Cette classe parcourt un iterateur, effectue un job pour chaque élément.
- * On peut suivre la progression du job grâce à progressJob.
+ * Cette classe parcourt un iterateur, effectue un job pour chaque élément. On peut suivre
+ * la progression du job grâce à progressJob.
  */
 public class JobRunner<T> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JobRunner.class);
+	private static final Logger LOG = LoggerFactory.getLogger(JobRunner.class);
 
-    private final Iterator<T> iterator;   // Itérateur sur les objets à traiter
+	private final Iterator<T> iterator; // Itérateur sur les objets à traiter
 
-    private String elementName = "enregistrements";
-    private int maxThreads = 1; // spécifie le nombre de threads utilisés par le traitement
+	private String elementName = "enregistrements";
 
-    /**
-     * Lorsqu'une exception est lancée par le job:
-     * - true: Le traitement s'arrête, l'exception est relancée
-     * - false: Le traitement se poursuit, un rollback est fait sur la transaction en cours
-     */
-    private boolean failOnException = true;
+	private int maxThreads = 1; // spécifie le nombre de threads utilisés par le
+								// traitement
 
-    /**
-     * Job à exécuter
-     */
-    private ImportJob<T> job;
+	/**
+	 * Lorsqu'une exception est lancée par le job: - true: Le traitement s'arrête,
+	 * l'exception est relancée - false: Le traitement se poursuit, un rollback est fait
+	 * sur la transaction en cours
+	 */
+	private boolean failOnException = true;
 
-    /**
-     * Suivi de la progression du job
-     */
-    private Consumer<Long> progressJob = lg -> {
-    };
+	/**
+	 * Job à exécuter
+	 */
+	private ImportJob<T> job;
 
-    public JobRunner(final Iterator<T> iterator) {
-        this.iterator = iterator;
-    }
+	/**
+	 * Suivi de la progression du job
+	 */
+	private Consumer<Long> progressJob = lg -> {
+	};
 
-    /**
-     * Définit le nombre max de thread comme étant le nombre de proc - 2, et au minimum 1
-     *
-     * @return
-     */
-    public JobRunner<T> autoSetMaxThreads() {
-        final int nbProc = Runtime.getRuntime().availableProcessors();
-        this.maxThreads = nbProc > 2 ? nbProc - 2
-                                     : 1;
-        return this;
-    }
+	public JobRunner(final Iterator<T> iterator) {
+		this.iterator = iterator;
+	}
 
-    public JobRunner<T> setMaxThreads(final int maxThreads) {
-        this.maxThreads = maxThreads;
-        return this;
-    }
+	/**
+	 * Définit le nombre max de thread comme étant le nombre de proc - 2, et au minimum 1
+	 * @return
+	 */
+	public JobRunner<T> autoSetMaxThreads() {
+		final int nbProc = Runtime.getRuntime().availableProcessors();
+		this.maxThreads = nbProc > 2 ? nbProc - 2 : 1;
+		return this;
+	}
 
-    public JobRunner<T> setFailOnException(final boolean failOnException) {
-        this.failOnException = failOnException;
-        return this;
-    }
+	public JobRunner<T> setMaxThreads(final int maxThreads) {
+		this.maxThreads = maxThreads;
+		return this;
+	}
 
-    public JobRunner<T> setElementName(final String elementName) {
-        this.elementName = elementName;
-        return this;
-    }
+	public JobRunner<T> setFailOnException(final boolean failOnException) {
+		this.failOnException = failOnException;
+		return this;
+	}
 
-    /**
-     * Traitement d'une notice
-     *
-     * @param job
-     *            le job retourne true si il est réalisé avec succès
-     */
-    public JobRunner<T> forEach(final ImportJob<T> job) {
-        this.job = job;
-        return this;
-    }
+	public JobRunner<T> setElementName(final String elementName) {
+		this.elementName = elementName;
+		return this;
+	}
 
-    /**
-     * Consumer permettant de suivre la progression du job
-     */
-    public JobRunner<T> onProgress(final Consumer<Long> progressJob) {
-        this.progressJob = progressJob;
-        return this;
-    }
+	/**
+	 * Traitement d'une notice
+	 * @param job le job retourne true si il est réalisé avec succès
+	 */
+	public JobRunner<T> forEach(final ImportJob<T> job) {
+		this.job = job;
+		return this;
+	}
 
-    /**
-     * Lancement du traitement
-     */
-    public void process() {
-        final AtomicLong nbErrors = new AtomicLong(0);    // Nombre de transactions en échec
-        final AtomicLong nbSuccess = new AtomicLong(0);   // Nombre de transactions réussies
-        final LocalDateTime start = LocalDateTime.now();
+	/**
+	 * Consumer permettant de suivre la progression du job
+	 */
+	public JobRunner<T> onProgress(final Consumer<Long> progressJob) {
+		this.progressJob = progressJob;
+		return this;
+	}
 
-        final ExecutorService executorService = Executors.newFixedThreadPool(maxThreads);
-        final Collection<Callable<Object>> jobs = new ArrayList<>(maxThreads);
+	/**
+	 * Lancement du traitement
+	 */
+	public void process() {
+		final AtomicLong nbErrors = new AtomicLong(0); // Nombre de transactions en échec
+		final AtomicLong nbSuccess = new AtomicLong(0); // Nombre de transactions réussies
+		final LocalDateTime start = LocalDateTime.now();
 
-        // Notification initiale
-        progressJob.accept(nbSuccess.get());
+		final ExecutorService executorService = Executors.newFixedThreadPool(maxThreads);
+		final Collection<Callable<Object>> jobs = new ArrayList<>(maxThreads);
 
-        // Initialisation des traitements
-        for (int nbThread = 0; nbThread < maxThreads; nbThread++) {
-            jobs.add(Executors.callable(() -> {
-                try {
-                    T record = getNext();
-                    while (record != null) {
-                        // Exécution du job
-                        final boolean result = job.run(record);
-                        if (result) {
-                            nbSuccess.incrementAndGet();
-                        } else {
-                            nbErrors.incrementAndGet();
-                            LOG.info("{} {} non traités", nbSuccess, elementName, nbErrors, elementName);
-                        }
+		// Notification initiale
+		progressJob.accept(nbSuccess.get());
 
-                        LOG.debug("{} {} traités avec succès - {} {} non traités", nbSuccess, elementName, nbErrors, elementName);
-                        record = getNext();
-                    }
+		// Initialisation des traitements
+		for (int nbThread = 0; nbThread < maxThreads; nbThread++) {
+			jobs.add(Executors.callable(() -> {
+				try {
+					T record = getNext();
+					while (record != null) {
+						// Exécution du job
+						final boolean result = job.run(record);
+						if (result) {
+							nbSuccess.incrementAndGet();
+						}
+						else {
+							nbErrors.incrementAndGet();
+							LOG.info("{} {} non traités", nbSuccess, elementName, nbErrors, elementName);
+						}
 
-                } catch (final Throwable e) {
-                    // Rollback transaction
-                    LOG.error(e.getMessage(), e);
+						LOG.debug("{} {} traités avec succès - {} {} non traités", nbSuccess, elementName, nbErrors,
+								elementName);
+						record = getNext();
+					}
 
-                    if (failOnException) {
-                        throw e;
-                    }
+				}
+				catch (final Throwable e) {
+					// Rollback transaction
+					LOG.error(e.getMessage(), e);
 
-                }
-            }));
-        }
-        // Lancement des traitements
-        try {
-            LOG.info("Lancement de {} traitement(s)", jobs.size());
-            final List<Future<Object>> futures = executorService.invokeAll(jobs);
+					if (failOnException) {
+						throw e;
+					}
 
-            // Vérification du résultat des traitements: future.get() lance une ExecutionException si le job a donné lieu à une exception
-            for (final Future<Object> future : futures) {
-                future.get();
-            }
+				}
+			}));
+		}
+		// Lancement des traitements
+		try {
+			LOG.info("Lancement de {} traitement(s)", jobs.size());
+			final List<Future<Object>> futures = executorService.invokeAll(jobs);
 
-        } catch (final Throwable e) {
-            LOG.error("Problème d'exécution multithreading : {}", e.getMessage(), e);
-            throw new RuntimeException(e);
+			// Vérification du résultat des traitements: future.get() lance une
+			// ExecutionException si le job a donné lieu à une exception
+			for (final Future<Object> future : futures) {
+				future.get();
+			}
 
-        } finally {
-            executorService.shutdown();
-            final Duration duration = Duration.between(start, LocalDateTime.now());
-            LOG.info("{} traitement(s) terminé(s) en {} secondes", jobs.size(), duration.getSeconds());
-            LOG.debug("Statut du service d'exécution: {}", executorService.toString());
-        }
-    }
+		}
+		catch (final Throwable e) {
+			LOG.error("Problème d'exécution multithreading : {}", e.getMessage(), e);
+			throw new RuntimeException(e);
 
-    /**
-     * Récupération de l'élément à traiter suivant
-     *
-     * @return
-     */
-    private T getNext() {
-        synchronized (iterator) {
-            if (iterator.hasNext()) {
-                return iterator.next();
-            }
-            return null;
-        }
-    }
+		}
+		finally {
+			executorService.shutdown();
+			final Duration duration = Duration.between(start, LocalDateTime.now());
+			LOG.info("{} traitement(s) terminé(s) en {} secondes", jobs.size(), duration.getSeconds());
+			LOG.debug("Statut du service d'exécution: {}", executorService.toString());
+		}
+	}
 
-    @FunctionalInterface
-    public interface ImportJob<T> {
+	/**
+	 * Récupération de l'élément à traiter suivant
+	 * @return
+	 */
+	private T getNext() {
+		synchronized (iterator) {
+			if (iterator.hasNext()) {
+				return iterator.next();
+			}
+			return null;
+		}
+	}
 
-        boolean run(T t);
-    }
+	@FunctionalInterface
+	public interface ImportJob<T> {
+
+		boolean run(T t);
+
+	}
 
 }

@@ -43,189 +43,198 @@ import java.util.ArrayList;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "event", propOrder = {"content"})
+@XmlType(name = "event", propOrder = { "content" })
 public class Event {
 
-    @XmlElementRefs({@XmlElementRef(name = "ptr", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "note", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "genreform", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "origination", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "chronlist", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "abbr", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "num", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "extptr", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "unitdate", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "occupation", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "corpname", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "emph", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "blockquote", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "linkgrp", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "address", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "list", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "archref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "expan", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "name", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "function", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "title", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "lb", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "table", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "extref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "ref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "subject", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "bibref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "repository", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "geogname", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "unittitle", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "persname", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "famname", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false),
-                     @XmlElementRef(name = "date", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class, required = false)})
-    @XmlMixed
-    protected java.util.List<Serializable> content;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	@XmlElementRefs({
+			@XmlElementRef(name = "ptr", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "note", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "genreform", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "origination", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "chronlist", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "abbr", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "num", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "extptr", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "unitdate", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "occupation", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "corpname", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "emph", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "blockquote", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "linkgrp", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "address", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "list", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "archref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "expan", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "name", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "function", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "title", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "lb", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "table", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "extref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "ref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "subject", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "bibref", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "repository", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "geogname", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "unittitle", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "persname", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "famname", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false),
+			@XmlElementRef(name = "date", namespace = "urn:isbn:1-931666-22-9", type = JAXBElement.class,
+					required = false) })
+	@XmlMixed
+	protected java.util.List<Serializable> content;
 
-    /**
-     * Gets the value of the content property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the content property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getContent().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link Ptr }{@code >}
-     * {@link JAXBElement }{@code <}{@link Note }{@code >}
-     * {@link JAXBElement }{@code <}{@link Genreform }{@code >}
-     * {@link JAXBElement }{@code <}{@link Origination }{@code >}
-     * {@link JAXBElement }{@code <}{@link Chronlist }{@code >}
-     * {@link JAXBElement }{@code <}{@link Abbr }{@code >}
-     * {@link JAXBElement }{@code <}{@link Num }{@code >}
-     * {@link JAXBElement }{@code <}{@link Extptr }{@code >}
-     * {@link JAXBElement }{@code <}{@link Unitdate }{@code >}
-     * {@link JAXBElement }{@code <}{@link Occupation }{@code >}
-     * {@link JAXBElement }{@code <}{@link Corpname }{@code >}
-     * {@link String }
-     * {@link JAXBElement }{@code <}{@link Emph }{@code >}
-     * {@link JAXBElement }{@code <}{@link Blockquote }{@code >}
-     * {@link JAXBElement }{@code <}{@link Linkgrp }{@code >}
-     * {@link JAXBElement }{@code <}{@link Address }{@code >}
-     * {@link JAXBElement }{@code <}{@link List }{@code >}
-     * {@link JAXBElement }{@code <}{@link Archref }{@code >}
-     * {@link JAXBElement }{@code <}{@link Expan }{@code >}
-     * {@link JAXBElement }{@code <}{@link Name }{@code >}
-     * {@link JAXBElement }{@code <}{@link Function }{@code >}
-     * {@link JAXBElement }{@code <}{@link Title }{@code >}
-     * {@link JAXBElement }{@code <}{@link Lb }{@code >}
-     * {@link JAXBElement }{@code <}{@link Table }{@code >}
-     * {@link JAXBElement }{@code <}{@link Extref }{@code >}
-     * {@link JAXBElement }{@code <}{@link Ref }{@code >}
-     * {@link JAXBElement }{@code <}{@link Subject }{@code >}
-     * {@link JAXBElement }{@code <}{@link Bibref }{@code >}
-     * {@link JAXBElement }{@code <}{@link Repository }{@code >}
-     * {@link JAXBElement }{@code <}{@link Geogname }{@code >}
-     * {@link JAXBElement }{@code <}{@link Unittitle }{@code >}
-     * {@link JAXBElement }{@code <}{@link Persname }{@code >}
-     * {@link JAXBElement }{@code <}{@link Famname }{@code >}
-     * {@link JAXBElement }{@code <}{@link Date }{@code >}
-     *
-     *
-     */
-    public java.util.List<Serializable> getContent() {
-        if (content == null) {
-            content = new ArrayList<>();
-        }
-        return this.content;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Gets the value of the content property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the content
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getContent().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link JAXBElement
+	 * }{@code <}{@link Ptr }{@code >} {@link JAXBElement }{@code <}{@link Note }{@code >}
+	 * {@link JAXBElement }{@code <}{@link Genreform }{@code >} {@link JAXBElement
+	 * }{@code <}{@link Origination }{@code >} {@link JAXBElement
+	 * }{@code <}{@link Chronlist }{@code >} {@link JAXBElement }{@code <}{@link Abbr
+	 * }{@code >} {@link JAXBElement }{@code <}{@link Num }{@code >} {@link JAXBElement
+	 * }{@code <}{@link Extptr }{@code >} {@link JAXBElement }{@code <}{@link Unitdate
+	 * }{@code >} {@link JAXBElement }{@code <}{@link Occupation }{@code >}
+	 * {@link JAXBElement }{@code <}{@link Corpname }{@code >} {@link String }
+	 * {@link JAXBElement }{@code <}{@link Emph }{@code >} {@link JAXBElement
+	 * }{@code <}{@link Blockquote }{@code >} {@link JAXBElement }{@code <}{@link Linkgrp
+	 * }{@code >} {@link JAXBElement }{@code <}{@link Address }{@code >}
+	 * {@link JAXBElement }{@code <}{@link List }{@code >} {@link JAXBElement
+	 * }{@code <}{@link Archref }{@code >} {@link JAXBElement }{@code <}{@link Expan
+	 * }{@code >} {@link JAXBElement }{@code <}{@link Name }{@code >} {@link JAXBElement
+	 * }{@code <}{@link Function }{@code >} {@link JAXBElement }{@code <}{@link Title
+	 * }{@code >} {@link JAXBElement }{@code <}{@link Lb }{@code >} {@link JAXBElement
+	 * }{@code <}{@link Table }{@code >} {@link JAXBElement }{@code <}{@link Extref
+	 * }{@code >} {@link JAXBElement }{@code <}{@link Ref }{@code >} {@link JAXBElement
+	 * }{@code <}{@link Subject }{@code >} {@link JAXBElement }{@code <}{@link Bibref
+	 * }{@code >} {@link JAXBElement }{@code <}{@link Repository }{@code >}
+	 * {@link JAXBElement }{@code <}{@link Geogname }{@code >} {@link JAXBElement
+	 * }{@code <}{@link Unittitle }{@code >} {@link JAXBElement }{@code <}{@link Persname
+	 * }{@code >} {@link JAXBElement }{@code <}{@link Famname }{@code >}
+	 * {@link JAXBElement }{@code <}{@link Date }{@code >}
+	 *
+	 *
+	 */
+	public java.util.List<Serializable> getContent() {
+		if (content == null) {
+			content = new ArrayList<>();
+		}
+		return this.content;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

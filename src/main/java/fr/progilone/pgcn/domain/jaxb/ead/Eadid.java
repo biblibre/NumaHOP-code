@@ -42,223 +42,182 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "eadid", propOrder = {"content"})
+@XmlType(name = "eadid", propOrder = { "content" })
 public class Eadid {
 
-    @XmlValue
-    protected String content;
-    @XmlAttribute(name = "publicid")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String publicid;
-    @XmlAttribute(name = "urn")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String urn;
-    @XmlAttribute(name = "url")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String url;
-    @XmlAttribute(name = "mainagencycode")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String mainagencycode;
-    @XmlAttribute(name = "identifier")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String identifier;
-    @XmlAttribute(name = "encodinganalog")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String encodinganalog;
-    @XmlAttribute(name = "countrycode")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String countrycode;
+	@XmlValue
+	protected String content;
 
-    /**
-     * Obtient la valeur de la propriété content.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getContent() {
-        return content;
-    }
+	@XmlAttribute(name = "publicid")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String publicid;
 
-    /**
-     * Définit la valeur de la propriété content.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setContent(String value) {
-        this.content = value;
-    }
+	@XmlAttribute(name = "urn")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String urn;
 
-    /**
-     * Obtient la valeur de la propriété publicid.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getPublicid() {
-        return publicid;
-    }
+	@XmlAttribute(name = "url")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String url;
 
-    /**
-     * Définit la valeur de la propriété publicid.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setPublicid(String value) {
-        this.publicid = value;
-    }
+	@XmlAttribute(name = "mainagencycode")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String mainagencycode;
 
-    /**
-     * Obtient la valeur de la propriété urn.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getUrn() {
-        return urn;
-    }
+	@XmlAttribute(name = "identifier")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String identifier;
 
-    /**
-     * Définit la valeur de la propriété urn.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setUrn(String value) {
-        this.urn = value;
-    }
+	@XmlAttribute(name = "encodinganalog")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String encodinganalog;
 
-    /**
-     * Obtient la valeur de la propriété url.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getUrl() {
-        return url;
-    }
+	@XmlAttribute(name = "countrycode")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String countrycode;
 
-    /**
-     * Définit la valeur de la propriété url.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setUrl(String value) {
-        this.url = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété content.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getContent() {
+		return content;
+	}
 
-    /**
-     * Obtient la valeur de la propriété mainagencycode.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getMainagencycode() {
-        return mainagencycode;
-    }
+	/**
+	 * Définit la valeur de la propriété content.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setContent(String value) {
+		this.content = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété mainagencycode.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setMainagencycode(String value) {
-        this.mainagencycode = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété publicid.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getPublicid() {
+		return publicid;
+	}
 
-    /**
-     * Obtient la valeur de la propriété identifier.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getIdentifier() {
-        return identifier;
-    }
+	/**
+	 * Définit la valeur de la propriété publicid.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setPublicid(String value) {
+		this.publicid = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété identifier.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setIdentifier(String value) {
-        this.identifier = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété urn.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getUrn() {
+		return urn;
+	}
 
-    /**
-     * Obtient la valeur de la propriété encodinganalog.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getEncodinganalog() {
-        return encodinganalog;
-    }
+	/**
+	 * Définit la valeur de la propriété urn.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setUrn(String value) {
+		this.urn = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété encodinganalog.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setEncodinganalog(String value) {
-        this.encodinganalog = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété url.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getUrl() {
+		return url;
+	}
 
-    /**
-     * Obtient la valeur de la propriété countrycode.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getCountrycode() {
-        return countrycode;
-    }
+	/**
+	 * Définit la valeur de la propriété url.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setUrl(String value) {
+		this.url = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété countrycode.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setCountrycode(String value) {
-        this.countrycode = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété mainagencycode.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getMainagencycode() {
+		return mainagencycode;
+	}
+
+	/**
+	 * Définit la valeur de la propriété mainagencycode.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setMainagencycode(String value) {
+		this.mainagencycode = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété identifier.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	/**
+	 * Définit la valeur de la propriété identifier.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdentifier(String value) {
+		this.identifier = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété encodinganalog.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getEncodinganalog() {
+		return encodinganalog;
+	}
+
+	/**
+	 * Définit la valeur de la propriété encodinganalog.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setEncodinganalog(String value) {
+		this.encodinganalog = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété countrycode.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getCountrycode() {
+		return countrycode;
+	}
+
+	/**
+	 * Définit la valeur de la propriété countrycode.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setCountrycode(String value) {
+		this.countrycode = value;
+	}
 
 }

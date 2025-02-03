@@ -5,70 +5,77 @@ import fr.progilone.pgcn.domain.dto.train.SimpleTrainDTO;
 
 public class PhysicalDocumentDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String name;
-    private String digitalId;
-    private Integer totalPage;
-    private SimpleTrainDTO train;
-    private String commentaire;
+	private String identifier;
 
-    public PhysicalDocumentDTO(final String identifier, final String name, final String digitalId, final Integer totalPage, final SimpleTrainDTO train, final String commentaire) {
-        this.identifier = identifier;
-        this.name = name;
-        this.digitalId = digitalId;
-        this.totalPage = totalPage;
-        this.train = train;
-        this.commentaire = commentaire;
-    }
+	private String name;
 
-    public PhysicalDocumentDTO() {
-    }
+	private String digitalId;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private Integer totalPage;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private SimpleTrainDTO train;
 
-    public String getName() {
-        return name;
-    }
+	private String commentaire;
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	public PhysicalDocumentDTO(final String identifier, final String name, final String digitalId,
+			final Integer totalPage, final SimpleTrainDTO train, final String commentaire) {
+		this.identifier = identifier;
+		this.name = name;
+		this.digitalId = digitalId;
+		this.totalPage = totalPage;
+		this.train = train;
+		this.commentaire = commentaire;
+	}
 
-    public String getDigitalId() {
-        return digitalId;
-    }
+	public PhysicalDocumentDTO() {
+	}
 
-    public void setDigitalId(final String digitalId) {
-        this.digitalId = digitalId;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public SimpleTrainDTO getTrain() {
-        return train;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setTrain(final SimpleTrainDTO train) {
-        this.train = train;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Integer getTotalPage() {
-        return totalPage;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public void setTotalPage(final Integer totalPage) {
-        this.totalPage = totalPage;
-    }
+	public String getDigitalId() {
+		return digitalId;
+	}
 
-    public String getCommentaire() {
-        return commentaire;
-    }
+	public void setDigitalId(final String digitalId) {
+		this.digitalId = digitalId;
+	}
 
-    public void setCommentaire(final String commentaire) {
-        this.commentaire = commentaire;
-    }
+	public SimpleTrainDTO getTrain() {
+		return train;
+	}
+
+	public void setTrain(final SimpleTrainDTO train) {
+		this.train = train;
+	}
+
+	public Integer getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(final Integer totalPage) {
+		this.totalPage = totalPage;
+	}
+
+	public String getCommentaire() {
+		return commentaire;
+	}
+
+	public void setCommentaire(final String commentaire) {
+		this.commentaire = commentaire;
+	}
+
 }

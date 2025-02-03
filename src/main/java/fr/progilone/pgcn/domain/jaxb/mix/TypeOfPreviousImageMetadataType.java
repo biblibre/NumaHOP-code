@@ -37,40 +37,39 @@ import org.w3c.dom.Element;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "typeOfPreviousImageMetadataType", propOrder = {"any"})
+@XmlType(name = "typeOfPreviousImageMetadataType", propOrder = { "any" })
 public class TypeOfPreviousImageMetadataType {
 
-    @XmlAnyElement
-    protected List<Element> any;
+	@XmlAnyElement
+	protected List<Element> any;
 
-    /**
-     * Gets the value of the any property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the any property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getAny().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Element }
-     *
-     *
-     */
-    public List<Element> getAny() {
-        if (any == null) {
-            any = new ArrayList<>();
-        }
-        return this.any;
-    }
+	/**
+	 * Gets the value of the any property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the any
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getAny().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link Element }
+	 *
+	 *
+	 */
+	public List<Element> getAny() {
+		if (any == null) {
+			any = new ArrayList<>();
+		}
+		return this.any;
+	}
 
 }

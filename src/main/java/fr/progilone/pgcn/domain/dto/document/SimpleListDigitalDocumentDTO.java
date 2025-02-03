@@ -10,132 +10,146 @@ import java.util.List;
 
 public class SimpleListDigitalDocumentDTO extends AbstractDTO {
 
-    private String identifier;
-    private String digitalId;
-    private String pgcnId;
-    private String label;
-    private SimpleDocUnitDTO docUnit;
-    private SimpleProjectDTO project;
-    private SimpleLotDTO lot;
-    private DigitalDocument.DigitalDocumentStatus status;
-    private int totalDelivery;
-    private LocalDate deliveryDate;
-    private int pageNumber;
-    private List<LightDeliveredDigitalDocDTO> deliveries;
-    private LightCondReportDetailDTO reportDetail;
+	private String identifier;
 
-    public SimpleListDigitalDocumentDTO() {
-    }
+	private String digitalId;
 
-    public String getPgcnId() {
-        return pgcnId;
-    }
+	private String pgcnId;
 
-    public void setPgcnId(final String pgcnId) {
-        this.pgcnId = pgcnId;
-    }
+	private String label;
 
-    public String getLabel() {
-        return label;
-    }
+	private SimpleDocUnitDTO docUnit;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	private SimpleProjectDTO project;
 
-    public String getReducedLabel() {
-        if (label == null || label.length() < 25) {
-            return label;
-        } else {
-            return label.substring(0, 24).concat("...");
-        }
-    }
+	private SimpleLotDTO lot;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private DigitalDocument.DigitalDocumentStatus status;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private int totalDelivery;
 
-    public String getDigitalId() {
-        return digitalId;
-    }
+	private LocalDate deliveryDate;
 
-    public void setDigitalId(final String digitalId) {
-        this.digitalId = digitalId;
-    }
+	private int pageNumber;
 
-    public SimpleProjectDTO getProject() {
-        return project;
-    }
+	private List<LightDeliveredDigitalDocDTO> deliveries;
 
-    public void setProject(final SimpleProjectDTO project) {
-        this.project = project;
-    }
+	private LightCondReportDetailDTO reportDetail;
 
-    public SimpleDocUnitDTO getDocUnit() {
-        return docUnit;
-    }
+	public SimpleListDigitalDocumentDTO() {
+	}
 
-    public void setDocUnit(final SimpleDocUnitDTO docUnit) {
-        this.docUnit = docUnit;
-    }
+	public String getPgcnId() {
+		return pgcnId;
+	}
 
-    public SimpleLotDTO getLot() {
-        return lot;
-    }
+	public void setPgcnId(final String pgcnId) {
+		this.pgcnId = pgcnId;
+	}
 
-    public void setLot(final SimpleLotDTO lot) {
-        this.lot = lot;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public LocalDate getDeliveryDate() {
-        return deliveryDate;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setDeliveryDate(final LocalDate deliveryDate) {
-        this.deliveryDate = deliveryDate;
-    }
+	public String getReducedLabel() {
+		if (label == null || label.length() < 25) {
+			return label;
+		}
+		else {
+			return label.substring(0, 24).concat("...");
+		}
+	}
 
-    public int getTotalDelivery() {
-        return totalDelivery;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setTotalDelivery(final int totalDelivery) {
-        this.totalDelivery = totalDelivery;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public DigitalDocument.DigitalDocumentStatus getStatus() {
-        return status;
-    }
+	public String getDigitalId() {
+		return digitalId;
+	}
 
-    public void setStatus(final DigitalDocument.DigitalDocumentStatus status) {
-        this.status = status;
-    }
+	public void setDigitalId(final String digitalId) {
+		this.digitalId = digitalId;
+	}
 
-    public int getPageNumber() {
-        return pageNumber;
-    }
+	public SimpleProjectDTO getProject() {
+		return project;
+	}
 
-    public void setPageNumber(final int pageNumber) {
-        this.pageNumber = pageNumber;
-    }
+	public void setProject(final SimpleProjectDTO project) {
+		this.project = project;
+	}
 
-    public List<LightDeliveredDigitalDocDTO> getDeliveries() {
-        return deliveries;
-    }
+	public SimpleDocUnitDTO getDocUnit() {
+		return docUnit;
+	}
 
-    public void setDeliveries(final List<LightDeliveredDigitalDocDTO> deliveries) {
-        this.deliveries = deliveries;
-    }
+	public void setDocUnit(final SimpleDocUnitDTO docUnit) {
+		this.docUnit = docUnit;
+	}
 
-    public LightCondReportDetailDTO getReportDetail() {
-        return reportDetail;
-    }
+	public SimpleLotDTO getLot() {
+		return lot;
+	}
 
-    public void setReportDetail(final LightCondReportDetailDTO reportDetail) {
-        this.reportDetail = reportDetail;
-    }
+	public void setLot(final SimpleLotDTO lot) {
+		this.lot = lot;
+	}
+
+	public LocalDate getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(final LocalDate deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public int getTotalDelivery() {
+		return totalDelivery;
+	}
+
+	public void setTotalDelivery(final int totalDelivery) {
+		this.totalDelivery = totalDelivery;
+	}
+
+	public DigitalDocument.DigitalDocumentStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(final DigitalDocument.DigitalDocumentStatus status) {
+		this.status = status;
+	}
+
+	public int getPageNumber() {
+		return pageNumber;
+	}
+
+	public void setPageNumber(final int pageNumber) {
+		this.pageNumber = pageNumber;
+	}
+
+	public List<LightDeliveredDigitalDocDTO> getDeliveries() {
+		return deliveries;
+	}
+
+	public void setDeliveries(final List<LightDeliveredDigitalDocDTO> deliveries) {
+		this.deliveries = deliveries;
+	}
+
+	public LightCondReportDetailDTO getReportDetail() {
+		return reportDetail;
+	}
+
+	public void setReportDetail(final LightCondReportDetailDTO reportDetail) {
+		this.reportDetail = reportDetail;
+	}
+
 }

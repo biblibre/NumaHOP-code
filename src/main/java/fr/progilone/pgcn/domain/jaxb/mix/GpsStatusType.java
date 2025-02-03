@@ -32,15 +32,14 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum GpsStatusType {
 
-    A,
-    V;
+	A, V;
 
-    public String value() {
-        return name();
-    }
+	public String value() {
+		return name();
+	}
 
-    public static GpsStatusType fromValue(String v) {
-        return valueOf(v);
-    }
+	public static GpsStatusType fromValue(String v) {
+		return valueOf(v);
+	}
 
 }

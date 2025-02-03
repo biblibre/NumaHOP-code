@@ -9,10 +9,11 @@ import org.mapstruct.factory.Mappers;
 /**
  * Created by lebouchp on 03/02/2017.
  */
-@Mapper(uses = {SimpleLibraryMapper.class})
+@Mapper(uses = { SimpleLibraryMapper.class })
 public interface FTPConfigurationMapper {
 
-    FTPConfigurationMapper INSTANCE = Mappers.getMapper(FTPConfigurationMapper.class);
+	FTPConfigurationMapper INSTANCE = Mappers.getMapper(FTPConfigurationMapper.class);
 
-    FTPConfigurationDTO ftpConfigurationToFTPConfigurationDTO(FTPConfiguration ftpConfiguration);
+	FTPConfigurationDTO ftpConfigurationToFTPConfigurationDTO(FTPConfiguration ftpConfiguration);
+
 }

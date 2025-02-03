@@ -17,71 +17,72 @@ import java.util.Set;
 @Table(name = CheckSlip.TABLE_NAME)
 public class CheckSlip extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "check_slip";
+	public static final String TABLE_NAME = "check_slip";
 
-    /**
-     * Liste des documents concernés.
-     */
-    @OneToMany(mappedBy = "checkSlip", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final Set<DeliveredDocument> documents = new HashSet<>();
+	/**
+	 * Liste des documents concernés.
+	 */
+	@OneToMany(mappedBy = "checkSlip", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private final Set<DeliveredDocument> documents = new HashSet<>();
 
-    @OneToMany(mappedBy = "checkSlip", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final Set<CheckSlipLine> slipLines = new LinkedHashSet<>();
+	@OneToMany(mappedBy = "checkSlip", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private final Set<CheckSlipLine> slipLines = new LinkedHashSet<>();
 
-    @Column(name = "lot_label")
-    private String lotLabel;
+	@Column(name = "lot_label")
+	private String lotLabel;
 
-    @Column(name = "deposit_date")
-    private LocalDate depositDate;
+	@Column(name = "deposit_date")
+	private LocalDate depositDate;
 
-    @Column(name = "uncompleted")
-    private boolean uncompleted;
+	@Column(name = "uncompleted")
+	private boolean uncompleted;
 
-    public String getLotLabel() {
-        return lotLabel;
-    }
+	public String getLotLabel() {
+		return lotLabel;
+	}
 
-    public void setLotLabel(String lotLabel) {
-        this.lotLabel = lotLabel;
-    }
+	public void setLotLabel(String lotLabel) {
+		this.lotLabel = lotLabel;
+	}
 
-    public LocalDate getDepositDate() {
-        return depositDate;
-    }
+	public LocalDate getDepositDate() {
+		return depositDate;
+	}
 
-    public void setDepositDate(LocalDate depositDate) {
-        this.depositDate = depositDate;
-    }
+	public void setDepositDate(LocalDate depositDate) {
+		this.depositDate = depositDate;
+	}
 
-    public Set<DeliveredDocument> getDocuments() {
-        return documents;
-    }
+	public Set<DeliveredDocument> getDocuments() {
+		return documents;
+	}
 
-    public void addDocument(DeliveredDocument document) {
-        this.documents.add(document);
-    }
+	public void addDocument(DeliveredDocument document) {
+		this.documents.add(document);
+	}
 
-    public Set<CheckSlipLine> getSlipLines() {
-        return slipLines;
-    }
+	public Set<CheckSlipLine> getSlipLines() {
+		return slipLines;
+	}
 
-    public void addSlipLine(CheckSlipLine line) {
-        this.slipLines.add(line);
-    }
+	public void addSlipLine(CheckSlipLine line) {
+		this.slipLines.add(line);
+	}
 
-    public boolean isUncompleted() {
-        return uncompleted;
-    }
+	public boolean isUncompleted() {
+		return uncompleted;
+	}
 
-    public void setUncompleted(boolean uncompleted) {
-        this.uncompleted = uncompleted;
-    }
+	public void setUncompleted(boolean uncompleted) {
+		this.uncompleted = uncompleted;
+	}
 
-    public void deleteAllSlipLines() {
-        this.slipLines.clear();
-    }
+	public void deleteAllSlipLines() {
+		this.slipLines.clear();
+	}
 
-    public void deleteAllDocuments() {
-        this.documents.clear();
-    }
+	public void deleteAllDocuments() {
+		this.documents.clear();
+	}
+
 }

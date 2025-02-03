@@ -6,9 +6,8 @@ package fr.progilone.pgcn.domain.exchange;
  * Created by Sebastien on 18/01/2015
  */
 public enum DataEncoding {
-    ANSEL,  // MARC-8
-    ISO_5426,
-    ISO_6937,
-    ISO_8859_1,
-    UTF_8
+
+	ANSEL, // MARC-8
+	ISO_5426, ISO_6937, ISO_8859_1, UTF_8
+
 }

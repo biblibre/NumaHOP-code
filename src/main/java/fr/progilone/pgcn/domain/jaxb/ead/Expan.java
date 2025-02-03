@@ -38,144 +38,118 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "expan", propOrder = {"content"})
+@XmlType(name = "expan", propOrder = { "content" })
 public class Expan {
 
-    @XmlValue
-    protected String content;
-    @XmlAttribute(name = "abbr")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String abbr;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	@XmlValue
+	protected String content;
 
-    /**
-     * Obtient la valeur de la propriété content.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getContent() {
-        return content;
-    }
+	@XmlAttribute(name = "abbr")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String abbr;
 
-    /**
-     * Définit la valeur de la propriété content.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setContent(String value) {
-        this.content = value;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Obtient la valeur de la propriété abbr.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAbbr() {
-        return abbr;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Définit la valeur de la propriété abbr.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAbbr(String value) {
-        this.abbr = value;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	/**
+	 * Obtient la valeur de la propriété content.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getContent() {
+		return content;
+	}
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	/**
+	 * Définit la valeur de la propriété content.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setContent(String value) {
+		this.content = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Obtient la valeur de la propriété abbr.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAbbr() {
+		return abbr;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Définit la valeur de la propriété abbr.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAbbr(String value) {
+		this.abbr = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

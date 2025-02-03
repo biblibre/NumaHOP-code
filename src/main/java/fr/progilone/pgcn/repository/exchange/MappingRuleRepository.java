@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MappingRuleRepository extends JpaRepository<MappingRule, String> {
 
-    Integer countByProperty(DocPropertyType type);
+	Integer countByProperty(DocPropertyType type);
+
 }

@@ -33,28 +33,27 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ComponentUnitType {
 
-    @XmlEnumValue("integer")
-    INTEGER("integer"),
-    @XmlEnumValue("floating point")
-    FLOATING_POINT("floating point");
+	@XmlEnumValue("integer")
+	INTEGER("integer"), @XmlEnumValue("floating point")
+	FLOATING_POINT("floating point");
 
-    private final String value;
+	private final String value;
 
-    ComponentUnitType(String v) {
-        value = v;
-    }
+	ComponentUnitType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static ComponentUnitType fromValue(String v) {
-        for (ComponentUnitType c : ComponentUnitType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static ComponentUnitType fromValue(String v) {
+		for (ComponentUnitType c : ComponentUnitType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

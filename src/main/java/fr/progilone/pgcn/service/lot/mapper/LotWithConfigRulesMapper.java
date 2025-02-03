@@ -18,23 +18,14 @@ import fr.progilone.pgcn.service.workflow.mapper.SimpleWorkflowMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {AddressMapper.class,
-                SimpleDocUnitMapper.class,
-                SimpleProjectMapper.class,
-                SimpleFTPConfigurationMapper.class,
-                CheckConfigurationMapper.class,
-                SimpleViewsFormatConfigurationMapper.class,
-                UserMapper.class,
-                OcrLanguageMapper.class,
-                InternetArchiveCollectionMapper.class,
-                CinesPACMapper.class,
-                SimpleWorkflowMapper.class,
-                OmekaListMapper.class,
-                OmekaConfigurationMapper.class})
+@Mapper(uses = { AddressMapper.class, SimpleDocUnitMapper.class, SimpleProjectMapper.class,
+		SimpleFTPConfigurationMapper.class, CheckConfigurationMapper.class, SimpleViewsFormatConfigurationMapper.class,
+		UserMapper.class, OcrLanguageMapper.class, InternetArchiveCollectionMapper.class, CinesPACMapper.class,
+		SimpleWorkflowMapper.class, OmekaListMapper.class, OmekaConfigurationMapper.class })
 public interface LotWithConfigRulesMapper {
 
-    LotWithConfigRulesMapper INSTANCE = Mappers.getMapper(LotWithConfigRulesMapper.class);
+	LotWithConfigRulesMapper INSTANCE = Mappers.getMapper(LotWithConfigRulesMapper.class);
 
-    LotWithConfigRulesDTO lotToLotWithConfigRulesDTO(Lot lot);
+	LotWithConfigRulesDTO lotToLotWithConfigRulesDTO(Lot lot);
 
 }

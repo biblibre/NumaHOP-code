@@ -33,28 +33,27 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum EnumType {
 
-    @XmlEnumValue("value1")
-    VALUE_1("value1"),
-    @XmlEnumValue("value2")
-    VALUE_2("value2");
+	@XmlEnumValue("value1")
+	VALUE_1("value1"), @XmlEnumValue("value2")
+	VALUE_2("value2");
 
-    private final String value;
+	private final String value;
 
-    EnumType(String v) {
-        value = v;
-    }
+	EnumType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static EnumType fromValue(String v) {
-        for (EnumType c : EnumType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static EnumType fromValue(String v) {
+		for (EnumType c : EnumType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

@@ -14,46 +14,50 @@ import org.springframework.data.domain.Pageable;
 
 public class ImportReportRepositoryImpl implements ImportReportRepositoryCustom {
 
-    private final JPAQueryFactory queryFactory;
+	private final JPAQueryFactory queryFactory;
 
-    public ImportReportRepositoryImpl(final JPAQueryFactory queryFactory) {
-        this.queryFactory = queryFactory;
-    }
+	public ImportReportRepositoryImpl(final JPAQueryFactory queryFactory) {
+		this.queryFactory = queryFactory;
+	}
 
-    @Override
-    public Page<ImportReport> search(final String search, final List<String> users, final List<ImportReport.Status> status, final List<String> libraries, final Pageable pageable) {
+	@Override
+	public Page<ImportReport> search(final String search, final List<String> users,
+			final List<ImportReport.Status> status, final List<String> libraries, final Pageable pageable) {
 
-        final QImportReport importReport = QImportReport.importReport;
+		final QImportReport importReport = QImportReport.importReport;
 
-        final BooleanBuilder builder = new BooleanBuilder();
+		final BooleanBuilder builder = new BooleanBuilder();
 
-        // users
-        if (CollectionUtils.isNotEmpty(users)) {
-            final BooleanExpression userFilter = importReport.runBy.in(users);
-            builder.and(userFilter);
-        }
+		// users
+		if (CollectionUtils.isNotEmpty(users)) {
+			final BooleanExpression userFilter = importReport.runBy.in(users);
+			builder.and(userFilter);
+		}
 
-        // status
-        if (CollectionUtils.isNotEmpty(status)) {
-            final BooleanExpression statusFilter = importReport.status.in(status);
-            builder.and(statusFilter);
-        }
+		// status
+		if (CollectionUtils.isNotEmpty(status)) {
+			final BooleanExpression statusFilter = importReport.status.in(status);
+			builder.and(statusFilter);
+		}
 
-        // libraries
-        if (CollectionUtils.isNotEmpty(libraries)) {
-            final BooleanExpression libFilter = importReport.library.identifier.in(libraries);
-            builder.and(libFilter);
-        }
+		// libraries
+		if (CollectionUtils.isNotEmpty(libraries)) {
+			final BooleanExpression libFilter = importReport.library.identifier.in(libraries);
+			builder.and(libFilter);
+		}
 
-        final JPAQuery<ImportReport> baseQuery = queryFactory.select(importReport).from(importReport).where(builder.getValue());
-        final long total = baseQuery.clone().select(importReport.countDistinct()).fetchOne();
+		final JPAQuery<ImportReport> baseQuery = queryFactory.select(importReport)
+			.from(importReport)
+			.where(builder.getValue());
+		final long total = baseQuery.clone().select(importReport.countDistinct()).fetchOne();
 
-        if (pageable != null) {
-            baseQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
-        }
+		if (pageable != null) {
+			baseQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
+		}
 
-        final List<ImportReport> result = baseQuery.orderBy(importReport.lastModifiedDate.desc()).distinct().fetch();
+		final List<ImportReport> result = baseQuery.orderBy(importReport.lastModifiedDate.desc()).distinct().fetch();
 
-        return new PageImpl<>(result, pageable, total);
-    }
+		return new PageImpl<>(result, pageable, total);
+	}
+
 }

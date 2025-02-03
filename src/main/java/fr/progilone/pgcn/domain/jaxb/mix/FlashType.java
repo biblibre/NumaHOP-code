@@ -53,68 +53,70 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum FlashType {
 
-    @XmlEnumValue("Flash did not fire")
-    FLASH_DID_NOT_FIRE("Flash did not fire"),
-    @XmlEnumValue("Flash fired")
-    FLASH_FIRED("Flash fired"),
-    @XmlEnumValue("Strobe return light not detected")
-    STROBE_RETURN_LIGHT_NOT_DETECTED("Strobe return light not detected"),
-    @XmlEnumValue("Strobe return light detected")
-    STROBE_RETURN_LIGHT_DETECTED("Strobe return light detected"),
-    @XmlEnumValue("Flash fired, compulsory flash mode")
-    FLASH_FIRED_COMPULSORY_FLASH_MODE("Flash fired, compulsory flash mode"),
-    @XmlEnumValue("Flash fired, compulsory flash mode, return light not detected")
-    FLASH_FIRED_COMPULSORY_FLASH_MODE_RETURN_LIGHT_NOT_DETECTED("Flash fired, compulsory flash mode, return light not detected"),
-    @XmlEnumValue("Flash fired, compulsory flash mode, return light detected")
-    FLASH_FIRED_COMPULSORY_FLASH_MODE_RETURN_LIGHT_DETECTED("Flash fired, compulsory flash mode, return light detected"),
-    @XmlEnumValue("Flash did not fire, compulsory flash mode")
-    FLASH_DID_NOT_FIRE_COMPULSORY_FLASH_MODE("Flash did not fire, compulsory flash mode"),
-    @XmlEnumValue("Flash did not fire, auto mode")
-    FLASH_DID_NOT_FIRE_AUTO_MODE("Flash did not fire, auto mode"),
-    @XmlEnumValue("Flash fired, auto mode")
-    FLASH_FIRED_AUTO_MODE("Flash fired, auto mode"),
-    @XmlEnumValue("Flash fired, auto mode, return light not detected")
-    FLASH_FIRED_AUTO_MODE_RETURN_LIGHT_NOT_DETECTED("Flash fired, auto mode, return light not detected"),
-    @XmlEnumValue("Flash fired, auto mode, return light detected")
-    FLASH_FIRED_AUTO_MODE_RETURN_LIGHT_DETECTED("Flash fired, auto mode, return light detected"),
-    @XmlEnumValue("No flash function")
-    NO_FLASH_FUNCTION("No flash function"),
-    @XmlEnumValue("Flash fired, red-eye reduction mode")
-    FLASH_FIRED_RED_EYE_REDUCTION_MODE("Flash fired, red-eye reduction mode"),
-    @XmlEnumValue("Flash fired, red-eye reduction mode, return light not detected")
-    FLASH_FIRED_RED_EYE_REDUCTION_MODE_RETURN_LIGHT_NOT_DETECTED("Flash fired, red-eye reduction mode, return light not detected"),
-    @XmlEnumValue("Flash fired, red-eye reduction mode, return light detected")
-    FLASH_FIRED_RED_EYE_REDUCTION_MODE_RETURN_LIGHT_DETECTED("Flash fired, red-eye reduction mode, return light detected"),
-    @XmlEnumValue("Flash fired, compulsory flash mode, red-eye reduction mode")
-    FLASH_FIRED_COMPULSORY_FLASH_MODE_RED_EYE_REDUCTION_MODE("Flash fired, compulsory flash mode, red-eye reduction mode"),
-    @XmlEnumValue("Flash fired, compulsory flash mode, red-eye reduction mode, return light not detected")
-    FLASH_FIRED_COMPULSORY_FLASH_MODE_RED_EYE_REDUCTION_MODE_RETURN_LIGHT_NOT_DETECTED("Flash fired, compulsory flash mode, red-eye reduction mode, return light not detected"),
-    @XmlEnumValue("Flash fired, compulsory flash mode, red-eye reduction mode, return light detected")
-    FLASH_FIRED_COMPULSORY_FLASH_MODE_RED_EYE_REDUCTION_MODE_RETURN_LIGHT_DETECTED("Flash fired, compulsory flash mode, red-eye reduction mode, return light detected"),
-    @XmlEnumValue("Flash fired, auto mode, red-eye reduction mode")
-    FLASH_FIRED_AUTO_MODE_RED_EYE_REDUCTION_MODE("Flash fired, auto mode, red-eye reduction mode"),
-    @XmlEnumValue("Flash fired, auto mode, return light not detected, red-eye reduction mode")
-    FLASH_FIRED_AUTO_MODE_RETURN_LIGHT_NOT_DETECTED_RED_EYE_REDUCTION_MODE("Flash fired, auto mode, return light not detected, red-eye reduction mode"),
-    @XmlEnumValue("Flash fired, auto mode, return light detected, red-eye reduction mode")
-    FLASH_FIRED_AUTO_MODE_RETURN_LIGHT_DETECTED_RED_EYE_REDUCTION_MODE("Flash fired, auto mode, return light detected, red-eye reduction mode");
+	@XmlEnumValue("Flash did not fire")
+	FLASH_DID_NOT_FIRE("Flash did not fire"), @XmlEnumValue("Flash fired")
+	FLASH_FIRED("Flash fired"), @XmlEnumValue("Strobe return light not detected")
+	STROBE_RETURN_LIGHT_NOT_DETECTED("Strobe return light not detected"), @XmlEnumValue("Strobe return light detected")
+	STROBE_RETURN_LIGHT_DETECTED("Strobe return light detected"), @XmlEnumValue("Flash fired, compulsory flash mode")
+	FLASH_FIRED_COMPULSORY_FLASH_MODE("Flash fired, compulsory flash mode"),
+	@XmlEnumValue("Flash fired, compulsory flash mode, return light not detected")
+	FLASH_FIRED_COMPULSORY_FLASH_MODE_RETURN_LIGHT_NOT_DETECTED(
+			"Flash fired, compulsory flash mode, return light not detected"),
+	@XmlEnumValue("Flash fired, compulsory flash mode, return light detected")
+	FLASH_FIRED_COMPULSORY_FLASH_MODE_RETURN_LIGHT_DETECTED(
+			"Flash fired, compulsory flash mode, return light detected"),
+	@XmlEnumValue("Flash did not fire, compulsory flash mode")
+	FLASH_DID_NOT_FIRE_COMPULSORY_FLASH_MODE("Flash did not fire, compulsory flash mode"),
+	@XmlEnumValue("Flash did not fire, auto mode")
+	FLASH_DID_NOT_FIRE_AUTO_MODE("Flash did not fire, auto mode"), @XmlEnumValue("Flash fired, auto mode")
+	FLASH_FIRED_AUTO_MODE("Flash fired, auto mode"), @XmlEnumValue("Flash fired, auto mode, return light not detected")
+	FLASH_FIRED_AUTO_MODE_RETURN_LIGHT_NOT_DETECTED("Flash fired, auto mode, return light not detected"),
+	@XmlEnumValue("Flash fired, auto mode, return light detected")
+	FLASH_FIRED_AUTO_MODE_RETURN_LIGHT_DETECTED("Flash fired, auto mode, return light detected"),
+	@XmlEnumValue("No flash function")
+	NO_FLASH_FUNCTION("No flash function"), @XmlEnumValue("Flash fired, red-eye reduction mode")
+	FLASH_FIRED_RED_EYE_REDUCTION_MODE("Flash fired, red-eye reduction mode"),
+	@XmlEnumValue("Flash fired, red-eye reduction mode, return light not detected")
+	FLASH_FIRED_RED_EYE_REDUCTION_MODE_RETURN_LIGHT_NOT_DETECTED(
+			"Flash fired, red-eye reduction mode, return light not detected"),
+	@XmlEnumValue("Flash fired, red-eye reduction mode, return light detected")
+	FLASH_FIRED_RED_EYE_REDUCTION_MODE_RETURN_LIGHT_DETECTED(
+			"Flash fired, red-eye reduction mode, return light detected"),
+	@XmlEnumValue("Flash fired, compulsory flash mode, red-eye reduction mode")
+	FLASH_FIRED_COMPULSORY_FLASH_MODE_RED_EYE_REDUCTION_MODE(
+			"Flash fired, compulsory flash mode, red-eye reduction mode"),
+	@XmlEnumValue("Flash fired, compulsory flash mode, red-eye reduction mode, return light not detected")
+	FLASH_FIRED_COMPULSORY_FLASH_MODE_RED_EYE_REDUCTION_MODE_RETURN_LIGHT_NOT_DETECTED(
+			"Flash fired, compulsory flash mode, red-eye reduction mode, return light not detected"),
+	@XmlEnumValue("Flash fired, compulsory flash mode, red-eye reduction mode, return light detected")
+	FLASH_FIRED_COMPULSORY_FLASH_MODE_RED_EYE_REDUCTION_MODE_RETURN_LIGHT_DETECTED(
+			"Flash fired, compulsory flash mode, red-eye reduction mode, return light detected"),
+	@XmlEnumValue("Flash fired, auto mode, red-eye reduction mode")
+	FLASH_FIRED_AUTO_MODE_RED_EYE_REDUCTION_MODE("Flash fired, auto mode, red-eye reduction mode"),
+	@XmlEnumValue("Flash fired, auto mode, return light not detected, red-eye reduction mode")
+	FLASH_FIRED_AUTO_MODE_RETURN_LIGHT_NOT_DETECTED_RED_EYE_REDUCTION_MODE(
+			"Flash fired, auto mode, return light not detected, red-eye reduction mode"),
+	@XmlEnumValue("Flash fired, auto mode, return light detected, red-eye reduction mode")
+	FLASH_FIRED_AUTO_MODE_RETURN_LIGHT_DETECTED_RED_EYE_REDUCTION_MODE(
+			"Flash fired, auto mode, return light detected, red-eye reduction mode");
 
-    private final String value;
+	private final String value;
 
-    FlashType(String v) {
-        value = v;
-    }
+	FlashType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static FlashType fromValue(String v) {
-        for (FlashType c : FlashType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static FlashType fromValue(String v) {
+		for (FlashType c : FlashType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

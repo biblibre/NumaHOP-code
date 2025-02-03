@@ -16,8 +16,8 @@ import java.util.List;
 
 /**
  *
- * Description générale des fichiers de métadonnées accompagnant les objets archivés ou du contenu de é OtherMetadata é dans le cadre de léarchivage
- * au format SEDA.
+ * Description générale des fichiers de métadonnées accompagnant les objets archivés ou du
+ * contenu de é OtherMetadata é dans le cadre de léarchivage au format SEDA.
  *
  *
  * <p>
@@ -42,68 +42,60 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "mdMetierType",
-         propOrder = {"mdDesc",
-                      "mdFichier"})
+@XmlType(name = "mdMetierType", propOrder = { "mdDesc", "mdFichier" })
 public class MdMetierType {
 
-    @XmlElement(required = true)
-    protected String mdDesc;
-    @XmlElement(required = true)
-    protected List<String> mdFichier;
+	@XmlElement(required = true)
+	protected String mdDesc;
 
-    /**
-     * Obtient la valeur de la propriété mdDesc.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getMdDesc() {
-        return mdDesc;
-    }
+	@XmlElement(required = true)
+	protected List<String> mdFichier;
 
-    /**
-     * Définit la valeur de la propriété mdDesc.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setMdDesc(String value) {
-        this.mdDesc = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété mdDesc.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getMdDesc() {
+		return mdDesc;
+	}
 
-    /**
-     * Gets the value of the mdFichier property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the mdFichier property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getMdFichier().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getMdFichier() {
-        if (mdFichier == null) {
-            mdFichier = new ArrayList<>();
-        }
-        return this.mdFichier;
-    }
+	/**
+	 * Définit la valeur de la propriété mdDesc.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setMdDesc(String value) {
+		this.mdDesc = value;
+	}
+
+	/**
+	 * Gets the value of the mdFichier property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the mdFichier
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getMdFichier().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getMdFichier() {
+		if (mdFichier == null) {
+			mdFichier = new ArrayList<>();
+		}
+		return this.mdFichier;
+	}
 
 }

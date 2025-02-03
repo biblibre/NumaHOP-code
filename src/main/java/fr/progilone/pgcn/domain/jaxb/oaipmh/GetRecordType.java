@@ -34,34 +34,28 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetRecordType", propOrder = {"record"})
+@XmlType(name = "GetRecordType", propOrder = { "record" })
 public class GetRecordType {
 
-    @XmlElement(required = true)
-    protected RecordType record;
+	@XmlElement(required = true)
+	protected RecordType record;
 
-    /**
-     * Obtient la valeur de la propriété record.
-     *
-     * @return
-     *         possible object is
-     *         {@link RecordType }
-     *
-     */
-    public RecordType getRecord() {
-        return record;
-    }
+	/**
+	 * Obtient la valeur de la propriété record.
+	 * @return possible object is {@link RecordType }
+	 *
+	 */
+	public RecordType getRecord() {
+		return record;
+	}
 
-    /**
-     * Définit la valeur de la propriété record.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link RecordType }
-     *
-     */
-    public void setRecord(RecordType value) {
-        this.record = value;
-    }
+	/**
+	 * Définit la valeur de la propriété record.
+	 * @param value allowed object is {@link RecordType }
+	 *
+	 */
+	public void setRecord(RecordType value) {
+		this.record = value;
+	}
 
 }

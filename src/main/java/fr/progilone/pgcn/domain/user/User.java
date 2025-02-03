@@ -33,314 +33,323 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = User.TABLE_NAME)
-@JsonSubTypes({@JsonSubTypes.Type(name = "user", value = User.class)})
+@JsonSubTypes({ @JsonSubTypes.Type(name = "user", value = User.class) })
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "user_user";
+	public static final String TABLE_NAME = "user_user";
 
-    /**
-     * identifiant
-     */
-    @Column(name = "login", unique = true, nullable = false)
-    private String login;
+	/**
+	 * identifiant
+	 */
+	@Column(name = "login", unique = true, nullable = false)
+	private String login;
 
-    /**
-     * Mot de passe
-     */
-    @JsonIgnore
-    @Column(name = "password")
-    private String password;
+	/**
+	 * Mot de passe
+	 */
+	@JsonIgnore
+	@Column(name = "password")
+	private String password;
 
-    /**
-     * Prénom
-     */
-    @Column(name = "firstname")
-    private String firstname;
+	/**
+	 * Prénom
+	 */
+	@Column(name = "firstname")
+	private String firstname;
 
-    /**
-     * Nom
-     */
-    @Column(name = "surname")
-    private String surname;
+	/**
+	 * Nom
+	 */
+	@Column(name = "surname")
+	private String surname;
 
-    /**
-     * Fonction
-     */
-    @Column(name = "function")
-    private String function;
+	/**
+	 * Fonction
+	 */
+	@Column(name = "function")
+	private String function;
 
-    /**
-     * Numéro de téléphone
-     */
-    @Column(name = "phone_number")
-    private String phoneNumber;
+	/**
+	 * Numéro de téléphone
+	 */
+	@Column(name = "phone_number")
+	private String phoneNumber;
 
-    /**
-     * Couriel
-     */
-    @Column(name = "email", nullable = false)
-    private String email;
+	/**
+	 * Couriel
+	 */
+	@Column(name = "email", nullable = false)
+	private String email;
 
-    /**
-     * Actif
-     */
-    @Column(name = "active")
-    private boolean active;
+	/**
+	 * Actif
+	 */
+	@Column(name = "active")
+	private boolean active;
 
-    /**
-     * Superutilisateur
-     */
-    @Column(name = "superuser")
-    private boolean superuser;
+	/**
+	 * Superutilisateur
+	 */
+	@Column(name = "superuser")
+	private boolean superuser;
 
-    /**
-     * Nom de la société (prestataire)
-     */
-    @Column(name = "company_name")
-    private String companyName;
+	/**
+	 * Nom de la société (prestataire)
+	 */
+	@Column(name = "company_name")
+	private String companyName;
 
-    /**
-     * Adresse de l'utilisateur (prestataire)
-     */
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "address")
-    private Address address;
+	/**
+	 * Adresse de l'utilisateur (prestataire)
+	 */
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "address")
+	private Address address;
 
-    /**
-     * Bibliothèque de l'utilisateur
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "library", nullable = false)
-    private Library library;
+	/**
+	 * Bibliothèque de l'utilisateur
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "library", nullable = false)
+	private Library library;
 
-    /**
-     * Projects associées
-     */
-    @ManyToMany(mappedBy = "associatedUsers", fetch = FetchType.LAZY)
-    private Set<Project> projects;
+	/**
+	 * Projects associées
+	 */
+	@ManyToMany(mappedBy = "associatedUsers", fetch = FetchType.LAZY)
+	private Set<Project> projects;
 
-    /**
-     * Rôle de l'utilisateur
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role", nullable = false)
-    private Role role;
+	/**
+	 * Rôle de l'utilisateur
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "role", nullable = false)
+	private Role role;
 
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<PersistentToken> persistentTokens = new HashSet<>();
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	private Set<PersistentToken> persistentTokens = new HashSet<>();
 
-    /**
-     * Catégorie de l'utilisateur
-     */
-    @Column(name = "category")
-    @Enumerated(EnumType.STRING)
-    private Category category;
+	/**
+	 * Catégorie de l'utilisateur
+	 */
+	@Column(name = "category")
+	@Enumerated(EnumType.STRING)
+	private Category category;
 
-    /**
-     * Tableau de bord de l'usager
-     */
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "dashboard")
-    private Dashboard dashboard;
+	/**
+	 * Tableau de bord de l'usager
+	 */
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "dashboard")
+	private Dashboard dashboard;
 
-    /**
-     * Langue de l'usager
-     */
-    @Column(name = "lang")
-    @Enumerated(EnumType.STRING)
-    private Lang lang;
+	/**
+	 * Langue de l'usager
+	 */
+	@Column(name = "lang")
+	@Enumerated(EnumType.STRING)
+	private Lang lang;
 
-    @ManyToMany(mappedBy = "users")
-    private Set<WorkflowGroup> groups;
+	@ManyToMany(mappedBy = "users")
+	private Set<WorkflowGroup> groups;
 
-    public void setAddress(final Address address) {
-        this.address = address;
-    }
+	public void setAddress(final Address address) {
+		this.address = address;
+	}
 
-    public Address getAddress() {
-        return address;
-    }
+	public Address getAddress() {
+		return address;
+	}
 
-    public String getFunction() {
-        return function;
-    }
+	public String getFunction() {
+		return function;
+	}
 
-    public void setFunction(final String function) {
-        this.function = function;
-    }
+	public void setFunction(final String function) {
+		this.function = function;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
 
-    public String getCompanyName() {
-        return companyName;
-    }
+	public String getCompanyName() {
+		return companyName;
+	}
 
-    public void setCompanyName(final String companyName) {
-        this.companyName = companyName;
-    }
+	public void setCompanyName(final String companyName) {
+		this.companyName = companyName;
+	}
 
-    public Library getLibrary() {
-        return library;
-    }
+	public Library getLibrary() {
+		return library;
+	}
 
-    public void setLibrary(final Library library) {
-        this.library = library;
-    }
+	public void setLibrary(final Library library) {
+		this.library = library;
+	}
 
-    public String getFirstname() {
-        return firstname;
-    }
+	public String getFirstname() {
+		return firstname;
+	}
 
-    public void setFirstname(final String firstname) {
-        this.firstname = firstname;
-    }
+	public void setFirstname(final String firstname) {
+		this.firstname = firstname;
+	}
 
-    public String getLogin() {
-        return login;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public void setLogin(final String login) {
-        this.login = login;
-    }
+	public void setLogin(final String login) {
+		this.login = login;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setPassword(final String password) {
-        this.password = password;
-    }
+	public void setPassword(final String password) {
+		this.password = password;
+	}
 
-    public Set<PersistentToken> getPersistentTokens() {
-        return persistentTokens;
-    }
+	public Set<PersistentToken> getPersistentTokens() {
+		return persistentTokens;
+	}
 
-    public void setPersistentTokens(final Set<PersistentToken> persistentTokens) {
-        this.persistentTokens = persistentTokens;
-    }
+	public void setPersistentTokens(final Set<PersistentToken> persistentTokens) {
+		this.persistentTokens = persistentTokens;
+	}
 
-    public Role getRole() {
-        return role;
-    }
+	public Role getRole() {
+		return role;
+	}
 
-    public void setRole(final Role role) {
-        this.role = role;
-    }
+	public void setRole(final Role role) {
+		this.role = role;
+	}
 
-    public String getSurname() {
-        return surname;
-    }
+	public String getSurname() {
+		return surname;
+	}
 
-    public void setSurname(final String surname) {
-        this.surname = surname;
-    }
+	public void setSurname(final String surname) {
+		this.surname = surname;
+	}
 
-    public Category getCategory() {
-        return category;
-    }
+	public Category getCategory() {
+		return category;
+	}
 
-    public void setCategory(final Category category) {
-        this.category = category;
-    }
+	public void setCategory(final Category category) {
+		this.category = category;
+	}
 
-    public Lang getLang() {
-        return lang;
-    }
+	public Lang getLang() {
+		return lang;
+	}
 
-    public void setLang(final Lang lang) {
-        this.lang = lang;
-    }
+	public void setLang(final Lang lang) {
+		this.lang = lang;
+	}
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
 
-    public void setPhoneNumber(final String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+	public void setPhoneNumber(final String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(final String email) {
-        this.email = email;
-    }
+	public void setEmail(final String email) {
+		this.email = email;
+	}
 
-    public Set<Project> getProjects() {
-        return projects;
-    }
+	public Set<Project> getProjects() {
+		return projects;
+	}
 
-    public void setProjects(final Set<Project> projects) {
-        this.projects = projects;
-    }
+	public void setProjects(final Set<Project> projects) {
+		this.projects = projects;
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).omitNullValues().add("login", login).add("firstname", firstname).add("surname", surname).toString();
-    }
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+			.omitNullValues()
+			.add("login", login)
+			.add("firstname", firstname)
+			.add("surname", surname)
+			.toString();
+	}
 
-    public void setSuperuser(final boolean superuser) {
-        this.superuser = superuser;
-    }
+	public void setSuperuser(final boolean superuser) {
+		this.superuser = superuser;
+	}
 
-    public boolean isSuperuser() {
-        return superuser;
-    }
+	public boolean isSuperuser() {
+		return superuser;
+	}
 
-    public Set<WorkflowGroup> getGroups() {
-        return groups;
-    }
+	public Set<WorkflowGroup> getGroups() {
+		return groups;
+	}
 
-    /**
-     * Type d'utilisateur
-     */
-    public enum Category {
-        /**
-         * Prestataire
-         */
-        PROVIDER,
-        /**
-         * Autre
-         */
-        OTHER
-    }
+	/**
+	 * Type d'utilisateur
+	 */
+	public enum Category {
 
-    public String getFullName() {
-        final StringBuilder builder = new StringBuilder();
+		/**
+		 * Prestataire
+		 */
+		PROVIDER,
+		/**
+		 * Autre
+		 */
+		OTHER
 
-        if (StringUtils.isNotBlank(firstname)) {
-            builder.append(firstname);
-        }
-        if (StringUtils.isNotBlank(surname)) {
-            if (builder.length() > 0) {
-                builder.append(' ');
-            }
-            builder.append(surname);
-        }
-        // Pour les prestataires, on ajoute le nom de la société, et on met le nom entre parenthèses
-        if (StringUtils.isNotBlank(companyName) && category == Category.PROVIDER) {
-            if (builder.length() > 0) {
-                builder.insert(0, " (").insert(0, companyName).append(')');
-            }
-        }
-        return builder.toString();
-    }
+	}
 
-    public Dashboard getDashboard() {
-        return dashboard;
-    }
+	public String getFullName() {
+		final StringBuilder builder = new StringBuilder();
 
-    public void setDashboard(final Dashboard dashboard) {
-        this.dashboard = dashboard;
-    }
+		if (StringUtils.isNotBlank(firstname)) {
+			builder.append(firstname);
+		}
+		if (StringUtils.isNotBlank(surname)) {
+			if (builder.length() > 0) {
+				builder.append(' ');
+			}
+			builder.append(surname);
+		}
+		// Pour les prestataires, on ajoute le nom de la société, et on met le nom entre
+		// parenthèses
+		if (StringUtils.isNotBlank(companyName) && category == Category.PROVIDER) {
+			if (builder.length() > 0) {
+				builder.insert(0, " (").insert(0, companyName).append(')');
+			}
+		}
+		return builder.toString();
+	}
+
+	public Dashboard getDashboard() {
+		return dashboard;
+	}
+
+	public void setDashboard(final Dashboard dashboard) {
+		this.dashboard = dashboard;
+	}
+
 }

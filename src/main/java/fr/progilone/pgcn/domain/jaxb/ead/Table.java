@@ -58,258 +58,215 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "table",
-         propOrder = {"head",
-                      "tgroup"})
+@XmlType(name = "table", propOrder = { "head", "tgroup" })
 public class Table {
 
-    protected Head head;
-    @XmlElement(required = true)
-    protected List<Tgroup> tgroup;
-    @XmlAttribute(name = "frame")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String frame;
-    @XmlAttribute(name = "colsep")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String colsep;
-    @XmlAttribute(name = "rowsep")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String rowsep;
-    @XmlAttribute(name = "pgwide")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String pgwide;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	protected Head head;
 
-    /**
-     * Obtient la valeur de la propriété head.
-     *
-     * @return
-     *         possible object is
-     *         {@link Head }
-     *
-     */
-    public Head getHead() {
-        return head;
-    }
+	@XmlElement(required = true)
+	protected List<Tgroup> tgroup;
 
-    /**
-     * Définit la valeur de la propriété head.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Head }
-     *
-     */
-    public void setHead(Head value) {
-        this.head = value;
-    }
+	@XmlAttribute(name = "frame")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String frame;
 
-    /**
-     * Gets the value of the tgroup property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the tgroup property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getTgroup().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Tgroup }
-     *
-     *
-     */
-    public List<Tgroup> getTgroup() {
-        if (tgroup == null) {
-            tgroup = new ArrayList<>();
-        }
-        return this.tgroup;
-    }
+	@XmlAttribute(name = "colsep")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String colsep;
 
-    /**
-     * Obtient la valeur de la propriété frame.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getFrame() {
-        return frame;
-    }
+	@XmlAttribute(name = "rowsep")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String rowsep;
 
-    /**
-     * Définit la valeur de la propriété frame.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setFrame(String value) {
-        this.frame = value;
-    }
+	@XmlAttribute(name = "pgwide")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String pgwide;
 
-    /**
-     * Obtient la valeur de la propriété colsep.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getColsep() {
-        return colsep;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Définit la valeur de la propriété colsep.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setColsep(String value) {
-        this.colsep = value;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Obtient la valeur de la propriété rowsep.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getRowsep() {
-        return rowsep;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Définit la valeur de la propriété rowsep.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setRowsep(String value) {
-        this.rowsep = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété head.
+	 * @return possible object is {@link Head }
+	 *
+	 */
+	public Head getHead() {
+		return head;
+	}
 
-    /**
-     * Obtient la valeur de la propriété pgwide.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getPgwide() {
-        return pgwide;
-    }
+	/**
+	 * Définit la valeur de la propriété head.
+	 * @param value allowed object is {@link Head }
+	 *
+	 */
+	public void setHead(Head value) {
+		this.head = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété pgwide.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setPgwide(String value) {
-        this.pgwide = value;
-    }
+	/**
+	 * Gets the value of the tgroup property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the tgroup
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getTgroup().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link Tgroup }
+	 *
+	 *
+	 */
+	public List<Tgroup> getTgroup() {
+		if (tgroup == null) {
+			tgroup = new ArrayList<>();
+		}
+		return this.tgroup;
+	}
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	/**
+	 * Obtient la valeur de la propriété frame.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getFrame() {
+		return frame;
+	}
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	/**
+	 * Définit la valeur de la propriété frame.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setFrame(String value) {
+		this.frame = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Obtient la valeur de la propriété colsep.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getColsep() {
+		return colsep;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Définit la valeur de la propriété colsep.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setColsep(String value) {
+		this.colsep = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Obtient la valeur de la propriété rowsep.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getRowsep() {
+		return rowsep;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Définit la valeur de la propriété rowsep.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setRowsep(String value) {
+		this.rowsep = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété pgwide.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getPgwide() {
+		return pgwide;
+	}
+
+	/**
+	 * Définit la valeur de la propriété pgwide.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setPgwide(String value) {
+		this.pgwide = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

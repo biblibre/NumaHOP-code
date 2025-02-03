@@ -7,52 +7,57 @@ import java.time.Duration;
 
 public class WorkflowModelStateDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private WorkflowStateKey key;
-    private SimpleWorkflowGroupDTO group;
-    private Duration duration;
-    private WorkflowModelStateType type;
+	private String identifier;
 
-    public WorkflowModelStateDTO() {
-    }
+	private WorkflowStateKey key;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private SimpleWorkflowGroupDTO group;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private Duration duration;
 
-    public WorkflowStateKey getKey() {
-        return key;
-    }
+	private WorkflowModelStateType type;
 
-    public void setKey(WorkflowStateKey key) {
-        this.key = key;
-    }
+	public WorkflowModelStateDTO() {
+	}
 
-    public SimpleWorkflowGroupDTO getGroup() {
-        return group;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setGroup(SimpleWorkflowGroupDTO group) {
-        this.group = group;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public Duration getDuration() {
-        return duration;
-    }
+	public WorkflowStateKey getKey() {
+		return key;
+	}
 
-    public void setDuration(Duration duration) {
-        this.duration = duration;
-    }
+	public void setKey(WorkflowStateKey key) {
+		this.key = key;
+	}
 
-    public WorkflowModelStateType getType() {
-        return type;
-    }
+	public SimpleWorkflowGroupDTO getGroup() {
+		return group;
+	}
 
-    public void setType(WorkflowModelStateType type) {
-        this.type = type;
-    }
+	public void setGroup(SimpleWorkflowGroupDTO group) {
+		this.group = group;
+	}
+
+	public Duration getDuration() {
+		return duration;
+	}
+
+	public void setDuration(Duration duration) {
+		this.duration = duration;
+	}
+
+	public WorkflowModelStateType getType() {
+		return type;
+	}
+
+	public void setType(WorkflowModelStateType type) {
+		this.type = type;
+	}
+
 }

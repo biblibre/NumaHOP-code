@@ -6,79 +6,84 @@ import java.util.List;
 
 public class BibliographicRecordMassUpdateDTO {
 
-    private final List<String> recordIds = new ArrayList<>();
-    private final List<Update> fields = new ArrayList<>();
-    private final List<Update> properties = new ArrayList<>();
+	private final List<String> recordIds = new ArrayList<>();
 
-    public List<String> getRecordIds() {
-        return recordIds;
-    }
+	private final List<Update> fields = new ArrayList<>();
 
-    public void setRecordIds(final List<String> recordIds) {
-        this.recordIds.clear();
-        recordIds.forEach(this::addRecordId);
-    }
+	private final List<Update> properties = new ArrayList<>();
 
-    private void addRecordId(final String recordId) {
-        if (recordId != null) {
-            this.recordIds.add(recordId);
-        }
-    }
+	public List<String> getRecordIds() {
+		return recordIds;
+	}
 
-    public List<Update> getFields() {
-        return fields;
-    }
+	public void setRecordIds(final List<String> recordIds) {
+		this.recordIds.clear();
+		recordIds.forEach(this::addRecordId);
+	}
 
-    public void setFields(final List<Update> fields) {
-        this.fields.clear();
-        fields.forEach(this::addFieldUpdate);
-    }
+	private void addRecordId(final String recordId) {
+		if (recordId != null) {
+			this.recordIds.add(recordId);
+		}
+	}
 
-    private void addFieldUpdate(final Update update) {
-        if (update != null) {
-            this.fields.add(update);
-        }
-    }
+	public List<Update> getFields() {
+		return fields;
+	}
 
-    public List<Update> getProperties() {
-        return properties;
-    }
+	public void setFields(final List<Update> fields) {
+		this.fields.clear();
+		fields.forEach(this::addFieldUpdate);
+	}
 
-    public void setProperties(final List<Update> properties) {
-        this.properties.clear();
-        properties.forEach(this::addPropertyUpdate);
-    }
+	private void addFieldUpdate(final Update update) {
+		if (update != null) {
+			this.fields.add(update);
+		}
+	}
 
-    private void addPropertyUpdate(final Update update) {
-        if (update != null) {
-            this.properties.add(update);
-        }
-    }
+	public List<Update> getProperties() {
+		return properties;
+	}
 
-    @JsonIgnore
-    public boolean isEmpty() {
-        return this.recordIds.isEmpty() || (this.fields.isEmpty() && this.properties.isEmpty());
-    }
+	public void setProperties(final List<Update> properties) {
+		this.properties.clear();
+		properties.forEach(this::addPropertyUpdate);
+	}
 
-    public static class Update {
+	private void addPropertyUpdate(final Update update) {
+		if (update != null) {
+			this.properties.add(update);
+		}
+	}
 
-        private String type;
-        private String value;
+	@JsonIgnore
+	public boolean isEmpty() {
+		return this.recordIds.isEmpty() || (this.fields.isEmpty() && this.properties.isEmpty());
+	}
 
-        public String getType() {
-            return type;
-        }
+	public static class Update {
 
-        public void setType(final String type) {
-            this.type = type;
-        }
+		private String type;
 
-        public String getValue() {
-            return value;
-        }
+		private String value;
 
-        public void setValue(final String value) {
-            this.value = value;
-        }
-    }
+		public String getType() {
+			return type;
+		}
+
+		public void setType(final String type) {
+			this.type = type;
+		}
+
+		public String getValue() {
+			return value;
+		}
+
+		public void setValue(final String value) {
+			this.value = value;
+		}
+
+	}
+
 }

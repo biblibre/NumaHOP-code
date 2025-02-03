@@ -16,45 +16,44 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class FtpClientServiceTest {
 
-    private FTPClientService service;
+	private FTPClientService service;
 
-    @BeforeEach
-    public void setUp() throws PgcnTechnicalException {
-        service = new FTPClientService();
-    }
+	@BeforeEach
+	public void setUp() throws PgcnTechnicalException {
+		service = new FTPClientService();
+	}
 
-    /**
-     * Envoi d'un dossier
-     *
-     * @throws PgcnTechnicalException
-     */
-    @Test
-    public void testFtpPut() throws PgcnTechnicalException, IOException {
-        final Path source = Paths.get("D:\\Projets\\PGCN\\Exemples");
+	/**
+	 * Envoi d'un dossier
+	 * @throws PgcnTechnicalException
+	 */
+	@Test
+	public void testFtpPut() throws PgcnTechnicalException, IOException {
+		final Path source = Paths.get("D:\\Projets\\PGCN\\Exemples");
 
-        service.ftpPut("ftp.progilone.fr", "21", "gjehanno", "", "gjehanno", source);
-    }
+		service.ftpPut("ftp.progilone.fr", "21", "gjehanno", "", "gjehanno", source);
+	}
 
-    /**
-     * Echec de connection
-     */
-    @Test
-    public void testFtpPutFailConnection() throws PgcnTechnicalException, IOException {
-        assertThrows(PgcnTechnicalException.class, () -> {
-            final Path source = Paths.get("D:\\Projets\\PGCN\\Exemples");
-            service.ftpPut("ftp.progilone.fr", "21", "gjehanno", "", "gjehanno", source);
-        });
-    }
+	/**
+	 * Echec de connection
+	 */
+	@Test
+	public void testFtpPutFailConnection() throws PgcnTechnicalException, IOException {
+		assertThrows(PgcnTechnicalException.class, () -> {
+			final Path source = Paths.get("D:\\Projets\\PGCN\\Exemples");
+			service.ftpPut("ftp.progilone.fr", "21", "gjehanno", "", "gjehanno", source);
+		});
+	}
 
-    /**
-     * Envoi d'un dossier qui n'existe pas
-     * Doit renvoyer une exception
-     */
-    @Test
-    public void testFtpPutDoesNotExist() throws PgcnTechnicalException, IOException {
-        assertThrows(PgcnTechnicalException.class, () -> {
-            final Path source = Paths.get("D:\\Projets\\PGCN\\DoesNotExist");
-            service.ftpPut("ftp.progilone.fr", "21", "gjehanno", "", "gjehanno", source);
-        });
-    }
+	/**
+	 * Envoi d'un dossier qui n'existe pas Doit renvoyer une exception
+	 */
+	@Test
+	public void testFtpPutDoesNotExist() throws PgcnTechnicalException, IOException {
+		assertThrows(PgcnTechnicalException.class, () -> {
+			final Path source = Paths.get("D:\\Projets\\PGCN\\DoesNotExist");
+			service.ftpPut("ftp.progilone.fr", "21", "gjehanno", "", "gjehanno", source);
+		});
+	}
+
 }

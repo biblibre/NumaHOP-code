@@ -49,216 +49,242 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DeliveryReportingService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DeliveryReportingService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DeliveryReportingService.class);
 
-    private final String LINE_SEP = System.lineSeparator();
+	private final String LINE_SEP = System.lineSeparator();
 
-    private final String REPORT_NAME = "deliv_report.txt";
+	private final String REPORT_NAME = "deliv_report.txt";
 
-    private final DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm:ss", Locale.FRENCH);
+	private final DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm:ss", Locale.FRENCH);
 
-    @Value("${instance.libraries}")
-    private String[] instanceLibraries;
+	@Value("${instance.libraries}")
+	private String[] instanceLibraries;
 
-    @Value("${services.deliveryreporting.path}")
-    private String deliveryReportingDirectory;
+	@Value("${services.deliveryreporting.path}")
+	private String deliveryReportingDirectory;
 
-    private final FileStorageManager fm;
-    private final DeliveryService deliveryService;
-    private final MailService mailService;
+	private final FileStorageManager fm;
 
-    @Autowired
-    public DeliveryReportingService(final FileStorageManager fm, final DeliveryService deliveryService, final MailService mailService) {
-        this.fm = fm;
-        this.deliveryService = deliveryService;
-        this.mailService = mailService;
-    }
+	private final DeliveryService deliveryService;
 
-    @PostConstruct
-    public void initialize() {
+	private final MailService mailService;
 
-        Arrays.asList(instanceLibraries).forEach(lib -> {
-            try {
-                FileUtils.forceMkdir(new File(deliveryReportingDirectory, lib));
-            } catch (final IOException ex) {
-                LOG.error(ex.getMessage(), ex);
-            }
-        });
+	@Autowired
+	public DeliveryReportingService(final FileStorageManager fm, final DeliveryService deliveryService,
+			final MailService mailService) {
+		this.fm = fm;
+		this.deliveryService = deliveryService;
+		this.mailService = mailService;
+	}
 
-    }
+	@PostConstruct
+	public void initialize() {
 
-    /**
-     * Construction du rapport de livraison.
-     *
-     * @param delivery
-     * @param startDeliv
-     * @param deliveryRefused
-     * @param results
-     */
-    @Transactional
-    public void createReport(final Delivery delivery,
-                             final LocalDateTime startDeliv,
-                             final boolean deliveryRefused,
-                             final Map<String, PrefixedDocuments> documentsToTreat,
-                             final int nbRefus,
-                             final List<AutomaticCheckResult> results,
-                             final Map<AutoCheckType, AutomaticCheckRule> rules,
-                             final Map<String, Integer> expectedPagesByPrefix,
-                             final String seqSeparator,
-                             final String libraryId) {
+		Arrays.asList(instanceLibraries).forEach(lib -> {
+			try {
+				FileUtils.forceMkdir(new File(deliveryReportingDirectory, lib));
+			}
+			catch (final IOException ex) {
+				LOG.error(ex.getMessage(), ex);
+			}
+		});
 
-        final StringBuilder report = new StringBuilder(2048);
-        report.append("*** RAPPORT DE LIVRAISON ***").append(LINE_SEP).append(LINE_SEP).append(delivery.getLabel());
-        if (deliveryRefused) {
-            report.append(" => LIVRAISON REJETEE (").append(String.valueOf(nbRefus)).append(" document(s) rejeté(s) )");
-        }
-        report.append(LINE_SEP)
-              .append(LINE_SEP)
-              .append("[")
-              .append(startDeliv.format(dtFormat))
-              .append("] DEBUT LIVRAISON")
-              .append(LINE_SEP)
-              .append(LINE_SEP)
-              .append("DOCUMENTS: ")
-              .append(LINE_SEP);
+	}
 
-        // Documents concernés.
-        final Set<DeliveredDocument> documents = deliveryService.getDigitalDocumentsByDelivery(delivery.getIdentifier());
-        documents.stream().filter(doc -> doc.getDigitalDocument() != null && doc.getDigitalDocument().getDocUnit() != null).forEach(doc -> {
+	/**
+	 * Construction du rapport de livraison.
+	 * @param delivery
+	 * @param startDeliv
+	 * @param deliveryRefused
+	 * @param results
+	 */
+	@Transactional
+	public void createReport(final Delivery delivery, final LocalDateTime startDeliv, final boolean deliveryRefused,
+			final Map<String, PrefixedDocuments> documentsToTreat, final int nbRefus,
+			final List<AutomaticCheckResult> results, final Map<AutoCheckType, AutomaticCheckRule> rules,
+			final Map<String, Integer> expectedPagesByPrefix, final String seqSeparator, final String libraryId) {
 
-            final DigitalDocument digDoc = doc.getDigitalDocument();
-            final String digitalId = digDoc.getDigitalId();
-            report.append(digDoc.getDocUnit().getPgcnId());
+		final StringBuilder report = new StringBuilder(2048);
+		report.append("*** RAPPORT DE LIVRAISON ***").append(LINE_SEP).append(LINE_SEP).append(delivery.getLabel());
+		if (deliveryRefused) {
+			report.append(" => LIVRAISON REJETEE (").append(String.valueOf(nbRefus)).append(" document(s) rejeté(s) )");
+		}
+		report.append(LINE_SEP)
+			.append(LINE_SEP)
+			.append("[")
+			.append(startDeliv.format(dtFormat))
+			.append("] DEBUT LIVRAISON")
+			.append(LINE_SEP)
+			.append(LINE_SEP)
+			.append("DOCUMENTS: ")
+			.append(LINE_SEP);
 
-            final int nbPages = expectedPagesByPrefix.get(digitalId) != null ? expectedPagesByPrefix.get(digitalId)
-                                                                             : 0;
+		// Documents concernés.
+		final Set<DeliveredDocument> documents = deliveryService
+			.getDigitalDocumentsByDelivery(delivery.getIdentifier());
+		documents.stream()
+			.filter(doc -> doc.getDigitalDocument() != null && doc.getDigitalDocument().getDocUnit() != null)
+			.forEach(doc -> {
 
-            if (nbPages > 0 && documentsToTreat.keySet().contains(digitalId)) {
-                report.append(" (").append(nbPages).append(" pages livrées").append(")");
-            }
-            report.append(LINE_SEP);
-        });
+				final DigitalDocument digDoc = doc.getDigitalDocument();
+				final String digitalId = digDoc.getDigitalId();
+				report.append(digDoc.getDocUnit().getPgcnId());
 
-        report.append(LINE_SEP).append("[").append(startDeliv.format(dtFormat)).append("] DEBUT CONTROLES AUTOMATIQUES").append(LINE_SEP);
+				final int nbPages = expectedPagesByPrefix.get(digitalId) != null ? expectedPagesByPrefix.get(digitalId)
+						: 0;
 
-        // Detail controles automatiques
-        documents.stream().filter(doc -> doc.getDigitalDocument().getDocUnit() != null).forEach(doc -> {
+				if (nbPages > 0 && documentsToTreat.keySet().contains(digitalId)) {
+					report.append(" (").append(nbPages).append(" pages livrées").append(")");
+				}
+				report.append(LINE_SEP);
+			});
 
-            final DigitalDocument dd = doc.getDigitalDocument();
-            final String digitalId = dd.getDigitalId();
+		report.append(LINE_SEP)
+			.append("[")
+			.append(startDeliv.format(dtFormat))
+			.append("] DEBUT CONTROLES AUTOMATIQUES")
+			.append(LINE_SEP);
 
-            final int expectedPages = expectedPagesByPrefix.get(digitalId) != null ? expectedPagesByPrefix.get(digitalId)
-                                                                                   : 0;
+		// Detail controles automatiques
+		documents.stream().filter(doc -> doc.getDigitalDocument().getDocUnit() != null).forEach(doc -> {
 
-            report.append(LINE_SEP).append("+++ DOCUMENT ").append(dd.getDocUnit().getPgcnId()).append(" +++").append(LINE_SEP).append(LINE_SEP);
+			final DigitalDocument dd = doc.getDigitalDocument();
+			final String digitalId = dd.getDigitalId();
 
-            results.stream().filter(res -> res.getDigitalDocument() != null && res.getDigitalDocument().equals(dd)).forEach(res -> {
-                report.append(" - ").append(res.getCheck().getLabel()).append(" : ");
+			final int expectedPages = expectedPagesByPrefix.get(digitalId) != null
+					? expectedPagesByPrefix.get(digitalId) : 0;
 
-                final AutomaticCheckRule rule = rules.get(res.getType());
-                if (rule != null && !rule.isActive()) {
-                    report.append("CONTROLE NON ACTIVE").append(LINE_SEP);
-                } else {
-                    if (AutoCheckResult.OTHER.equals(res.getResult())) {
-                        report.append("ERREURS NON BLOQUANTES DETECTEES").append(LINE_SEP);
-                    } else {
-                        report.append(res.getResult()).append(LINE_SEP);
-                    }
-                    if (!AutoCheckResult.OK.equals(res.getResult())) {
-                        report.append("    ++ Message: ").append(res.getMessage()).append(LINE_SEP);
+			report.append(LINE_SEP)
+				.append("+++ DOCUMENT ")
+				.append(dd.getDocUnit().getPgcnId())
+				.append(" +++")
+				.append(LINE_SEP)
+				.append(LINE_SEP);
 
-                        final List<String> filteredErrorFiles = res.getErrorFiles()
-                                                                   .stream()
-                                                                   .filter(f -> StringUtils.contains(f, digitalId.concat(seqSeparator)))
-                                                                   .collect(Collectors.toList());
+			results.stream()
+				.filter(res -> res.getDigitalDocument() != null && res.getDigitalDocument().equals(dd))
+				.forEach(res -> {
+					report.append(" - ").append(res.getCheck().getLabel()).append(" : ");
 
-                        if (filteredErrorFiles != null && expectedPages == filteredErrorFiles.size()) {
-                            report.append(" [Tous les fichiers masters]").append(LINE_SEP);
-                        } else {
-                            res.getErrorFiles()
-                               .stream()
-                               .filter(f -> StringUtils.contains(f, digitalId.concat(seqSeparator))) // filtre sur le radical
-                               .forEach(f -> report.append("  ").append(f).append(LINE_SEP));
-                        }
-                    }
-                }
-                report.append(LINE_SEP);
-            });
+					final AutomaticCheckRule rule = rules.get(res.getType());
+					if (rule != null && !rule.isActive()) {
+						report.append("CONTROLE NON ACTIVE").append(LINE_SEP);
+					}
+					else {
+						if (AutoCheckResult.OTHER.equals(res.getResult())) {
+							report.append("ERREURS NON BLOQUANTES DETECTEES").append(LINE_SEP);
+						}
+						else {
+							report.append(res.getResult()).append(LINE_SEP);
+						}
+						if (!AutoCheckResult.OK.equals(res.getResult())) {
+							report.append("    ++ Message: ").append(res.getMessage()).append(LINE_SEP);
 
-        });
+							final List<String> filteredErrorFiles = res.getErrorFiles()
+								.stream()
+								.filter(f -> StringUtils.contains(f, digitalId.concat(seqSeparator)))
+								.collect(Collectors.toList());
 
-        final LocalDateTime endCheck = LocalDateTime.now();
-        report.append("[").append(endCheck.format(dtFormat)).append("] FIN CONTROLES AUTOMATIQUES - ").append("Durée: ").append(calculateDuration(startDeliv, endCheck));
-        report.append(LINE_SEP).append(LINE_SEP);
+							if (filteredErrorFiles != null && expectedPages == filteredErrorFiles.size()) {
+								report.append(" [Tous les fichiers masters]").append(LINE_SEP);
+							}
+							else {
+								res.getErrorFiles()
+									.stream()
+									.filter(f -> StringUtils.contains(f, digitalId.concat(seqSeparator))) // filtre
+																											// sur
+																											// le
+																											// radical
+									.forEach(f -> report.append("  ").append(f).append(LINE_SEP));
+							}
+						}
+					}
+					report.append(LINE_SEP);
+				});
 
-        handleDeliveryReportFile(delivery, new ByteArrayInputStream(report.toString().getBytes(StandardCharsets.UTF_8)), libraryId);
-    }
+		});
 
-    /**
-     * Ajout de lignes supplémentaires au rapport.
-     *
-     * @param delivery
-     * @param startDeliv
-     * @param dtHr
-     * @param text
-     */
-    public void updateReport(final Delivery delivery, final Optional<LocalDateTime> start, final Optional<LocalDateTime> dtHr, final String text, final String libraryId) {
+		final LocalDateTime endCheck = LocalDateTime.now();
+		report.append("[")
+			.append(endCheck.format(dtFormat))
+			.append("] FIN CONTROLES AUTOMATIQUES - ")
+			.append("Durée: ")
+			.append(calculateDuration(startDeliv, endCheck));
+		report.append(LINE_SEP).append(LINE_SEP);
 
-        final Path root = Paths.get(deliveryReportingDirectory, libraryId, delivery.getIdentifier());
+		handleDeliveryReportFile(delivery, new ByteArrayInputStream(report.toString().getBytes(StandardCharsets.UTF_8)),
+				libraryId);
+	}
 
-        final List<String> lines = new ArrayList<>();
-        lines.add("");
-        if (dtHr.isPresent()) {
-            lines.add("[".concat(dtHr.get().format(dtFormat)).concat("] ").concat(text));
-            start.ifPresent(deb -> lines.add("Durée: ".concat(calculateDuration(deb, dtHr.get()))));
-        } else {
-            lines.add(text);
-        }
-        fm.appendFile(lines, root.toFile(), REPORT_NAME);
-    }
+	/**
+	 * Ajout de lignes supplémentaires au rapport.
+	 * @param delivery
+	 * @param startDeliv
+	 * @param dtHr
+	 * @param text
+	 */
+	public void updateReport(final Delivery delivery, final Optional<LocalDateTime> start,
+			final Optional<LocalDateTime> dtHr, final String text, final String libraryId) {
 
-    /**
-     * Retourne la duree au format 'hh:mm:ss'.
-     *
-     * @param start
-     * @param end
-     * @return
-     */
-    private String calculateDuration(final LocalDateTime start, final LocalDateTime end) {
+		final Path root = Paths.get(deliveryReportingDirectory, libraryId, delivery.getIdentifier());
 
-        final long ms = Duration.between(start, end).toMillis();
-        return String.format("%02dh%02dm%02ds",
-                             TimeUnit.MILLISECONDS.toHours(ms),
-                             TimeUnit.MILLISECONDS.toMinutes(ms) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(ms)),
-                             TimeUnit.MILLISECONDS.toSeconds(ms) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(ms)));
-    }
+		final List<String> lines = new ArrayList<>();
+		lines.add("");
+		if (dtHr.isPresent()) {
+			lines.add("[".concat(dtHr.get().format(dtFormat)).concat("] ").concat(text));
+			start.ifPresent(deb -> lines.add("Durée: ".concat(calculateDuration(deb, dtHr.get()))));
+		}
+		else {
+			lines.add(text);
+		}
+		fm.appendFile(lines, root.toFile(), REPORT_NAME);
+	}
 
-    /**
-     * Assure le stockage physique du rapport de la livraison.
-     */
-    private void handleDeliveryReportFile(final Delivery delivery, final InputStream reportInput, final String libraryId) {
+	/**
+	 * Retourne la duree au format 'hh:mm:ss'.
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	private String calculateDuration(final LocalDateTime start, final LocalDateTime end) {
 
-        final Path root = Paths.get(deliveryReportingDirectory, libraryId);
-        try (InputStream input = new BufferedInputStream(reportInput)) {
-            fm.copyInputStreamToFileWithOtherDirs(input, root.toFile(), Arrays.asList(delivery.getIdentifier()), REPORT_NAME, true, false);
-        } catch (final IOException e) {
-            LOG.error("Erreur {} lors de la génération du rapport de livraison {}.", e.getLocalizedMessage(), delivery.getLabel());
-        }
-    }
+		final long ms = Duration.between(start, end).toMillis();
+		return String.format("%02dh%02dm%02ds", TimeUnit.MILLISECONDS.toHours(ms),
+				TimeUnit.MILLISECONDS.toMinutes(ms) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(ms)),
+				TimeUnit.MILLISECONDS.toSeconds(ms) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(ms)));
+	}
 
-    /**
-     * Récupération du fichier de rapport de contrôle.
-     *
-     * @param deliveryId
-     * @return
-     */
-    @Transactional
-    public File getDeliveryReportForDelivery(final String deliveryId) {
-        Project project = deliveryService.findOneWithDep(deliveryId).getLot().getProject();
-        final Path root = Paths.get(deliveryReportingDirectory, project.getLibrary().getIdentifier(), deliveryId, REPORT_NAME);
-        if (root != null) {
-            return root.toFile();
-        }
-        return null;
-    }
+	/**
+	 * Assure le stockage physique du rapport de la livraison.
+	 */
+	private void handleDeliveryReportFile(final Delivery delivery, final InputStream reportInput,
+			final String libraryId) {
+
+		final Path root = Paths.get(deliveryReportingDirectory, libraryId);
+		try (InputStream input = new BufferedInputStream(reportInput)) {
+			fm.copyInputStreamToFileWithOtherDirs(input, root.toFile(), Arrays.asList(delivery.getIdentifier()),
+					REPORT_NAME, true, false);
+		}
+		catch (final IOException e) {
+			LOG.error("Erreur {} lors de la génération du rapport de livraison {}.", e.getLocalizedMessage(),
+					delivery.getLabel());
+		}
+	}
+
+	/**
+	 * Récupération du fichier de rapport de contrôle.
+	 * @param deliveryId
+	 * @return
+	 */
+	@Transactional
+	public File getDeliveryReportForDelivery(final String deliveryId) {
+		Project project = deliveryService.findOneWithDep(deliveryId).getLot().getProject();
+		final Path root = Paths.get(deliveryReportingDirectory, project.getLibrary().getIdentifier(), deliveryId,
+				REPORT_NAME);
+		if (root != null) {
+			return root.toFile();
+		}
+		return null;
+	}
+
 }

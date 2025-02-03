@@ -7,40 +7,44 @@ import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
  */
 public class CheckDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String errorLabel;
-    private String errorType;
-    private SimpleDocPageDTO page;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String errorLabel;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private String errorType;
 
-    public String getErrorLabel() {
-        return errorLabel;
-    }
+	private SimpleDocPageDTO page;
 
-    public void setErrorLabel(String errorLabel) {
-        this.errorLabel = errorLabel;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getErrorType() {
-        return errorType;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setErrorType(String errorType) {
-        this.errorType = errorType;
-    }
+	public String getErrorLabel() {
+		return errorLabel;
+	}
 
-    public SimpleDocPageDTO getPage() {
-        return page;
-    }
+	public void setErrorLabel(String errorLabel) {
+		this.errorLabel = errorLabel;
+	}
 
-    public void setPage(SimpleDocPageDTO page) {
-        this.page = page;
-    }
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
+
+	public SimpleDocPageDTO getPage() {
+		return page;
+	}
+
+	public void setPage(SimpleDocPageDTO page) {
+		this.page = page;
+	}
+
 }

@@ -24,67 +24,74 @@ import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecu
 @EnableScheduling
 public class AsyncConfiguration implements AsyncConfigurer, EnvironmentAware {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AsyncConfiguration.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AsyncConfiguration.class);
 
-    private Environment environment;
+	private Environment environment;
 
-    @Override
-    public void setEnvironment(final Environment environment) {
-        this.environment = environment;
-    }
+	@Override
+	public void setEnvironment(final Environment environment) {
+		this.environment = environment;
+	}
 
-    @Override
-    @Bean(name = "taskExecutor")
-    // On utilise un DelegatingSecurityContextAsyncTaskExecutor pour que le contexte SpringSecurity soit propagé aux threads enfants.
-    // On l'instancie comme ceci car sinon le threadPool délégué n'est pas initialisé ni fermé car le DelegatingSecurityContextAsyncTaskExecutor
-    // n'implémente pas InitializingBean ni DisposableBean
-    public Executor getAsyncExecutor() {
-        return new DelegatingSecurityContextAsyncTaskExecutor(threadPoolTaskExecutor());
-    }
+	@Override
+	@Bean(name = "taskExecutor")
+	// On utilise un DelegatingSecurityContextAsyncTaskExecutor pour que le contexte
+	// SpringSecurity soit propagé aux threads enfants.
+	// On l'instancie comme ceci car sinon le threadPool délégué n'est pas initialisé ni
+	// fermé car le DelegatingSecurityContextAsyncTaskExecutor
+	// n'implémente pas InitializingBean ni DisposableBean
+	public Executor getAsyncExecutor() {
+		return new DelegatingSecurityContextAsyncTaskExecutor(threadPoolTaskExecutor());
+	}
 
-    @Bean
-    public AsyncTaskExecutor threadPoolTaskExecutor() {
-        LOG.debug("Creating Async Task Executor");
-        final ThreadPoolTaskExecutor executor = createThreadPoolTaskExecutor(environment.getProperty("async.corePoolSize",
-                                                                                                     Integer.class,
-                                                                                                     Runtime.getRuntime().availableProcessors() / 2),
-                                                                             environment.getProperty("async.maxPoolSize", Integer.class, 50),
-                                                                             environment.getProperty("async.queueCapacity", Integer.class, Integer.MAX_VALUE),
-                                                                             "Numahop-executor-");
-        return new ExceptionHandlingAsyncTaskExecutor(executor);
-    }
+	@Bean
+	public AsyncTaskExecutor threadPoolTaskExecutor() {
+		LOG.debug("Creating Async Task Executor");
+		final ThreadPoolTaskExecutor executor = createThreadPoolTaskExecutor(
+				environment.getProperty("async.corePoolSize", Integer.class,
+						Runtime.getRuntime().availableProcessors() / 2),
+				environment.getProperty("async.maxPoolSize", Integer.class, 50),
+				environment.getProperty("async.queueCapacity", Integer.class, Integer.MAX_VALUE), "Numahop-executor-");
+		return new ExceptionHandlingAsyncTaskExecutor(executor);
+	}
 
-    @Bean("jobRunnerExecutor")
-    public ThreadPoolTaskExecutor jobRunnerExecutor() {
-        return createThreadPoolTaskExecutor(Runtime.getRuntime().availableProcessors(), Integer.MAX_VALUE, 0, "jobrunner-");
-    }
+	@Bean("jobRunnerExecutor")
+	public ThreadPoolTaskExecutor jobRunnerExecutor() {
+		return createThreadPoolTaskExecutor(Runtime.getRuntime().availableProcessors(), Integer.MAX_VALUE, 0,
+				"jobrunner-");
+	}
 
-    private ThreadPoolTaskExecutor createThreadPoolTaskExecutor(final int corePoolSize, final int maxPoolSize, final int queueCapacity, final String namePrefix) {
-        final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(corePoolSize);
-        executor.setMaxPoolSize(maxPoolSize);
-        executor.setQueueCapacity(queueCapacity);
-        executor.setThreadNamePrefix(namePrefix);
-        // On crée un décorateur qui va recopier le SecurityContext du thread appelant vers le thread exécutant car sinon on se retrouve
-        // avec les informations de la personne précédente car les threads sont dans un pool et ne sont pas recréés à chaque utilisation.
-        executor.setTaskDecorator(r -> {
-            final SecurityContext securityContext = SecurityContextHolder.getContext();
-            return () -> {
-                try {
-                    if (securityContext != null) {
-                        SecurityContextHolder.setContext(securityContext);
-                    }
-                    r.run();
-                } finally {
-                    SecurityContextHolder.clearContext();
-                }
-            };
-        });
-        return executor;
-    }
+	private ThreadPoolTaskExecutor createThreadPoolTaskExecutor(final int corePoolSize, final int maxPoolSize,
+			final int queueCapacity, final String namePrefix) {
+		final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(corePoolSize);
+		executor.setMaxPoolSize(maxPoolSize);
+		executor.setQueueCapacity(queueCapacity);
+		executor.setThreadNamePrefix(namePrefix);
+		// On crée un décorateur qui va recopier le SecurityContext du thread appelant
+		// vers le thread exécutant car sinon on se retrouve
+		// avec les informations de la personne précédente car les threads sont dans un
+		// pool et ne sont pas recréés à chaque utilisation.
+		executor.setTaskDecorator(r -> {
+			final SecurityContext securityContext = SecurityContextHolder.getContext();
+			return () -> {
+				try {
+					if (securityContext != null) {
+						SecurityContextHolder.setContext(securityContext);
+					}
+					r.run();
+				}
+				finally {
+					SecurityContextHolder.clearContext();
+				}
+			};
+		});
+		return executor;
+	}
 
-    @Override
-    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-        return new SimpleAsyncUncaughtExceptionHandler();
-    }
+	@Override
+	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+		return new SimpleAsyncUncaughtExceptionHandler();
+	}
+
 }

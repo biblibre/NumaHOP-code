@@ -13,10 +13,9 @@ import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 /**
- * The descriptionType is used for the description
- * element in Identify and for setDescription element in ListSets.
- * Content must be compliant with an XML Schema defined by a
- * community.
+ * The descriptionType is used for the description element in Identify and for
+ * setDescription element in ListSets. Content must be compliant with an XML Schema
+ * defined by a community.
  *
  * <p>
  * Classe Java pour descriptionType complex type.
@@ -39,34 +38,28 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "descriptionType", propOrder = {"any"})
+@XmlType(name = "descriptionType", propOrder = { "any" })
 public class DescriptionType {
 
-    @XmlAnyElement(lax = true)
-    protected Object any;
+	@XmlAnyElement(lax = true)
+	protected Object any;
 
-    /**
-     * Obtient la valeur de la propriété any.
-     *
-     * @return
-     *         possible object is
-     *         {@link Object }
-     *
-     */
-    public Object getAny() {
-        return any;
-    }
+	/**
+	 * Obtient la valeur de la propriété any.
+	 * @return possible object is {@link Object }
+	 *
+	 */
+	public Object getAny() {
+		return any;
+	}
 
-    /**
-     * Définit la valeur de la propriété any.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Object }
-     *
-     */
-    public void setAny(Object value) {
-        this.any = value;
-    }
+	/**
+	 * Définit la valeur de la propriété any.
+	 * @param value allowed object is {@link Object }
+	 *
+	 */
+	public void setAny(Object value) {
+		this.any = value;
+	}
 
 }

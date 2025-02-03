@@ -16,149 +16,157 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 /**
- * Service permettant de gérer des transactions à la main. Deux types de transactions sont possibles :
+ * Service permettant de gérer des transactions à la main. Deux types de transactions sont
+ * possibles :
  * <ul>
- * <li>Stateless : ce type est destiné aux imports de masse. Les entitées hibernate ne sont pas attachées à la session
- * (attention aux LazyInitialisationException !) ce qui permet de gagner un temps phénoménal dans les imports.</li>
+ * <li>Stateless : ce type est destiné aux imports de masse. Les entitées hibernate ne
+ * sont pas attachées à la session (attention aux LazyInitialisationException !) ce qui
+ * permet de gagner un temps phénoménal dans les imports.</li>
  * <li>Normal : ce type est destiné à tous les autres cas...</li>
  * </ul>
- * Il est possible de mixer les transactions (par exemple démarrer une stateless, puis faire une normale pour un
- * traitement particulier et continuer la stateless ensuite)
+ * Il est possible de mixer les transactions (par exemple démarrer une stateless, puis
+ * faire une normale pour un traitement particulier et continuer la stateless ensuite)
  *
  * @author David
  */
 @Service
 public class TransactionService {
 
-    private final PlatformTransactionManager txManager;
-    private final LocalContainerEntityManagerFactoryBean entityManagerFactory;
-    private final EntityManager entityManager;
-    private final ThreadPoolTaskExecutor taskExecutor;
+	private final PlatformTransactionManager txManager;
 
-    public TransactionService(final PlatformTransactionManager txManager,
-                              final LocalContainerEntityManagerFactoryBean entityManagerFactory,
-                              final EntityManager entityManager,
-                              @Qualifier("jobRunnerExecutor") final ThreadPoolTaskExecutor taskExecutor) {
-        this.txManager = txManager;
-        this.entityManagerFactory = entityManagerFactory;
-        this.entityManager = entityManager;
-        this.taskExecutor = taskExecutor;
-    }
+	private final LocalContainerEntityManagerFactoryBean entityManagerFactory;
 
-    public ThreadPoolTaskExecutor getTaskExecutor() {
-        return taskExecutor;
-    }
+	private final EntityManager entityManager;
 
-    public TransactionStatus startTransaction(final boolean readonly) {
-        final DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
-        def.setReadOnly(readonly);
-        return txManager.getTransaction(def);
-    }
+	private final ThreadPoolTaskExecutor taskExecutor;
 
-    public void commitTransaction(final TransactionStatus status) {
-        txManager.commit(status);
-        entityManager.clear();
-    }
+	public TransactionService(final PlatformTransactionManager txManager,
+			final LocalContainerEntityManagerFactoryBean entityManagerFactory, final EntityManager entityManager,
+			@Qualifier("jobRunnerExecutor") final ThreadPoolTaskExecutor taskExecutor) {
+		this.txManager = txManager;
+		this.entityManagerFactory = entityManagerFactory;
+		this.entityManager = entityManager;
+		this.taskExecutor = taskExecutor;
+	}
 
-    public void rollbackTransaction(final TransactionStatus status) {
-        if (!status.isCompleted()) {
-            txManager.rollback(status);
-        }
-    }
+	public ThreadPoolTaskExecutor getTaskExecutor() {
+		return taskExecutor;
+	}
 
-    public void flushSession(final TransactionStatus status) {
-        status.flush();
-        entityManager.clear();
-    }
+	public TransactionStatus startTransaction(final boolean readonly) {
+		final DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		def.setReadOnly(readonly);
+		return txManager.getTransaction(def);
+	}
 
-    /**
-     * Crée une nouvelle session stateless et démarre une nouvelle transaction. Attention à bien fermer la session après
-     * l'avoir utilisée !
-     *
-     * @return StatelessSession
-     */
-    public StatelessSession startStatelessTransaction() {
-        return startStatelessTransaction(null);
-    }
+	public void commitTransaction(final TransactionStatus status) {
+		txManager.commit(status);
+		entityManager.clear();
+	}
 
-    /**
-     * Utilise la session passée en paramètre et démarre une nouvelle transaction. Si la session est <code>null</code>,
-     * une nouvelle est créee. Attention à bien fermer la session après l'avoir utilisée !
-     */
-    public StatelessSession startStatelessTransaction(StatelessSession session) {
-        if (session == null || !session.isOpen()) {
-            session = ((SessionFactory) entityManagerFactory.getNativeEntityManagerFactory()).openStatelessSession();
-        }
-        session.beginTransaction();
-        return session;
-    }
+	public void rollbackTransaction(final TransactionStatus status) {
+		if (!status.isCompleted()) {
+			txManager.rollback(status);
+		}
+	}
 
-    /**
-     * Commite la transaction contenue dans la session.
-     */
-    public void commitStatelessTransaction(final StatelessSession session) {
-        session.getTransaction().commit();
-    }
+	public void flushSession(final TransactionStatus status) {
+		status.flush();
+		entityManager.clear();
+	}
 
-    /**
-     * Rollback la transaction contenue dans la session.
-     */
-    public void rollbackStatelessTransaction(final StatelessSession session) {
-        if (session.getTransaction().getStatus() == org.hibernate.resource.transaction.spi.TransactionStatus.ACTIVE) {
-            session.getTransaction().rollback();
-        }
-    }
+	/**
+	 * Crée une nouvelle session stateless et démarre une nouvelle transaction. Attention
+	 * à bien fermer la session après l'avoir utilisée !
+	 * @return StatelessSession
+	 */
+	public StatelessSession startStatelessTransaction() {
+		return startStatelessTransaction(null);
+	}
 
-    /**
-     * Ferme la session
-     */
-    public void closeStatelessSession(final StatelessSession session) {
-        session.close();
-    }
+	/**
+	 * Utilise la session passée en paramètre et démarre une nouvelle transaction. Si la
+	 * session est <code>null</code>, une nouvelle est créee. Attention à bien fermer la
+	 * session après l'avoir utilisée !
+	 */
+	public StatelessSession startStatelessTransaction(StatelessSession session) {
+		if (session == null || !session.isOpen()) {
+			session = ((SessionFactory) entityManagerFactory.getNativeEntityManagerFactory()).openStatelessSession();
+		}
+		session.beginTransaction();
+		return session;
+	}
 
-    /**
-     * Exécute une méthode dans une nouvelle transaction
-     */
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public void executeInNewTransaction(final Runnable runnable) {
-        runnable.run();
-    }
+	/**
+	 * Commite la transaction contenue dans la session.
+	 */
+	public void commitStatelessTransaction(final StatelessSession session) {
+		session.getTransaction().commit();
+	}
 
-    /**
-     * Exécute une méthode dans une nouvelle transaction non readonly
-     */
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public <T> T executeInNewTransactionWithReturn(final RunnableWithReturn<T> runnable) {
-        return runnable.run();
-    }
+	/**
+	 * Rollback la transaction contenue dans la session.
+	 */
+	public void rollbackStatelessTransaction(final StatelessSession session) {
+		if (session.getTransaction().getStatus() == org.hibernate.resource.transaction.spi.TransactionStatus.ACTIVE) {
+			session.getTransaction().rollback();
+		}
+	}
 
-    /**
-     * Exécute une méthode dans une nouvelle transaction non readonly
-     */
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public <T> T executeInNewTransactionWithReturnAndException(final RunnableWithReturnAndException<T> runnable) throws Exception {
-        return runnable.run();
-    }
+	/**
+	 * Ferme la session
+	 */
+	public void closeStatelessSession(final StatelessSession session) {
+		session.close();
+	}
 
-    /**
-     * Exécute une méthode dans une nouvelle transaction asynchrone
-     */
-    @Async
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public void executeInNewTransactionAsync(final Runnable runnable) {
-        executeInNewTransaction(runnable);
-    }
+	/**
+	 * Exécute une méthode dans une nouvelle transaction
+	 */
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+	public void executeInNewTransaction(final Runnable runnable) {
+		runnable.run();
+	}
 
-    @FunctionalInterface
-    public interface RunnableWithReturn<T> {
+	/**
+	 * Exécute une méthode dans une nouvelle transaction non readonly
+	 */
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+	public <T> T executeInNewTransactionWithReturn(final RunnableWithReturn<T> runnable) {
+		return runnable.run();
+	}
 
-        public abstract T run();
-    }
+	/**
+	 * Exécute une méthode dans une nouvelle transaction non readonly
+	 */
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+	public <T> T executeInNewTransactionWithReturnAndException(final RunnableWithReturnAndException<T> runnable)
+			throws Exception {
+		return runnable.run();
+	}
 
-    @FunctionalInterface
-    public interface RunnableWithReturnAndException<T> {
+	/**
+	 * Exécute une méthode dans une nouvelle transaction asynchrone
+	 */
+	@Async
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+	public void executeInNewTransactionAsync(final Runnable runnable) {
+		executeInNewTransaction(runnable);
+	}
 
-        public abstract T run() throws Exception;
-    }
+	@FunctionalInterface
+	public interface RunnableWithReturn<T> {
+
+		public abstract T run();
+
+	}
+
+	@FunctionalInterface
+	public interface RunnableWithReturnAndException<T> {
+
+		public abstract T run() throws Exception;
+
+	}
+
 }

@@ -51,153 +51,121 @@ import java.util.ArrayList;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "titlepage", propOrder = {"addressOrChronlistOrList"})
+@XmlType(name = "titlepage", propOrder = { "addressOrChronlistOrList" })
 public class Titlepage {
 
-    @XmlElements({@XmlElement(name = "address", type = Address.class),
-                  @XmlElement(name = "chronlist", type = Chronlist.class),
-                  @XmlElement(name = "list", type = List.class),
-                  @XmlElement(name = "note", type = Note.class),
-                  @XmlElement(name = "table", type = Table.class),
-                  @XmlElement(name = "blockquote", type = Blockquote.class),
-                  @XmlElement(name = "p", type = P.class),
-                  @XmlElement(name = "author", type = Author.class),
-                  @XmlElement(name = "date", type = Date.class),
-                  @XmlElement(name = "edition", type = Edition.class),
-                  @XmlElement(name = "num", type = Num.class),
-                  @XmlElement(name = "publisher", type = Publisher.class),
-                  @XmlElement(name = "bibseries", type = Bibseries.class),
-                  @XmlElement(name = "sponsor", type = Sponsor.class),
-                  @XmlElement(name = "titleproper", type = Titleproper.class),
-                  @XmlElement(name = "subtitle", type = Subtitle.class)})
-    protected java.util.List<Object> addressOrChronlistOrList;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	@XmlElements({ @XmlElement(name = "address", type = Address.class),
+			@XmlElement(name = "chronlist", type = Chronlist.class), @XmlElement(name = "list", type = List.class),
+			@XmlElement(name = "note", type = Note.class), @XmlElement(name = "table", type = Table.class),
+			@XmlElement(name = "blockquote", type = Blockquote.class), @XmlElement(name = "p", type = P.class),
+			@XmlElement(name = "author", type = Author.class), @XmlElement(name = "date", type = Date.class),
+			@XmlElement(name = "edition", type = Edition.class), @XmlElement(name = "num", type = Num.class),
+			@XmlElement(name = "publisher", type = Publisher.class),
+			@XmlElement(name = "bibseries", type = Bibseries.class),
+			@XmlElement(name = "sponsor", type = Sponsor.class),
+			@XmlElement(name = "titleproper", type = Titleproper.class),
+			@XmlElement(name = "subtitle", type = Subtitle.class) })
+	protected java.util.List<Object> addressOrChronlistOrList;
 
-    /**
-     * Gets the value of the addressOrChronlistOrList property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the addressOrChronlistOrList property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getAddressOrChronlistOrList().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Address }
-     * {@link Chronlist }
-     * {@link List }
-     * {@link Note }
-     * {@link Table }
-     * {@link Blockquote }
-     * {@link P }
-     * {@link Author }
-     * {@link Date }
-     * {@link Edition }
-     * {@link Num }
-     * {@link Publisher }
-     * {@link Bibseries }
-     * {@link Sponsor }
-     * {@link Titleproper }
-     * {@link Subtitle }
-     *
-     *
-     */
-    public java.util.List<Object> getAddressOrChronlistOrList() {
-        if (addressOrChronlistOrList == null) {
-            addressOrChronlistOrList = new ArrayList<>();
-        }
-        return this.addressOrChronlistOrList;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Gets the value of the addressOrChronlistOrList property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * addressOrChronlistOrList property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getAddressOrChronlistOrList().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link Address }
+	 * {@link Chronlist } {@link List } {@link Note } {@link Table } {@link Blockquote }
+	 * {@link P } {@link Author } {@link Date } {@link Edition } {@link Num }
+	 * {@link Publisher } {@link Bibseries } {@link Sponsor } {@link Titleproper }
+	 * {@link Subtitle }
+	 *
+	 *
+	 */
+	public java.util.List<Object> getAddressOrChronlistOrList() {
+		if (addressOrChronlistOrList == null) {
+			addressOrChronlistOrList = new ArrayList<>();
+		}
+		return this.addressOrChronlistOrList;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

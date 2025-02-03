@@ -29,98 +29,111 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AuditMappingRepository {
 
-    @PersistenceContext
-    private EntityManager em;
+	@PersistenceContext
+	private EntityManager em;
 
-    /**
-     * Recherche une révision précise d'un mapping
-     *
-     * @param id
-     * @param rev
-     * @return
-     */
-    public Mapping getEntity(final String id, final Number rev) {
-        final AuditReader auditReader = AuditReaderFactory.get(em);
+	/**
+	 * Recherche une révision précise d'un mapping
+	 * @param id
+	 * @param rev
+	 * @return
+	 */
+	public Mapping getEntity(final String id, final Number rev) {
+		final AuditReader auditReader = AuditReaderFactory.get(em);
 
-        // Recherche du mapping à la révision rev
-        final Mapping mapping = auditReader.find(Mapping.class, id, rev);
+		// Recherche du mapping à la révision rev
+		final Mapping mapping = auditReader.find(Mapping.class, id, rev);
 
-        if (mapping != null) {
-            // Initialisation des règles à la révision rev
-            @SuppressWarnings("unchecked")
-            final List<MappingRule> rules = auditReader.createQuery()
-                                                       .forEntitiesAtRevision(MappingRule.class, rev)
-                                                       .add(AuditEntity.property("mapping").eq(mapping))
-                                                       .getResultList();
-            mapping.setRules(rules);
+		if (mapping != null) {
+			// Initialisation des règles à la révision rev
+			@SuppressWarnings("unchecked")
+			final List<MappingRule> rules = auditReader.createQuery()
+				.forEntitiesAtRevision(MappingRule.class, rev)
+				.add(AuditEntity.property("mapping").eq(mapping))
+				.getResultList();
+			mapping.setRules(rules);
 
-            // Initialisation des données non versionnées
-            Hibernate.initialize(mapping.getLibrary());
-            rules.forEach(r -> Hibernate.initialize(r.getProperty()));
-        }
-        return mapping;
-    }
+			// Initialisation des données non versionnées
+			Hibernate.initialize(mapping.getLibrary());
+			rules.forEach(r -> Hibernate.initialize(r.getProperty()));
+		}
+		return mapping;
+	}
 
-    /**
-     * Recherche la liste des révisions disponibles pour un mapping en tenant compte du mapping et de ses règles
-     *
-     * @param id
-     * @return
-     */
-    public List<AuditRevision> getRevisions(final String id) {
-        final List<AuditRevision> mappingResult = getRevisions(em, Mapping.class, AuditEntity.id().eq(id));
+	/**
+	 * Recherche la liste des révisions disponibles pour un mapping en tenant compte du
+	 * mapping et de ses règles
+	 * @param id
+	 * @return
+	 */
+	public List<AuditRevision> getRevisions(final String id) {
+		final List<AuditRevision> mappingResult = getRevisions(em, Mapping.class, AuditEntity.id().eq(id));
 
-        final Mapping mapping = new Mapping();
-        mapping.setIdentifier(id);
-        final List<AuditRevision> ruleResult = getRevisions(em, MappingRule.class, AuditEntity.property("mapping").eq(mapping));
+		final Mapping mapping = new Mapping();
+		mapping.setIdentifier(id);
+		final List<AuditRevision> ruleResult = getRevisions(em, MappingRule.class,
+				AuditEntity.property("mapping").eq(mapping));
 
-        return Stream.concat(mappingResult.stream(), ruleResult.stream()).sorted(Comparator.comparing(AuditRevision::getTimestamp)).distinct().collect(Collectors.toList());
-    }
+		return Stream.concat(mappingResult.stream(), ruleResult.stream())
+			.sorted(Comparator.comparing(AuditRevision::getTimestamp))
+			.distinct()
+			.collect(Collectors.toList());
+	}
 
-    /**
-     * Récupère la révision la plus récente
-     *
-     * @return
-     */
-    public long getLatestRevision() {
-        return Stream.of(Mapping.class, MappingRule.class).map(c -> getLatestRevision(em, c)).mapToLong(rev -> rev).max().orElse(0L);
-    }
+	/**
+	 * Récupère la révision la plus récente
+	 * @return
+	 */
+	public long getLatestRevision() {
+		return Stream.of(Mapping.class, MappingRule.class)
+			.map(c -> getLatestRevision(em, c))
+			.mapToLong(rev -> rev)
+			.max()
+			.orElse(0L);
+	}
 
-    /**
-     * Recherche la liste des révisions disponibles pour la classe clazz, en appliquant le critère de filtrage auditFilter
-     *
-     * @param clazz
-     * @param auditFilter
-     * @return
-     */
-    private List<AuditRevision> getRevisions(final EntityManager em, final Class<?> clazz, final AuditCriterion auditFilter) {
-        final AuditReader auditReader = AuditReaderFactory.get(em);
-        final List<?> result = auditReader.createQuery().forRevisionsOfEntity(clazz, false, false).add(auditFilter).getResultList();
-        return result.stream()
-                     .map(obj -> ((Object[]) obj)[1])
-                     .map(AuditRevision.class::cast)
-                     .sorted(Comparator.comparing(AuditRevision::getTimestamp))
-                     .collect(Collectors.toList());
-    }
+	/**
+	 * Recherche la liste des révisions disponibles pour la classe clazz, en appliquant le
+	 * critère de filtrage auditFilter
+	 * @param clazz
+	 * @param auditFilter
+	 * @return
+	 */
+	private List<AuditRevision> getRevisions(final EntityManager em, final Class<?> clazz,
+			final AuditCriterion auditFilter) {
+		final AuditReader auditReader = AuditReaderFactory.get(em);
+		final List<?> result = auditReader.createQuery()
+			.forRevisionsOfEntity(clazz, false, false)
+			.add(auditFilter)
+			.getResultList();
+		return result.stream()
+			.map(obj -> ((Object[]) obj)[1])
+			.map(AuditRevision.class::cast)
+			.sorted(Comparator.comparing(AuditRevision::getTimestamp))
+			.collect(Collectors.toList());
+	}
 
-    /**
-     * Récupère la révision la plus récente pour les entités de classe clazz
-     */
-    private long getLatestRevision(final EntityManager em, final Class<?> clazz) {
-        try {
-            return (long) AuditReaderFactory.get(em)
-                                            .createQuery()
-                                            // Révision des entités Mapping
-                                            .forRevisionsOfEntity(clazz, false, false)
-                                            // Champ timestamp de la révision
-                                            .addProjection(new PropertyAuditProjection(null, new RevisionPropertyPropertyName("timestamp"), null, true))
-                                            // Tri par n° de révision desc
-                                            .addOrder(new PropertyAuditOrder(null, new RevisionNumberPropertyName(), false))
-                                            // On ne conserve que le 1er résultat
-                                            .setMaxResults(1)
-                                            .getSingleResult();
-        } catch (NoResultException e) {
-            return 0L;
-        }
-    }
+	/**
+	 * Récupère la révision la plus récente pour les entités de classe clazz
+	 */
+	private long getLatestRevision(final EntityManager em, final Class<?> clazz) {
+		try {
+			return (long) AuditReaderFactory.get(em)
+				.createQuery()
+				// Révision des entités Mapping
+				.forRevisionsOfEntity(clazz, false, false)
+				// Champ timestamp de la révision
+				.addProjection(
+						new PropertyAuditProjection(null, new RevisionPropertyPropertyName("timestamp"), null, true))
+				// Tri par n° de révision desc
+				.addOrder(new PropertyAuditOrder(null, new RevisionNumberPropertyName(), false))
+				// On ne conserve que le 1er résultat
+				.setMaxResults(1)
+				.getSingleResult();
+		}
+		catch (NoResultException e) {
+			return 0L;
+		}
+	}
+
 }

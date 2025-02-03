@@ -44,143 +44,116 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "namegrp", propOrder = {"corpnameOrFamnameOrGeogname"})
+@XmlType(name = "namegrp", propOrder = { "corpnameOrFamnameOrGeogname" })
 public class Namegrp {
 
-    @XmlElements({@XmlElement(name = "corpname", type = Corpname.class),
-                  @XmlElement(name = "famname", type = Famname.class),
-                  @XmlElement(name = "geogname", type = Geogname.class),
-                  @XmlElement(name = "name", type = Name.class),
-                  @XmlElement(name = "occupation", type = Occupation.class),
-                  @XmlElement(name = "persname", type = Persname.class),
-                  @XmlElement(name = "subject", type = Subject.class),
-                  @XmlElement(name = "genreform", type = Genreform.class),
-                  @XmlElement(name = "function", type = Function.class),
-                  @XmlElement(name = "title", type = Title.class),
-                  @XmlElement(name = "note", type = Note.class)})
-    protected List<Object> corpnameOrFamnameOrGeogname;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	@XmlElements({ @XmlElement(name = "corpname", type = Corpname.class),
+			@XmlElement(name = "famname", type = Famname.class), @XmlElement(name = "geogname", type = Geogname.class),
+			@XmlElement(name = "name", type = Name.class), @XmlElement(name = "occupation", type = Occupation.class),
+			@XmlElement(name = "persname", type = Persname.class), @XmlElement(name = "subject", type = Subject.class),
+			@XmlElement(name = "genreform", type = Genreform.class),
+			@XmlElement(name = "function", type = Function.class), @XmlElement(name = "title", type = Title.class),
+			@XmlElement(name = "note", type = Note.class) })
+	protected List<Object> corpnameOrFamnameOrGeogname;
 
-    /**
-     * Gets the value of the corpnameOrFamnameOrGeogname property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the corpnameOrFamnameOrGeogname property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getCorpnameOrFamnameOrGeogname().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Corpname }
-     * {@link Famname }
-     * {@link Geogname }
-     * {@link Name }
-     * {@link Occupation }
-     * {@link Persname }
-     * {@link Subject }
-     * {@link Genreform }
-     * {@link Function }
-     * {@link Title }
-     * {@link Note }
-     *
-     *
-     */
-    public List<Object> getCorpnameOrFamnameOrGeogname() {
-        if (corpnameOrFamnameOrGeogname == null) {
-            corpnameOrFamnameOrGeogname = new ArrayList<>();
-        }
-        return this.corpnameOrFamnameOrGeogname;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Gets the value of the corpnameOrFamnameOrGeogname property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * corpnameOrFamnameOrGeogname property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getCorpnameOrFamnameOrGeogname().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link Corpname }
+	 * {@link Famname } {@link Geogname } {@link Name } {@link Occupation }
+	 * {@link Persname } {@link Subject } {@link Genreform } {@link Function }
+	 * {@link Title } {@link Note }
+	 *
+	 *
+	 */
+	public List<Object> getCorpnameOrFamnameOrGeogname() {
+		if (corpnameOrFamnameOrGeogname == null) {
+			corpnameOrFamnameOrGeogname = new ArrayList<>();
+		}
+		return this.corpnameOrFamnameOrGeogname;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

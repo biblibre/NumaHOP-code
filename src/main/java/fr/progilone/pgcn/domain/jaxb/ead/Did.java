@@ -45,203 +45,162 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "did",
-         propOrder = {"head",
-                      "mDid"})
+@XmlType(name = "did", propOrder = { "head", "mDid" })
 public class Did {
 
-    protected Head head;
-    @XmlElements({@XmlElement(name = "abstract", type = Abstract.class),
-                  @XmlElement(name = "container", type = Container.class),
-                  @XmlElement(name = "dao", type = Dao.class),
-                  @XmlElement(name = "daogrp", type = Daogrp.class),
-                  @XmlElement(name = "langmaterial", type = Langmaterial.class),
-                  @XmlElement(name = "materialspec", type = Materialspec.class),
-                  @XmlElement(name = "note", type = Note.class),
-                  @XmlElement(name = "origination", type = Origination.class),
-                  @XmlElement(name = "physdesc", type = Physdesc.class),
-                  @XmlElement(name = "physloc", type = Physloc.class),
-                  @XmlElement(name = "repository", type = Repository.class),
-                  @XmlElement(name = "unitdate", type = Unitdate.class),
-                  @XmlElement(name = "unitid", type = Unitid.class),
-                  @XmlElement(name = "unittitle", type = Unittitle.class)})
-    protected List<Object> mDid;
-    @XmlAttribute(name = "encodinganalog")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String encodinganalog;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	protected Head head;
 
-    /**
-     * Obtient la valeur de la propriété head.
-     *
-     * @return
-     *         possible object is
-     *         {@link Head }
-     *
-     */
-    public Head getHead() {
-        return head;
-    }
+	@XmlElements({ @XmlElement(name = "abstract", type = Abstract.class),
+			@XmlElement(name = "container", type = Container.class), @XmlElement(name = "dao", type = Dao.class),
+			@XmlElement(name = "daogrp", type = Daogrp.class),
+			@XmlElement(name = "langmaterial", type = Langmaterial.class),
+			@XmlElement(name = "materialspec", type = Materialspec.class),
+			@XmlElement(name = "note", type = Note.class), @XmlElement(name = "origination", type = Origination.class),
+			@XmlElement(name = "physdesc", type = Physdesc.class), @XmlElement(name = "physloc", type = Physloc.class),
+			@XmlElement(name = "repository", type = Repository.class),
+			@XmlElement(name = "unitdate", type = Unitdate.class), @XmlElement(name = "unitid", type = Unitid.class),
+			@XmlElement(name = "unittitle", type = Unittitle.class) })
+	protected List<Object> mDid;
 
-    /**
-     * Définit la valeur de la propriété head.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Head }
-     *
-     */
-    public void setHead(Head value) {
-        this.head = value;
-    }
+	@XmlAttribute(name = "encodinganalog")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String encodinganalog;
 
-    /**
-     * Gets the value of the mDid property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the mDid property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getMDid().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Abstract }
-     * {@link Container }
-     * {@link Dao }
-     * {@link Daogrp }
-     * {@link Langmaterial }
-     * {@link Materialspec }
-     * {@link Note }
-     * {@link Origination }
-     * {@link Physdesc }
-     * {@link Physloc }
-     * {@link Repository }
-     * {@link Unitdate }
-     * {@link Unitid }
-     * {@link Unittitle }
-     *
-     *
-     */
-    public List<Object> getMDid() {
-        if (mDid == null) {
-            mDid = new ArrayList<>();
-        }
-        return this.mDid;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Obtient la valeur de la propriété encodinganalog.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getEncodinganalog() {
-        return encodinganalog;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Définit la valeur de la propriété encodinganalog.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setEncodinganalog(String value) {
-        this.encodinganalog = value;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	/**
+	 * Obtient la valeur de la propriété head.
+	 * @return possible object is {@link Head }
+	 *
+	 */
+	public Head getHead() {
+		return head;
+	}
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	/**
+	 * Définit la valeur de la propriété head.
+	 * @param value allowed object is {@link Head }
+	 *
+	 */
+	public void setHead(Head value) {
+		this.head = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Gets the value of the mDid property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the mDid
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getMDid().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link Abstract }
+	 * {@link Container } {@link Dao } {@link Daogrp } {@link Langmaterial }
+	 * {@link Materialspec } {@link Note } {@link Origination } {@link Physdesc }
+	 * {@link Physloc } {@link Repository } {@link Unitdate } {@link Unitid }
+	 * {@link Unittitle }
+	 *
+	 *
+	 */
+	public List<Object> getMDid() {
+		if (mDid == null) {
+			mDid = new ArrayList<>();
+		}
+		return this.mDid;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété encodinganalog.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getEncodinganalog() {
+		return encodinganalog;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Définit la valeur de la propriété encodinganalog.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setEncodinganalog(String value) {
+		this.encodinganalog = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

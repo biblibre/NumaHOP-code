@@ -11,9 +11,9 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface PersistentTokenRepository extends JpaRepository<PersistentToken, String> {
 
-    List<PersistentToken> findByTokenDateBefore(Date date);
+	List<PersistentToken> findByTokenDateBefore(Date date);
 
-    @Query("select t from PersistentToken t left join fetch t.user")
-    List<PersistentToken> findByAllWithUser();
+	@Query("select t from PersistentToken t left join fetch t.user")
+	List<PersistentToken> findByAllWithUser();
 
 }

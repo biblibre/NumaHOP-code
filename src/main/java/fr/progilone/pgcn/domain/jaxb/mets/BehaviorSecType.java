@@ -24,9 +24,10 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 /**
- * behaviorSecType: Complex Type for Behavior Sections
- * Behaviors are executable code which can be associated with parts of a METS object. The behaviorSec element is used to group individual behaviors
- * within a hierarchical structure. Such grouping can be useful to organize families of behaviors together or to indicate other relationships between
+ * behaviorSecType: Complex Type for Behavior Sections Behaviors are executable code which
+ * can be associated with parts of a METS object. The behaviorSec element is used to group
+ * individual behaviors within a hierarchical structure. Such grouping can be useful to
+ * organize families of behaviors together or to indicate other relationships between
  * particular behaviors.
  *
  *
@@ -56,174 +57,155 @@ import javax.xml.namespace.QName;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "behaviorSecType",
-         propOrder = {"behaviorSec",
-                      "behavior"})
+@XmlType(name = "behaviorSecType", propOrder = { "behaviorSec", "behavior" })
 public class BehaviorSecType {
 
-    protected List<BehaviorSecType> behaviorSec;
-    protected List<BehaviorType> behavior;
-    @XmlAttribute(name = "ID")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "CREATED")
-    @XmlSchemaType(name = "dateTime")
-    protected LocalDateTime created;
-    @XmlAttribute(name = "LABEL")
-    protected String label;
-    @XmlAnyAttribute
-    private Map<QName, String> otherAttributes = new HashMap<>();
+	protected List<BehaviorSecType> behaviorSec;
 
-    /**
-     * Gets the value of the behaviorSec property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the behaviorSec property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getBehaviorSec().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link BehaviorSecType }
-     *
-     *
-     */
-    public List<BehaviorSecType> getBehaviorSec() {
-        if (behaviorSec == null) {
-            behaviorSec = new ArrayList<>();
-        }
-        return this.behaviorSec;
-    }
+	protected List<BehaviorType> behavior;
 
-    /**
-     * Gets the value of the behavior property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the behavior property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getBehavior().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link BehaviorType }
-     *
-     *
-     */
-    public List<BehaviorType> getBehavior() {
-        if (behavior == null) {
-            behavior = new ArrayList<>();
-        }
-        return this.behavior;
-    }
+	@XmlAttribute(name = "ID")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getID() {
-        return id;
-    }
+	@XmlAttribute(name = "CREATED")
+	@XmlSchemaType(name = "dateTime")
+	protected LocalDateTime created;
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setID(String value) {
-        this.id = value;
-    }
+	@XmlAttribute(name = "LABEL")
+	protected String label;
 
-    /**
-     * Obtient la valeur de la propriété created.
-     *
-     * @return
-     *         possible object is
-     *         {@link LocalDateTime }
-     *
-     */
-    public LocalDateTime getCREATED() {
-        return created;
-    }
+	@XmlAnyAttribute
+	private Map<QName, String> otherAttributes = new HashMap<>();
 
-    /**
-     * Définit la valeur de la propriété created.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link LocalDateTime }
-     *
-     */
-    public void setCREATED(LocalDateTime value) {
-        this.created = value;
-    }
+	/**
+	 * Gets the value of the behaviorSec property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the behaviorSec
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getBehaviorSec().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link BehaviorSecType }
+	 *
+	 *
+	 */
+	public List<BehaviorSecType> getBehaviorSec() {
+		if (behaviorSec == null) {
+			behaviorSec = new ArrayList<>();
+		}
+		return this.behaviorSec;
+	}
 
-    /**
-     * Obtient la valeur de la propriété label.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getLABEL() {
-        return label;
-    }
+	/**
+	 * Gets the value of the behavior property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the behavior
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getBehavior().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link BehaviorType }
+	 *
+	 *
+	 */
+	public List<BehaviorType> getBehavior() {
+		if (behavior == null) {
+			behavior = new ArrayList<>();
+		}
+		return this.behavior;
+	}
 
-    /**
-     * Définit la valeur de la propriété label.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setLABEL(String value) {
-        this.label = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getID() {
+		return id;
+	}
 
-    /**
-     * Gets a map that contains attributes that aren't bound to any typed property on this class.
-     *
-     * <p>
-     * the map is keyed by the name of the attribute and
-     * the value is the string value of the attribute.
-     *
-     * the map returned by this method is live, and you can add new attribute
-     * by updating the map directly. Because of this design, there's no setter.
-     *
-     *
-     * @return
-     *         always non-null
-     */
-    public Map<QName, String> getOtherAttributes() {
-        return otherAttributes;
-    }
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setID(String value) {
+		this.id = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété created.
+	 * @return possible object is {@link LocalDateTime }
+	 *
+	 */
+	public LocalDateTime getCREATED() {
+		return created;
+	}
+
+	/**
+	 * Définit la valeur de la propriété created.
+	 * @param value allowed object is {@link LocalDateTime }
+	 *
+	 */
+	public void setCREATED(LocalDateTime value) {
+		this.created = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété label.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getLABEL() {
+		return label;
+	}
+
+	/**
+	 * Définit la valeur de la propriété label.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setLABEL(String value) {
+		this.label = value;
+	}
+
+	/**
+	 * Gets a map that contains attributes that aren't bound to any typed property on this
+	 * class.
+	 *
+	 * <p>
+	 * the map is keyed by the name of the attribute and the value is the string value of
+	 * the attribute.
+	 *
+	 * the map returned by this method is live, and you can add new attribute by updating
+	 * the map directly. Because of this design, there's no setter.
+	 * @return always non-null
+	 */
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes;
+	}
 
 }

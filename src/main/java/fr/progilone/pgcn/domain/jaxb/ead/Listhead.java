@@ -40,143 +40,115 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "listhead",
-         propOrder = {"head01",
-                      "head02"})
+@XmlType(name = "listhead", propOrder = { "head01", "head02" })
 public class Listhead {
 
-    protected Head01 head01;
-    protected Head02 head02;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	protected Head01 head01;
 
-    /**
-     * Obtient la valeur de la propriété head01.
-     *
-     * @return
-     *         possible object is
-     *         {@link Head01 }
-     *
-     */
-    public Head01 getHead01() {
-        return head01;
-    }
+	protected Head02 head02;
 
-    /**
-     * Définit la valeur de la propriété head01.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Head01 }
-     *
-     */
-    public void setHead01(Head01 value) {
-        this.head01 = value;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Obtient la valeur de la propriété head02.
-     *
-     * @return
-     *         possible object is
-     *         {@link Head02 }
-     *
-     */
-    public Head02 getHead02() {
-        return head02;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Définit la valeur de la propriété head02.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Head02 }
-     *
-     */
-    public void setHead02(Head02 value) {
-        this.head02 = value;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	/**
+	 * Obtient la valeur de la propriété head01.
+	 * @return possible object is {@link Head01 }
+	 *
+	 */
+	public Head01 getHead01() {
+		return head01;
+	}
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	/**
+	 * Définit la valeur de la propriété head01.
+	 * @param value allowed object is {@link Head01 }
+	 *
+	 */
+	public void setHead01(Head01 value) {
+		this.head01 = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Obtient la valeur de la propriété head02.
+	 * @return possible object is {@link Head02 }
+	 *
+	 */
+	public Head02 getHead02() {
+		return head02;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Définit la valeur de la propriété head02.
+	 * @param value allowed object is {@link Head02 }
+	 *
+	 */
+	public void setHead02(Head02 value) {
+		this.head02 = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

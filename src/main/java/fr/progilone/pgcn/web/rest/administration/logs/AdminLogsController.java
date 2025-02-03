@@ -24,38 +24,43 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/downloadlogsfile")
 public class AdminLogsController extends AbstractRestController {
 
-    private final DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.FRENCH);
+	private final DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.FRENCH);
 
-    private final AccessHelper accessHelper;
-    private final AdminLogsService adminLogsService;
+	private final AccessHelper accessHelper;
 
-    public AdminLogsController(final AccessHelper accessHelper, final AdminLogsService adminLogsService) {
-        this.accessHelper = accessHelper;
-        this.adminLogsService = adminLogsService;
-    }
+	private final AdminLogsService adminLogsService;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"logFile"}, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    @Timed
-    // @RolesAllowed(DEL_HAB0)
-    public ResponseEntity<?> getLogFile(final HttpServletResponse response, @RequestParam(value = "dtFile") final String dtFile) throws PgcnTechnicalException {
+	public AdminLogsController(final AccessHelper accessHelper, final AdminLogsService adminLogsService) {
+		this.accessHelper = accessHelper;
+		this.adminLogsService = adminLogsService;
+	}
 
-        final CustomUserDetails currentUser = SecurityUtils.getCurrentUser();
-        if (!accessHelper.checkCurrentUser(currentUser).get()) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        LocalDate dateFile;
-        if (dtFile == null) {
-            dateFile = LocalDate.parse(LocalDate.now().format(dtFormat), dtFormat);
-        } else {
-            dateFile = LocalDate.parse(dtFile, dtFormat);
-        }
-        final File log = adminLogsService.getLogFile(dateFile);
-        if (log == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            writeResponseForDownload(response, log, MediaType.TEXT_PLAIN_VALUE, log.getName());
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "logFile" },
+			produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@Timed
+	// @RolesAllowed(DEL_HAB0)
+	public ResponseEntity<?> getLogFile(final HttpServletResponse response,
+			@RequestParam(value = "dtFile") final String dtFile) throws PgcnTechnicalException {
+
+		final CustomUserDetails currentUser = SecurityUtils.getCurrentUser();
+		if (!accessHelper.checkCurrentUser(currentUser).get()) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		LocalDate dateFile;
+		if (dtFile == null) {
+			dateFile = LocalDate.parse(LocalDate.now().format(dtFormat), dtFormat);
+		}
+		else {
+			dateFile = LocalDate.parse(dtFile, dtFormat);
+		}
+		final File log = adminLogsService.getLogFile(dateFile);
+		if (log == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		else {
+			writeResponseForDownload(response, log, MediaType.TEXT_PLAIN_VALUE, log.getName());
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+	}
 
 }

@@ -26,9 +26,10 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 /**
- * parType: Complex Type for Parallel Files
- * The <par> or parallel files element aggregates pointers to files, parts of files, and/or sequences of files or parts of files that must be played
- * or displayed simultaneously to manifest a block of digital content represented by an <fptr> element.
+ * parType: Complex Type for Parallel Files The <par> or parallel files element aggregates
+ * pointers to files, parts of files, and/or sequences of files or parts of files that
+ * must be played or displayed simultaneously to manifest a block of digital content
+ * represented by an <fptr> element.
  *
  *
  * <p>
@@ -56,169 +57,146 @@ import javax.xml.namespace.QName;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "parType", propOrder = {"areaOrSeq"})
+@XmlType(name = "parType", propOrder = { "areaOrSeq" })
 public class ParType {
 
-    @XmlElements({@XmlElement(name = "area", type = AreaType.class),
-                  @XmlElement(name = "seq", type = SeqType.class)})
-    protected List<Object> areaOrSeq;
-    @XmlAttribute(name = "ID")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "ORDER")
-    protected BigInteger order;
-    @XmlAttribute(name = "ORDERLABEL")
-    protected String orderlabel;
-    @XmlAttribute(name = "LABEL")
-    protected String label;
-    @XmlAnyAttribute
-    private Map<QName, String> otherAttributes = new HashMap<>();
+	@XmlElements({ @XmlElement(name = "area", type = AreaType.class), @XmlElement(name = "seq", type = SeqType.class) })
+	protected List<Object> areaOrSeq;
 
-    /**
-     * Gets the value of the areaOrSeq property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the areaOrSeq property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getAreaOrSeq().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AreaType }
-     * {@link SeqType }
-     *
-     *
-     */
-    public List<Object> getAreaOrSeq() {
-        if (areaOrSeq == null) {
-            areaOrSeq = new ArrayList<>();
-        }
-        return this.areaOrSeq;
-    }
+	@XmlAttribute(name = "ID")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getID() {
-        return id;
-    }
+	@XmlAttribute(name = "ORDER")
+	protected BigInteger order;
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setID(String value) {
-        this.id = value;
-    }
+	@XmlAttribute(name = "ORDERLABEL")
+	protected String orderlabel;
 
-    /**
-     * Obtient la valeur de la propriété order.
-     *
-     * @return
-     *         possible object is
-     *         {@link BigInteger }
-     *
-     */
-    public BigInteger getORDER() {
-        return order;
-    }
+	@XmlAttribute(name = "LABEL")
+	protected String label;
 
-    /**
-     * Définit la valeur de la propriété order.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link BigInteger }
-     *
-     */
-    public void setORDER(BigInteger value) {
-        this.order = value;
-    }
+	@XmlAnyAttribute
+	private Map<QName, String> otherAttributes = new HashMap<>();
 
-    /**
-     * Obtient la valeur de la propriété orderlabel.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getORDERLABEL() {
-        return orderlabel;
-    }
+	/**
+	 * Gets the value of the areaOrSeq property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the areaOrSeq
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getAreaOrSeq().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link AreaType }
+	 * {@link SeqType }
+	 *
+	 *
+	 */
+	public List<Object> getAreaOrSeq() {
+		if (areaOrSeq == null) {
+			areaOrSeq = new ArrayList<>();
+		}
+		return this.areaOrSeq;
+	}
 
-    /**
-     * Définit la valeur de la propriété orderlabel.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setORDERLABEL(String value) {
-        this.orderlabel = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getID() {
+		return id;
+	}
 
-    /**
-     * Obtient la valeur de la propriété label.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getLABEL() {
-        return label;
-    }
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setID(String value) {
+		this.id = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété label.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setLABEL(String value) {
-        this.label = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété order.
+	 * @return possible object is {@link BigInteger }
+	 *
+	 */
+	public BigInteger getORDER() {
+		return order;
+	}
 
-    /**
-     * Gets a map that contains attributes that aren't bound to any typed property on this class.
-     *
-     * <p>
-     * the map is keyed by the name of the attribute and
-     * the value is the string value of the attribute.
-     *
-     * the map returned by this method is live, and you can add new attribute
-     * by updating the map directly. Because of this design, there's no setter.
-     *
-     *
-     * @return
-     *         always non-null
-     */
-    public Map<QName, String> getOtherAttributes() {
-        return otherAttributes;
-    }
+	/**
+	 * Définit la valeur de la propriété order.
+	 * @param value allowed object is {@link BigInteger }
+	 *
+	 */
+	public void setORDER(BigInteger value) {
+		this.order = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété orderlabel.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getORDERLABEL() {
+		return orderlabel;
+	}
+
+	/**
+	 * Définit la valeur de la propriété orderlabel.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setORDERLABEL(String value) {
+		this.orderlabel = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété label.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getLABEL() {
+		return label;
+	}
+
+	/**
+	 * Définit la valeur de la propriété label.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setLABEL(String value) {
+		this.label = value;
+	}
+
+	/**
+	 * Gets a map that contains attributes that aren't bound to any typed property on this
+	 * class.
+	 *
+	 * <p>
+	 * the map is keyed by the name of the attribute and the value is the string value of
+	 * the attribute.
+	 *
+	 * the map returned by this method is live, and you can add new attribute by updating
+	 * the map directly. Because of this design, there's no setter.
+	 * @return always non-null
+	 */
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes;
+	}
 
 }

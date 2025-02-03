@@ -39,40 +39,33 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum OAIPMHerrorcodeType {
 
-    @XmlEnumValue("cannotDisseminateFormat")
-    CANNOT_DISSEMINATE_FORMAT("cannotDisseminateFormat"),
-    @XmlEnumValue("idDoesNotExist")
-    ID_DOES_NOT_EXIST("idDoesNotExist"),
-    @XmlEnumValue("badArgument")
-    BAD_ARGUMENT("badArgument"),
-    @XmlEnumValue("badVerb")
-    BAD_VERB("badVerb"),
-    @XmlEnumValue("noMetadataFormats")
-    NO_METADATA_FORMATS("noMetadataFormats"),
-    @XmlEnumValue("noRecordsMatch")
-    NO_RECORDS_MATCH("noRecordsMatch"),
-    @XmlEnumValue("badResumptionToken")
-    BAD_RESUMPTION_TOKEN("badResumptionToken"),
-    @XmlEnumValue("noSetHierarchy")
-    NO_SET_HIERARCHY("noSetHierarchy");
+	@XmlEnumValue("cannotDisseminateFormat")
+	CANNOT_DISSEMINATE_FORMAT("cannotDisseminateFormat"), @XmlEnumValue("idDoesNotExist")
+	ID_DOES_NOT_EXIST("idDoesNotExist"), @XmlEnumValue("badArgument")
+	BAD_ARGUMENT("badArgument"), @XmlEnumValue("badVerb")
+	BAD_VERB("badVerb"), @XmlEnumValue("noMetadataFormats")
+	NO_METADATA_FORMATS("noMetadataFormats"), @XmlEnumValue("noRecordsMatch")
+	NO_RECORDS_MATCH("noRecordsMatch"), @XmlEnumValue("badResumptionToken")
+	BAD_RESUMPTION_TOKEN("badResumptionToken"), @XmlEnumValue("noSetHierarchy")
+	NO_SET_HIERARCHY("noSetHierarchy");
 
-    private final String value;
+	private final String value;
 
-    OAIPMHerrorcodeType(String v) {
-        value = v;
-    }
+	OAIPMHerrorcodeType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static OAIPMHerrorcodeType fromValue(String v) {
-        for (OAIPMHerrorcodeType c : OAIPMHerrorcodeType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static OAIPMHerrorcodeType fromValue(String v) {
+		for (OAIPMHerrorcodeType c : OAIPMHerrorcodeType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

@@ -4,76 +4,83 @@ import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
 
 public class StatisticsDocUnitStatusRatioDTO {
 
-    /* Projet */
-    private String projectIdentifier;
-    private String projectName;
-    /* Lot */
-    private String lotIdentifier;
-    private String lotLabel;
-    /* Étape de l'UD */
-    private WorkflowStateKey state;
-    /**
-     * Nombre d'UD au statut state
-     */
-    private long nbDocOnState;
-    /**
-     * Nombre d'UD dans le projet / lot
-     */
-    private long nbDoc;
+	/* Projet */
+	private String projectIdentifier;
 
-    public String getProjectIdentifier() {
-        return projectIdentifier;
-    }
+	private String projectName;
 
-    public void setProjectIdentifier(final String projectIdentifier) {
-        this.projectIdentifier = projectIdentifier;
-    }
+	/* Lot */
+	private String lotIdentifier;
 
-    public String getProjectName() {
-        return projectName;
-    }
+	private String lotLabel;
 
-    public void setProjectName(final String projectName) {
-        this.projectName = projectName;
-    }
+	/* Étape de l'UD */
+	private WorkflowStateKey state;
 
-    public String getLotIdentifier() {
-        return lotIdentifier;
-    }
+	/**
+	 * Nombre d'UD au statut state
+	 */
+	private long nbDocOnState;
 
-    public void setLotIdentifier(final String lotIdentifier) {
-        this.lotIdentifier = lotIdentifier;
-    }
+	/**
+	 * Nombre d'UD dans le projet / lot
+	 */
+	private long nbDoc;
 
-    public String getLotLabel() {
-        return lotLabel;
-    }
+	public String getProjectIdentifier() {
+		return projectIdentifier;
+	}
 
-    public void setLotLabel(final String lotLabel) {
-        this.lotLabel = lotLabel;
-    }
+	public void setProjectIdentifier(final String projectIdentifier) {
+		this.projectIdentifier = projectIdentifier;
+	}
 
-    public WorkflowStateKey getState() {
-        return state;
-    }
+	public String getProjectName() {
+		return projectName;
+	}
 
-    public void setState(final WorkflowStateKey state) {
-        this.state = state;
-    }
+	public void setProjectName(final String projectName) {
+		this.projectName = projectName;
+	}
 
-    public long getNbDocOnState() {
-        return nbDocOnState;
-    }
+	public String getLotIdentifier() {
+		return lotIdentifier;
+	}
 
-    public void setNbDocOnState(final long nbDocOnState) {
-        this.nbDocOnState = nbDocOnState;
-    }
+	public void setLotIdentifier(final String lotIdentifier) {
+		this.lotIdentifier = lotIdentifier;
+	}
 
-    public long getNbDoc() {
-        return nbDoc;
-    }
+	public String getLotLabel() {
+		return lotLabel;
+	}
 
-    public void setNbDoc(final long nbDoc) {
-        this.nbDoc = nbDoc;
-    }
+	public void setLotLabel(final String lotLabel) {
+		this.lotLabel = lotLabel;
+	}
+
+	public WorkflowStateKey getState() {
+		return state;
+	}
+
+	public void setState(final WorkflowStateKey state) {
+		this.state = state;
+	}
+
+	public long getNbDocOnState() {
+		return nbDocOnState;
+	}
+
+	public void setNbDocOnState(final long nbDocOnState) {
+		this.nbDocOnState = nbDocOnState;
+	}
+
+	public long getNbDoc() {
+		return nbDoc;
+	}
+
+	public void setNbDoc(final long nbDoc) {
+		this.nbDoc = nbDoc;
+	}
+
 }

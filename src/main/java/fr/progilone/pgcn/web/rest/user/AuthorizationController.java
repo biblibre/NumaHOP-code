@@ -20,32 +20,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/rest/authorization")
-@RolesAllowed({ROLE_HAB0})
+@RolesAllowed({ ROLE_HAB0 })
 public class AuthorizationController extends AbstractRestController {
 
-    private final AuthorizationService authorizationService;
+	private final AuthorizationService authorizationService;
 
-    @Autowired
-    public AuthorizationController(final AuthorizationService authorizationService) {
-        super();
-        this.authorizationService = authorizationService;
-    }
+	@Autowired
+	public AuthorizationController(final AuthorizationService authorizationService) {
+		super();
+		this.authorizationService = authorizationService;
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"dto"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<List<AuthorizationDTO>> findAllDto() {
-        return new ResponseEntity<>(authorizationService.findAllDTO(), HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "dto" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<List<AuthorizationDTO>> findAllDto() {
+		return new ResponseEntity<>(authorizationService.findAllDTO(), HttpStatus.OK);
+	}
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<List<Authorization>> findAll() {
-        return new ResponseEntity<>(authorizationService.findAll(), HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<List<Authorization>> findAll() {
+		return new ResponseEntity<>(authorizationService.findAll(), HttpStatus.OK);
+	}
 
-    @RequestMapping(value = "/{identifier}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<Authorization> getById(@PathVariable final String identifier) {
-        return createResponseEntity(authorizationService.findOne(identifier));
-    }
+	@RequestMapping(value = "/{identifier}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<Authorization> getById(@PathVariable final String identifier) {
+		return createResponseEntity(authorizationService.findOne(identifier));
+	}
+
 }

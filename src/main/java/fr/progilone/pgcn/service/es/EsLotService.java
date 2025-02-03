@@ -19,44 +19,38 @@ import org.springframework.stereotype.Service;
 @Service
 public class EsLotService extends AbstractElasticsearchOperations<Lot, EsLot> {
 
-    private final LotRepository lotRepository;
-    private final EsLotRepository esLotRepository;
+	private final LotRepository lotRepository;
 
-    @Autowired
-    public EsLotService(final LotRepository lotRepository,
-                        final EsLotRepository esLotRepository,
-                        final TransactionService transactionService,
-                        final ElasticsearchOperations elasticsearchOperations,
-                        @Value("${elasticsearch.bulk_size}") final Integer bulkSize) {
-        super(transactionService, elasticsearchOperations, bulkSize, EsLot.class, lotRepository, esLotRepository);
-        this.lotRepository = lotRepository;
-        this.esLotRepository = esLotRepository;
-    }
+	private final EsLotRepository esLotRepository;
 
-    /**
-     * Recherche d'unités documentaires
-     */
-    public Page<EsLot> search(final String[] rawSearches,
-                              final String[] rawFilters,
-                              final List<String> libraries,
-                              final boolean fuzzy,
-                              final Integer page,
-                              final Integer size,
-                              final String[] rawSorts,
-                              final boolean facet) {
-        final EsSearchOperation[] searches = EsSearchOperation.fromRawSearches(rawSearches);
-        final EsSearchOperation[] filters = EsSearchOperation.fromRawFilters(rawFilters);
-        final Sort sort = EsSort.fromRawSorts(rawSorts, SearchEntity.LOT);
-        return esLotRepository.search(searches, libraries, fuzzy, filters, PageRequest.of(page, size, sort), facet);
-    }
+	@Autowired
+	public EsLotService(final LotRepository lotRepository, final EsLotRepository esLotRepository,
+			final TransactionService transactionService, final ElasticsearchOperations elasticsearchOperations,
+			@Value("${elasticsearch.bulk_size}") final Integer bulkSize) {
+		super(transactionService, elasticsearchOperations, bulkSize, EsLot.class, lotRepository, esLotRepository);
+		this.lotRepository = lotRepository;
+		this.esLotRepository = esLotRepository;
+	}
 
-    @Override
-    protected EsLot convertToEsObject(final Lot domainObject) {
-        return EsLot.from(domainObject);
-    }
+	/**
+	 * Recherche d'unités documentaires
+	 */
+	public Page<EsLot> search(final String[] rawSearches, final String[] rawFilters, final List<String> libraries,
+			final boolean fuzzy, final Integer page, final Integer size, final String[] rawSorts, final boolean facet) {
+		final EsSearchOperation[] searches = EsSearchOperation.fromRawSearches(rawSearches);
+		final EsSearchOperation[] filters = EsSearchOperation.fromRawFilters(rawFilters);
+		final Sort sort = EsSort.fromRawSorts(rawSorts, SearchEntity.LOT);
+		return esLotRepository.search(searches, libraries, fuzzy, filters, PageRequest.of(page, size, sort), facet);
+	}
 
-    @Override
-    protected List<String> findAllIdentifiersToIndex() {
-        return lotRepository.findAllIdentifiers();
-    }
+	@Override
+	protected EsLot convertToEsObject(final Lot domainObject) {
+		return EsLot.from(domainObject);
+	}
+
+	@Override
+	protected List<String> findAllIdentifiersToIndex() {
+		return lotRepository.findAllIdentifiers();
+	}
+
 }

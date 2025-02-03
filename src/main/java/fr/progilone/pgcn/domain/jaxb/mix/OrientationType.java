@@ -40,42 +40,37 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum OrientationType {
 
-    @XmlEnumValue("normal*")
-    NORMAL("normal*"),
-    @XmlEnumValue("normal, image flipped")
-    NORMAL_IMAGE_FLIPPED("normal, image flipped"),
-    @XmlEnumValue("normal, rotated 180\u00b0")
-    NORMAL_ROTATED_180("normal, rotated 180\u00b0"),
-    @XmlEnumValue("normal, image flipped, rotated 180\u00b0")
-    NORMAL_IMAGE_FLIPPED_ROTATED_180("normal, image flipped, rotated 180\u00b0"),
-    @XmlEnumValue("normal, image flipped, rotated cw 90\u00b0")
-    NORMAL_IMAGE_FLIPPED_ROTATED_CW_90("normal, image flipped, rotated cw 90\u00b0"),
-    @XmlEnumValue("normal, rotated ccw 90\u00b0")
-    NORMAL_ROTATED_CCW_90("normal, rotated ccw 90\u00b0"),
-    @XmlEnumValue("normal, image flipped, rotated ccw 90\u00b0")
-    NORMAL_IMAGE_FLIPPED_ROTATED_CCW_90("normal, image flipped, rotated ccw 90\u00b0"),
-    @XmlEnumValue("normal, rotated cw 90\u00b0")
-    NORMAL_ROTATED_CW_90("normal, rotated cw 90\u00b0"),
-    @XmlEnumValue("unknown")
-    UNKNOWN("unknown");
+	@XmlEnumValue("normal*")
+	NORMAL("normal*"), @XmlEnumValue("normal, image flipped")
+	NORMAL_IMAGE_FLIPPED("normal, image flipped"), @XmlEnumValue("normal, rotated 180\u00b0")
+	NORMAL_ROTATED_180("normal, rotated 180\u00b0"), @XmlEnumValue("normal, image flipped, rotated 180\u00b0")
+	NORMAL_IMAGE_FLIPPED_ROTATED_180("normal, image flipped, rotated 180\u00b0"),
+	@XmlEnumValue("normal, image flipped, rotated cw 90\u00b0")
+	NORMAL_IMAGE_FLIPPED_ROTATED_CW_90("normal, image flipped, rotated cw 90\u00b0"),
+	@XmlEnumValue("normal, rotated ccw 90\u00b0")
+	NORMAL_ROTATED_CCW_90("normal, rotated ccw 90\u00b0"), @XmlEnumValue("normal, image flipped, rotated ccw 90\u00b0")
+	NORMAL_IMAGE_FLIPPED_ROTATED_CCW_90("normal, image flipped, rotated ccw 90\u00b0"),
+	@XmlEnumValue("normal, rotated cw 90\u00b0")
+	NORMAL_ROTATED_CW_90("normal, rotated cw 90\u00b0"), @XmlEnumValue("unknown")
+	UNKNOWN("unknown");
 
-    private final String value;
+	private final String value;
 
-    OrientationType(String v) {
-        value = v;
-    }
+	OrientationType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static OrientationType fromValue(String v) {
-        for (OrientationType c : OrientationType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static OrientationType fromValue(String v) {
+		for (OrientationType c : OrientationType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

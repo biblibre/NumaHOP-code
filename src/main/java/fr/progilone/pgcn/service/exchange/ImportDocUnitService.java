@@ -33,206 +33,204 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ImportDocUnitService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ImportDocUnitService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ImportDocUnitService.class);
 
-    private final DocUnitService docUnitService;
-    private final DocUnitValidationService docUnitValidationService;
-    private final ImportedDocUnitRepository importedDocUnitRepository;
+	private final DocUnitService docUnitService;
 
-    @Autowired
-    public ImportDocUnitService(final DocUnitService docUnitService,
-                                final DocUnitValidationService docUnitValidationService,
-                                final ImportedDocUnitRepository importedDocUnitRepository) {
-        this.docUnitService = docUnitService;
-        this.docUnitValidationService = docUnitValidationService;
-        this.importedDocUnitRepository = importedDocUnitRepository;
-    }
+	private final DocUnitValidationService docUnitValidationService;
 
-    /**
-     * Sauvegarde de importDocUnit, et de l'unité documentaire associée
-     * La validation de l'UD n'est pas exécutée par cette fonction
-     *
-     * @param importDocUnit
-     * @return
-     */
-    @Transactional
-    public ImportedDocUnit save(final ImportedDocUnit importDocUnit) {
-        final DocUnit docUnit = importDocUnit.getDocUnit();
-        if (docUnit != null) {
-            docUnitService.save(docUnit, false);    // Sauvegarde sans validation
-        }
-        return importedDocUnitRepository.save(importDocUnit);
-    }
+	private final ImportedDocUnitRepository importedDocUnitRepository;
 
-    /**
-     * Sauvegarde de importDocUnit seul et sans validation
-     *
-     * @param importDocUnit
-     * @return
-     */
-    @Transactional
-    public ImportedDocUnit saveWithoutValidation(final ImportedDocUnit importDocUnit) {
-        return importedDocUnitRepository.save(importDocUnit);
-    }
+	@Autowired
+	public ImportDocUnitService(final DocUnitService docUnitService,
+			final DocUnitValidationService docUnitValidationService,
+			final ImportedDocUnitRepository importedDocUnitRepository) {
+		this.docUnitService = docUnitService;
+		this.docUnitValidationService = docUnitValidationService;
+		this.importedDocUnitRepository = importedDocUnitRepository;
+	}
 
-    /**
-     * Création de importDocUnit
-     * A la différence de save, les erreurs de validations sont catchées, et gérées: dans ce cas un {@link ImportedDocUnit} est tout de même créé
-     * pour remonter l'erreur à l'utilisateur, mais sans unité documentaire attachée.
-     *
-     * @param importDocUnit
-     * @return
-     * @throws PgcnValidationException
-     */
-    @Transactional(noRollbackFor = PgcnValidationException.class)
-    public ImportedDocUnit create(final ImportedDocUnit importDocUnit) throws PgcnValidationException {
-        final DocUnit docUnit = importDocUnit.getDocUnit();
+	/**
+	 * Sauvegarde de importDocUnit, et de l'unité documentaire associée La validation de
+	 * l'UD n'est pas exécutée par cette fonction
+	 * @param importDocUnit
+	 * @return
+	 */
+	@Transactional
+	public ImportedDocUnit save(final ImportedDocUnit importDocUnit) {
+		final DocUnit docUnit = importDocUnit.getDocUnit();
+		if (docUnit != null) {
+			docUnitService.save(docUnit, false); // Sauvegarde sans validation
+		}
+		return importedDocUnitRepository.save(importDocUnit);
+	}
 
-        try {
-            // Validation de l'UD
-            if (docUnit != null) {
-                docUnitValidationService.validate(docUnit); // nouvelle transaction
-            }
-            // Si Ok => on sauvegarde
-            return save(importDocUnit);
+	/**
+	 * Sauvegarde de importDocUnit seul et sans validation
+	 * @param importDocUnit
+	 * @return
+	 */
+	@Transactional
+	public ImportedDocUnit saveWithoutValidation(final ImportedDocUnit importDocUnit) {
+		return importedDocUnitRepository.save(importDocUnit);
+	}
 
-        } catch (PgcnValidationException e) {
-            final List<PgcnError> errors = e.getErrors();
+	/**
+	 * Création de importDocUnit A la différence de save, les erreurs de validations sont
+	 * catchées, et gérées: dans ce cas un {@link ImportedDocUnit} est tout de même créé
+	 * pour remonter l'erreur à l'utilisateur, mais sans unité documentaire attachée.
+	 * @param importDocUnit
+	 * @return
+	 * @throws PgcnValidationException
+	 */
+	@Transactional(noRollbackFor = PgcnValidationException.class)
+	public ImportedDocUnit create(final ImportedDocUnit importDocUnit) throws PgcnValidationException {
+		final DocUnit docUnit = importDocUnit.getDocUnit();
 
-            // Si Ko + doublon sur PGCN ID / Statut => on supprime le doublon et on sauvegarde de nouveau
-            if (errors.size() == 1 && errors.get(0).getCode() == DOC_UNIT_DUPLICATE_PGCN_ID
-                && docUnit != null) {
-                LOG.debug("L'UD {} au statut \"non disponible\" existe déjà", docUnit.getPgcnId());
-                docUnitService.deleteByPgcnIdAndState(docUnit.getPgcnId(), DocUnit.State.NOT_AVAILABLE); // nouvelle transaction
-                return save(importDocUnit);
-            }
-            // Sinon => message d'erreur
-            else {
-                final ImportedDocUnit imp = new ImportedDocUnit();
-                imp.setReport(importDocUnit.getReport());
-                imp.setDocUnitLabel(importDocUnit.getDocUnitLabel());
-                imp.setDocUnitPgcnId(importDocUnit.getDocUnitPgcnId());
-                saveWithError(imp, e);
+		try {
+			// Validation de l'UD
+			if (docUnit != null) {
+				docUnitValidationService.validate(docUnit); // nouvelle transaction
+			}
+			// Si Ok => on sauvegarde
+			return save(importDocUnit);
 
-                throw e;
-            }
-        }
-    }
+		}
+		catch (PgcnValidationException e) {
+			final List<PgcnError> errors = e.getErrors();
 
-    /**
-     * Sauvegarde des erreurs dans imp
-     *
-     * @param imp
-     * @param e
-     */
-    @Transactional
-    public ImportedDocUnit saveWithError(final ImportedDocUnit imp, final PgcnException e) {
-        for (PgcnError pgcnError : e.getErrors()) {
-            ImportedDocUnit.Message msg = new ImportedDocUnit.Message();
-            msg.setCode(pgcnError.getCode().name());
-            pgcnError.getComplements()
-                     .stream()
-                     .reduce((a, b) -> a + ", "
-                                       + b)
-                     .ifPresent(msg::setComplement);
-            imp.addMessages(msg);
-        }
-        return importedDocUnitRepository.save(imp);
-    }
+			// Si Ko + doublon sur PGCN ID / Statut => on supprime le doublon et on
+			// sauvegarde de nouveau
+			if (errors.size() == 1 && errors.get(0).getCode() == DOC_UNIT_DUPLICATE_PGCN_ID && docUnit != null) {
+				LOG.debug("L'UD {} au statut \"non disponible\" existe déjà", docUnit.getPgcnId());
+				docUnitService.deleteByPgcnIdAndState(docUnit.getPgcnId(), DocUnit.State.NOT_AVAILABLE); // nouvelle
+																											// transaction
+				return save(importDocUnit);
+			}
+			// Sinon => message d'erreur
+			else {
+				final ImportedDocUnit imp = new ImportedDocUnit();
+				imp.setReport(importDocUnit.getReport());
+				imp.setDocUnitLabel(importDocUnit.getDocUnitLabel());
+				imp.setDocUnitPgcnId(importDocUnit.getDocUnitPgcnId());
+				saveWithError(imp, e);
 
-    @Transactional(readOnly = true)
-    public ImportedDocUnit findByIdentifier(String identifier) {
-        return importedDocUnitRepository.findByIdentifier(identifier);
-    }
+				throw e;
+			}
+		}
+	}
 
-    /**
-     * Recherche les unités documentaires importées
-     *
-     * @param report
-     * @param pageable
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Page<ImportedDocUnit> findByImportReport(final ImportReport report, final Pageable pageable) {
-        // récupération de la plage de résultats
-        final Page<String> pageOfIds = importedDocUnitRepository.findIdentifiersByImportReport(report, pageable);
+	/**
+	 * Sauvegarde des erreurs dans imp
+	 * @param imp
+	 * @param e
+	 */
+	@Transactional
+	public ImportedDocUnit saveWithError(final ImportedDocUnit imp, final PgcnException e) {
+		for (PgcnError pgcnError : e.getErrors()) {
+			ImportedDocUnit.Message msg = new ImportedDocUnit.Message();
+			msg.setCode(pgcnError.getCode().name());
+			pgcnError.getComplements().stream().reduce((a, b) -> a + ", " + b).ifPresent(msg::setComplement);
+			imp.addMessages(msg);
+		}
+		return importedDocUnitRepository.save(imp);
+	}
 
-        // Chargement des résultats et de leurs relations
-        List<ImportedDocUnit> reports;
-        if (pageOfIds.getNumberOfElements() > 0) {
-            reports = importedDocUnitRepository.findByIdentifiersIn(pageOfIds.getContent(), pageable.getSort());
-        } else {
-            reports = Collections.emptyList();
-        }
-        // Page renvoyée
-        return new PageImpl<>(reports, pageable, pageOfIds.getTotalElements());
-    }
+	@Transactional(readOnly = true)
+	public ImportedDocUnit findByIdentifier(String identifier) {
+		return importedDocUnitRepository.findByIdentifier(identifier);
+	}
 
-    /**
-     * Recherche les unités documentaires importées
-     *
-     * @param report
-     * @param page
-     * @param size
-     * @param states
-     * @param withErrors
-     * @param withDuplicates
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Page<ImportedDocUnit> findByImportReport(final ImportReport report,
-                                                    final int page,
-                                                    final int size,
-                                                    final List<DocUnit.State> states,
-                                                    boolean withErrors,
-                                                    boolean withDuplicates) {
-        // récupération de la plage de résultats
-        final Pageable pageable = PageRequest.of(page, size);
-        final Page<String> pageOfIds = importedDocUnitRepository.findIdentifiersByImportReport(report, states, withErrors, withDuplicates, pageable);
+	/**
+	 * Recherche les unités documentaires importées
+	 * @param report
+	 * @param pageable
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Page<ImportedDocUnit> findByImportReport(final ImportReport report, final Pageable pageable) {
+		// récupération de la plage de résultats
+		final Page<String> pageOfIds = importedDocUnitRepository.findIdentifiersByImportReport(report, pageable);
 
-        // Chargement des résultats et de leurs relations
-        List<ImportedDocUnit> reports;
-        if (pageOfIds.getNumberOfElements() > 0) {
-            final Sort sort = JpaSort.unsafe("coalesce(i.groupCode, i.parentDocUnitPgcnId, i.docUnitPgcnId)", "groupCode", "parentDocUnitPgcnId", "docUnitPgcnId");
-            reports = importedDocUnitRepository.findByIdentifiersIn(pageOfIds.getContent(), sort);
-        } else {
-            reports = Collections.emptyList();
-        }
-        // Page renvoyée
-        return new PageImpl<>(reports, pageable, pageOfIds.getTotalElements());
-    }
+		// Chargement des résultats et de leurs relations
+		List<ImportedDocUnit> reports;
+		if (pageOfIds.getNumberOfElements() > 0) {
+			reports = importedDocUnitRepository.findByIdentifiersIn(pageOfIds.getContent(), pageable.getSort());
+		}
+		else {
+			reports = Collections.emptyList();
+		}
+		// Page renvoyée
+		return new PageImpl<>(reports, pageable, pageOfIds.getTotalElements());
+	}
 
-    /**
-     * Recherche les unités documentaires importées par import et parentKeys
-     *
-     * @param reportId
-     * @param parentKeys
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public List<ImportedDocUnit> findByReportIdentifierAndParentKeyIn(final String reportId, final Collection<String> parentKeys) {
-        return CollectionUtils.isNotEmpty(parentKeys) ? importedDocUnitRepository.findByReportIdentifierAndParentKeyIn(reportId, parentKeys)
-                                                      : Collections.emptyList();
-    }
+	/**
+	 * Recherche les unités documentaires importées
+	 * @param report
+	 * @param page
+	 * @param size
+	 * @param states
+	 * @param withErrors
+	 * @param withDuplicates
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Page<ImportedDocUnit> findByImportReport(final ImportReport report, final int page, final int size,
+			final List<DocUnit.State> states, boolean withErrors, boolean withDuplicates) {
+		// récupération de la plage de résultats
+		final Pageable pageable = PageRequest.of(page, size);
+		final Page<String> pageOfIds = importedDocUnitRepository.findIdentifiersByImportReport(report, states,
+				withErrors, withDuplicates, pageable);
 
-    /**
-     * @param report
-     * @param state
-     * @param pageable
-     * @return page d'identifiant des unités documentaires importées
-     */
-    @Transactional(readOnly = true)
-    public Page<DocUnit> findDocUnitByImportReport(final ImportReport report, final DocUnit.State state, final Pageable pageable) {
-        // Page de résultats
-        final Page<String> pageOfIds = importedDocUnitRepository.findDocUnitIdentifiersByImportReport(report, state, pageable);
-        // Chargement des résultats et de leurs relations
-        final List<DocUnit> docUnits = docUnitService.findAllByIdWithRecords(pageOfIds.getContent());
-        // Page renvoyée
-        return new PageImpl<>(docUnits, pageable, pageOfIds.getTotalElements());
-    }
+		// Chargement des résultats et de leurs relations
+		List<ImportedDocUnit> reports;
+		if (pageOfIds.getNumberOfElements() > 0) {
+			final Sort sort = JpaSort.unsafe("coalesce(i.groupCode, i.parentDocUnitPgcnId, i.docUnitPgcnId)",
+					"groupCode", "parentDocUnitPgcnId", "docUnitPgcnId");
+			reports = importedDocUnitRepository.findByIdentifiersIn(pageOfIds.getContent(), sort);
+		}
+		else {
+			reports = Collections.emptyList();
+		}
+		// Page renvoyée
+		return new PageImpl<>(reports, pageable, pageOfIds.getTotalElements());
+	}
 
-    @Transactional
-    public void updateProcess(final String identifier, final ImportedDocUnit.Process process) {
-        importedDocUnitRepository.updateProcess(identifier, process);
-    }
+	/**
+	 * Recherche les unités documentaires importées par import et parentKeys
+	 * @param reportId
+	 * @param parentKeys
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public List<ImportedDocUnit> findByReportIdentifierAndParentKeyIn(final String reportId,
+			final Collection<String> parentKeys) {
+		return CollectionUtils.isNotEmpty(parentKeys)
+				? importedDocUnitRepository.findByReportIdentifierAndParentKeyIn(reportId, parentKeys)
+				: Collections.emptyList();
+	}
+
+	/**
+	 * @param report
+	 * @param state
+	 * @param pageable
+	 * @return page d'identifiant des unités documentaires importées
+	 */
+	@Transactional(readOnly = true)
+	public Page<DocUnit> findDocUnitByImportReport(final ImportReport report, final DocUnit.State state,
+			final Pageable pageable) {
+		// Page de résultats
+		final Page<String> pageOfIds = importedDocUnitRepository.findDocUnitIdentifiersByImportReport(report, state,
+				pageable);
+		// Chargement des résultats et de leurs relations
+		final List<DocUnit> docUnits = docUnitService.findAllByIdWithRecords(pageOfIds.getContent());
+		// Page renvoyée
+		return new PageImpl<>(docUnits, pageable, pageOfIds.getTotalElements());
+	}
+
+	@Transactional
+	public void updateProcess(final String identifier, final ImportedDocUnit.Process process) {
+		importedDocUnitRepository.updateProcess(identifier, process);
+	}
+
 }

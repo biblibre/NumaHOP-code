@@ -9,10 +9,10 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface SimpleViewsFormatConfigurationMapper {
 
-    SimpleViewsFormatConfigurationMapper INSTANCE = Mappers.getMapper(SimpleViewsFormatConfigurationMapper.class);
+	SimpleViewsFormatConfigurationMapper INSTANCE = Mappers.getMapper(SimpleViewsFormatConfigurationMapper.class);
 
-    SimpleViewsFormatConfigurationDTO formatConfigToDto(ViewsFormatConfiguration formatConfiguration);
+	SimpleViewsFormatConfigurationDTO formatConfigToDto(ViewsFormatConfiguration formatConfiguration);
 
-    Set<SimpleViewsFormatConfigurationDTO> formatConfigToDtos(Set<ViewsFormatConfiguration> confs);
+	Set<SimpleViewsFormatConfigurationDTO> formatConfigToDtos(Set<ViewsFormatConfiguration> confs);
 
 }

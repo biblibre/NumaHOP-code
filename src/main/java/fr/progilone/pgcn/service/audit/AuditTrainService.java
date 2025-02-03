@@ -19,71 +19,76 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AuditTrainService {
 
-    private final AuditTrainRepository auditTrainRepository;
-    private final TrainRepository trainRepository;
+	private final AuditTrainRepository auditTrainRepository;
 
-    @Autowired
-    public AuditTrainService(final AuditTrainRepository auditTrainRepository, final TrainRepository trainRepository) {
-        this.auditTrainRepository = auditTrainRepository;
-        this.trainRepository = trainRepository;
-    }
+	private final TrainRepository trainRepository;
 
-    /**
-     * Liste des modification apportées sur un train, à partir d'une date donnée
-     *
-     * @param fromDate
-     * @param libraries
-     * @param projects
-     * @param status
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public List<AuditTrainRevisionDTO> getRevisions(final LocalDate fromDate, final List<String> libraries, final List<String> projects, final List<Train.TrainStatus> status) {
-        List<AuditTrainRevisionDTO> revisions = auditTrainRepository.getRevisions(fromDate, status);
-        revisions = updateRevisions(revisions, libraries, projects);
-        return revisions;
-    }
+	@Autowired
+	public AuditTrainService(final AuditTrainRepository auditTrainRepository, final TrainRepository trainRepository) {
+		this.auditTrainRepository = auditTrainRepository;
+		this.trainRepository = trainRepository;
+	}
 
-    /**
-     * Ajout des infos du train (non auditées)
-     *
-     * @param revisions
-     * @param libraries
-     * @param projects
-     */
-    private List<AuditTrainRevisionDTO> updateRevisions(final List<AuditTrainRevisionDTO> revisions, final List<String> libraries, final List<String> projects) {
-        final List<AuditTrainRevisionDTO> updatedRevs = new ArrayList<>();
-        final List<String> trainIds = revisions.stream().map(AuditTrainRevisionDTO::getIdentifier).collect(Collectors.toList());
-        final List<Train> trains = trainRepository.findAllById(trainIds);
+	/**
+	 * Liste des modification apportées sur un train, à partir d'une date donnée
+	 * @param fromDate
+	 * @param libraries
+	 * @param projects
+	 * @param status
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public List<AuditTrainRevisionDTO> getRevisions(final LocalDate fromDate, final List<String> libraries,
+			final List<String> projects, final List<Train.TrainStatus> status) {
+		List<AuditTrainRevisionDTO> revisions = auditTrainRepository.getRevisions(fromDate, status);
+		revisions = updateRevisions(revisions, libraries, projects);
+		return revisions;
+	}
 
-        for (final AuditTrainRevisionDTO revision : revisions) {
-            trains.stream()
-                  // Train correspondant à la révision
-                  .filter(train -> StringUtils.equals(train.getIdentifier(), revision.getIdentifier()))
-                  // Filtrage par bibliothèque et par projet
-                  .filter(train -> {
-                      final Project project = train.getProject();
-                      final Library library = project != null ? project.getLibrary()
-                                                              : null;
+	/**
+	 * Ajout des infos du train (non auditées)
+	 * @param revisions
+	 * @param libraries
+	 * @param projects
+	 */
+	private List<AuditTrainRevisionDTO> updateRevisions(final List<AuditTrainRevisionDTO> revisions,
+			final List<String> libraries, final List<String> projects) {
+		final List<AuditTrainRevisionDTO> updatedRevs = new ArrayList<>();
+		final List<String> trainIds = revisions.stream()
+			.map(AuditTrainRevisionDTO::getIdentifier)
+			.collect(Collectors.toList());
+		final List<Train> trains = trainRepository.findAllById(trainIds);
 
-                      // Projet
-                      if (CollectionUtils.isNotEmpty(projects) && (project == null || !projects.contains(project.getIdentifier()))) {
-                          return false;
-                      }
-                      // Bibliothèque
-                      if (CollectionUtils.isNotEmpty(libraries) && (library == null || !libraries.contains(library.getIdentifier()))) {
-                          return false;
-                      }
-                      return true;
+		for (final AuditTrainRevisionDTO revision : revisions) {
+			trains.stream()
+				// Train correspondant à la révision
+				.filter(train -> StringUtils.equals(train.getIdentifier(), revision.getIdentifier()))
+				// Filtrage par bibliothèque et par projet
+				.filter(train -> {
+					final Project project = train.getProject();
+					final Library library = project != null ? project.getLibrary() : null;
 
-                  })
-                  .findAny()
-                  // alimentation liste résultats
-                  .ifPresent(train -> {
-                      revision.setLabel(train.getLabel());
-                      updatedRevs.add(revision);
-                  });
-        }
-        return updatedRevs;
-    }
+					// Projet
+					if (CollectionUtils.isNotEmpty(projects)
+							&& (project == null || !projects.contains(project.getIdentifier()))) {
+						return false;
+					}
+					// Bibliothèque
+					if (CollectionUtils.isNotEmpty(libraries)
+							&& (library == null || !libraries.contains(library.getIdentifier()))) {
+						return false;
+					}
+					return true;
+
+				})
+				.findAny()
+				// alimentation liste résultats
+				.ifPresent(train -> {
+					revision.setLabel(train.getLabel());
+					updatedRevs.add(revision);
+				});
+		}
+		return updatedRevs;
+	}
+
 }

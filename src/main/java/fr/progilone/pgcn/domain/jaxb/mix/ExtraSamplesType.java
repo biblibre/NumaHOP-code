@@ -35,32 +35,30 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ExtraSamplesType {
 
-    @XmlEnumValue("unspecified data")
-    UNSPECIFIED_DATA("unspecified data"),
-    @XmlEnumValue("associated alpha data (with pre-multiplied color)")
-    ASSOCIATED_ALPHA_DATA_WITH_PRE_MULTIPLIED_COLOR("associated alpha data (with pre-multiplied color)"),
-    @XmlEnumValue("unassociated alpha data")
-    UNASSOCIATED_ALPHA_DATA("unassociated alpha data"),
-    @XmlEnumValue("range or depth data")
-    RANGE_OR_DEPTH_DATA("range or depth data");
+	@XmlEnumValue("unspecified data")
+	UNSPECIFIED_DATA("unspecified data"), @XmlEnumValue("associated alpha data (with pre-multiplied color)")
+	ASSOCIATED_ALPHA_DATA_WITH_PRE_MULTIPLIED_COLOR("associated alpha data (with pre-multiplied color)"),
+	@XmlEnumValue("unassociated alpha data")
+	UNASSOCIATED_ALPHA_DATA("unassociated alpha data"), @XmlEnumValue("range or depth data")
+	RANGE_OR_DEPTH_DATA("range or depth data");
 
-    private final String value;
+	private final String value;
 
-    ExtraSamplesType(String v) {
-        value = v;
-    }
+	ExtraSamplesType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static ExtraSamplesType fromValue(String v) {
-        for (ExtraSamplesType c : ExtraSamplesType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static ExtraSamplesType fromValue(String v) {
+		for (ExtraSamplesType c : ExtraSamplesType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

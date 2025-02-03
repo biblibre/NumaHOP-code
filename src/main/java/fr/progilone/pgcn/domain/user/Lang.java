@@ -7,22 +7,23 @@ import java.util.Locale;
  */
 public enum Lang {
 
-    /**
-     * Français
-     */
-    FR(Locale.FRANCE),
-    /**
-     * Anglais
-     */
-    EN(Locale.ENGLISH);
+	/**
+	 * Français
+	 */
+	FR(Locale.FRANCE),
+	/**
+	 * Anglais
+	 */
+	EN(Locale.ENGLISH);
 
-    private Locale locale;
+	private Locale locale;
 
-    Lang(Locale locale) {
-        this.locale = locale;
-    }
+	Lang(Locale locale) {
+		this.locale = locale;
+	}
 
-    public Locale getLocale() {
-        return this.locale;
-    }
+	public Locale getLocale() {
+		return this.locale;
+	}
+
 }

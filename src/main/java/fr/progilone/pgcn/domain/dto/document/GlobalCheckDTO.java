@@ -7,40 +7,44 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
  */
 public class GlobalCheckDTO extends AbstractDTO {
 
-    private String identifier;
-    private String errorLabel;
-    private String errorType;
-    private SimpleDigitalDocumentDTO digitalDocument;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String errorLabel;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private String errorType;
 
-    public String getErrorLabel() {
-        return errorLabel;
-    }
+	private SimpleDigitalDocumentDTO digitalDocument;
 
-    public void setErrorLabel(String errorLabel) {
-        this.errorLabel = errorLabel;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getErrorType() {
-        return errorType;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setErrorType(String errorType) {
-        this.errorType = errorType;
-    }
+	public String getErrorLabel() {
+		return errorLabel;
+	}
 
-    public SimpleDigitalDocumentDTO getDigitalDocument() {
-        return digitalDocument;
-    }
+	public void setErrorLabel(String errorLabel) {
+		this.errorLabel = errorLabel;
+	}
 
-    public void setDigitalDocument(SimpleDigitalDocumentDTO digitalDocument) {
-        this.digitalDocument = digitalDocument;
-    }
+	public String getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(String errorType) {
+		this.errorType = errorType;
+	}
+
+	public SimpleDigitalDocumentDTO getDigitalDocument() {
+		return digitalDocument;
+	}
+
+	public void setDigitalDocument(SimpleDigitalDocumentDTO digitalDocument) {
+		this.digitalDocument = digitalDocument;
+	}
+
 }

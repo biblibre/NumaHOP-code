@@ -32,273 +32,279 @@ import org.apache.commons.lang3.RegExUtils;
 @Table(name = ImportedDocUnit.TABLE_NAME)
 public class ImportedDocUnit extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "exc_doc_unit";
-    public static final String TABLE_NAME_DUPL = "exc_doc_unit_dupl";
-    public static final String TABLE_NAME_MESSAGE = "exc_doc_unit_msg";
+	public static final String TABLE_NAME = "exc_doc_unit";
 
-    /**
-     * Rapport général
-     */
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "report")
-    private ImportReport report;
+	public static final String TABLE_NAME_DUPL = "exc_doc_unit_dupl";
 
-    /**
-     * Date de début de l'import
-     */
-    @Column(name = "date_import")
-    private LocalDateTime importDate;
+	public static final String TABLE_NAME_MESSAGE = "exc_doc_unit_msg";
 
-    /**
-     * Action à effectuer pour l'import de cette unité documentaire
-     */
-    @Column(name = "process", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Process process;
+	/**
+	 * Rapport général
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "report")
+	private ImportReport report;
 
-    /**
-     * Clé identifiant le parent, pour les imports de type HIERARCHY_IN_MULTIPLE_IMPORT
-     */
-    @Column(name = "parent_key")
-    private String parentKey;
+	/**
+	 * Date de début de l'import
+	 */
+	@Column(name = "date_import")
+	private LocalDateTime importDate;
 
-    /**
-     * Unités documentaires doublons de celle-ci
-     */
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = TABLE_NAME_DUPL,
-               joinColumns = @JoinColumn(name = "imp_unit", referencedColumnName = "identifier"),
-               inverseJoinColumns = @JoinColumn(name = "doc_unit", referencedColumnName = "identifier"))
-    private final Set<DocUnit> duplicatedUnits = new HashSet<>();
+	/**
+	 * Action à effectuer pour l'import de cette unité documentaire
+	 */
+	@Column(name = "process", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Process process;
 
-    @ElementCollection
-    @CollectionTable(name = TABLE_NAME_MESSAGE, joinColumns = @JoinColumn(name = "imp_unit"))
-    private final Set<Message> messages = new HashSet<>();
+	/**
+	 * Clé identifiant le parent, pour les imports de type HIERARCHY_IN_MULTIPLE_IMPORT
+	 */
+	@Column(name = "parent_key")
+	private String parentKey;
 
-    /**
-     * Unité documentaire créée à partir de cet {@link ImportedDocUnit}
-     */
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doc_unit")
-    private DocUnit docUnit;
+	/**
+	 * Unités documentaires doublons de celle-ci
+	 */
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = TABLE_NAME_DUPL,
+			joinColumns = @JoinColumn(name = "imp_unit", referencedColumnName = "identifier"),
+			inverseJoinColumns = @JoinColumn(name = "doc_unit", referencedColumnName = "identifier"))
+	private final Set<DocUnit> duplicatedUnits = new HashSet<>();
 
-    /**
-     * Pgcn Id de l'unité documentaire importée
-     */
-    @Column(name = "doc_unit_pgcn_id")
-    private String docUnitPgcnId;
+	@ElementCollection
+	@CollectionTable(name = TABLE_NAME_MESSAGE, joinColumns = @JoinColumn(name = "imp_unit"))
+	private final Set<Message> messages = new HashSet<>();
 
-    /**
-     * Libellé de l'unité documentaire importée
-     */
-    @Column(name = "doc_unit_label")
-    private String docUnitLabel;
+	/**
+	 * Unité documentaire créée à partir de cet {@link ImportedDocUnit}
+	 */
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "doc_unit")
+	private DocUnit docUnit;
 
-    /**
-     * Identifiant de l'unité documentaire parente
-     */
-    @Column(name = "parent_doc_unit")
-    private String parentDocUnit;
+	/**
+	 * Pgcn Id de l'unité documentaire importée
+	 */
+	@Column(name = "doc_unit_pgcn_id")
+	private String docUnitPgcnId;
 
-    /**
-     * Pgcn Id de l'unité documentaire parente
-     */
-    @Column(name = "parent_pgcn_id")
-    private String parentDocUnitPgcnId;
+	/**
+	 * Libellé de l'unité documentaire importée
+	 */
+	@Column(name = "doc_unit_label")
+	private String docUnitLabel;
 
-    /**
-     * Libellé de l'unité documentaire parente
-     */
-    @Column(name = "parent_label")
-    private String parentDocUnitLabel;
+	/**
+	 * Identifiant de l'unité documentaire parente
+	 */
+	@Column(name = "parent_doc_unit")
+	private String parentDocUnit;
 
-    /**
-     * Code de regroupement, par exemple pour regrouper des UD issues d'une même notice MARC
-     */
-    @Column(name = "group_code")
-    private String groupCode;
+	/**
+	 * Pgcn Id de l'unité documentaire parente
+	 */
+	@Column(name = "parent_pgcn_id")
+	private String parentDocUnitPgcnId;
 
-    public ImportReport getReport() {
-        return report;
-    }
+	/**
+	 * Libellé de l'unité documentaire parente
+	 */
+	@Column(name = "parent_label")
+	private String parentDocUnitLabel;
 
-    public void setReport(final ImportReport report) {
-        this.report = report;
-    }
+	/**
+	 * Code de regroupement, par exemple pour regrouper des UD issues d'une même notice
+	 * MARC
+	 */
+	@Column(name = "group_code")
+	private String groupCode;
 
-    public LocalDateTime getImportDate() {
-        return importDate;
-    }
+	public ImportReport getReport() {
+		return report;
+	}
 
-    public void setImportDate(final LocalDateTime importDate) {
-        this.importDate = importDate;
-    }
+	public void setReport(final ImportReport report) {
+		this.report = report;
+	}
 
-    public Process getProcess() {
-        return process;
-    }
+	public LocalDateTime getImportDate() {
+		return importDate;
+	}
 
-    public void setProcess(final Process process) {
-        this.process = process;
-    }
+	public void setImportDate(final LocalDateTime importDate) {
+		this.importDate = importDate;
+	}
 
-    public String getParentKey() {
-        return parentKey;
-    }
+	public Process getProcess() {
+		return process;
+	}
 
-    public void setParentKey(final String parentKey) {
-        this.parentKey = parentKey;
-    }
+	public void setProcess(final Process process) {
+		this.process = process;
+	}
 
-    public Set<DocUnit> getDuplicatedUnits() {
-        return duplicatedUnits;
-    }
+	public String getParentKey() {
+		return parentKey;
+	}
 
-    public void setDuplicatedUnits(final Collection<DocUnit> duplicatedUnits) {
-        this.duplicatedUnits.clear();
-        if (duplicatedUnits != null) {
-            duplicatedUnits.forEach(this::addDuplicatedUnit);
-        }
-    }
+	public void setParentKey(final String parentKey) {
+		this.parentKey = parentKey;
+	}
 
-    public void addDuplicatedUnit(final DocUnit duplicatedUnit) {
-        if (duplicatedUnit != null) {
-            this.duplicatedUnits.add(duplicatedUnit);
-        }
-    }
+	public Set<DocUnit> getDuplicatedUnits() {
+		return duplicatedUnits;
+	}
 
-    public Set<Message> getMessages() {
-        return messages;
-    }
+	public void setDuplicatedUnits(final Collection<DocUnit> duplicatedUnits) {
+		this.duplicatedUnits.clear();
+		if (duplicatedUnits != null) {
+			duplicatedUnits.forEach(this::addDuplicatedUnit);
+		}
+	}
 
-    public void setMessages(final Set<Message> messages) {
-        this.messages.clear();
-        if (messages != null) {
-            messages.forEach(this::addMessages);
-        }
-    }
+	public void addDuplicatedUnit(final DocUnit duplicatedUnit) {
+		if (duplicatedUnit != null) {
+			this.duplicatedUnits.add(duplicatedUnit);
+		}
+	}
 
-    public void addMessages(final Message message) {
-        if (message != null) {
-            this.messages.add(message);
-        }
-    }
+	public Set<Message> getMessages() {
+		return messages;
+	}
 
-    public DocUnit getDocUnit() {
-        return docUnit;
-    }
+	public void setMessages(final Set<Message> messages) {
+		this.messages.clear();
+		if (messages != null) {
+			messages.forEach(this::addMessages);
+		}
+	}
 
-    public void setDocUnit(final DocUnit docUnit) {
-        this.docUnit = docUnit;
-    }
+	public void addMessages(final Message message) {
+		if (message != null) {
+			this.messages.add(message);
+		}
+	}
 
-    /**
-     * Set docUnit + champs de docUnit répétés dans {@link ImportedDocUnit}
-     */
-    public void initDocUnitFields(final DocUnit docUnit) {
-        setDocUnit(docUnit);
-        setDocUnitLabel(docUnit != null ? docUnit.getLabel()
-                                        : null);
-        setDocUnitPgcnId(docUnit != null ? docUnit.getPgcnId()
-                                         : null);
-    }
+	public DocUnit getDocUnit() {
+		return docUnit;
+	}
 
-    public String getDocUnitPgcnId() {
-        return docUnitPgcnId;
-    }
+	public void setDocUnit(final DocUnit docUnit) {
+		this.docUnit = docUnit;
+	}
 
-    public void setDocUnitPgcnId(final String docUnitPgcnId) {
-        this.docUnitPgcnId = docUnitPgcnId;
-    }
+	/**
+	 * Set docUnit + champs de docUnit répétés dans {@link ImportedDocUnit}
+	 */
+	public void initDocUnitFields(final DocUnit docUnit) {
+		setDocUnit(docUnit);
+		setDocUnitLabel(docUnit != null ? docUnit.getLabel() : null);
+		setDocUnitPgcnId(docUnit != null ? docUnit.getPgcnId() : null);
+	}
 
-    public String getDocUnitLabel() {
-        return docUnitLabel;
-    }
+	public String getDocUnitPgcnId() {
+		return docUnitPgcnId;
+	}
 
-    public void setDocUnitLabel(final String docUnitLabel) {
-        this.docUnitLabel = RegExUtils.replaceAll(docUnitLabel, "[\u0088\u0089]", "");
-    }
+	public void setDocUnitPgcnId(final String docUnitPgcnId) {
+		this.docUnitPgcnId = docUnitPgcnId;
+	}
 
-    public String getParentDocUnit() {
-        return parentDocUnit;
-    }
+	public String getDocUnitLabel() {
+		return docUnitLabel;
+	}
 
-    public void setParentDocUnit(final String parentDocUnit) {
-        this.parentDocUnit = parentDocUnit;
-    }
+	public void setDocUnitLabel(final String docUnitLabel) {
+		this.docUnitLabel = RegExUtils.replaceAll(docUnitLabel, "[\u0088\u0089]", "");
+	}
 
-    public String getParentDocUnitPgcnId() {
-        return parentDocUnitPgcnId;
-    }
+	public String getParentDocUnit() {
+		return parentDocUnit;
+	}
 
-    public void setParentDocUnitPgcnId(final String parentDocUnitPgcnId) {
-        this.parentDocUnitPgcnId = parentDocUnitPgcnId;
-    }
+	public void setParentDocUnit(final String parentDocUnit) {
+		this.parentDocUnit = parentDocUnit;
+	}
 
-    public String getParentDocUnitLabel() {
-        return parentDocUnitLabel;
-    }
+	public String getParentDocUnitPgcnId() {
+		return parentDocUnitPgcnId;
+	}
 
-    public void setParentDocUnitLabel(final String parentDocUnitLabel) {
-        this.parentDocUnitLabel = parentDocUnitLabel;
-    }
+	public void setParentDocUnitPgcnId(final String parentDocUnitPgcnId) {
+		this.parentDocUnitPgcnId = parentDocUnitPgcnId;
+	}
 
-    public String getGroupCode() {
-        return groupCode;
-    }
+	public String getParentDocUnitLabel() {
+		return parentDocUnitLabel;
+	}
 
-    public void setGroupCode(final String groupCode) {
-        this.groupCode = groupCode;
-    }
+	public void setParentDocUnitLabel(final String parentDocUnitLabel) {
+		this.parentDocUnitLabel = parentDocUnitLabel;
+	}
 
-    /**
-     * Liste des actions possible pour l'import de cette unité documentaire
-     */
-    public enum Process {
-        ADD,
-        // Création de l'unité documentaire provenant de la source d'import
-        REPLACE,
-        // Remplacement de l'unité documentaire existante par celle provenant de la source d'import
-        IGNORE      // L'unité documentaire provenant de la source d'import n'est pas importée
-    }
+	public String getGroupCode() {
+		return groupCode;
+	}
 
-    /**
-     * Messages détaillant les problèmes rencontrés en cours de traitement
-     */
-    @Embeddable
-    public static class Message {
+	public void setGroupCode(final String groupCode) {
+		this.groupCode = groupCode;
+	}
 
-        /**
-         * Code du message
-         */
-        @Column(name = "code", nullable = false)
-        private String code;
+	/**
+	 * Liste des actions possible pour l'import de cette unité documentaire
+	 */
+	public enum Process {
 
-        /**
-         * Complément d'information sur ce message (détail de l'exception, ...)
-         */
-        @Column(name = "complement", columnDefinition = "text")
-        private String complement;
+		ADD,
+		// Création de l'unité documentaire provenant de la source d'import
+		REPLACE,
+		// Remplacement de l'unité documentaire existante par celle provenant de la source
+		// d'import
+		IGNORE // L'unité documentaire provenant de la source d'import n'est pas importée
 
-        public String getCode() {
-            return code;
-        }
+	}
 
-        public void setCode(final String code) {
-            this.code = code;
-        }
+	/**
+	 * Messages détaillant les problèmes rencontrés en cours de traitement
+	 */
+	@Embeddable
+	public static class Message {
 
-        public String getComplement() {
-            return complement;
-        }
+		/**
+		 * Code du message
+		 */
+		@Column(name = "code", nullable = false)
+		private String code;
 
-        public void setComplement(final String complement) {
-            this.complement = complement;
-        }
+		/**
+		 * Complément d'information sur ce message (détail de l'exception, ...)
+		 */
+		@Column(name = "complement", columnDefinition = "text")
+		private String complement;
 
-        @Override
-        public String toString() {
-            return MoreObjects.toStringHelper(this).add("code", code).add("complement", complement).toString();
-        }
-    }
+		public String getCode() {
+			return code;
+		}
+
+		public void setCode(final String code) {
+			this.code = code;
+		}
+
+		public String getComplement() {
+			return complement;
+		}
+
+		public void setComplement(final String complement) {
+			this.complement = complement;
+		}
+
+		@Override
+		public String toString() {
+			return MoreObjects.toStringHelper(this).add("code", code).add("complement", complement).toString();
+		}
+
+	}
+
 }

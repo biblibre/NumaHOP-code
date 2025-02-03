@@ -36,40 +36,40 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ListMetadataFormatsType", propOrder = {"metadataFormat"})
+@XmlType(name = "ListMetadataFormatsType", propOrder = { "metadataFormat" })
 public class ListMetadataFormatsType {
 
-    @XmlElement(required = true)
-    protected List<MetadataFormatType> metadataFormat;
+	@XmlElement(required = true)
+	protected List<MetadataFormatType> metadataFormat;
 
-    /**
-     * Gets the value of the metadataFormat property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the metadataFormat property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getMetadataFormat().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link MetadataFormatType }
-     *
-     *
-     */
-    public List<MetadataFormatType> getMetadataFormat() {
-        if (metadataFormat == null) {
-            metadataFormat = new ArrayList<>();
-        }
-        return this.metadataFormat;
-    }
+	/**
+	 * Gets the value of the metadataFormat property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * metadataFormat property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getMetadataFormat().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link MetadataFormatType
+	 * }
+	 *
+	 *
+	 */
+	public List<MetadataFormatType> getMetadataFormat() {
+		if (metadataFormat == null) {
+			metadataFormat = new ArrayList<>();
+		}
+		return this.metadataFormat;
+	}
 
 }

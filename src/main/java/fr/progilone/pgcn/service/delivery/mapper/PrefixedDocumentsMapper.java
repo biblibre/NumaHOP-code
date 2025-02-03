@@ -11,37 +11,39 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PrefixedDocumentsMapper {
 
-    public PrefixedDocumentsMapper() {
+	public PrefixedDocumentsMapper() {
 
-    }
+	}
 
-    @Autowired
-    private DigitalDocumentService ddService;
-    @Autowired
-    private PhysicalDocumentService pdService;
+	@Autowired
+	private DigitalDocumentService ddService;
 
-    @Transactional(readOnly = true)
-    public PrefixedDocuments mapFromDTO(final PrefixedDocumentsDTO dto) {
-        final PrefixedDocuments result = new PrefixedDocuments();
-        result.setFiles(dto.getFiles());
-        dto.getDigitalDocuments().forEach(dd -> {
-            result.addDigitalDocument(ddService.findOne(dd));
-        });
-        dto.getPhysicalDocuments().forEach(pd -> {
-            result.addPhysicalDocument(pdService.findByIdentifier(pd));
-        });
-        return result;
-    }
+	@Autowired
+	private PhysicalDocumentService pdService;
 
-    public PrefixedDocumentsDTO mapToDTO(final PrefixedDocuments doc) {
-        final PrefixedDocumentsDTO dto = new PrefixedDocumentsDTO();
-        dto.setFiles(doc.getFiles());
-        doc.getDigitalDocuments().forEach(dd -> {
-            dto.addDigitalDocument(dd.getIdentifier());
-        });
-        doc.getPhysicalDocuments().forEach(pd -> {
-            dto.addPhysicalDocument(pd.getIdentifier());
-        });
-        return dto;
-    }
+	@Transactional(readOnly = true)
+	public PrefixedDocuments mapFromDTO(final PrefixedDocumentsDTO dto) {
+		final PrefixedDocuments result = new PrefixedDocuments();
+		result.setFiles(dto.getFiles());
+		dto.getDigitalDocuments().forEach(dd -> {
+			result.addDigitalDocument(ddService.findOne(dd));
+		});
+		dto.getPhysicalDocuments().forEach(pd -> {
+			result.addPhysicalDocument(pdService.findByIdentifier(pd));
+		});
+		return result;
+	}
+
+	public PrefixedDocumentsDTO mapToDTO(final PrefixedDocuments doc) {
+		final PrefixedDocumentsDTO dto = new PrefixedDocumentsDTO();
+		dto.setFiles(doc.getFiles());
+		doc.getDigitalDocuments().forEach(dd -> {
+			dto.addDigitalDocument(dd.getIdentifier());
+		});
+		doc.getPhysicalDocuments().forEach(pd -> {
+			dto.addPhysicalDocument(pd.getIdentifier());
+		});
+		return dto;
+	}
+
 }

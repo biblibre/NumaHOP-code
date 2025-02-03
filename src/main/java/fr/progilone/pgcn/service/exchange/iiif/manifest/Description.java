@@ -12,59 +12,59 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"@id"})
+@JsonPropertyOrder({ "@id" })
 public class Description {
 
-    @JsonProperty("@id")
-    private String id;
-    @JsonIgnore
-    @Valid
-    private Map<String, Object> additionalProperties = new HashMap<>();
+	@JsonProperty("@id")
+	private String id;
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public Description() {
-    }
+	@JsonIgnore
+	@Valid
+	private Map<String, Object> additionalProperties = new HashMap<>();
 
-    /**
-     *
-     * @param id
-     */
-    public Description(String id) {
-        super();
-        this.id = id;
-    }
+	/**
+	 * No args constructor for use in serialization
+	 *
+	 */
+	public Description() {
+	}
 
-    @JsonProperty("@id")
-    public String getId() {
-        return id;
-    }
+	/**
+	 * @param id
+	 */
+	public Description(String id) {
+		super();
+		this.id = id;
+	}
 
-    @JsonProperty("@id")
-    public void setId(String id) {
-        this.id = id;
-    }
+	@JsonProperty("@id")
+	public String getId() {
+		return id;
+	}
 
-    public Description withId(String id) {
-        this.id = id;
-        return this;
-    }
+	@JsonProperty("@id")
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
+	public Description withId(String id) {
+		this.id = id;
+		return this;
+	}
 
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
+	@JsonAnyGetter
+	public Map<String, Object> getAdditionalProperties() {
+		return this.additionalProperties;
+	}
 
-    public Description withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
-    }
+	@JsonAnySetter
+	public void setAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+	}
+
+	public Description withAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+		return this;
+	}
 
 }

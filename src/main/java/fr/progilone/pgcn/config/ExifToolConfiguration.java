@@ -15,22 +15,23 @@ import org.springframework.core.env.Environment;
 @EnableMetrics(proxyTargetClass = true)
 public class ExifToolConfiguration implements EnvironmentAware {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ExifToolConfiguration.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ExifToolConfiguration.class);
 
-    private Environment environment;
+	private Environment environment;
 
-    @Autowired
-    private ExifToolService exifToolService;
+	@Autowired
+	private ExifToolService exifToolService;
 
-    @Override
-    public void setEnvironment(final Environment environment) {
-        this.environment = environment;
-    }
+	@Override
+	public void setEnvironment(final Environment environment) {
+		this.environment = environment;
+	}
 
-    @PostConstruct
-    public void init() throws IOException {
-        LOG.debug("Configuring Exif Tool");
-        final String exifProcessPath = environment.getProperty("exifTool.process");
-        exifToolService.initialize(exifProcessPath);
-    }
+	@PostConstruct
+	public void init() throws IOException {
+		LOG.debug("Configuring Exif Tool");
+		final String exifProcessPath = environment.getProperty("exifTool.process");
+		exifToolService.initialize(exifProcessPath);
+	}
+
 }

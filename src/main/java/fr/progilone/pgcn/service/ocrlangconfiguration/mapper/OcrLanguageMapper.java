@@ -9,12 +9,12 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface OcrLanguageMapper {
 
-    OcrLanguageMapper INSTANCE = Mappers.getMapper(OcrLanguageMapper.class);
+	OcrLanguageMapper INSTANCE = Mappers.getMapper(OcrLanguageMapper.class);
 
-    OcrLanguageDTO objToDTO(OcrLanguage object);
+	OcrLanguageDTO objToDTO(OcrLanguage object);
 
-    OcrLanguage dtoToObject(OcrLanguageDTO dto);
+	OcrLanguage dtoToObject(OcrLanguageDTO dto);
 
-    List<OcrLanguageDTO> objsToDtos(List<OcrLanguage> objects);
+	List<OcrLanguageDTO> objsToDtos(List<OcrLanguage> objects);
 
 }

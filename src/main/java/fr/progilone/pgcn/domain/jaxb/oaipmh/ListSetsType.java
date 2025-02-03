@@ -37,67 +37,59 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ListSetsType",
-         propOrder = {"set",
-                      "resumptionToken"})
+@XmlType(name = "ListSetsType", propOrder = { "set", "resumptionToken" })
 public class ListSetsType {
 
-    @XmlElement(required = true)
-    protected List<SetType> set;
-    protected ResumptionTokenType resumptionToken;
+	@XmlElement(required = true)
+	protected List<SetType> set;
 
-    /**
-     * Gets the value of the set property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the set property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getSet().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link SetType }
-     *
-     *
-     */
-    public List<SetType> getSet() {
-        if (set == null) {
-            set = new ArrayList<>();
-        }
-        return this.set;
-    }
+	protected ResumptionTokenType resumptionToken;
 
-    /**
-     * Obtient la valeur de la propriété resumptionToken.
-     *
-     * @return
-     *         possible object is
-     *         {@link ResumptionTokenType }
-     *
-     */
-    public ResumptionTokenType getResumptionToken() {
-        return resumptionToken;
-    }
+	/**
+	 * Gets the value of the set property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the set
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getSet().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link SetType }
+	 *
+	 *
+	 */
+	public List<SetType> getSet() {
+		if (set == null) {
+			set = new ArrayList<>();
+		}
+		return this.set;
+	}
 
-    /**
-     * Définit la valeur de la propriété resumptionToken.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link ResumptionTokenType }
-     *
-     */
-    public void setResumptionToken(ResumptionTokenType value) {
-        this.resumptionToken = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété resumptionToken.
+	 * @return possible object is {@link ResumptionTokenType }
+	 *
+	 */
+	public ResumptionTokenType getResumptionToken() {
+		return resumptionToken;
+	}
+
+	/**
+	 * Définit la valeur de la propriété resumptionToken.
+	 * @param value allowed object is {@link ResumptionTokenType }
+	 *
+	 */
+	public void setResumptionToken(ResumptionTokenType value) {
+		this.resumptionToken = value;
+	}
 
 }

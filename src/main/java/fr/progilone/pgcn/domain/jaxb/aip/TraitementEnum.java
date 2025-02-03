@@ -33,28 +33,27 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TraitementEnum {
 
-    @XmlEnumValue("conservation d\u00e9finitive")
-    CONSERVATION_DÉFINITIVE("conservation d\u00e9finitive"),
-    @XmlEnumValue("\u00e9limination")
-    ÉLIMINATION("\u00e9limination");
+	@XmlEnumValue("conservation d\u00e9finitive")
+	CONSERVATION_DÉFINITIVE("conservation d\u00e9finitive"), @XmlEnumValue("\u00e9limination")
+	ÉLIMINATION("\u00e9limination");
 
-    private final String value;
+	private final String value;
 
-    TraitementEnum(String v) {
-        value = v;
-    }
+	TraitementEnum(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static TraitementEnum fromValue(String v) {
-        for (TraitementEnum c : TraitementEnum.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static TraitementEnum fromValue(String v) {
+		for (TraitementEnum c : TraitementEnum.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

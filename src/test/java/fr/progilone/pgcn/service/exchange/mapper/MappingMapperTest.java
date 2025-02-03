@@ -15,29 +15,30 @@ import org.springframework.test.util.ReflectionTestUtils;
  */
 public class MappingMapperTest {
 
-    private MappingMapper mapper;
+	private MappingMapper mapper;
 
-    @BeforeEach
-    public void setUp() {
-        mapper = MappingMapper.INSTANCE;
-        ReflectionTestUtils.setField(mapper, "simpleLibraryMapper", SimpleLibraryMapper.INSTANCE);
-    }
+	@BeforeEach
+	public void setUp() {
+		mapper = MappingMapper.INSTANCE;
+		ReflectionTestUtils.setField(mapper, "simpleLibraryMapper", SimpleLibraryMapper.INSTANCE);
+	}
 
-    @Test
-    public void shouldMapMappingToSimpleMappingDTO() {
-        final Library library = new Library();
-        library.setIdentifier("LIB-001");
+	@Test
+	public void shouldMapMappingToSimpleMappingDTO() {
+		final Library library = new Library();
+		library.setIdentifier("LIB-001");
 
-        final Mapping mapping = new Mapping();
-        mapping.setIdentifier("MAPPING-001");
-        mapping.setLabel("Mapping de test");
-        mapping.setLibrary(library);
-        mapping.setType(Mapping.Type.MARC);
-        mapping.setVersion(10);
+		final Mapping mapping = new Mapping();
+		mapping.setIdentifier("MAPPING-001");
+		mapping.setLabel("Mapping de test");
+		mapping.setLibrary(library);
+		mapping.setType(Mapping.Type.MARC);
+		mapping.setVersion(10);
 
-        final MappingDTO actual = mapper.mappingToDto(mapping);
+		final MappingDTO actual = mapper.mappingToDto(mapping);
 
-        assertNotNull(actual);
-        assertEquals(mapping.getIdentifier(), actual.getIdentifier());
-    }
+		assertNotNull(actual);
+		assertEquals(mapping.getIdentifier(), actual.getIdentifier());
+	}
+
 }

@@ -7,180 +7,199 @@ import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
 
 public class FilesGestionConfigDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String triggerType;
-    private int delay;
-    private boolean useExportFtp;
-    private String destinationDir;
-    private boolean deleteMaster;
-    private boolean deletePdf;
-    private boolean deletePrint;
-    private boolean deleteView;
-    private boolean deleteThumb;
-    private boolean saveMaster;
-    private boolean savePdf;
-    private boolean savePrint;
-    private boolean saveView;
-    private boolean saveThumb;
-    private boolean saveAipSip;
-    private ExportFTPConfigurationDTO activeExportFTPConfiguration;
-    private ExportFTPConfigurationDeliveryFolderDTO activeExportFTPDeliveryFolder;
+	private String identifier;
 
-    private SimpleLibraryDTO library;
+	private String triggerType;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private int delay;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private boolean useExportFtp;
 
-    public FilesGestionConfigDTO() {
-        super();
-    }
+	private String destinationDir;
 
-    public String getTriggerType() {
-        return triggerType;
-    }
+	private boolean deleteMaster;
 
-    public void setTriggerType(final String triggerType) {
-        this.triggerType = triggerType;
-    }
+	private boolean deletePdf;
 
-    public int getDelay() {
-        return delay;
-    }
+	private boolean deletePrint;
 
-    public void setDelay(final int delay) {
-        this.delay = delay;
-    }
+	private boolean deleteView;
 
-    public boolean isUseExportFtp() {
-        return useExportFtp;
-    }
+	private boolean deleteThumb;
 
-    public void setUseExportFtp(final boolean useExportFtp) {
-        this.useExportFtp = useExportFtp;
-    }
+	private boolean saveMaster;
 
-    public String getDestinationDir() {
-        return destinationDir;
-    }
+	private boolean savePdf;
 
-    public void setDestinationDir(final String destinationDir) {
-        this.destinationDir = destinationDir;
-    }
+	private boolean savePrint;
 
-    public boolean isDeleteMaster() {
-        return deleteMaster;
-    }
+	private boolean saveView;
 
-    public void setDeleteMaster(final boolean deleteMaster) {
-        this.deleteMaster = deleteMaster;
-    }
+	private boolean saveThumb;
 
-    public boolean isDeletePrint() {
-        return deletePrint;
-    }
+	private boolean saveAipSip;
 
-    public void setDeletePrint(final boolean deletePrint) {
-        this.deletePrint = deletePrint;
-    }
+	private ExportFTPConfigurationDTO activeExportFTPConfiguration;
 
-    public boolean isDeleteView() {
-        return deleteView;
-    }
+	private ExportFTPConfigurationDeliveryFolderDTO activeExportFTPDeliveryFolder;
 
-    public void setDeleteView(final boolean deleteView) {
-        this.deleteView = deleteView;
-    }
+	private SimpleLibraryDTO library;
 
-    public boolean isDeleteThumb() {
-        return deleteThumb;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setDeleteThumb(final boolean deleteThumb) {
-        this.deleteThumb = deleteThumb;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public boolean isSaveMaster() {
-        return saveMaster;
-    }
+	public FilesGestionConfigDTO() {
+		super();
+	}
 
-    public void setSaveMaster(final boolean saveMaster) {
-        this.saveMaster = saveMaster;
-    }
+	public String getTriggerType() {
+		return triggerType;
+	}
 
-    public boolean isSavePrint() {
-        return savePrint;
-    }
+	public void setTriggerType(final String triggerType) {
+		this.triggerType = triggerType;
+	}
 
-    public void setSavePrint(final boolean savePrint) {
-        this.savePrint = savePrint;
-    }
+	public int getDelay() {
+		return delay;
+	}
 
-    public boolean isSaveView() {
-        return saveView;
-    }
+	public void setDelay(final int delay) {
+		this.delay = delay;
+	}
 
-    public void setSaveView(final boolean saveView) {
-        this.saveView = saveView;
-    }
+	public boolean isUseExportFtp() {
+		return useExportFtp;
+	}
 
-    public boolean isSaveThumb() {
-        return saveThumb;
-    }
+	public void setUseExportFtp(final boolean useExportFtp) {
+		this.useExportFtp = useExportFtp;
+	}
 
-    public void setSaveThumb(final boolean saveThumb) {
-        this.saveThumb = saveThumb;
-    }
+	public String getDestinationDir() {
+		return destinationDir;
+	}
 
-    public boolean isDeletePdf() {
-        return deletePdf;
-    }
+	public void setDestinationDir(final String destinationDir) {
+		this.destinationDir = destinationDir;
+	}
 
-    public void setDeletePdf(final boolean deletePdf) {
-        this.deletePdf = deletePdf;
-    }
+	public boolean isDeleteMaster() {
+		return deleteMaster;
+	}
 
-    public boolean isSavePdf() {
-        return savePdf;
-    }
+	public void setDeleteMaster(final boolean deleteMaster) {
+		this.deleteMaster = deleteMaster;
+	}
 
-    public void setSavePdf(final boolean savePdf) {
-        this.savePdf = savePdf;
-    }
+	public boolean isDeletePrint() {
+		return deletePrint;
+	}
 
-    public boolean isSaveAipSip() {
-        return saveAipSip;
-    }
+	public void setDeletePrint(final boolean deletePrint) {
+		this.deletePrint = deletePrint;
+	}
 
-    public void setSaveAipSip(final boolean saveAipSip) {
-        this.saveAipSip = saveAipSip;
-    }
+	public boolean isDeleteView() {
+		return deleteView;
+	}
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	public void setDeleteView(final boolean deleteView) {
+		this.deleteView = deleteView;
+	}
 
-    public void setLibrary(final SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	public boolean isDeleteThumb() {
+		return deleteThumb;
+	}
 
-    public ExportFTPConfigurationDTO getActiveExportFTPConfiguration() {
-        return activeExportFTPConfiguration;
-    }
+	public void setDeleteThumb(final boolean deleteThumb) {
+		this.deleteThumb = deleteThumb;
+	}
 
-    public void setActiveExportFTPConfiguration(ExportFTPConfigurationDTO activeExportFTPConfiguration) {
-        this.activeExportFTPConfiguration = activeExportFTPConfiguration;
-    }
+	public boolean isSaveMaster() {
+		return saveMaster;
+	}
 
-    public ExportFTPConfigurationDeliveryFolderDTO getActiveExportFTPDeliveryFolder() {
-        return activeExportFTPDeliveryFolder;
-    }
+	public void setSaveMaster(final boolean saveMaster) {
+		this.saveMaster = saveMaster;
+	}
 
-    public void setActiveExportFTPDeliveryFolder(ExportFTPConfigurationDeliveryFolderDTO activeExportFTPDeliveryFolder) {
-        this.activeExportFTPDeliveryFolder = activeExportFTPDeliveryFolder;
-    }
+	public boolean isSavePrint() {
+		return savePrint;
+	}
+
+	public void setSavePrint(final boolean savePrint) {
+		this.savePrint = savePrint;
+	}
+
+	public boolean isSaveView() {
+		return saveView;
+	}
+
+	public void setSaveView(final boolean saveView) {
+		this.saveView = saveView;
+	}
+
+	public boolean isSaveThumb() {
+		return saveThumb;
+	}
+
+	public void setSaveThumb(final boolean saveThumb) {
+		this.saveThumb = saveThumb;
+	}
+
+	public boolean isDeletePdf() {
+		return deletePdf;
+	}
+
+	public void setDeletePdf(final boolean deletePdf) {
+		this.deletePdf = deletePdf;
+	}
+
+	public boolean isSavePdf() {
+		return savePdf;
+	}
+
+	public void setSavePdf(final boolean savePdf) {
+		this.savePdf = savePdf;
+	}
+
+	public boolean isSaveAipSip() {
+		return saveAipSip;
+	}
+
+	public void setSaveAipSip(final boolean saveAipSip) {
+		this.saveAipSip = saveAipSip;
+	}
+
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
+
+	public void setLibrary(final SimpleLibraryDTO library) {
+		this.library = library;
+	}
+
+	public ExportFTPConfigurationDTO getActiveExportFTPConfiguration() {
+		return activeExportFTPConfiguration;
+	}
+
+	public void setActiveExportFTPConfiguration(ExportFTPConfigurationDTO activeExportFTPConfiguration) {
+		this.activeExportFTPConfiguration = activeExportFTPConfiguration;
+	}
+
+	public ExportFTPConfigurationDeliveryFolderDTO getActiveExportFTPDeliveryFolder() {
+		return activeExportFTPDeliveryFolder;
+	}
+
+	public void setActiveExportFTPDeliveryFolder(
+			ExportFTPConfigurationDeliveryFolderDTO activeExportFTPDeliveryFolder) {
+		this.activeExportFTPDeliveryFolder = activeExportFTPDeliveryFolder;
+	}
+
 }

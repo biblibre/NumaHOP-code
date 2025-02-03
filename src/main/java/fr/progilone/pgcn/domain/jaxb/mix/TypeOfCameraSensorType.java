@@ -33,60 +33,49 @@ import jakarta.xml.bind.annotation.XmlValue;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "typeOfCameraSensorType", propOrder = {"value"})
+@XmlType(name = "typeOfCameraSensorType", propOrder = { "value" })
 public class TypeOfCameraSensorType {
 
-    @XmlValue
-    protected CameraSensorType value;
-    @XmlAttribute(name = "use")
-    protected String use;
+	@XmlValue
+	protected CameraSensorType value;
 
-    /**
-     * Obtient la valeur de la propriété value.
-     *
-     * @return
-     *         possible object is
-     *         {@link CameraSensorType }
-     *
-     */
-    public CameraSensorType getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "use")
+	protected String use;
 
-    /**
-     * Définit la valeur de la propriété value.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link CameraSensorType }
-     *
-     */
-    public void setValue(CameraSensorType value) {
-        this.value = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété value.
+	 * @return possible object is {@link CameraSensorType }
+	 *
+	 */
+	public CameraSensorType getValue() {
+		return value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété use.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getUse() {
-        return use;
-    }
+	/**
+	 * Définit la valeur de la propriété value.
+	 * @param value allowed object is {@link CameraSensorType }
+	 *
+	 */
+	public void setValue(CameraSensorType value) {
+		this.value = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété use.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setUse(String value) {
-        this.use = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété use.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getUse() {
+		return use;
+	}
+
+	/**
+	 * Définit la valeur de la propriété use.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setUse(String value) {
+		this.use = value;
+	}
 
 }

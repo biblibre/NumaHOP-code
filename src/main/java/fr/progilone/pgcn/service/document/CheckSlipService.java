@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class CheckSlipService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CheckSlipService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(CheckSlipService.class);
 
-    private final CheckSlipRepository checkSlipRepository;
+	private final CheckSlipRepository checkSlipRepository;
 
-    @Autowired
-    public CheckSlipService(final CheckSlipRepository checkSlipRepository) {
-        this.checkSlipRepository = checkSlipRepository;
-    }
+	@Autowired
+	public CheckSlipService(final CheckSlipRepository checkSlipRepository) {
+		this.checkSlipRepository = checkSlipRepository;
+	}
 
 }

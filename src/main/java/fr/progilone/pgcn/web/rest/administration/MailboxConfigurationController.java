@@ -32,103 +32,113 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/conf_mail")
 public class MailboxConfigurationController extends AbstractRestController {
 
-    private final MailboxConfigurationService mailboxConfigurationService;
-    private final AccessHelper accessHelper;
-    private final LibraryAccesssHelper libraryAccesssHelper;
+	private final MailboxConfigurationService mailboxConfigurationService;
 
-    @Autowired
-    public MailboxConfigurationController(final MailboxConfigurationService mailboxConfigurationService,
-                                          final AccessHelper accessHelper,
-                                          final LibraryAccesssHelper libraryAccesssHelper) {
-        this.mailboxConfigurationService = mailboxConfigurationService;
-        this.accessHelper = accessHelper;
-        this.libraryAccesssHelper = libraryAccesssHelper;
-    }
+	private final AccessHelper accessHelper;
 
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({MAIL_HAB1})
-    public ResponseEntity<MailboxConfiguration> create(final HttpServletRequest request, @RequestBody final MailboxConfiguration conf) throws PgcnTechnicalException {
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur, pour le conf à importer
-        if (!libraryAccesssHelper.checkLibrary(request, conf, MailboxConfiguration::getLibrary)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Création
-        return new ResponseEntity<>(mailboxConfigurationService.save(conf), HttpStatus.CREATED);
-    }
+	private final LibraryAccesssHelper libraryAccesssHelper;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @Timed
-    @RolesAllowed({MAIL_HAB2})
-    public ResponseEntity<?> delete(final HttpServletRequest request, @PathVariable final String id) {
-        // Chargement
-        final MailboxConfiguration conf = mailboxConfigurationService.findOne(id);
-        // Non trouvé
-        if (conf == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur
-        if (!libraryAccesssHelper.checkLibrary(request, conf, MailboxConfiguration::getLibrary)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Suppression
-        mailboxConfigurationService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	@Autowired
+	public MailboxConfigurationController(final MailboxConfigurationService mailboxConfigurationService,
+			final AccessHelper accessHelper, final LibraryAccesssHelper libraryAccesssHelper) {
+		this.mailboxConfigurationService = mailboxConfigurationService;
+		this.accessHelper = accessHelper;
+		this.libraryAccesssHelper = libraryAccesssHelper;
+	}
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({MAIL_HAB0})
-    public ResponseEntity<Collection<MailboxConfigurationDTO>> search(final HttpServletRequest request,
-                                                                      @RequestParam(value = "search", required = false) String search,
-                                                                      @RequestParam(value = "library", required = false) List<String> libraries,
-                                                                      @RequestParam(value = "active", required = false, defaultValue = "true") boolean active) {
+	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ MAIL_HAB1 })
+	public ResponseEntity<MailboxConfiguration> create(final HttpServletRequest request,
+			@RequestBody final MailboxConfiguration conf) throws PgcnTechnicalException {
+		// Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur,
+		// pour le conf à importer
+		if (!libraryAccesssHelper.checkLibrary(request, conf, MailboxConfiguration::getLibrary)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Création
+		return new ResponseEntity<>(mailboxConfigurationService.save(conf), HttpStatus.CREATED);
+	}
 
-        Collection<MailboxConfigurationDTO> mailboxes = mailboxConfigurationService.search(search, libraries, active);
-        // Filtrage des mailbox par rapport à la bibliothèque de l'utilisateur, pour les non-admin
-        mailboxes = libraryAccesssHelper.filterObjectsByLibrary(request, mailboxes, dto -> dto.getLibrary().getIdentifier());
-        // Réponse
-        return new ResponseEntity<>(mailboxes, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@Timed
+	@RolesAllowed({ MAIL_HAB2 })
+	public ResponseEntity<?> delete(final HttpServletRequest request, @PathVariable final String id) {
+		// Chargement
+		final MailboxConfiguration conf = mailboxConfigurationService.findOne(id);
+		// Non trouvé
+		if (conf == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur
+		if (!libraryAccesssHelper.checkLibrary(request, conf, MailboxConfiguration::getLibrary)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Suppression
+		mailboxConfigurationService.delete(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({MAIL_HAB0})
-    public ResponseEntity<MailboxConfiguration> getById(final HttpServletRequest request, @PathVariable final String id) {
-        // Chargement
-        final MailboxConfiguration conf = mailboxConfigurationService.findOne(id);
-        // Non trouvé
-        if (conf == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur
-        if (!libraryAccesssHelper.checkLibrary(request, conf, MailboxConfiguration::getLibrary)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Réponse
-        return new ResponseEntity<>(conf, HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ MAIL_HAB0 })
+	public ResponseEntity<Collection<MailboxConfigurationDTO>> search(final HttpServletRequest request,
+			@RequestParam(value = "search", required = false) String search,
+			@RequestParam(value = "library", required = false) List<String> libraries,
+			@RequestParam(value = "active", required = false, defaultValue = "true") boolean active) {
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({MAIL_HAB1})
-    public ResponseEntity<MailboxConfiguration> udpate(final HttpServletRequest request, @RequestBody final MailboxConfiguration conf) throws PgcnTechnicalException {
+		Collection<MailboxConfigurationDTO> mailboxes = mailboxConfigurationService.search(search, libraries, active);
+		// Filtrage des mailbox par rapport à la bibliothèque de l'utilisateur, pour les
+		// non-admin
+		mailboxes = libraryAccesssHelper.filterObjectsByLibrary(request, mailboxes,
+				dto -> dto.getLibrary().getIdentifier());
+		// Réponse
+		return new ResponseEntity<>(mailboxes, HttpStatus.OK);
+	}
 
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur, pour le conf à importer
-        if (!libraryAccesssHelper.checkLibrary(request, conf, MailboxConfiguration::getLibrary)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Chargement du conf existant
-        final MailboxConfiguration dbConfigurationMail = mailboxConfigurationService.findOne(conf.getIdentifier());
-        // Non trouvé
-        if (dbConfigurationMail == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur, pour le conf existant
-        if (!libraryAccesssHelper.checkLibrary(request, dbConfigurationMail, MailboxConfiguration::getLibrary)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Mise à jour
-        return new ResponseEntity<>(mailboxConfigurationService.save(conf), HttpStatus.OK);
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ MAIL_HAB0 })
+	public ResponseEntity<MailboxConfiguration> getById(final HttpServletRequest request,
+			@PathVariable final String id) {
+		// Chargement
+		final MailboxConfiguration conf = mailboxConfigurationService.findOne(id);
+		// Non trouvé
+		if (conf == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur
+		if (!libraryAccesssHelper.checkLibrary(request, conf, MailboxConfiguration::getLibrary)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Réponse
+		return new ResponseEntity<>(conf, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ MAIL_HAB1 })
+	public ResponseEntity<MailboxConfiguration> udpate(final HttpServletRequest request,
+			@RequestBody final MailboxConfiguration conf) throws PgcnTechnicalException {
+
+		// Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur,
+		// pour le conf à importer
+		if (!libraryAccesssHelper.checkLibrary(request, conf, MailboxConfiguration::getLibrary)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Chargement du conf existant
+		final MailboxConfiguration dbConfigurationMail = mailboxConfigurationService.findOne(conf.getIdentifier());
+		// Non trouvé
+		if (dbConfigurationMail == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur,
+		// pour le conf existant
+		if (!libraryAccesssHelper.checkLibrary(request, dbConfigurationMail, MailboxConfiguration::getLibrary)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Mise à jour
+		return new ResponseEntity<>(mailboxConfigurationService.save(conf), HttpStatus.OK);
+	}
+
 }

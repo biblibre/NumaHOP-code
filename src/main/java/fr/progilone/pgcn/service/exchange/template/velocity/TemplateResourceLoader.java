@@ -12,12 +12,13 @@ import org.apache.velocity.runtime.resource.loader.ResourceLoader;
 import org.apache.velocity.util.ExtProperties;
 
 /**
- * Ce {@link ResourceLoader} gère les templates Velocity stockés dans la table des Templates.
- * A la différence de {@link org.apache.velocity.runtime.resource.loader.DataSourceResourceLoader}, la base est interrogées en passant par hibernate,
- * et en utilisant le pool de connexions de l'application
+ * Ce {@link ResourceLoader} gère les templates Velocity stockés dans la table des
+ * Templates. A la différence de
+ * {@link org.apache.velocity.runtime.resource.loader.DataSourceResourceLoader}, la base
+ * est interrogées en passant par hibernate, et en utilisant le pool de connexions de
+ * l'application
  * <p>
- * Exemple de configuration:
- * <code>
+ * Exemple de configuration: <code>
  * Velocity.setProperty(Velocity.RESOURCE_LOADER, "ds");
  * Velocity.setProperty("ds.resource.loader.class", "fr.progilone.pgcn.service.exchange.template.velocity.TemplateResourceLoader");
  * Velocity.setProperty("ds.resource.loader.service", templateService);
@@ -27,33 +28,34 @@ import org.apache.velocity.util.ExtProperties;
  */
 public class TemplateResourceLoader extends ResourceLoader {
 
-    private fr.progilone.pgcn.service.exchange.template.loader.TemplateResourceLoader delegate;
+	private fr.progilone.pgcn.service.exchange.template.loader.TemplateResourceLoader delegate;
 
-    @Override
-    public void init(final ExtProperties configuration) {
-        final Object service = configuration.get("service");
-        delegate = new fr.progilone.pgcn.service.exchange.template.loader.TemplateResourceLoader(service);
-    }
+	@Override
+	public void init(final ExtProperties configuration) {
+		final Object service = configuration.get("service");
+		delegate = new fr.progilone.pgcn.service.exchange.template.loader.TemplateResourceLoader(service);
+	}
 
-    @Override
-    public synchronized Reader getResourceReader(final String source, final String encoding) throws ResourceNotFoundException {
-        return new InputStreamReader(delegate.getResourceStream(new ResourceName(source)));
-    }
+	@Override
+	public synchronized Reader getResourceReader(final String source, final String encoding)
+			throws ResourceNotFoundException {
+		return new InputStreamReader(delegate.getResourceStream(new ResourceName(source)));
+	}
 
-    @Override
-    public boolean isSourceModified(final Resource resource) {
-        return resource.getLastModified() != readLastModified(resource);
-    }
+	@Override
+	public boolean isSourceModified(final Resource resource) {
+		return resource.getLastModified() != readLastModified(resource);
+	}
 
-    @Override
-    public long getLastModified(final Resource resource) {
-        return readLastModified(resource);
-    }
+	@Override
+	public long getLastModified(final Resource resource) {
+		return readLastModified(resource);
+	}
 
-    private long readLastModified(final Resource resource) {
-        final Template template = delegate.findTemplateByName(new ResourceName(resource.getName()));
-        final LocalDateTime lastModifiedDate = template.getLastModifiedDate();
-        return lastModifiedDate != null ? Timestamp.valueOf(lastModifiedDate).getTime()
-                                        : 0;
-    }
+	private long readLastModified(final Resource resource) {
+		final Template template = delegate.findTemplateByName(new ResourceName(resource.getName()));
+		final LocalDateTime lastModifiedDate = template.getLastModifiedDate();
+		return lastModifiedDate != null ? Timestamp.valueOf(lastModifiedDate).getTime() : 0;
+	}
+
 }

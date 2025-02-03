@@ -35,61 +35,50 @@ import java.math.BigInteger;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "positiveIntegerType", propOrder = {"value"})
+@XmlType(name = "positiveIntegerType", propOrder = { "value" })
 public class PositiveIntegerType {
 
-    @XmlValue
-    @XmlSchemaType(name = "positiveInteger")
-    protected BigInteger value;
-    @XmlAttribute(name = "use")
-    protected String use;
+	@XmlValue
+	@XmlSchemaType(name = "positiveInteger")
+	protected BigInteger value;
 
-    /**
-     * Obtient la valeur de la propriété value.
-     *
-     * @return
-     *         possible object is
-     *         {@link BigInteger }
-     *
-     */
-    public BigInteger getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "use")
+	protected String use;
 
-    /**
-     * Définit la valeur de la propriété value.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link BigInteger }
-     *
-     */
-    public void setValue(BigInteger value) {
-        this.value = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété value.
+	 * @return possible object is {@link BigInteger }
+	 *
+	 */
+	public BigInteger getValue() {
+		return value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété use.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getUse() {
-        return use;
-    }
+	/**
+	 * Définit la valeur de la propriété value.
+	 * @param value allowed object is {@link BigInteger }
+	 *
+	 */
+	public void setValue(BigInteger value) {
+		this.value = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété use.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setUse(String value) {
-        this.use = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété use.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getUse() {
+		return use;
+	}
+
+	/**
+	 * Définit la valeur de la propriété use.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setUse(String value) {
+		this.use = value;
+	}
 
 }

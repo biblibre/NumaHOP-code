@@ -39,40 +39,33 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum CameraSensorType {
 
-    @XmlEnumValue("undefined")
-    UNDEFINED("undefined"),
-    @XmlEnumValue("MonochromeArea")
-    MONOCHROME_AREA("MonochromeArea"),
-    @XmlEnumValue("OneChipColorArea")
-    ONE_CHIP_COLOR_AREA("OneChipColorArea"),
-    @XmlEnumValue("TwoChipColorArea")
-    TWO_CHIP_COLOR_AREA("TwoChipColorArea"),
-    @XmlEnumValue("ThreeChipColorArea")
-    THREE_CHIP_COLOR_AREA("ThreeChipColorArea"),
-    @XmlEnumValue("MonochromeLinear")
-    MONOCHROME_LINEAR("MonochromeLinear"),
-    @XmlEnumValue("ColorTriLinear")
-    COLOR_TRI_LINEAR("ColorTriLinear"),
-    @XmlEnumValue("ColorSequentialLinear")
-    COLOR_SEQUENTIAL_LINEAR("ColorSequentialLinear");
+	@XmlEnumValue("undefined")
+	UNDEFINED("undefined"), @XmlEnumValue("MonochromeArea")
+	MONOCHROME_AREA("MonochromeArea"), @XmlEnumValue("OneChipColorArea")
+	ONE_CHIP_COLOR_AREA("OneChipColorArea"), @XmlEnumValue("TwoChipColorArea")
+	TWO_CHIP_COLOR_AREA("TwoChipColorArea"), @XmlEnumValue("ThreeChipColorArea")
+	THREE_CHIP_COLOR_AREA("ThreeChipColorArea"), @XmlEnumValue("MonochromeLinear")
+	MONOCHROME_LINEAR("MonochromeLinear"), @XmlEnumValue("ColorTriLinear")
+	COLOR_TRI_LINEAR("ColorTriLinear"), @XmlEnumValue("ColorSequentialLinear")
+	COLOR_SEQUENTIAL_LINEAR("ColorSequentialLinear");
 
-    private final String value;
+	private final String value;
 
-    CameraSensorType(String v) {
-        value = v;
-    }
+	CameraSensorType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static CameraSensorType fromValue(String v) {
-        for (CameraSensorType c : CameraSensorType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static CameraSensorType fromValue(String v) {
+		for (CameraSensorType c : CameraSensorType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

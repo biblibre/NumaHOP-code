@@ -39,155 +39,175 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ExtendWith(MockitoExtension.class)
 public class MappingControllerTest {
 
-    @Mock
-    private ExchangeMappingService exchangeMappingService;
-    @Mock
-    private MappingService mappingService;
-    @Mock
-    private LibraryAccesssHelper libraryAccesssHelper;
+	@Mock
+	private ExchangeMappingService exchangeMappingService;
 
-    private MockMvc restMockMvc;
+	@Mock
+	private MappingService mappingService;
 
-    private final RequestPostProcessor allPermissions = roles(MAP_HAB0, MAP_HAB1, MAP_HAB2);
+	@Mock
+	private LibraryAccesssHelper libraryAccesssHelper;
 
-    @BeforeEach
-    public void setUp() throws Exception {
-        final MappingController controller = new MappingController(exchangeMappingService, mappingService, libraryAccesssHelper);
+	private MockMvc restMockMvc;
 
-        final FormattingConversionService convService = new DefaultFormattingConversionService();
-        convService.addConverter(String.class, Library.class, TestConverterFactory.getConverter(Library.class));
-        this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).setConversionService(convService).build();
-    }
+	private final RequestPostProcessor allPermissions = roles(MAP_HAB0, MAP_HAB1, MAP_HAB2);
 
-    @Test
-    public void testCreate() throws Exception {
-        final Mapping mapping = getMapping("ABCD-1234");
-        when(mappingService.save(any(Mapping.class))).thenReturn(mapping);
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+	@BeforeEach
+	public void setUp() throws Exception {
+		final MappingController controller = new MappingController(exchangeMappingService, mappingService,
+				libraryAccesssHelper);
 
-        this.restMockMvc.perform(post("/api/rest/mapping").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(mapping)).with(allPermissions))
-                        .andExpect(status().isCreated())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("identifier").value(mapping.getIdentifier()))
-                        .andExpect(jsonPath("label").value(mapping.getLabel()))
-                        .andExpect(jsonPath("library.identifier").value(mapping.getLibrary().getIdentifier()))
-                        .andExpect(jsonPath("type").value(mapping.getType().name()));
-    }
+		final FormattingConversionService convService = new DefaultFormattingConversionService();
+		convService.addConverter(String.class, Library.class, TestConverterFactory.getConverter(Library.class));
+		this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).setConversionService(convService).build();
+	}
 
-    @Test
-    public void testDelete() throws Exception {
-        final Mapping mapping = getMapping("ABCD-1235");
-        final String identifier = mapping.getIdentifier();
+	@Test
+	public void testCreate() throws Exception {
+		final Mapping mapping = getMapping("ABCD-1234");
+		when(mappingService.save(any(Mapping.class))).thenReturn(mapping);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
 
-        when(mappingService.findOne(mapping.getIdentifier())).thenReturn(mapping);
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		this.restMockMvc
+			.perform(post("/api/rest/mapping").contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(mapping))
+				.with(allPermissions))
+			.andExpect(status().isCreated())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("identifier").value(mapping.getIdentifier()))
+			.andExpect(jsonPath("label").value(mapping.getLabel()))
+			.andExpect(jsonPath("library.identifier").value(mapping.getLibrary().getIdentifier()))
+			.andExpect(jsonPath("type").value(mapping.getType().name()));
+	}
 
-        // test delete
-        this.restMockMvc.perform(delete("/api/rest/mapping/{id}", identifier).contentType(MediaType.APPLICATION_JSON).with(allPermissions)).andExpect(status().isOk());
+	@Test
+	public void testDelete() throws Exception {
+		final Mapping mapping = getMapping("ABCD-1235");
+		final String identifier = mapping.getIdentifier();
 
-        verify(mappingService).delete(identifier);
-    }
+		when(mappingService.findOne(mapping.getIdentifier())).thenReturn(mapping);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
 
-    @Test
-    public void testFindByType() throws Exception {
-        final Set<MappingDTO> mappings = new HashSet<>();
-        mappings.add(getSimpleMappingDto("ABCD-1236"));
+		// test delete
+		this.restMockMvc
+			.perform(delete("/api/rest/mapping/{id}", identifier).contentType(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isOk());
 
-        when(libraryAccesssHelper.filterObjectsByLibrary(any(HttpServletRequest.class), any(), any(), any())).thenAnswer(new ReturnsArgumentAt(1));
+		verify(mappingService).delete(identifier);
+	}
 
-        when(mappingService.findByType(Mapping.Type.MARC)).thenReturn(mappings);
+	@Test
+	public void testFindByType() throws Exception {
+		final Set<MappingDTO> mappings = new HashSet<>();
+		mappings.add(getSimpleMappingDto("ABCD-1236"));
 
-        // test findAllActive
-        this.restMockMvc.perform(get("/api/rest/mapping").accept(MediaType.APPLICATION_JSON).param("type", "MARC").with(allPermissions))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("$[0].identifier").value(mappings.iterator().next().getIdentifier()));
-    }
+		when(libraryAccesssHelper.filterObjectsByLibrary(any(HttpServletRequest.class), any(), any(), any()))
+			.thenAnswer(new ReturnsArgumentAt(1));
 
-    @Test
-    @Disabled
-    public void testFindByLibrary() throws Exception {
-        final Set<MappingDTO> stats = new HashSet<>();
-        final MappingDTO mapping = getSimpleMappingDto("ABCD-1237");
-        stats.add(mapping);
-        final Library library = new Library();
-        library.setIdentifier(mapping.getLibrary().getIdentifier());
+		when(mappingService.findByType(Mapping.Type.MARC)).thenReturn(mappings);
 
-        when(mappingService.findByLibrary(library)).thenReturn(stats);
+		// test findAllActive
+		this.restMockMvc.perform(
+				get("/api/rest/mapping").accept(MediaType.APPLICATION_JSON).param("type", "MARC").with(allPermissions))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("$[0].identifier").value(mappings.iterator().next().getIdentifier()));
+	}
 
-        // test findAllActive
-        this.restMockMvc.perform(get("/api/rest/mapping").param("library", mapping.getLibrary().getIdentifier()).accept(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("$[0].identifier").value(mapping.getIdentifier()));
-    }
+	@Test
+	@Disabled
+	public void testFindByLibrary() throws Exception {
+		final Set<MappingDTO> stats = new HashSet<>();
+		final MappingDTO mapping = getSimpleMappingDto("ABCD-1237");
+		stats.add(mapping);
+		final Library library = new Library();
+		library.setIdentifier(mapping.getLibrary().getIdentifier());
 
-    @Test
-    public void getById() throws Exception {
-        final Mapping mapping = getMapping("ABCD-1238");
-        when(mappingService.findOne(mapping.getIdentifier())).thenReturn(mapping);
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(mappingService.findByLibrary(library)).thenReturn(stats);
 
-        // test findAllActive
-        this.restMockMvc.perform(get("/api/rest/mapping/{id}", mapping.getIdentifier()).accept(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("identifier").value(mapping.getIdentifier()));
-    }
+		// test findAllActive
+		this.restMockMvc
+			.perform(get("/api/rest/mapping").param("library", mapping.getLibrary().getIdentifier())
+				.accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("$[0].identifier").value(mapping.getIdentifier()));
+	}
 
-    @Test
-    public void testGetById_notFound() throws Exception {
-        final String identifier = "AAA";
-        when(mappingService.findOne(identifier)).thenReturn(null);
+	@Test
+	public void getById() throws Exception {
+		final Mapping mapping = getMapping("ABCD-1238");
+		when(mappingService.findOne(mapping.getIdentifier())).thenReturn(mapping);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
 
-        this.restMockMvc.perform(get("/api/rest/mapping/{identifier}", identifier).accept(MediaType.APPLICATION_JSON).with(allPermissions)).andExpect(status().isNotFound());
-    }
+		// test findAllActive
+		this.restMockMvc
+			.perform(get("/api/rest/mapping/{id}", mapping.getIdentifier()).accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("identifier").value(mapping.getIdentifier()));
+	}
 
-    @Test
-    public void testUpdate() throws Exception {
-        final Mapping mapping = getMapping("ABCD-1239");
+	@Test
+	public void testGetById_notFound() throws Exception {
+		final String identifier = "AAA";
+		when(mappingService.findOne(identifier)).thenReturn(null);
 
-        // prepare update
-        final String identifier = mapping.getIdentifier();
-        final Mapping savedStat = getMapping("ABCD-1239");
-        savedStat.setLabel("New label");
+		this.restMockMvc
+			.perform(get("/api/rest/mapping/{identifier}", identifier).accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isNotFound());
+	}
 
-        when(mappingService.findOne(mapping.getIdentifier())).thenReturn(mapping);
-        when(mappingService.save(mapping)).thenReturn(savedStat);
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+	@Test
+	public void testUpdate() throws Exception {
+		final Mapping mapping = getMapping("ABCD-1239");
 
-        // test update
-        this.restMockMvc.perform(post("/api/rest/mapping/" + identifier).contentType(MediaType.APPLICATION_JSON)
-                                                                        .content(TestUtil.convertObjectToJsonBytes(mapping))
-                                                                        .with(allPermissions))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("identifier").value(savedStat.getIdentifier()))
-                        .andExpect(jsonPath("label").value(savedStat.getLabel()))
-                        .andExpect(jsonPath("library.identifier").value(savedStat.getLibrary().getIdentifier()))
-                        .andExpect(jsonPath("type").value(savedStat.getType().name()));
-    }
+		// prepare update
+		final String identifier = mapping.getIdentifier();
+		final Mapping savedStat = getMapping("ABCD-1239");
+		savedStat.setLabel("New label");
 
-    private Mapping getMapping(final String identifier) {
-        final Library library = new Library();
-        library.setIdentifier("LIBRARY-001");
+		when(mappingService.findOne(mapping.getIdentifier())).thenReturn(mapping);
+		when(mappingService.save(mapping)).thenReturn(savedStat);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
 
-        final Mapping mapping = new Mapping();
-        mapping.setIdentifier(identifier);
-        mapping.setLabel("Chou-fleur");
-        mapping.setLibrary(library);
-        mapping.setType(Mapping.Type.MARC);
-        return mapping;
-    }
+		// test update
+		this.restMockMvc
+			.perform(post("/api/rest/mapping/" + identifier).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(mapping))
+				.with(allPermissions))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("identifier").value(savedStat.getIdentifier()))
+			.andExpect(jsonPath("label").value(savedStat.getLabel()))
+			.andExpect(jsonPath("library.identifier").value(savedStat.getLibrary().getIdentifier()))
+			.andExpect(jsonPath("type").value(savedStat.getType().name()));
+	}
 
-    private MappingDTO getSimpleMappingDto(final String identifier) {
-        final MappingDTO dto = new MappingDTO();
-        dto.setIdentifier(identifier);
-        dto.setLabel("Chou-fleur");
-        final SimpleLibraryDTO lib = new SimpleLibraryDTO.Builder().setIdentifier("LIBRARY-001").build();
-        dto.setLibrary(lib);
-        dto.setType(Mapping.Type.MARC.name());
-        return dto;
-    }
+	private Mapping getMapping(final String identifier) {
+		final Library library = new Library();
+		library.setIdentifier("LIBRARY-001");
+
+		final Mapping mapping = new Mapping();
+		mapping.setIdentifier(identifier);
+		mapping.setLabel("Chou-fleur");
+		mapping.setLibrary(library);
+		mapping.setType(Mapping.Type.MARC);
+		return mapping;
+	}
+
+	private MappingDTO getSimpleMappingDto(final String identifier) {
+		final MappingDTO dto = new MappingDTO();
+		dto.setIdentifier(identifier);
+		dto.setLabel("Chou-fleur");
+		final SimpleLibraryDTO lib = new SimpleLibraryDTO.Builder().setIdentifier("LIBRARY-001").build();
+		dto.setLibrary(lib);
+		dto.setType(Mapping.Type.MARC.name());
+		return dto;
+	}
 
 }

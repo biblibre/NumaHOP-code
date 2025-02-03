@@ -33,28 +33,27 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum CadreType {
 
-    @XmlEnumValue("Archivage patrimonial")
-    ARCHIVAGE_PATRIMONIAL("Archivage patrimonial"),
-    @XmlEnumValue("Tiers archivage")
-    TIERS_ARCHIVAGE("Tiers archivage");
+	@XmlEnumValue("Archivage patrimonial")
+	ARCHIVAGE_PATRIMONIAL("Archivage patrimonial"), @XmlEnumValue("Tiers archivage")
+	TIERS_ARCHIVAGE("Tiers archivage");
 
-    private final String value;
+	private final String value;
 
-    CadreType(String v) {
-        value = v;
-    }
+	CadreType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static CadreType fromValue(String v) {
-        for (CadreType c : CadreType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static CadreType fromValue(String v) {
+		for (CadreType c : CadreType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

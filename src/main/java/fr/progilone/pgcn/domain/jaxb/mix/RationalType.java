@@ -37,86 +37,68 @@ import java.math.BigInteger;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "rationalType",
-         propOrder = {"numerator",
-                      "denominator"})
+@XmlType(name = "rationalType", propOrder = { "numerator", "denominator" })
 public class RationalType {
 
-    protected BigInteger numerator;
-    protected BigInteger denominator;
-    @XmlAttribute(name = "use")
-    protected String use;
+	protected BigInteger numerator;
 
-    /**
-     * Obtient la valeur de la propriété numerator.
-     *
-     * @return
-     *         possible object is
-     *         {@link BigInteger }
-     *
-     */
-    public BigInteger getNumerator() {
-        return numerator;
-    }
+	protected BigInteger denominator;
 
-    /**
-     * Définit la valeur de la propriété numerator.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link BigInteger }
-     *
-     */
-    public void setNumerator(BigInteger value) {
-        this.numerator = value;
-    }
+	@XmlAttribute(name = "use")
+	protected String use;
 
-    /**
-     * Obtient la valeur de la propriété denominator.
-     *
-     * @return
-     *         possible object is
-     *         {@link BigInteger }
-     *
-     */
-    public BigInteger getDenominator() {
-        return denominator;
-    }
+	/**
+	 * Obtient la valeur de la propriété numerator.
+	 * @return possible object is {@link BigInteger }
+	 *
+	 */
+	public BigInteger getNumerator() {
+		return numerator;
+	}
 
-    /**
-     * Définit la valeur de la propriété denominator.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link BigInteger }
-     *
-     */
-    public void setDenominator(BigInteger value) {
-        this.denominator = value;
-    }
+	/**
+	 * Définit la valeur de la propriété numerator.
+	 * @param value allowed object is {@link BigInteger }
+	 *
+	 */
+	public void setNumerator(BigInteger value) {
+		this.numerator = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété use.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getUse() {
-        return use;
-    }
+	/**
+	 * Obtient la valeur de la propriété denominator.
+	 * @return possible object is {@link BigInteger }
+	 *
+	 */
+	public BigInteger getDenominator() {
+		return denominator;
+	}
 
-    /**
-     * Définit la valeur de la propriété use.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setUse(String value) {
-        this.use = value;
-    }
+	/**
+	 * Définit la valeur de la propriété denominator.
+	 * @param value allowed object is {@link BigInteger }
+	 *
+	 */
+	public void setDenominator(BigInteger value) {
+		this.denominator = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété use.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getUse() {
+		return use;
+	}
+
+	/**
+	 * Définit la valeur de la propriété use.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setUse(String value) {
+		this.use = value;
+	}
 
 }

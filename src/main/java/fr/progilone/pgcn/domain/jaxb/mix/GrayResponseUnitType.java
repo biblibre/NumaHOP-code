@@ -36,34 +36,34 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum GrayResponseUnitType {
 
-    @XmlEnumValue("Number represents tenths of a unit")
-    NUMBER_REPRESENTS_TENTHS_OF_A_UNIT("Number represents tenths of a unit"),
-    @XmlEnumValue("Number represents hundredths of a unit")
-    NUMBER_REPRESENTS_HUNDREDTHS_OF_A_UNIT("Number represents hundredths of a unit"),
-    @XmlEnumValue("Number represents thousandths of a unit")
-    NUMBER_REPRESENTS_THOUSANDTHS_OF_A_UNIT("Number represents thousandths of a unit"),
-    @XmlEnumValue("Number represents ten-thousandths of a unit")
-    NUMBER_REPRESENTS_TEN_THOUSANDTHS_OF_A_UNIT("Number represents ten-thousandths of a unit"),
-    @XmlEnumValue("Number represents hundred-thousandths of a unit")
-    NUMBER_REPRESENTS_HUNDRED_THOUSANDTHS_OF_A_UNIT("Number represents hundred-thousandths of a unit");
+	@XmlEnumValue("Number represents tenths of a unit")
+	NUMBER_REPRESENTS_TENTHS_OF_A_UNIT("Number represents tenths of a unit"),
+	@XmlEnumValue("Number represents hundredths of a unit")
+	NUMBER_REPRESENTS_HUNDREDTHS_OF_A_UNIT("Number represents hundredths of a unit"),
+	@XmlEnumValue("Number represents thousandths of a unit")
+	NUMBER_REPRESENTS_THOUSANDTHS_OF_A_UNIT("Number represents thousandths of a unit"),
+	@XmlEnumValue("Number represents ten-thousandths of a unit")
+	NUMBER_REPRESENTS_TEN_THOUSANDTHS_OF_A_UNIT("Number represents ten-thousandths of a unit"),
+	@XmlEnumValue("Number represents hundred-thousandths of a unit")
+	NUMBER_REPRESENTS_HUNDRED_THOUSANDTHS_OF_A_UNIT("Number represents hundred-thousandths of a unit");
 
-    private final String value;
+	private final String value;
 
-    GrayResponseUnitType(String v) {
-        value = v;
-    }
+	GrayResponseUnitType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static GrayResponseUnitType fromValue(String v) {
-        for (GrayResponseUnitType c : GrayResponseUnitType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static GrayResponseUnitType fromValue(String v) {
+		for (GrayResponseUnitType c : GrayResponseUnitType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

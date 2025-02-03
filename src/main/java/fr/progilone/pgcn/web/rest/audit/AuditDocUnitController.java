@@ -25,50 +25,58 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/audit/docunit")
 public class AuditDocUnitController extends AbstractRestController {
 
-    private final AccessHelper accessHelper;
-    private final AuditDocUnitService auditDocUnitService;
-    private final DocUnitService docUnitService;
+	private final AccessHelper accessHelper;
 
-    @Autowired
-    public AuditDocUnitController(final AccessHelper accessHelper, final AuditDocUnitService auditDocUnitService, final DocUnitService docUnitService) {
-        this.accessHelper = accessHelper;
-        this.auditDocUnitService = auditDocUnitService;
-        this.docUnitService = docUnitService;
-    }
+	private final AuditDocUnitService auditDocUnitService;
 
-    @RequestMapping(value = "/{id}", params = {"rev"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(DOC_UNIT_HAB0)
-    public ResponseEntity<DocUnit> getEntity(@PathVariable(value = "id") final String id, @RequestParam(value = "rev", defaultValue = "1") final int rev) {
-        // Chargement du docUnit existant
-        final DocUnit docUnit = docUnitService.findOne(id);
-        // Non trouvé
-        if (docUnit == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur, pour le docUnit existant
-        if (!accessHelper.checkDocUnit(id)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Réponse
-        return createResponseEntity(auditDocUnitService.getEntity(id, rev));
-    }
+	private final DocUnitService docUnitService;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({DOC_UNIT_HAB0})
-    public ResponseEntity<List<AuditDocUnitRevisionDTO>> getRevisions(@PathVariable(value = "id") final String id) {
-        // Chargement du docUnit existant
-        final DocUnit docUnit = docUnitService.findOne(id);
-        // Non trouvé
-        if (docUnit == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur, pour le docUnit existant
-        if (!accessHelper.checkDocUnit(id)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Réponse
-        return new ResponseEntity<>(auditDocUnitService.getRevisions(id), HttpStatus.OK);
-    }
+	@Autowired
+	public AuditDocUnitController(final AccessHelper accessHelper, final AuditDocUnitService auditDocUnitService,
+			final DocUnitService docUnitService) {
+		this.accessHelper = accessHelper;
+		this.auditDocUnitService = auditDocUnitService;
+		this.docUnitService = docUnitService;
+	}
+
+	@RequestMapping(value = "/{id}", params = { "rev" }, method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(DOC_UNIT_HAB0)
+	public ResponseEntity<DocUnit> getEntity(@PathVariable(value = "id") final String id,
+			@RequestParam(value = "rev", defaultValue = "1") final int rev) {
+		// Chargement du docUnit existant
+		final DocUnit docUnit = docUnitService.findOne(id);
+		// Non trouvé
+		if (docUnit == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur,
+		// pour le docUnit existant
+		if (!accessHelper.checkDocUnit(id)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Réponse
+		return createResponseEntity(auditDocUnitService.getEntity(id, rev));
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ DOC_UNIT_HAB0 })
+	public ResponseEntity<List<AuditDocUnitRevisionDTO>> getRevisions(@PathVariable(value = "id") final String id) {
+		// Chargement du docUnit existant
+		final DocUnit docUnit = docUnitService.findOne(id);
+		// Non trouvé
+		if (docUnit == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur,
+		// pour le docUnit existant
+		if (!accessHelper.checkDocUnit(id)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Réponse
+		return new ResponseEntity<>(auditDocUnitService.getRevisions(id), HttpStatus.OK);
+	}
+
 }

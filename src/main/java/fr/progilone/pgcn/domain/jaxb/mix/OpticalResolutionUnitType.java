@@ -34,30 +34,28 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum OpticalResolutionUnitType {
 
-    @XmlEnumValue("no absolute unit")
-    NO_ABSOLUTE_UNIT("no absolute unit"),
-    @XmlEnumValue("in.")
-    IN("in."),
-    @XmlEnumValue("cm")
-    CM("cm");
+	@XmlEnumValue("no absolute unit")
+	NO_ABSOLUTE_UNIT("no absolute unit"), @XmlEnumValue("in.")
+	IN("in."), @XmlEnumValue("cm")
+	CM("cm");
 
-    private final String value;
+	private final String value;
 
-    OpticalResolutionUnitType(String v) {
-        value = v;
-    }
+	OpticalResolutionUnitType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static OpticalResolutionUnitType fromValue(String v) {
-        for (OpticalResolutionUnitType c : OpticalResolutionUnitType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static OpticalResolutionUnitType fromValue(String v) {
+		for (OpticalResolutionUnitType c : OpticalResolutionUnitType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

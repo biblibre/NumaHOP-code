@@ -9,49 +9,54 @@ import java.util.List;
 import org.marc4j.converter.CharConverter;
 
 /**
- * Classe permettant de précompiler les règles de mapping pour accélérer leur évaluation au moment de leur application
+ * Classe permettant de précompiler les règles de mapping pour accélérer leur évaluation
+ * au moment de leur application
  */
 public final class CompiledMapping {
 
-    private final Mapping mapping;
-    private final List<CompiledMappingRule> compiledRules = new ArrayList<>();
+	private final Mapping mapping;
 
-    public CompiledMapping(final Mapping mapping) {
-        this.mapping = mapping;
-        // alimentation de compiledRules, par ordre de position croissante
-        mapping.getRules().stream().sorted(Ordering.natural().nullsFirst().onResultOf(MappingRule::getPosition)).forEach(rule -> compiledRules.add(new CompiledMappingRule(rule)));
-    }
+	private final List<CompiledMappingRule> compiledRules = new ArrayList<>();
 
-    public String getLabel() {
-        return mapping.getLabel();
-    }
+	public CompiledMapping(final Mapping mapping) {
+		this.mapping = mapping;
+		// alimentation de compiledRules, par ordre de position croissante
+		mapping.getRules()
+			.stream()
+			.sorted(Ordering.natural().nullsFirst().onResultOf(MappingRule::getPosition))
+			.forEach(rule -> compiledRules.add(new CompiledMappingRule(rule)));
+	}
 
-    public Library getLibrary() {
-        return mapping.getLibrary();
-    }
+	public String getLabel() {
+		return mapping.getLabel();
+	}
 
-    public Mapping.Type getType() {
-        return mapping.getType();
-    }
+	public Library getLibrary() {
+		return mapping.getLibrary();
+	}
 
-    public List<MappingRule> getRules() {
-        return mapping.getRules();
-    }
+	public Mapping.Type getType() {
+		return mapping.getType();
+	}
 
-    public Mapping getMapping() {
-        return mapping;
-    }
+	public List<MappingRule> getRules() {
+		return mapping.getRules();
+	}
 
-    public List<CompiledMappingRule> getCompiledRules() {
-        return compiledRules;
-    }
+	public Mapping getMapping() {
+		return mapping;
+	}
 
-    /**
-     * Initialisation des scripts personnalisés pour chaque règle de mapping
-     *
-     * @param charConverter
-     */
-    public void initialize(final CharConverter charConverter) {
-        compiledRules.forEach(rule -> rule.initialize(charConverter));
-    }
+	public List<CompiledMappingRule> getCompiledRules() {
+		return compiledRules;
+	}
+
+	/**
+	 * Initialisation des scripts personnalisés pour chaque règle de mapping
+	 * @param charConverter
+	 */
+	public void initialize(final CharConverter charConverter) {
+		compiledRules.forEach(rule -> rule.initialize(charConverter));
+	}
+
 }

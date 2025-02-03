@@ -36,31 +36,25 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlType(name = "DescriptionType", namespace = "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 public class DescriptionType extends ElementContainer {
 
-    @XmlAttribute(name = "about", namespace = "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
-    protected String about;
+	@XmlAttribute(name = "about", namespace = "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
+	protected String about;
 
-    /**
-     * Obtient la valeur de la propriété about.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAbout() {
-        return about;
-    }
+	/**
+	 * Obtient la valeur de la propriété about.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAbout() {
+		return about;
+	}
 
-    /**
-     * Définit la valeur de la propriété about.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAbout(String value) {
-        this.about = value;
-    }
+	/**
+	 * Définit la valeur de la propriété about.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAbout(String value) {
+		this.about = value;
+	}
 
 }

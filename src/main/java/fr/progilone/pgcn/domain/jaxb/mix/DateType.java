@@ -35,61 +35,50 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "dateType", propOrder = {"value"})
+@XmlType(name = "dateType", propOrder = { "value" })
 public class DateType {
 
-    @XmlValue
-    @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar value;
-    @XmlAttribute(name = "use")
-    protected String use;
+	@XmlValue
+	@XmlSchemaType(name = "date")
+	protected XMLGregorianCalendar value;
 
-    /**
-     * Obtient la valeur de la propriété value.
-     *
-     * @return
-     *         possible object is
-     *         {@link XMLGregorianCalendar }
-     *
-     */
-    public XMLGregorianCalendar getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "use")
+	protected String use;
 
-    /**
-     * Définit la valeur de la propriété value.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link XMLGregorianCalendar }
-     *
-     */
-    public void setValue(XMLGregorianCalendar value) {
-        this.value = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété value.
+	 * @return possible object is {@link XMLGregorianCalendar }
+	 *
+	 */
+	public XMLGregorianCalendar getValue() {
+		return value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété use.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getUse() {
-        return use;
-    }
+	/**
+	 * Définit la valeur de la propriété value.
+	 * @param value allowed object is {@link XMLGregorianCalendar }
+	 *
+	 */
+	public void setValue(XMLGregorianCalendar value) {
+		this.value = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété use.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setUse(String value) {
-        this.use = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété use.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getUse() {
+		return use;
+	}
+
+	/**
+	 * Définit la valeur de la propriété use.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setUse(String value) {
+		this.use = value;
+	}
 
 }

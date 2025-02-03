@@ -12,79 +12,79 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"@type",
-                    "@id"})
+@JsonPropertyOrder({ "@type", "@id" })
 public class License {
 
-    @JsonProperty("@type")
-    private String type;
-    @JsonProperty("@id")
-    private String id;
-    @JsonIgnore
-    @Valid
-    private Map<String, Object> additionalProperties = new HashMap<>();
+	@JsonProperty("@type")
+	private String type;
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public License() {
-    }
+	@JsonProperty("@id")
+	private String id;
 
-    /**
-     *
-     * @param id
-     * @param type
-     */
-    public License(String type, String id) {
-        super();
-        this.type = type;
-        this.id = id;
-    }
+	@JsonIgnore
+	@Valid
+	private Map<String, Object> additionalProperties = new HashMap<>();
 
-    @JsonProperty("@type")
-    public String getType() {
-        return type;
-    }
+	/**
+	 * No args constructor for use in serialization
+	 *
+	 */
+	public License() {
+	}
 
-    @JsonProperty("@type")
-    public void setType(String type) {
-        this.type = type;
-    }
+	/**
+	 * @param id
+	 * @param type
+	 */
+	public License(String type, String id) {
+		super();
+		this.type = type;
+		this.id = id;
+	}
 
-    public License withType(String type) {
-        this.type = type;
-        return this;
-    }
+	@JsonProperty("@type")
+	public String getType() {
+		return type;
+	}
 
-    @JsonProperty("@id")
-    public String getId() {
-        return id;
-    }
+	@JsonProperty("@type")
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    @JsonProperty("@id")
-    public void setId(String id) {
-        this.id = id;
-    }
+	public License withType(String type) {
+		this.type = type;
+		return this;
+	}
 
-    public License withId(String id) {
-        this.id = id;
-        return this;
-    }
+	@JsonProperty("@id")
+	public String getId() {
+		return id;
+	}
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
+	@JsonProperty("@id")
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
+	public License withId(String id) {
+		this.id = id;
+		return this;
+	}
 
-    public License withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
-    }
+	@JsonAnyGetter
+	public Map<String, Object> getAdditionalProperties() {
+		return this.additionalProperties;
+	}
+
+	@JsonAnySetter
+	public void setAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+	}
+
+	public License withAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+		return this;
+	}
 
 }

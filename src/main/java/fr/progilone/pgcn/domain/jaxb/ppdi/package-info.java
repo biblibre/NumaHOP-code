@@ -6,6 +6,6 @@
 //
 
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.cines.fr/pac/ppdi",
-                                       elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
-                                       xmlns = {@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.cines.fr/pac/ppdi", prefix = "")})
+		elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
+		xmlns = { @jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.cines.fr/pac/ppdi", prefix = "") })
 package fr.progilone.pgcn.domain.jaxb.ppdi;

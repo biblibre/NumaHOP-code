@@ -10,27 +10,28 @@ import java.util.List;
  */
 public class PgcnBusinessExceptionDTO {
 
-    private PgcnExceptionLevel level;
-    private final List<PgcnError> errors = new ArrayList<>();
+	private PgcnExceptionLevel level;
 
-    public PgcnBusinessExceptionDTO(final PgcnExceptionLevel level, List<PgcnError> errors) {
-        this.level = level;
-        this.errors.clear();
-        if (errors != null) {
-            this.errors.addAll(errors);
-        }
-    }
+	private final List<PgcnError> errors = new ArrayList<>();
 
-    public PgcnExceptionLevel getLevel() {
-        return level;
-    }
+	public PgcnBusinessExceptionDTO(final PgcnExceptionLevel level, List<PgcnError> errors) {
+		this.level = level;
+		this.errors.clear();
+		if (errors != null) {
+			this.errors.addAll(errors);
+		}
+	}
 
-    public void setLevel(final PgcnExceptionLevel level) {
-        this.level = level;
-    }
+	public PgcnExceptionLevel getLevel() {
+		return level;
+	}
 
-    public List<PgcnError> getErrors() {
-        return errors;
-    }
+	public void setLevel(final PgcnExceptionLevel level) {
+		this.level = level;
+	}
+
+	public List<PgcnError> getErrors() {
+		return errors;
+	}
 
 }

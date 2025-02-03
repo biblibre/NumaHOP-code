@@ -36,115 +36,150 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ExtendWith(MockitoExtension.class)
 public class ImportReportControllerTest {
 
-    @Mock
-    private ImportReportService importReportService;
-    @Mock
-    private LibraryAccesssHelper libraryAccesssHelper;
+	@Mock
+	private ImportReportService importReportService;
 
-    private MockMvc restMockMvc;
+	@Mock
+	private LibraryAccesssHelper libraryAccesssHelper;
 
-    private final RequestPostProcessor allPermissions = roles(EXC_HAB0, EXC_HAB1);
+	private MockMvc restMockMvc;
 
-    @BeforeEach
-    public void setUp() {
-        final ImportReportController controller = new ImportReportController(importReportService, libraryAccesssHelper);
+	private final RequestPostProcessor allPermissions = roles(EXC_HAB0, EXC_HAB1);
 
-        final FormattingConversionService convService = new DefaultFormattingConversionService();
-        convService.addConverter(String.class, Library.class, TestConverterFactory.getConverter(Library.class));
-        this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).setConversionService(convService).build();
-    }
+	@BeforeEach
+	public void setUp() {
+		final ImportReportController controller = new ImportReportController(importReportService, libraryAccesssHelper);
 
-    @Test
-    public void testDelete() throws Exception {
-        final ImportReport report = getImportReport("ABCD-1235");
-        final String identifier = report.getIdentifier();
+		final FormattingConversionService convService = new DefaultFormattingConversionService();
+		convService.addConverter(String.class, Library.class, TestConverterFactory.getConverter(Library.class));
+		this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).setConversionService(convService).build();
+	}
 
-        when(importReportService.findByIdentifier(report.getIdentifier())).thenReturn(null, report);
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(ImportReport.class), any())).thenReturn(false, true);
+	@Test
+	public void testDelete() throws Exception {
+		final ImportReport report = getImportReport("ABCD-1235");
+		final String identifier = report.getIdentifier();
 
-        // 404
-        this.restMockMvc.perform(delete("/api/rest/importreport/{id}", identifier).contentType(MediaType.APPLICATION_JSON).with(allPermissions)).andExpect(status().isNotFound());
+		when(importReportService.findByIdentifier(report.getIdentifier())).thenReturn(null, report);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(ImportReport.class), any()))
+			.thenReturn(false, true);
 
-        // 403
-        this.restMockMvc.perform(delete("/api/rest/importreport/{id}", identifier).contentType(MediaType.APPLICATION_JSON).with(allPermissions)).andExpect(status().isForbidden());
+		// 404
+		this.restMockMvc
+			.perform(delete("/api/rest/importreport/{id}", identifier).contentType(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isNotFound());
 
-        // test delete
-        this.restMockMvc.perform(delete("/api/rest/importreport/{id}", identifier).contentType(MediaType.APPLICATION_JSON).with(allPermissions)).andExpect(status().isOk());
+		// 403
+		this.restMockMvc
+			.perform(delete("/api/rest/importreport/{id}", identifier).contentType(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isForbidden());
 
-        verify(importReportService).delete(identifier);
-    }
+		// test delete
+		this.restMockMvc
+			.perform(delete("/api/rest/importreport/{id}", identifier).contentType(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isOk());
 
-    @Test
-    public void testFindAllByLibrary() throws Exception {
-        final ImportReport report = getImportReport("ABCD-1236");
-        final Page<ImportReport> page = new PageImpl<>(Collections.singletonList(report));
+		verify(importReportService).delete(identifier);
+	}
 
-        when(importReportService.findAllByLibraryIn(any(), eq(0), eq(10))).thenReturn(page);
+	@Test
+	public void testFindAllByLibrary() throws Exception {
+		final ImportReport report = getImportReport("ABCD-1236");
+		final Page<ImportReport> page = new PageImpl<>(Collections.singletonList(report));
 
-        // test delete
-        this.restMockMvc.perform(get("/api/rest/importreport").param("library", "BNF").accept(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("content[0].identifier").value(report.getIdentifier()));
-    }
+		when(importReportService.findAllByLibraryIn(any(), eq(0), eq(10))).thenReturn(page);
 
-    @Test
-    public void findOne() throws Exception {
-        final ImportReport report = getImportReport("ABCD-1238");
-        when(importReportService.findByIdentifier(report.getIdentifier())).thenReturn(null, report);
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(ImportReport.class), any())).thenReturn(false, true);
+		// test delete
+		this.restMockMvc
+			.perform(get("/api/rest/importreport").param("library", "BNF")
+				.accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("content[0].identifier").value(report.getIdentifier()));
+	}
 
-        // 404
-        this.restMockMvc.perform(get("/api/rest/importreport/{id}", report.getIdentifier()).accept(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isNotFound());
+	@Test
+	public void findOne() throws Exception {
+		final ImportReport report = getImportReport("ABCD-1238");
+		when(importReportService.findByIdentifier(report.getIdentifier())).thenReturn(null, report);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(ImportReport.class), any()))
+			.thenReturn(false, true);
 
-        // 403
-        this.restMockMvc.perform(get("/api/rest/importreport/{id}", report.getIdentifier()).accept(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isForbidden());
+		// 404
+		this.restMockMvc
+			.perform(get("/api/rest/importreport/{id}", report.getIdentifier()).accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isNotFound());
 
-        // test findAllActive
-        this.restMockMvc.perform(get("/api/rest/importreport/{id}", report.getIdentifier()).accept(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("identifier").value(report.getIdentifier()));
-    }
+		// 403
+		this.restMockMvc
+			.perform(get("/api/rest/importreport/{id}", report.getIdentifier()).accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isForbidden());
 
-    @Test
-    public void testGetById_notFound() throws Exception {
-        final String identifier = "AAA";
-        when(importReportService.findByIdentifier(identifier)).thenReturn(null);
+		// test findAllActive
+		this.restMockMvc
+			.perform(get("/api/rest/importreport/{id}", report.getIdentifier()).accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("identifier").value(report.getIdentifier()));
+	}
 
-        this.restMockMvc.perform(get("/api/rest/importreport/{identifier}", identifier).accept(MediaType.APPLICATION_JSON).with(allPermissions)).andExpect(status().isNotFound());
-    }
+	@Test
+	public void testGetById_notFound() throws Exception {
+		final String identifier = "AAA";
+		when(importReportService.findByIdentifier(identifier)).thenReturn(null);
 
-    @Test
-    public void testGetStatus() throws Exception {
-        final ImportReport report = getImportReport("ABCD-1238");
-        final Map<String, Object> response = new HashMap<>();
-        response.put("status", "OK");
+		this.restMockMvc
+			.perform(get("/api/rest/importreport/{identifier}", identifier).accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isNotFound());
+	}
 
-        when(importReportService.findByIdentifier(report.getIdentifier())).thenReturn(null, report);
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(ImportReport.class), any())).thenReturn(false, true);
-        when(importReportService.getStatus(report)).thenReturn(response);
+	@Test
+	public void testGetStatus() throws Exception {
+		final ImportReport report = getImportReport("ABCD-1238");
+		final Map<String, Object> response = new HashMap<>();
+		response.put("status", "OK");
 
-        // 404
-        this.restMockMvc.perform(get("/api/rest/importreport/{id}", report.getIdentifier()).param("status", "true").accept(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isNotFound());
+		when(importReportService.findByIdentifier(report.getIdentifier())).thenReturn(null, report);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(ImportReport.class), any()))
+			.thenReturn(false, true);
+		when(importReportService.getStatus(report)).thenReturn(response);
 
-        // 403
-        this.restMockMvc.perform(get("/api/rest/importreport/{id}", report.getIdentifier()).param("status", "true").accept(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isForbidden());
+		// 404
+		this.restMockMvc
+			.perform(get("/api/rest/importreport/{id}", report.getIdentifier()).param("status", "true")
+				.accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isNotFound());
 
-        // test getStatus
-        this.restMockMvc.perform(get("/api/rest/importreport/{id}", report.getIdentifier()).param("status", "true").accept(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("status").value("OK"));
-    }
+		// 403
+		this.restMockMvc
+			.perform(get("/api/rest/importreport/{id}", report.getIdentifier()).param("status", "true")
+				.accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isForbidden());
 
-    private ImportReport getImportReport(final String identifier) {
-        final ImportReport report = new ImportReport();
-        report.setIdentifier(identifier);
-        return report;
-    }
+		// test getStatus
+		this.restMockMvc
+			.perform(get("/api/rest/importreport/{id}", report.getIdentifier()).param("status", "true")
+				.accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("status").value("OK"));
+	}
+
+	private ImportReport getImportReport(final String identifier) {
+		final ImportReport report = new ImportReport();
+		report.setIdentifier(identifier);
+		return report;
+	}
+
 }

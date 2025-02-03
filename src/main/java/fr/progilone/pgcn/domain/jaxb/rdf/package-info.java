@@ -6,7 +6,9 @@
 //
 
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-                                       elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
-                                       xmlns = {@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#", prefix = "rdf"),
-                                                @jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://purl.org/dc/elements/1.1/", prefix = "dc")})
+		elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
+		xmlns = {
+				@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+						prefix = "rdf"),
+				@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://purl.org/dc/elements/1.1/", prefix = "dc") })
 package fr.progilone.pgcn.domain.jaxb.rdf;

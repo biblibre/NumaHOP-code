@@ -35,62 +35,49 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "communicabiliteType",
-         propOrder = {"code",
-                      "dateDebut"})
+@XmlType(name = "communicabiliteType", propOrder = { "code", "dateDebut" })
 public class CommunicabiliteType {
 
-    @XmlElement(required = true)
-    protected Object code;
-    @XmlElement(required = true)
-    protected String dateDebut;
+	@XmlElement(required = true)
+	protected Object code;
 
-    /**
-     * Obtient la valeur de la propriété code.
-     *
-     * @return
-     *         possible object is
-     *         {@link Object }
-     *
-     */
-    public Object getCode() {
-        return code;
-    }
+	@XmlElement(required = true)
+	protected String dateDebut;
 
-    /**
-     * Définit la valeur de la propriété code.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Object }
-     *
-     */
-    public void setCode(Object value) {
-        this.code = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété code.
+	 * @return possible object is {@link Object }
+	 *
+	 */
+	public Object getCode() {
+		return code;
+	}
 
-    /**
-     * Obtient la valeur de la propriété dateDebut.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getDateDebut() {
-        return dateDebut;
-    }
+	/**
+	 * Définit la valeur de la propriété code.
+	 * @param value allowed object is {@link Object }
+	 *
+	 */
+	public void setCode(Object value) {
+		this.code = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété dateDebut.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setDateDebut(String value) {
-        this.dateDebut = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété dateDebut.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getDateDebut() {
+		return dateDebut;
+	}
+
+	/**
+	 * Définit la valeur de la propriété dateDebut.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setDateDebut(String value) {
+		this.dateDebut = value;
+	}
 
 }

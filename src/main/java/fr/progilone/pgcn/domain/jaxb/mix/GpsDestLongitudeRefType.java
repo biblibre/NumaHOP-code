@@ -32,15 +32,14 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum GpsDestLongitudeRefType {
 
-    E,
-    W;
+	E, W;
 
-    public String value() {
-        return name();
-    }
+	public String value() {
+		return name();
+	}
 
-    public static GpsDestLongitudeRefType fromValue(String v) {
-        return valueOf(v);
-    }
+	public static GpsDestLongitudeRefType fromValue(String v) {
+		return valueOf(v);
+	}
 
 }

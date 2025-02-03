@@ -33,28 +33,27 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum SourceDimensionUnitType {
 
-    @XmlEnumValue("in.")
-    IN("in."),
-    @XmlEnumValue("mm")
-    MM("mm");
+	@XmlEnumValue("in.")
+	IN("in."), @XmlEnumValue("mm")
+	MM("mm");
 
-    private final String value;
+	private final String value;
 
-    SourceDimensionUnitType(String v) {
-        value = v;
-    }
+	SourceDimensionUnitType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static SourceDimensionUnitType fromValue(String v) {
-        for (SourceDimensionUnitType c : SourceDimensionUnitType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static SourceDimensionUnitType fromValue(String v) {
+		for (SourceDimensionUnitType c : SourceDimensionUnitType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

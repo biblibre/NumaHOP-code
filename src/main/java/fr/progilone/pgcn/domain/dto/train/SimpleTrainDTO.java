@@ -7,138 +7,145 @@ import java.time.LocalDate;
 
 public class SimpleTrainDTO extends AbstractDTO {
 
-    private String identifier;
-    private String label;
-    private String description;
-    private Train.TrainStatus status;
-    private LocalDate providerSendingDate;
-    private LocalDate returnDate;
+	private String identifier;
 
-    public SimpleTrainDTO() {
-    }
+	private String label;
 
-    @QueryProjection
-    public SimpleTrainDTO(final String identifier, final String label) {
-        this.identifier = identifier;
-        this.label = label;
-    }
+	private String description;
 
-    public SimpleTrainDTO(final String identifier,
-                          final String label,
-                          final String description,
-                          final Train.TrainStatus status,
-                          final LocalDate providerSendingDate,
-                          final LocalDate returnDate) {
-        this.identifier = identifier;
-        this.label = label;
-        this.description = description;
-        this.status = status;
-        this.providerSendingDate = providerSendingDate;
-        this.returnDate = returnDate;
-    }
+	private Train.TrainStatus status;
 
-    public String getLabel() {
-        return label;
-    }
+	private LocalDate providerSendingDate;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	private LocalDate returnDate;
 
-    public String getDescription() {
-        return description;
-    }
+	public SimpleTrainDTO() {
+	}
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	@QueryProjection
+	public SimpleTrainDTO(final String identifier, final String label) {
+		this.identifier = identifier;
+		this.label = label;
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public SimpleTrainDTO(final String identifier, final String label, final String description,
+			final Train.TrainStatus status, final LocalDate providerSendingDate, final LocalDate returnDate) {
+		this.identifier = identifier;
+		this.label = label;
+		this.description = description;
+		this.status = status;
+		this.providerSendingDate = providerSendingDate;
+		this.returnDate = returnDate;
+	}
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public Train.TrainStatus getStatus() {
-        return status;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setStatus(final Train.TrainStatus status) {
-        this.status = status;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public LocalDate getProviderSendingDate() {
-        return providerSendingDate;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public void setProviderSendingDate(final LocalDate providerSendingDate) {
-        this.providerSendingDate = providerSendingDate;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public LocalDate getReturnDate() {
-        return returnDate;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setReturnDate(final LocalDate returnDate) {
-        this.returnDate = returnDate;
-    }
+	public Train.TrainStatus getStatus() {
+		return status;
+	}
 
-    /**
-     * Builder pour la classe SimpleTrainDTO
-     *
-     */
-    public static final class Builder {
+	public void setStatus(final Train.TrainStatus status) {
+		this.status = status;
+	}
 
-        private String identifier;
-        private String label;
-        private String description;
-        private Train.TrainStatus status;
-        private LocalDate providerSendingDate;
-        private LocalDate returnDate;
+	public LocalDate getProviderSendingDate() {
+		return providerSendingDate;
+	}
 
-        public Builder reinit() {
-            this.identifier = null;
-            this.label = null;
-            this.description = null;
-            this.status = null;
-            this.providerSendingDate = null;
-            this.returnDate = null;
-            return this;
-        }
+	public void setProviderSendingDate(final LocalDate providerSendingDate) {
+		this.providerSendingDate = providerSendingDate;
+	}
 
-        public Builder setIdentifier(final String identifier) {
-            this.identifier = identifier;
-            return this;
-        }
+	public LocalDate getReturnDate() {
+		return returnDate;
+	}
 
-        public Builder setDescription(final String description) {
-            this.description = description;
-            return this;
-        }
+	public void setReturnDate(final LocalDate returnDate) {
+		this.returnDate = returnDate;
+	}
 
-        public Builder setLabel(final String label) {
-            this.label = label;
-            return this;
-        }
+	/**
+	 * Builder pour la classe SimpleTrainDTO
+	 *
+	 */
+	public static final class Builder {
 
-        public Builder setStatus(final Train.TrainStatus status) {
-            this.status = status;
-            return this;
-        }
+		private String identifier;
 
-        public void setProviderSendingDate(final LocalDate providerSendingDate) {
-            this.providerSendingDate = providerSendingDate;
-        }
+		private String label;
 
-        public void setReturnDate(final LocalDate returnDate) {
-            this.returnDate = returnDate;
-        }
+		private String description;
 
-        public SimpleTrainDTO build() {
-            return new SimpleTrainDTO(identifier, label, description, status, providerSendingDate, returnDate);
-        }
-    }
+		private Train.TrainStatus status;
+
+		private LocalDate providerSendingDate;
+
+		private LocalDate returnDate;
+
+		public Builder reinit() {
+			this.identifier = null;
+			this.label = null;
+			this.description = null;
+			this.status = null;
+			this.providerSendingDate = null;
+			this.returnDate = null;
+			return this;
+		}
+
+		public Builder setIdentifier(final String identifier) {
+			this.identifier = identifier;
+			return this;
+		}
+
+		public Builder setDescription(final String description) {
+			this.description = description;
+			return this;
+		}
+
+		public Builder setLabel(final String label) {
+			this.label = label;
+			return this;
+		}
+
+		public Builder setStatus(final Train.TrainStatus status) {
+			this.status = status;
+			return this;
+		}
+
+		public void setProviderSendingDate(final LocalDate providerSendingDate) {
+			this.providerSendingDate = providerSendingDate;
+		}
+
+		public void setReturnDate(final LocalDate returnDate) {
+			this.returnDate = returnDate;
+		}
+
+		public SimpleTrainDTO build() {
+			return new SimpleTrainDTO(identifier, label, description, status, providerSendingDate, returnDate);
+		}
+
+	}
 
 }

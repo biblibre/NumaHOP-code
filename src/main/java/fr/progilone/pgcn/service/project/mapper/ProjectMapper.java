@@ -22,34 +22,25 @@ import fr.progilone.pgcn.service.workflow.mapper.SimpleWorkflowMapper;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {AddressMapper.class,
-                SimpleLibraryMapper.class,
-                SimpleDocUnitMapper.class,
-                LotMapper.class,
-                SimpleTrainMapper.class,
-                SimpleFTPConfigurationMapper.class,
-                ExportFTPConfigurationMapper.class,
-                SimpleCheckConfigurationMapper.class,
-                SimpleViewsFormatConfigurationMapper.class,
-                SimpleWorkflowMapper.class,
-                UserMapper.class,
-                InternetArchiveCollectionMapper.class,
-                CinesPACMapper.class,
-                OmekaListMapper.class,
-                OmekaConfigurationMapper.class})
+@Mapper(uses = { AddressMapper.class, SimpleLibraryMapper.class, SimpleDocUnitMapper.class, LotMapper.class,
+		SimpleTrainMapper.class, SimpleFTPConfigurationMapper.class, ExportFTPConfigurationMapper.class,
+		SimpleCheckConfigurationMapper.class, SimpleViewsFormatConfigurationMapper.class, SimpleWorkflowMapper.class,
+		UserMapper.class, InternetArchiveCollectionMapper.class, CinesPACMapper.class, OmekaListMapper.class,
+		OmekaConfigurationMapper.class })
 public interface ProjectMapper {
 
-    ProjectMapper INSTANCE = Mappers.getMapper(ProjectMapper.class);
+	ProjectMapper INSTANCE = Mappers.getMapper(ProjectMapper.class);
 
-    ProjectSearchDTO projectToProjectSearchDTO(Project project);
+	ProjectSearchDTO projectToProjectSearchDTO(Project project);
 
-    ProjectDTO projectToProjectDTO(Project project);
+	ProjectDTO projectToProjectDTO(Project project);
 
-    @Mappings({@Mapping(target = "nbDocUnits", ignore = true)})
-    StatisticsProjectDTO projectToStatProjectDTO(Project project);
+	@Mappings({ @Mapping(target = "nbDocUnits", ignore = true) })
+	StatisticsProjectDTO projectToStatProjectDTO(Project project);
 
-    @AfterMapping
-    default void calculateDocUnits(Project project, @MappingTarget StatisticsProjectDTO dto) {
-        dto.setNbDocUnits(project.getDocUnits().size());
-    }
+	@AfterMapping
+	default void calculateDocUnits(Project project, @MappingTarget StatisticsProjectDTO dto) {
+		dto.setNbDocUnits(project.getDocUnits().size());
+	}
+
 }

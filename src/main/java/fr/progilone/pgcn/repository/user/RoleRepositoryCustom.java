@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface RoleRepositoryCustom {
 
-    List<Role> search(String search, final List<String> authorizations);
+	List<Role> search(String search, final List<String> authorizations);
 
 }

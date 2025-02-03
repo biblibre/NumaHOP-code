@@ -37,36 +37,31 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum VerbType {
 
-    @XmlEnumValue("Identify")
-    IDENTIFY("Identify"),
-    @XmlEnumValue("ListMetadataFormats")
-    LIST_METADATA_FORMATS("ListMetadataFormats"),
-    @XmlEnumValue("ListSets")
-    LIST_SETS("ListSets"),
-    @XmlEnumValue("GetRecord")
-    GET_RECORD("GetRecord"),
-    @XmlEnumValue("ListIdentifiers")
-    LIST_IDENTIFIERS("ListIdentifiers"),
-    @XmlEnumValue("ListRecords")
-    LIST_RECORDS("ListRecords");
+	@XmlEnumValue("Identify")
+	IDENTIFY("Identify"), @XmlEnumValue("ListMetadataFormats")
+	LIST_METADATA_FORMATS("ListMetadataFormats"), @XmlEnumValue("ListSets")
+	LIST_SETS("ListSets"), @XmlEnumValue("GetRecord")
+	GET_RECORD("GetRecord"), @XmlEnumValue("ListIdentifiers")
+	LIST_IDENTIFIERS("ListIdentifiers"), @XmlEnumValue("ListRecords")
+	LIST_RECORDS("ListRecords");
 
-    private final String value;
+	private final String value;
 
-    VerbType(String v) {
-        value = v;
-    }
+	VerbType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static VerbType fromValue(String v) {
-        for (VerbType c : VerbType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static VerbType fromValue(String v) {
+		for (VerbType c : VerbType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

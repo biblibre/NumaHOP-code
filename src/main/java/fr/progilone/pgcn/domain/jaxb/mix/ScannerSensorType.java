@@ -40,42 +40,34 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ScannerSensorType {
 
-    @XmlEnumValue("undefined")
-    UNDEFINED("undefined"),
-    @XmlEnumValue("MonochromeLinear")
-    MONOCHROME_LINEAR("MonochromeLinear"),
-    @XmlEnumValue("ColorTriLinear")
-    COLOR_TRI_LINEAR("ColorTriLinear"),
-    @XmlEnumValue("ColorSequentialLinear")
-    COLOR_SEQUENTIAL_LINEAR("ColorSequentialLinear"),
-    @XmlEnumValue("MonochromeArea")
-    MONOCHROME_AREA("MonochromeArea"),
-    @XmlEnumValue("OneChipColourArea")
-    ONE_CHIP_COLOUR_AREA("OneChipColourArea"),
-    @XmlEnumValue("TwoChipColorArea")
-    TWO_CHIP_COLOR_AREA("TwoChipColorArea"),
-    @XmlEnumValue("ThreeChipColorArea")
-    THREE_CHIP_COLOR_AREA("ThreeChipColorArea"),
-    @XmlEnumValue("ColorSequentialArea")
-    COLOR_SEQUENTIAL_AREA("ColorSequentialArea");
+	@XmlEnumValue("undefined")
+	UNDEFINED("undefined"), @XmlEnumValue("MonochromeLinear")
+	MONOCHROME_LINEAR("MonochromeLinear"), @XmlEnumValue("ColorTriLinear")
+	COLOR_TRI_LINEAR("ColorTriLinear"), @XmlEnumValue("ColorSequentialLinear")
+	COLOR_SEQUENTIAL_LINEAR("ColorSequentialLinear"), @XmlEnumValue("MonochromeArea")
+	MONOCHROME_AREA("MonochromeArea"), @XmlEnumValue("OneChipColourArea")
+	ONE_CHIP_COLOUR_AREA("OneChipColourArea"), @XmlEnumValue("TwoChipColorArea")
+	TWO_CHIP_COLOR_AREA("TwoChipColorArea"), @XmlEnumValue("ThreeChipColorArea")
+	THREE_CHIP_COLOR_AREA("ThreeChipColorArea"), @XmlEnumValue("ColorSequentialArea")
+	COLOR_SEQUENTIAL_AREA("ColorSequentialArea");
 
-    private final String value;
+	private final String value;
 
-    ScannerSensorType(String v) {
-        value = v;
-    }
+	ScannerSensorType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static ScannerSensorType fromValue(String v) {
-        for (ScannerSensorType c : ScannerSensorType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static ScannerSensorType fromValue(String v) {
+		for (ScannerSensorType c : ScannerSensorType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

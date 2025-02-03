@@ -45,63 +45,50 @@ import java.time.LocalDateTime;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "communicabiliteType",
-         propOrder = {"code",
-                      "dateDebut"})
+@XmlType(name = "communicabiliteType", propOrder = { "code", "dateDebut" })
 public class CommunicabiliteType {
 
-    @XmlElement(required = true)
-    protected CodeType code;
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "date")
-    protected LocalDateTime dateDebut;
+	@XmlElement(required = true)
+	protected CodeType code;
 
-    /**
-     * Obtient la valeur de la propriété code.
-     *
-     * @return
-     *         possible object is
-     *         {@link CodeType }
-     *
-     */
-    public CodeType getCode() {
-        return code;
-    }
+	@XmlElement(required = true)
+	@XmlSchemaType(name = "date")
+	protected LocalDateTime dateDebut;
 
-    /**
-     * Définit la valeur de la propriété code.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link CodeType }
-     *
-     */
-    public void setCode(CodeType value) {
-        this.code = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété code.
+	 * @return possible object is {@link CodeType }
+	 *
+	 */
+	public CodeType getCode() {
+		return code;
+	}
 
-    /**
-     * Obtient la valeur de la propriété dateDebut.
-     *
-     * @return
-     *         possible object is
-     *         {@link LocalDateTime }
-     *
-     */
-    public LocalDateTime getDateDebut() {
-        return dateDebut;
-    }
+	/**
+	 * Définit la valeur de la propriété code.
+	 * @param value allowed object is {@link CodeType }
+	 *
+	 */
+	public void setCode(CodeType value) {
+		this.code = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété dateDebut.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link LocalDateTime }
-     *
-     */
-    public void setDateDebut(LocalDateTime value) {
-        this.dateDebut = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété dateDebut.
+	 * @return possible object is {@link LocalDateTime }
+	 *
+	 */
+	public LocalDateTime getDateDebut() {
+		return dateDebut;
+	}
+
+	/**
+	 * Définit la valeur de la propriété dateDebut.
+	 * @param value allowed object is {@link LocalDateTime }
+	 *
+	 */
+	public void setDateDebut(LocalDateTime value) {
+		this.dateDebut = value;
+	}
 
 }

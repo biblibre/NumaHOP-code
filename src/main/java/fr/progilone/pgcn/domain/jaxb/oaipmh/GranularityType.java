@@ -33,28 +33,27 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum GranularityType {
 
-    @XmlEnumValue("YYYY-MM-DD")
-    YYYY_MM_DD("YYYY-MM-DD"),
-    @XmlEnumValue("YYYY-MM-DDThh:mm:ssZ")
-    YYYY_MM_DD_THH_MM_SS_Z("YYYY-MM-DDThh:mm:ssZ");
+	@XmlEnumValue("YYYY-MM-DD")
+	YYYY_MM_DD("YYYY-MM-DD"), @XmlEnumValue("YYYY-MM-DDThh:mm:ssZ")
+	YYYY_MM_DD_THH_MM_SS_Z("YYYY-MM-DDThh:mm:ssZ");
 
-    private final String value;
+	private final String value;
 
-    GranularityType(String v) {
-        value = v;
-    }
+	GranularityType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static GranularityType fromValue(String v) {
-        for (GranularityType c : GranularityType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static GranularityType fromValue(String v) {
+		for (GranularityType c : GranularityType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

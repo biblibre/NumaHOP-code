@@ -36,186 +36,203 @@ import org.springframework.data.domain.Sort;
 @ExtendWith(MockitoExtension.class)
 public class ImportDocUnitServiceTest {
 
-    @Mock
-    private DocUnitService docUnitService;
-    @Mock
-    private DocUnitValidationService docUnitValidationService;
-    @Mock
-    private ImportedDocUnitRepository importedDocUnitRepository;
+	@Mock
+	private DocUnitService docUnitService;
 
-    private ImportDocUnitService service;
+	@Mock
+	private DocUnitValidationService docUnitValidationService;
 
-    @BeforeEach
-    public void setUp() {
-        service = new ImportDocUnitService(docUnitService, docUnitValidationService, importedDocUnitRepository);
-    }
+	@Mock
+	private ImportedDocUnitRepository importedDocUnitRepository;
 
-    @Test
-    public void testSave() throws PgcnTechnicalException {
-        final ImportedDocUnit impDocUnit = new ImportedDocUnit();
-        final DocUnit docUnit = new DocUnit();
-        final BibliographicRecord record = new BibliographicRecord();
-        docUnit.addRecord(record);
-        impDocUnit.initDocUnitFields(docUnit);
+	private ImportDocUnitService service;
 
-        when(importedDocUnitRepository.save(impDocUnit)).thenReturn(impDocUnit);
+	@BeforeEach
+	public void setUp() {
+		service = new ImportDocUnitService(docUnitService, docUnitValidationService, importedDocUnitRepository);
+	}
 
-        final ImportedDocUnit actual = service.save(impDocUnit);
+	@Test
+	public void testSave() throws PgcnTechnicalException {
+		final ImportedDocUnit impDocUnit = new ImportedDocUnit();
+		final DocUnit docUnit = new DocUnit();
+		final BibliographicRecord record = new BibliographicRecord();
+		docUnit.addRecord(record);
+		impDocUnit.initDocUnitFields(docUnit);
 
-        verify(docUnitService).save(docUnit, false);
-        verify(importedDocUnitRepository).save(impDocUnit);
-        assertSame(impDocUnit, actual);
-    }
+		when(importedDocUnitRepository.save(impDocUnit)).thenReturn(impDocUnit);
 
-    @Test
-    public void testCreateOk() throws PgcnTechnicalException {
-        final ImportedDocUnit impDocUnit = new ImportedDocUnit();
-        final DocUnit docUnit = new DocUnit();
-        final BibliographicRecord record = new BibliographicRecord();
-        docUnit.addRecord(record);
-        impDocUnit.initDocUnitFields(docUnit);
+		final ImportedDocUnit actual = service.save(impDocUnit);
 
-        when(importedDocUnitRepository.save(any(ImportedDocUnit.class))).then(new ReturnsArgumentAt(0));
+		verify(docUnitService).save(docUnit, false);
+		verify(importedDocUnitRepository).save(impDocUnit);
+		assertSame(impDocUnit, actual);
+	}
 
-        final ImportedDocUnit actual = service.create(impDocUnit);
+	@Test
+	public void testCreateOk() throws PgcnTechnicalException {
+		final ImportedDocUnit impDocUnit = new ImportedDocUnit();
+		final DocUnit docUnit = new DocUnit();
+		final BibliographicRecord record = new BibliographicRecord();
+		docUnit.addRecord(record);
+		impDocUnit.initDocUnitFields(docUnit);
 
-        verify(docUnitService).save(docUnit, false);
-        verify(importedDocUnitRepository).save(impDocUnit);
-        assertSame(impDocUnit, actual);
-    }
+		when(importedDocUnitRepository.save(any(ImportedDocUnit.class))).then(new ReturnsArgumentAt(0));
 
-    /**
-     * Tentative d'import d'une UD invalide
-     *
-     * @throws PgcnTechnicalException
-     */
-    @Test
-    public void testCreateKo1() throws PgcnTechnicalException {
-        final ImportedDocUnit impDocUnit = new ImportedDocUnit();
-        final DocUnit docUnit = new DocUnit();
-        final BibliographicRecord record = new BibliographicRecord();
-        docUnit.addRecord(record);
-        impDocUnit.initDocUnitFields(docUnit);
+		final ImportedDocUnit actual = service.create(impDocUnit);
 
-        doThrow(new PgcnValidationException(docUnit, new PgcnError.Builder().setCode(PgcnErrorCode.DOC_UNIT_LABEL_MANDATORY).build())).when(docUnitValidationService)
-                                                                                                                                      .validate(docUnit);
+		verify(docUnitService).save(docUnit, false);
+		verify(importedDocUnitRepository).save(impDocUnit);
+		assertSame(impDocUnit, actual);
+	}
 
-        final CapturingMatcher<ImportedDocUnit> matcher = new CapturingMatcher<>();
-        when(importedDocUnitRepository.save(argThat(matcher))).then(new ReturnsArgumentAt(0));
+	/**
+	 * Tentative d'import d'une UD invalide
+	 * @throws PgcnTechnicalException
+	 */
+	@Test
+	public void testCreateKo1() throws PgcnTechnicalException {
+		final ImportedDocUnit impDocUnit = new ImportedDocUnit();
+		final DocUnit docUnit = new DocUnit();
+		final BibliographicRecord record = new BibliographicRecord();
+		docUnit.addRecord(record);
+		impDocUnit.initDocUnitFields(docUnit);
 
-        try {
-            service.create(impDocUnit);
-            fail("testCreate should have thrown PgcnValidationException");
+		doThrow(new PgcnValidationException(docUnit,
+				new PgcnError.Builder().setCode(PgcnErrorCode.DOC_UNIT_LABEL_MANDATORY).build()))
+			.when(docUnitValidationService)
+			.validate(docUnit);
 
-        } catch (final PgcnValidationException e) {
-            final ImportedDocUnit actualImp = matcher.getLastValue();
-            assertNotSame(impDocUnit, actualImp);
-            assertEquals(1, actualImp.getMessages().size());
-            assertEquals(PgcnErrorCode.DOC_UNIT_LABEL_MANDATORY.name(), actualImp.getMessages().iterator().next().getCode());
-        }
-    }
+		final CapturingMatcher<ImportedDocUnit> matcher = new CapturingMatcher<>();
+		when(importedDocUnitRepository.save(argThat(matcher))).then(new ReturnsArgumentAt(0));
 
-    /**
-     * Tentative d'import d'une UD dont le PgcnId est déjà présent au statut non dispo
-     *
-     * @throws PgcnTechnicalException
-     */
-    @Test
-    public void testCreateKo2() throws PgcnTechnicalException {
-        final ImportedDocUnit impDocUnit = new ImportedDocUnit();
-        final DocUnit docUnit = new DocUnit();
-        docUnit.setPgcnId("XXX-000");
+		try {
+			service.create(impDocUnit);
+			fail("testCreate should have thrown PgcnValidationException");
 
-        final BibliographicRecord record = new BibliographicRecord();
-        docUnit.addRecord(record);
-        impDocUnit.initDocUnitFields(docUnit);
+		}
+		catch (final PgcnValidationException e) {
+			final ImportedDocUnit actualImp = matcher.getLastValue();
+			assertNotSame(impDocUnit, actualImp);
+			assertEquals(1, actualImp.getMessages().size());
+			assertEquals(PgcnErrorCode.DOC_UNIT_LABEL_MANDATORY.name(),
+					actualImp.getMessages().iterator().next().getCode());
+		}
+	}
 
-        doThrow(new PgcnValidationException(docUnit, new PgcnError.Builder().setCode(PgcnErrorCode.DOC_UNIT_DUPLICATE_PGCN_ID).build())).when(docUnitValidationService)
-                                                                                                                                        .validate(docUnit);
+	/**
+	 * Tentative d'import d'une UD dont le PgcnId est déjà présent au statut non dispo
+	 * @throws PgcnTechnicalException
+	 */
+	@Test
+	public void testCreateKo2() throws PgcnTechnicalException {
+		final ImportedDocUnit impDocUnit = new ImportedDocUnit();
+		final DocUnit docUnit = new DocUnit();
+		docUnit.setPgcnId("XXX-000");
 
-        final CapturingMatcher<ImportedDocUnit> matcher = new CapturingMatcher<>();
-        when(importedDocUnitRepository.save(argThat(matcher))).then(new ReturnsArgumentAt(0));
+		final BibliographicRecord record = new BibliographicRecord();
+		docUnit.addRecord(record);
+		impDocUnit.initDocUnitFields(docUnit);
 
-        try {
-            final ImportedDocUnit actual = service.create(impDocUnit);
+		doThrow(new PgcnValidationException(docUnit,
+				new PgcnError.Builder().setCode(PgcnErrorCode.DOC_UNIT_DUPLICATE_PGCN_ID).build()))
+			.when(docUnitValidationService)
+			.validate(docUnit);
 
-            verify(docUnitService).deleteByPgcnIdAndState(docUnit.getPgcnId(), DocUnit.State.NOT_AVAILABLE);
-            verify(docUnitService).save(docUnit, false);
-            verify(importedDocUnitRepository).save(impDocUnit);
-            assertSame(impDocUnit, actual);
+		final CapturingMatcher<ImportedDocUnit> matcher = new CapturingMatcher<>();
+		when(importedDocUnitRepository.save(argThat(matcher))).then(new ReturnsArgumentAt(0));
 
-        } catch (final PgcnValidationException e) {
-            fail("unexpected exception: " + e.getMessage());
-        }
-    }
+		try {
+			final ImportedDocUnit actual = service.create(impDocUnit);
 
-    @Test
-    public void testFindByImportReportWithoutFilters() {
-        final ImportReport report = new ImportReport();
-        final int page = 0;
-        final int size = 10;
+			verify(docUnitService).deleteByPgcnIdAndState(docUnit.getPgcnId(), DocUnit.State.NOT_AVAILABLE);
+			verify(docUnitService).save(docUnit, false);
+			verify(importedDocUnitRepository).save(impDocUnit);
+			assertSame(impDocUnit, actual);
 
-        final List<String> content = Collections.singletonList("6b378e41-8083-4b11-b83c-57a20f7fb432");
-        final Page<String> pageOfIds = new PageImpl<>(content);
-        final List<ImportedDocUnit> impDocUnits = Collections.singletonList(new ImportedDocUnit());
+		}
+		catch (final PgcnValidationException e) {
+			fail("unexpected exception: " + e.getMessage());
+		}
+	}
 
-        when(importedDocUnitRepository.findIdentifiersByImportReport(eq(report), any(Pageable.class))).thenReturn(pageOfIds);
-        when(importedDocUnitRepository.findByIdentifiersIn(eq(pageOfIds.getContent()), any(Sort.class))).thenReturn(impDocUnits);
+	@Test
+	public void testFindByImportReportWithoutFilters() {
+		final ImportReport report = new ImportReport();
+		final int page = 0;
+		final int size = 10;
 
-        final Page<ImportedDocUnit> actual = service.findByImportReport(report, PageRequest.of(page, size));
+		final List<String> content = Collections.singletonList("6b378e41-8083-4b11-b83c-57a20f7fb432");
+		final Page<String> pageOfIds = new PageImpl<>(content);
+		final List<ImportedDocUnit> impDocUnits = Collections.singletonList(new ImportedDocUnit());
 
-        assertEquals(1, actual.getContent().size());
-    }
+		when(importedDocUnitRepository.findIdentifiersByImportReport(eq(report), any(Pageable.class)))
+			.thenReturn(pageOfIds);
+		when(importedDocUnitRepository.findByIdentifiersIn(eq(pageOfIds.getContent()), any(Sort.class)))
+			.thenReturn(impDocUnits);
 
-    @Test
-    public void testFindByImportReportWithoutStatus() {
-        final ImportReport report = new ImportReport();
-        final int page = 0;
-        final int size = 10;
+		final Page<ImportedDocUnit> actual = service.findByImportReport(report, PageRequest.of(page, size));
 
-        final List<String> content = Collections.singletonList("6b378e41-8083-4b11-b83c-57a20f7fb432");
-        final Page<String> pageOfIds = new PageImpl<>(content);
-        final List<ImportedDocUnit> impDocUnits = Collections.singletonList(new ImportedDocUnit());
+		assertEquals(1, actual.getContent().size());
+	}
 
-        when(importedDocUnitRepository.findIdentifiersByImportReport(eq(report), any(), anyBoolean(), anyBoolean(), any(Pageable.class))).thenReturn(pageOfIds);
-        when(importedDocUnitRepository.findByIdentifiersIn(eq(pageOfIds.getContent()), any(Sort.class))).thenReturn(impDocUnits);
+	@Test
+	public void testFindByImportReportWithoutStatus() {
+		final ImportReport report = new ImportReport();
+		final int page = 0;
+		final int size = 10;
 
-        final Page<ImportedDocUnit> actual = service.findByImportReport(report, page, size, null, false, false);
+		final List<String> content = Collections.singletonList("6b378e41-8083-4b11-b83c-57a20f7fb432");
+		final Page<String> pageOfIds = new PageImpl<>(content);
+		final List<ImportedDocUnit> impDocUnits = Collections.singletonList(new ImportedDocUnit());
 
-        assertEquals(1, actual.getContent().size());
-    }
+		when(importedDocUnitRepository.findIdentifiersByImportReport(eq(report), any(), anyBoolean(), anyBoolean(),
+				any(Pageable.class)))
+			.thenReturn(pageOfIds);
+		when(importedDocUnitRepository.findByIdentifiersIn(eq(pageOfIds.getContent()), any(Sort.class)))
+			.thenReturn(impDocUnits);
 
-    @Test
-    public void testFindByImportReportWithStatus() {
-        final ImportReport report = new ImportReport();
-        final int page = 0;
-        final int size = 10;
+		final Page<ImportedDocUnit> actual = service.findByImportReport(report, page, size, null, false, false);
 
-        final List<String> content = Collections.singletonList("6b378e41-8083-4b11-b83c-57a20f7fb432");
-        final Page<String> pageOfIds = new PageImpl<>(content);
-        final List<ImportedDocUnit> impDocUnits = Collections.singletonList(new ImportedDocUnit());
+		assertEquals(1, actual.getContent().size());
+	}
 
-        when(importedDocUnitRepository.findIdentifiersByImportReport(eq(report), any(), anyBoolean(), anyBoolean(), any(Pageable.class))).thenReturn(pageOfIds);
-        when(importedDocUnitRepository.findByIdentifiersIn(eq(pageOfIds.getContent()), any(Sort.class))).thenReturn(impDocUnits);
+	@Test
+	public void testFindByImportReportWithStatus() {
+		final ImportReport report = new ImportReport();
+		final int page = 0;
+		final int size = 10;
 
-        final Page<ImportedDocUnit> actual = service.findByImportReport(report, page, size, Collections.singletonList(DocUnit.State.AVAILABLE), false, false);
+		final List<String> content = Collections.singletonList("6b378e41-8083-4b11-b83c-57a20f7fb432");
+		final Page<String> pageOfIds = new PageImpl<>(content);
+		final List<ImportedDocUnit> impDocUnits = Collections.singletonList(new ImportedDocUnit());
 
-        assertEquals(1, actual.getContent().size());
-    }
+		when(importedDocUnitRepository.findIdentifiersByImportReport(eq(report), any(), anyBoolean(), anyBoolean(),
+				any(Pageable.class)))
+			.thenReturn(pageOfIds);
+		when(importedDocUnitRepository.findByIdentifiersIn(eq(pageOfIds.getContent()), any(Sort.class)))
+			.thenReturn(impDocUnits);
 
-    @Test
-    public void testFindByImportReportWithNoResult() {
-        final ImportReport report = new ImportReport();
-        final int page = 0;
-        final int size = 10;
+		final Page<ImportedDocUnit> actual = service.findByImportReport(report, page, size,
+				Collections.singletonList(DocUnit.State.AVAILABLE), false, false);
 
-        when(importedDocUnitRepository.findIdentifiersByImportReport(eq(report), any(), anyBoolean(), anyBoolean(), any(Pageable.class))).thenReturn(new PageImpl<>(Collections
-                                                                                                                                                                               .emptyList()));
+		assertEquals(1, actual.getContent().size());
+	}
 
-        final Page<ImportedDocUnit> actual = service.findByImportReport(report, page, size, null, false, false);
+	@Test
+	public void testFindByImportReportWithNoResult() {
+		final ImportReport report = new ImportReport();
+		final int page = 0;
+		final int size = 10;
 
-        assertTrue(actual.getContent().isEmpty());
-        verify(importedDocUnitRepository, never()).findByIdentifiersIn(any(), any(Sort.class));
-    }
+		when(importedDocUnitRepository.findIdentifiersByImportReport(eq(report), any(), anyBoolean(), anyBoolean(),
+				any(Pageable.class)))
+			.thenReturn(new PageImpl<>(Collections.emptyList()));
+
+		final Page<ImportedDocUnit> actual = service.findByImportReport(report, page, size, null, false, false);
+
+		assertTrue(actual.getContent().isEmpty());
+		verify(importedDocUnitRepository, never()).findByIdentifiersIn(any(), any(Sort.class));
+	}
 
 }

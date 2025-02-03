@@ -52,177 +52,151 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "row", propOrder = {"entry"})
+@XmlType(name = "row", propOrder = { "entry" })
 public class Row {
 
-    @XmlElement(required = true)
-    protected List<Entry> entry;
-    @XmlAttribute(name = "rowsep")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String rowsep;
-    @XmlAttribute(name = "valign")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String valign;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	@XmlElement(required = true)
+	protected List<Entry> entry;
 
-    /**
-     * Gets the value of the entry property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the entry property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getEntry().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Entry }
-     *
-     *
-     */
-    public List<Entry> getEntry() {
-        if (entry == null) {
-            entry = new ArrayList<>();
-        }
-        return this.entry;
-    }
+	@XmlAttribute(name = "rowsep")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String rowsep;
 
-    /**
-     * Obtient la valeur de la propriété rowsep.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getRowsep() {
-        return rowsep;
-    }
+	@XmlAttribute(name = "valign")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String valign;
 
-    /**
-     * Définit la valeur de la propriété rowsep.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setRowsep(String value) {
-        this.rowsep = value;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Obtient la valeur de la propriété valign.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getValign() {
-        return valign;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Définit la valeur de la propriété valign.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setValign(String value) {
-        this.valign = value;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	/**
+	 * Gets the value of the entry property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the entry
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getEntry().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link Entry }
+	 *
+	 *
+	 */
+	public List<Entry> getEntry() {
+		if (entry == null) {
+			entry = new ArrayList<>();
+		}
+		return this.entry;
+	}
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété rowsep.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getRowsep() {
+		return rowsep;
+	}
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Définit la valeur de la propriété rowsep.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setRowsep(String value) {
+		this.rowsep = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété valign.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getValign() {
+		return valign;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Définit la valeur de la propriété valign.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setValign(String value) {
+		this.valign = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

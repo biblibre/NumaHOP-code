@@ -5,8 +5,7 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
 import java.util.List;
 
 /**
- * DocUnitBibliographicRecordDTO DTO
- * Sans lien avec le DocUnit
+ * DocUnitBibliographicRecordDTO DTO Sans lien avec le DocUnit
  *
  * @author jbrunet
  * @see BibliographicRecord
@@ -14,72 +13,79 @@ import java.util.List;
  */
 public class DocUnitBibliographicRecordDTO extends AbstractDTO {
 
-    private String identifier;
-    private String title;
-    private String calames;
-    private String sigb;
-    private String sudoc;
-    private List<DocPropertyDTO> properties;
+	private String identifier;
 
-    public DocUnitBibliographicRecordDTO(String identifier, String title, String calames, String sigb, String sudoc, List<DocPropertyDTO> properties) {
-        super();
-        this.identifier = identifier;
-        this.title = title;
-        this.calames = calames;
-        this.sigb = sigb;
-        this.sudoc = sudoc;
-        this.properties = properties;
-    }
+	private String title;
 
-    public final List<DocPropertyDTO> getProperties() {
-        return properties;
-    }
+	private String calames;
 
-    public void setProperties(List<DocPropertyDTO> properties) {
-        this.properties = properties;
-    }
+	private String sigb;
 
-    public final String getIdentifier() {
-        return identifier;
-    }
+	private String sudoc;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private List<DocPropertyDTO> properties;
 
-    public final String getTitle() {
-        return title;
-    }
+	public DocUnitBibliographicRecordDTO(String identifier, String title, String calames, String sigb, String sudoc,
+			List<DocPropertyDTO> properties) {
+		super();
+		this.identifier = identifier;
+		this.title = title;
+		this.calames = calames;
+		this.sigb = sigb;
+		this.sudoc = sudoc;
+		this.properties = properties;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public final List<DocPropertyDTO> getProperties() {
+		return properties;
+	}
 
-    public final String getCalames() {
-        return calames;
-    }
+	public void setProperties(List<DocPropertyDTO> properties) {
+		this.properties = properties;
+	}
 
-    public void setCalames(String calames) {
-        this.calames = calames;
-    }
+	public final String getIdentifier() {
+		return identifier;
+	}
 
-    public final String getSigb() {
-        return sigb;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setSigb(String sigb) {
-        this.sigb = sigb;
-    }
+	public final String getTitle() {
+		return title;
+	}
 
-    public final String getSudoc() {
-        return sudoc;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setSudoc(String sudoc) {
-        this.sudoc = sudoc;
-    }
+	public final String getCalames() {
+		return calames;
+	}
 
-    public DocUnitBibliographicRecordDTO() {
+	public void setCalames(String calames) {
+		this.calames = calames;
+	}
 
-    }
+	public final String getSigb() {
+		return sigb;
+	}
+
+	public void setSigb(String sigb) {
+		this.sigb = sigb;
+	}
+
+	public final String getSudoc() {
+		return sudoc;
+	}
+
+	public void setSudoc(String sudoc) {
+		this.sudoc = sudoc;
+	}
+
+	public DocUnitBibliographicRecordDTO() {
+
+	}
+
 }

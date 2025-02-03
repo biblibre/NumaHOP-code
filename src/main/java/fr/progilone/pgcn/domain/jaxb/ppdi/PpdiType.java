@@ -36,89 +36,70 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ppdiType",
-         propOrder = {"titre",
-                      "contexte",
-                      "caracteristiques"})
+@XmlType(name = "ppdiType", propOrder = { "titre", "contexte", "caracteristiques" })
 public class PpdiType {
 
-    @XmlElement(name = "Titre", required = true)
-    protected String titre;
-    @XmlElement(name = "Contexte", required = true)
-    protected ContexteType contexte;
-    @XmlElement(name = "Caracteristiques", required = true)
-    protected CaracteristiquesType caracteristiques;
+	@XmlElement(name = "Titre", required = true)
+	protected String titre;
 
-    /**
-     * Obtient la valeur de la propriété titre.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getTitre() {
-        return titre;
-    }
+	@XmlElement(name = "Contexte", required = true)
+	protected ContexteType contexte;
 
-    /**
-     * Définit la valeur de la propriété titre.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setTitre(String value) {
-        this.titre = value;
-    }
+	@XmlElement(name = "Caracteristiques", required = true)
+	protected CaracteristiquesType caracteristiques;
 
-    /**
-     * Obtient la valeur de la propriété contexte.
-     *
-     * @return
-     *         possible object is
-     *         {@link ContexteType }
-     *
-     */
-    public ContexteType getContexte() {
-        return contexte;
-    }
+	/**
+	 * Obtient la valeur de la propriété titre.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getTitre() {
+		return titre;
+	}
 
-    /**
-     * Définit la valeur de la propriété contexte.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link ContexteType }
-     *
-     */
-    public void setContexte(ContexteType value) {
-        this.contexte = value;
-    }
+	/**
+	 * Définit la valeur de la propriété titre.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setTitre(String value) {
+		this.titre = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété caracteristiques.
-     *
-     * @return
-     *         possible object is
-     *         {@link CaracteristiquesType }
-     *
-     */
-    public CaracteristiquesType getCaracteristiques() {
-        return caracteristiques;
-    }
+	/**
+	 * Obtient la valeur de la propriété contexte.
+	 * @return possible object is {@link ContexteType }
+	 *
+	 */
+	public ContexteType getContexte() {
+		return contexte;
+	}
 
-    /**
-     * Définit la valeur de la propriété caracteristiques.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link CaracteristiquesType }
-     *
-     */
-    public void setCaracteristiques(CaracteristiquesType value) {
-        this.caracteristiques = value;
-    }
+	/**
+	 * Définit la valeur de la propriété contexte.
+	 * @param value allowed object is {@link ContexteType }
+	 *
+	 */
+	public void setContexte(ContexteType value) {
+		this.contexte = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété caracteristiques.
+	 * @return possible object is {@link CaracteristiquesType }
+	 *
+	 */
+	public CaracteristiquesType getCaracteristiques() {
+		return caracteristiques;
+	}
+
+	/**
+	 * Définit la valeur de la propriété caracteristiques.
+	 * @param value allowed object is {@link CaracteristiquesType }
+	 *
+	 */
+	public void setCaracteristiques(CaracteristiquesType value) {
+		this.caracteristiques = value;
+	}
 
 }

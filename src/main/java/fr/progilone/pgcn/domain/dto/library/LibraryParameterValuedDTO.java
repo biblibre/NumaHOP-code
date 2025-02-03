@@ -6,49 +6,51 @@ import java.util.List;
 /**
  * DTO représentant un paramètre de bibliothèque
  *
- * @author jbrunet
- *         Créé le 24 févr. 2017
+ * @author jbrunet Créé le 24 févr. 2017
  */
 public class LibraryParameterValuedDTO extends AbstractDTO {
 
-    private String identifier;
-    private String type;
-    private SimpleLibraryDTO library;
-    private List<LibraryParameterValueCinesDTO> values;
+	private String identifier;
 
-    public LibraryParameterValuedDTO() {
-    }
+	private String type;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private SimpleLibraryDTO library;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private List<LibraryParameterValueCinesDTO> values;
 
-    public final String getType() {
-        return type;
-    }
+	public LibraryParameterValuedDTO() {
+	}
 
-    public void setType(final String type) {
-        this.type = type;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public final SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setLibrary(final SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	public final String getType() {
+		return type;
+	}
 
-    public List<LibraryParameterValueCinesDTO> getValues() {
-        return values;
-    }
+	public void setType(final String type) {
+		this.type = type;
+	}
 
-    public void setValues(final List<LibraryParameterValueCinesDTO> values) {
-        this.values = values;
-    }
+	public final SimpleLibraryDTO getLibrary() {
+		return library;
+	}
+
+	public void setLibrary(final SimpleLibraryDTO library) {
+		this.library = library;
+	}
+
+	public List<LibraryParameterValueCinesDTO> getValues() {
+		return values;
+	}
+
+	public void setValues(final List<LibraryParameterValueCinesDTO> values) {
+		this.values = values;
+	}
 
 }

@@ -42,196 +42,157 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "profiledesc",
-         propOrder = {"creation",
-                      "langusage",
-                      "descrules"})
+@XmlType(name = "profiledesc", propOrder = { "creation", "langusage", "descrules" })
 public class Profiledesc {
 
-    protected Creation creation;
-    protected Langusage langusage;
-    protected Descrules descrules;
-    @XmlAttribute(name = "encodinganalog")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String encodinganalog;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	protected Creation creation;
 
-    /**
-     * Obtient la valeur de la propriété creation.
-     *
-     * @return
-     *         possible object is
-     *         {@link Creation }
-     *
-     */
-    public Creation getCreation() {
-        return creation;
-    }
+	protected Langusage langusage;
 
-    /**
-     * Définit la valeur de la propriété creation.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Creation }
-     *
-     */
-    public void setCreation(Creation value) {
-        this.creation = value;
-    }
+	protected Descrules descrules;
 
-    /**
-     * Obtient la valeur de la propriété langusage.
-     *
-     * @return
-     *         possible object is
-     *         {@link Langusage }
-     *
-     */
-    public Langusage getLangusage() {
-        return langusage;
-    }
+	@XmlAttribute(name = "encodinganalog")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String encodinganalog;
 
-    /**
-     * Définit la valeur de la propriété langusage.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Langusage }
-     *
-     */
-    public void setLangusage(Langusage value) {
-        this.langusage = value;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Obtient la valeur de la propriété descrules.
-     *
-     * @return
-     *         possible object is
-     *         {@link Descrules }
-     *
-     */
-    public Descrules getDescrules() {
-        return descrules;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Définit la valeur de la propriété descrules.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Descrules }
-     *
-     */
-    public void setDescrules(Descrules value) {
-        this.descrules = value;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Obtient la valeur de la propriété encodinganalog.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getEncodinganalog() {
-        return encodinganalog;
-    }
+	/**
+	 * Obtient la valeur de la propriété creation.
+	 * @return possible object is {@link Creation }
+	 *
+	 */
+	public Creation getCreation() {
+		return creation;
+	}
 
-    /**
-     * Définit la valeur de la propriété encodinganalog.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setEncodinganalog(String value) {
-        this.encodinganalog = value;
-    }
+	/**
+	 * Définit la valeur de la propriété creation.
+	 * @param value allowed object is {@link Creation }
+	 *
+	 */
+	public void setCreation(Creation value) {
+		this.creation = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	/**
+	 * Obtient la valeur de la propriété langusage.
+	 * @return possible object is {@link Langusage }
+	 *
+	 */
+	public Langusage getLangusage() {
+		return langusage;
+	}
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	/**
+	 * Définit la valeur de la propriété langusage.
+	 * @param value allowed object is {@link Langusage }
+	 *
+	 */
+	public void setLangusage(Langusage value) {
+		this.langusage = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Obtient la valeur de la propriété descrules.
+	 * @return possible object is {@link Descrules }
+	 *
+	 */
+	public Descrules getDescrules() {
+		return descrules;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Définit la valeur de la propriété descrules.
+	 * @param value allowed object is {@link Descrules }
+	 *
+	 */
+	public void setDescrules(Descrules value) {
+		this.descrules = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Obtient la valeur de la propriété encodinganalog.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getEncodinganalog() {
+		return encodinganalog;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Définit la valeur de la propriété encodinganalog.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setEncodinganalog(String value) {
+		this.encodinganalog = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

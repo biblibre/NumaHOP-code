@@ -11,35 +11,35 @@ import jakarta.persistence.Table;
 /**
  * Configuration des connexions Internet Archive
  *
- * @author jbrunet
- *         Créé le 18 avr. 2017
+ * @author jbrunet Créé le 18 avr. 2017
  */
 @Entity
 @Table(name = InternetArchiveCollection.TABLE_NAME)
 public class InternetArchiveCollection extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "conf_collection_ia";
+	public static final String TABLE_NAME = "conf_collection_ia";
 
-    @Column(name = "name", nullable = false)
-    private String name;
+	@Column(name = "name", nullable = false)
+	private String name;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "conf_ia")
-    private InternetArchiveConfiguration confIa;
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "conf_ia")
+	private InternetArchiveConfiguration confIa;
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public InternetArchiveConfiguration getConfIa() {
-        return confIa;
-    }
+	public InternetArchiveConfiguration getConfIa() {
+		return confIa;
+	}
 
-    public void setConfIa(final InternetArchiveConfiguration confIa) {
-        this.confIa = confIa;
-    }
+	public void setConfIa(final InternetArchiveConfiguration confIa) {
+		this.confIa = confIa;
+	}
+
 }

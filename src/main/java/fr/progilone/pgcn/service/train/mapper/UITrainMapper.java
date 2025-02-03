@@ -11,31 +11,33 @@ import org.springframework.stereotype.Service;
 @Service
 public class UITrainMapper {
 
-    @Autowired
-    private ProjectRepository projectRepository;
-    @Autowired
-    private PhysicalDocumentRepository physicalDocumentRepository;
+	@Autowired
+	private ProjectRepository projectRepository;
 
-    public UITrainMapper() {
-    }
+	@Autowired
+	private PhysicalDocumentRepository physicalDocumentRepository;
 
-    public void mapInto(final TrainDTO trainDTO, final Train train) {
-        train.setIdentifier(trainDTO.getIdentifier());
-        train.setLabel(trainDTO.getLabel());
-        train.setActive(trainDTO.getActive());
-        train.setDescription(trainDTO.getDescription());
-        train.setStatus(trainDTO.getStatus());
-        if (trainDTO.getProject() != null) {
-            train.setProject(projectRepository.getOne(trainDTO.getProject().getIdentifier()));
-        }
-        if (trainDTO.getPhysicalDocuments() != null) {
-            train.setPhysicalDocuments(trainDTO.getPhysicalDocuments()
-                                               .stream()
-                                               .filter(documentDTO -> documentDTO.getIdentifier() != null)
-                                               .map(documentDTO -> physicalDocumentRepository.findByIdentifier(documentDTO.getIdentifier()))
-                                               .collect(Collectors.toSet()));
-        }
-        train.setProviderSendingDate(trainDTO.getProviderSendingDate());
-        train.setReturnDate(trainDTO.getReturnDate());
-    }
+	public UITrainMapper() {
+	}
+
+	public void mapInto(final TrainDTO trainDTO, final Train train) {
+		train.setIdentifier(trainDTO.getIdentifier());
+		train.setLabel(trainDTO.getLabel());
+		train.setActive(trainDTO.getActive());
+		train.setDescription(trainDTO.getDescription());
+		train.setStatus(trainDTO.getStatus());
+		if (trainDTO.getProject() != null) {
+			train.setProject(projectRepository.getOne(trainDTO.getProject().getIdentifier()));
+		}
+		if (trainDTO.getPhysicalDocuments() != null) {
+			train.setPhysicalDocuments(trainDTO.getPhysicalDocuments()
+				.stream()
+				.filter(documentDTO -> documentDTO.getIdentifier() != null)
+				.map(documentDTO -> physicalDocumentRepository.findByIdentifier(documentDTO.getIdentifier()))
+				.collect(Collectors.toSet()));
+		}
+		train.setProviderSendingDate(trainDTO.getProviderSendingDate());
+		train.setReturnDate(trainDTO.getReturnDate());
+	}
+
 }

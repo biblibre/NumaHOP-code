@@ -8,96 +8,104 @@ import java.util.List;
 
 public class WorkflowGroupDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String name;
-    private SimpleLibraryDTO library;
-    private String description;
-    private List<SimpleUserDTO> users;
+	private String identifier;
 
-    /**
-     * Ajout des infos de création
-     */
-    private String createdBy;
-    private LocalDateTime createdDate;
-    /**
-     * Ajout des infos de modifications
-     */
-    private String lastModifiedBy;
-    private LocalDateTime lastModifiedDate;
+	private String name;
 
-    public WorkflowGroupDTO() {
+	private SimpleLibraryDTO library;
 
-    }
+	private String description;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private List<SimpleUserDTO> users;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	/**
+	 * Ajout des infos de création
+	 */
+	private String createdBy;
 
-    public String getName() {
-        return name;
-    }
+	private LocalDateTime createdDate;
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	/**
+	 * Ajout des infos de modifications
+	 */
+	private String lastModifiedBy;
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	private LocalDateTime lastModifiedDate;
 
-    public void setLibrary(final SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	public WorkflowGroupDTO() {
 
-    public String getDescription() {
-        return description;
-    }
+	}
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public List<SimpleUserDTO> getUsers() {
-        return users;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setUsers(final List<SimpleUserDTO> users) {
-        this.users = users;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public void setCreatedBy(final String createdBy) {
-        this.createdBy = createdBy;
-    }
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
+	public void setLibrary(final SimpleLibraryDTO library) {
+		this.library = library;
+	}
 
-    public void setCreatedDate(final LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public void setLastModifiedBy(final String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
+	public List<SimpleUserDTO> getUsers() {
+		return users;
+	}
 
-    public LocalDateTime getLastModifiedDate() {
-        return lastModifiedDate;
-    }
+	public void setUsers(final List<SimpleUserDTO> users) {
+		this.users = users;
+	}
 
-    public void setLastModifiedDate(final LocalDateTime lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(final String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(final LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(final String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public LocalDateTime getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(final LocalDateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
 }

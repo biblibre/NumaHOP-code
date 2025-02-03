@@ -33,16 +33,14 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum GpsSpeedRefType {
 
-    K,
-    M,
-    N;
+	K, M, N;
 
-    public String value() {
-        return name();
-    }
+	public String value() {
+		return name();
+	}
 
-    public static GpsSpeedRefType fromValue(String v) {
-        return valueOf(v);
-    }
+	public static GpsSpeedRefType fromValue(String v) {
+		return valueOf(v);
+	}
 
 }

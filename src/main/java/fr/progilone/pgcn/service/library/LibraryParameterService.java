@@ -13,62 +13,66 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class LibraryParameterService {
 
-    private final LibraryParameterRepository libraryParameterRepository;
-    // Repository dédiés
-    private final LibraryParameterCinesRepository cinesParameterRepository;
+	private final LibraryParameterRepository libraryParameterRepository;
 
-    public LibraryParameterService(final LibraryParameterRepository libraryParameterRepository, final LibraryParameterCinesRepository cinesParameterRepository) {
-        this.libraryParameterRepository = libraryParameterRepository;
-        this.cinesParameterRepository = cinesParameterRepository;
-    }
+	// Repository dédiés
+	private final LibraryParameterCinesRepository cinesParameterRepository;
 
-    @Transactional(readOnly = true)
-    public LibraryParameter findCinesParameterForLibrary(final Library lib) {
-        if (lib == null) {
-            return null;
-        }
-        return libraryParameterRepository.getOneByTypeAndLibrary(LibraryParameterType.CINES_EXPORT, lib);
-    }
+	public LibraryParameterService(final LibraryParameterRepository libraryParameterRepository,
+			final LibraryParameterCinesRepository cinesParameterRepository) {
+		this.libraryParameterRepository = libraryParameterRepository;
+		this.cinesParameterRepository = cinesParameterRepository;
+	}
 
-    @Transactional
-    public void delete(final LibraryParameter param) {
-        libraryParameterRepository.delete(param);
-    }
+	@Transactional(readOnly = true)
+	public LibraryParameter findCinesParameterForLibrary(final Library lib) {
+		if (lib == null) {
+			return null;
+		}
+		return libraryParameterRepository.getOneByTypeAndLibrary(LibraryParameterType.CINES_EXPORT, lib);
+	}
 
-    @Transactional
-    public void delete(final String identifer) {
-        libraryParameterRepository.deleteById(identifer);
-    }
+	@Transactional
+	public void delete(final LibraryParameter param) {
+		libraryParameterRepository.delete(param);
+	}
 
-    @Transactional
-    public LibraryParameter save(final LibraryParameter param) {
-        final LibraryParameter savedLibParam = libraryParameterRepository.save(param);
+	@Transactional
+	public void delete(final String identifer) {
+		libraryParameterRepository.deleteById(identifer);
+	}
 
-        switch (savedLibParam.getType()) {
-            case CINES_EXPORT:
-                saveCinesValueParameter(savedLibParam);
-                break;
-            default:
-                break;
-        }
-        return savedLibParam;
-    }
+	@Transactional
+	public LibraryParameter save(final LibraryParameter param) {
+		final LibraryParameter savedLibParam = libraryParameterRepository.save(param);
 
-    private void saveCinesValueParameter(final LibraryParameter param) {
-        for (final AbstractLibraryParameterValue value : param.getValues()) {
-            cinesParameterRepository.save((LibraryParameterValueCines) value);
-        }
-    }
+		switch (savedLibParam.getType()) {
+			case CINES_EXPORT:
+				saveCinesValueParameter(savedLibParam);
+				break;
+			default:
+				break;
+		}
+		return savedLibParam;
+	}
 
-    public LibraryParameter findLibraryParameterWithDependencies(final String identifier) {
-        return libraryParameterRepository.getOneByIdentifier(identifier);
-    }
+	private void saveCinesValueParameter(final LibraryParameter param) {
+		for (final AbstractLibraryParameterValue value : param.getValues()) {
+			cinesParameterRepository.save((LibraryParameterValueCines) value);
+		}
+	}
 
-    @Transactional(readOnly = true)
-    public LibraryParameter findCinesDefaultValuesForLibrary(final Library lib) {
+	public LibraryParameter findLibraryParameterWithDependencies(final String identifier) {
+		return libraryParameterRepository.getOneByIdentifier(identifier);
+	}
 
-        final LibraryParameter libParam = libraryParameterRepository.getByTypeAndLibraryWithValues(LibraryParameterType.CINES_EXPORT, lib);
+	@Transactional(readOnly = true)
+	public LibraryParameter findCinesDefaultValuesForLibrary(final Library lib) {
 
-        return libraryParameterRepository.getByTypeAndLibraryWithValues(LibraryParameterType.CINES_EXPORT, lib);
-    }
+		final LibraryParameter libParam = libraryParameterRepository
+			.getByTypeAndLibraryWithValues(LibraryParameterType.CINES_EXPORT, lib);
+
+		return libraryParameterRepository.getByTypeAndLibraryWithValues(LibraryParameterType.CINES_EXPORT, lib);
+	}
+
 }

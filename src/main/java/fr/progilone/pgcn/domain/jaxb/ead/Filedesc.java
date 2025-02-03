@@ -45,249 +45,198 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "filedesc",
-         propOrder = {"titlestmt",
-                      "editionstmt",
-                      "publicationstmt",
-                      "seriesstmt",
-                      "notestmt"})
+@XmlType(name = "filedesc", propOrder = { "titlestmt", "editionstmt", "publicationstmt", "seriesstmt", "notestmt" })
 public class Filedesc {
 
-    @XmlElement(required = true)
-    protected Titlestmt titlestmt;
-    protected Editionstmt editionstmt;
-    protected Publicationstmt publicationstmt;
-    protected Seriesstmt seriesstmt;
-    protected Notestmt notestmt;
-    @XmlAttribute(name = "encodinganalog")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String encodinganalog;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	@XmlElement(required = true)
+	protected Titlestmt titlestmt;
 
-    /**
-     * Obtient la valeur de la propriété titlestmt.
-     *
-     * @return
-     *         possible object is
-     *         {@link Titlestmt }
-     *
-     */
-    public Titlestmt getTitlestmt() {
-        return titlestmt;
-    }
+	protected Editionstmt editionstmt;
 
-    /**
-     * Définit la valeur de la propriété titlestmt.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Titlestmt }
-     *
-     */
-    public void setTitlestmt(Titlestmt value) {
-        this.titlestmt = value;
-    }
+	protected Publicationstmt publicationstmt;
 
-    /**
-     * Obtient la valeur de la propriété editionstmt.
-     *
-     * @return
-     *         possible object is
-     *         {@link Editionstmt }
-     *
-     */
-    public Editionstmt getEditionstmt() {
-        return editionstmt;
-    }
+	protected Seriesstmt seriesstmt;
 
-    /**
-     * Définit la valeur de la propriété editionstmt.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Editionstmt }
-     *
-     */
-    public void setEditionstmt(Editionstmt value) {
-        this.editionstmt = value;
-    }
+	protected Notestmt notestmt;
 
-    /**
-     * Obtient la valeur de la propriété publicationstmt.
-     *
-     * @return
-     *         possible object is
-     *         {@link Publicationstmt }
-     *
-     */
-    public Publicationstmt getPublicationstmt() {
-        return publicationstmt;
-    }
+	@XmlAttribute(name = "encodinganalog")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String encodinganalog;
 
-    /**
-     * Définit la valeur de la propriété publicationstmt.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Publicationstmt }
-     *
-     */
-    public void setPublicationstmt(Publicationstmt value) {
-        this.publicationstmt = value;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Obtient la valeur de la propriété seriesstmt.
-     *
-     * @return
-     *         possible object is
-     *         {@link Seriesstmt }
-     *
-     */
-    public Seriesstmt getSeriesstmt() {
-        return seriesstmt;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Définit la valeur de la propriété seriesstmt.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Seriesstmt }
-     *
-     */
-    public void setSeriesstmt(Seriesstmt value) {
-        this.seriesstmt = value;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Obtient la valeur de la propriété notestmt.
-     *
-     * @return
-     *         possible object is
-     *         {@link Notestmt }
-     *
-     */
-    public Notestmt getNotestmt() {
-        return notestmt;
-    }
+	/**
+	 * Obtient la valeur de la propriété titlestmt.
+	 * @return possible object is {@link Titlestmt }
+	 *
+	 */
+	public Titlestmt getTitlestmt() {
+		return titlestmt;
+	}
 
-    /**
-     * Définit la valeur de la propriété notestmt.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Notestmt }
-     *
-     */
-    public void setNotestmt(Notestmt value) {
-        this.notestmt = value;
-    }
+	/**
+	 * Définit la valeur de la propriété titlestmt.
+	 * @param value allowed object is {@link Titlestmt }
+	 *
+	 */
+	public void setTitlestmt(Titlestmt value) {
+		this.titlestmt = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété encodinganalog.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getEncodinganalog() {
-        return encodinganalog;
-    }
+	/**
+	 * Obtient la valeur de la propriété editionstmt.
+	 * @return possible object is {@link Editionstmt }
+	 *
+	 */
+	public Editionstmt getEditionstmt() {
+		return editionstmt;
+	}
 
-    /**
-     * Définit la valeur de la propriété encodinganalog.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setEncodinganalog(String value) {
-        this.encodinganalog = value;
-    }
+	/**
+	 * Définit la valeur de la propriété editionstmt.
+	 * @param value allowed object is {@link Editionstmt }
+	 *
+	 */
+	public void setEditionstmt(Editionstmt value) {
+		this.editionstmt = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	/**
+	 * Obtient la valeur de la propriété publicationstmt.
+	 * @return possible object is {@link Publicationstmt }
+	 *
+	 */
+	public Publicationstmt getPublicationstmt() {
+		return publicationstmt;
+	}
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	/**
+	 * Définit la valeur de la propriété publicationstmt.
+	 * @param value allowed object is {@link Publicationstmt }
+	 *
+	 */
+	public void setPublicationstmt(Publicationstmt value) {
+		this.publicationstmt = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Obtient la valeur de la propriété seriesstmt.
+	 * @return possible object is {@link Seriesstmt }
+	 *
+	 */
+	public Seriesstmt getSeriesstmt() {
+		return seriesstmt;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Définit la valeur de la propriété seriesstmt.
+	 * @param value allowed object is {@link Seriesstmt }
+	 *
+	 */
+	public void setSeriesstmt(Seriesstmt value) {
+		this.seriesstmt = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Obtient la valeur de la propriété notestmt.
+	 * @return possible object is {@link Notestmt }
+	 *
+	 */
+	public Notestmt getNotestmt() {
+		return notestmt;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Définit la valeur de la propriété notestmt.
+	 * @param value allowed object is {@link Notestmt }
+	 *
+	 */
+	public void setNotestmt(Notestmt value) {
+		this.notestmt = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété encodinganalog.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getEncodinganalog() {
+		return encodinganalog;
+	}
+
+	/**
+	 * Définit la valeur de la propriété encodinganalog.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setEncodinganalog(String value) {
+		this.encodinganalog = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

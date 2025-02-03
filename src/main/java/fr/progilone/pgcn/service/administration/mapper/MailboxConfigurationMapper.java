@@ -11,12 +11,13 @@ import org.mapstruct.factory.Mappers;
 /**
  * Created by Sébastien on 30/12/2016.
  */
-@Mapper(uses = {SimpleLibraryMapper.class})
+@Mapper(uses = { SimpleLibraryMapper.class })
 public interface MailboxConfigurationMapper {
 
-    MailboxConfigurationMapper INSTANCE = Mappers.getMapper(MailboxConfigurationMapper.class);
+	MailboxConfigurationMapper INSTANCE = Mappers.getMapper(MailboxConfigurationMapper.class);
 
-    MailboxConfigurationDTO mailboxToDto(MailboxConfiguration mailboxConfiguration);
+	MailboxConfigurationDTO mailboxToDto(MailboxConfiguration mailboxConfiguration);
 
-    List<MailboxConfigurationDTO> mailboxToDtos(Collection<MailboxConfiguration> mailboxConfiguration);
+	List<MailboxConfigurationDTO> mailboxToDtos(Collection<MailboxConfiguration> mailboxConfiguration);
+
 }

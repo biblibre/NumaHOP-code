@@ -49,60 +49,43 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum CodeErreurType {
 
-    @XmlEnumValue("E0001")
-    E_0001("E0001"),
-    @XmlEnumValue("E0002")
-    E_0002("E0002"),
-    @XmlEnumValue("E0003")
-    E_0003("E0003"),
-    @XmlEnumValue("E0004")
-    E_0004("E0004"),
-    @XmlEnumValue("E0005")
-    E_0005("E0005"),
-    @XmlEnumValue("E0006")
-    E_0006("E0006"),
-    @XmlEnumValue("E0007")
-    E_0007("E0007"),
-    @XmlEnumValue("E0008")
-    E_0008("E0008"),
-    @XmlEnumValue("E0009")
-    E_0009("E0009"),
-    @XmlEnumValue("E0010")
-    E_0010("E0010"),
-    @XmlEnumValue("E0011")
-    E_0011("E0011"),
-    @XmlEnumValue("E0100")
-    E_0100("E0100"),
-    @XmlEnumValue("E0101")
-    E_0101("E0101"),
-    @XmlEnumValue("E0102")
-    E_0102("E0102"),
-    @XmlEnumValue("E0103")
-    E_0103("E0103"),
-    @XmlEnumValue("E0104")
-    E_0104("E0104"),
-    @XmlEnumValue("E0105")
-    E_0105("E0105"),
-    @XmlEnumValue("E0106")
-    E_0106("E0106");
+	@XmlEnumValue("E0001")
+	E_0001("E0001"), @XmlEnumValue("E0002")
+	E_0002("E0002"), @XmlEnumValue("E0003")
+	E_0003("E0003"), @XmlEnumValue("E0004")
+	E_0004("E0004"), @XmlEnumValue("E0005")
+	E_0005("E0005"), @XmlEnumValue("E0006")
+	E_0006("E0006"), @XmlEnumValue("E0007")
+	E_0007("E0007"), @XmlEnumValue("E0008")
+	E_0008("E0008"), @XmlEnumValue("E0009")
+	E_0009("E0009"), @XmlEnumValue("E0010")
+	E_0010("E0010"), @XmlEnumValue("E0011")
+	E_0011("E0011"), @XmlEnumValue("E0100")
+	E_0100("E0100"), @XmlEnumValue("E0101")
+	E_0101("E0101"), @XmlEnumValue("E0102")
+	E_0102("E0102"), @XmlEnumValue("E0103")
+	E_0103("E0103"), @XmlEnumValue("E0104")
+	E_0104("E0104"), @XmlEnumValue("E0105")
+	E_0105("E0105"), @XmlEnumValue("E0106")
+	E_0106("E0106");
 
-    private final String value;
+	private final String value;
 
-    CodeErreurType(String v) {
-        value = v;
-    }
+	CodeErreurType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static CodeErreurType fromValue(String v) {
-        for (CodeErreurType c : CodeErreurType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static CodeErreurType fromValue(String v) {
+		for (CodeErreurType c : CodeErreurType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

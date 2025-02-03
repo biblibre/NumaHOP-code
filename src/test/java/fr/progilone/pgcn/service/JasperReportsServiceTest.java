@@ -23,62 +23,56 @@ import org.springframework.test.util.ReflectionTestUtils;
  */
 public class JasperReportsServiceTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JasperReportsServiceTest.class);
+	private static final Logger LOG = LoggerFactory.getLogger(JasperReportsServiceTest.class);
 
-    private static final String IMAGE_PATH = "images";
+	private static final String IMAGE_PATH = "images";
 
-    private JasperReportsService service;
+	private JasperReportsService service;
 
-    @BeforeEach
-    public void setUp() {
-        service = new JasperReportsService();
-        ReflectionTestUtils.setField(service, "imagePath", IMAGE_PATH);
-    }
+	@BeforeEach
+	public void setUp() {
+		service = new JasperReportsService();
+		ReflectionTestUtils.setField(service, "imagePath", IMAGE_PATH);
+	}
 
-    @Disabled
-    @Test
-    public void generateTestReport() {
-        final File exportFile = getExportFile(JasperReportsService.REPORT_TEST, "pdf");
-        LOG.debug("Génération du rapport {}", exportFile.getAbsolutePath());
+	@Disabled
+	@Test
+	public void generateTestReport() {
+		final File exportFile = getExportFile(JasperReportsService.REPORT_TEST, "pdf");
+		LOG.debug("Génération du rapport {}", exportFile.getAbsolutePath());
 
-        try (final OutputStream out = new FileOutputStream(exportFile)) {
-            service.exportReportToStream(JasperReportsService.REPORT_TEST,
-                                         JasperReportsService.ExportType.PDF,
-                                         new HashMap<>(),
-                                         Arrays.asList(new TestObject("voiture"),
-                                                       new TestObject("cochon"),
-                                                       new TestObject("ski"),
-                                                       new TestObject("tartiflette"),
-                                                       new TestObject("dvd")),
-                                         out,
-                                         "fakeLibraryId");
-        } catch (final IOException e) {
-            fail("generateBudgetReport s'est terminé sur l'erreur: " + e.getMessage());
-        }
-    }
+		try (final OutputStream out = new FileOutputStream(exportFile)) {
+			service.exportReportToStream(JasperReportsService.REPORT_TEST, JasperReportsService.ExportType.PDF,
+					new HashMap<>(), Arrays.asList(new TestObject("voiture"), new TestObject("cochon"),
+							new TestObject("ski"), new TestObject("tartiflette"), new TestObject("dvd")),
+					out, "fakeLibraryId");
+		}
+		catch (final IOException e) {
+			fail("generateBudgetReport s'est terminé sur l'erreur: " + e.getMessage());
+		}
+	}
 
-    private File getExportFile(final String prefix, final String extension) {
-        final String fileName = prefix + "_"
-                                + System.currentTimeMillis()
-                                + "."
-                                + extension;
-        return FileUtils.getFile(FileUtils.getTempDirectory(), fileName);
-    }
+	private File getExportFile(final String prefix, final String extension) {
+		final String fileName = prefix + "_" + System.currentTimeMillis() + "." + extension;
+		return FileUtils.getFile(FileUtils.getTempDirectory(), fileName);
+	}
 
-    public static final class TestObject {
+	public static final class TestObject {
 
-        private String label;
+		private String label;
 
-        public TestObject(final String label) {
-            this.label = label;
-        }
+		public TestObject(final String label) {
+			this.label = label;
+		}
 
-        public String getLabel() {
-            return label;
-        }
+		public String getLabel() {
+			return label;
+		}
 
-        public void setLabel(final String label) {
-            this.label = label;
-        }
-    }
+		public void setLabel(final String label) {
+			this.label = label;
+		}
+
+	}
+
 }

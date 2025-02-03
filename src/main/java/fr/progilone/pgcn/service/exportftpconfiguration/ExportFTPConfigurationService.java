@@ -22,85 +22,97 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ExportFTPConfigurationService {
 
-    private final ExportFTPConfigurationRepository exportFtpConfigurationRepository;
-    private final LibraryRepository libraryRepository;
-    private final LotRepository lotRepository;
-    private final ProjectRepository projectRepository;
+	private final ExportFTPConfigurationRepository exportFtpConfigurationRepository;
 
-    @Autowired
-    public ExportFTPConfigurationService(final ExportFTPConfigurationRepository exportFtpConfigurationRepository,
-                                         final LibraryRepository libraryRepository,
-                                         final LotRepository lotRepository,
-                                         final ProjectRepository projectRepository) {
-        this.exportFtpConfigurationRepository = exportFtpConfigurationRepository;
-        this.libraryRepository = libraryRepository;
-        this.lotRepository = lotRepository;
-        this.projectRepository = projectRepository;
-    }
+	private final LibraryRepository libraryRepository;
 
-    @Transactional
-    public ExportFTPConfiguration save(final ExportFTPConfiguration conf) throws PgcnTechnicalException {
-        return exportFtpConfigurationRepository.save(conf);
-    }
+	private final LotRepository lotRepository;
 
-    @Transactional(readOnly = true)
-    public ExportFTPConfiguration getOne(final String identifier) {
-        if (identifier == null) {
-            return null;
-        }
-        return exportFtpConfigurationRepository.findOneWithDependencies(identifier);
-    }
+	private final ProjectRepository projectRepository;
 
-    public Set<ExportFTPConfiguration> findByLibraryAndActive(final Library library, final boolean active) {
-        return exportFtpConfigurationRepository.findByLibraryAndActive(library, active);
-    }
+	@Autowired
+	public ExportFTPConfigurationService(final ExportFTPConfigurationRepository exportFtpConfigurationRepository,
+			final LibraryRepository libraryRepository, final LotRepository lotRepository,
+			final ProjectRepository projectRepository) {
+		this.exportFtpConfigurationRepository = exportFtpConfigurationRepository;
+		this.libraryRepository = libraryRepository;
+		this.lotRepository = lotRepository;
+		this.projectRepository = projectRepository;
+	}
 
-    /**
-     * Recherche paginée
-     *
-     * @param search
-     * @param libraries
-     * @param pageRequest
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Page<ExportFTPConfiguration> search(final String search, final List<String> libraries, final Pageable pageRequest) {
-        return exportFtpConfigurationRepository.search(search, libraries, pageRequest);
-    }
+	@Transactional
+	public ExportFTPConfiguration save(final ExportFTPConfiguration conf) throws PgcnTechnicalException {
+		return exportFtpConfigurationRepository.save(conf);
+	}
 
-    @Transactional
-    public void delete(final String id) throws PgcnValidationException {
-        // Validation de la suppression
-        final ExportFTPConfiguration conf = exportFtpConfigurationRepository.getOne(id);
-        validateDelete(conf);
+	@Transactional(readOnly = true)
+	public ExportFTPConfiguration getOne(final String identifier) {
+		if (identifier == null) {
+			return null;
+		}
+		return exportFtpConfigurationRepository.findOneWithDependencies(identifier);
+	}
 
-        // Suppression
-        exportFtpConfigurationRepository.deleteById(id);
-    }
+	public Set<ExportFTPConfiguration> findByLibraryAndActive(final Library library, final boolean active) {
+		return exportFtpConfigurationRepository.findByLibraryAndActive(library, active);
+	}
 
-    private void validateDelete(final ExportFTPConfiguration conf) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
+	/**
+	 * Recherche paginée
+	 * @param search
+	 * @param libraries
+	 * @param pageRequest
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Page<ExportFTPConfiguration> search(final String search, final List<String> libraries,
+			final Pageable pageRequest) {
+		return exportFtpConfigurationRepository.search(search, libraries, pageRequest);
+	}
 
-        // Bibliothèque
-        final Long libCount = libraryRepository.countByActiveExportFTPConfiguration(conf);
-        if (libCount > 0) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_FTP_DEL_EXITS_LIB).setAdditionalComplement(libCount).build());
-        }
-        // Lot
-        final Long lotCount = lotRepository.countByActiveExportFTPConfiguration(conf);
-        if (lotCount > 0) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_FTP_DEL_EXITS_LOT).setAdditionalComplement(lotCount).build());
-        }
-        // Projet
-        final Long projCount = projectRepository.countByActiveExportFTPConfiguration(conf);
-        if (projCount > 0) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_FTP_DEL_EXITS_PROJECT).setAdditionalComplement(projCount).build());
-        }
+	@Transactional
+	public void delete(final String id) throws PgcnValidationException {
+		// Validation de la suppression
+		final ExportFTPConfiguration conf = exportFtpConfigurationRepository.getOne(id);
+		validateDelete(conf);
 
-        if (!errors.isEmpty()) {
-            conf.setErrors(errors);
-            throw new PgcnValidationException(conf, errors);
-        }
-    }
+		// Suppression
+		exportFtpConfigurationRepository.deleteById(id);
+	}
+
+	private void validateDelete(final ExportFTPConfiguration conf) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
+
+		// Bibliothèque
+		final Long libCount = libraryRepository.countByActiveExportFTPConfiguration(conf);
+		if (libCount > 0) {
+			errors.add(builder.reinit()
+				.setCode(PgcnErrorCode.CONF_FTP_DEL_EXITS_LIB)
+				.setAdditionalComplement(libCount)
+				.build());
+		}
+		// Lot
+		final Long lotCount = lotRepository.countByActiveExportFTPConfiguration(conf);
+		if (lotCount > 0) {
+			errors.add(builder.reinit()
+				.setCode(PgcnErrorCode.CONF_FTP_DEL_EXITS_LOT)
+				.setAdditionalComplement(lotCount)
+				.build());
+		}
+		// Projet
+		final Long projCount = projectRepository.countByActiveExportFTPConfiguration(conf);
+		if (projCount > 0) {
+			errors.add(builder.reinit()
+				.setCode(PgcnErrorCode.CONF_FTP_DEL_EXITS_PROJECT)
+				.setAdditionalComplement(projCount)
+				.build());
+		}
+
+		if (!errors.isEmpty()) {
+			conf.setErrors(errors);
+			throw new PgcnValidationException(conf, errors);
+		}
+	}
+
 }

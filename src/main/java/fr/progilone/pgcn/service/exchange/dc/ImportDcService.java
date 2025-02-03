@@ -31,187 +31,178 @@ import org.springframework.stereotype.Service;
 @Service
 public class ImportDcService extends AbstractImportService {
 
-    private static final String MAPPING_DC_OAI = "DC_OAI_MAPPING";
-    private static final String MAPPING_DC_RDF = "DC_RDF_MAPPING";
+	private static final String MAPPING_DC_OAI = "DC_OAI_MAPPING";
 
-    private static final Logger LOG = LoggerFactory.getLogger(ImportDcService.class);
+	private static final String MAPPING_DC_RDF = "DC_RDF_MAPPING";
 
-    private final DcToDocUnitConvertService convertService;
-    private final DocPropertyTypeService docPropertyTypeService;
-    private final ImportDocUnitService importDocUnitService;
-    private final ImportReportService importReportService;
-    private final LibraryService libraryService;
-    private final TransactionService transactionService;
+	private static final Logger LOG = LoggerFactory.getLogger(ImportDcService.class);
 
-    @Autowired
-    public ImportDcService(final DeduplicationService deduplicationService,
-                           final DocUnitService docUnitService,
-                           final EsDocUnitService esDocUnitService,
-                           final ImportDocUnitService importDocUnitService,
-                           final ImportReportService importReportService,
-                           final TransactionService transactionService,
-                           final WebsocketService websocketService,
-                           final DcToDocUnitConvertService convertService,
-                           final DocPropertyTypeService docPropertyTypeService,
-                           final LibraryService libraryService) {
-        super(deduplicationService, docUnitService, esDocUnitService, importDocUnitService, importReportService, transactionService, websocketService);
-        this.convertService = convertService;
-        this.docPropertyTypeService = docPropertyTypeService;
-        this.importDocUnitService = importDocUnitService;
-        this.importReportService = importReportService;
-        this.libraryService = libraryService;
-        this.transactionService = transactionService;
-    }
+	private final DcToDocUnitConvertService convertService;
 
-    /**
-     * Import asynchrone d'un flux de notices Dublin Core.
-     *
-     * @param importFile
-     *            Fichier de notices à importer
-     * @param fileFormat
-     *            Format du fichier (DC)
-     * @param mappingId
-     *            Identifiant du mapping
-     * @param report
-     *            Rapport d'exécution de cet import
-     * @param stepValidation
-     *            Étape de validation par l'utilisateur
-     * @param stepDeduplication
-     *            Étape de dédoublonnage
-     * @param defaultDedupProcess
-     *            Gestion de l'import des doublons, dans le cas où l'import se fait directement sans validation par l'utilisateur
-     */
-    @Async
-    public void importDcAsync(final File importFile,
-                              final FileFormat fileFormat,
-                              final String libraryId,
-                              final String mappingId,
-                              ImportReport report,
-                              final boolean stepValidation,
-                              final boolean stepDeduplication,
-                              final ImportedDocUnit.Process defaultDedupProcess,
-                              final boolean archivable,
-                              final boolean distributable) {
-        try {
-            /* Pré-import */
-            LOG.info("Pré-import du fichier {} {}", fileFormat, importFile.getAbsolutePath());
-            // DC
-            if (fileFormat == FileFormat.DC) {
-                final ImportReport fReport = report;
-                report = transactionService.executeInNewTransactionWithReturnAndException(() -> {
-                    return importDcRecords(importFile, libraryId, mappingId, fReport, archivable, distributable);
-                });
-            }
-            // DCQ
-            // else if (fileFormat == FileFormat.DCQ) {
-            // report = importDcRecords(importFile, mappingId, report);
-            // }
-            // Non géré
-            else {
-                throw new PgcnTechnicalException("Le format de fichier " + fileFormat
-                                                 + " n'est pas supporté (fichier "
-                                                 + importFile.getAbsolutePath()
-                                                 + ")"
-                                                 + "par le service ImportDcService");
-            }
+	private final DocPropertyTypeService docPropertyTypeService;
 
-            /* Poursuite du traitement des unités documentaires pré-importées: recherche de doublons, validation utilisateur, import */
-            importDocUnit(report, null, stepValidation, stepDeduplication, defaultDedupProcess);
-            LOG.info("Le fichier {} {} est traité avec le statut {}", fileFormat, importFile.getAbsolutePath(), report.getStatus());
+	private final ImportDocUnitService importDocUnitService;
 
-        } catch (final Exception e) {
-            LOG.error(e.getMessage(), e);
-            importReportService.failReport(report, e);
-        }
-    }
+	private final ImportReportService importReportService;
 
-    /**
-     * Import des notices à partir d'un fichier RDFXML contenant les Description Dublin Core
-     *
-     * @param importFile
-     * @param libraryId
-     * @param mappingId
-     * @param report
-     * @return
-     * @throws PgcnTechnicalException
-     * @see fr.progilone.pgcn.domain.jaxb.rdf.RDF
-     */
-    private ImportReport importDcRecords(final File importFile,
-                                         final String libraryId,
-                                         final String mappingId,
-                                         final ImportReport report,
-                                         final boolean archivable,
-                                         final boolean distributable) throws PgcnTechnicalException {
-        try {
-            // vérification bibliothèque
-            final Library library = libraryService.findOne(libraryId);
-            if (library == null) {
-                throw new PgcnTechnicalException("Il n'existe pas de bibliothèque avec l'identifiant " + libraryId);
-            }
+	private final LibraryService libraryService;
 
-            // Chargement des types de propriété
-            final List<DocPropertyType> propertyTypes = docPropertyTypeService.findAll();
+	private final TransactionService transactionService;
 
-            // Résumé d'exécution
-            // report.setMapping(mapping); // lien avec le mapping qui vient d'être chargé
-            final ImportReport runningReport = importReportService.startReport(report);
+	@Autowired
+	public ImportDcService(final DeduplicationService deduplicationService, final DocUnitService docUnitService,
+			final EsDocUnitService esDocUnitService, final ImportDocUnitService importDocUnitService,
+			final ImportReportService importReportService, final TransactionService transactionService,
+			final WebsocketService websocketService, final DcToDocUnitConvertService convertService,
+			final DocPropertyTypeService docPropertyTypeService, final LibraryService libraryService) {
+		super(deduplicationService, docUnitService, esDocUnitService, importDocUnitService, importReportService,
+				transactionService, websocketService);
+		this.convertService = convertService;
+		this.docPropertyTypeService = docPropertyTypeService;
+		this.importDocUnitService = importDocUnitService;
+		this.importReportService = importReportService;
+		this.libraryService = libraryService;
+		this.transactionService = transactionService;
+	}
 
-            // Vérification du type de mapping OAI_DC / RDF
-            switch (mappingId) {
-                case MAPPING_DC_OAI: {
-                    new OAIDcEntityHandler(oaidc -> {
-                        try {
-                            // Conversion du XML en unité documentaire
-                            final DocUnit docUnit = convertService.convert(oaidc, library, propertyTypes);
-                            docUnit.setArchivable(archivable);
-                            docUnit.setDistributable(distributable);
+	/**
+	 * Import asynchrone d'un flux de notices Dublin Core.
+	 * @param importFile Fichier de notices à importer
+	 * @param fileFormat Format du fichier (DC)
+	 * @param mappingId Identifiant du mapping
+	 * @param report Rapport d'exécution de cet import
+	 * @param stepValidation Étape de validation par l'utilisateur
+	 * @param stepDeduplication Étape de dédoublonnage
+	 * @param defaultDedupProcess Gestion de l'import des doublons, dans le cas où
+	 * l'import se fait directement sans validation par l'utilisateur
+	 */
+	@Async
+	public void importDcAsync(final File importFile, final FileFormat fileFormat, final String libraryId,
+			final String mappingId, ImportReport report, final boolean stepValidation, final boolean stepDeduplication,
+			final ImportedDocUnit.Process defaultDedupProcess, final boolean archivable, final boolean distributable) {
+		try {
+			/* Pré-import */
+			LOG.info("Pré-import du fichier {} {}", fileFormat, importFile.getAbsolutePath());
+			// DC
+			if (fileFormat == FileFormat.DC) {
+				final ImportReport fReport = report;
+				report = transactionService.executeInNewTransactionWithReturnAndException(() -> {
+					return importDcRecords(importFile, libraryId, mappingId, fReport, archivable, distributable);
+				});
+			}
+			// DCQ
+			// else if (fileFormat == FileFormat.DCQ) {
+			// report = importDcRecords(importFile, mappingId, report);
+			// }
+			// Non géré
+			else {
+				throw new PgcnTechnicalException("Le format de fichier " + fileFormat + " n'est pas supporté (fichier "
+						+ importFile.getAbsolutePath() + ")" + "par le service ImportDcService");
+			}
 
-                            // Sauvegarde
-                            final ImportedDocUnit imp = new ImportedDocUnit();
-                            imp.initDocUnitFields(docUnit);
-                            imp.setReport(runningReport);
-                            importDocUnitService.create(imp);
+			/*
+			 * Poursuite du traitement des unités documentaires pré-importées: recherche
+			 * de doublons, validation utilisateur, import
+			 */
+			importDocUnit(report, null, stepValidation, stepDeduplication, defaultDedupProcess);
+			LOG.info("Le fichier {} {} est traité avec le statut {}", fileFormat, importFile.getAbsolutePath(),
+					report.getStatus());
 
-                            synchronized (runningReport) {
-                                runningReport.incrementNbImp(1);
-                            }
-                        } catch (final Exception e) {
-                            LOG.error(e.getMessage(), e);
-                        }
-                    }).parse(importFile);
-                }
-                    break;
+		}
+		catch (final Exception e) {
+			LOG.error(e.getMessage(), e);
+			importReportService.failReport(report, e);
+		}
+	}
 
-                case MAPPING_DC_RDF:
-                default: {
-                    new RdfDcEntityHandler((rdf, description) -> {
-                        LOG.debug(description.getAbout());
-                        try {
-                            // Conversion du XML en unité documentaire
-                            final DocUnit docUnit = convertService.convert(description, library, propertyTypes);
-                            docUnit.setArchivable(archivable);
-                            docUnit.setDistributable(distributable);
+	/**
+	 * Import des notices à partir d'un fichier RDFXML contenant les Description Dublin
+	 * Core
+	 * @param importFile
+	 * @param libraryId
+	 * @param mappingId
+	 * @param report
+	 * @return
+	 * @throws PgcnTechnicalException
+	 * @see fr.progilone.pgcn.domain.jaxb.rdf.RDF
+	 */
+	private ImportReport importDcRecords(final File importFile, final String libraryId, final String mappingId,
+			final ImportReport report, final boolean archivable, final boolean distributable)
+			throws PgcnTechnicalException {
+		try {
+			// vérification bibliothèque
+			final Library library = libraryService.findOne(libraryId);
+			if (library == null) {
+				throw new PgcnTechnicalException("Il n'existe pas de bibliothèque avec l'identifiant " + libraryId);
+			}
 
-                            // Sauvegarde
-                            final ImportedDocUnit imp = new ImportedDocUnit();
-                            imp.initDocUnitFields(docUnit);
-                            imp.setReport(runningReport);
-                            importDocUnitService.create(imp);
+			// Chargement des types de propriété
+			final List<DocPropertyType> propertyTypes = docPropertyTypeService.findAll();
 
-                            synchronized (runningReport) {
-                                runningReport.incrementNbImp(1);
-                            }
-                        } catch (final Exception e) {
-                            LOG.error(e.getMessage(), e);
-                        }
-                    }).parse(importFile);
-                }
-                    break;
-            }
-            return runningReport;
+			// Résumé d'exécution
+			// report.setMapping(mapping); // lien avec le mapping qui vient d'être chargé
+			final ImportReport runningReport = importReportService.startReport(report);
 
-        } catch (final Exception e) {
-            throw new PgcnTechnicalException(e);
-        }
-    }
+			// Vérification du type de mapping OAI_DC / RDF
+			switch (mappingId) {
+				case MAPPING_DC_OAI: {
+					new OAIDcEntityHandler(oaidc -> {
+						try {
+							// Conversion du XML en unité documentaire
+							final DocUnit docUnit = convertService.convert(oaidc, library, propertyTypes);
+							docUnit.setArchivable(archivable);
+							docUnit.setDistributable(distributable);
+
+							// Sauvegarde
+							final ImportedDocUnit imp = new ImportedDocUnit();
+							imp.initDocUnitFields(docUnit);
+							imp.setReport(runningReport);
+							importDocUnitService.create(imp);
+
+							synchronized (runningReport) {
+								runningReport.incrementNbImp(1);
+							}
+						}
+						catch (final Exception e) {
+							LOG.error(e.getMessage(), e);
+						}
+					}).parse(importFile);
+				}
+					break;
+
+				case MAPPING_DC_RDF:
+				default: {
+					new RdfDcEntityHandler((rdf, description) -> {
+						LOG.debug(description.getAbout());
+						try {
+							// Conversion du XML en unité documentaire
+							final DocUnit docUnit = convertService.convert(description, library, propertyTypes);
+							docUnit.setArchivable(archivable);
+							docUnit.setDistributable(distributable);
+
+							// Sauvegarde
+							final ImportedDocUnit imp = new ImportedDocUnit();
+							imp.initDocUnitFields(docUnit);
+							imp.setReport(runningReport);
+							importDocUnitService.create(imp);
+
+							synchronized (runningReport) {
+								runningReport.incrementNbImp(1);
+							}
+						}
+						catch (final Exception e) {
+							LOG.error(e.getMessage(), e);
+						}
+					}).parse(importFile);
+				}
+					break;
+			}
+			return runningReport;
+
+		}
+		catch (final Exception e) {
+			throw new PgcnTechnicalException(e);
+		}
+	}
+
 }

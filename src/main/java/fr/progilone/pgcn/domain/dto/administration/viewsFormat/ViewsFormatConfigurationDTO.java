@@ -5,115 +5,124 @@ import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
 
 public class ViewsFormatConfigurationDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String label;
-    private Long thumbWidth;
-    private Long thumbHeight;
-    private Long viewWidth;
-    private Long viewHeight;
-    private Long printWidth;
-    private Long printHeight;
+	private String identifier;
 
-    private String thumbDefaultValue;
-    private String viewDefaultValue;
-    private String printDefaultValue;
+	private String label;
 
-    private SimpleLibraryDTO library;
+	private Long thumbWidth;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private Long thumbHeight;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private Long viewWidth;
 
-    public String getLabel() {
-        return label;
-    }
+	private Long viewHeight;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	private Long printWidth;
 
-    public Long getThumbWidth() {
-        return thumbWidth;
-    }
+	private Long printHeight;
 
-    public void setThumbWidth(final Long thumbWidth) {
-        this.thumbWidth = thumbWidth;
-    }
+	private String thumbDefaultValue;
 
-    public Long getThumbHeight() {
-        return thumbHeight;
-    }
+	private String viewDefaultValue;
 
-    public void setThumbHeight(final Long thumbHeight) {
-        this.thumbHeight = thumbHeight;
-    }
+	private String printDefaultValue;
 
-    public Long getViewWidth() {
-        return viewWidth;
-    }
+	private SimpleLibraryDTO library;
 
-    public void setViewWidth(final Long viewWidth) {
-        this.viewWidth = viewWidth;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public Long getViewHeight() {
-        return viewHeight;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setViewHeight(final Long viewHeight) {
-        this.viewHeight = viewHeight;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public Long getPrintWidth() {
-        return printWidth;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setPrintWidth(final Long printWidth) {
-        this.printWidth = printWidth;
-    }
+	public Long getThumbWidth() {
+		return thumbWidth;
+	}
 
-    public Long getPrintHeight() {
-        return printHeight;
-    }
+	public void setThumbWidth(final Long thumbWidth) {
+		this.thumbWidth = thumbWidth;
+	}
 
-    public void setPrintHeight(final Long printHeight) {
-        this.printHeight = printHeight;
-    }
+	public Long getThumbHeight() {
+		return thumbHeight;
+	}
 
-    public String getThumbDefaultValue() {
-        return thumbDefaultValue;
-    }
+	public void setThumbHeight(final Long thumbHeight) {
+		this.thumbHeight = thumbHeight;
+	}
 
-    public void setThumbDefaultValue(final String thumbDefaultValue) {
-        this.thumbDefaultValue = thumbDefaultValue;
-    }
+	public Long getViewWidth() {
+		return viewWidth;
+	}
 
-    public String getViewDefaultValue() {
-        return viewDefaultValue;
-    }
+	public void setViewWidth(final Long viewWidth) {
+		this.viewWidth = viewWidth;
+	}
 
-    public void setViewDefaultValue(final String viewDefaultValue) {
-        this.viewDefaultValue = viewDefaultValue;
-    }
+	public Long getViewHeight() {
+		return viewHeight;
+	}
 
-    public String getPrintDefaultValue() {
-        return printDefaultValue;
-    }
+	public void setViewHeight(final Long viewHeight) {
+		this.viewHeight = viewHeight;
+	}
 
-    public void setPrintDefaultValue(final String printDefaultValue) {
-        this.printDefaultValue = printDefaultValue;
-    }
+	public Long getPrintWidth() {
+		return printWidth;
+	}
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	public void setPrintWidth(final Long printWidth) {
+		this.printWidth = printWidth;
+	}
 
-    public void setLibrary(final SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	public Long getPrintHeight() {
+		return printHeight;
+	}
+
+	public void setPrintHeight(final Long printHeight) {
+		this.printHeight = printHeight;
+	}
+
+	public String getThumbDefaultValue() {
+		return thumbDefaultValue;
+	}
+
+	public void setThumbDefaultValue(final String thumbDefaultValue) {
+		this.thumbDefaultValue = thumbDefaultValue;
+	}
+
+	public String getViewDefaultValue() {
+		return viewDefaultValue;
+	}
+
+	public void setViewDefaultValue(final String viewDefaultValue) {
+		this.viewDefaultValue = viewDefaultValue;
+	}
+
+	public String getPrintDefaultValue() {
+		return printDefaultValue;
+	}
+
+	public void setPrintDefaultValue(final String printDefaultValue) {
+		this.printDefaultValue = printDefaultValue;
+	}
+
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
+
+	public void setLibrary(final SimpleLibraryDTO library) {
+		this.library = library;
+	}
 
 }

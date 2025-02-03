@@ -52,385 +52,308 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "pac_avisType",
-         propOrder = {"serveur",
-                      "id",
-                      "idVersement",
-                      "idDemande",
-                      "title",
-                      "dateArchivage",
-                      "dateDemande",
-                      "dateCommunication",
-                      "identifiantDocPac",
-                      "identifiantDocProducteur",
-                      "codeErreur",
-                      "commentaire",
-                      "erreurValidation",
-                      "contrles"})
+		propOrder = { "serveur", "id", "idVersement", "idDemande", "title", "dateArchivage", "dateDemande",
+				"dateCommunication", "identifiantDocPac", "identifiantDocProducteur", "codeErreur", "commentaire",
+				"erreurValidation", "contrles" })
 public class PacAvisType {
 
-    @XmlElement(required = true)
-    protected String serveur;
-    protected String id;
-    @XmlElement(name = "id_versement")
-    protected String idVersement;
-    @XmlElement(name = "id_demande")
-    protected String idDemande;
-    protected List<String> title;
-    @XmlSchemaType(name = "dateTime")
-    protected LocalDateTime dateArchivage;
-    @XmlSchemaType(name = "dateTime")
-    protected LocalDateTime dateDemande;
-    @XmlSchemaType(name = "dateTime")
-    protected LocalDateTime dateCommunication;
-    protected String identifiantDocPac;
-    protected String identifiantDocProducteur;
-    @XmlSchemaType(name = "string")
-    protected CodeErreurType codeErreur;
-    @XmlElement(required = true)
-    protected String commentaire;
-    protected String erreurValidation;
-    protected String contrles;
+	@XmlElement(required = true)
+	protected String serveur;
 
-    /**
-     * Obtient la valeur de la propriété serveur.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getServeur() {
-        return serveur;
-    }
+	protected String id;
 
-    /**
-     * Définit la valeur de la propriété serveur.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setServeur(String value) {
-        this.serveur = value;
-    }
+	@XmlElement(name = "id_versement")
+	protected String idVersement;
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	@XmlElement(name = "id_demande")
+	protected String idDemande;
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	protected List<String> title;
 
-    /**
-     * Obtient la valeur de la propriété idVersement.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getIdVersement() {
-        return idVersement;
-    }
+	@XmlSchemaType(name = "dateTime")
+	protected LocalDateTime dateArchivage;
 
-    /**
-     * Définit la valeur de la propriété idVersement.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setIdVersement(String value) {
-        this.idVersement = value;
-    }
+	@XmlSchemaType(name = "dateTime")
+	protected LocalDateTime dateDemande;
 
-    /**
-     * Obtient la valeur de la propriété idDemande.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getIdDemande() {
-        return idDemande;
-    }
+	@XmlSchemaType(name = "dateTime")
+	protected LocalDateTime dateCommunication;
 
-    /**
-     * Définit la valeur de la propriété idDemande.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setIdDemande(String value) {
-        this.idDemande = value;
-    }
+	protected String identifiantDocPac;
 
-    /**
-     * Gets the value of the title property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the title property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getTitle().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getTitle() {
-        if (title == null) {
-            title = new ArrayList<>();
-        }
-        return this.title;
-    }
+	protected String identifiantDocProducteur;
 
-    /**
-     * Obtient la valeur de la propriété dateArchivage.
-     *
-     * @return
-     *         possible object is
-     *         {@link LocalDateTime }
-     *
-     */
-    public LocalDateTime getDateArchivage() {
-        return dateArchivage;
-    }
+	@XmlSchemaType(name = "string")
+	protected CodeErreurType codeErreur;
 
-    /**
-     * Définit la valeur de la propriété dateArchivage.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link LocalDateTime }
-     *
-     */
-    public void setDateArchivage(LocalDateTime value) {
-        this.dateArchivage = value;
-    }
+	@XmlElement(required = true)
+	protected String commentaire;
 
-    /**
-     * Obtient la valeur de la propriété dateDemande.
-     *
-     * @return
-     *         possible object is
-     *         {@link LocalDateTime }
-     *
-     */
-    public LocalDateTime getDateDemande() {
-        return dateDemande;
-    }
+	protected String erreurValidation;
 
-    /**
-     * Définit la valeur de la propriété dateDemande.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link LocalDateTime }
-     *
-     */
-    public void setDateDemande(LocalDateTime value) {
-        this.dateDemande = value;
-    }
+	protected String contrles;
 
-    /**
-     * Obtient la valeur de la propriété dateCommunication.
-     *
-     * @return
-     *         possible object is
-     *         {@link LocalDateTime }
-     *
-     */
-    public LocalDateTime getDateCommunication() {
-        return dateCommunication;
-    }
+	/**
+	 * Obtient la valeur de la propriété serveur.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getServeur() {
+		return serveur;
+	}
 
-    /**
-     * Définit la valeur de la propriété dateCommunication.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link LocalDateTime }
-     *
-     */
-    public void setDateCommunication(LocalDateTime value) {
-        this.dateCommunication = value;
-    }
+	/**
+	 * Définit la valeur de la propriété serveur.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setServeur(String value) {
+		this.serveur = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété identifiantDocPac.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getIdentifiantDocPac() {
-        return identifiantDocPac;
-    }
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
 
-    /**
-     * Définit la valeur de la propriété identifiantDocPac.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setIdentifiantDocPac(String value) {
-        this.identifiantDocPac = value;
-    }
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété identifiantDocProducteur.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getIdentifiantDocProducteur() {
-        return identifiantDocProducteur;
-    }
+	/**
+	 * Obtient la valeur de la propriété idVersement.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdVersement() {
+		return idVersement;
+	}
 
-    /**
-     * Définit la valeur de la propriété identifiantDocProducteur.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setIdentifiantDocProducteur(String value) {
-        this.identifiantDocProducteur = value;
-    }
+	/**
+	 * Définit la valeur de la propriété idVersement.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdVersement(String value) {
+		this.idVersement = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété codeErreur.
-     *
-     * @return
-     *         possible object is
-     *         {@link CodeErreurType }
-     *
-     */
-    public CodeErreurType getCodeErreur() {
-        return codeErreur;
-    }
+	/**
+	 * Obtient la valeur de la propriété idDemande.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdDemande() {
+		return idDemande;
+	}
 
-    /**
-     * Définit la valeur de la propriété codeErreur.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link CodeErreurType }
-     *
-     */
-    public void setCodeErreur(CodeErreurType value) {
-        this.codeErreur = value;
-    }
+	/**
+	 * Définit la valeur de la propriété idDemande.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdDemande(String value) {
+		this.idDemande = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété commentaire.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getCommentaire() {
-        return commentaire;
-    }
+	/**
+	 * Gets the value of the title property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the title
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getTitle().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getTitle() {
+		if (title == null) {
+			title = new ArrayList<>();
+		}
+		return this.title;
+	}
 
-    /**
-     * Définit la valeur de la propriété commentaire.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setCommentaire(String value) {
-        this.commentaire = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété dateArchivage.
+	 * @return possible object is {@link LocalDateTime }
+	 *
+	 */
+	public LocalDateTime getDateArchivage() {
+		return dateArchivage;
+	}
 
-    /**
-     * Obtient la valeur de la propriété erreurValidation.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getErreurValidation() {
-        return erreurValidation;
-    }
+	/**
+	 * Définit la valeur de la propriété dateArchivage.
+	 * @param value allowed object is {@link LocalDateTime }
+	 *
+	 */
+	public void setDateArchivage(LocalDateTime value) {
+		this.dateArchivage = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété erreurValidation.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setErreurValidation(String value) {
-        this.erreurValidation = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété dateDemande.
+	 * @return possible object is {@link LocalDateTime }
+	 *
+	 */
+	public LocalDateTime getDateDemande() {
+		return dateDemande;
+	}
 
-    /**
-     * Obtient la valeur de la propriété contrles.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getContrles() {
-        return contrles;
-    }
+	/**
+	 * Définit la valeur de la propriété dateDemande.
+	 * @param value allowed object is {@link LocalDateTime }
+	 *
+	 */
+	public void setDateDemande(LocalDateTime value) {
+		this.dateDemande = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété contrles.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setContrles(String value) {
-        this.contrles = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété dateCommunication.
+	 * @return possible object is {@link LocalDateTime }
+	 *
+	 */
+	public LocalDateTime getDateCommunication() {
+		return dateCommunication;
+	}
+
+	/**
+	 * Définit la valeur de la propriété dateCommunication.
+	 * @param value allowed object is {@link LocalDateTime }
+	 *
+	 */
+	public void setDateCommunication(LocalDateTime value) {
+		this.dateCommunication = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété identifiantDocPac.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdentifiantDocPac() {
+		return identifiantDocPac;
+	}
+
+	/**
+	 * Définit la valeur de la propriété identifiantDocPac.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdentifiantDocPac(String value) {
+		this.identifiantDocPac = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété identifiantDocProducteur.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdentifiantDocProducteur() {
+		return identifiantDocProducteur;
+	}
+
+	/**
+	 * Définit la valeur de la propriété identifiantDocProducteur.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdentifiantDocProducteur(String value) {
+		this.identifiantDocProducteur = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété codeErreur.
+	 * @return possible object is {@link CodeErreurType }
+	 *
+	 */
+	public CodeErreurType getCodeErreur() {
+		return codeErreur;
+	}
+
+	/**
+	 * Définit la valeur de la propriété codeErreur.
+	 * @param value allowed object is {@link CodeErreurType }
+	 *
+	 */
+	public void setCodeErreur(CodeErreurType value) {
+		this.codeErreur = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété commentaire.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getCommentaire() {
+		return commentaire;
+	}
+
+	/**
+	 * Définit la valeur de la propriété commentaire.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setCommentaire(String value) {
+		this.commentaire = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété erreurValidation.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getErreurValidation() {
+		return erreurValidation;
+	}
+
+	/**
+	 * Définit la valeur de la propriété erreurValidation.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setErreurValidation(String value) {
+		this.erreurValidation = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété contrles.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getContrles() {
+		return contrles;
+	}
+
+	/**
+	 * Définit la valeur de la propriété contrles.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setContrles(String value) {
+		this.contrles = value;
+	}
 
 }

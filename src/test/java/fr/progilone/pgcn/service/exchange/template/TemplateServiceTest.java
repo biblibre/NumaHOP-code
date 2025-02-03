@@ -36,180 +36,190 @@ import org.springframework.web.multipart.MultipartFile;
 @ExtendWith(MockitoExtension.class)
 public class TemplateServiceTest {
 
-    private static final String TPL_DIR = FileUtils.getTempDirectoryPath() + "/pgcn_test";
+	private static final String TPL_DIR = FileUtils.getTempDirectoryPath() + "/pgcn_test";
 
-    @Mock
-    private FileStorageManager fm;
-    @Mock
-    private TemplateRepository templateRepository;
+	@Mock
+	private FileStorageManager fm;
 
-    private TemplateService service;
+	@Mock
+	private TemplateRepository templateRepository;
 
-    @BeforeEach
-    public void setUp() {
-        service = new TemplateService(fm, templateRepository);
-        ReflectionTestUtils.setField(service, "templateDir", TPL_DIR);
-    }
+	private TemplateService service;
 
-    @AfterAll
-    public static void clean() {
-        FileUtils.deleteQuietly(new File(TPL_DIR));
-    }
+	@BeforeEach
+	public void setUp() {
+		service = new TemplateService(fm, templateRepository);
+		ReflectionTestUtils.setField(service, "templateDir", TPL_DIR);
+	}
 
-    @Test
-    public void testFindTemplate1() {
-        final List<Template> templates = new ArrayList<>();
-        when(templateRepository.findAll()).thenReturn(templates);
-        final List<Template> actual = service.findTemplate();
-        assertSame(templates, actual);
-    }
+	@AfterAll
+	public static void clean() {
+		FileUtils.deleteQuietly(new File(TPL_DIR));
+	}
 
-    @Test
-    public void testFindTemplate2() {
-        final List<Template> templates = new ArrayList<>();
-        final Engine engine = Engine.Velocity;
-        final Library library = new Library();
+	@Test
+	public void testFindTemplate1() {
+		final List<Template> templates = new ArrayList<>();
+		when(templateRepository.findAll()).thenReturn(templates);
+		final List<Template> actual = service.findTemplate();
+		assertSame(templates, actual);
+	}
 
-        when(templateRepository.findByLibrary(library)).thenReturn(templates);
-        final List<Template> actual = service.findTemplate(library);
-        assertSame(templates, actual);
-    }
+	@Test
+	public void testFindTemplate2() {
+		final List<Template> templates = new ArrayList<>();
+		final Engine engine = Engine.Velocity;
+		final Library library = new Library();
 
-    @Test
-    public void testFindTemplate3() {
-        final List<Template> templates = new ArrayList<>();
-        final Name name = Name.ReinitPassword;
-        final Engine engine = Engine.Velocity;
-        final Library library = new Library();
-        library.setIdentifier("4663935f-4be4-4563-8204-eaf552585d18");
+		when(templateRepository.findByLibrary(library)).thenReturn(templates);
+		final List<Template> actual = service.findTemplate(library);
+		assertSame(templates, actual);
+	}
 
-        when(templateRepository.findByNameAndLibraryIdentifier(name, library.getIdentifier())).thenReturn(templates);
-        final List<Template> actual = service.findTemplate(name, library.getIdentifier());
-        assertSame(templates, actual);
-    }
+	@Test
+	public void testFindTemplate3() {
+		final List<Template> templates = new ArrayList<>();
+		final Name name = Name.ReinitPassword;
+		final Engine engine = Engine.Velocity;
+		final Library library = new Library();
+		library.setIdentifier("4663935f-4be4-4563-8204-eaf552585d18");
 
-    @Test
-    public void testFindByIdentifier() {
-        final String identifier = "42fc5db3-988e-4507-ad18-3e48f944c742";
-        final Template template = new Template();
+		when(templateRepository.findByNameAndLibraryIdentifier(name, library.getIdentifier())).thenReturn(templates);
+		final List<Template> actual = service.findTemplate(name, library.getIdentifier());
+		assertSame(templates, actual);
+	}
 
-        when(templateRepository.findByIdentifier(identifier)).thenReturn(template);
-        final Template actual = service.findByIdentifier(identifier);
-        assertSame(template, actual);
-    }
+	@Test
+	public void testFindByIdentifier() {
+		final String identifier = "42fc5db3-988e-4507-ad18-3e48f944c742";
+		final Template template = new Template();
 
-    @Test
-    public void testDelete() throws IOException {
-        final Template template = new Template();
-        template.setIdentifier("42fc5db3-988e-4507-ad18-3e48f944c742");
-        template.setOriginalFilename("testDelete");
+		when(templateRepository.findByIdentifier(identifier)).thenReturn(template);
+		final Template actual = service.findByIdentifier(identifier);
+		assertSame(template, actual);
+	}
 
-        final File file = new File(TPL_DIR, "testDelete");
-        FileUtils.writeStringToFile(file, "testDelete", StandardCharsets.UTF_8);
+	@Test
+	public void testDelete() throws IOException {
+		final Template template = new Template();
+		template.setIdentifier("42fc5db3-988e-4507-ad18-3e48f944c742");
+		template.setOriginalFilename("testDelete");
 
-        when(templateRepository.findById(template.getIdentifier())).thenReturn(Optional.of(template));
-        when(fm.retrieveFile(anyString(), any(AbstractDomainObject.class))).thenReturn(file);
+		final File file = new File(TPL_DIR, "testDelete");
+		FileUtils.writeStringToFile(file, "testDelete", StandardCharsets.UTF_8);
 
-        service.delete(template.getIdentifier());
+		when(templateRepository.findById(template.getIdentifier())).thenReturn(Optional.of(template));
+		when(fm.retrieveFile(anyString(), any(AbstractDomainObject.class))).thenReturn(file);
 
-        assertFalse(file.exists());
-        verify(templateRepository).delete(template);
-    }
+		service.delete(template.getIdentifier());
 
-    @Test
-    public void testSave() {
-        final Library library = new Library();
-        library.setIdentifier("6b84a31c-0654-4b37-ba0b-e1d4cb4b5fac");
+		assertFalse(file.exists());
+		verify(templateRepository).delete(template);
+	}
 
-        final Template template = new Template();
-        final String identifier = "05d4fdf5-1dd8-4feb-95fa-eba3271c5ed1";
+	@Test
+	public void testSave() {
+		final Library library = new Library();
+		library.setIdentifier("6b84a31c-0654-4b37-ba0b-e1d4cb4b5fac");
 
-        when(templateRepository.save(template)).thenReturn(template);
-        when(templateRepository.countByNameAndLibraryIdentifier(Name.ReinitPassword, library.getIdentifier())).thenReturn(1L, 0L);
-        when(templateRepository.countByNameAndLibraryIdentifierAndIdentifierNot(Name.ReinitPassword, library.getIdentifier(), identifier)).thenReturn(1L, 0L);
+		final Template template = new Template();
+		final String identifier = "05d4fdf5-1dd8-4feb-95fa-eba3271c5ed1";
 
-        // Validation KO, création
-        try {
-            service.save(template);
-            fail("testSave should have failed");
-        } catch (final PgcnValidationException e) {
-            TestUtil.checkPgcnException(e, TPL_LIBRARY_MANDATORY, TPL_NAME_MANDATORY);
-        }
+		when(templateRepository.save(template)).thenReturn(template);
+		when(templateRepository.countByNameAndLibraryIdentifier(Name.ReinitPassword, library.getIdentifier()))
+			.thenReturn(1L, 0L);
+		when(templateRepository.countByNameAndLibraryIdentifierAndIdentifierNot(Name.ReinitPassword,
+				library.getIdentifier(), identifier))
+			.thenReturn(1L, 0L);
 
-        // Validation KO, création + doublon
-        try {
-            template.setLibrary(library);
-            template.setName(Name.ReinitPassword);
+		// Validation KO, création
+		try {
+			service.save(template);
+			fail("testSave should have failed");
+		}
+		catch (final PgcnValidationException e) {
+			TestUtil.checkPgcnException(e, TPL_LIBRARY_MANDATORY, TPL_NAME_MANDATORY);
+		}
 
-            service.save(template);
-            fail("testSave should have failed");
-        } catch (final PgcnValidationException e) {
-            TestUtil.checkPgcnException(e, TPL_DUPLICATE);
-        }
+		// Validation KO, création + doublon
+		try {
+			template.setLibrary(library);
+			template.setName(Name.ReinitPassword);
 
-        // Validation OK, création + doublon
-        try {
-            final Template actual = service.save(template);
-            assertSame(template, actual);
+			service.save(template);
+			fail("testSave should have failed");
+		}
+		catch (final PgcnValidationException e) {
+			TestUtil.checkPgcnException(e, TPL_DUPLICATE);
+		}
 
-        } catch (final PgcnValidationException e) {
-            fail("unexpected failure");
-        }
+		// Validation OK, création + doublon
+		try {
+			final Template actual = service.save(template);
+			assertSame(template, actual);
 
-        // Validation KO, mise à jour + doublon
-        try {
-            template.setIdentifier(identifier);
-            service.save(template);
-            fail("testSave should have failed");
-        } catch (final PgcnValidationException e) {
-            TestUtil.checkPgcnException(e, TPL_DUPLICATE);
-        }
+		}
+		catch (final PgcnValidationException e) {
+			fail("unexpected failure");
+		}
 
-        // Validation OK, mise à jour + doublon
-        try {
-            final Template actual = service.save(template);
-            assertSame(template, actual);
+		// Validation KO, mise à jour + doublon
+		try {
+			template.setIdentifier(identifier);
+			service.save(template);
+			fail("testSave should have failed");
+		}
+		catch (final PgcnValidationException e) {
+			TestUtil.checkPgcnException(e, TPL_DUPLICATE);
+		}
 
-        } catch (final PgcnValidationException e) {
-            fail("unexpected failure");
-        }
-    }
+		// Validation OK, mise à jour + doublon
+		try {
+			final Template actual = service.save(template);
+			assertSame(template, actual);
 
-    @Test
-    public void testDownload() throws IOException {
-        final Template template = new Template();
-        template.setIdentifier("42fc5db3-988e-4507-ad18-3e48f944c742");
-        template.setOriginalFilename("testDownload");
+		}
+		catch (final PgcnValidationException e) {
+			fail("unexpected failure");
+		}
+	}
 
-        final String data = "Cras accumsan urna condimentum suscipit efficitur.";
-        final File file = new File(TPL_DIR, "testDownload");
-        FileUtils.writeStringToFile(file, data, StandardCharsets.UTF_8);
+	@Test
+	public void testDownload() throws IOException {
+		final Template template = new Template();
+		template.setIdentifier("42fc5db3-988e-4507-ad18-3e48f944c742");
+		template.setOriginalFilename("testDownload");
 
-        when(fm.retrieveFile(anyString(), any(AbstractDomainObject.class))).thenReturn(file);
+		final String data = "Cras accumsan urna condimentum suscipit efficitur.";
+		final File file = new File(TPL_DIR, "testDownload");
+		FileUtils.writeStringToFile(file, data, StandardCharsets.UTF_8);
 
-        final InputStream actual = service.getContentStream(template);
-        assertNotNull(actual);
-        assertEquals(data, IOUtils.toString(actual, StandardCharsets.UTF_8));
-    }
+		when(fm.retrieveFile(anyString(), any(AbstractDomainObject.class))).thenReturn(file);
 
-    @Test
-    public void testUpload() throws IOException {
-        final Template template = new Template();
-        template.setIdentifier("42fc5db3-988e-4507-ad18-3e48f944c742");
+		final InputStream actual = service.getContentStream(template);
+		assertNotNull(actual);
+		assertEquals(data, IOUtils.toString(actual, StandardCharsets.UTF_8));
+	}
 
-        final String data = "Cras accumsan urna condimentum suscipit efficitur.";
-        final MultipartFile file = new MockMultipartFile("testUpload", "testUpload", "text/plain", data.getBytes(StandardCharsets.UTF_8));
-        final File impFile = new File("testUpload");
+	@Test
+	public void testUpload() throws IOException {
+		final Template template = new Template();
+		template.setIdentifier("42fc5db3-988e-4507-ad18-3e48f944c742");
 
-        when(templateRepository.findById(template.getIdentifier())).thenReturn(Optional.of(template));
-        when(templateRepository.save(template)).thenReturn(template);
-        when(fm.copyInputStreamToFile(any(InputStream.class), anyString(), any())).thenReturn(impFile);
+		final String data = "Cras accumsan urna condimentum suscipit efficitur.";
+		final MultipartFile file = new MockMultipartFile("testUpload", "testUpload", "text/plain",
+				data.getBytes(StandardCharsets.UTF_8));
+		final File impFile = new File("testUpload");
 
-        // upload du fichier
-        final Template actualUploaded = service.save(template, file);
-        assertNotNull(actualUploaded);
-        assertEquals(file.getOriginalFilename(), template.getOriginalFilename());
-        assertEquals(file.getSize(), template.getFileSize().longValue());
-    }
+		when(templateRepository.findById(template.getIdentifier())).thenReturn(Optional.of(template));
+		when(templateRepository.save(template)).thenReturn(template);
+		when(fm.copyInputStreamToFile(any(InputStream.class), anyString(), any())).thenReturn(impFile);
+
+		// upload du fichier
+		final Template actualUploaded = service.save(template, file);
+		assertNotNull(actualUploaded);
+		assertEquals(file.getOriginalFilename(), template.getOriginalFilename());
+		assertEquals(file.getSize(), template.getFileSize().longValue());
+	}
 
 }

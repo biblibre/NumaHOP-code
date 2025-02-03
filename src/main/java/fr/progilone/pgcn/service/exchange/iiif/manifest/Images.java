@@ -12,99 +12,99 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"@type",
-                    "@id",
-                    "@container"})
+@JsonPropertyOrder({ "@type", "@id", "@container" })
 public class Images {
 
-    @JsonProperty("@type")
-    private String type;
-    @JsonProperty("@id")
-    private String id;
-    @JsonProperty("@container")
-    private String container;
-    @JsonIgnore
-    @Valid
-    private Map<String, Object> additionalProperties = new HashMap<>();
+	@JsonProperty("@type")
+	private String type;
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public Images() {
-    }
+	@JsonProperty("@id")
+	private String id;
 
-    /**
-     *
-     * @param id
-     * @param container
-     * @param type
-     */
-    public Images(String type, String id, String container) {
-        super();
-        this.type = type;
-        this.id = id;
-        this.container = container;
-    }
+	@JsonProperty("@container")
+	private String container;
 
-    @JsonProperty("@type")
-    public String getType() {
-        return type;
-    }
+	@JsonIgnore
+	@Valid
+	private Map<String, Object> additionalProperties = new HashMap<>();
 
-    @JsonProperty("@type")
-    public void setType(String type) {
-        this.type = type;
-    }
+	/**
+	 * No args constructor for use in serialization
+	 *
+	 */
+	public Images() {
+	}
 
-    public Images withType(String type) {
-        this.type = type;
-        return this;
-    }
+	/**
+	 * @param id
+	 * @param container
+	 * @param type
+	 */
+	public Images(String type, String id, String container) {
+		super();
+		this.type = type;
+		this.id = id;
+		this.container = container;
+	}
 
-    @JsonProperty("@id")
-    public String getId() {
-        return id;
-    }
+	@JsonProperty("@type")
+	public String getType() {
+		return type;
+	}
 
-    @JsonProperty("@id")
-    public void setId(String id) {
-        this.id = id;
-    }
+	@JsonProperty("@type")
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public Images withId(String id) {
-        this.id = id;
-        return this;
-    }
+	public Images withType(String type) {
+		this.type = type;
+		return this;
+	}
 
-    @JsonProperty("@container")
-    public String getContainer() {
-        return container;
-    }
+	@JsonProperty("@id")
+	public String getId() {
+		return id;
+	}
 
-    @JsonProperty("@container")
-    public void setContainer(String container) {
-        this.container = container;
-    }
+	@JsonProperty("@id")
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public Images withContainer(String container) {
-        this.container = container;
-        return this;
-    }
+	public Images withId(String id) {
+		this.id = id;
+		return this;
+	}
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
+	@JsonProperty("@container")
+	public String getContainer() {
+		return container;
+	}
 
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
+	@JsonProperty("@container")
+	public void setContainer(String container) {
+		this.container = container;
+	}
 
-    public Images withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
-    }
+	public Images withContainer(String container) {
+		this.container = container;
+		return this;
+	}
+
+	@JsonAnyGetter
+	public Map<String, Object> getAdditionalProperties() {
+		return this.additionalProperties;
+	}
+
+	@JsonAnySetter
+	public void setAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+	}
+
+	public Images withAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+		return this;
+	}
 
 }

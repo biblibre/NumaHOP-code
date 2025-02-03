@@ -12,11 +12,12 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface SimpleWorkflowMapper {
 
-    SimpleWorkflowMapper INSTANCE = Mappers.getMapper(SimpleWorkflowMapper.class);
+	SimpleWorkflowMapper INSTANCE = Mappers.getMapper(SimpleWorkflowMapper.class);
 
-    SimpleWorkflowGroupDTO groupToSimpleGroupDTO(WorkflowGroup group);
+	SimpleWorkflowGroupDTO groupToSimpleGroupDTO(WorkflowGroup group);
 
-    SimpleWorkflowModelDTO modelToSimpleModelDTO(WorkflowModel model);
+	SimpleWorkflowModelDTO modelToSimpleModelDTO(WorkflowModel model);
 
-    SimpleWorkflowModelStateDTO modelStateToSimpleModelState(WorkflowModelState state);
+	SimpleWorkflowModelStateDTO modelStateToSimpleModelState(WorkflowModelState state);
+
 }

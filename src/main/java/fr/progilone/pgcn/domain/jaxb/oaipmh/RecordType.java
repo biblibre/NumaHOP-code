@@ -15,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A record has a header, a metadata part, and
- * an optional about container
+ * A record has a header, a metadata part, and an optional about container
  *
  * <p>
  * Classe Java pour recordType complex type.
@@ -41,93 +40,79 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "recordType",
-         propOrder = {"header",
-                      "metadata",
-                      "about"})
+@XmlType(name = "recordType", propOrder = { "header", "metadata", "about" })
 public class RecordType {
 
-    @XmlElement(required = true)
-    protected HeaderType header;
-    protected MetadataType metadata;
-    protected List<AboutType> about;
+	@XmlElement(required = true)
+	protected HeaderType header;
 
-    /**
-     * Obtient la valeur de la propriété header.
-     *
-     * @return
-     *         possible object is
-     *         {@link HeaderType }
-     *
-     */
-    public HeaderType getHeader() {
-        return header;
-    }
+	protected MetadataType metadata;
 
-    /**
-     * Définit la valeur de la propriété header.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link HeaderType }
-     *
-     */
-    public void setHeader(HeaderType value) {
-        this.header = value;
-    }
+	protected List<AboutType> about;
 
-    /**
-     * Obtient la valeur de la propriété metadata.
-     *
-     * @return
-     *         possible object is
-     *         {@link MetadataType }
-     *
-     */
-    public MetadataType getMetadata() {
-        return metadata;
-    }
+	/**
+	 * Obtient la valeur de la propriété header.
+	 * @return possible object is {@link HeaderType }
+	 *
+	 */
+	public HeaderType getHeader() {
+		return header;
+	}
 
-    /**
-     * Définit la valeur de la propriété metadata.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link MetadataType }
-     *
-     */
-    public void setMetadata(MetadataType value) {
-        this.metadata = value;
-    }
+	/**
+	 * Définit la valeur de la propriété header.
+	 * @param value allowed object is {@link HeaderType }
+	 *
+	 */
+	public void setHeader(HeaderType value) {
+		this.header = value;
+	}
 
-    /**
-     * Gets the value of the about property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the about property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getAbout().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AboutType }
-     *
-     *
-     */
-    public List<AboutType> getAbout() {
-        if (about == null) {
-            about = new ArrayList<>();
-        }
-        return this.about;
-    }
+	/**
+	 * Obtient la valeur de la propriété metadata.
+	 * @return possible object is {@link MetadataType }
+	 *
+	 */
+	public MetadataType getMetadata() {
+		return metadata;
+	}
+
+	/**
+	 * Définit la valeur de la propriété metadata.
+	 * @param value allowed object is {@link MetadataType }
+	 *
+	 */
+	public void setMetadata(MetadataType value) {
+		this.metadata = value;
+	}
+
+	/**
+	 * Gets the value of the about property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the about
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getAbout().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link AboutType }
+	 *
+	 *
+	 */
+	public List<AboutType> getAbout() {
+		if (about == null) {
+			about = new ArrayList<>();
+		}
+		return this.about;
+	}
 
 }

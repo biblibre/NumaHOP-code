@@ -6,44 +6,48 @@ import java.util.List;
 
 public class DocUnitWorkflowDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-    private List<DocUnitStateDTO> states;
+	private String identifier;
 
-    public DocUnitWorkflowDTO() {
+	private LocalDateTime startDate;
 
-    }
+	private LocalDateTime endDate;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private List<DocUnitStateDTO> states;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public DocUnitWorkflowDTO() {
 
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
+	}
 
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
-    }
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
 
-    public List<DocUnitStateDTO> getStates() {
-        return states;
-    }
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
 
-    public void setStates(List<DocUnitStateDTO> states) {
-        this.states = states;
-    }
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
+
+	public List<DocUnitStateDTO> getStates() {
+		return states;
+	}
+
+	public void setStates(List<DocUnitStateDTO> states) {
+		this.states = states;
+	}
+
 }

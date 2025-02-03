@@ -5,15 +5,16 @@ import fr.progilone.pgcn.domain.user.User;
 
 public abstract class UserMapperDecorator implements UserMapper {
 
-    private final UserMapper delegate;
+	private final UserMapper delegate;
 
-    public UserMapperDecorator(UserMapper delegate) {
-        this.delegate = delegate;
-    }
+	public UserMapperDecorator(UserMapper delegate) {
+		this.delegate = delegate;
+	}
 
-    @Override
-    public UserDTO userToUserDTO(User user) {
-        UserDTO dto = delegate.userToUserDTO(user);
-        return dto;
-    }
+	@Override
+	public UserDTO userToUserDTO(User user) {
+		UserDTO dto = delegate.userToUserDTO(user);
+		return dto;
+	}
+
 }

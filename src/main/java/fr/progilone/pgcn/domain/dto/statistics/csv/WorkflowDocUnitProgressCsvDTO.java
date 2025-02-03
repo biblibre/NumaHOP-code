@@ -8,100 +8,118 @@ import jakarta.annotation.Nullable;
 
 public class WorkflowDocUnitProgressCsvDTO implements Comparable<WorkflowDocUnitProgressCsvDTO> {
 
-    private static final Ordering<WorkflowDocUnitProgressCsvDTO> orderDto;
+	private static final Ordering<WorkflowDocUnitProgressCsvDTO> orderDto;
 
-    static {
-        Ordering<WorkflowDocUnitProgressCsvDTO> orderLib = Ordering.natural().nullsFirst().onResultOf(WorkflowDocUnitProgressCsvDTO::getLibraryName);
-        Ordering<WorkflowDocUnitProgressCsvDTO> orderPj = Ordering.natural().nullsFirst().onResultOf(WorkflowDocUnitProgressCsvDTO::getProjectName);
-        Ordering<WorkflowDocUnitProgressCsvDTO> orderLot = Ordering.natural().nullsFirst().onResultOf(WorkflowDocUnitProgressCsvDTO::getLotLabel);
-        Ordering<WorkflowDocUnitProgressCsvDTO> orderUd = Ordering.natural().nullsFirst().onResultOf(WorkflowDocUnitProgressCsvDTO::getDocPgcnId);
-        Ordering<WorkflowDocUnitProgressCsvDTO> orderStep = Ordering.natural().nullsFirst().onResultOf(WorkflowDocUnitProgressCsvDTO::getKey);
-        orderDto = orderLib.compound(orderPj).compound(orderLot).compound(orderUd).compound(orderStep);
-    }
+	static {
+		Ordering<WorkflowDocUnitProgressCsvDTO> orderLib = Ordering.natural()
+			.nullsFirst()
+			.onResultOf(WorkflowDocUnitProgressCsvDTO::getLibraryName);
+		Ordering<WorkflowDocUnitProgressCsvDTO> orderPj = Ordering.natural()
+			.nullsFirst()
+			.onResultOf(WorkflowDocUnitProgressCsvDTO::getProjectName);
+		Ordering<WorkflowDocUnitProgressCsvDTO> orderLot = Ordering.natural()
+			.nullsFirst()
+			.onResultOf(WorkflowDocUnitProgressCsvDTO::getLotLabel);
+		Ordering<WorkflowDocUnitProgressCsvDTO> orderUd = Ordering.natural()
+			.nullsFirst()
+			.onResultOf(WorkflowDocUnitProgressCsvDTO::getDocPgcnId);
+		Ordering<WorkflowDocUnitProgressCsvDTO> orderStep = Ordering.natural()
+			.nullsFirst()
+			.onResultOf(WorkflowDocUnitProgressCsvDTO::getKey);
+		orderDto = orderLib.compound(orderPj).compound(orderLot).compound(orderUd).compound(orderStep);
+	}
 
-    @CsvBindByName(column = "1. Bibliothèque")
-    private String libraryName;
-    @CsvBindByName(column = "2. Projet")
-    private String projectName;
-    @CsvBindByName(column = "3. Lot")
-    private String lotLabel;
-    @CsvBindByName(column = "4. Pgcn Id")
-    private String docPgcnId;
-    @CsvBindByName(column = "5. Libellé UD")
-    private String docLabel;
-    @CsvBindByName(column = "6. Nombre de pages")
-    private Integer totalPage;
-    @CsvBindByName(column = "7. Étape")
-    private WorkflowStateKey key;
-    @CsvBindByName(column = "8. Statut")
-    private WorkflowStateStatus status;
+	@CsvBindByName(column = "1. Bibliothèque")
+	private String libraryName;
 
-    public String getLibraryName() {
-        return libraryName;
-    }
+	@CsvBindByName(column = "2. Projet")
+	private String projectName;
 
-    public void setLibraryName(final String libraryName) {
-        this.libraryName = libraryName;
-    }
+	@CsvBindByName(column = "3. Lot")
+	private String lotLabel;
 
-    public String getProjectName() {
-        return projectName;
-    }
+	@CsvBindByName(column = "4. Pgcn Id")
+	private String docPgcnId;
 
-    public void setProjectName(final String projectName) {
-        this.projectName = projectName;
-    }
+	@CsvBindByName(column = "5. Libellé UD")
+	private String docLabel;
 
-    public String getLotLabel() {
-        return lotLabel;
-    }
+	@CsvBindByName(column = "6. Nombre de pages")
+	private Integer totalPage;
 
-    public void setLotLabel(final String lotLabel) {
-        this.lotLabel = lotLabel;
-    }
+	@CsvBindByName(column = "7. Étape")
+	private WorkflowStateKey key;
 
-    public String getDocPgcnId() {
-        return docPgcnId;
-    }
+	@CsvBindByName(column = "8. Statut")
+	private WorkflowStateStatus status;
 
-    public void setDocPgcnId(final String docPgcnId) {
-        this.docPgcnId = docPgcnId;
-    }
+	public String getLibraryName() {
+		return libraryName;
+	}
 
-    public String getDocLabel() {
-        return docLabel;
-    }
+	public void setLibraryName(final String libraryName) {
+		this.libraryName = libraryName;
+	}
 
-    public void setDocLabel(final String docLabel) {
-        this.docLabel = docLabel;
-    }
+	public String getProjectName() {
+		return projectName;
+	}
 
-    public Integer getTotalPage() {
-        return totalPage;
-    }
+	public void setProjectName(final String projectName) {
+		this.projectName = projectName;
+	}
 
-    public void setTotalPage(final Integer totalPage) {
-        this.totalPage = totalPage;
-    }
+	public String getLotLabel() {
+		return lotLabel;
+	}
 
-    public WorkflowStateKey getKey() {
-        return key;
-    }
+	public void setLotLabel(final String lotLabel) {
+		this.lotLabel = lotLabel;
+	}
 
-    public void setKey(final WorkflowStateKey key) {
-        this.key = key;
-    }
+	public String getDocPgcnId() {
+		return docPgcnId;
+	}
 
-    public WorkflowStateStatus getStatus() {
-        return status;
-    }
+	public void setDocPgcnId(final String docPgcnId) {
+		this.docPgcnId = docPgcnId;
+	}
 
-    public void setStatus(final WorkflowStateStatus status) {
-        this.status = status;
-    }
+	public String getDocLabel() {
+		return docLabel;
+	}
 
-    @Override
-    public int compareTo(@Nullable final WorkflowDocUnitProgressCsvDTO o) {
-        return orderDto.compare(this, o);
-    }
+	public void setDocLabel(final String docLabel) {
+		this.docLabel = docLabel;
+	}
+
+	public Integer getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(final Integer totalPage) {
+		this.totalPage = totalPage;
+	}
+
+	public WorkflowStateKey getKey() {
+		return key;
+	}
+
+	public void setKey(final WorkflowStateKey key) {
+		this.key = key;
+	}
+
+	public WorkflowStateStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(final WorkflowStateStatus status) {
+		this.status = status;
+	}
+
+	@Override
+	public int compareTo(@Nullable final WorkflowDocUnitProgressCsvDTO o) {
+		return orderDto.compare(this, o);
+	}
+
 }

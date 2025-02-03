@@ -19,123 +19,127 @@ import java.util.Objects;
 @IdClass(Transliteration.TransliterationId.class)
 public class Transliteration {
 
-    public static final String TABLE_NAME = "conf_transliteration";
+	public static final String TABLE_NAME = "conf_transliteration";
 
-    public enum Type {
-        FUNCTION
-    }
+	public enum Type {
 
-    @Id
-    @Column(name = "type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Type type;
+		FUNCTION
 
-    @Id
-    @Column(name = "code", nullable = false, unique = true)
-    private String code;
+	}
 
-    @Column(name = "value")
-    private String value;
+	@Id
+	@Column(name = "type", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Type type;
 
-    public Type getType() {
-        return type;
-    }
+	@Id
+	@Column(name = "code", nullable = false, unique = true)
+	private String code;
 
-    public void setType(final Type type) {
-        this.type = type;
-    }
+	@Column(name = "value")
+	private String value;
 
-    public String getCode() {
-        return code;
-    }
+	public Type getType() {
+		return type;
+	}
 
-    public void setCode(final String code) {
-        this.code = code;
-    }
+	public void setType(final Type type) {
+		this.type = type;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setValue(final String value) {
-        this.value = value;
-    }
+	public void setCode(final String code) {
+		this.code = code;
+	}
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Transliteration that = (Transliteration) o;
-        return type == that.type && Objects.equals(code, that.code)
-               && Objects.equals(value, that.value);
-    }
+	public String getValue() {
+		return value;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(type, code, value);
-    }
+	public void setValue(final String value) {
+		this.value = value;
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("type", type).add("code", code).add("value", value).toString();
-    }
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		final Transliteration that = (Transliteration) o;
+		return type == that.type && Objects.equals(code, that.code) && Objects.equals(value, that.value);
+	}
 
-    /**
-     * {@link jakarta.persistence.IdClass} pour les {@link Transliteration}
-     */
-    public static class TransliterationId implements Serializable {
+	@Override
+	public int hashCode() {
+		return Objects.hash(type, code, value);
+	}
 
-        private Type type;
-        private String code;
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this).add("type", type).add("code", code).add("value", value).toString();
+	}
 
-        public TransliterationId() {
-        }
+	/**
+	 * {@link jakarta.persistence.IdClass} pour les {@link Transliteration}
+	 */
+	public static class TransliterationId implements Serializable {
 
-        public TransliterationId(final Type type, final String code) {
-            this.type = type;
-            this.code = code;
-        }
+		private Type type;
 
-        public Type getType() {
-            return type;
-        }
+		private String code;
 
-        public void setType(final Type type) {
-            this.type = type;
-        }
+		public TransliterationId() {
+		}
 
-        public String getCode() {
-            return code;
-        }
+		public TransliterationId(final Type type, final String code) {
+			this.type = type;
+			this.code = code;
+		}
 
-        public void setCode(final String code) {
-            this.code = code;
-        }
+		public Type getType() {
+			return type;
+		}
 
-        @Override
-        public boolean equals(final Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-            final TransliterationId that = (TransliterationId) o;
-            return type == that.type && Objects.equals(code, that.code);
-        }
+		public void setType(final Type type) {
+			this.type = type;
+		}
 
-        @Override
-        public int hashCode() {
-            return Objects.hash(type, code);
-        }
+		public String getCode() {
+			return code;
+		}
 
-        @Override
-        public String toString() {
-            return MoreObjects.toStringHelper(this).add("type", type).add("code", code).toString();
-        }
-    }
+		public void setCode(final String code) {
+			this.code = code;
+		}
+
+		@Override
+		public boolean equals(final Object o) {
+			if (this == o) {
+				return true;
+			}
+			if (o == null || getClass() != o.getClass()) {
+				return false;
+			}
+			final TransliterationId that = (TransliterationId) o;
+			return type == that.type && Objects.equals(code, that.code);
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(type, code);
+		}
+
+		@Override
+		public String toString() {
+			return MoreObjects.toStringHelper(this).add("type", type).add("code", code).toString();
+		}
+
+	}
+
 }

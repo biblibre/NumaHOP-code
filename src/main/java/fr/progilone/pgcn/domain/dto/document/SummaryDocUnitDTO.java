@@ -11,70 +11,77 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
  */
 public class SummaryDocUnitDTO extends AbstractDTO {
 
-    private String identifier;
-    private String pgcnId;
-    private String label;
-    private String type;
-    private Boolean archivable;
-    private Boolean distributable;
+	private String identifier;
 
-    public SummaryDocUnitDTO() {
-    }
+	private String pgcnId;
 
-    public SummaryDocUnitDTO(String identifier, String pgcnId, String label, String type, Boolean archivable, Boolean distributable) {
-        this.identifier = identifier;
-        this.pgcnId = pgcnId;
-        this.label = label;
-        this.type = type;
-        this.archivable = archivable;
-        this.distributable = distributable;
-    }
+	private String label;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String type;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private Boolean archivable;
 
-    public String getPgcnId() {
-        return pgcnId;
-    }
+	private Boolean distributable;
 
-    public void setPgcnId(String pgcnId) {
-        this.pgcnId = pgcnId;
-    }
+	public SummaryDocUnitDTO() {
+	}
 
-    public String getLabel() {
-        return label;
-    }
+	public SummaryDocUnitDTO(String identifier, String pgcnId, String label, String type, Boolean archivable,
+			Boolean distributable) {
+		this.identifier = identifier;
+		this.pgcnId = pgcnId;
+		this.label = label;
+		this.type = type;
+		this.archivable = archivable;
+		this.distributable = distributable;
+	}
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public String getPgcnId() {
+		return pgcnId;
+	}
 
-    public Boolean getArchivable() {
-        return archivable;
-    }
+	public void setPgcnId(String pgcnId) {
+		this.pgcnId = pgcnId;
+	}
 
-    public void setArchivable(Boolean archivable) {
-        this.archivable = archivable;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public Boolean getDistributable() {
-        return distributable;
-    }
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
-    public void setDistributable(Boolean distributable) {
-        this.distributable = distributable;
-    }
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Boolean getArchivable() {
+		return archivable;
+	}
+
+	public void setArchivable(Boolean archivable) {
+		this.archivable = archivable;
+	}
+
+	public Boolean getDistributable() {
+		return distributable;
+	}
+
+	public void setDistributable(Boolean distributable) {
+		this.distributable = distributable;
+	}
+
 }

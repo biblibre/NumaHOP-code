@@ -33,28 +33,27 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum DjvuFormatType {
 
-    @XmlEnumValue("indirect")
-    INDIRECT("indirect"),
-    @XmlEnumValue("bundled")
-    BUNDLED("bundled");
+	@XmlEnumValue("indirect")
+	INDIRECT("indirect"), @XmlEnumValue("bundled")
+	BUNDLED("bundled");
 
-    private final String value;
+	private final String value;
 
-    DjvuFormatType(String v) {
-        value = v;
-    }
+	DjvuFormatType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static DjvuFormatType fromValue(String v) {
-        for (DjvuFormatType c : DjvuFormatType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static DjvuFormatType fromValue(String v) {
+		for (DjvuFormatType c : DjvuFormatType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

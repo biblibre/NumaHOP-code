@@ -10,12 +10,13 @@ import org.mapstruct.factory.Mappers;
 /**
  * Created by Sebastien on 07/12/2016.
  */
-@Mapper(uses = {SimpleLibraryMapper.class})
+@Mapper(uses = { SimpleLibraryMapper.class })
 public interface CSVMappingMapper {
 
-    CSVMappingMapper INSTANCE = Mappers.getMapper(CSVMappingMapper.class);
+	CSVMappingMapper INSTANCE = Mappers.getMapper(CSVMappingMapper.class);
 
-    CSVMappingDTO mappingToDto(CSVMapping mapping);
+	CSVMappingDTO mappingToDto(CSVMapping mapping);
 
-    Set<CSVMappingDTO> mappingToDtos(Set<CSVMapping> mappings);
+	Set<CSVMappingDTO> mappingToDtos(Set<CSVMapping> mappings);
+
 }

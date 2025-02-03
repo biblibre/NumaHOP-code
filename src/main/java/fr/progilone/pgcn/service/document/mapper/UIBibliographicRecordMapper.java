@@ -21,105 +21,102 @@ import org.springframework.stereotype.Service;
 @Service
 public class UIBibliographicRecordMapper {
 
-    private final DocPropertyService docPropertyService;
-    private final DocUnitService docUnitService;
-    private final LibraryService libraryService;
-    private final UIDocPropertyMapper uiDocPropertyMapper;
+	private final DocPropertyService docPropertyService;
 
-    @Autowired
-    public UIBibliographicRecordMapper(final DocPropertyService docPropertyService,
-                                       final DocUnitService docUnitService,
-                                       final LibraryService libraryService,
-                                       final UIDocPropertyMapper uiDocPropertyMapper) {
-        this.docPropertyService = docPropertyService;
-        this.docUnitService = docUnitService;
-        this.libraryService = libraryService;
-        this.uiDocPropertyMapper = uiDocPropertyMapper;
-    }
+	private final DocUnitService docUnitService;
 
-    public void mapInto(final BibliographicRecordDTO recordDTO, final BibliographicRecord record) {
-        record.setDocElectronique(recordDTO.getDocElectronique());
-        record.setCalames(recordDTO.getCalames());
-        record.setSigb(recordDTO.getSigb());
-        record.setSudoc(recordDTO.getSudoc());
-        record.setTitle(recordDTO.getTitle());
-        // DocUnit
-        final SimpleDocUnitDTO doc = recordDTO.getDocUnit();
-        if (doc != null && doc.getIdentifier() != null) {
-            final DocUnit bddDoc = docUnitService.findOne(doc.getIdentifier());
-            record.setDocUnit(bddDoc);
-        }
-        // Library
-        final SimpleLibraryDTO library = recordDTO.getLibrary();
-        if (library != null) {
-            final Library bdlib = libraryService.findOne(library.getIdentifier());
-            record.setLibrary(bdlib);
-        }
-        // Properties
-        final List<DocPropertyDTO> properties = recordDTO.getProperties();
+	private final LibraryService libraryService;
 
-        if (properties != null) {
+	private final UIDocPropertyMapper uiDocPropertyMapper;
 
-            if (record.getPropertyOrder() == PropertyOrder.BY_PROPERTY_TYPE) {
-                createWeightedValueOrderByType(properties);
-            } else {
-                createWeightedValue(properties);
-            }
+	@Autowired
+	public UIBibliographicRecordMapper(final DocPropertyService docPropertyService, final DocUnitService docUnitService,
+			final LibraryService libraryService, final UIDocPropertyMapper uiDocPropertyMapper) {
+		this.docPropertyService = docPropertyService;
+		this.docUnitService = docUnitService;
+		this.libraryService = libraryService;
+		this.uiDocPropertyMapper = uiDocPropertyMapper;
+	}
 
-            // modifiable
-            record.setProperties(properties.stream().map(property -> {
-                if (property.getIdentifier() != null) {
-                    final DocProperty oldProperty = docPropertyService.findOne(property.getIdentifier());
-                    uiDocPropertyMapper.mapInto(property, oldProperty);
-                    return oldProperty;
-                } else {
-                    // Ajout d'une propriété
-                    final DocProperty newProperty = new DocProperty();
-                    uiDocPropertyMapper.mapInto(property, newProperty);
-                    // sauvegarde effectuée au niveau de la notice
-                    return newProperty;
-                }
-            }).collect(Collectors.toSet()));
+	public void mapInto(final BibliographicRecordDTO recordDTO, final BibliographicRecord record) {
+		record.setDocElectronique(recordDTO.getDocElectronique());
+		record.setCalames(recordDTO.getCalames());
+		record.setSigb(recordDTO.getSigb());
+		record.setSudoc(recordDTO.getSudoc());
+		record.setTitle(recordDTO.getTitle());
+		// DocUnit
+		final SimpleDocUnitDTO doc = recordDTO.getDocUnit();
+		if (doc != null && doc.getIdentifier() != null) {
+			final DocUnit bddDoc = docUnitService.findOne(doc.getIdentifier());
+			record.setDocUnit(bddDoc);
+		}
+		// Library
+		final SimpleLibraryDTO library = recordDTO.getLibrary();
+		if (library != null) {
+			final Library bdlib = libraryService.findOne(library.getIdentifier());
+			record.setLibrary(bdlib);
+		}
+		// Properties
+		final List<DocPropertyDTO> properties = recordDTO.getProperties();
 
-        }
-    }
+		if (properties != null) {
 
-    /**
-     * Create weighted values for properties
-     *
-     * @param properties
-     */
-    public void createWeightedValueOrderByType(final List<DocPropertyDTO> properties) {
-        final int maxPropertyRank = properties.stream()
-                                              .mapToInt(p -> p.getRank() != null ? p.getRank()
-                                                                                 : 0)
-                                              .max()
-                                              .orElse(Integer.MIN_VALUE);
-        int i = 0;
-        for (final DocPropertyDTO p : properties) {
-            i++;
-            final DocPropertyTypeDTO type = p.getType();
-            final int rank = p.getRank() != null ? p.getRank()
-                                                 : 0;
-            p.setWeightedRank((double) (rank + i
-                                        + type.getRank() * maxPropertyRank));
-        }
+			if (record.getPropertyOrder() == PropertyOrder.BY_PROPERTY_TYPE) {
+				createWeightedValueOrderByType(properties);
+			}
+			else {
+				createWeightedValue(properties);
+			}
 
-    }
+			// modifiable
+			record.setProperties(properties.stream().map(property -> {
+				if (property.getIdentifier() != null) {
+					final DocProperty oldProperty = docPropertyService.findOne(property.getIdentifier());
+					uiDocPropertyMapper.mapInto(property, oldProperty);
+					return oldProperty;
+				}
+				else {
+					// Ajout d'une propriété
+					final DocProperty newProperty = new DocProperty();
+					uiDocPropertyMapper.mapInto(property, newProperty);
+					// sauvegarde effectuée au niveau de la notice
+					return newProperty;
+				}
+			}).collect(Collectors.toSet()));
 
-    /**
-     * Create weighted values for properties
-     *
-     * @param properties
-     */
-    public void createWeightedValue(final List<DocPropertyDTO> properties) {
-        int i = 0;
-        for (final DocPropertyDTO p : properties) {
-            i++;
-            final int rank = p.getRank() != null ? p.getRank()
-                                                 : 0;
-            p.setWeightedRank((double) (rank + i));
-        }
-    }
+		}
+	}
+
+	/**
+	 * Create weighted values for properties
+	 * @param properties
+	 */
+	public void createWeightedValueOrderByType(final List<DocPropertyDTO> properties) {
+		final int maxPropertyRank = properties.stream()
+			.mapToInt(p -> p.getRank() != null ? p.getRank() : 0)
+			.max()
+			.orElse(Integer.MIN_VALUE);
+		int i = 0;
+		for (final DocPropertyDTO p : properties) {
+			i++;
+			final DocPropertyTypeDTO type = p.getType();
+			final int rank = p.getRank() != null ? p.getRank() : 0;
+			p.setWeightedRank((double) (rank + i + type.getRank() * maxPropertyRank));
+		}
+
+	}
+
+	/**
+	 * Create weighted values for properties
+	 * @param properties
+	 */
+	public void createWeightedValue(final List<DocPropertyDTO> properties) {
+		int i = 0;
+		for (final DocPropertyDTO p : properties) {
+			i++;
+			final int rank = p.getRank() != null ? p.getRank() : 0;
+			p.setWeightedRank((double) (rank + i));
+		}
+	}
 
 }

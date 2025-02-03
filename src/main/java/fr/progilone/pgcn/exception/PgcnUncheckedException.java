@@ -5,11 +5,12 @@ package fr.progilone.pgcn.exception;
  */
 public class PgcnUncheckedException extends RuntimeException {
 
-    public PgcnUncheckedException(Throwable e) {
-        super(e);
-    }
+	public PgcnUncheckedException(Throwable e) {
+		super(e);
+	}
 
-    public PgcnUncheckedException(String message, Throwable e) {
-        super(message, e);
-    }
+	public PgcnUncheckedException(String message, Throwable e) {
+		super(message, e);
+	}
+
 }

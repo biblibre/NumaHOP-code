@@ -8,7 +8,8 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface SimpleTrainMapper {
 
-    SimpleTrainMapper INSTANCE = Mappers.getMapper(SimpleTrainMapper.class);
+	SimpleTrainMapper INSTANCE = Mappers.getMapper(SimpleTrainMapper.class);
 
-    SimpleTrainDTO trainToSimpleTrainDTO(Train train);
+	SimpleTrainDTO trainToSimpleTrainDTO(Train train);
+
 }

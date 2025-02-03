@@ -67,357 +67,362 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UIDeliveryService {
 
-    private final DeliveryService deliveryService;
-    private final DeliveryAsyncService deliveryAsyncService;
-    private final DeliveryProcessService deliveryProcessService;
-    private final EsDeliveryService esDeliveryService;
-    private final EsDocUnitService esDocUnitService;
-    private final UIDeliveryMapper uiDeliveryMapper;
-    private final DocUnitService docUnitService;
-    private final DocUnitWorkflowService docUnitWorkflowService;
-    private final DigitalDocumentService digitalDocumentService;
-    private final AccessHelper accessHelper;
+	private final DeliveryService deliveryService;
 
-    @Autowired
-    public UIDeliveryService(final DeliveryService deliveryService,
-                             final DeliveryAsyncService deliveryAsyncService,
-                             final DeliveryProcessService deliveryProcessService,
-                             final EsDeliveryService esDeliveryService,
-                             final EsDocUnitService esDocUnitService,
-                             final UIDeliveryMapper uiDeliveryMapper,
-                             final DocUnitService docUnitService,
-                             final DocUnitWorkflowService docUnitWorkflowService,
-                             final DigitalDocumentService digitalDocumentService,
-                             final AccessHelper accessHelper) {
-        this.deliveryService = deliveryService;
-        this.deliveryAsyncService = deliveryAsyncService;
-        this.deliveryProcessService = deliveryProcessService;
-        this.esDeliveryService = esDeliveryService;
-        this.esDocUnitService = esDocUnitService;
-        this.uiDeliveryMapper = uiDeliveryMapper;
-        this.docUnitService = docUnitService;
-        this.docUnitWorkflowService = docUnitWorkflowService;
-        this.digitalDocumentService = digitalDocumentService;
-        this.accessHelper = accessHelper;
-    }
+	private final DeliveryAsyncService deliveryAsyncService;
 
-    @Transactional(readOnly = true)
-    public DeliveryDTO getOne(final String id) {
-        final Delivery delivery = deliveryService.getOne(id);
-        return DeliveryMapper.INSTANCE.deliveryToDeliveryDTO(delivery);
-    }
+	private final DeliveryProcessService deliveryProcessService;
 
-    @Transactional
-    public Set<SimpleDeliveredDigitalDocDTO> getSimpleDigitalDocuments(final String id) {
-        final Set<DeliveredDocument> digitalDocuments = deliveryService.getSimpleDigitalDocumentsByDelivery(id);
-        return DeliveredDocumentMapper.INSTANCE.docToSimpleDTOs(digitalDocuments);
-    }
+	private final EsDeliveryService esDeliveryService;
 
-    public PreDeliveryDTO predeliver(final String id, final boolean createDocs) {
-        final Delivery delivery = deliveryService.findOneWithDep(id);
-        return deliveryProcessService.predeliver(delivery, createDocs);
-    }
+	private final EsDocUnitService esDocUnitService;
 
-    @Transactional
-    public DeliveryDTO update(final ManualDeliveryDTO request) throws PgcnValidationException {
-        validate(request);
-        final Delivery delivery = deliveryService.getOne(request.getIdentifier());
-        uiDeliveryMapper.mapInto(request, delivery);
-        final Delivery savedDelivery = deliveryService.save(delivery);
-        final Delivery deliveryWithProperties = deliveryService.getOne(savedDelivery.getIdentifier());
-        return DeliveryMapper.INSTANCE.deliveryToDeliveryDTO(deliveryWithProperties);
-    }
+	private final UIDeliveryMapper uiDeliveryMapper;
 
-    /**
-     * Infos espace disque / bibliothèque.
-     */
-    public Map<String, Long> getDiskInfos(final String libIdentifier) {
+	private final DocUnitService docUnitService;
 
-        return deliveryProcessService.getDiskInfos(libIdentifier);
-    }
+	private final DocUnitWorkflowService docUnitWorkflowService;
 
-    /**
-     * Réalisation de la livraison avec une partie synchrone (initialisation) et une
-     * partie asynchrone (réalisation)
-     */
-    public void deliver(final String identifier,
-                        final List<String> lockedDocs,
-                        final List<PreDeliveryDocumentDTO> metaDatas,
-                        final boolean createDocs,
-                        final List<String> prefixToExclude) throws PgcnTechnicalException {
+	private final DigitalDocumentService digitalDocumentService;
 
-        final CustomUserDetails user = SecurityUtils.getCurrentUser();
-        final String libraryId = user != null ? user.getLibraryId()
-                                              : null;
+	private final AccessHelper accessHelper;
 
-        // Synchrone
-        if (createDocs) {
-            final List<DocUnit> docs = deliveryProcessService.createDocs(identifier, metaDatas, prefixToExclude);
-            esDocUnitService.indexAsync(docs.stream().map(DocUnit::getIdentifier).collect(Collectors.toList()));
-        }
-        final DeliveryProcessResults processElement = deliveryProcessService.deliver(identifier, lockedDocs, prefixToExclude, metaDatas, libraryId);
+	@Autowired
+	public UIDeliveryService(final DeliveryService deliveryService, final DeliveryAsyncService deliveryAsyncService,
+			final DeliveryProcessService deliveryProcessService, final EsDeliveryService esDeliveryService,
+			final EsDocUnitService esDocUnitService, final UIDeliveryMapper uiDeliveryMapper,
+			final DocUnitService docUnitService, final DocUnitWorkflowService docUnitWorkflowService,
+			final DigitalDocumentService digitalDocumentService, final AccessHelper accessHelper) {
+		this.deliveryService = deliveryService;
+		this.deliveryAsyncService = deliveryAsyncService;
+		this.deliveryProcessService = deliveryProcessService;
+		this.esDeliveryService = esDeliveryService;
+		this.esDocUnitService = esDocUnitService;
+		this.uiDeliveryMapper = uiDeliveryMapper;
+		this.docUnitService = docUnitService;
+		this.docUnitWorkflowService = docUnitWorkflowService;
+		this.digitalDocumentService = digitalDocumentService;
+		this.accessHelper = accessHelper;
+	}
 
-        // Asynchrone
-        esDeliveryService.indexAsync(identifier);
-        deliveryAsyncService.processDelivery(identifier, processElement);
-    }
+	@Transactional(readOnly = true)
+	public DeliveryDTO getOne(final String id) {
+		final Delivery delivery = deliveryService.getOne(id);
+		return DeliveryMapper.INSTANCE.deliveryToDeliveryDTO(delivery);
+	}
 
-    @Transactional
-    public DeliveryDTO create(final ManualDeliveryDTO request) throws PgcnValidationException {
-        validate(request);
-        final Delivery delivery = new Delivery();
-        uiDeliveryMapper.mapInto(request, delivery);
-        final Delivery savedLot = deliveryService.save(delivery);
-        final Delivery deliveryWithProperties = deliveryService.getOne(savedLot.getIdentifier());
-        return DeliveryMapper.INSTANCE.deliveryToDeliveryDTO(deliveryWithProperties);
-    }
+	@Transactional
+	public Set<SimpleDeliveredDigitalDocDTO> getSimpleDigitalDocuments(final String id) {
+		final Set<DeliveredDocument> digitalDocuments = deliveryService.getSimpleDigitalDocumentsByDelivery(id);
+		return DeliveredDocumentMapper.INSTANCE.docToSimpleDTOs(digitalDocuments);
+	}
 
-    @Transactional(readOnly = true)
-    public List<SimpleDeliveryDTO> findPreviousDeliveriesForCheckSlips(final String digitalDocId) {
-        final List<SimpleDeliveryDTO> previousDeliveriesForSlips = new ArrayList<>();
-        final List<DeliveredDocument> slips = deliveryService.findDeliveredWithCheckSlipsByDigitalDoc(digitalDocId);
-        if (CollectionUtils.isNotEmpty(slips) && slips.size() > 1) {
-            slips.subList(1, slips.size()).stream().filter(doc -> DigitalDocumentStatus.REJECTED.equals(doc.getStatus()) && doc.getCheckSlip() != null).forEach(doc -> {
-                final SimpleDeliveryDTO dto = new SimpleDeliveryDTO();
-                dto.setIdentifier(doc.getDelivery().getIdentifier());
-                dto.setLabel(doc.getDelivery().getLabel());
-                dto.setStatus(DeliveryStatus.REJECTED);
-                previousDeliveriesForSlips.add(dto);
-            });
-        }
-        return previousDeliveriesForSlips;
-    }
+	public PreDeliveryDTO predeliver(final String id, final boolean createDocs) {
+		final Delivery delivery = deliveryService.findOneWithDep(id);
+		return deliveryProcessService.predeliver(delivery, createDocs);
+	}
 
-    /**
-     * Validation des champs unique au niveau du DTO avant le merge
-     */
-    private PgcnList<PgcnError> validate(final ManualDeliveryDTO dto) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
+	@Transactional
+	public DeliveryDTO update(final ManualDeliveryDTO request) throws PgcnValidationException {
+		validate(request);
+		final Delivery delivery = deliveryService.getOne(request.getIdentifier());
+		uiDeliveryMapper.mapInto(request, delivery);
+		final Delivery savedDelivery = deliveryService.save(delivery);
+		final Delivery deliveryWithProperties = deliveryService.getOne(savedDelivery.getIdentifier());
+		return DeliveryMapper.INSTANCE.deliveryToDeliveryDTO(deliveryWithProperties);
+	}
 
-        // Le label est unique
-        if (StringUtils.isNotBlank(dto.getLabel())) {
-            final Delivery duplicate = deliveryService.findOneByLabel(dto.getLabel());
+	/**
+	 * Infos espace disque / bibliothèque.
+	 */
+	public Map<String, Long> getDiskInfos(final String libIdentifier) {
 
-            if (duplicate != null && (dto.getIdentifier() == null || !duplicate.getIdentifier().equalsIgnoreCase(dto.getIdentifier()))) {
-                errors.add(builder.reinit().setCode(PgcnErrorCode.DELIVERY_DUPLICATE_LABEL).setField("label").build());
-            }
-        }
-        // Le lot est obligatoire
-        if (dto.getLot() == null) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.DELIVERY_LOT_MANDATORY).setField("lot").build());
-        }
+		return deliveryProcessService.getDiskInfos(libIdentifier);
+	}
 
-        // Retour
-        if (!errors.isEmpty()) {
-            dto.setErrors(errors);
-            throw new PgcnValidationException(dto, errors);
-        }
-        return errors;
-    }
+	/**
+	 * Réalisation de la livraison avec une partie synchrone (initialisation) et une
+	 * partie asynchrone (réalisation)
+	 */
+	public void deliver(final String identifier, final List<String> lockedDocs,
+			final List<PreDeliveryDocumentDTO> metaDatas, final boolean createDocs, final List<String> prefixToExclude)
+			throws PgcnTechnicalException {
 
-    @Transactional(readOnly = true)
-    public List<SimpleDeliveryDTO> findByLot(final String lotId) {
-        final List<Delivery> deliveries = deliveryService.findByLot(lotId);
-        return deliveries.stream().map(DeliveryMapper.INSTANCE::deliveryToSimpleDeliveryDTO).collect(Collectors.toList());
-    }
+		final CustomUserDetails user = SecurityUtils.getCurrentUser();
+		final String libraryId = user != null ? user.getLibraryId() : null;
 
-    /**
-     * Recherche paramétrée
-     */
-    public Page<SimpleDeliveryDTO> search(final String search,
-                                          final List<String> libraries,
-                                          final List<String> projects,
-                                          final List<String> lots,
-                                          final List<String> providers,
-                                          final List<DeliveryStatus> status,
-                                          final LocalDate dateFrom,
-                                          final LocalDate dateTo,
-                                          final Integer page,
-                                          final Integer size) {
+		// Synchrone
+		if (createDocs) {
+			final List<DocUnit> docs = deliveryProcessService.createDocs(identifier, metaDatas, prefixToExclude);
+			esDocUnitService.indexAsync(docs.stream().map(DocUnit::getIdentifier).collect(Collectors.toList()));
+		}
+		final DeliveryProcessResults processElement = deliveryProcessService.deliver(identifier, lockedDocs,
+				prefixToExclude, metaDatas, libraryId);
 
-        final Page<Delivery> deliveries = deliveryService.search(search, libraries, projects, lots, providers, status, dateFrom, dateTo, page, size);
-        return deliveries.map(DeliveryMapper.INSTANCE::deliveryToSimpleDeliveryDTO);
-    }
+		// Asynchrone
+		esDeliveryService.indexAsync(identifier);
+		deliveryAsyncService.processDelivery(identifier, processElement);
+	}
 
-    @Transactional(readOnly = true)
-    public List<AuditDeliveryRevisionDTO> getDeliveriesForWidget(final LocalDate fromDate,
-                                                                 final List<String> libraries,
-                                                                 final List<String> projects,
-                                                                 final List<String> lots,
-                                                                 final List<Delivery.DeliveryStatus> status,
-                                                                 final boolean sampled) {
+	@Transactional
+	public DeliveryDTO create(final ManualDeliveryDTO request) throws PgcnValidationException {
+		validate(request);
+		final Delivery delivery = new Delivery();
+		uiDeliveryMapper.mapInto(request, delivery);
+		final Delivery savedLot = deliveryService.save(delivery);
+		final Delivery deliveryWithProperties = deliveryService.getOne(savedLot.getIdentifier());
+		return DeliveryMapper.INSTANCE.deliveryToDeliveryDTO(deliveryWithProperties);
+	}
 
-        final List<Delivery> deliveries = deliveryService.findDeliveriesForWidget(fromDate, libraries, projects, lots, status, sampled);
-        final List<AuditDeliveryRevisionDTO> revs = new ArrayList<>();
+	@Transactional(readOnly = true)
+	public List<SimpleDeliveryDTO> findPreviousDeliveriesForCheckSlips(final String digitalDocId) {
+		final List<SimpleDeliveryDTO> previousDeliveriesForSlips = new ArrayList<>();
+		final List<DeliveredDocument> slips = deliveryService.findDeliveredWithCheckSlipsByDigitalDoc(digitalDocId);
+		if (CollectionUtils.isNotEmpty(slips) && slips.size() > 1) {
+			slips.subList(1, slips.size())
+				.stream()
+				.filter(doc -> DigitalDocumentStatus.REJECTED.equals(doc.getStatus()) && doc.getCheckSlip() != null)
+				.forEach(doc -> {
+					final SimpleDeliveryDTO dto = new SimpleDeliveryDTO();
+					dto.setIdentifier(doc.getDelivery().getIdentifier());
+					dto.setLabel(doc.getDelivery().getLabel());
+					dto.setStatus(DeliveryStatus.REJECTED);
+					previousDeliveriesForSlips.add(dto);
+				});
+		}
+		return previousDeliveriesForSlips;
+	}
 
-        deliveries.stream().filter(del -> accessHelper.checkDelivery(del.getIdentifier())).forEach(del -> {
-            final AuditDeliveryRevisionDTO dto = new AuditDeliveryRevisionDTO();
-            dto.setIdentifier(del.getIdentifier());
-            dto.setLabel(del.getLabel());
-            dto.setLotIdentifier(del.getLot().getIdentifier());
-            dto.setLotLabel(del.getLot().getLabel());
-            dto.setStatus(del.getStatus());
-            dto.setTimestamp(del.getDepositDate().atStartOfDay().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
-            revs.add(dto);
-        });
-        return revs;
-    }
+	/**
+	 * Validation des champs unique au niveau du DTO avant le merge
+	 */
+	private PgcnList<PgcnError> validate(final ManualDeliveryDTO dto) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
 
-    @Transactional(readOnly = true)
-    public List<DeliveryDTO> findAllForProject(final String projectId) {
-        final List<Delivery> deliveries = deliveryService.findAllByProjectId(projectId);
-        return deliveries.stream().map(DeliveryMapper.INSTANCE::deliveryToDeliveryDTO).collect(Collectors.toList());
-    }
+		// Le label est unique
+		if (StringUtils.isNotBlank(dto.getLabel())) {
+			final Delivery duplicate = deliveryService.findOneByLabel(dto.getLabel());
 
-    @Transactional(readOnly = true)
-    public DeliveryDTO findLatestDelivery(final String docUnitId) {
-        final Delivery delivery = deliveryService.findLatestDelivery(docUnitId);
-        return DeliveryMapper.INSTANCE.deliveryToDeliveryDTO(delivery);
-    }
+			if (duplicate != null && (dto.getIdentifier() == null
+					|| !duplicate.getIdentifier().equalsIgnoreCase(dto.getIdentifier()))) {
+				errors.add(builder.reinit().setCode(PgcnErrorCode.DELIVERY_DUPLICATE_LABEL).setField("label").build());
+			}
+		}
+		// Le lot est obligatoire
+		if (dto.getLot() == null) {
+			errors.add(builder.reinit().setCode(PgcnErrorCode.DELIVERY_LOT_MANDATORY).setField("lot").build());
+		}
 
-    @Transactional
-    public DeliveryDTO duplicate(final String id) {
-        final Delivery duplicated = deliveryService.duplicate(id);
-        return DeliveryMapper.INSTANCE.deliveryToDeliveryDTO(duplicated);
-    }
+		// Retour
+		if (!errors.isEmpty()) {
+			dto.setErrors(errors);
+			throw new PgcnValidationException(dto, errors);
+		}
+		return errors;
+	}
 
-    @Transactional(readOnly = true)
-    public CheckConfigurationDTO getActiveCheckConfiguration(final String deliveryId) {
-        final Delivery deliv = deliveryService.getWithActiveCheckConfiguration(deliveryId);
-        final Lot lot = deliv.getLot();
-        CheckConfiguration cc = null;
+	@Transactional(readOnly = true)
+	public List<SimpleDeliveryDTO> findByLot(final String lotId) {
+		final List<Delivery> deliveries = deliveryService.findByLot(lotId);
+		return deliveries.stream()
+			.map(DeliveryMapper.INSTANCE::deliveryToSimpleDeliveryDTO)
+			.collect(Collectors.toList());
+	}
 
-        if (lot != null) {
-            cc = lot.getActiveCheckConfiguration();
+	/**
+	 * Recherche paramétrée
+	 */
+	public Page<SimpleDeliveryDTO> search(final String search, final List<String> libraries,
+			final List<String> projects, final List<String> lots, final List<String> providers,
+			final List<DeliveryStatus> status, final LocalDate dateFrom, final LocalDate dateTo, final Integer page,
+			final Integer size) {
 
-            if (cc == null) {
-                final Project project = lot.getProject();
+		final Page<Delivery> deliveries = deliveryService.search(search, libraries, projects, lots, providers, status,
+				dateFrom, dateTo, page, size);
+		return deliveries.map(DeliveryMapper.INSTANCE::deliveryToSimpleDeliveryDTO);
+	}
 
-                if (project != null) {
-                    cc = project.getActiveCheckConfiguration();
-                }
-            }
-        }
-        return CheckConfigurationMapper.INSTANCE.checkConfigurationToCheckConfigurationDTO(cc);
-    }
+	@Transactional(readOnly = true)
+	public List<AuditDeliveryRevisionDTO> getDeliveriesForWidget(final LocalDate fromDate, final List<String> libraries,
+			final List<String> projects, final List<String> lots, final List<Delivery.DeliveryStatus> status,
+			final boolean sampled) {
 
-    @Transactional(readOnly = true)
-    public SimpleDeliveryForViewerDTO getSimpleWithLot(final String id) {
-        final Delivery delivery = deliveryService.getSimpleWithLot(id);
-        return DeliveryMapper.INSTANCE.delivToDtoForViewer(delivery);
-    }
+		final List<Delivery> deliveries = deliveryService.findDeliveriesForWidget(fromDate, libraries, projects, lots,
+				status, sampled);
+		final List<AuditDeliveryRevisionDTO> revs = new ArrayList<>();
 
-    @Transactional(readOnly = true)
-    public List<StatisticsProviderDeliveryDTO> getProviderDeliveryStats(final List<String> libraries,
-                                                                        final List<String> providers,
-                                                                        final LocalDate fromDate,
-                                                                        final LocalDate toDate) {
-        return deliveryService.findByProviders(libraries,
-                                               providers,
-                                               Arrays.asList(DeliveryStatus.TO_BE_CONTROLLED,
-                                                             DeliveryStatus.DELIVERING,
-                                                             DeliveryStatus.DELIVERING_ERROR,
-                                                             DeliveryStatus.AUTOMATICALLY_REJECTED),
-                                               fromDate,
-                                               toDate)
-                              .stream()
-                              // la livraison a un lot, un projet, une bibliothèque
-                              .filter(dlv -> dlv.getLot() != null && dlv.getLot().getProject() != null
-                                             && dlv.getLot().getProject().getLibrary() != null)
+		deliveries.stream().filter(del -> accessHelper.checkDelivery(del.getIdentifier())).forEach(del -> {
+			final AuditDeliveryRevisionDTO dto = new AuditDeliveryRevisionDTO();
+			dto.setIdentifier(del.getIdentifier());
+			dto.setLabel(del.getLabel());
+			dto.setLotIdentifier(del.getLot().getIdentifier());
+			dto.setLotLabel(del.getLot().getLabel());
+			dto.setStatus(del.getStatus());
+			dto.setTimestamp(
+					del.getDepositDate().atStartOfDay().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
+			revs.add(dto);
+		});
+		return revs;
+	}
 
-                              // Regroupement des livraisons par bibliothèque et prestataire
-                              .collect(Collectors.groupingBy(dlv -> {
-                                  final Lot lot = dlv.getLot();
-                                  final Project project = lot.getProject();
-                                  final Library library = project.getLibrary();
-                                  return Pair.of(library, lot.getProvider());
+	@Transactional(readOnly = true)
+	public List<DeliveryDTO> findAllForProject(final String projectId) {
+		final List<Delivery> deliveries = deliveryService.findAllByProjectId(projectId);
+		return deliveries.stream().map(DeliveryMapper.INSTANCE::deliveryToDeliveryDTO).collect(Collectors.toList());
+	}
 
-                              }, Collectors.toList()))
-                              .entrySet()
-                              .stream()
-                              // Pour chaque bibliothèque + prestataire: création d'un DTO
-                              .map(e -> {
-                                  final Library library = e.getKey().getLeft();
-                                  final User provider = e.getKey().getRight();
-                                  final List<Delivery> deliveries = e.getValue();
+	@Transactional(readOnly = true)
+	public DeliveryDTO findLatestDelivery(final String docUnitId) {
+		final Delivery delivery = deliveryService.findLatestDelivery(docUnitId);
+		return DeliveryMapper.INSTANCE.deliveryToDeliveryDTO(delivery);
+	}
 
-                                  final StatisticsProviderDeliveryDTO dto = new StatisticsProviderDeliveryDTO();
-                                  dto.setLibraryIdentifier(library.getIdentifier());
-                                  dto.setLibraryName(library.getName());
+	@Transactional
+	public DeliveryDTO duplicate(final String id) {
+		final Delivery duplicated = deliveryService.duplicate(id);
+		return DeliveryMapper.INSTANCE.deliveryToDeliveryDTO(duplicated);
+	}
 
-                                  if (provider != null) {
-                                      dto.setProviderIdentifier(provider.getIdentifier());
-                                      dto.setProviderLogin(provider.getLogin());
-                                      dto.setProviderFullName(provider.getFullName());
-                                  }
+	@Transactional(readOnly = true)
+	public CheckConfigurationDTO getActiveCheckConfiguration(final String deliveryId) {
+		final Delivery deliv = deliveryService.getWithActiveCheckConfiguration(deliveryId);
+		final Lot lot = deliv.getLot();
+		CheckConfiguration cc = null;
 
-                                  dto.setNbDelivery(deliveries.size());
-                                  dto.setNbLot(deliveries.stream().map(Delivery::getLot).distinct().count());
+		if (lot != null) {
+			cc = lot.getActiveCheckConfiguration();
 
-                                  return dto;
+			if (cc == null) {
+				final Project project = lot.getProject();
 
-                              })
-                              .collect(Collectors.toList());
-    }
+				if (project != null) {
+					cc = project.getActiveCheckConfiguration();
+				}
+			}
+		}
+		return CheckConfigurationMapper.INSTANCE.checkConfigurationToCheckConfigurationDTO(cc);
+	}
 
-    /**
-     * Retourne le vrai statut de la livraison une fois que tous les documents ont ete livres.
-     */
-    public Map<String, Object> getDeliveryStatus(final Delivery delivery) {
+	@Transactional(readOnly = true)
+	public SimpleDeliveryForViewerDTO getSimpleWithLot(final String id) {
+		final Delivery delivery = deliveryService.getSimpleWithLot(id);
+		return DeliveryMapper.INSTANCE.delivToDtoForViewer(delivery);
+	}
 
-        final Map<String, Object> response = new HashMap<>();
-        response.put("identifier", delivery.getIdentifier());
+	@Transactional(readOnly = true)
+	public List<StatisticsProviderDeliveryDTO> getProviderDeliveryStats(final List<String> libraries,
+			final List<String> providers, final LocalDate fromDate, final LocalDate toDate) {
+		return deliveryService
+			.findByProviders(libraries, providers,
+					Arrays.asList(DeliveryStatus.TO_BE_CONTROLLED, DeliveryStatus.DELIVERING,
+							DeliveryStatus.DELIVERING_ERROR, DeliveryStatus.AUTOMATICALLY_REJECTED),
+					fromDate, toDate)
+			.stream()
+			// la livraison a un lot, un projet, une bibliothèque
+			.filter(dlv -> dlv.getLot() != null && dlv.getLot().getProject() != null
+					&& dlv.getLot().getProject().getLibrary() != null)
 
-        final Optional<DeliveredDocument> opt = delivery.getDocuments().stream().filter(doc -> doc.getStatus() == DigitalDocument.DigitalDocumentStatus.DELIVERING).findAny();
-        if (opt.isPresent()) {
-            response.put("status", DigitalDocument.DigitalDocumentStatus.DELIVERING);
-        } else {
-            response.put("status", delivery.getStatus());
-        }
-        return response;
-    }
+			// Regroupement des livraisons par bibliothèque et prestataire
+			.collect(Collectors.groupingBy(dlv -> {
+				final Lot lot = dlv.getLot();
+				final Project project = lot.getProject();
+				final Library library = project.getLibrary();
+				return Pair.of(library, lot.getProvider());
 
-    /**
-     * Détache 1 digitalDocument de la livraison.
-     * => debloquer la livraison
-     * => permettre une relivraison du doc bloqué
-     */
-    @Transactional
-    public DeliveryDTO detachDigitalDoc(final String deliveryId, final DigitalDocumentDTO docToDetach) {
+			}, Collectors.toList()))
+			.entrySet()
+			.stream()
+			// Pour chaque bibliothèque + prestataire: création d'un DTO
+			.map(e -> {
+				final Library library = e.getKey().getLeft();
+				final User provider = e.getKey().getRight();
+				final List<Delivery> deliveries = e.getValue();
 
-        // suppression du deliveredDocument qui bloque
-        deliveryService.deleteDeliveredDocument(deliveryId, docToDetach.getIdentifier());
+				final StatisticsProviderDeliveryDTO dto = new StatisticsProviderDeliveryDTO();
+				dto.setLibraryIdentifier(library.getIdentifier());
+				dto.setLibraryName(library.getName());
 
-        // update status of related digital document
-        final DigitalDocument digitDoc = digitalDocumentService.findOne(docToDetach.getIdentifier());
-        digitDoc.setStatus(DigitalDocumentStatus.CANCELED);
-        digitalDocumentService.save(digitDoc);
+				if (provider != null) {
+					dto.setProviderIdentifier(provider.getIdentifier());
+					dto.setProviderLogin(provider.getLogin());
+					dto.setProviderFullName(provider.getFullName());
+				}
 
-        // Workflow : retour à un etat d'avant livraison pour le doc bloqué
-        final DocUnit docUnit = docUnitService.findOneWithAllDependenciesForWorkflow(docToDetach.getDocUnit().getIdentifier());
-        docUnitWorkflowService.resetDeliverStatesForDetachedDoc(docUnit);
+				dto.setNbDelivery(deliveries.size());
+				dto.setNbLot(deliveries.stream().map(Delivery::getLot).distinct().count());
 
-        // Voir s'il faut finaliser la livraison ou la laisser en l'état
-        final Set<DeliveredDocument> docsToDeliver = deliveryService.getSimpleDigitalDocumentsByDelivery(deliveryId);
-        final DeliveredDocument deliveredDoc = docsToDeliver.stream().findFirst().orElse(null);
+				return dto;
 
-        if (deliveredDoc == null) {
-            // plus rien à livrer
-            final Delivery delivery = deliveryService.getOne(deliveryId);
-            delivery.setStatus(DeliveryStatus.DELIVERING_ERROR);
-            deliveryService.save(delivery);
-        } else {
-            final String docUnitId = deliveredDoc.getDigitalDocument().getDocUnit().getIdentifier();
-            // Tous les docs traités => on doit finaliser les contrôles (bordereau, envoi au prestataire)..
-            if (digitalDocumentService.allDeliveryDocsChecked(docsToDeliver, deliveredDoc)) {
-                // ok, on doit finaliser
-                digitalDocumentService.generateAndSendCheckSlip(docUnitId, Optional.of(deliveredDoc));
-                deliveredDoc.getDelivery().setStatus(DeliveryStatus.TREATED);
-                digitalDocumentService.save(deliveredDoc.getDigitalDocument());
-            }
-        }
+			})
+			.collect(Collectors.toList());
+	}
 
-        return getOne(deliveryId);
-    }
+	/**
+	 * Retourne le vrai statut de la livraison une fois que tous les documents ont ete
+	 * livres.
+	 */
+	public Map<String, Object> getDeliveryStatus(final Delivery delivery) {
+
+		final Map<String, Object> response = new HashMap<>();
+		response.put("identifier", delivery.getIdentifier());
+
+		final Optional<DeliveredDocument> opt = delivery.getDocuments()
+			.stream()
+			.filter(doc -> doc.getStatus() == DigitalDocument.DigitalDocumentStatus.DELIVERING)
+			.findAny();
+		if (opt.isPresent()) {
+			response.put("status", DigitalDocument.DigitalDocumentStatus.DELIVERING);
+		}
+		else {
+			response.put("status", delivery.getStatus());
+		}
+		return response;
+	}
+
+	/**
+	 * Détache 1 digitalDocument de la livraison. => debloquer la livraison => permettre
+	 * une relivraison du doc bloqué
+	 */
+	@Transactional
+	public DeliveryDTO detachDigitalDoc(final String deliveryId, final DigitalDocumentDTO docToDetach) {
+
+		// suppression du deliveredDocument qui bloque
+		deliveryService.deleteDeliveredDocument(deliveryId, docToDetach.getIdentifier());
+
+		// update status of related digital document
+		final DigitalDocument digitDoc = digitalDocumentService.findOne(docToDetach.getIdentifier());
+		digitDoc.setStatus(DigitalDocumentStatus.CANCELED);
+		digitalDocumentService.save(digitDoc);
+
+		// Workflow : retour à un etat d'avant livraison pour le doc bloqué
+		final DocUnit docUnit = docUnitService
+			.findOneWithAllDependenciesForWorkflow(docToDetach.getDocUnit().getIdentifier());
+		docUnitWorkflowService.resetDeliverStatesForDetachedDoc(docUnit);
+
+		// Voir s'il faut finaliser la livraison ou la laisser en l'état
+		final Set<DeliveredDocument> docsToDeliver = deliveryService.getSimpleDigitalDocumentsByDelivery(deliveryId);
+		final DeliveredDocument deliveredDoc = docsToDeliver.stream().findFirst().orElse(null);
+
+		if (deliveredDoc == null) {
+			// plus rien à livrer
+			final Delivery delivery = deliveryService.getOne(deliveryId);
+			delivery.setStatus(DeliveryStatus.DELIVERING_ERROR);
+			deliveryService.save(delivery);
+		}
+		else {
+			final String docUnitId = deliveredDoc.getDigitalDocument().getDocUnit().getIdentifier();
+			// Tous les docs traités => on doit finaliser les contrôles (bordereau, envoi
+			// au prestataire)..
+			if (digitalDocumentService.allDeliveryDocsChecked(docsToDeliver, deliveredDoc)) {
+				// ok, on doit finaliser
+				digitalDocumentService.generateAndSendCheckSlip(docUnitId, Optional.of(deliveredDoc));
+				deliveredDoc.getDelivery().setStatus(DeliveryStatus.TREATED);
+				digitalDocumentService.save(deliveredDoc.getDigitalDocument());
+			}
+		}
+
+		return getOne(deliveryId);
+	}
+
 }

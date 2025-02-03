@@ -41,73 +41,70 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DocumentsType",
-         propOrder = {"structureDocuments",
-                      "mdMetier"})
+@XmlType(name = "DocumentsType", propOrder = { "structureDocuments", "mdMetier" })
 public class DocumentsType {
 
-    @XmlElement(required = true)
-    protected List<String> structureDocuments;
-    protected List<MdMetierType> mdMetier;
+	@XmlElement(required = true)
+	protected List<String> structureDocuments;
 
-    /**
-     * Gets the value of the structureDocuments property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the structureDocuments property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getStructureDocuments().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getStructureDocuments() {
-        if (structureDocuments == null) {
-            structureDocuments = new ArrayList<>();
-        }
-        return this.structureDocuments;
-    }
+	protected List<MdMetierType> mdMetier;
 
-    /**
-     * Gets the value of the mdMetier property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the mdMetier property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getMdMetier().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link MdMetierType }
-     *
-     *
-     */
-    public List<MdMetierType> getMdMetier() {
-        if (mdMetier == null) {
-            mdMetier = new ArrayList<>();
-        }
-        return this.mdMetier;
-    }
+	/**
+	 * Gets the value of the structureDocuments property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * structureDocuments property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getStructureDocuments().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getStructureDocuments() {
+		if (structureDocuments == null) {
+			structureDocuments = new ArrayList<>();
+		}
+		return this.structureDocuments;
+	}
+
+	/**
+	 * Gets the value of the mdMetier property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the mdMetier
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getMdMetier().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link MdMetierType }
+	 *
+	 *
+	 */
+	public List<MdMetierType> getMdMetier() {
+		if (mdMetier == null) {
+			mdMetier = new ArrayList<>();
+		}
+		return this.mdMetier;
+	}
 
 }

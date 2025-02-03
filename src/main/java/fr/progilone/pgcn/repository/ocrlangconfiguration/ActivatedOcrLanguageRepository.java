@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ActivatedOcrLanguageRepository extends JpaRepository<ActivatedOcrLanguage, String> {
 
-    List<ActivatedOcrLanguage> findByOcrLangConfiguration(OcrLangConfiguration config);
+	List<ActivatedOcrLanguage> findByOcrLangConfiguration(OcrLangConfiguration config);
+
 }

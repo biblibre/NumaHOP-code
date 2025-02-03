@@ -28,84 +28,92 @@ import org.springframework.test.util.ReflectionTestUtils;
 @ExtendWith(MockitoExtension.class)
 public class FacileCinesServiceTest {
 
-    private static final String VALIDATOR_FORMAT_PNG = "PNG";
-    private static final String FACILE_TEST_URL = "https://facile.cines.fr/xml";
-    private static final String RESOURCE_FOLDER = "src/test/resources/facile";
-    private static final String FILE_PREFIX = "BSG_DELTA_000";
-    private static final String FILE_SUFFIX = ".png";
+	private static final String VALIDATOR_FORMAT_PNG = "PNG";
 
-    private FacileCinesService service;
+	private static final String FACILE_TEST_URL = "https://facile.cines.fr/xml";
 
-    @BeforeEach
-    public void setUp() {
-        service = new FacileCinesService();
-        ReflectionTestUtils.setField(service, "facileApiUrl", FACILE_TEST_URL);
-    }
+	private static final String RESOURCE_FOLDER = "src/test/resources/facile";
 
-    @Disabled
-    @Test
-    public void testCheckFilesAgainstFacile() {
-        // ignoré car chronophage - mais ça fonctionne !
+	private static final String FILE_PREFIX = "BSG_DELTA_000";
 
-        final List<File> files = getTestListFiles();
-        final List<ValidatorType> results = service.checkFilesAgainstFacile(files.toArray(new File[files.size()]));
-        results.forEach(this::validateResult);
-    }
+	private static final String FILE_SUFFIX = ".png";
 
-    @Test
-    public void marshallValidatorType() {
-        final FacileResponse test = new FacileResponse();
-        test.setFileName("test");
-        test.setValid(false);
-        test.setWellformed(true);
-        final StringWriter writer = new StringWriter();
-        try {
-            final JAXBContext context = JAXBContext.newInstance(fr.progilone.pgcn.domain.jaxb.facile.FacileResponse.class,
-                                                                fr.progilone.pgcn.domain.jaxb.facile.ObjectFactory.class);
-            final Marshaller marshaller = context.createMarshaller();
-            marshaller.marshal(test, writer);
-            final String result = writer.toString();
-            assertTrue(result.contains("test"));
+	private FacileCinesService service;
 
-            // UnMarshall
-            final Unmarshaller unmarshaller = context.createUnmarshaller();
-            final FacileResponse response = (FacileResponse) unmarshaller.unmarshal(new StringReader(result));
+	@BeforeEach
+	public void setUp() {
+		service = new FacileCinesService();
+		ReflectionTestUtils.setField(service, "facileApiUrl", FACILE_TEST_URL);
+	}
 
-            // Check
-            assertEquals(test.isValid(), response.isValid());
-            assertEquals(test.isWellformed(), response.isWellformed());
+	@Disabled
+	@Test
+	public void testCheckFilesAgainstFacile() {
+		// ignoré car chronophage - mais ça fonctionne !
 
-        } catch (final JAXBException e) {
-            fail("Erreur lors du marshalling");
-        } finally {
-            try {
-                writer.close();
-            } catch (final IOException e) {
-                fail(e.getMessage());
-            }
-        }
-    }
+		final List<File> files = getTestListFiles();
+		final List<ValidatorType> results = service.checkFilesAgainstFacile(files.toArray(new File[files.size()]));
+		results.forEach(this::validateResult);
+	}
 
-    /**
-     * Le résultat le plus important pour l'archivage sur la plateforme PAC se situe dans la balise <;valid>.<br>
-     * Elle doît être positionnée à « true » pour que le document soit archivable. {@see https://facile.cines.fr/}
-     *
-     * @param validator
-     */
-    private void validateResult(final ValidatorType validator) {
-        assertTrue(validator.isValid());
-        assertEquals(VALIDATOR_FORMAT_PNG, validator.getFormat());
-    }
+	@Test
+	public void marshallValidatorType() {
+		final FacileResponse test = new FacileResponse();
+		test.setFileName("test");
+		test.setValid(false);
+		test.setWellformed(true);
+		final StringWriter writer = new StringWriter();
+		try {
+			final JAXBContext context = JAXBContext.newInstance(
+					fr.progilone.pgcn.domain.jaxb.facile.FacileResponse.class,
+					fr.progilone.pgcn.domain.jaxb.facile.ObjectFactory.class);
+			final Marshaller marshaller = context.createMarshaller();
+			marshaller.marshal(test, writer);
+			final String result = writer.toString();
+			assertTrue(result.contains("test"));
 
-    private List<File> getTestListFiles() {
-        final File baseDirectory = new File(RESOURCE_FOLDER);
-        final List<File> files = new ArrayList<>();
-        for (int i = 1; i < 6; i++) {
-            final File file = new File(baseDirectory,
-                                       FILE_PREFIX + i
-                                                      + FILE_SUFFIX);
-            files.add(file);
-        }
-        return files;
-    }
+			// UnMarshall
+			final Unmarshaller unmarshaller = context.createUnmarshaller();
+			final FacileResponse response = (FacileResponse) unmarshaller.unmarshal(new StringReader(result));
+
+			// Check
+			assertEquals(test.isValid(), response.isValid());
+			assertEquals(test.isWellformed(), response.isWellformed());
+
+		}
+		catch (final JAXBException e) {
+			fail("Erreur lors du marshalling");
+		}
+		finally {
+			try {
+				writer.close();
+			}
+			catch (final IOException e) {
+				fail(e.getMessage());
+			}
+		}
+	}
+
+	/**
+	 * Le résultat le plus important pour l'archivage sur la plateforme PAC se situe dans
+	 * la balise <;valid>.<br>
+	 * Elle doît être positionnée à « true » pour que le document soit archivable.
+	 * {@see https://facile.cines.fr/}
+	 * @param validator
+	 */
+	private void validateResult(final ValidatorType validator) {
+		assertTrue(validator.isValid());
+		assertEquals(VALIDATOR_FORMAT_PNG, validator.getFormat());
+	}
+
+	private List<File> getTestListFiles() {
+		final File baseDirectory = new File(RESOURCE_FOLDER);
+		final List<File> files = new ArrayList<>();
+		for (int i = 1; i < 6; i++) {
+			final File file = new File(baseDirectory, FILE_PREFIX + i + FILE_SUFFIX);
+			files.add(file);
+		}
+		return files;
+	}
+
 }

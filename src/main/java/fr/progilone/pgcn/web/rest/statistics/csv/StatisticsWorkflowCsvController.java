@@ -42,207 +42,199 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @PermitAll
 public class StatisticsWorkflowCsvController extends AbstractRestController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StatisticsWorkflowCsvController.class);
-    private static final String FILENAME = "export.csv";
+	private static final Logger LOG = LoggerFactory.getLogger(StatisticsWorkflowCsvController.class);
 
-    private final ExportCSVService statisticsCsvService;
-    private final StatisticsWorkflowController delegate;
+	private static final String FILENAME = "export.csv";
 
-    @Autowired
-    public StatisticsWorkflowCsvController(final StatisticsWorkflowController delegate, final ExportCSVService statisticsCsvService) {
-        this.statisticsCsvService = statisticsCsvService;
-        this.delegate = delegate;
-    }
+	private final ExportCSVService statisticsCsvService;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"wdelivery"}, produces = "text/csv")
-    @Timed
-    @ResponseStatus(HttpStatus.OK)
-    public void getWorkflowDeliveryProgressStatistics(final HttpServletRequest request,
-                                                      final HttpServletResponse response,
-                                                      @RequestParam(value = "library", required = false) final List<String> libraries,
-                                                      @RequestParam(value = "project", required = false) final List<String> projects,
-                                                      @RequestParam(value = "lot", required = false) final List<String> lots,
-                                                      @RequestParam(value = "delivery", required = false) final List<String> deliveries,
-                                                      @RequestParam(value = "pgcnid", required = false) final String pgcnId,
-                                                      @RequestParam(value = "state", required = false) final List<WorkflowStateKey> states,
-                                                      @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) final LocalDate fromDate,
-                                                      @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
-                                                      @RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
-                                                      @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
-        final ResponseEntity<Page<WorkflowDeliveryProgressDTO>> result = delegate.getWorkflowDeliveryProgressStatistics(request,
-                                                                                                                        libraries,
-                                                                                                                        projects,
-                                                                                                                        lots,
-                                                                                                                        deliveries,
-                                                                                                                        pgcnId,
-                                                                                                                        states,
-                                                                                                                        fromDate,
-                                                                                                                        toDate,
-                                                                                                                        0,
-                                                                                                                        Integer.MAX_VALUE);
-        final List<WorkflowDeliveryProgressDTO> body = result.getBody().getContent();
-        final List<WorkflowDeliveryProgressCsvDTO> dtos = StatisticsMapper.toWorkflowDeliveryProgressCsvDTO(body);
+	private final StatisticsWorkflowController delegate;
 
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
-            statisticsCsvService.exportOrderedBeans(dtos, response.getOutputStream(), encoding, separator);
+	@Autowired
+	public StatisticsWorkflowCsvController(final StatisticsWorkflowController delegate,
+			final ExportCSVService statisticsCsvService) {
+		this.statisticsCsvService = statisticsCsvService;
+		this.delegate = delegate;
+	}
 
-        } catch (final IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "wdelivery" }, produces = "text/csv")
+	@Timed
+	@ResponseStatus(HttpStatus.OK)
+	public void getWorkflowDeliveryProgressStatistics(final HttpServletRequest request,
+			final HttpServletResponse response,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@RequestParam(value = "lot", required = false) final List<String> lots,
+			@RequestParam(value = "delivery", required = false) final List<String> deliveries,
+			@RequestParam(value = "pgcnid", required = false) final String pgcnId,
+			@RequestParam(value = "state", required = false) final List<WorkflowStateKey> states,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from",
+					required = false) final LocalDate fromDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
+			@RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+		final ResponseEntity<Page<WorkflowDeliveryProgressDTO>> result = delegate.getWorkflowDeliveryProgressStatistics(
+				request, libraries, projects, lots, deliveries, pgcnId, states, fromDate, toDate, 0, Integer.MAX_VALUE);
+		final List<WorkflowDeliveryProgressDTO> body = result.getBody().getContent();
+		final List<WorkflowDeliveryProgressCsvDTO> dtos = StatisticsMapper.toWorkflowDeliveryProgressCsvDTO(body);
 
-    @RequestMapping(method = RequestMethod.GET, params = {"wdocunit"}, produces = "text/csv")
-    @Timed
-    @ResponseStatus(HttpStatus.OK)
-    public void getWorkflowDocUnitProgressStatistics(final HttpServletRequest request,
-                                                     final HttpServletResponse response,
-                                                     @RequestParam(value = "library", required = false) final List<String> libraries,
-                                                     @RequestParam(value = "project", required = false) final List<String> projects,
-                                                     @RequestParam(value = "lot", required = false) final List<String> lots,
-                                                     @RequestParam(value = "train", required = false) final List<String> trains,
-                                                     @RequestParam(value = "pgcnid", required = false) final String pgcnId,
-                                                     @RequestParam(value = "state", required = false) final List<WorkflowStateKey> states,
-                                                     @RequestParam(value = "status", required = false) final List<WorkflowStateStatus> status,
-                                                     @RequestParam(value = "mine", required = false, defaultValue = "false") final boolean onlyMine,
-                                                     @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) final LocalDate fromDate,
-                                                     @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
-                                                     @RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
-                                                     @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
-        final ResponseEntity<Page<WorkflowDocUnitProgressDTO>> result = delegate.getWorkflowDocUnitProgressStatistics(request,
-                                                                                                                      libraries,
-                                                                                                                      projects,
-                                                                                                                      false,
-                                                                                                                      lots,
-                                                                                                                      trains,
-                                                                                                                      pgcnId,
-                                                                                                                      states,
-                                                                                                                      status,
-                                                                                                                      onlyMine,
-                                                                                                                      fromDate,
-                                                                                                                      toDate,
-                                                                                                                      0,
-                                                                                                                      Integer.MAX_VALUE);
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
+			statisticsCsvService.exportOrderedBeans(dtos, response.getOutputStream(), encoding, separator);
 
-        final List<WorkflowDocUnitProgressDTO> body = result.getBody().getContent();
-        final List<WorkflowDocUnitProgressCsvDTO> dtos = StatisticsMapper.toWorkflowDocUnitProgressCsvDTO(body);
+		}
+		catch (final IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
-            statisticsCsvService.exportOrderedBeans(dtos, response.getOutputStream(), encoding, separator);
+	@RequestMapping(method = RequestMethod.GET, params = { "wdocunit" }, produces = "text/csv")
+	@Timed
+	@ResponseStatus(HttpStatus.OK)
+	public void getWorkflowDocUnitProgressStatistics(final HttpServletRequest request,
+			final HttpServletResponse response,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@RequestParam(value = "lot", required = false) final List<String> lots,
+			@RequestParam(value = "train", required = false) final List<String> trains,
+			@RequestParam(value = "pgcnid", required = false) final String pgcnId,
+			@RequestParam(value = "state", required = false) final List<WorkflowStateKey> states,
+			@RequestParam(value = "status", required = false) final List<WorkflowStateStatus> status,
+			@RequestParam(value = "mine", required = false, defaultValue = "false") final boolean onlyMine,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from",
+					required = false) final LocalDate fromDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
+			@RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+		final ResponseEntity<Page<WorkflowDocUnitProgressDTO>> result = delegate.getWorkflowDocUnitProgressStatistics(
+				request, libraries, projects, false, lots, trains, pgcnId, states, status, onlyMine, fromDate, toDate,
+				0, Integer.MAX_VALUE);
 
-        } catch (final IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+		final List<WorkflowDocUnitProgressDTO> body = result.getBody().getContent();
+		final List<WorkflowDocUnitProgressCsvDTO> dtos = StatisticsMapper.toWorkflowDocUnitProgressCsvDTO(body);
 
-    @RequestMapping(method = RequestMethod.GET, params = {"wstate"}, produces = "text/csv")
-    @Timed
-    @ResponseStatus(HttpStatus.OK)
-    public void getWorkflowStatesStatistics(final HttpServletRequest request,
-                                            final HttpServletResponse response,
-                                            @RequestParam(value = "library", required = false) final List<String> libraries,
-                                            @RequestParam(value = "workflow", required = false) final List<String> workflows,
-                                            @RequestParam(value = "state", required = false) final List<WorkflowStateKey> states,
-                                            @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) final LocalDate fromDate,
-                                            @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
-                                            @RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
-                                            @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
-        final ResponseEntity<List<WorkflowStateProgressDTO>> result = delegate.getWorkflowStatesStatistics(request, libraries, workflows, states, fromDate, toDate);
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
+			statisticsCsvService.exportOrderedBeans(dtos, response.getOutputStream(), encoding, separator);
 
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
-            statisticsCsvService.exportOrderedBeans(result.getBody(), response.getOutputStream(), encoding, separator);
+		}
+		catch (final IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-        } catch (final IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "wstate" }, produces = "text/csv")
+	@Timed
+	@ResponseStatus(HttpStatus.OK)
+	public void getWorkflowStatesStatistics(final HttpServletRequest request, final HttpServletResponse response,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "workflow", required = false) final List<String> workflows,
+			@RequestParam(value = "state", required = false) final List<WorkflowStateKey> states,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from",
+					required = false) final LocalDate fromDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
+			@RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+		final ResponseEntity<List<WorkflowStateProgressDTO>> result = delegate.getWorkflowStatesStatistics(request,
+				libraries, workflows, states, fromDate, toDate);
 
-    @RequestMapping(method = RequestMethod.GET, params = {"wuser"}, produces = "text/csv")
-    @Timed
-    @ResponseStatus(HttpStatus.OK)
-    public void getWorkflowUsersStatistics(final HttpServletRequest request,
-                                           final HttpServletResponse response,
-                                           @RequestParam(value = "library", required = false) final List<String> libraries,
-                                           @RequestParam(value = "project", required = false) final List<String> projects,
-                                           @RequestParam(value = "lot", required = false) final List<String> lots,
-                                           @RequestParam(value = "delivery", required = false) final List<String> deliveries,
-                                           @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) final LocalDate fromDate,
-                                           @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
-                                           @RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
-                                           @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
-        final ResponseEntity<Collection<WorkflowUserProgressDTO>> result = delegate.getWorkflowUsersStatistics(request, libraries, projects, lots, deliveries, fromDate, toDate);
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
+			statisticsCsvService.exportOrderedBeans(result.getBody(), response.getOutputStream(), encoding, separator);
 
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
-            statisticsCsvService.exportOrderedBeans(new ArrayList<>(result.getBody()), response.getOutputStream(), encoding, separator);
+		}
+		catch (final IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-        } catch (final IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "wuser" }, produces = "text/csv")
+	@Timed
+	@ResponseStatus(HttpStatus.OK)
+	public void getWorkflowUsersStatistics(final HttpServletRequest request, final HttpServletResponse response,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@RequestParam(value = "lot", required = false) final List<String> lots,
+			@RequestParam(value = "delivery", required = false) final List<String> deliveries,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from",
+					required = false) final LocalDate fromDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
+			@RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+		final ResponseEntity<Collection<WorkflowUserProgressDTO>> result = delegate.getWorkflowUsersStatistics(request,
+				libraries, projects, lots, deliveries, fromDate, toDate);
 
-    @RequestMapping(method = RequestMethod.GET, params = {"wprofile_activity"}, produces = "text/csv")
-    @Timed
-    @ResponseStatus(HttpStatus.OK)
-    public void getProfilesActivityStatistics(final HttpServletRequest request,
-                                              final HttpServletResponse response,
-                                              @RequestParam(value = "library", required = false) final List<String> libraries,
-                                              @RequestParam(value = "project", required = false) final List<String> projects,
-                                              @RequestParam(value = "lot", required = false) final List<String> lots,
-                                              @RequestParam(value = "state", required = false) final List<WorkflowStateKey> states,
-                                              @RequestParam(value = "role", required = false) final List<String> roles,
-                                              @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) final LocalDate fromDate,
-                                              @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
-                                              @RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
-                                              @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
-        final ResponseEntity<Collection<WorkflowProfileActivityDTO>> result = delegate.getProfilesActivityStatistics(request,
-                                                                                                                     libraries,
-                                                                                                                     projects,
-                                                                                                                     lots,
-                                                                                                                     states,
-                                                                                                                     roles,
-                                                                                                                     fromDate,
-                                                                                                                     toDate);
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
+			statisticsCsvService.exportOrderedBeans(new ArrayList<>(result.getBody()), response.getOutputStream(),
+					encoding, separator);
 
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
-            statisticsCsvService.exportOrderedBeans(new ArrayList<>(result.getBody()), response.getOutputStream(), encoding, separator);
+		}
+		catch (final IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-        } catch (final IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "wprofile_activity" }, produces = "text/csv")
+	@Timed
+	@ResponseStatus(HttpStatus.OK)
+	public void getProfilesActivityStatistics(final HttpServletRequest request, final HttpServletResponse response,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@RequestParam(value = "lot", required = false) final List<String> lots,
+			@RequestParam(value = "state", required = false) final List<WorkflowStateKey> states,
+			@RequestParam(value = "role", required = false) final List<String> roles,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from",
+					required = false) final LocalDate fromDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
+			@RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+		final ResponseEntity<Collection<WorkflowProfileActivityDTO>> result = delegate
+			.getProfilesActivityStatistics(request, libraries, projects, lots, states, roles, fromDate, toDate);
 
-    @RequestMapping(method = RequestMethod.GET, params = {"wuser_activity"}, produces = "text/csv")
-    @Timed
-    @ResponseStatus(HttpStatus.OK)
-    public void getUsersActivityStatistics(final HttpServletRequest request,
-                                           final HttpServletResponse response,
-                                           @RequestParam(value = "library", required = false) final List<String> libraries,
-                                           @RequestParam(value = "project", required = false) final List<String> projects,
-                                           @RequestParam(value = "lot", required = false) final List<String> lots,
-                                           @RequestParam(value = "state", required = false) final List<WorkflowStateKey> states,
-                                           @RequestParam(value = "role", required = false) final List<String> roles,
-                                           @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) final LocalDate fromDate,
-                                           @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
-                                           @RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
-                                           @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
-        final ResponseEntity<Collection<WorkflowUserActivityDTO>> result = delegate.getUsersActivityStatistics(request, libraries, projects, lots, states, roles, fromDate, toDate);
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
+			statisticsCsvService.exportOrderedBeans(new ArrayList<>(result.getBody()), response.getOutputStream(),
+					encoding, separator);
 
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
-            statisticsCsvService.exportOrderedBeans(new ArrayList<>(result.getBody()), response.getOutputStream(), encoding, separator);
+		}
+		catch (final IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-        } catch (final IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "wuser_activity" }, produces = "text/csv")
+	@Timed
+	@ResponseStatus(HttpStatus.OK)
+	public void getUsersActivityStatistics(final HttpServletRequest request, final HttpServletResponse response,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@RequestParam(value = "lot", required = false) final List<String> lots,
+			@RequestParam(value = "state", required = false) final List<WorkflowStateKey> states,
+			@RequestParam(value = "role", required = false) final List<String> roles,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from",
+					required = false) final LocalDate fromDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
+			@RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+		final ResponseEntity<Collection<WorkflowUserActivityDTO>> result = delegate.getUsersActivityStatistics(request,
+				libraries, projects, lots, states, roles, fromDate, toDate);
+
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
+			statisticsCsvService.exportOrderedBeans(new ArrayList<>(result.getBody()), response.getOutputStream(),
+					encoding, separator);
+
+		}
+		catch (final IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
+
 }

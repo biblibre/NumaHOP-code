@@ -33,60 +33,49 @@ import jakarta.xml.bind.annotation.XmlValue;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "OAI-PMHerrorType", propOrder = {"value"})
+@XmlType(name = "OAI-PMHerrorType", propOrder = { "value" })
 public class OAIPMHerrorType {
 
-    @XmlValue
-    protected String value;
-    @XmlAttribute(name = "code", required = true)
-    protected OAIPMHerrorcodeType code;
+	@XmlValue
+	protected String value;
 
-    /**
-     * Obtient la valeur de la propriété value.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "code", required = true)
+	protected OAIPMHerrorcodeType code;
 
-    /**
-     * Définit la valeur de la propriété value.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété value.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getValue() {
+		return value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété code.
-     *
-     * @return
-     *         possible object is
-     *         {@link OAIPMHerrorcodeType }
-     *
-     */
-    public OAIPMHerrorcodeType getCode() {
-        return code;
-    }
+	/**
+	 * Définit la valeur de la propriété value.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété code.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link OAIPMHerrorcodeType }
-     *
-     */
-    public void setCode(OAIPMHerrorcodeType value) {
-        this.code = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété code.
+	 * @return possible object is {@link OAIPMHerrorcodeType }
+	 *
+	 */
+	public OAIPMHerrorcodeType getCode() {
+		return code;
+	}
+
+	/**
+	 * Définit la valeur de la propriété code.
+	 * @param value allowed object is {@link OAIPMHerrorcodeType }
+	 *
+	 */
+	public void setCode(OAIPMHerrorcodeType value) {
+		this.code = value;
+	}
 
 }

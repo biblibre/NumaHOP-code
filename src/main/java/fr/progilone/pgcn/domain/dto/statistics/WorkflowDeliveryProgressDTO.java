@@ -6,125 +6,137 @@ import java.util.List;
 
 public class WorkflowDeliveryProgressDTO {
 
-    private String libraryIdentifier;
-    private String libraryName;
-    private String projectIdentifier;
-    private String projectName;
-    private String lotIdentifier;
-    private String lotLabel;
-    private String deliveryIdentifier;
-    private String deliveryLabel;
-    private String docUnitNumber;
-    private final List<WorkflowState> workflow = new ArrayList<>();
+	private String libraryIdentifier;
 
-    public String getLibraryIdentifier() {
-        return libraryIdentifier;
-    }
+	private String libraryName;
 
-    public void setLibraryIdentifier(final String libraryIdentifier) {
-        this.libraryIdentifier = libraryIdentifier;
-    }
+	private String projectIdentifier;
 
-    public String getLibraryName() {
-        return libraryName;
-    }
+	private String projectName;
 
-    public void setLibraryName(final String libraryName) {
-        this.libraryName = libraryName;
-    }
+	private String lotIdentifier;
 
-    public String getProjectIdentifier() {
-        return projectIdentifier;
-    }
+	private String lotLabel;
 
-    public void setProjectIdentifier(final String projectIdentifier) {
-        this.projectIdentifier = projectIdentifier;
-    }
+	private String deliveryIdentifier;
 
-    public String getProjectName() {
-        return projectName;
-    }
+	private String deliveryLabel;
 
-    public void setProjectName(final String projectName) {
-        this.projectName = projectName;
-    }
+	private String docUnitNumber;
 
-    public String getLotIdentifier() {
-        return lotIdentifier;
-    }
+	private final List<WorkflowState> workflow = new ArrayList<>();
 
-    public void setLotIdentifier(final String lotIdentifier) {
-        this.lotIdentifier = lotIdentifier;
-    }
+	public String getLibraryIdentifier() {
+		return libraryIdentifier;
+	}
 
-    public String getLotLabel() {
-        return lotLabel;
-    }
+	public void setLibraryIdentifier(final String libraryIdentifier) {
+		this.libraryIdentifier = libraryIdentifier;
+	}
 
-    public void setLotLabel(final String lotLabel) {
-        this.lotLabel = lotLabel;
-    }
+	public String getLibraryName() {
+		return libraryName;
+	}
 
-    public String getDeliveryIdentifier() {
-        return deliveryIdentifier;
-    }
+	public void setLibraryName(final String libraryName) {
+		this.libraryName = libraryName;
+	}
 
-    public void setDeliveryIdentifier(final String deliveryIdentifier) {
-        this.deliveryIdentifier = deliveryIdentifier;
-    }
+	public String getProjectIdentifier() {
+		return projectIdentifier;
+	}
 
-    public String getDeliveryLabel() {
-        return deliveryLabel;
-    }
+	public void setProjectIdentifier(final String projectIdentifier) {
+		this.projectIdentifier = projectIdentifier;
+	}
 
-    public void setDeliveryLabel(final String deliveryLabel) {
-        this.deliveryLabel = deliveryLabel;
-    }
+	public String getProjectName() {
+		return projectName;
+	}
 
-    public String getDocUnitNumber() {
-        return docUnitNumber;
-    }
+	public void setProjectName(final String projectName) {
+		this.projectName = projectName;
+	}
 
-    public void setDocUnitNumber(String docUnitNumber) {
-        this.docUnitNumber = docUnitNumber;
-    }
+	public String getLotIdentifier() {
+		return lotIdentifier;
+	}
 
-    public List<WorkflowState> getWorkflow() {
-        return workflow;
-    }
+	public void setLotIdentifier(final String lotIdentifier) {
+		this.lotIdentifier = lotIdentifier;
+	}
 
-    public void setWorkflow(final List<WorkflowState> workflow) {
-        this.workflow.clear();
-        this.workflow.addAll(workflow);
-    }
+	public String getLotLabel() {
+		return lotLabel;
+	}
 
-    public void addWorkflow(final WorkflowState workflow) {
-        this.workflow.add(workflow);
-    }
+	public void setLotLabel(final String lotLabel) {
+		this.lotLabel = lotLabel;
+	}
 
-    public static final class WorkflowState {
+	public String getDeliveryIdentifier() {
+		return deliveryIdentifier;
+	}
 
-        private WorkflowStateKey key;
-        private long count = 0L;
+	public void setDeliveryIdentifier(final String deliveryIdentifier) {
+		this.deliveryIdentifier = deliveryIdentifier;
+	}
 
-        public WorkflowStateKey getKey() {
-            return key;
-        }
+	public String getDeliveryLabel() {
+		return deliveryLabel;
+	}
 
-        public void setKey(final WorkflowStateKey key) {
-            this.key = key;
-        }
+	public void setDeliveryLabel(final String deliveryLabel) {
+		this.deliveryLabel = deliveryLabel;
+	}
 
-        public long getCount() {
-            return count;
-        }
+	public String getDocUnitNumber() {
+		return docUnitNumber;
+	}
 
-        public void setCount(final long count) {
-            this.count = count;
-        }
+	public void setDocUnitNumber(String docUnitNumber) {
+		this.docUnitNumber = docUnitNumber;
+	}
 
-        public void incrementCount() {
-            this.count++;
-        }
-    }
+	public List<WorkflowState> getWorkflow() {
+		return workflow;
+	}
+
+	public void setWorkflow(final List<WorkflowState> workflow) {
+		this.workflow.clear();
+		this.workflow.addAll(workflow);
+	}
+
+	public void addWorkflow(final WorkflowState workflow) {
+		this.workflow.add(workflow);
+	}
+
+	public static final class WorkflowState {
+
+		private WorkflowStateKey key;
+
+		private long count = 0L;
+
+		public WorkflowStateKey getKey() {
+			return key;
+		}
+
+		public void setKey(final WorkflowStateKey key) {
+			this.key = key;
+		}
+
+		public long getCount() {
+			return count;
+		}
+
+		public void setCount(final long count) {
+			this.count = count;
+		}
+
+		public void incrementCount() {
+			this.count++;
+		}
+
+	}
+
 }

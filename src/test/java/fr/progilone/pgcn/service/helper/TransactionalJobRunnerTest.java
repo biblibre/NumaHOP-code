@@ -22,53 +22,34 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @ExtendWith(MockitoExtension.class)
 public class TransactionalJobRunnerTest {
 
-    @Mock
-    private TransactionService transactionService;
+	@Mock
+	private TransactionService transactionService;
 
-    @Test
-    public void test() {
-        final String FAILURE = "_FAIL_";
+	@Test
+	public void test() {
+		final String FAILURE = "_FAIL_";
 
-        final ThreadPoolTaskExecutor e = new ThreadPoolTaskExecutor();
-        e.initialize();
-        when(transactionService.getTaskExecutor()).thenReturn(e);
+		final ThreadPoolTaskExecutor e = new ThreadPoolTaskExecutor();
+		e.initialize();
+		when(transactionService.getTaskExecutor()).thenReturn(e);
 
-        final List<String> checkJob = new ArrayList<>();
-        final List<Long> checkProgress = new ArrayList<>();
-        final List<String> sample = Arrays.asList("bulldozer",
-                                                  "cuisiné",
-                                                  "désinstrumentaliser",
-                                                  "fourneaux",
-                                                  FAILURE,
-                                                  "lombric",
-                                                  "neutrodyner",
-                                                  "recraqueler",
-                                                  "s'entremordre",
-                                                  "étourneaux");
+		final List<String> checkJob = new ArrayList<>();
+		final List<Long> checkProgress = new ArrayList<>();
+		final List<String> sample = Arrays.asList("bulldozer", "cuisiné", "désinstrumentaliser", "fourneaux", FAILURE,
+				"lombric", "neutrodyner", "recraqueler", "s'entremordre", "étourneaux");
 
-        new TransactionalJobRunner<>(sample, transactionService).setCommit(2)
-                                                                .forEach(s -> !StringUtils.equals(s, FAILURE) && checkJob.add(s))
-                                                                .onProgress(checkProgress::add)
-                                                                .process();
+		new TransactionalJobRunner<>(sample, transactionService).setCommit(2)
+			.forEach(s -> !StringUtils.equals(s, FAILURE) && checkJob.add(s))
+			.onProgress(checkProgress::add)
+			.process();
 
-        assertEquals(sample.size() - 1, checkJob.size());
-        assertArrayEquals(new String[] {"bulldozer",
-                                        "cuisiné",
-                                        "désinstrumentaliser",
-                                        "fourneaux",
-                                        "lombric",
-                                        "neutrodyner",
-                                        "recraqueler",
-                                        "s'entremordre",
-                                        "étourneaux"}, checkJob.toArray(new String[] {}));
-        assertArrayEquals(new Long[] {0L,
-                                      2L,
-                                      4L,
-                                      6L,
-                                      8L,
-                                      9L}, checkProgress.toArray(new Long[] {}));
+		assertEquals(sample.size() - 1, checkJob.size());
+		assertArrayEquals(new String[] { "bulldozer", "cuisiné", "désinstrumentaliser", "fourneaux", "lombric",
+				"neutrodyner", "recraqueler", "s'entremordre", "étourneaux" }, checkJob.toArray(new String[] {}));
+		assertArrayEquals(new Long[] { 0L, 2L, 4L, 6L, 8L, 9L }, checkProgress.toArray(new Long[] {}));
 
-        verify(transactionService, times(5)).startTransaction(false);
-        verify(transactionService, times(5)).commitTransaction(isNull());
-    }
+		verify(transactionService, times(5)).startTransaction(false);
+		verify(transactionService, times(5)).commitTransaction(isNull());
+	}
+
 }

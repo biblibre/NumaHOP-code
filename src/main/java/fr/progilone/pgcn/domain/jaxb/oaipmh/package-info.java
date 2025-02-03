@@ -6,6 +6,7 @@
 //
 
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.openarchives.org/OAI/2.0/",
-                                       elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
-                                       xmlns = {@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.openarchives.org/OAI/2.0/", prefix = "")})
+		elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
+		xmlns = { @jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.openarchives.org/OAI/2.0/",
+				prefix = "") })
 package fr.progilone.pgcn.domain.jaxb.oaipmh;

@@ -33,28 +33,27 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum BitsPerSampleUnit {
 
-    @XmlEnumValue("integer")
-    INTEGER("integer"),
-    @XmlEnumValue("floating point")
-    FLOATING_POINT("floating point");
+	@XmlEnumValue("integer")
+	INTEGER("integer"), @XmlEnumValue("floating point")
+	FLOATING_POINT("floating point");
 
-    private final String value;
+	private final String value;
 
-    BitsPerSampleUnit(String v) {
-        value = v;
-    }
+	BitsPerSampleUnit(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static BitsPerSampleUnit fromValue(String v) {
-        for (BitsPerSampleUnit c : BitsPerSampleUnit.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static BitsPerSampleUnit fromValue(String v) {
+		for (BitsPerSampleUnit c : BitsPerSampleUnit.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

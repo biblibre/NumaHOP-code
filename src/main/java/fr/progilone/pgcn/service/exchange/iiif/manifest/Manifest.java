@@ -14,60 +14,60 @@ import java.util.List;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"@context"})
+@JsonPropertyOrder({ "@context" })
 public class Manifest {
 
-    @JsonProperty("@context")
-    @Valid
-    private List<Context> context = new ArrayList<>();
-    @JsonIgnore
-    @Valid
-    private Map<String, Object> additionalProperties = new HashMap<>();
+	@JsonProperty("@context")
+	@Valid
+	private List<Context> context = new ArrayList<>();
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public Manifest() {
-    }
+	@JsonIgnore
+	@Valid
+	private Map<String, Object> additionalProperties = new HashMap<>();
 
-    /**
-     *
-     * @param context
-     */
-    public Manifest(List<Context> context) {
-        super();
-        this.context = context;
-    }
+	/**
+	 * No args constructor for use in serialization
+	 *
+	 */
+	public Manifest() {
+	}
 
-    @JsonProperty("@context")
-    public List<Context> getContext() {
-        return context;
-    }
+	/**
+	 * @param context
+	 */
+	public Manifest(List<Context> context) {
+		super();
+		this.context = context;
+	}
 
-    @JsonProperty("@context")
-    public void setContext(List<Context> context) {
-        this.context = context;
-    }
+	@JsonProperty("@context")
+	public List<Context> getContext() {
+		return context;
+	}
 
-    public Manifest withContext(List<Context> context) {
-        this.context = context;
-        return this;
-    }
+	@JsonProperty("@context")
+	public void setContext(List<Context> context) {
+		this.context = context;
+	}
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
+	public Manifest withContext(List<Context> context) {
+		this.context = context;
+		return this;
+	}
 
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
+	@JsonAnyGetter
+	public Map<String, Object> getAdditionalProperties() {
+		return this.additionalProperties;
+	}
 
-    public Manifest withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
-    }
+	@JsonAnySetter
+	public void setAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+	}
+
+	public Manifest withAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+		return this;
+	}
 
 }

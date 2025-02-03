@@ -54,127 +54,112 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProducteurType",
-         propOrder = {"nomProd",
-                      "datesProd",
-                      "historiqueProd",
-                      "notesProd"})
+@XmlType(name = "ProducteurType", propOrder = { "nomProd", "datesProd", "historiqueProd", "notesProd" })
 public class ProducteurType {
 
-    @XmlElement(required = true)
-    protected String nomProd;
-    @XmlElement(required = true)
-    protected String datesProd;
-    @XmlElement(required = true)
-    protected List<String> historiqueProd;
-    protected List<String> notesProd;
+	@XmlElement(required = true)
+	protected String nomProd;
 
-    /**
-     * Obtient la valeur de la propriété nomProd.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getNomProd() {
-        return nomProd;
-    }
+	@XmlElement(required = true)
+	protected String datesProd;
 
-    /**
-     * Définit la valeur de la propriété nomProd.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setNomProd(String value) {
-        this.nomProd = value;
-    }
+	@XmlElement(required = true)
+	protected List<String> historiqueProd;
 
-    /**
-     * Obtient la valeur de la propriété datesProd.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getDatesProd() {
-        return datesProd;
-    }
+	protected List<String> notesProd;
 
-    /**
-     * Définit la valeur de la propriété datesProd.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setDatesProd(String value) {
-        this.datesProd = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété nomProd.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getNomProd() {
+		return nomProd;
+	}
 
-    /**
-     * Gets the value of the historiqueProd property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the historiqueProd property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getHistoriqueProd().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getHistoriqueProd() {
-        if (historiqueProd == null) {
-            historiqueProd = new ArrayList<>();
-        }
-        return this.historiqueProd;
-    }
+	/**
+	 * Définit la valeur de la propriété nomProd.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setNomProd(String value) {
+		this.nomProd = value;
+	}
 
-    /**
-     * Gets the value of the notesProd property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the notesProd property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getNotesProd().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getNotesProd() {
-        if (notesProd == null) {
-            notesProd = new ArrayList<>();
-        }
-        return this.notesProd;
-    }
+	/**
+	 * Obtient la valeur de la propriété datesProd.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getDatesProd() {
+		return datesProd;
+	}
+
+	/**
+	 * Définit la valeur de la propriété datesProd.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setDatesProd(String value) {
+		this.datesProd = value;
+	}
+
+	/**
+	 * Gets the value of the historiqueProd property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * historiqueProd property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getHistoriqueProd().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getHistoriqueProd() {
+		if (historiqueProd == null) {
+			historiqueProd = new ArrayList<>();
+		}
+		return this.historiqueProd;
+	}
+
+	/**
+	 * Gets the value of the notesProd property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the notesProd
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getNotesProd().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getNotesProd() {
+		if (notesProd == null) {
+			notesProd = new ArrayList<>();
+		}
+		return this.notesProd;
+	}
 
 }

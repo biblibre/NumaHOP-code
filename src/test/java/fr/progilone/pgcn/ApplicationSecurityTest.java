@@ -16,36 +16,37 @@ import org.springframework.security.web.authentication.RememberMeServices;
 @Configuration
 public class ApplicationSecurityTest {
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return Mockito.mock(UserDetailsService.class);
-    }
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return Mockito.mock(UserDetailsService.class);
+	}
 
-    @Mock
-    public LockService lockService;
+	@Mock
+	public LockService lockService;
 
-    @Bean
-    public RememberMeServices rememberMeServices() {
-        return new NullRememberMeServices();
-    }
+	@Bean
+	public RememberMeServices rememberMeServices() {
+		return new NullRememberMeServices();
+	}
 
-    @Bean
-    public AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler() {
-        return new AjaxAuthenticationSuccessHandler();
-    }
+	@Bean
+	public AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler() {
+		return new AjaxAuthenticationSuccessHandler();
+	}
 
-    @Bean
-    public AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler() {
-        return new AjaxAuthenticationFailureHandler();
-    }
+	@Bean
+	public AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler() {
+		return new AjaxAuthenticationFailureHandler();
+	}
 
-    @Bean
-    public AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler() {
-        return new AjaxLogoutSuccessHandler(lockService);
-    }
+	@Bean
+	public AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler() {
+		return new AjaxLogoutSuccessHandler(lockService);
+	}
 
-    @Bean
-    public Http401UnauthorizedEntryPoint authenticationEntryPoint() {
-        return new Http401UnauthorizedEntryPoint();
-    }
+	@Bean
+	public Http401UnauthorizedEntryPoint authenticationEntryPoint() {
+		return new Http401UnauthorizedEntryPoint();
+	}
+
 }

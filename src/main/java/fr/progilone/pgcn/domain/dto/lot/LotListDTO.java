@@ -3,152 +3,169 @@ package fr.progilone.pgcn.domain.dto.lot;
 import java.util.Date;
 
 /**
- * DTO représentant un lot, avec les infos requises pour une utilisation dans les listes côtés client
+ * DTO représentant un lot, avec les infos requises pour une utilisation dans les listes
+ * côtés client
  */
 public class LotListDTO {
 
-    private String identifier;
-    private String label;
-    private String code;
-    private String type;
-    private String description;
-    private Boolean active;
-    private String status;
-    private String condNotes;
-    private String numNotes;
-    private String requiredFormat;
-    private Date deliveryDateForseen;
-    private String requiredTypeCompression;
-    private Integer requiredTauxCompression;
-    private String requiredResolution;
-    private String requiredColorspace;
-    private String projectIdentifier;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String label;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private String code;
 
-    public String getLabel() {
-        return label;
-    }
+	private String type;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	private String description;
 
-    public String getCode() {
-        return code;
-    }
+	private Boolean active;
 
-    public void setCode(final String code) {
-        this.code = code;
-    }
+	private String status;
 
-    public String getType() {
-        return type;
-    }
+	private String condNotes;
 
-    public void setType(final String type) {
-        this.type = type;
-    }
+	private String numNotes;
 
-    public String getDescription() {
-        return description;
-    }
+	private String requiredFormat;
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	private Date deliveryDateForseen;
 
-    public Boolean getActive() {
-        return active;
-    }
+	private String requiredTypeCompression;
 
-    public void setActive(final Boolean active) {
-        this.active = active;
-    }
+	private Integer requiredTauxCompression;
 
-    public String getStatus() {
-        return status;
-    }
+	private String requiredResolution;
 
-    public void setStatus(final String status) {
-        this.status = status;
-    }
+	private String requiredColorspace;
 
-    public String getCondNotes() {
-        return condNotes;
-    }
+	private String projectIdentifier;
 
-    public void setCondNotes(final String condNotes) {
-        this.condNotes = condNotes;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getNumNotes() {
-        return numNotes;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setNumNotes(final String numNotes) {
-        this.numNotes = numNotes;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public String getRequiredFormat() {
-        return requiredFormat;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setRequiredFormat(final String requiredFormat) {
-        this.requiredFormat = requiredFormat;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public Date getDeliveryDateForseen() {
-        return deliveryDateForseen;
-    }
+	public void setCode(final String code) {
+		this.code = code;
+	}
 
-    public void setDeliveryDateForseen(final Date deliveryDateForseen) {
-        this.deliveryDateForseen = deliveryDateForseen;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public String getRequiredTypeCompression() {
-        return requiredTypeCompression;
-    }
+	public void setType(final String type) {
+		this.type = type;
+	}
 
-    public void setRequiredTypeCompression(final String requiredTypeCompression) {
-        this.requiredTypeCompression = requiredTypeCompression;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public Integer getRequiredTauxCompression() {
-        return requiredTauxCompression;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public void setRequiredTauxCompression(final Integer requiredTauxCompression) {
-        this.requiredTauxCompression = requiredTauxCompression;
-    }
+	public Boolean getActive() {
+		return active;
+	}
 
-    public String getRequiredResolution() {
-        return requiredResolution;
-    }
+	public void setActive(final Boolean active) {
+		this.active = active;
+	}
 
-    public void setRequiredResolution(final String requiredResolution) {
-        this.requiredResolution = requiredResolution;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public String getRequiredColorspace() {
-        return requiredColorspace;
-    }
+	public void setStatus(final String status) {
+		this.status = status;
+	}
 
-    public void setRequiredColorspace(final String requiredColorspace) {
-        this.requiredColorspace = requiredColorspace;
-    }
+	public String getCondNotes() {
+		return condNotes;
+	}
 
-    public String getProjectIdentifier() {
-        return projectIdentifier;
-    }
+	public void setCondNotes(final String condNotes) {
+		this.condNotes = condNotes;
+	}
 
-    public void setProjectIdentifier(final String projectIdentifier) {
-        this.projectIdentifier = projectIdentifier;
-    }
+	public String getNumNotes() {
+		return numNotes;
+	}
+
+	public void setNumNotes(final String numNotes) {
+		this.numNotes = numNotes;
+	}
+
+	public String getRequiredFormat() {
+		return requiredFormat;
+	}
+
+	public void setRequiredFormat(final String requiredFormat) {
+		this.requiredFormat = requiredFormat;
+	}
+
+	public Date getDeliveryDateForseen() {
+		return deliveryDateForseen;
+	}
+
+	public void setDeliveryDateForseen(final Date deliveryDateForseen) {
+		this.deliveryDateForseen = deliveryDateForseen;
+	}
+
+	public String getRequiredTypeCompression() {
+		return requiredTypeCompression;
+	}
+
+	public void setRequiredTypeCompression(final String requiredTypeCompression) {
+		this.requiredTypeCompression = requiredTypeCompression;
+	}
+
+	public Integer getRequiredTauxCompression() {
+		return requiredTauxCompression;
+	}
+
+	public void setRequiredTauxCompression(final Integer requiredTauxCompression) {
+		this.requiredTauxCompression = requiredTauxCompression;
+	}
+
+	public String getRequiredResolution() {
+		return requiredResolution;
+	}
+
+	public void setRequiredResolution(final String requiredResolution) {
+		this.requiredResolution = requiredResolution;
+	}
+
+	public String getRequiredColorspace() {
+		return requiredColorspace;
+	}
+
+	public void setRequiredColorspace(final String requiredColorspace) {
+		this.requiredColorspace = requiredColorspace;
+	}
+
+	public String getProjectIdentifier() {
+		return projectIdentifier;
+	}
+
+	public void setProjectIdentifier(final String projectIdentifier) {
+		this.projectIdentifier = projectIdentifier;
+	}
+
 }

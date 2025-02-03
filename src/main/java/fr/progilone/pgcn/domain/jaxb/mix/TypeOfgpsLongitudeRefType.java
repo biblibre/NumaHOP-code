@@ -33,60 +33,49 @@ import jakarta.xml.bind.annotation.XmlValue;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "typeOfgpsLongitudeRefType", propOrder = {"value"})
+@XmlType(name = "typeOfgpsLongitudeRefType", propOrder = { "value" })
 public class TypeOfgpsLongitudeRefType {
 
-    @XmlValue
-    protected GpsLongitudeRefType value;
-    @XmlAttribute(name = "use")
-    protected String use;
+	@XmlValue
+	protected GpsLongitudeRefType value;
 
-    /**
-     * Obtient la valeur de la propriété value.
-     *
-     * @return
-     *         possible object is
-     *         {@link GpsLongitudeRefType }
-     *
-     */
-    public GpsLongitudeRefType getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "use")
+	protected String use;
 
-    /**
-     * Définit la valeur de la propriété value.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link GpsLongitudeRefType }
-     *
-     */
-    public void setValue(GpsLongitudeRefType value) {
-        this.value = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété value.
+	 * @return possible object is {@link GpsLongitudeRefType }
+	 *
+	 */
+	public GpsLongitudeRefType getValue() {
+		return value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété use.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getUse() {
-        return use;
-    }
+	/**
+	 * Définit la valeur de la propriété value.
+	 * @param value allowed object is {@link GpsLongitudeRefType }
+	 *
+	 */
+	public void setValue(GpsLongitudeRefType value) {
+		this.value = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété use.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setUse(String value) {
-        this.use = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété use.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getUse() {
+		return use;
+	}
+
+	/**
+	 * Définit la valeur de la propriété use.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setUse(String value) {
+		this.use = value;
+	}
 
 }

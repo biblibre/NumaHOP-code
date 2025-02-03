@@ -46,54 +46,40 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum AvRender {
 
-    @XmlEnumValue("altrender")
-    ALTRENDER("altrender"),
-    @XmlEnumValue("bold")
-    BOLD("bold"),
-    @XmlEnumValue("bolddoublequote")
-    BOLDDOUBLEQUOTE("bolddoublequote"),
-    @XmlEnumValue("bolditalic")
-    BOLDITALIC("bolditalic"),
-    @XmlEnumValue("boldsinglequote")
-    BOLDSINGLEQUOTE("boldsinglequote"),
-    @XmlEnumValue("boldsmcaps")
-    BOLDSMCAPS("boldsmcaps"),
-    @XmlEnumValue("boldunderline")
-    BOLDUNDERLINE("boldunderline"),
-    @XmlEnumValue("doublequote")
-    DOUBLEQUOTE("doublequote"),
-    @XmlEnumValue("italic")
-    ITALIC("italic"),
-    @XmlEnumValue("nonproport")
-    NONPROPORT("nonproport"),
-    @XmlEnumValue("singlequote")
-    SINGLEQUOTE("singlequote"),
-    @XmlEnumValue("smcaps")
-    SMCAPS("smcaps"),
-    @XmlEnumValue("sub")
-    SUB("sub"),
-    @XmlEnumValue("super")
-    SUPER("super"),
-    @XmlEnumValue("underline")
-    UNDERLINE("underline");
+	@XmlEnumValue("altrender")
+	ALTRENDER("altrender"), @XmlEnumValue("bold")
+	BOLD("bold"), @XmlEnumValue("bolddoublequote")
+	BOLDDOUBLEQUOTE("bolddoublequote"), @XmlEnumValue("bolditalic")
+	BOLDITALIC("bolditalic"), @XmlEnumValue("boldsinglequote")
+	BOLDSINGLEQUOTE("boldsinglequote"), @XmlEnumValue("boldsmcaps")
+	BOLDSMCAPS("boldsmcaps"), @XmlEnumValue("boldunderline")
+	BOLDUNDERLINE("boldunderline"), @XmlEnumValue("doublequote")
+	DOUBLEQUOTE("doublequote"), @XmlEnumValue("italic")
+	ITALIC("italic"), @XmlEnumValue("nonproport")
+	NONPROPORT("nonproport"), @XmlEnumValue("singlequote")
+	SINGLEQUOTE("singlequote"), @XmlEnumValue("smcaps")
+	SMCAPS("smcaps"), @XmlEnumValue("sub")
+	SUB("sub"), @XmlEnumValue("super")
+	SUPER("super"), @XmlEnumValue("underline")
+	UNDERLINE("underline");
 
-    private final String value;
+	private final String value;
 
-    AvRender(String v) {
-        value = v;
-    }
+	AvRender(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static AvRender fromValue(String v) {
-        for (AvRender c : AvRender.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static AvRender fromValue(String v) {
+		for (AvRender c : AvRender.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

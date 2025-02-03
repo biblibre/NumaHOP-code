@@ -24,128 +24,138 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class DocPropertyTypeServiceTest {
 
-    @Mock
-    private DocPropertyTypeRepository docPropertyTypeRepository;
-    @Mock
-    private DocPropertyService docPropertyService;
-    @Mock
-    private MappingService mappingService;
+	@Mock
+	private DocPropertyTypeRepository docPropertyTypeRepository;
 
-    private DocPropertyTypeService service;
+	@Mock
+	private DocPropertyService docPropertyService;
 
-    @BeforeEach
-    public void setUp() {
-        service = new DocPropertyTypeService(docPropertyTypeRepository, docPropertyService, mappingService);
-    }
+	@Mock
+	private MappingService mappingService;
 
-    @Test
-    public void testFindAll() {
-        final List<DocPropertyType> properties = new ArrayList<>();
-        when(docPropertyTypeRepository.findAll()).thenReturn(properties);
-        final List<DocPropertyType> actual = service.findAll();
-        assertSame(properties, actual);
-    }
+	private DocPropertyTypeService service;
 
-    @Test
-    public void testFindAllBySuperType() {
-        final List<DocPropertyType> properties = new ArrayList<>();
-        when(docPropertyTypeRepository.findAllBySuperType(DocPropertyType.DocPropertySuperType.CUSTOM)).thenReturn(properties);
-        final List<DocPropertyType> actual = service.findAllBySuperType(DocPropertyType.DocPropertySuperType.CUSTOM);
-        assertSame(properties, actual);
-    }
+	@BeforeEach
+	public void setUp() {
+		service = new DocPropertyTypeService(docPropertyTypeRepository, docPropertyService, mappingService);
+	}
 
-    @Test
-    public void testFindAllByIdentifierIn() {
-        final List<DocPropertyType> properties = new ArrayList<>();
-        final List<String> identifiers = Arrays.asList("1", "2", "3");
-        when(docPropertyTypeRepository.findAllById(identifiers)).thenReturn(properties);
-        final List<DocPropertyType> actual = service.findAllByIdentifierIn(identifiers);
-        assertSame(properties, actual);
-    }
+	@Test
+	public void testFindAll() {
+		final List<DocPropertyType> properties = new ArrayList<>();
+		when(docPropertyTypeRepository.findAll()).thenReturn(properties);
+		final List<DocPropertyType> actual = service.findAll();
+		assertSame(properties, actual);
+	}
 
-    @Test
-    public void testFindOne() {
-        final String identifier = "ID-001";
-        final DocPropertyType property = new DocPropertyType();
-        when(docPropertyTypeRepository.findById(identifier)).thenReturn(Optional.of(property));
-        final DocPropertyType actual = service.findOne(identifier);
-        assertSame(property, actual);
-    }
+	@Test
+	public void testFindAllBySuperType() {
+		final List<DocPropertyType> properties = new ArrayList<>();
+		when(docPropertyTypeRepository.findAllBySuperType(DocPropertyType.DocPropertySuperType.CUSTOM))
+			.thenReturn(properties);
+		final List<DocPropertyType> actual = service.findAllBySuperType(DocPropertyType.DocPropertySuperType.CUSTOM);
+		assertSame(properties, actual);
+	}
 
-    @Test
-    public void testSave() {
-        when(docPropertyTypeRepository.save(any(DocPropertyType.class))).then(new ReturnsArgumentAt(0));
-        when(docPropertyTypeRepository.findCurrentRankForPropertyType(DocPropertyType.DocPropertySuperType.CUSTOM)).thenReturn(45);
+	@Test
+	public void testFindAllByIdentifierIn() {
+		final List<DocPropertyType> properties = new ArrayList<>();
+		final List<String> identifiers = Arrays.asList("1", "2", "3");
+		when(docPropertyTypeRepository.findAllById(identifiers)).thenReturn(properties);
+		final List<DocPropertyType> actual = service.findAllByIdentifierIn(identifiers);
+		assertSame(properties, actual);
+	}
 
-        try {
-            // pas de libellé
-            final DocPropertyType property = new DocPropertyType();
-            property.setSuperType(DocPropertyType.DocPropertySuperType.CUSTOM);
-            property.setRank(14);
+	@Test
+	public void testFindOne() {
+		final String identifier = "ID-001";
+		final DocPropertyType property = new DocPropertyType();
+		when(docPropertyTypeRepository.findById(identifier)).thenReturn(Optional.of(property));
+		final DocPropertyType actual = service.findOne(identifier);
+		assertSame(property, actual);
+	}
 
-            final DocPropertyType actual = service.save(property);
-            fail("testSave: PgcnValidationException expected");
+	@Test
+	public void testSave() {
+		when(docPropertyTypeRepository.save(any(DocPropertyType.class))).then(new ReturnsArgumentAt(0));
+		when(docPropertyTypeRepository.findCurrentRankForPropertyType(DocPropertyType.DocPropertySuperType.CUSTOM))
+			.thenReturn(45);
 
-        } catch (final PgcnValidationException e) {
-            TestUtil.checkPgcnException(e, PgcnErrorCode.DOC_PROP_TYPE_LABEL_MANDATORY);
-        }
+		try {
+			// pas de libellé
+			final DocPropertyType property = new DocPropertyType();
+			property.setSuperType(DocPropertyType.DocPropertySuperType.CUSTOM);
+			property.setRank(14);
 
-        try {
-            // le rang est défini
-            final DocPropertyType property = new DocPropertyType();
-            property.setSuperType(DocPropertyType.DocPropertySuperType.CUSTOM);
-            property.setRank(14);
-            property.setLabel("libellé de mon champ");
+			final DocPropertyType actual = service.save(property);
+			fail("testSave: PgcnValidationException expected");
 
-            final DocPropertyType actual = service.save(property);
-            assertNotNull(actual);
-            assertEquals(14L, actual.getRank().longValue());
+		}
+		catch (final PgcnValidationException e) {
+			TestUtil.checkPgcnException(e, PgcnErrorCode.DOC_PROP_TYPE_LABEL_MANDATORY);
+		}
 
-        } catch (final PgcnValidationException e) {
-            fail("testSave: PgcnValidationException not expected");
-        }
+		try {
+			// le rang est défini
+			final DocPropertyType property = new DocPropertyType();
+			property.setSuperType(DocPropertyType.DocPropertySuperType.CUSTOM);
+			property.setRank(14);
+			property.setLabel("libellé de mon champ");
 
-        try {
-            // le rang n'est pas défini
-            final DocPropertyType property = new DocPropertyType();
-            property.setSuperType(DocPropertyType.DocPropertySuperType.CUSTOM);
-            property.setLabel("libellé de mon champ");
+			final DocPropertyType actual = service.save(property);
+			assertNotNull(actual);
+			assertEquals(14L, actual.getRank().longValue());
 
-            final DocPropertyType actual = service.save(property);
+		}
+		catch (final PgcnValidationException e) {
+			fail("testSave: PgcnValidationException not expected");
+		}
 
-            assertNotNull(actual);
-            assertEquals(46L, actual.getRank().longValue());
+		try {
+			// le rang n'est pas défini
+			final DocPropertyType property = new DocPropertyType();
+			property.setSuperType(DocPropertyType.DocPropertySuperType.CUSTOM);
+			property.setLabel("libellé de mon champ");
 
-        } catch (final PgcnValidationException e) {
-            fail("testSave: PgcnValidationException not expected");
-        }
-    }
+			final DocPropertyType actual = service.save(property);
 
-    @Test
-    public void testDelete() {
-        final String identifier = "ID-DEL";
-        final DocPropertyType property = new DocPropertyType();
-        property.setIdentifier(identifier);
+			assertNotNull(actual);
+			assertEquals(46L, actual.getRank().longValue());
 
-        when(docPropertyService.countByType(property)).thenReturn(10, 0);
-        when(mappingService.countByPropertyType(property)).thenReturn(20, 0);
+		}
+		catch (final PgcnValidationException e) {
+			fail("testSave: PgcnValidationException not expected");
+		}
+	}
 
-        // ko
-        try {
-            service.delete(property);
-            fail("testDelete: expecting validation exception");
-        } catch (final PgcnValidationException e) {
-            verify(docPropertyTypeRepository, never()).delete(property);
-            TestUtil.checkPgcnException(e, PgcnErrorCode.DOC_PROP_TYPE_DEL_USED_MAPPING, PgcnErrorCode.DOC_PROP_TYPE_DEL_USED_PROP);
-        }
+	@Test
+	public void testDelete() {
+		final String identifier = "ID-DEL";
+		final DocPropertyType property = new DocPropertyType();
+		property.setIdentifier(identifier);
 
-        // ok
-        try {
-            service.delete(property);
-            verify(docPropertyTypeRepository).delete(property);
-        } catch (final PgcnValidationException e) {
-            fail("testDelete: expecting no validation exception");
-        }
-    }
+		when(docPropertyService.countByType(property)).thenReturn(10, 0);
+		when(mappingService.countByPropertyType(property)).thenReturn(20, 0);
+
+		// ko
+		try {
+			service.delete(property);
+			fail("testDelete: expecting validation exception");
+		}
+		catch (final PgcnValidationException e) {
+			verify(docPropertyTypeRepository, never()).delete(property);
+			TestUtil.checkPgcnException(e, PgcnErrorCode.DOC_PROP_TYPE_DEL_USED_MAPPING,
+					PgcnErrorCode.DOC_PROP_TYPE_DEL_USED_PROP);
+		}
+
+		// ok
+		try {
+			service.delete(property);
+			verify(docPropertyTypeRepository).delete(property);
+		}
+		catch (final PgcnValidationException e) {
+			fail("testDelete: expecting no validation exception");
+		}
+	}
 
 }

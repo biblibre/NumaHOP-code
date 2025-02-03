@@ -26,129 +26,133 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UIExportFTPConfigurationService {
 
-    private final ExportFTPConfigurationService exportFtpConfigurationService;
-    private final ProjectService projectService;
-    private final LibraryRepository libraryRepository;
-    private final LibraryService libraryService;
+	private final ExportFTPConfigurationService exportFtpConfigurationService;
 
-    @Autowired
-    public UIExportFTPConfigurationService(final ExportFTPConfigurationService exportFtpConfigurationService,
-                                           final ProjectService projectService,
-                                           final LibraryRepository libraryRepository,
-                                           final LibraryService libraryService) {
-        this.exportFtpConfigurationService = exportFtpConfigurationService;
-        this.projectService = projectService;
-        this.libraryRepository = libraryRepository;
-        this.libraryService = libraryService;
-    }
+	private final ProjectService projectService;
 
-    /**
-     * Recherche paginée paramétrée
-     *
-     * @param search
-     * @param libraries
-     * @param page
-     * @param size
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Page<SimpleExportFTPConfDTO> search(final String search, final List<String> libraries, final Integer page, final Integer size) {
-        final Pageable pageRequest = PageRequest.of(page, size);
-        final Page<ExportFTPConfiguration> ftpConfigurations = exportFtpConfigurationService.search(search, libraries, pageRequest);
-        return ftpConfigurations.map(ExportFTPConfigurationMapper.INSTANCE::objectToSimpleDto);
-    }
+	private final LibraryRepository libraryRepository;
 
-    @Transactional
-    public ExportFTPConfigurationDTO create(final ExportFTPConfigurationDTO dto) throws PgcnTechnicalException {
+	private final LibraryService libraryService;
 
-        final ExportFTPConfiguration conf = ExportFTPConfigurationMapper.INSTANCE.dtoToObject(dto);
-        return ExportFTPConfigurationMapper.INSTANCE.objectToDto(exportFtpConfigurationService.save(conf));
-    }
+	@Autowired
+	public UIExportFTPConfigurationService(final ExportFTPConfigurationService exportFtpConfigurationService,
+			final ProjectService projectService, final LibraryRepository libraryRepository,
+			final LibraryService libraryService) {
+		this.exportFtpConfigurationService = exportFtpConfigurationService;
+		this.projectService = projectService;
+		this.libraryRepository = libraryRepository;
+		this.libraryService = libraryService;
+	}
 
-    @Transactional
-    public ExportFTPConfigurationDTO update(final ExportFTPConfigurationDTO dto) throws PgcnTechnicalException {
+	/**
+	 * Recherche paginée paramétrée
+	 * @param search
+	 * @param libraries
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Page<SimpleExportFTPConfDTO> search(final String search, final List<String> libraries, final Integer page,
+			final Integer size) {
+		final Pageable pageRequest = PageRequest.of(page, size);
+		final Page<ExportFTPConfiguration> ftpConfigurations = exportFtpConfigurationService.search(search, libraries,
+				pageRequest);
+		return ftpConfigurations.map(ExportFTPConfigurationMapper.INSTANCE::objectToSimpleDto);
+	}
 
-        final ExportFTPConfiguration conf = exportFtpConfigurationService.getOne(dto.getIdentifier());
-        // Contrôle d'accès concurrents
-        VersionValidationService.checkForStateObject(conf, dto);
-        mapInto(dto, conf);
+	@Transactional
+	public ExportFTPConfigurationDTO create(final ExportFTPConfigurationDTO dto) throws PgcnTechnicalException {
 
-        final ExportFTPConfiguration savedConf = exportFtpConfigurationService.save(conf);
-        return getOne(savedConf.getIdentifier());
-    }
+		final ExportFTPConfiguration conf = ExportFTPConfigurationMapper.INSTANCE.dtoToObject(dto);
+		return ExportFTPConfigurationMapper.INSTANCE.objectToDto(exportFtpConfigurationService.save(conf));
+	}
 
-    @Transactional(readOnly = true)
-    public ExportFTPConfigurationDTO getOne(final String id) {
-        final ExportFTPConfiguration config = exportFtpConfigurationService.getOne(id);
-        return ExportFTPConfigurationMapper.INSTANCE.objectToDto(config);
-    }
+	@Transactional
+	public ExportFTPConfigurationDTO update(final ExportFTPConfigurationDTO dto) throws PgcnTechnicalException {
 
-    /**
-     * Récupération des configurations par projet
-     *
-     * @param projectId
-     * @param libraries
-     *            filtrage par bibliothèque (pour les droits d'accès)
-     * @param fullConfiguration
-     *            si true renvoie la configuration complète
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public List<? extends AbstractDTO> getAllByProjectId(final String projectId, final List<String> libraries, boolean fullConfiguration) {
-        final Project project = projectService.findOneWithExportFTPConfiguration(projectId);
-        return project.getLibrary()
-                      .getExportFtpConfigurations()
-                      .stream()
-                      .filter(conf -> CollectionUtils.isEmpty(libraries) || (conf.getLibrary() != null && libraries.contains(conf.getLibrary().getIdentifier())))
-                      .map(fullConfiguration ? ExportFTPConfigurationMapper.INSTANCE::objectToDto
-                                             : ExportFTPConfigurationMapper.INSTANCE::objectToSimpleDto)
-                      .collect(Collectors.toList());
-    }
+		final ExportFTPConfiguration conf = exportFtpConfigurationService.getOne(dto.getIdentifier());
+		// Contrôle d'accès concurrents
+		VersionValidationService.checkForStateObject(conf, dto);
+		mapInto(dto, conf);
 
-    /**
-     * Récupération des configurations par bibliothèque
-     *
-     * @param libraryId
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public List<? extends AbstractDTO> getAllByLibraryId(final String libraryId) {
-        final Library library = libraryService.findByIdentifier(libraryId);
-        return library.getExportFtpConfigurations().stream().map(ExportFTPConfigurationMapper.INSTANCE::objectToDto).collect(Collectors.toList());
-    }
+		final ExportFTPConfiguration savedConf = exportFtpConfigurationService.save(conf);
+		return getOne(savedConf.getIdentifier());
+	}
 
-    private void mapInto(final ExportFTPConfigurationDTO dto, final ExportFTPConfiguration conf) {
-        conf.setAddress(dto.getAddress());
-        conf.setLogin(dto.getLogin());
-        conf.setLabel(dto.getLabel());
-        conf.setPassword(dto.getPassword());
-        conf.setStorageServer(dto.getStorageServer());
-        conf.setPort(dto.getPort());
-        conf.setActive(dto.isActive());
+	@Transactional(readOnly = true)
+	public ExportFTPConfigurationDTO getOne(final String id) {
+		final ExportFTPConfiguration config = exportFtpConfigurationService.getOne(id);
+		return ExportFTPConfigurationMapper.INSTANCE.objectToDto(config);
+	}
 
-        conf.setExportView(dto.isExportView());
-        conf.setExportMaster(dto.isExportMaster());
-        conf.setExportThumb(dto.isExportThumb());
-        conf.setExportPdf(dto.isExportPdf());
-        conf.setExportMets(dto.isExportMets());
-        conf.setExportAipSip(dto.isExportAipSip());
-        conf.setExportAlto(dto.isExportAlto());
+	/**
+	 * Récupération des configurations par projet
+	 * @param projectId
+	 * @param libraries filtrage par bibliothèque (pour les droits d'accès)
+	 * @param fullConfiguration si true renvoie la configuration complète
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public List<? extends AbstractDTO> getAllByProjectId(final String projectId, final List<String> libraries,
+			boolean fullConfiguration) {
+		final Project project = projectService.findOneWithExportFTPConfiguration(projectId);
+		return project.getLibrary()
+			.getExportFtpConfigurations()
+			.stream()
+			.filter(conf -> CollectionUtils.isEmpty(libraries)
+					|| (conf.getLibrary() != null && libraries.contains(conf.getLibrary().getIdentifier())))
+			.map(fullConfiguration ? ExportFTPConfigurationMapper.INSTANCE::objectToDto
+					: ExportFTPConfigurationMapper.INSTANCE::objectToSimpleDto)
+			.collect(Collectors.toList());
+	}
 
-        conf.setDeliveryFolders(dto.getDeliveryFolders().stream().map(deliveryFolderDTO -> {
-            ExportFTPDeliveryFolder deliveryFolder = new ExportFTPDeliveryFolder();
-            deliveryFolder.setName(deliveryFolderDTO.getName());
-            deliveryFolder.setVersion(deliveryFolderDTO.getVersion());
-            if (deliveryFolderDTO.getIdentifier() != null)
-                deliveryFolder.setIdentifier(deliveryFolderDTO.getIdentifier());
-            else
-                deliveryFolder.setIdentifier(null);
-            return deliveryFolder;
-        }).collect(Collectors.toSet()));
+	/**
+	 * Récupération des configurations par bibliothèque
+	 * @param libraryId
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public List<? extends AbstractDTO> getAllByLibraryId(final String libraryId) {
+		final Library library = libraryService.findByIdentifier(libraryId);
+		return library.getExportFtpConfigurations()
+			.stream()
+			.map(ExportFTPConfigurationMapper.INSTANCE::objectToDto)
+			.collect(Collectors.toList());
+	}
 
-        if (dto.getLibrary() != null) {
-            final Library library = libraryRepository.getOne(dto.getLibrary().getIdentifier());
-            conf.setLibrary(library);
-        }
-    }
+	private void mapInto(final ExportFTPConfigurationDTO dto, final ExportFTPConfiguration conf) {
+		conf.setAddress(dto.getAddress());
+		conf.setLogin(dto.getLogin());
+		conf.setLabel(dto.getLabel());
+		conf.setPassword(dto.getPassword());
+		conf.setStorageServer(dto.getStorageServer());
+		conf.setPort(dto.getPort());
+		conf.setActive(dto.isActive());
+
+		conf.setExportView(dto.isExportView());
+		conf.setExportMaster(dto.isExportMaster());
+		conf.setExportThumb(dto.isExportThumb());
+		conf.setExportPdf(dto.isExportPdf());
+		conf.setExportMets(dto.isExportMets());
+		conf.setExportAipSip(dto.isExportAipSip());
+		conf.setExportAlto(dto.isExportAlto());
+
+		conf.setDeliveryFolders(dto.getDeliveryFolders().stream().map(deliveryFolderDTO -> {
+			ExportFTPDeliveryFolder deliveryFolder = new ExportFTPDeliveryFolder();
+			deliveryFolder.setName(deliveryFolderDTO.getName());
+			deliveryFolder.setVersion(deliveryFolderDTO.getVersion());
+			if (deliveryFolderDTO.getIdentifier() != null)
+				deliveryFolder.setIdentifier(deliveryFolderDTO.getIdentifier());
+			else
+				deliveryFolder.setIdentifier(null);
+			return deliveryFolder;
+		}).collect(Collectors.toSet()));
+
+		if (dto.getLibrary() != null) {
+			final Library library = libraryRepository.getOne(dto.getLibrary().getIdentifier());
+			conf.setLibrary(library);
+		}
+	}
 
 }

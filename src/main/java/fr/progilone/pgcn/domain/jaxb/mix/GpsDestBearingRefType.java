@@ -32,15 +32,14 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum GpsDestBearingRefType {
 
-    T,
-    M;
+	T, M;
 
-    public String value() {
-        return name();
-    }
+	public String value() {
+		return name();
+	}
 
-    public static GpsDestBearingRefType fromValue(String v) {
-        return valueOf(v);
-    }
+	public static GpsDestBearingRefType fromValue(String v) {
+		return valueOf(v);
+	}
 
 }

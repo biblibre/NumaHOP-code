@@ -9,19 +9,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class QuerydslConfiguration {
 
-    private final EntityManager em;
+	private final EntityManager em;
 
-    public QuerydslConfiguration(final EntityManager em) {
-        this.em = em;
-    }
+	public QuerydslConfiguration(final EntityManager em) {
+		this.em = em;
+	}
 
-    @Bean
-    public JPAQueryFactory jpaQueryFactory() {
-        return new JPAQueryFactory(em);
-    }
+	@Bean
+	public JPAQueryFactory jpaQueryFactory() {
+		return new JPAQueryFactory(em);
+	}
 
-    @Bean
-    public PathBuilderFactory pathBuilderFactory() {
-        return new PathBuilderFactory();
-    }
+	@Bean
+	public PathBuilderFactory pathBuilderFactory() {
+		return new PathBuilderFactory();
+	}
+
 }

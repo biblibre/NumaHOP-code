@@ -8,115 +8,123 @@ import java.util.Objects;
 
 public class SimpleDeliveredDigitalDocDTO implements Comparable<SimpleDeliveredDigitalDocDTO> {
 
-    private String identifier;
-    private String digitalId;
-    private LocalDate deliveryDate;
-    private Integer nbPages;
-    private Long totalLength;
-    private DigitalDocument.DigitalDocumentStatus status;
-    private SimpleDeliveryDTO delivery;
-    private LocalDateTime createdDate;
-    private String docUnitId;
+	private String identifier;
 
-    private String progress;
+	private String digitalId;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private LocalDate deliveryDate;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private Integer nbPages;
 
-    public String getDigitalId() {
-        return digitalId;
-    }
+	private Long totalLength;
 
-    public void setDigitalId(final String digitalId) {
-        this.digitalId = digitalId;
-    }
+	private DigitalDocument.DigitalDocumentStatus status;
 
-    public LocalDate getDeliveryDate() {
-        return deliveryDate;
-    }
+	private SimpleDeliveryDTO delivery;
 
-    public void setDeliveryDate(final LocalDate deliveryDate) {
-        this.deliveryDate = deliveryDate;
-    }
+	private LocalDateTime createdDate;
 
-    public Integer getNbPages() {
-        return nbPages;
-    }
+	private String docUnitId;
 
-    public void setNbPages(final Integer nbPages) {
-        this.nbPages = nbPages;
-    }
+	private String progress;
 
-    public Long getTotalLength() {
-        return totalLength;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setTotalLength(final Long totalLength) {
-        this.totalLength = totalLength;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public DigitalDocument.DigitalDocumentStatus getStatus() {
-        return status;
-    }
+	public String getDigitalId() {
+		return digitalId;
+	}
 
-    public void setStatus(final DigitalDocument.DigitalDocumentStatus status) {
-        this.status = status;
-    }
+	public void setDigitalId(final String digitalId) {
+		this.digitalId = digitalId;
+	}
 
-    public SimpleDeliveryDTO getDelivery() {
-        return delivery;
-    }
+	public LocalDate getDeliveryDate() {
+		return deliveryDate;
+	}
 
-    public void setDelivery(final SimpleDeliveryDTO delivery) {
-        this.delivery = delivery;
-    }
+	public void setDeliveryDate(final LocalDate deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
+	public Integer getNbPages() {
+		return nbPages;
+	}
 
-    public void setCreatedDate(final LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
+	public void setNbPages(final Integer nbPages) {
+		this.nbPages = nbPages;
+	}
 
-    public String getDocUnitId() {
-        return docUnitId;
-    }
+	public Long getTotalLength() {
+		return totalLength;
+	}
 
-    public void setDocUnitId(final String docUnitId) {
-        this.docUnitId = docUnitId;
-    }
+	public void setTotalLength(final Long totalLength) {
+		this.totalLength = totalLength;
+	}
 
-    public String getProgress() {
-        return progress;
-    }
+	public DigitalDocument.DigitalDocumentStatus getStatus() {
+		return status;
+	}
 
-    public void setProgress(final String progress) {
-        this.progress = progress;
-    }
+	public void setStatus(final DigitalDocument.DigitalDocumentStatus status) {
+		this.status = status;
+	}
 
-    @Override
-    public boolean equals(final Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final SimpleDeliveredDigitalDocDTO that = (SimpleDeliveredDigitalDocDTO) o;
-        return Objects.equals(identifier, that.identifier);
-    }
+	public SimpleDeliveryDTO getDelivery() {
+		return delivery;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(identifier);
-    }
+	public void setDelivery(final SimpleDeliveryDTO delivery) {
+		this.delivery = delivery;
+	}
 
-    @Override
-    public int compareTo(final SimpleDeliveredDigitalDocDTO comparedDto) {
-        return this.createdDate.compareTo(comparedDto.getCreatedDate());
-    }
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(final LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getDocUnitId() {
+		return docUnitId;
+	}
+
+	public void setDocUnitId(final String docUnitId) {
+		this.docUnitId = docUnitId;
+	}
+
+	public String getProgress() {
+		return progress;
+	}
+
+	public void setProgress(final String progress) {
+		this.progress = progress;
+	}
+
+	@Override
+	public boolean equals(final Object o) {
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		final SimpleDeliveredDigitalDocDTO that = (SimpleDeliveredDigitalDocDTO) o;
+		return Objects.equals(identifier, that.identifier);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(identifier);
+	}
+
+	@Override
+	public int compareTo(final SimpleDeliveredDigitalDocDTO comparedDto) {
+		return this.createdDate.compareTo(comparedDto.getCreatedDate());
+	}
 
 }

@@ -33,28 +33,27 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum GpsAltitudeRefType {
 
-    @XmlEnumValue("Sea level")
-    SEA_LEVEL("Sea level"),
-    @XmlEnumValue("Sea level reference (negative value)")
-    SEA_LEVEL_REFERENCE_NEGATIVE_VALUE("Sea level reference (negative value)");
+	@XmlEnumValue("Sea level")
+	SEA_LEVEL("Sea level"), @XmlEnumValue("Sea level reference (negative value)")
+	SEA_LEVEL_REFERENCE_NEGATIVE_VALUE("Sea level reference (negative value)");
 
-    private final String value;
+	private final String value;
 
-    GpsAltitudeRefType(String v) {
-        value = v;
-    }
+	GpsAltitudeRefType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static GpsAltitudeRefType fromValue(String v) {
-        for (GpsAltitudeRefType c : GpsAltitudeRefType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static GpsAltitudeRefType fromValue(String v) {
+		for (GpsAltitudeRefType c : GpsAltitudeRefType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

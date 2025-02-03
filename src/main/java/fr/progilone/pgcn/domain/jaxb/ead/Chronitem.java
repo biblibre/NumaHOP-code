@@ -44,170 +44,136 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "chronitem",
-         propOrder = {"date",
-                      "event",
-                      "eventgrp"})
+@XmlType(name = "chronitem", propOrder = { "date", "event", "eventgrp" })
 public class Chronitem {
 
-    @XmlElement(required = true)
-    protected Date date;
-    protected Event event;
-    protected Eventgrp eventgrp;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	@XmlElement(required = true)
+	protected Date date;
 
-    /**
-     * Obtient la valeur de la propriété date.
-     *
-     * @return
-     *         possible object is
-     *         {@link Date }
-     *
-     */
-    public Date getDate() {
-        return date;
-    }
+	protected Event event;
 
-    /**
-     * Définit la valeur de la propriété date.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Date }
-     *
-     */
-    public void setDate(Date value) {
-        this.date = value;
-    }
+	protected Eventgrp eventgrp;
 
-    /**
-     * Obtient la valeur de la propriété event.
-     *
-     * @return
-     *         possible object is
-     *         {@link Event }
-     *
-     */
-    public Event getEvent() {
-        return event;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Définit la valeur de la propriété event.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Event }
-     *
-     */
-    public void setEvent(Event value) {
-        this.event = value;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Obtient la valeur de la propriété eventgrp.
-     *
-     * @return
-     *         possible object is
-     *         {@link Eventgrp }
-     *
-     */
-    public Eventgrp getEventgrp() {
-        return eventgrp;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Définit la valeur de la propriété eventgrp.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Eventgrp }
-     *
-     */
-    public void setEventgrp(Eventgrp value) {
-        this.eventgrp = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété date.
+	 * @return possible object is {@link Date }
+	 *
+	 */
+	public Date getDate() {
+		return date;
+	}
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	/**
+	 * Définit la valeur de la propriété date.
+	 * @param value allowed object is {@link Date }
+	 *
+	 */
+	public void setDate(Date value) {
+		this.date = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété event.
+	 * @return possible object is {@link Event }
+	 *
+	 */
+	public Event getEvent() {
+		return event;
+	}
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Définit la valeur de la propriété event.
+	 * @param value allowed object is {@link Event }
+	 *
+	 */
+	public void setEvent(Event value) {
+		this.event = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété eventgrp.
+	 * @return possible object is {@link Eventgrp }
+	 *
+	 */
+	public Eventgrp getEventgrp() {
+		return eventgrp;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Définit la valeur de la propriété eventgrp.
+	 * @param value allowed object is {@link Eventgrp }
+	 *
+	 */
+	public void setEventgrp(Eventgrp value) {
+		this.eventgrp = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

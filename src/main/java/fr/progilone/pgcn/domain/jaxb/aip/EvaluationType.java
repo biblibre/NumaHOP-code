@@ -47,90 +47,71 @@ import javax.xml.datatype.Duration;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "evaluationType",
-         propOrder = {"dua",
-                      "traitement",
-                      "dateDebut"})
+@XmlType(name = "evaluationType", propOrder = { "dua", "traitement", "dateDebut" })
 public class EvaluationType {
 
-    @XmlElement(name = "DUA", required = true)
-    protected Duration dua;
-    @XmlElement(required = true)
-    protected TraitementType traitement;
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "date")
-    protected LocalDateTime dateDebut;
+	@XmlElement(name = "DUA", required = true)
+	protected Duration dua;
 
-    /**
-     * Obtient la valeur de la propriété dua.
-     *
-     * @return
-     *         possible object is
-     *         {@link Duration }
-     *
-     */
-    public Duration getDUA() {
-        return dua;
-    }
+	@XmlElement(required = true)
+	protected TraitementType traitement;
 
-    /**
-     * Définit la valeur de la propriété dua.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Duration }
-     *
-     */
-    public void setDUA(Duration value) {
-        this.dua = value;
-    }
+	@XmlElement(required = true)
+	@XmlSchemaType(name = "date")
+	protected LocalDateTime dateDebut;
 
-    /**
-     * Obtient la valeur de la propriété traitement.
-     *
-     * @return
-     *         possible object is
-     *         {@link TraitementType }
-     *
-     */
-    public TraitementType getTraitement() {
-        return traitement;
-    }
+	/**
+	 * Obtient la valeur de la propriété dua.
+	 * @return possible object is {@link Duration }
+	 *
+	 */
+	public Duration getDUA() {
+		return dua;
+	}
 
-    /**
-     * Définit la valeur de la propriété traitement.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link TraitementType }
-     *
-     */
-    public void setTraitement(TraitementType value) {
-        this.traitement = value;
-    }
+	/**
+	 * Définit la valeur de la propriété dua.
+	 * @param value allowed object is {@link Duration }
+	 *
+	 */
+	public void setDUA(Duration value) {
+		this.dua = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété dateDebut.
-     *
-     * @return
-     *         possible object is
-     *         {@link LocalDateTime }
-     *
-     */
-    public LocalDateTime getDateDebut() {
-        return dateDebut;
-    }
+	/**
+	 * Obtient la valeur de la propriété traitement.
+	 * @return possible object is {@link TraitementType }
+	 *
+	 */
+	public TraitementType getTraitement() {
+		return traitement;
+	}
 
-    /**
-     * Définit la valeur de la propriété dateDebut.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link LocalDateTime }
-     *
-     */
-    public void setDateDebut(LocalDateTime value) {
-        this.dateDebut = value;
-    }
+	/**
+	 * Définit la valeur de la propriété traitement.
+	 * @param value allowed object is {@link TraitementType }
+	 *
+	 */
+	public void setTraitement(TraitementType value) {
+		this.traitement = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété dateDebut.
+	 * @return possible object is {@link LocalDateTime }
+	 *
+	 */
+	public LocalDateTime getDateDebut() {
+		return dateDebut;
+	}
+
+	/**
+	 * Définit la valeur de la propriété dateDebut.
+	 * @param value allowed object is {@link LocalDateTime }
+	 *
+	 */
+	public void setDateDebut(LocalDateTime value) {
+		this.dateDebut = value;
+	}
 
 }

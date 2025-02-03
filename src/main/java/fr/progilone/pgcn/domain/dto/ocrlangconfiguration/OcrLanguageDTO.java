@@ -5,52 +5,55 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
 
 public class OcrLanguageDTO extends AbstractDTO {
 
-    private String identifier;
-    private String label;
-    private String code;
-    private boolean active = false;
+	private String identifier;
 
-    public OcrLanguageDTO(final String identifier, final String label, final String code, final boolean active) {
-        this.identifier = identifier;
-        this.label = label;
-        this.code = code;
-        this.active = active;
-    }
+	private String label;
 
-    public OcrLanguageDTO() {
+	private String code;
 
-    }
+	private boolean active = false;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public OcrLanguageDTO(final String identifier, final String label, final String code, final boolean active) {
+		this.identifier = identifier;
+		this.label = label;
+		this.code = code;
+		this.active = active;
+	}
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	public OcrLanguageDTO() {
 
-    public String getLabel() {
-        return label;
-    }
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setCode(final String code) {
-        this.code = code;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(final String code) {
+		this.code = code;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
 
 }

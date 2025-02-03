@@ -22,8 +22,9 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 /**
- * structMapType: Complex Type for Structural Maps
- * The structural map (structMap) outlines a hierarchical structure for the original object being encoded, using a series of nested div elements.
+ * structMapType: Complex Type for Structural Maps The structural map (structMap) outlines
+ * a hierarchical structure for the original object being encoded, using a series of
+ * nested div elements.
  *
  *
  * <p>
@@ -51,135 +52,113 @@ import javax.xml.namespace.QName;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "structMapType", propOrder = {"div"})
+@XmlType(name = "structMapType", propOrder = { "div" })
 public class StructMapType {
 
-    @XmlElement(required = true)
-    protected DivType div;
-    @XmlAttribute(name = "ID")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "TYPE")
-    protected String type;
-    @XmlAttribute(name = "LABEL")
-    protected String label;
-    @XmlAnyAttribute
-    private Map<QName, String> otherAttributes = new HashMap<>();
+	@XmlElement(required = true)
+	protected DivType div;
 
-    /**
-     * Obtient la valeur de la propriété div.
-     *
-     * @return
-     *         possible object is
-     *         {@link DivType }
-     *
-     */
-    public DivType getDiv() {
-        return div;
-    }
+	@XmlAttribute(name = "ID")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Définit la valeur de la propriété div.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link DivType }
-     *
-     */
-    public void setDiv(DivType value) {
-        this.div = value;
-    }
+	@XmlAttribute(name = "TYPE")
+	protected String type;
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getID() {
-        return id;
-    }
+	@XmlAttribute(name = "LABEL")
+	protected String label;
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setID(String value) {
-        this.id = value;
-    }
+	@XmlAnyAttribute
+	private Map<QName, String> otherAttributes = new HashMap<>();
 
-    /**
-     * Obtient la valeur de la propriété type.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getTYPE() {
-        return type;
-    }
+	/**
+	 * Obtient la valeur de la propriété div.
+	 * @return possible object is {@link DivType }
+	 *
+	 */
+	public DivType getDiv() {
+		return div;
+	}
 
-    /**
-     * Définit la valeur de la propriété type.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setTYPE(String value) {
-        this.type = value;
-    }
+	/**
+	 * Définit la valeur de la propriété div.
+	 * @param value allowed object is {@link DivType }
+	 *
+	 */
+	public void setDiv(DivType value) {
+		this.div = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété label.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getLABEL() {
-        return label;
-    }
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getID() {
+		return id;
+	}
 
-    /**
-     * Définit la valeur de la propriété label.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setLABEL(String value) {
-        this.label = value;
-    }
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setID(String value) {
+		this.id = value;
+	}
 
-    /**
-     * Gets a map that contains attributes that aren't bound to any typed property on this class.
-     *
-     * <p>
-     * the map is keyed by the name of the attribute and
-     * the value is the string value of the attribute.
-     *
-     * the map returned by this method is live, and you can add new attribute
-     * by updating the map directly. Because of this design, there's no setter.
-     *
-     *
-     * @return
-     *         always non-null
-     */
-    public Map<QName, String> getOtherAttributes() {
-        return otherAttributes;
-    }
+	/**
+	 * Obtient la valeur de la propriété type.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getTYPE() {
+		return type;
+	}
+
+	/**
+	 * Définit la valeur de la propriété type.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setTYPE(String value) {
+		this.type = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété label.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getLABEL() {
+		return label;
+	}
+
+	/**
+	 * Définit la valeur de la propriété label.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setLABEL(String value) {
+		this.label = value;
+	}
+
+	/**
+	 * Gets a map that contains attributes that aren't bound to any typed property on this
+	 * class.
+	 *
+	 * <p>
+	 * the map is keyed by the name of the attribute and the value is the string value of
+	 * the attribute.
+	 *
+	 * the map returned by this method is live, and you can add new attribute by updating
+	 * the map directly. Because of this design, there's no setter.
+	 * @return always non-null
+	 */
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes;
+	}
 
 }

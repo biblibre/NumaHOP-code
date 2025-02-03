@@ -46,235 +46,200 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "titlestmt",
-         propOrder = {"titleproper",
-                      "subtitle",
-                      "author",
-                      "sponsor"})
+@XmlType(name = "titlestmt", propOrder = { "titleproper", "subtitle", "author", "sponsor" })
 public class Titlestmt {
 
-    @XmlElement(required = true)
-    protected List<Titleproper> titleproper;
-    protected List<Subtitle> subtitle;
-    protected Author author;
-    protected Sponsor sponsor;
-    @XmlAttribute(name = "encodinganalog")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String encodinganalog;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAttribute(name = "altrender")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String altrender;
-    @XmlAttribute(name = "audience")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String audience;
+	@XmlElement(required = true)
+	protected List<Titleproper> titleproper;
 
-    /**
-     * Gets the value of the titleproper property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the titleproper property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getTitleproper().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Titleproper }
-     *
-     *
-     */
-    public List<Titleproper> getTitleproper() {
-        if (titleproper == null) {
-            titleproper = new ArrayList<>();
-        }
-        return this.titleproper;
-    }
+	protected List<Subtitle> subtitle;
 
-    /**
-     * Gets the value of the subtitle property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the subtitle property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getSubtitle().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Subtitle }
-     *
-     *
-     */
-    public List<Subtitle> getSubtitle() {
-        if (subtitle == null) {
-            subtitle = new ArrayList<>();
-        }
-        return this.subtitle;
-    }
+	protected Author author;
 
-    /**
-     * Obtient la valeur de la propriété author.
-     *
-     * @return
-     *         possible object is
-     *         {@link Author }
-     *
-     */
-    public Author getAuthor() {
-        return author;
-    }
+	protected Sponsor sponsor;
 
-    /**
-     * Définit la valeur de la propriété author.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Author }
-     *
-     */
-    public void setAuthor(Author value) {
-        this.author = value;
-    }
+	@XmlAttribute(name = "encodinganalog")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String encodinganalog;
 
-    /**
-     * Obtient la valeur de la propriété sponsor.
-     *
-     * @return
-     *         possible object is
-     *         {@link Sponsor }
-     *
-     */
-    public Sponsor getSponsor() {
-        return sponsor;
-    }
+	@XmlAttribute(name = "id")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Définit la valeur de la propriété sponsor.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link Sponsor }
-     *
-     */
-    public void setSponsor(Sponsor value) {
-        this.sponsor = value;
-    }
+	@XmlAttribute(name = "altrender")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String altrender;
 
-    /**
-     * Obtient la valeur de la propriété encodinganalog.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getEncodinganalog() {
-        return encodinganalog;
-    }
+	@XmlAttribute(name = "audience")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String audience;
 
-    /**
-     * Définit la valeur de la propriété encodinganalog.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setEncodinganalog(String value) {
-        this.encodinganalog = value;
-    }
+	/**
+	 * Gets the value of the titleproper property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the titleproper
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getTitleproper().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link Titleproper }
+	 *
+	 *
+	 */
+	public List<Titleproper> getTitleproper() {
+		if (titleproper == null) {
+			titleproper = new ArrayList<>();
+		}
+		return this.titleproper;
+	}
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	/**
+	 * Gets the value of the subtitle property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the subtitle
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getSubtitle().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link Subtitle }
+	 *
+	 *
+	 */
+	public List<Subtitle> getSubtitle() {
+		if (subtitle == null) {
+			subtitle = new ArrayList<>();
+		}
+		return this.subtitle;
+	}
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété author.
+	 * @return possible object is {@link Author }
+	 *
+	 */
+	public Author getAuthor() {
+		return author;
+	}
 
-    /**
-     * Obtient la valeur de la propriété altrender.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAltrender() {
-        return altrender;
-    }
+	/**
+	 * Définit la valeur de la propriété author.
+	 * @param value allowed object is {@link Author }
+	 *
+	 */
+	public void setAuthor(Author value) {
+		this.author = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété altrender.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAltrender(String value) {
-        this.altrender = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété sponsor.
+	 * @return possible object is {@link Sponsor }
+	 *
+	 */
+	public Sponsor getSponsor() {
+		return sponsor;
+	}
 
-    /**
-     * Obtient la valeur de la propriété audience.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getAudience() {
-        return audience;
-    }
+	/**
+	 * Définit la valeur de la propriété sponsor.
+	 * @param value allowed object is {@link Sponsor }
+	 *
+	 */
+	public void setSponsor(Sponsor value) {
+		this.sponsor = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété audience.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setAudience(String value) {
-        this.audience = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété encodinganalog.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getEncodinganalog() {
+		return encodinganalog;
+	}
+
+	/**
+	 * Définit la valeur de la propriété encodinganalog.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setEncodinganalog(String value) {
+		this.encodinganalog = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété altrender.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAltrender() {
+		return altrender;
+	}
+
+	/**
+	 * Définit la valeur de la propriété altrender.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAltrender(String value) {
+		this.altrender = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété audience.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getAudience() {
+		return audience;
+	}
+
+	/**
+	 * Définit la valeur de la propriété audience.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setAudience(String value) {
+		this.audience = value;
+	}
 
 }

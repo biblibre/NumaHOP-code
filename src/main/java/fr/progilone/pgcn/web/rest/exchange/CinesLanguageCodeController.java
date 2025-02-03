@@ -23,25 +23,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/conf/cineslangcode")
 public class CinesLanguageCodeController extends AbstractRestController {
 
-    private final CinesLanguageCodeService cinesLangCodeService;
+	private final CinesLanguageCodeService cinesLangCodeService;
 
-    @Autowired
-    public CinesLanguageCodeController(final CinesLanguageCodeService cinesLangCodeService) {
-        this.cinesLangCodeService = cinesLangCodeService;
-    }
+	@Autowired
+	public CinesLanguageCodeController(final CinesLanguageCodeService cinesLangCodeService) {
+		this.cinesLangCodeService = cinesLangCodeService;
+	}
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<List<CinesLanguageCode>> getListByActive() {
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<List<CinesLanguageCode>> getListByActive() {
 
-        return createResponseEntity(cinesLangCodeService.findAllActive(true));
-    }
+		return createResponseEntity(cinesLangCodeService.findAllActive(true));
+	}
 
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<List<CinesLanguageCode>> update(@RequestBody final List<CinesLanguageCode> cinesCodes) throws PgcnException {
+	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<List<CinesLanguageCode>> update(@RequestBody final List<CinesLanguageCode> cinesCodes)
+			throws PgcnException {
 
-        final List<CinesLanguageCode> savedCodes = cinesLangCodeService.update(cinesCodes);
-        return new ResponseEntity<>(savedCodes, HttpStatus.OK);
-    }
+		final List<CinesLanguageCode> savedCodes = cinesLangCodeService.update(cinesCodes);
+		return new ResponseEntity<>(savedCodes, HttpStatus.OK);
+	}
+
 }

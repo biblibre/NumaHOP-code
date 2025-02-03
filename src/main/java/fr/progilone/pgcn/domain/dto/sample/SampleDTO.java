@@ -11,76 +11,75 @@ import java.util.TreeSet;
 
 public class SampleDTO extends AbstractDTO {
 
-    private String identifier;
-    private String samplingMode;
-    private SortedSet<DocPageDTO> pages = new TreeSet<>();
-    private Set<SimpleDigitalDocumentDTO> documents = new HashSet<>();
+	private String identifier;
 
-    private DeliveryDTO delivery;
+	private String samplingMode;
 
-    /**
-     * @return the identifier
-     */
-    public String getIdentifier() {
-        return identifier;
-    }
+	private SortedSet<DocPageDTO> pages = new TreeSet<>();
 
-    /**
-     * @param identifier
-     *            the identifier to set
-     */
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private Set<SimpleDigitalDocumentDTO> documents = new HashSet<>();
 
-    /**
-     * @return the samplingMode
-     */
-    public String getSamplingMode() {
-        return samplingMode;
-    }
+	private DeliveryDTO delivery;
 
-    /**
-     * @param samplingMode
-     *            the samplingMode to set
-     */
-    public void setSamplingMode(String samplingMode) {
-        this.samplingMode = samplingMode;
-    }
+	/**
+	 * @return the identifier
+	 */
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    /**
-     * @return the pages
-     */
-    public SortedSet<DocPageDTO> getPages() {
-        return pages;
-    }
+	/**
+	 * @param identifier the identifier to set
+	 */
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    /**
-     * @param pages
-     *            the pages to set
-     */
-    public void setPages(SortedSet<DocPageDTO> pages) {
-        this.pages = pages;
-    }
+	/**
+	 * @return the samplingMode
+	 */
+	public String getSamplingMode() {
+		return samplingMode;
+	}
 
-    public Set<SimpleDigitalDocumentDTO> getDocuments() {
-        pages.forEach(p -> this.documents.add(p.getDigitalDocument()));
-        return documents;
-    }
+	/**
+	 * @param samplingMode the samplingMode to set
+	 */
+	public void setSamplingMode(String samplingMode) {
+		this.samplingMode = samplingMode;
+	}
 
-    /**
-     * @return the delivery
-     */
-    public DeliveryDTO getDelivery() {
-        return delivery;
-    }
+	/**
+	 * @return the pages
+	 */
+	public SortedSet<DocPageDTO> getPages() {
+		return pages;
+	}
 
-    /**
-     * @param delivery
-     *            the delivery to set
-     */
-    public void setDelivery(DeliveryDTO delivery) {
-        this.delivery = delivery;
-    }
+	/**
+	 * @param pages the pages to set
+	 */
+	public void setPages(SortedSet<DocPageDTO> pages) {
+		this.pages = pages;
+	}
+
+	public Set<SimpleDigitalDocumentDTO> getDocuments() {
+		pages.forEach(p -> this.documents.add(p.getDigitalDocument()));
+		return documents;
+	}
+
+	/**
+	 * @return the delivery
+	 */
+	public DeliveryDTO getDelivery() {
+		return delivery;
+	}
+
+	/**
+	 * @param delivery the delivery to set
+	 */
+	public void setDelivery(DeliveryDTO delivery) {
+		this.delivery = delivery;
+	}
 
 }

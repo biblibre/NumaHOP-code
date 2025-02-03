@@ -23,57 +23,62 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AutomaticCheckRuleService {
 
-    private final AutomaticCheckService automaticCheckService;
-    private final AutomaticCheckRuleRepository automaticCheckRuleRepository;
+	private final AutomaticCheckService automaticCheckService;
 
-    @Autowired
-    public AutomaticCheckRuleService(final AutomaticCheckService automaticCheckService, final AutomaticCheckRuleRepository automaticCheckRuleRepository) {
-        this.automaticCheckService = automaticCheckService;
-        this.automaticCheckRuleRepository = automaticCheckRuleRepository;
-    }
+	private final AutomaticCheckRuleRepository automaticCheckRuleRepository;
 
-    @Transactional(readOnly = true)
-    public List<AutomaticCheckRuleDTO> getInitRulesForConfiguration() {
+	@Autowired
+	public AutomaticCheckRuleService(final AutomaticCheckService automaticCheckService,
+			final AutomaticCheckRuleRepository automaticCheckRuleRepository) {
+		this.automaticCheckService = automaticCheckService;
+		this.automaticCheckRuleRepository = automaticCheckRuleRepository;
+	}
 
-        final List<AutomaticCheckRuleDTO> checkInitRules = new ArrayList<>();
-        final List<AutomaticCheckTypeDTO> typesAuto = automaticCheckService.findAllDto();
-        typesAuto.forEach(actDto -> {
-            // pas de controle auto facile pour le moment..
-            if (AutomaticCheckType.AutoCheckType.FACILE != actDto.getType()) {
-                final AutomaticCheckRuleDTO dto = new AutomaticCheckRuleDTO();
-                dto.setActive(actDto.isActive());
-                dto.setBlocking(actDto.isActive() ? true
-                                                  : false);
-                dto.setAutomaticCheckType(actDto);
-                checkInitRules.add(dto);
-            }
-        });
-        return checkInitRules;
-    }
+	@Transactional(readOnly = true)
+	public List<AutomaticCheckRuleDTO> getInitRulesForConfiguration() {
 
-    public AutomaticCheckRule duplicateAutomaticCheckRule(final AutomaticCheckRule acr) {
-        final AutomaticCheckRule duplicata = new AutomaticCheckRule();
-        duplicata.setActive(acr.isActive());
-        duplicata.setBlocking(acr.isBlocking());
-        duplicata.setAutomaticCheckType(acr.getAutomaticCheckType());
-        return duplicata;
-    }
+		final List<AutomaticCheckRuleDTO> checkInitRules = new ArrayList<>();
+		final List<AutomaticCheckTypeDTO> typesAuto = automaticCheckService.findAllDto();
+		typesAuto.forEach(actDto -> {
+			// pas de controle auto facile pour le moment..
+			if (AutomaticCheckType.AutoCheckType.FACILE != actDto.getType()) {
+				final AutomaticCheckRuleDTO dto = new AutomaticCheckRuleDTO();
+				dto.setActive(actDto.isActive());
+				dto.setBlocking(actDto.isActive() ? true : false);
+				dto.setAutomaticCheckType(actDto);
+				checkInitRules.add(dto);
+			}
+		});
+		return checkInitRules;
+	}
 
-    @Transactional(readOnly = true)
-    public Map<AutoCheckType, AutomaticCheckRule> findRulesByConfigId(final String configId) {
+	public AutomaticCheckRule duplicateAutomaticCheckRule(final AutomaticCheckRule acr) {
+		final AutomaticCheckRule duplicata = new AutomaticCheckRule();
+		duplicata.setActive(acr.isActive());
+		duplicata.setBlocking(acr.isBlocking());
+		duplicata.setAutomaticCheckType(acr.getAutomaticCheckType());
+		return duplicata;
+	}
 
-        final Map<AutoCheckType, AutomaticCheckRule> rulesByCheckType = new HashMap<>();
-        final CheckConfiguration cc = new CheckConfiguration();
-        cc.setIdentifier(configId);
-        automaticCheckRuleRepository.findByCheckConfiguration(cc).stream().filter(rule -> rule.getAutomaticCheckType() != null).forEach(rule -> {
-            // On initialise la relation vers checkConfiguration car on en a besoin par la suite
-            // mais pas dans la même transaction, de même pour la library
-            if (rule.getCheckConfiguration() != null) {
-                Hibernate.initialize(rule.getCheckConfiguration().getLibrary());
-            }
-            rulesByCheckType.put(rule.getAutomaticCheckType().getType(), rule);
-        });
-        return rulesByCheckType;
-    }
+	@Transactional(readOnly = true)
+	public Map<AutoCheckType, AutomaticCheckRule> findRulesByConfigId(final String configId) {
+
+		final Map<AutoCheckType, AutomaticCheckRule> rulesByCheckType = new HashMap<>();
+		final CheckConfiguration cc = new CheckConfiguration();
+		cc.setIdentifier(configId);
+		automaticCheckRuleRepository.findByCheckConfiguration(cc)
+			.stream()
+			.filter(rule -> rule.getAutomaticCheckType() != null)
+			.forEach(rule -> {
+				// On initialise la relation vers checkConfiguration car on en a besoin
+				// par la suite
+				// mais pas dans la même transaction, de même pour la library
+				if (rule.getCheckConfiguration() != null) {
+					Hibernate.initialize(rule.getCheckConfiguration().getLibrary());
+				}
+				rulesByCheckType.put(rule.getAutomaticCheckType().getType(), rule);
+			});
+		return rulesByCheckType;
+	}
 
 }

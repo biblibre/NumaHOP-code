@@ -40,42 +40,39 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ExposureProgramType {
 
-    @XmlEnumValue("Not defined")
-    NOT_DEFINED("Not defined"),
-    @XmlEnumValue("Manual")
-    MANUAL("Manual"),
-    @XmlEnumValue("Normal program")
-    NORMAL_PROGRAM("Normal program"),
-    @XmlEnumValue("Aperture priority")
-    APERTURE_PRIORITY("Aperture priority"),
-    @XmlEnumValue("Shutter priority")
-    SHUTTER_PRIORITY("Shutter priority"),
-    @XmlEnumValue("Creative program (biased toward depth of field)")
-    CREATIVE_PROGRAM_BIASED_TOWARD_DEPTH_OF_FIELD("Creative program (biased toward depth of field)"),
-    @XmlEnumValue("Action program (biased toward fast shutter speed)")
-    ACTION_PROGRAM_BIASED_TOWARD_FAST_SHUTTER_SPEED("Action program (biased toward fast shutter speed)"),
-    @XmlEnumValue("Portrait mode (for closeup photos with the background out of focus)")
-    PORTRAIT_MODE_FOR_CLOSEUP_PHOTOS_WITH_THE_BACKGROUND_OUT_OF_FOCUS("Portrait mode (for closeup photos with the background out of focus)"),
-    @XmlEnumValue("Landscape mode (for landscape photos with the background in focus)")
-    LANDSCAPE_MODE_FOR_LANDSCAPE_PHOTOS_WITH_THE_BACKGROUND_IN_FOCUS("Landscape mode (for landscape photos with the background in focus)");
+	@XmlEnumValue("Not defined")
+	NOT_DEFINED("Not defined"), @XmlEnumValue("Manual")
+	MANUAL("Manual"), @XmlEnumValue("Normal program")
+	NORMAL_PROGRAM("Normal program"), @XmlEnumValue("Aperture priority")
+	APERTURE_PRIORITY("Aperture priority"), @XmlEnumValue("Shutter priority")
+	SHUTTER_PRIORITY("Shutter priority"), @XmlEnumValue("Creative program (biased toward depth of field)")
+	CREATIVE_PROGRAM_BIASED_TOWARD_DEPTH_OF_FIELD("Creative program (biased toward depth of field)"),
+	@XmlEnumValue("Action program (biased toward fast shutter speed)")
+	ACTION_PROGRAM_BIASED_TOWARD_FAST_SHUTTER_SPEED("Action program (biased toward fast shutter speed)"),
+	@XmlEnumValue("Portrait mode (for closeup photos with the background out of focus)")
+	PORTRAIT_MODE_FOR_CLOSEUP_PHOTOS_WITH_THE_BACKGROUND_OUT_OF_FOCUS(
+			"Portrait mode (for closeup photos with the background out of focus)"),
+	@XmlEnumValue("Landscape mode (for landscape photos with the background in focus)")
+	LANDSCAPE_MODE_FOR_LANDSCAPE_PHOTOS_WITH_THE_BACKGROUND_IN_FOCUS(
+			"Landscape mode (for landscape photos with the background in focus)");
 
-    private final String value;
+	private final String value;
 
-    ExposureProgramType(String v) {
-        value = v;
-    }
+	ExposureProgramType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static ExposureProgramType fromValue(String v) {
-        for (ExposureProgramType c : ExposureProgramType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static ExposureProgramType fromValue(String v) {
+		for (ExposureProgramType c : ExposureProgramType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

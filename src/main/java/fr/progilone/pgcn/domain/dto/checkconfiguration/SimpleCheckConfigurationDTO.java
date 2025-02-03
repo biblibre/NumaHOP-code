@@ -4,56 +4,60 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
 
 public class SimpleCheckConfigurationDTO extends AbstractDTO {
 
-    private String identifier;
-    private String label;
+	private String identifier;
 
-    public SimpleCheckConfigurationDTO(String identifier, String label) {
-        this.identifier = identifier;
-        this.label = label;
-    }
+	private String label;
 
-    public SimpleCheckConfigurationDTO() {
-    }
+	public SimpleCheckConfigurationDTO(String identifier, String label) {
+		this.identifier = identifier;
+		this.label = label;
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public SimpleCheckConfigurationDTO() {
+	}
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getLabel() {
-        return label;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public static final class Builder {
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
-        private String identifier;
-        private String label;
+	public static final class Builder {
 
-        public Builder init() {
-            this.identifier = null;
-            this.label = null;
-            return this;
-        }
+		private String identifier;
 
-        public Builder setIdentifier(String identifier) {
-            this.identifier = identifier;
-            return this;
-        }
+		private String label;
 
-        public Builder setLabel(String label) {
-            this.label = label;
-            return this;
-        }
+		public Builder init() {
+			this.identifier = null;
+			this.label = null;
+			return this;
+		}
 
-        public SimpleCheckConfigurationDTO build() {
-            return new SimpleCheckConfigurationDTO(identifier, label);
-        }
-    }
+		public Builder setIdentifier(String identifier) {
+			this.identifier = identifier;
+			return this;
+		}
+
+		public Builder setLabel(String label) {
+			this.label = label;
+			return this;
+		}
+
+		public SimpleCheckConfigurationDTO build() {
+			return new SimpleCheckConfigurationDTO(identifier, label);
+		}
+
+	}
+
 }

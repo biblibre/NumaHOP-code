@@ -8,16 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ConditionReportAttachmentRepository extends JpaRepository<ConditionReportAttachment, String> {
 
-    @Query("select d " + "from ConditionReportAttachment a "
-           + "join a.report r "
-           + "join r.docUnit d "
-           + "where a.identifier = ?1")
-    DocUnit findDocUnitByIdentifier(String identifier);
+	@Query("select d " + "from ConditionReportAttachment a " + "join a.report r " + "join r.docUnit d "
+			+ "where a.identifier = ?1")
+	DocUnit findDocUnitByIdentifier(String identifier);
 
-    List<ConditionReportAttachment> findByReportIdentifier(String reportId);
+	List<ConditionReportAttachment> findByReportIdentifier(String reportId);
 
-    @Query("select a " + "from ConditionReportAttachment a "
-           + "join fetch a.report "
-           + "where a.identifier = ?1")
-    ConditionReportAttachment findByIdentifier(String identifier);
+	@Query("select a " + "from ConditionReportAttachment a " + "join fetch a.report " + "where a.identifier = ?1")
+	ConditionReportAttachment findByIdentifier(String identifier);
+
 }

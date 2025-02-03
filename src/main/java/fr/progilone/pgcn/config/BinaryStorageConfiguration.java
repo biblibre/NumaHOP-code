@@ -14,30 +14,31 @@ import org.springframework.core.env.Environment;
 @Configuration
 public class BinaryStorageConfiguration implements EnvironmentAware {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BinaryStorageConfiguration.class);
+	private static final Logger LOG = LoggerFactory.getLogger(BinaryStorageConfiguration.class);
 
-    private Environment environment;
+	private Environment environment;
 
-    @Value("${instance.libraries}")
-    private String[] instanceLibraries;
+	@Value("${instance.libraries}")
+	private String[] instanceLibraries;
 
-    @Autowired
-    private BinaryStorageManager bm;
+	@Autowired
+	private BinaryStorageManager bm;
 
-    @Override
-    public void setEnvironment(final Environment environment) {
-        this.environment = environment;
-    }
+	@Override
+	public void setEnvironment(final Environment environment) {
+		this.environment = environment;
+	}
 
-    @PostConstruct
-    public void init() throws IOException {
-        LOG.debug("Configuring Binaries Storage Engine");
-        final String binaries = environment.getProperty("storage.binaries");
-        final String digest = environment.getProperty("storage.digest");
-        final int depth = environment.getProperty("storage.depth", Integer.class, 2);
-        LOG.debug("binaries folder : {}", binaries);
-        LOG.debug("choosen digest : {}", digest);
-        LOG.debug("depth : {}", depth);
-        bm.initialize(binaries, depth, digest, instanceLibraries);
-    }
+	@PostConstruct
+	public void init() throws IOException {
+		LOG.debug("Configuring Binaries Storage Engine");
+		final String binaries = environment.getProperty("storage.binaries");
+		final String digest = environment.getProperty("storage.digest");
+		final int depth = environment.getProperty("storage.depth", Integer.class, 2);
+		LOG.debug("binaries folder : {}", binaries);
+		LOG.debug("choosen digest : {}", digest);
+		LOG.debug("depth : {}", depth);
+		bm.initialize(binaries, depth, digest, instanceLibraries);
+	}
+
 }

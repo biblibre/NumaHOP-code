@@ -5,104 +5,108 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
 
 public class ListPhysicalDocumentDTO extends AbstractDTO {
 
-    private String identifier;
-    private String name;
-    private String digitalId;
-    private Integer totalPage;
-    private PhysicalDocument.PhysicalDocumentStatus status;
-    private SimpleDocUnitDTO docUnit;
+	private String identifier;
 
-    private String reportDetailDim;
-    private String reportDetailInsurance;
-    private String reportDetailOperture;
+	private String name;
 
-    public ListPhysicalDocumentDTO(final String identifier,
-                                   final String name,
-                                   final String digitalId,
-                                   final Integer totalPage,
-                                   final PhysicalDocument.PhysicalDocumentStatus status,
-                                   final SimpleDocUnitDTO docUnit) {
-        this.identifier = identifier;
-        this.name = name;
-        this.digitalId = digitalId;
-        this.totalPage = totalPage;
-        this.status = status;
-        this.docUnit = docUnit;
-    }
+	private String digitalId;
 
-    public ListPhysicalDocumentDTO() {
-    }
+	private Integer totalPage;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private PhysicalDocument.PhysicalDocumentStatus status;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private SimpleDocUnitDTO docUnit;
 
-    public String getName() {
-        return name;
-    }
+	private String reportDetailDim;
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	private String reportDetailInsurance;
 
-    public String getDigitalId() {
-        return digitalId;
-    }
+	private String reportDetailOperture;
 
-    public void setDigitalId(final String digitalId) {
-        this.digitalId = digitalId;
-    }
+	public ListPhysicalDocumentDTO(final String identifier, final String name, final String digitalId,
+			final Integer totalPage, final PhysicalDocument.PhysicalDocumentStatus status,
+			final SimpleDocUnitDTO docUnit) {
+		this.identifier = identifier;
+		this.name = name;
+		this.digitalId = digitalId;
+		this.totalPage = totalPage;
+		this.status = status;
+		this.docUnit = docUnit;
+	}
 
-    public Integer getTotalPage() {
-        return totalPage;
-    }
+	public ListPhysicalDocumentDTO() {
+	}
 
-    public void setTotalPage(final Integer totalPage) {
-        this.totalPage = totalPage;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public SimpleDocUnitDTO getDocUnit() {
-        return docUnit;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setDocUnit(final SimpleDocUnitDTO docUnit) {
-        this.docUnit = docUnit;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public PhysicalDocument.PhysicalDocumentStatus getStatus() {
-        return status;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public void setStatus(final PhysicalDocument.PhysicalDocumentStatus status) {
-        this.status = status;
-    }
+	public String getDigitalId() {
+		return digitalId;
+	}
 
-    public String getReportDetailDim() {
-        return reportDetailDim;
-    }
+	public void setDigitalId(final String digitalId) {
+		this.digitalId = digitalId;
+	}
 
-    public void setReportDetailDim(final String reportDetailDim) {
-        this.reportDetailDim = reportDetailDim;
-    }
+	public Integer getTotalPage() {
+		return totalPage;
+	}
 
-    public String getReportDetailInsurance() {
-        return reportDetailInsurance;
-    }
+	public void setTotalPage(final Integer totalPage) {
+		this.totalPage = totalPage;
+	}
 
-    public void setReportDetailInsurance(final String reportDetailInsurance) {
-        this.reportDetailInsurance = reportDetailInsurance;
-    }
+	public SimpleDocUnitDTO getDocUnit() {
+		return docUnit;
+	}
 
-    public String getReportDetailOperture() {
-        return reportDetailOperture;
-    }
+	public void setDocUnit(final SimpleDocUnitDTO docUnit) {
+		this.docUnit = docUnit;
+	}
 
-    public void setReportDetailOperture(final String reportDetailOperture) {
-        this.reportDetailOperture = reportDetailOperture;
-    }
+	public PhysicalDocument.PhysicalDocumentStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(final PhysicalDocument.PhysicalDocumentStatus status) {
+		this.status = status;
+	}
+
+	public String getReportDetailDim() {
+		return reportDetailDim;
+	}
+
+	public void setReportDetailDim(final String reportDetailDim) {
+		this.reportDetailDim = reportDetailDim;
+	}
+
+	public String getReportDetailInsurance() {
+		return reportDetailInsurance;
+	}
+
+	public void setReportDetailInsurance(final String reportDetailInsurance) {
+		this.reportDetailInsurance = reportDetailInsurance;
+	}
+
+	public String getReportDetailOperture() {
+		return reportDetailOperture;
+	}
+
+	public void setReportDetailOperture(final String reportDetailOperture) {
+		this.reportDetailOperture = reportDetailOperture;
+	}
 
 }

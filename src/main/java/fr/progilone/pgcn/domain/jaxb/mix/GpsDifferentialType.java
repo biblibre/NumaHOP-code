@@ -33,28 +33,28 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum GpsDifferentialType {
 
-    @XmlEnumValue("Measurement without differential correction")
-    MEASUREMENT_WITHOUT_DIFFERENTIAL_CORRECTION("Measurement without differential correction"),
-    @XmlEnumValue("Differential correction applied")
-    DIFFERENTIAL_CORRECTION_APPLIED("Differential correction applied");
+	@XmlEnumValue("Measurement without differential correction")
+	MEASUREMENT_WITHOUT_DIFFERENTIAL_CORRECTION("Measurement without differential correction"),
+	@XmlEnumValue("Differential correction applied")
+	DIFFERENTIAL_CORRECTION_APPLIED("Differential correction applied");
 
-    private final String value;
+	private final String value;
 
-    GpsDifferentialType(String v) {
-        value = v;
-    }
+	GpsDifferentialType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static GpsDifferentialType fromValue(String v) {
-        for (GpsDifferentialType c : GpsDifferentialType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static GpsDifferentialType fromValue(String v) {
+		for (GpsDifferentialType c : GpsDifferentialType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

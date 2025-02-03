@@ -61,354 +61,333 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "FondsType",
-         propOrder = {"intitule",
-                      "contenu",
-                      "langue",
-                      "structure",
-                      "quantite",
-                      "sortFinal",
-                      "original",
-                      "communauteCible",
-                      "sourcesComplementaires",
-                      "relationFdsProd",
-                      "notesFonds"})
+@XmlType(name = "FondsType", propOrder = { "intitule", "contenu", "langue", "structure", "quantite", "sortFinal",
+		"original", "communauteCible", "sourcesComplementaires", "relationFdsProd", "notesFonds" })
 public class FondsType {
 
-    @XmlElement(required = true)
-    protected String intitule;
-    @XmlElement(required = true)
-    protected String contenu;
-    @XmlElement(required = true)
-    protected List<String> langue;
-    protected List<String> structure;
-    @XmlElement(required = true)
-    protected List<String> quantite;
-    @XmlElement(required = true)
-    protected List<String> sortFinal;
-    protected List<String> original;
-    @XmlElement(required = true)
-    protected List<String> communauteCible;
-    protected List<String> sourcesComplementaires;
-    protected List<String> relationFdsProd;
-    protected List<String> notesFonds;
+	@XmlElement(required = true)
+	protected String intitule;
 
-    /**
-     * Obtient la valeur de la propriété intitule.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getIntitule() {
-        return intitule;
-    }
+	@XmlElement(required = true)
+	protected String contenu;
 
-    /**
-     * Définit la valeur de la propriété intitule.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setIntitule(String value) {
-        this.intitule = value;
-    }
+	@XmlElement(required = true)
+	protected List<String> langue;
 
-    /**
-     * Obtient la valeur de la propriété contenu.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getContenu() {
-        return contenu;
-    }
+	protected List<String> structure;
 
-    /**
-     * Définit la valeur de la propriété contenu.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setContenu(String value) {
-        this.contenu = value;
-    }
+	@XmlElement(required = true)
+	protected List<String> quantite;
 
-    /**
-     * Gets the value of the langue property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the langue property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getLangue().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getLangue() {
-        if (langue == null) {
-            langue = new ArrayList<>();
-        }
-        return this.langue;
-    }
+	@XmlElement(required = true)
+	protected List<String> sortFinal;
 
-    /**
-     * Gets the value of the structure property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the structure property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getStructure().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getStructure() {
-        if (structure == null) {
-            structure = new ArrayList<>();
-        }
-        return this.structure;
-    }
+	protected List<String> original;
 
-    /**
-     * Gets the value of the quantite property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the quantite property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getQuantite().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getQuantite() {
-        if (quantite == null) {
-            quantite = new ArrayList<>();
-        }
-        return this.quantite;
-    }
+	@XmlElement(required = true)
+	protected List<String> communauteCible;
 
-    /**
-     * Gets the value of the sortFinal property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the sortFinal property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getSortFinal().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getSortFinal() {
-        if (sortFinal == null) {
-            sortFinal = new ArrayList<>();
-        }
-        return this.sortFinal;
-    }
+	protected List<String> sourcesComplementaires;
 
-    /**
-     * Gets the value of the original property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the original property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getOriginal().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getOriginal() {
-        if (original == null) {
-            original = new ArrayList<>();
-        }
-        return this.original;
-    }
+	protected List<String> relationFdsProd;
 
-    /**
-     * Gets the value of the communauteCible property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the communauteCible property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getCommunauteCible().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getCommunauteCible() {
-        if (communauteCible == null) {
-            communauteCible = new ArrayList<>();
-        }
-        return this.communauteCible;
-    }
+	protected List<String> notesFonds;
 
-    /**
-     * Gets the value of the sourcesComplementaires property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the sourcesComplementaires property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getSourcesComplementaires().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getSourcesComplementaires() {
-        if (sourcesComplementaires == null) {
-            sourcesComplementaires = new ArrayList<>();
-        }
-        return this.sourcesComplementaires;
-    }
+	/**
+	 * Obtient la valeur de la propriété intitule.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIntitule() {
+		return intitule;
+	}
 
-    /**
-     * Gets the value of the relationFdsProd property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the relationFdsProd property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getRelationFdsProd().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getRelationFdsProd() {
-        if (relationFdsProd == null) {
-            relationFdsProd = new ArrayList<>();
-        }
-        return this.relationFdsProd;
-    }
+	/**
+	 * Définit la valeur de la propriété intitule.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIntitule(String value) {
+		this.intitule = value;
+	}
 
-    /**
-     * Gets the value of the notesFonds property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the notesFonds property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getNotesFonds().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getNotesFonds() {
-        if (notesFonds == null) {
-            notesFonds = new ArrayList<>();
-        }
-        return this.notesFonds;
-    }
+	/**
+	 * Obtient la valeur de la propriété contenu.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getContenu() {
+		return contenu;
+	}
+
+	/**
+	 * Définit la valeur de la propriété contenu.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setContenu(String value) {
+		this.contenu = value;
+	}
+
+	/**
+	 * Gets the value of the langue property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the langue
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getLangue().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getLangue() {
+		if (langue == null) {
+			langue = new ArrayList<>();
+		}
+		return this.langue;
+	}
+
+	/**
+	 * Gets the value of the structure property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the structure
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getStructure().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getStructure() {
+		if (structure == null) {
+			structure = new ArrayList<>();
+		}
+		return this.structure;
+	}
+
+	/**
+	 * Gets the value of the quantite property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the quantite
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getQuantite().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getQuantite() {
+		if (quantite == null) {
+			quantite = new ArrayList<>();
+		}
+		return this.quantite;
+	}
+
+	/**
+	 * Gets the value of the sortFinal property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the sortFinal
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getSortFinal().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getSortFinal() {
+		if (sortFinal == null) {
+			sortFinal = new ArrayList<>();
+		}
+		return this.sortFinal;
+	}
+
+	/**
+	 * Gets the value of the original property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the original
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getOriginal().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getOriginal() {
+		if (original == null) {
+			original = new ArrayList<>();
+		}
+		return this.original;
+	}
+
+	/**
+	 * Gets the value of the communauteCible property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * communauteCible property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getCommunauteCible().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getCommunauteCible() {
+		if (communauteCible == null) {
+			communauteCible = new ArrayList<>();
+		}
+		return this.communauteCible;
+	}
+
+	/**
+	 * Gets the value of the sourcesComplementaires property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * sourcesComplementaires property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getSourcesComplementaires().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getSourcesComplementaires() {
+		if (sourcesComplementaires == null) {
+			sourcesComplementaires = new ArrayList<>();
+		}
+		return this.sourcesComplementaires;
+	}
+
+	/**
+	 * Gets the value of the relationFdsProd property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * relationFdsProd property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getRelationFdsProd().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getRelationFdsProd() {
+		if (relationFdsProd == null) {
+			relationFdsProd = new ArrayList<>();
+		}
+		return this.relationFdsProd;
+	}
+
+	/**
+	 * Gets the value of the notesFonds property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the notesFonds
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getNotesFonds().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getNotesFonds() {
+		if (notesFonds == null) {
+			notesFonds = new ArrayList<>();
+		}
+		return this.notesFonds;
+	}
 
 }

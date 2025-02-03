@@ -7,5 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface DigitalLibraryConfigurationRepositoryCustom {
 
-    Page<DigitalLibraryConfiguration> search(String search, final List<String> libraries, Pageable pageable);
+	Page<DigitalLibraryConfiguration> search(String search, final List<String> libraries, Pageable pageable);
+
 }

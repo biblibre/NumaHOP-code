@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface CinesReportRepositoryCustom {
 
-    List<CinesReport> findAll(List<String> libraries, LocalDate fromDate, boolean failures);
+	List<CinesReport> findAll(List<String> libraries, LocalDate fromDate, boolean failures);
+
 }

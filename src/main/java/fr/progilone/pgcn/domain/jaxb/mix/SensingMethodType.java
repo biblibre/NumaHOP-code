@@ -38,38 +38,32 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum SensingMethodType {
 
-    @XmlEnumValue("Not defined")
-    NOT_DEFINED("Not defined"),
-    @XmlEnumValue("One-chip color area sensor")
-    ONE_CHIP_COLOR_AREA_SENSOR("One-chip color area sensor"),
-    @XmlEnumValue("Two-chip color area sensor")
-    TWO_CHIP_COLOR_AREA_SENSOR("Two-chip color area sensor"),
-    @XmlEnumValue("Three-chip color area sensor")
-    THREE_CHIP_COLOR_AREA_SENSOR("Three-chip color area sensor"),
-    @XmlEnumValue("Color sequential area sensor")
-    COLOR_SEQUENTIAL_AREA_SENSOR("Color sequential area sensor"),
-    @XmlEnumValue("Trilinear sensor")
-    TRILINEAR_SENSOR("Trilinear sensor"),
-    @XmlEnumValue("Color sequential linear sensor")
-    COLOR_SEQUENTIAL_LINEAR_SENSOR("Color sequential linear sensor");
+	@XmlEnumValue("Not defined")
+	NOT_DEFINED("Not defined"), @XmlEnumValue("One-chip color area sensor")
+	ONE_CHIP_COLOR_AREA_SENSOR("One-chip color area sensor"), @XmlEnumValue("Two-chip color area sensor")
+	TWO_CHIP_COLOR_AREA_SENSOR("Two-chip color area sensor"), @XmlEnumValue("Three-chip color area sensor")
+	THREE_CHIP_COLOR_AREA_SENSOR("Three-chip color area sensor"), @XmlEnumValue("Color sequential area sensor")
+	COLOR_SEQUENTIAL_AREA_SENSOR("Color sequential area sensor"), @XmlEnumValue("Trilinear sensor")
+	TRILINEAR_SENSOR("Trilinear sensor"), @XmlEnumValue("Color sequential linear sensor")
+	COLOR_SEQUENTIAL_LINEAR_SENSOR("Color sequential linear sensor");
 
-    private final String value;
+	private final String value;
 
-    SensingMethodType(String v) {
-        value = v;
-    }
+	SensingMethodType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static SensingMethodType fromValue(String v) {
-        for (SensingMethodType c : SensingMethodType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static SensingMethodType fromValue(String v) {
+		for (SensingMethodType c : SensingMethodType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

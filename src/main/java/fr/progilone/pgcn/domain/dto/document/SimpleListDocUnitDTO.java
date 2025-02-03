@@ -15,142 +15,150 @@ import fr.progilone.pgcn.domain.dto.train.SimpleTrainDTO;
  */
 public class SimpleListDocUnitDTO extends AbstractDTO {
 
-    private String identifier;
-    private String label;
-    private String pgcnId;
-    private SimpleLibraryDTO library;
-    private SimpleProjectDTO project;
-    private SimpleLotDTO lot;
-    private SimpleTrainDTO train;
-    private String parentIdentifier;
-    private String parentLabel;
-    private String parentPgcnId;
-    private boolean hasRecord;
-    private String digitalDocumentStatus;
-    private boolean changeTrainAuthorized;
+	private String identifier;
 
-    public SimpleListDocUnitDTO() {
-    }
+	private String label;
 
-    public SimpleListDocUnitDTO(final String identifier,
-                                final String label,
-                                final String pgcnId,
-                                final SimpleLibraryDTO library,
-                                final SimpleProjectDTO project,
-                                final SimpleLotDTO lot,
-                                final SimpleTrainDTO train) {
-        super();
-        this.identifier = identifier;
-        this.label = label;
-        this.pgcnId = pgcnId;
-        this.library = library;
-        this.project = project;
-        this.lot = lot;
-        this.train = train;
-    }
+	private String pgcnId;
 
-    public SimpleTrainDTO getTrain() {
-        return train;
-    }
+	private SimpleLibraryDTO library;
 
-    public void setTrain(final SimpleTrainDTO train) {
-        this.train = train;
-    }
+	private SimpleProjectDTO project;
 
-    public final String getIdentifier() {
-        return identifier;
-    }
+	private SimpleLotDTO lot;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private SimpleTrainDTO train;
 
-    public final String getPgcnId() {
-        return pgcnId;
-    }
+	private String parentIdentifier;
 
-    public void setPgcnId(final String pgcnId) {
-        this.pgcnId = pgcnId;
-    }
+	private String parentLabel;
 
-    public final String getLabel() {
-        return label;
-    }
+	private String parentPgcnId;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	private boolean hasRecord;
 
-    public final SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	private String digitalDocumentStatus;
 
-    public void setLibrary(final SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	private boolean changeTrainAuthorized;
 
-    public final SimpleProjectDTO getProject() {
-        return project;
-    }
+	public SimpleListDocUnitDTO() {
+	}
 
-    public void setProject(final SimpleProjectDTO project) {
-        this.project = project;
-    }
+	public SimpleListDocUnitDTO(final String identifier, final String label, final String pgcnId,
+			final SimpleLibraryDTO library, final SimpleProjectDTO project, final SimpleLotDTO lot,
+			final SimpleTrainDTO train) {
+		super();
+		this.identifier = identifier;
+		this.label = label;
+		this.pgcnId = pgcnId;
+		this.library = library;
+		this.project = project;
+		this.lot = lot;
+		this.train = train;
+	}
 
-    public SimpleLotDTO getLot() {
-        return lot;
-    }
+	public SimpleTrainDTO getTrain() {
+		return train;
+	}
 
-    public void setLot(final SimpleLotDTO lot) {
-        this.lot = lot;
-    }
+	public void setTrain(final SimpleTrainDTO train) {
+		this.train = train;
+	}
 
-    public String getParentIdentifier() {
-        return parentIdentifier;
-    }
+	public final String getIdentifier() {
+		return identifier;
+	}
 
-    public void setParentIdentifier(final String parentIdentifier) {
-        this.parentIdentifier = parentIdentifier;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getParentLabel() {
-        return parentLabel;
-    }
+	public final String getPgcnId() {
+		return pgcnId;
+	}
 
-    public void setParentLabel(final String parentLabel) {
-        this.parentLabel = parentLabel;
-    }
+	public void setPgcnId(final String pgcnId) {
+		this.pgcnId = pgcnId;
+	}
 
-    public String getParentPgcnId() {
-        return parentPgcnId;
-    }
+	public final String getLabel() {
+		return label;
+	}
 
-    public void setParentPgcnId(final String parentPgcnId) {
-        this.parentPgcnId = parentPgcnId;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public boolean isHasRecord() {
-        return hasRecord;
-    }
+	public final SimpleLibraryDTO getLibrary() {
+		return library;
+	}
 
-    public void setHasRecord(final boolean hasRecord) {
-        this.hasRecord = hasRecord;
-    }
+	public void setLibrary(final SimpleLibraryDTO library) {
+		this.library = library;
+	}
 
-    public String getDigitalDocumentStatus() {
-        return digitalDocumentStatus;
-    }
+	public final SimpleProjectDTO getProject() {
+		return project;
+	}
 
-    public void setDigitalDocumentStatus(final String digitalDocumentStatus) {
-        this.digitalDocumentStatus = digitalDocumentStatus;
-    }
+	public void setProject(final SimpleProjectDTO project) {
+		this.project = project;
+	}
 
-    public boolean isChangeTrainAuthorized() {
-        return changeTrainAuthorized;
-    }
+	public SimpleLotDTO getLot() {
+		return lot;
+	}
 
-    public void setChangeTrainAuthorized(final boolean changeTrainAuthorized) {
-        this.changeTrainAuthorized = changeTrainAuthorized;
-    }
+	public void setLot(final SimpleLotDTO lot) {
+		this.lot = lot;
+	}
+
+	public String getParentIdentifier() {
+		return parentIdentifier;
+	}
+
+	public void setParentIdentifier(final String parentIdentifier) {
+		this.parentIdentifier = parentIdentifier;
+	}
+
+	public String getParentLabel() {
+		return parentLabel;
+	}
+
+	public void setParentLabel(final String parentLabel) {
+		this.parentLabel = parentLabel;
+	}
+
+	public String getParentPgcnId() {
+		return parentPgcnId;
+	}
+
+	public void setParentPgcnId(final String parentPgcnId) {
+		this.parentPgcnId = parentPgcnId;
+	}
+
+	public boolean isHasRecord() {
+		return hasRecord;
+	}
+
+	public void setHasRecord(final boolean hasRecord) {
+		this.hasRecord = hasRecord;
+	}
+
+	public String getDigitalDocumentStatus() {
+		return digitalDocumentStatus;
+	}
+
+	public void setDigitalDocumentStatus(final String digitalDocumentStatus) {
+		this.digitalDocumentStatus = digitalDocumentStatus;
+	}
+
+	public boolean isChangeTrainAuthorized() {
+		return changeTrainAuthorized;
+	}
+
+	public void setChangeTrainAuthorized(final boolean changeTrainAuthorized) {
+		this.changeTrainAuthorized = changeTrainAuthorized;
+	}
 
 }

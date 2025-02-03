@@ -10,12 +10,13 @@ import org.mapstruct.factory.Mappers;
 /**
  * Created by Sebastien on 07/12/2016.
  */
-@Mapper(uses = {SimpleLibraryMapper.class})
+@Mapper(uses = { SimpleLibraryMapper.class })
 public interface MappingMapper {
 
-    MappingMapper INSTANCE = Mappers.getMapper(MappingMapper.class);
+	MappingMapper INSTANCE = Mappers.getMapper(MappingMapper.class);
 
-    MappingDTO mappingToDto(Mapping mapping);
+	MappingDTO mappingToDto(Mapping mapping);
 
-    Set<MappingDTO> mappingToDtos(Set<Mapping> mappings);
+	Set<MappingDTO> mappingToDtos(Set<Mapping> mappings);
+
 }

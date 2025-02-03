@@ -15,33 +15,34 @@ import org.springframework.test.util.ReflectionTestUtils;
  */
 public class MapperConfigurationMapperTest {
 
-    private MailboxConfigurationMapper mapper;
+	private MailboxConfigurationMapper mapper;
 
-    @BeforeEach
-    public void setUp() {
-        mapper = MailboxConfigurationMapper.INSTANCE;
-        ReflectionTestUtils.setField(mapper, "simpleLibraryMapper", SimpleLibraryMapper.INSTANCE);
-    }
+	@BeforeEach
+	public void setUp() {
+		mapper = MailboxConfigurationMapper.INSTANCE;
+		ReflectionTestUtils.setField(mapper, "simpleLibraryMapper", SimpleLibraryMapper.INSTANCE);
+	}
 
-    @Test
-    public void shouldConfigurationSftpToDto() {
-        final Library library = new Library();
-        library.setIdentifier("LIB-001");
+	@Test
+	public void shouldConfigurationSftpToDto() {
+		final Library library = new Library();
+		library.setIdentifier("LIB-001");
 
-        final MailboxConfiguration conf = new MailboxConfiguration();
-        conf.setIdentifier("CONF-001");
-        conf.setLabel("Config de test");
-        conf.setLibrary(library);
-        conf.setVersion(10);
+		final MailboxConfiguration conf = new MailboxConfiguration();
+		conf.setIdentifier("CONF-001");
+		conf.setLabel("Config de test");
+		conf.setLibrary(library);
+		conf.setVersion(10);
 
-        conf.addProperty("mail.store.protocol", "imaps");
-        conf.addProperty("mail.imaps.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        conf.addProperty("mail.imaps.socketFactory.fallback", "false");
+		conf.addProperty("mail.store.protocol", "imaps");
+		conf.addProperty("mail.imaps.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		conf.addProperty("mail.imaps.socketFactory.fallback", "false");
 
-        final MailboxConfigurationDTO actual = mapper.mailboxToDto(conf);
+		final MailboxConfigurationDTO actual = mapper.mailboxToDto(conf);
 
-        assertNotNull(actual);
-        assertEquals(conf.getIdentifier(), actual.getIdentifier());
-        assertEquals(3, actual.getProperties().size());
-    }
+		assertNotNull(actual);
+		assertEquals(conf.getIdentifier(), actual.getIdentifier());
+		assertEquals(3, actual.getProperties().size());
+	}
+
 }

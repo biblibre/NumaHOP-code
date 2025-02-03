@@ -15,22 +15,23 @@ import org.springframework.core.env.Environment;
 @EnableMetrics(proxyTargetClass = true)
 public class TesseractConfiguration implements EnvironmentAware {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TesseractConfiguration.class);
+	private static final Logger LOG = LoggerFactory.getLogger(TesseractConfiguration.class);
 
-    private Environment environment;
+	private Environment environment;
 
-    @Autowired
-    private TesseractService tesseractService;
+	@Autowired
+	private TesseractService tesseractService;
 
-    @Override
-    public void setEnvironment(final Environment environment) {
-        this.environment = environment;
-    }
+	@Override
+	public void setEnvironment(final Environment environment) {
+		this.environment = environment;
+	}
 
-    @PostConstruct
-    public void init() throws IOException {
-        LOG.debug("Configuring Tesseract");
-        final String tessProcessPath = environment.getProperty("tesseract.process");
-        tesseractService.initialize(tessProcessPath);
-    }
+	@PostConstruct
+	public void init() throws IOException {
+		LOG.debug("Configuring Tesseract");
+		final String tessProcessPath = environment.getProperty("tesseract.process");
+		tesseractService.initialize(tessProcessPath);
+	}
+
 }

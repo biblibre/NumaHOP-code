@@ -24,518 +24,564 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.TransactionStatus;
 
 /**
- * Cette classe parcourt un iterateur, effectue un job pour chaque élément, et committe sa transaction tous les 100 éléments.
- * On peut suivre la progression du job grâce à progressJob.
+ * Cette classe parcourt un iterateur, effectue un job pour chaque élément, et committe sa
+ * transaction tous les 100 éléments. On peut suivre la progression du job grâce à
+ * progressJob.
  */
 public class TransactionalJobRunner<T> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TransactionalJobRunner.class);
+	private static final Logger LOG = LoggerFactory.getLogger(TransactionalJobRunner.class);
 
-    private final TransactionService transactionService;
-    private final Iterator<T> iterator;   // Itérateur sur les objets à traiter
-    private final int totalElements;
+	private final TransactionService transactionService;
 
-    private String elementName = "enregistrements";
-    private long commit = 100L; // Committe tous les x éléments
-    private long flush = 0L;  // Flush tous les x éléments
-    private long groupSize = 0L;  // Regroupe les éléments en collections de x éléments avant de les traiter
-    private int maxThreads = 1; // spécifie le nombre de threads utilisés par le traitement
-    private boolean readOnly = false; // si les transactions doivent être readonly
-    private long nbBeforeLog = 100L; // Nombre d'éléments en dessous duquel les logs sont générés seulement en trace
-    private long durationBetweenLogs = 5000l; // Nombre de millisecondes minimum entre 2 logs
+	private final Iterator<T> iterator; // Itérateur sur les objets à traiter
 
-    /**
-     * Lorsqu'une exception est lancée par le job:
-     * - true: Le traitement s'arrête, l'exception est relancée
-     * - false: Le traitement se poursuit, un rollback est fait sur la transaction en cours
-     */
-    private boolean failOnException = true;
-    private boolean logExceptions = true;
-    private boolean stateless = false;
+	private final int totalElements;
 
-    /**
-     * Job à exécuter
-     */
-    private Job<T> job;
+	private String elementName = "enregistrements";
 
-    /**
-     * Job à exécuter pour les groupes
-     */
-    private Job<Collection<T>> groupJob;
+	private long commit = 100L; // Committe tous les x éléments
 
-    /**
-     * Jobs à exécuter après que tous les jobs soient terminés, chacun dans une transaction
-     */
-    private final List<PostJob> postJobs = new ArrayList<>();
+	private long flush = 0L; // Flush tous les x éléments
 
-    /**
-     * Suivi de la progression du job
-     */
-    private Consumer<Long> progressJob = lg -> {
-    };
+	private long groupSize = 0L; // Regroupe les éléments en collections de x éléments
+									// avant de les traiter
 
-    /**
-     * Permet de regrouper des enregistrements pour qu'ils soient traités par le même job (donc séquentiellement) pour éviter les problèmes de
-     * concurence d'accès entre ces enregistrements.
-     */
-    private GroupExtractor<T> groupExtractor;
+	private int maxThreads = 1; // spécifie le nombre de threads utilisés par le
+								// traitement
 
-    /**
-     * Stocke les affectations entre un group et un job qui le traite.
-     */
-    private final Map<String, String> groupAssignment = new HashMap<>();
+	private boolean readOnly = false; // si les transactions doivent être readonly
 
-    /**
-     * Stocke les enregistrements à traiter ultérieurement par un autre job.
-     */
-    private final Map<String, List<T>> toBeHandled = new HashMap<>();
+	private long nbBeforeLog = 100L; // Nombre d'éléments en dessous duquel les logs sont
+										// générés seulement en trace
 
-    public TransactionalJobRunner(final Collection<T> collection, final TransactionService transactionService) {
-        this.iterator = collection.iterator();
-        this.totalElements = collection.size();
-        this.transactionService = transactionService;
-    }
+	private long durationBetweenLogs = 5000l; // Nombre de millisecondes minimum entre 2
+												// logs
 
-    public TransactionalJobRunner(final Iterator<T> iterator, final TransactionService transactionService) {
-        this.iterator = iterator;
-        this.totalElements = 0;
-        this.transactionService = transactionService;
-    }
+	/**
+	 * Lorsqu'une exception est lancée par le job: - true: Le traitement s'arrête,
+	 * l'exception est relancée - false: Le traitement se poursuit, un rollback est fait
+	 * sur la transaction en cours
+	 */
+	private boolean failOnException = true;
 
-    public TransactionalJobRunner(final Stream<T> stream, final TransactionService transactionService) {
-        this.iterator = stream.iterator();
-        this.totalElements = 0;
-        this.transactionService = transactionService;
-    }
+	private boolean logExceptions = true;
 
-    // Committe tous les commit éléments
-    public TransactionalJobRunner<T> setCommit(final long commit) {
-        this.commit = commit;
-        return this;
-    }
+	private boolean stateless = false;
 
-    public TransactionalJobRunner<T> setReadOnly(final boolean readOnly) {
-        this.readOnly = readOnly;
-        return this;
-    }
+	/**
+	 * Job à exécuter
+	 */
+	private Job<T> job;
 
-    public TransactionalJobRunner<T> setFlush(final long flush) {
-        this.flush = flush;
-        return this;
-    }
+	/**
+	 * Job à exécuter pour les groupes
+	 */
+	private Job<Collection<T>> groupJob;
 
-    public TransactionalJobRunner<T> setNbBeforeLog(final long nbBeforeLog) {
-        this.nbBeforeLog = nbBeforeLog;
-        return this;
-    }
+	/**
+	 * Jobs à exécuter après que tous les jobs soient terminés, chacun dans une
+	 * transaction
+	 */
+	private final List<PostJob> postJobs = new ArrayList<>();
 
-    public TransactionalJobRunner<T> setDurationBetweenLogs(final long durationBetweenLogs) {
-        this.durationBetweenLogs = durationBetweenLogs;
-        return this;
-    }
+	/**
+	 * Suivi de la progression du job
+	 */
+	private Consumer<Long> progressJob = lg -> {
+	};
 
-    public TransactionalJobRunner<T> autoSetMaxThreads() {
-        this.maxThreads = Runtime.getRuntime().availableProcessors();
-        return this;
-    }
+	/**
+	 * Permet de regrouper des enregistrements pour qu'ils soient traités par le même job
+	 * (donc séquentiellement) pour éviter les problèmes de concurence d'accès entre ces
+	 * enregistrements.
+	 */
+	private GroupExtractor<T> groupExtractor;
 
-    public TransactionalJobRunner<T> setFailOnException(final boolean failOnException) {
-        this.failOnException = failOnException;
-        return this;
-    }
+	/**
+	 * Stocke les affectations entre un group et un job qui le traite.
+	 */
+	private final Map<String, String> groupAssignment = new HashMap<>();
 
-    public TransactionalJobRunner<T> setLogExceptions(final boolean logExceptions) {
-        this.logExceptions = logExceptions;
-        return this;
-    }
+	/**
+	 * Stocke les enregistrements à traiter ultérieurement par un autre job.
+	 */
+	private final Map<String, List<T>> toBeHandled = new HashMap<>();
 
-    public TransactionalJobRunner<T> setStateless(final boolean stateless) {
-        this.stateless = stateless;
-        return this;
-    }
+	public TransactionalJobRunner(final Collection<T> collection, final TransactionService transactionService) {
+		this.iterator = collection.iterator();
+		this.totalElements = collection.size();
+		this.transactionService = transactionService;
+	}
 
-    public TransactionalJobRunner<T> setElementName(final String elementName) {
-        this.elementName = elementName;
-        return this;
-    }
+	public TransactionalJobRunner(final Iterator<T> iterator, final TransactionService transactionService) {
+		this.iterator = iterator;
+		this.totalElements = 0;
+		this.transactionService = transactionService;
+	}
 
-    public TransactionalJobRunner<T> setGroupExtractor(final GroupExtractor<T> groupExtractor) {
-        this.groupExtractor = groupExtractor;
-        return this;
-    }
+	public TransactionalJobRunner(final Stream<T> stream, final TransactionService transactionService) {
+		this.iterator = stream.iterator();
+		this.totalElements = 0;
+		this.transactionService = transactionService;
+	}
 
-    /**
-     * Traitement d'une notice
-     *
-     * @param job
-     *            le job retourne true si il est réalisé avec succès
-     */
-    public TransactionalJobRunner<T> forEach(final Job<T> job) {
-        this.job = job;
-        return this;
-    }
+	// Committe tous les commit éléments
+	public TransactionalJobRunner<T> setCommit(final long commit) {
+		this.commit = commit;
+		return this;
+	}
 
-    /**
-     * Traitement d'un groupe
-     *
-     * @param groupJob
-     *            le job retourne true si il est réalisé avec succès
-     */
-    public TransactionalJobRunner<T> forEachGroup(final int groupSize, final Job<Collection<T>> groupJob) {
-        this.groupJob = groupJob;
-        this.groupSize = groupSize;
-        return this;
-    }
+	public TransactionalJobRunner<T> setReadOnly(final boolean readOnly) {
+		this.readOnly = readOnly;
+		return this;
+	}
 
-    public TransactionalJobRunner<T> addPostJob(final PostJob job) {
-        this.postJobs.add(job);
-        return this;
-    }
+	public TransactionalJobRunner<T> setFlush(final long flush) {
+		this.flush = flush;
+		return this;
+	}
 
-    /**
-     * Consumer permettant de suivre la progression du job
-     */
-    public TransactionalJobRunner<T> onProgress(final Consumer<Long> progressJob) {
-        if (progressJob != null) {
-            this.progressJob = progressJob;
-        }
-        return this;
-    }
+	public TransactionalJobRunner<T> setNbBeforeLog(final long nbBeforeLog) {
+		this.nbBeforeLog = nbBeforeLog;
+		return this;
+	}
 
-    /**
-     * Lancement du traitement
-     */
-    public void process() {
-        final AtomicBoolean stopAllJobs = new AtomicBoolean(false);
-        final AtomicLong nbErrors = new AtomicLong(0);    // Nombre de transactions en échec
-        final AtomicLong nbSuccess = new AtomicLong(0);   // Nombre de transactions réussies
-        final long start = System.currentTimeMillis();
-        final AtomicLong lastLogTime = new AtomicLong(start);
+	public TransactionalJobRunner<T> setDurationBetweenLogs(final long durationBetweenLogs) {
+		this.durationBetweenLogs = durationBetweenLogs;
+		return this;
+	}
 
-        final ThreadPoolTaskExecutor taskExecutor = transactionService.getTaskExecutor();
-        final Collection<Future<Object>> futures = new ArrayList<>(maxThreads);
+	public TransactionalJobRunner<T> autoSetMaxThreads() {
+		this.maxThreads = Runtime.getRuntime().availableProcessors();
+		return this;
+	}
 
-        // Notification initiale
-        progressJob.accept(nbSuccess.get());
+	public TransactionalJobRunner<T> setFailOnException(final boolean failOnException) {
+		this.failOnException = failOnException;
+		return this;
+	}
 
-        // Initialisation des traitements
-        for (int nbThread = 0; nbThread < maxThreads; nbThread++) {
-            futures.add(taskExecutor.submit(Executors.callable(() -> {
-                final String jobId = UUID.randomUUID().toString();
-                final TransactionManager t = new TransactionManager();
-                t.startTransaction();
-                long currentNbSuccess = 0;
-                long currentNbErrors = 0;
+	public TransactionalJobRunner<T> setLogExceptions(final boolean logExceptions) {
+		this.logExceptions = logExceptions;
+		return this;
+	}
 
-                try {
-                    if (this.groupSize > 0 && this.groupJob != null) {
-                        Collection<T> list = getNextGroup(jobId);
-                        while (!list.isEmpty() && !stopAllJobs.get()) {
-                            try {
-                                // Exécution du job
-                                final boolean result = groupJob.run(list);
-                                if (result) {
-                                    currentNbSuccess += list.size();
-                                } else {
-                                    currentNbErrors += list.size();
-                                }
+	public TransactionalJobRunner<T> setStateless(final boolean stateless) {
+		this.stateless = stateless;
+		return this;
+	}
 
-                                // Gestion de la transaction sous-jacente
-                                if (currentNbSuccess > 0 && currentNbSuccess % commit == 0) {
-                                    lastLogTime.set(t.commit(nbSuccess.addAndGet(currentNbSuccess), nbErrors.addAndGet(currentNbErrors), start, lastLogTime.get(), false));
-                                    t.startTransaction();
+	public TransactionalJobRunner<T> setElementName(final String elementName) {
+		this.elementName = elementName;
+		return this;
+	}
 
-                                    currentNbSuccess = 0;
-                                    currentNbErrors = 0;
-                                } else if (flush > 0 && currentNbSuccess > 0
-                                           && currentNbSuccess % flush == 0) {
-                                    // Vidage de la session
-                                    t.flush();
-                                }
-                            } catch (final Throwable e) {
-                                handleException(nbErrors, nbSuccess, t, currentNbSuccess, currentNbErrors + list.size(), stopAllJobs, e);
-                                currentNbSuccess = 0;
-                                currentNbErrors = 0;
-                            }
-                            list = getNextGroup(jobId);
-                        }
-                        lastLogTime.set(t.commit(nbSuccess.addAndGet(currentNbSuccess), nbErrors.addAndGet(currentNbErrors), start, lastLogTime.get(), true));
-                    } else {
-                        T record = getNext(jobId);
-                        while (record != null && !stopAllJobs.get()) {
-                            try {
-                                // Exécution du job
-                                final boolean result = job.run(record);
-                                if (result) {
-                                    currentNbSuccess++;
-                                } else {
-                                    currentNbErrors++;
-                                }
+	public TransactionalJobRunner<T> setGroupExtractor(final GroupExtractor<T> groupExtractor) {
+		this.groupExtractor = groupExtractor;
+		return this;
+	}
 
-                                // Gestion de la transaction sous-jacente
-                                if (currentNbSuccess > 0 && currentNbSuccess % commit == 0) {
-                                    lastLogTime.set(t.commit(nbSuccess.addAndGet(currentNbSuccess), nbErrors.addAndGet(currentNbErrors), start, lastLogTime.get(), false));
-                                    t.startTransaction();
+	/**
+	 * Traitement d'une notice
+	 * @param job le job retourne true si il est réalisé avec succès
+	 */
+	public TransactionalJobRunner<T> forEach(final Job<T> job) {
+		this.job = job;
+		return this;
+	}
 
-                                    currentNbSuccess = 0;
-                                    currentNbErrors = 0;
-                                } else if (flush > 0 && currentNbSuccess > 0
-                                           && currentNbSuccess % flush == 0) {
-                                    // Vidage de la session
-                                    t.flush();
-                                }
-                            } catch (final Throwable e) {
-                                handleException(nbErrors, nbSuccess, t, currentNbSuccess, ++currentNbErrors, stopAllJobs, e);
-                                currentNbSuccess = 0;
-                                currentNbErrors = 0;
-                            }
-                            record = getNext(jobId);
-                        }
-                        lastLogTime.set(t.commit(nbSuccess.addAndGet(currentNbSuccess), nbErrors.addAndGet(currentNbErrors), start, lastLogTime.get(), true));
-                    }
-                } finally {
-                    // Normalement ici il ne devrait pas y avoir de transaction ouverte mais bon on ne sait jamais...
-                    t.rollback();
-                    t.closeSession();
-                }
-            })));
-        }
-        // Lancement des traitements
-        try {
-            LOG.trace("Attente de la fin de {} traitement(s)", futures.size());
+	/**
+	 * Traitement d'un groupe
+	 * @param groupJob le job retourne true si il est réalisé avec succès
+	 */
+	public TransactionalJobRunner<T> forEachGroup(final int groupSize, final Job<Collection<T>> groupJob) {
+		this.groupJob = groupJob;
+		this.groupSize = groupSize;
+		return this;
+	}
 
-            // Vérification du résultat des traitements: future.get() lance une ExecutionException si le job a donné lieu à une exception
-            for (final Future<Object> future : futures) {
-                future.get();
-            }
+	public TransactionalJobRunner<T> addPostJob(final PostJob job) {
+		this.postJobs.add(job);
+		return this;
+	}
 
-            if (!postJobs.isEmpty()) {
-                LOG.debug("Lancement de {} actions post-traitement", postJobs.size());
-                final long startPostJobs = System.currentTimeMillis();
+	/**
+	 * Consumer permettant de suivre la progression du job
+	 */
+	public TransactionalJobRunner<T> onProgress(final Consumer<Long> progressJob) {
+		if (progressJob != null) {
+			this.progressJob = progressJob;
+		}
+		return this;
+	}
 
-                final TransactionManager t = new TransactionManager();
+	/**
+	 * Lancement du traitement
+	 */
+	public void process() {
+		final AtomicBoolean stopAllJobs = new AtomicBoolean(false);
+		final AtomicLong nbErrors = new AtomicLong(0); // Nombre de transactions en échec
+		final AtomicLong nbSuccess = new AtomicLong(0); // Nombre de transactions réussies
+		final long start = System.currentTimeMillis();
+		final AtomicLong lastLogTime = new AtomicLong(start);
 
-                postJobs.forEach(j -> {
-                    t.startTransaction();
-                    try {
-                        j.run();
-                        lastLogTime.set(t.commit(1, 0, startPostJobs, lastLogTime.get(), true));
-                    } catch (final Throwable e) {
-                        LOG.error(e.getMessage(), e);
-                        t.rollback();
-                    } finally {
-                        t.closeSession();
-                    }
-                });
-            }
+		final ThreadPoolTaskExecutor taskExecutor = transactionService.getTaskExecutor();
+		final Collection<Future<Object>> futures = new ArrayList<>(maxThreads);
 
-        } catch (final InterruptedException e) {
-            LOG.warn("Thread interrompu : {}", e.getMessage(), e);
-            Thread.currentThread().interrupt();
-        } catch (final Throwable e) {
-            LOG.error("Problème d'exécution multithreading : {}", e.getMessage(), e);
-            throw new PgcnException(new PgcnError.Builder().setMessage("Problème d'exécution multithreading").build(), e);
+		// Notification initiale
+		progressJob.accept(nbSuccess.get());
 
-        } finally {
-            final long elapsedTime = System.currentTimeMillis() - start;
-            LOG.trace("{} traitement(s) terminé(s) en {} ms", futures.size(), elapsedTime);
-        }
-    }
+		// Initialisation des traitements
+		for (int nbThread = 0; nbThread < maxThreads; nbThread++) {
+			futures.add(taskExecutor.submit(Executors.callable(() -> {
+				final String jobId = UUID.randomUUID().toString();
+				final TransactionManager t = new TransactionManager();
+				t.startTransaction();
+				long currentNbSuccess = 0;
+				long currentNbErrors = 0;
 
-    private void handleException(final AtomicLong nbErrors,
-                                 final AtomicLong nbSuccess,
-                                 final TransactionManager t,
-                                 final long currentNbSuccess,
-                                 final long currentNbErrors,
-                                 final AtomicBoolean stopAllJobs,
-                                 final Throwable e) {
-        // Rollback transaction
-        t.rollback();
-        nbSuccess.addAndGet(currentNbSuccess);
-        nbErrors.addAndGet(currentNbErrors);
+				try {
+					if (this.groupSize > 0 && this.groupJob != null) {
+						Collection<T> list = getNextGroup(jobId);
+						while (!list.isEmpty() && !stopAllJobs.get()) {
+							try {
+								// Exécution du job
+								final boolean result = groupJob.run(list);
+								if (result) {
+									currentNbSuccess += list.size();
+								}
+								else {
+									currentNbErrors += list.size();
+								}
 
-        if (failOnException) {
-            stopAllJobs.set(true);
-            throw new IllegalStateException(e);
-        } else {
-            if (logExceptions) {
-                LOG.warn(e.getMessage(), e);
-            } else {
-                LOG.trace(e.getMessage(), e);
-            }
-            t.startTransaction();
-        }
-    }
+								// Gestion de la transaction sous-jacente
+								if (currentNbSuccess > 0 && currentNbSuccess % commit == 0) {
+									lastLogTime.set(t.commit(nbSuccess.addAndGet(currentNbSuccess),
+											nbErrors.addAndGet(currentNbErrors), start, lastLogTime.get(), false));
+									t.startTransaction();
 
-    /**
-     * Récupération de l'élément à traiter suivant
-     *
-     * @return
-     */
-    private T getNext(final String jobId) {
-        synchronized (iterator) {
-            if (toBeHandled.containsKey(jobId)) {
-                final List<T> list = toBeHandled.get(jobId);
-                if (CollectionUtils.isNotEmpty(list)) {
-                    return list.remove(0);
-                }
-            }
-            while (iterator.hasNext()) {
-                try {
-                    final T next = iterator.next();
-                    if (groupExtractor == null) {
-                        return next;
-                    } else {
-                        final String group = groupExtractor.extractGroup(next);
-                        if (groupAssignment.containsKey(group)) {
-                            final String assignedJob = groupAssignment.get(group);
-                            if (!jobId.equals(assignedJob)) {
-                                toBeHandled.computeIfAbsent(assignedJob, k -> new ArrayList<>()).add(next);
-                            } else {
-                                return next;
-                            }
-                        } else {
-                            groupAssignment.put(group, jobId);
-                            return next;
-                        }
-                    }
-                } catch (final Throwable e) {
-                    if (failOnException) {
-                        throw e;
-                    } else {
-                        if (logExceptions) {
-                            LOG.warn(e.getMessage(), e);
-                        } else {
-                            LOG.trace(e.getMessage(), e);
-                        }
-                    }
-                }
-            }
-            return null;
-        }
-    }
+									currentNbSuccess = 0;
+									currentNbErrors = 0;
+								}
+								else if (flush > 0 && currentNbSuccess > 0 && currentNbSuccess % flush == 0) {
+									// Vidage de la session
+									t.flush();
+								}
+							}
+							catch (final Throwable e) {
+								handleException(nbErrors, nbSuccess, t, currentNbSuccess, currentNbErrors + list.size(),
+										stopAllJobs, e);
+								currentNbSuccess = 0;
+								currentNbErrors = 0;
+							}
+							list = getNextGroup(jobId);
+						}
+						lastLogTime.set(t.commit(nbSuccess.addAndGet(currentNbSuccess),
+								nbErrors.addAndGet(currentNbErrors), start, lastLogTime.get(), true));
+					}
+					else {
+						T record = getNext(jobId);
+						while (record != null && !stopAllJobs.get()) {
+							try {
+								// Exécution du job
+								final boolean result = job.run(record);
+								if (result) {
+									currentNbSuccess++;
+								}
+								else {
+									currentNbErrors++;
+								}
 
-    /**
-     * Récupération de l'élément à traiter suivant
-     *
-     * @return
-     */
-    private Collection<T> getNextGroup(final String jobId) {
-        final Collection<T> list = new ArrayList<>();
-        T record;
-        do {
-            record = getNext(jobId);
-            if (record != null) {
-                list.add(record);
-            }
-        } while (record != null && list.size() < this.groupSize);
-        return list;
-    }
+								// Gestion de la transaction sous-jacente
+								if (currentNbSuccess > 0 && currentNbSuccess % commit == 0) {
+									lastLogTime.set(t.commit(nbSuccess.addAndGet(currentNbSuccess),
+											nbErrors.addAndGet(currentNbErrors), start, lastLogTime.get(), false));
+									t.startTransaction();
 
-    private class TransactionManager {
+									currentNbSuccess = 0;
+									currentNbErrors = 0;
+								}
+								else if (flush > 0 && currentNbSuccess > 0 && currentNbSuccess % flush == 0) {
+									// Vidage de la session
+									t.flush();
+								}
+							}
+							catch (final Throwable e) {
+								handleException(nbErrors, nbSuccess, t, currentNbSuccess, ++currentNbErrors,
+										stopAllJobs, e);
+								currentNbSuccess = 0;
+								currentNbErrors = 0;
+							}
+							record = getNext(jobId);
+						}
+						lastLogTime.set(t.commit(nbSuccess.addAndGet(currentNbSuccess),
+								nbErrors.addAndGet(currentNbErrors), start, lastLogTime.get(), true));
+					}
+				}
+				finally {
+					// Normalement ici il ne devrait pas y avoir de transaction ouverte
+					// mais bon on ne sait jamais...
+					t.rollback();
+					t.closeSession();
+				}
+			})));
+		}
+		// Lancement des traitements
+		try {
+			LOG.trace("Attente de la fin de {} traitement(s)", futures.size());
 
-        private StatelessSession statelessSession;
-        private TransactionStatus status;
+			// Vérification du résultat des traitements: future.get() lance une
+			// ExecutionException si le job a donné lieu à une exception
+			for (final Future<Object> future : futures) {
+				future.get();
+			}
 
-        /**
-         * Ouverture de la transaction sous-jacente
-         */
-        public void startTransaction() {
-            if (stateless) {
-                statelessSession = transactionService.startStatelessTransaction(statelessSession);
-            } else {
-                status = transactionService.startTransaction(readOnly);
-            }
-        }
+			if (!postJobs.isEmpty()) {
+				LOG.debug("Lancement de {} actions post-traitement", postJobs.size());
+				final long startPostJobs = System.currentTimeMillis();
 
-        /**
-         * Commit de la transaction sous-jacente
-         */
-        public long commit(final long nbSuccess, final long nbError, final long start, final long lastLogTime, final boolean forceLog) {
-            if (stateless) {
-                transactionService.commitStatelessTransaction(statelessSession);
-            } else {
-                transactionService.commitTransaction(status);
-            }
-            long result = lastLogTime;
-            final long currentTime = System.currentTimeMillis();
-            final long elapsedTimeSinceLastLog = currentTime - lastLogTime;
-            if (elapsedTimeSinceLastLog >= durationBetweenLogs || forceLog) {
-                result = currentTime;
-                final long elapsedTime = currentTime - start;
-                if (totalElements > 0) {
-                    if (nbSuccess + nbError < nbBeforeLog) {
-                        LOG.trace("{} {} traités avec succès - {} erreur - {}% ({})",
-                                  nbSuccess,
-                                  elementName,
-                                  nbError,
-                                  ((nbSuccess + nbError) * 100) / totalElements,
-                                  DurationFormatUtils.formatDurationHMS(elapsedTime));
-                    } else {
-                        LOG.debug("{} {} traités avec succès - {} erreur - {}% ({})",
-                                  nbSuccess,
-                                  elementName,
-                                  nbError,
-                                  ((nbSuccess + nbError) * 100) / totalElements,
-                                  DurationFormatUtils.formatDurationHMS(elapsedTime));
-                    }
-                } else {
-                    if (nbSuccess + nbError < nbBeforeLog) {
-                        LOG.trace("{} {} traités avec succès - {} erreur ({})", nbSuccess, elementName, nbError, DurationFormatUtils.formatDurationHMS(elapsedTime));
-                    } else {
-                        LOG.debug("{} {} traités avec succès - {} erreur ({})", nbSuccess, elementName, nbError, DurationFormatUtils.formatDurationHMS(elapsedTime));
-                    }
-                }
-            }
-            progressJob.accept(nbSuccess);
-            return result;
-        }
+				final TransactionManager t = new TransactionManager();
 
-        /**
-         * Rollback de la transaction sous-jacente
-         */
-        public void rollback() {
-            if (stateless) {
-                transactionService.rollbackStatelessTransaction(statelessSession);
-            } else if (status != null && !status.isCompleted()) {
-                transactionService.rollbackTransaction(status);
-            }
-        }
+				postJobs.forEach(j -> {
+					t.startTransaction();
+					try {
+						j.run();
+						lastLogTime.set(t.commit(1, 0, startPostJobs, lastLogTime.get(), true));
+					}
+					catch (final Throwable e) {
+						LOG.error(e.getMessage(), e);
+						t.rollback();
+					}
+					finally {
+						t.closeSession();
+					}
+				});
+			}
 
-        /**
-         * Fermeture de la transaction sous-jacente
-         */
-        public void closeSession() {
-            if (stateless) {
-                transactionService.closeStatelessSession(statelessSession);
-            }
-        }
+		}
+		catch (final InterruptedException e) {
+			LOG.warn("Thread interrompu : {}", e.getMessage(), e);
+			Thread.currentThread().interrupt();
+		}
+		catch (final Throwable e) {
+			LOG.error("Problème d'exécution multithreading : {}", e.getMessage(), e);
+			throw new PgcnException(new PgcnError.Builder().setMessage("Problème d'exécution multithreading").build(),
+					e);
 
-        /**
-         * Flush de la session sous-jacente
-         */
-        public void flush() {
-            if (!stateless) {
-                transactionService.flushSession(status);
-            }
-        }
-    }
+		}
+		finally {
+			final long elapsedTime = System.currentTimeMillis() - start;
+			LOG.trace("{} traitement(s) terminé(s) en {} ms", futures.size(), elapsedTime);
+		}
+	}
 
-    @FunctionalInterface
-    public interface Job<T> {
+	private void handleException(final AtomicLong nbErrors, final AtomicLong nbSuccess, final TransactionManager t,
+			final long currentNbSuccess, final long currentNbErrors, final AtomicBoolean stopAllJobs,
+			final Throwable e) {
+		// Rollback transaction
+		t.rollback();
+		nbSuccess.addAndGet(currentNbSuccess);
+		nbErrors.addAndGet(currentNbErrors);
 
-        boolean run(T t) throws Exception;
-    }
+		if (failOnException) {
+			stopAllJobs.set(true);
+			throw new IllegalStateException(e);
+		}
+		else {
+			if (logExceptions) {
+				LOG.warn(e.getMessage(), e);
+			}
+			else {
+				LOG.trace(e.getMessage(), e);
+			}
+			t.startTransaction();
+		}
+	}
 
-    @FunctionalInterface
-    public interface PostJob {
+	/**
+	 * Récupération de l'élément à traiter suivant
+	 * @return
+	 */
+	private T getNext(final String jobId) {
+		synchronized (iterator) {
+			if (toBeHandled.containsKey(jobId)) {
+				final List<T> list = toBeHandled.get(jobId);
+				if (CollectionUtils.isNotEmpty(list)) {
+					return list.remove(0);
+				}
+			}
+			while (iterator.hasNext()) {
+				try {
+					final T next = iterator.next();
+					if (groupExtractor == null) {
+						return next;
+					}
+					else {
+						final String group = groupExtractor.extractGroup(next);
+						if (groupAssignment.containsKey(group)) {
+							final String assignedJob = groupAssignment.get(group);
+							if (!jobId.equals(assignedJob)) {
+								toBeHandled.computeIfAbsent(assignedJob, k -> new ArrayList<>()).add(next);
+							}
+							else {
+								return next;
+							}
+						}
+						else {
+							groupAssignment.put(group, jobId);
+							return next;
+						}
+					}
+				}
+				catch (final Throwable e) {
+					if (failOnException) {
+						throw e;
+					}
+					else {
+						if (logExceptions) {
+							LOG.warn(e.getMessage(), e);
+						}
+						else {
+							LOG.trace(e.getMessage(), e);
+						}
+					}
+				}
+			}
+			return null;
+		}
+	}
 
-        void run();
-    }
+	/**
+	 * Récupération de l'élément à traiter suivant
+	 * @return
+	 */
+	private Collection<T> getNextGroup(final String jobId) {
+		final Collection<T> list = new ArrayList<>();
+		T record;
+		do {
+			record = getNext(jobId);
+			if (record != null) {
+				list.add(record);
+			}
+		}
+		while (record != null && list.size() < this.groupSize);
+		return list;
+	}
 
-    @FunctionalInterface
-    public interface GroupExtractor<T> {
+	private class TransactionManager {
 
-        String extractGroup(T record);
-    }
+		private StatelessSession statelessSession;
+
+		private TransactionStatus status;
+
+		/**
+		 * Ouverture de la transaction sous-jacente
+		 */
+		public void startTransaction() {
+			if (stateless) {
+				statelessSession = transactionService.startStatelessTransaction(statelessSession);
+			}
+			else {
+				status = transactionService.startTransaction(readOnly);
+			}
+		}
+
+		/**
+		 * Commit de la transaction sous-jacente
+		 */
+		public long commit(final long nbSuccess, final long nbError, final long start, final long lastLogTime,
+				final boolean forceLog) {
+			if (stateless) {
+				transactionService.commitStatelessTransaction(statelessSession);
+			}
+			else {
+				transactionService.commitTransaction(status);
+			}
+			long result = lastLogTime;
+			final long currentTime = System.currentTimeMillis();
+			final long elapsedTimeSinceLastLog = currentTime - lastLogTime;
+			if (elapsedTimeSinceLastLog >= durationBetweenLogs || forceLog) {
+				result = currentTime;
+				final long elapsedTime = currentTime - start;
+				if (totalElements > 0) {
+					if (nbSuccess + nbError < nbBeforeLog) {
+						LOG.trace("{} {} traités avec succès - {} erreur - {}% ({})", nbSuccess, elementName, nbError,
+								((nbSuccess + nbError) * 100) / totalElements,
+								DurationFormatUtils.formatDurationHMS(elapsedTime));
+					}
+					else {
+						LOG.debug("{} {} traités avec succès - {} erreur - {}% ({})", nbSuccess, elementName, nbError,
+								((nbSuccess + nbError) * 100) / totalElements,
+								DurationFormatUtils.formatDurationHMS(elapsedTime));
+					}
+				}
+				else {
+					if (nbSuccess + nbError < nbBeforeLog) {
+						LOG.trace("{} {} traités avec succès - {} erreur ({})", nbSuccess, elementName, nbError,
+								DurationFormatUtils.formatDurationHMS(elapsedTime));
+					}
+					else {
+						LOG.debug("{} {} traités avec succès - {} erreur ({})", nbSuccess, elementName, nbError,
+								DurationFormatUtils.formatDurationHMS(elapsedTime));
+					}
+				}
+			}
+			progressJob.accept(nbSuccess);
+			return result;
+		}
+
+		/**
+		 * Rollback de la transaction sous-jacente
+		 */
+		public void rollback() {
+			if (stateless) {
+				transactionService.rollbackStatelessTransaction(statelessSession);
+			}
+			else if (status != null && !status.isCompleted()) {
+				transactionService.rollbackTransaction(status);
+			}
+		}
+
+		/**
+		 * Fermeture de la transaction sous-jacente
+		 */
+		public void closeSession() {
+			if (stateless) {
+				transactionService.closeStatelessSession(statelessSession);
+			}
+		}
+
+		/**
+		 * Flush de la session sous-jacente
+		 */
+		public void flush() {
+			if (!stateless) {
+				transactionService.flushSession(status);
+			}
+		}
+
+	}
+
+	@FunctionalInterface
+	public interface Job<T> {
+
+		boolean run(T t) throws Exception;
+
+	}
+
+	@FunctionalInterface
+	public interface PostJob {
+
+		void run();
+
+	}
+
+	@FunctionalInterface
+	public interface GroupExtractor<T> {
+
+		String extractGroup(T record);
+
+	}
+
 }

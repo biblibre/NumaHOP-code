@@ -41,74 +41,72 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CaracteristiquesType",
-         propOrder = {"documents",
-                      "sipDescription"})
+@XmlType(name = "CaracteristiquesType", propOrder = { "documents", "sipDescription" })
 public class CaracteristiquesType {
 
-    @XmlElement(name = "Documents", required = true)
-    protected List<DocumentsType> documents;
-    @XmlElement(name = "SipDescription")
-    protected List<SipDescriptionType> sipDescription;
+	@XmlElement(name = "Documents", required = true)
+	protected List<DocumentsType> documents;
 
-    /**
-     * Gets the value of the documents property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the documents property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getDocuments().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link DocumentsType }
-     *
-     *
-     */
-    public List<DocumentsType> getDocuments() {
-        if (documents == null) {
-            documents = new ArrayList<>();
-        }
-        return this.documents;
-    }
+	@XmlElement(name = "SipDescription")
+	protected List<SipDescriptionType> sipDescription;
 
-    /**
-     * Gets the value of the sipDescription property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the sipDescription property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getSipDescription().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link SipDescriptionType }
-     *
-     *
-     */
-    public List<SipDescriptionType> getSipDescription() {
-        if (sipDescription == null) {
-            sipDescription = new ArrayList<>();
-        }
-        return this.sipDescription;
-    }
+	/**
+	 * Gets the value of the documents property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the documents
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getDocuments().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link DocumentsType }
+	 *
+	 *
+	 */
+	public List<DocumentsType> getDocuments() {
+		if (documents == null) {
+			documents = new ArrayList<>();
+		}
+		return this.documents;
+	}
+
+	/**
+	 * Gets the value of the sipDescription property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the
+	 * sipDescription property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getSipDescription().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link SipDescriptionType
+	 * }
+	 *
+	 *
+	 */
+	public List<SipDescriptionType> getSipDescription() {
+		if (sipDescription == null) {
+			sipDescription = new ArrayList<>();
+		}
+		return this.sipDescription;
+	}
 
 }

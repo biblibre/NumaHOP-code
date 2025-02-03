@@ -9,33 +9,33 @@ import java.util.List;
  */
 public class PreDeliveryLockedDocsDTO extends AbstractDTO {
 
-    private String deliveryLabel;
-    private List<String> lockedDocsIdentifiers = new ArrayList<>();
+	private String deliveryLabel;
 
-    public PreDeliveryLockedDocsDTO(final String deliveryLabel, final List<String> lockedDocsIdentifiers) {
-        this.deliveryLabel = deliveryLabel;
-        this.lockedDocsIdentifiers = lockedDocsIdentifiers;
-    }
+	private List<String> lockedDocsIdentifiers = new ArrayList<>();
 
-    public PreDeliveryLockedDocsDTO() {
+	public PreDeliveryLockedDocsDTO(final String deliveryLabel, final List<String> lockedDocsIdentifiers) {
+		this.deliveryLabel = deliveryLabel;
+		this.lockedDocsIdentifiers = lockedDocsIdentifiers;
+	}
 
-    }
+	public PreDeliveryLockedDocsDTO() {
 
-    public String getDeliveryLabel() {
-        return deliveryLabel;
-    }
+	}
 
-    public void setDeliveryLabel(final String deliveryLabel) {
-        this.deliveryLabel = deliveryLabel;
-    }
+	public String getDeliveryLabel() {
+		return deliveryLabel;
+	}
 
-    public List<String> getLockedDocsIdentifiers() {
-        return lockedDocsIdentifiers != null ? lockedDocsIdentifiers
-                                             : new ArrayList<>();
-    }
+	public void setDeliveryLabel(final String deliveryLabel) {
+		this.deliveryLabel = deliveryLabel;
+	}
 
-    public void setLockedDocsIdentifiers(final List<String> lockedDocsIdentifiers) {
-        this.lockedDocsIdentifiers = lockedDocsIdentifiers;
-    }
+	public List<String> getLockedDocsIdentifiers() {
+		return lockedDocsIdentifiers != null ? lockedDocsIdentifiers : new ArrayList<>();
+	}
+
+	public void setLockedDocsIdentifiers(final List<String> lockedDocsIdentifiers) {
+		this.lockedDocsIdentifiers = lockedDocsIdentifiers;
+	}
 
 }

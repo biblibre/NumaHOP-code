@@ -17,11 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A header has a unique identifier, a datestamp,
- * and setSpec(s) in case the item from which
- * the record is disseminated belongs to set(s).
- * the header can carry a deleted status indicating
- * that the record is deleted.
+ * A header has a unique identifier, a datestamp, and setSpec(s) in case the item from
+ * which the record is disseminated belongs to set(s). the header can carry a deleted
+ * status indicating that the record is deleted.
  *
  * <p>
  * Classe Java pour headerType complex type.
@@ -47,121 +45,102 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "headerType",
-         propOrder = {"identifier",
-                      "datestamp",
-                      "setSpec"})
+@XmlType(name = "headerType", propOrder = { "identifier", "datestamp", "setSpec" })
 public class HeaderType {
 
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String identifier;
-    @XmlElement(required = true)
-    protected String datestamp;
-    protected List<String> setSpec;
-    @XmlAttribute(name = "status")
-    protected StatusType status;
+	@XmlElement(required = true)
+	@XmlSchemaType(name = "anyURI")
+	protected String identifier;
 
-    /**
-     * Obtient la valeur de la propriété identifier.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getIdentifier() {
-        return identifier;
-    }
+	@XmlElement(required = true)
+	protected String datestamp;
 
-    /**
-     * Définit la valeur de la propriété identifier.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setIdentifier(String value) {
-        this.identifier = value;
-    }
+	protected List<String> setSpec;
 
-    /**
-     * Obtient la valeur de la propriété datestamp.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getDatestamp() {
-        return datestamp;
-    }
+	@XmlAttribute(name = "status")
+	protected StatusType status;
 
-    /**
-     * Définit la valeur de la propriété datestamp.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setDatestamp(String value) {
-        this.datestamp = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété identifier.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    /**
-     * Gets the value of the setSpec property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the setSpec property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getSetSpec().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getSetSpec() {
-        if (setSpec == null) {
-            setSpec = new ArrayList<>();
-        }
-        return this.setSpec;
-    }
+	/**
+	 * Définit la valeur de la propriété identifier.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdentifier(String value) {
+		this.identifier = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété status.
-     *
-     * @return
-     *         possible object is
-     *         {@link StatusType }
-     *
-     */
-    public StatusType getStatus() {
-        return status;
-    }
+	/**
+	 * Obtient la valeur de la propriété datestamp.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getDatestamp() {
+		return datestamp;
+	}
 
-    /**
-     * Définit la valeur de la propriété status.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link StatusType }
-     *
-     */
-    public void setStatus(StatusType value) {
-        this.status = value;
-    }
+	/**
+	 * Définit la valeur de la propriété datestamp.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setDatestamp(String value) {
+		this.datestamp = value;
+	}
+
+	/**
+	 * Gets the value of the setSpec property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the setSpec
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getSetSpec().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getSetSpec() {
+		if (setSpec == null) {
+			setSpec = new ArrayList<>();
+		}
+		return this.setSpec;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété status.
+	 * @return possible object is {@link StatusType }
+	 *
+	 */
+	public StatusType getStatus() {
+		return status;
+	}
+
+	/**
+	 * Définit la valeur de la propriété status.
+	 * @param value allowed object is {@link StatusType }
+	 *
+	 */
+	public void setStatus(StatusType value) {
+		this.status = value;
+	}
 
 }

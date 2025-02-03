@@ -36,89 +36,70 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "evaluationType",
-         propOrder = {"dua",
-                      "traitement",
-                      "dateDebut"})
+@XmlType(name = "evaluationType", propOrder = { "dua", "traitement", "dateDebut" })
 public class EvaluationType {
 
-    @XmlElement(name = "DUA", required = true)
-    protected String dua;
-    @XmlElement(required = true)
-    protected String traitement;
-    @XmlElement(required = true)
-    protected String dateDebut;
+	@XmlElement(name = "DUA", required = true)
+	protected String dua;
 
-    /**
-     * Obtient la valeur de la propriété dua.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getDUA() {
-        return dua;
-    }
+	@XmlElement(required = true)
+	protected String traitement;
 
-    /**
-     * Définit la valeur de la propriété dua.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setDUA(String value) {
-        this.dua = value;
-    }
+	@XmlElement(required = true)
+	protected String dateDebut;
 
-    /**
-     * Obtient la valeur de la propriété traitement.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getTraitement() {
-        return traitement;
-    }
+	/**
+	 * Obtient la valeur de la propriété dua.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getDUA() {
+		return dua;
+	}
 
-    /**
-     * Définit la valeur de la propriété traitement.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setTraitement(String value) {
-        this.traitement = value;
-    }
+	/**
+	 * Définit la valeur de la propriété dua.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setDUA(String value) {
+		this.dua = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété dateDebut.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getDateDebut() {
-        return dateDebut;
-    }
+	/**
+	 * Obtient la valeur de la propriété traitement.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getTraitement() {
+		return traitement;
+	}
 
-    /**
-     * Définit la valeur de la propriété dateDebut.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setDateDebut(String value) {
-        this.dateDebut = value;
-    }
+	/**
+	 * Définit la valeur de la propriété traitement.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setTraitement(String value) {
+		this.traitement = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété dateDebut.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getDateDebut() {
+		return dateDebut;
+	}
+
+	/**
+	 * Définit la valeur de la propriété dateDebut.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setDateDebut(String value) {
+		this.dateDebut = value;
+	}
 
 }

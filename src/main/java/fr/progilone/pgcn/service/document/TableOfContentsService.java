@@ -39,384 +39,384 @@ import org.springframework.stereotype.Service;
 @Service
 public class TableOfContentsService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TableOfContentsService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(TableOfContentsService.class);
 
-    public final static String TOC_COL_ZERO_NAME = "FICHIER";
+	public final static String TOC_COL_ZERO_NAME = "FICHIER";
 
-    private final DocPageRepository docPageRepository;
-    private final BinaryRepository binaryRepository;
+	private final DocPageRepository docPageRepository;
 
-    @Autowired
-    public TableOfContentsService(final DocPageRepository docPageRepository, final BinaryRepository binaryRepository) {
+	private final BinaryRepository binaryRepository;
 
-        this.docPageRepository = docPageRepository;
-        this.binaryRepository = binaryRepository;
-    }
+	@Autowired
+	public TableOfContentsService(final DocPageRepository docPageRepository, final BinaryRepository binaryRepository) {
 
-    /**
-     * Construction table des matieres depuis 1 METS.
-     *
-     * @param identifier
-     * @return
-     */
-    public List<Structures> getTableOfContent(final String identifier, final Mets mets) {
+		this.docPageRepository = docPageRepository;
+		this.binaryRepository = binaryRepository;
+	}
 
-        final List<Structures> structList = new ArrayList<>();
-        final String TYPE_STRUCT_PHYSICAL = "physical";
+	/**
+	 * Construction table des matieres depuis 1 METS.
+	 * @param identifier
+	 * @return
+	 */
+	public List<Structures> getTableOfContent(final String identifier, final Mets mets) {
 
-        final List<StoredFile> storedMasters = getMasterStoredFiles(identifier);
-        final Map<String, StoredFile> mastersMap = storedMasters.stream().map(sf -> Pair.of(sf.getFilename(), sf)).collect(Collectors.toMap(Pair::getLeft, Pair::getRight));
-        // Table des matieres
-        LOG.info("Construction table des matieres depuis 1 METS.");
+		final List<Structures> structList = new ArrayList<>();
+		final String TYPE_STRUCT_PHYSICAL = "physical";
 
-        structList.add(initializeStructure(identifier));
+		final List<StoredFile> storedMasters = getMasterStoredFiles(identifier);
+		final Map<String, StoredFile> mastersMap = storedMasters.stream()
+			.map(sf -> Pair.of(sf.getFilename(), sf))
+			.collect(Collectors.toMap(Pair::getLeft, Pair::getRight));
+		// Table des matieres
+		LOG.info("Construction table des matieres depuis 1 METS.");
 
-        // Niveau 0
-        final Structures r0Struct = new Structures();
-        final List<Ranges> ranges = new ArrayList<>();
-        r0Struct.setId(ViewerService.URI_WS_VIEWER.concat(identifier) + "/range/r");
-        r0Struct.setType("sc:range");
-        r0Struct.setAdditionalProperty("ranges", ranges);
+		structList.add(initializeStructure(identifier));
 
-        // extract Structures from Mets.
-        final List<StructMapType> metsStructures = mets.getStructMap();
-        metsStructures.forEach((smt) -> {
+		// Niveau 0
+		final Structures r0Struct = new Structures();
+		final List<Ranges> ranges = new ArrayList<>();
+		r0Struct.setId(ViewerService.URI_WS_VIEWER.concat(identifier) + "/range/r");
+		r0Struct.setType("sc:range");
+		r0Struct.setAdditionalProperty("ranges", ranges);
 
-            // On utilise la structure physique.
-            if (StringUtils.equals(smt.getTYPE(), TYPE_STRUCT_PHYSICAL)) {
+		// extract Structures from Mets.
+		final List<StructMapType> metsStructures = mets.getStructMap();
+		metsStructures.forEach((smt) -> {
 
-                final String title = smt.getDiv().getLABEL();
-                r0Struct.setAdditionalProperty("label", title);
-                structList.add(r0Struct);
+			// On utilise la structure physique.
+			if (StringUtils.equals(smt.getTYPE(), TYPE_STRUCT_PHYSICAL)) {
 
-                smt.getDiv().getDiv().stream().forEach((page) -> {
+				final String title = smt.getDiv().getLABEL();
+				r0Struct.setAdditionalProperty("label", title);
+				structList.add(r0Struct);
 
-                    page.getFptr().stream().filter((fptr) -> fptr.getFILEID() != null).forEach((fptr) -> {
+				smt.getDiv().getDiv().stream().forEach((page) -> {
 
-                        final FileType fileType = (FileType) fptr.getFILEID();
-                        fileType.getFLocat().stream().findFirst().ifPresent(location -> {
+					page.getFptr().stream().filter((fptr) -> fptr.getFILEID() != null).forEach((fptr) -> {
 
-                            final String[] split = location.getHref().split("/");
-                            final String fileName = Stream.of(split).reduce((first, last) -> last).get();
-                            final StoredFile masterSf = mastersMap.get(fileName);
-                            if (masterSf != null) {
-                                final int index = storedMasters.indexOf(masterSf);
-                                final String pageOrder = String.valueOf(index + 1);
-                                final Structures s = buildStructure(identifier, pageOrder, page.getTYPE(), page.getORDERLABEL(), page.getLABEL(), masterSf, ranges);
-                                structList.add(s);
-                            }
-                        });
+						final FileType fileType = (FileType) fptr.getFILEID();
+						fileType.getFLocat().stream().findFirst().ifPresent(location -> {
 
-                    });
-                });
-            }
-        });
-        return structList;
-    }
+							final String[] split = location.getHref().split("/");
+							final String fileName = Stream.of(split).reduce((first, last) -> last).get();
+							final StoredFile masterSf = mastersMap.get(fileName);
+							if (masterSf != null) {
+								final int index = storedMasters.indexOf(masterSf);
+								final String pageOrder = String.valueOf(index + 1);
+								final Structures s = buildStructure(identifier, pageOrder, page.getTYPE(),
+										page.getORDERLABEL(), page.getLABEL(), masterSf, ranges);
+								structList.add(s);
+							}
+						});
 
-    /**
-     * Construction d'une TOC depuis les infos saisies au contrôle.
-     * (Pas de fichier Mets ni d'Excel à la livraison)
-     *
-     * @param identifier
-     * @return
-     */
-    public List<Structures> getTableOfContentFromDb(final String identifier) {
+					});
+				});
+			}
+		});
+		return structList;
+	}
 
-        final List<Structures> structList = new ArrayList<>();
-        final List<StoredFile> storedMasters = getMasterStoredFiles(identifier);
-        // Table des matieres depuis infos de la DB.
-        LOG.info("Construction table des matieres depuis DB si saisie au contrôle.");
-        final boolean tocExists = storedMasters.stream().anyMatch(sf -> !StringUtils.isAllBlank(sf.getTitleToc(), sf.getTypeToc(), sf.getOrderToc()));
+	/**
+	 * Construction d'une TOC depuis les infos saisies au contrôle. (Pas de fichier Mets
+	 * ni d'Excel à la livraison)
+	 * @param identifier
+	 * @return
+	 */
+	public List<Structures> getTableOfContentFromDb(final String identifier) {
 
-        if (tocExists) {
+		final List<Structures> structList = new ArrayList<>();
+		final List<StoredFile> storedMasters = getMasterStoredFiles(identifier);
+		// Table des matieres depuis infos de la DB.
+		LOG.info("Construction table des matieres depuis DB si saisie au contrôle.");
+		final boolean tocExists = storedMasters.stream()
+			.anyMatch(sf -> !StringUtils.isAllBlank(sf.getTitleToc(), sf.getTypeToc(), sf.getOrderToc()));
 
-            structList.add(initializeStructure(identifier));
-            // Niveau 0
-            final Structures r0Struct = new Structures();
-            final List<Ranges> ranges = new ArrayList<>();
-            r0Struct.setId(ViewerService.URI_WS_VIEWER.concat(identifier) + "/range/r");
-            r0Struct.setType("sc:range");
-            r0Struct.setAdditionalProperty("ranges", ranges);
-            r0Struct.setAdditionalProperty("label", "Table des matières");
-            structList.add(r0Struct);
+		if (tocExists) {
 
-            storedMasters.stream().forEach(sf -> {
-                final String pageOrder = String.valueOf(sf.getPage().getNumber().intValue());
-                final Structures s = buildStructure(identifier, pageOrder, null, null, null, sf, ranges);
-                structList.add(s);
-            });
-        }
-        return structList;
-    }
+			structList.add(initializeStructure(identifier));
+			// Niveau 0
+			final Structures r0Struct = new Structures();
+			final List<Ranges> ranges = new ArrayList<>();
+			r0Struct.setId(ViewerService.URI_WS_VIEWER.concat(identifier) + "/range/r");
+			r0Struct.setType("sc:range");
+			r0Struct.setAdditionalProperty("ranges", ranges);
+			r0Struct.setAdditionalProperty("label", "Table des matières");
+			structList.add(r0Struct);
 
-    /**
-     * Construit un element Structures.
-     *
-     * @param identifier
-     * @param pageOrder
-     * @param pgLabel
-     * @param pgOrderLabel
-     * @param ranges
-     * @return
-     */
-    private Structures buildStructure(final String identifier,
-                                      final String pageOrder,
-                                      final String type,
-                                      final String orderLabel,
-                                      final String label,
-                                      final StoredFile sf,
-                                      final List<Ranges> ranges) {
+			storedMasters.stream().forEach(sf -> {
+				final String pageOrder = String.valueOf(sf.getPage().getNumber().intValue());
+				final Structures s = buildStructure(identifier, pageOrder, null, null, null, sf, ranges);
+				structList.add(s);
+			});
+		}
+		return structList;
+	}
 
-        final String SEPAR = " - ";
+	/**
+	 * Construit un element Structures.
+	 * @param identifier
+	 * @param pageOrder
+	 * @param pgLabel
+	 * @param pgOrderLabel
+	 * @param ranges
+	 * @return
+	 */
+	private Structures buildStructure(final String identifier, final String pageOrder, final String type,
+			final String orderLabel, final String label, final StoredFile sf, final List<Ranges> ranges) {
 
-        final Structures s = new Structures();
-        final List<String> canvases = new ArrayList<>();
-        final String idRange = ViewerService.URI_WS_VIEWER.concat(identifier).concat("/range/r").concat(pageOrder);
-        s.setId(idRange);
-        s.setType("sc:range");
+		final String SEPAR = " - ";
 
-        final StringBuilder lib = new StringBuilder();
-        /* label => TOC */
-        /* type, order, title => Metadatas */
-        if (StringUtils.isAllBlank(sf.getTitleToc(), sf.getTypeToc(), sf.getOrderToc())) {
-            // données du Mets
-            if (StringUtils.isAllBlank(type, orderLabel, label)) {
-                s.setAdditionalProperty("label", "Page non chiffrée");
-            } else {
-                if (StringUtils.isNotBlank(type)) {
-                    lib.append(type);
-                }
-                if (StringUtils.isNotBlank(orderLabel)) {
-                    if (StringUtils.isNotBlank(lib.toString())) {
-                        lib.append(SEPAR);
-                    }
-                    lib.append(orderLabel);
-                }
-                if (StringUtils.isNotBlank(label)) {
-                    if (StringUtils.isNotBlank(lib.toString()) && !StringUtils.endsWith(lib.toString(), SEPAR)) {
-                        lib.append(SEPAR);
-                    }
-                    lib.append(label);
-                }
-                s.setAdditionalProperty("label", lib.toString());
-                s.setAdditionalProperty("title", label);
-                s.setAdditionalProperty("order", orderLabel);
-                s.setAdditionalProperty("type", type);
-            }
-        } else {
-            // données de la table storedFile
-            if (StringUtils.isNotBlank(sf.getTypeToc())) {
-                lib.append(sf.getTypeToc());
-            }
-            if (StringUtils.isNotBlank(sf.getOrderToc())) {
-                if (StringUtils.isNotBlank(lib.toString())) {
-                    lib.append(SEPAR);
-                }
-                lib.append(sf.getOrderToc());
-            }
-            if (StringUtils.isNotBlank(sf.getTitleToc())) {
-                if (StringUtils.isNotBlank(lib.toString()) && !StringUtils.endsWith(lib.toString(), SEPAR)) {
-                    lib.append(SEPAR);
-                }
-                lib.append(sf.getTitleToc());
-            }
-            s.setAdditionalProperty("label", lib.toString());
-            s.setAdditionalProperty("title", sf.getTitleToc());
-            s.setAdditionalProperty("order", sf.getOrderToc());
-            s.setAdditionalProperty("type", sf.getTypeToc());
-        }
+		final Structures s = new Structures();
+		final List<String> canvases = new ArrayList<>();
+		final String idRange = ViewerService.URI_WS_VIEWER.concat(identifier).concat("/range/r").concat(pageOrder);
+		s.setId(idRange);
+		s.setType("sc:range");
 
-        final Ranges r = new Ranges();
-        r.setId(idRange);
-        ranges.add(r);
-        canvases.add(pageOrder);
-        s.setAdditionalProperty("canvases", canvases);
-        return s;
-    }
+		final StringBuilder lib = new StringBuilder();
+		/* label => TOC */
+		/* type, order, title => Metadatas */
+		if (StringUtils.isAllBlank(sf.getTitleToc(), sf.getTypeToc(), sf.getOrderToc())) {
+			// données du Mets
+			if (StringUtils.isAllBlank(type, orderLabel, label)) {
+				s.setAdditionalProperty("label", "Page non chiffrée");
+			}
+			else {
+				if (StringUtils.isNotBlank(type)) {
+					lib.append(type);
+				}
+				if (StringUtils.isNotBlank(orderLabel)) {
+					if (StringUtils.isNotBlank(lib.toString())) {
+						lib.append(SEPAR);
+					}
+					lib.append(orderLabel);
+				}
+				if (StringUtils.isNotBlank(label)) {
+					if (StringUtils.isNotBlank(lib.toString()) && !StringUtils.endsWith(lib.toString(), SEPAR)) {
+						lib.append(SEPAR);
+					}
+					lib.append(label);
+				}
+				s.setAdditionalProperty("label", lib.toString());
+				s.setAdditionalProperty("title", label);
+				s.setAdditionalProperty("order", orderLabel);
+				s.setAdditionalProperty("type", type);
+			}
+		}
+		else {
+			// données de la table storedFile
+			if (StringUtils.isNotBlank(sf.getTypeToc())) {
+				lib.append(sf.getTypeToc());
+			}
+			if (StringUtils.isNotBlank(sf.getOrderToc())) {
+				if (StringUtils.isNotBlank(lib.toString())) {
+					lib.append(SEPAR);
+				}
+				lib.append(sf.getOrderToc());
+			}
+			if (StringUtils.isNotBlank(sf.getTitleToc())) {
+				if (StringUtils.isNotBlank(lib.toString()) && !StringUtils.endsWith(lib.toString(), SEPAR)) {
+					lib.append(SEPAR);
+				}
+				lib.append(sf.getTitleToc());
+			}
+			s.setAdditionalProperty("label", lib.toString());
+			s.setAdditionalProperty("title", sf.getTitleToc());
+			s.setAdditionalProperty("order", sf.getOrderToc());
+			s.setAdditionalProperty("type", sf.getTypeToc());
+		}
 
-    /**
-     * Renvoie une Structure sans réelle correspondance
-     * afin de permettre l'affichage du titre en 1er niveau.
-     *
-     * @param identifier
-     * @return
-     */
-    private Structures initializeStructure(final String identifier) {
-        final Structures toc = new Structures();
-        toc.setId(ViewerService.URI_WS_VIEWER.concat(identifier) + "/range/r_root");
-        final Ranges rToc = new Ranges();
-        rToc.setId(ViewerService.URI_WS_VIEWER.concat(identifier) + "/range/r");
-        toc.setAdditionalProperty("ranges", rToc);
-        return toc;
-    }
+		final Ranges r = new Ranges();
+		r.setId(idRange);
+		ranges.add(r);
+		canvases.add(pageOrder);
+		s.setAdditionalProperty("canvases", canvases);
+		return s;
+	}
 
-    /**
-     * Retourne la liste des master storedFile du doc.
-     *
-     * @param identifier
-     * @return
-     */
-    private List<StoredFile> getMasterStoredFiles(final String identifier) {
+	/**
+	 * Renvoie une Structure sans réelle correspondance afin de permettre l'affichage du
+	 * titre en 1er niveau.
+	 * @param identifier
+	 * @return
+	 */
+	private Structures initializeStructure(final String identifier) {
+		final Structures toc = new Structures();
+		toc.setId(ViewerService.URI_WS_VIEWER.concat(identifier) + "/range/r_root");
+		final Ranges rToc = new Ranges();
+		rToc.setId(ViewerService.URI_WS_VIEWER.concat(identifier) + "/range/r");
+		toc.setAdditionalProperty("ranges", rToc);
+		return toc;
+	}
 
-        final List<DocPage> dps = docPageRepository.getAllByDigitalDocumentIdentifier(identifier);
-        if (dps.isEmpty()) {
-            return Collections.emptyList();
-        }
+	/**
+	 * Retourne la liste des master storedFile du doc.
+	 * @param identifier
+	 * @return
+	 */
+	private List<StoredFile> getMasterStoredFiles(final String identifier) {
 
-        final List<String> ids = dps.stream().map(AbstractDomainObject::getIdentifier).collect(Collectors.toList());
-        return binaryRepository.getAllByPageIdentifiersAndFileFormat(ids, ViewsFormatConfiguration.FileFormat.MASTER);
-    }
+		final List<DocPage> dps = docPageRepository.getAllByDigitalDocumentIdentifier(identifier);
+		if (dps.isEmpty()) {
+			return Collections.emptyList();
+		}
 
-    /**
-     * Construction table des matieres depuis 1 classeur excel.
-     *
-     * @param identifier
-     * @param excel
-     * @return
-     */
-    public List<Structures> getTableOfContentExcel(final String identifier, final InputStream input, final String docTitle) throws IOException, InvalidFormatException {
+		final List<String> ids = dps.stream().map(AbstractDomainObject::getIdentifier).collect(Collectors.toList());
+		return binaryRepository.getAllByPageIdentifiersAndFileFormat(ids, ViewsFormatConfiguration.FileFormat.MASTER);
+	}
 
-        LOG.info("Construction table des matieres depuis 1 classeur EXCEL.");
+	/**
+	 * Construction table des matieres depuis 1 classeur excel.
+	 * @param identifier
+	 * @param excel
+	 * @return
+	 */
+	public List<Structures> getTableOfContentExcel(final String identifier, final InputStream input,
+			final String docTitle) throws IOException, InvalidFormatException {
 
-        final List<StoredFile> storedMasters = getMasterStoredFiles(identifier);
-        final List<Structures> structList = new ArrayList<>();
-        structList.add(initializeStructure(identifier));
+		LOG.info("Construction table des matieres depuis 1 classeur EXCEL.");
 
-        // Niveau 0
-        final Structures r0Struct = new Structures();
-        final List<Ranges> ranges = new ArrayList<>();
-        r0Struct.setId(ViewerService.URI_WS_VIEWER.concat(identifier) + "/range/r");
-        r0Struct.setType("sc:range");
-        r0Struct.setAdditionalProperty("ranges", ranges);
-        r0Struct.setAdditionalProperty("label", docTitle);
-        structList.add(r0Struct);
+		final List<StoredFile> storedMasters = getMasterStoredFiles(identifier);
+		final List<Structures> structList = new ArrayList<>();
+		structList.add(initializeStructure(identifier));
 
-        // Lecture du classeur excel.
-        new SheetReader().stream(input).process(identifier, structList, ranges, storedMasters);
-        return structList;
-    }
+		// Niveau 0
+		final Structures r0Struct = new Structures();
+		final List<Ranges> ranges = new ArrayList<>();
+		r0Struct.setId(ViewerService.URI_WS_VIEWER.concat(identifier) + "/range/r");
+		r0Struct.setType("sc:range");
+		r0Struct.setAdditionalProperty("ranges", ranges);
+		r0Struct.setAdditionalProperty("label", docTitle);
+		structList.add(r0Struct);
 
-    /**
-     * Classe gérant la lecture du fichier excel, et la création de la structure => TOC.
-     */
-    private class SheetReader {
+		// Lecture du classeur excel.
+		new SheetReader().stream(input).process(identifier, structList, ranges, storedMasters);
+		return structList;
+	}
 
-        private Workbook wb;
+	/**
+	 * Classe gérant la lecture du fichier excel, et la création de la structure => TOC.
+	 */
+	private class SheetReader {
 
-        /**
-         * Initialisation du workbook à partir d'un flux
-         *
-         * @param in
-         * @return
-         * @throws IOException
-         * @throws InvalidFormatException
-         */
-        public SheetReader stream(final InputStream in) throws IOException, InvalidFormatException {
-            this.wb = WorkbookFactory.create(in);
-            return this;
-        }
+		private Workbook wb;
 
-        /**
-         *
-         * @param identifier
-         * @param structList
-         * @param ranges
-         * @return
-         */
-        public SheetReader process(final String identifier, final List<Structures> structList, final List<Ranges> ranges, final List<StoredFile> storedMasters) {
-            this.wb.sheetIterator().forEachRemaining(sheet -> readSheet(sheet, identifier, structList, ranges, storedMasters));
-            return this;
-        }
+		/**
+		 * Initialisation du workbook à partir d'un flux
+		 * @param in
+		 * @return
+		 * @throws IOException
+		 * @throws InvalidFormatException
+		 */
+		public SheetReader stream(final InputStream in) throws IOException, InvalidFormatException {
+			this.wb = WorkbookFactory.create(in);
+			return this;
+		}
 
-        /**
-         * Lecture des feuilles du classeur excel.
-         *
-         * @param sheet
-         * @param identifier
-         * @param structList
-         * @param ranges
-         */
-        private void readSheet(final Sheet sheet, final String identifier, final List<Structures> structList, final List<Ranges> ranges, final List<StoredFile> storedMasters) {
+		/**
+		 * @param identifier
+		 * @param structList
+		 * @param ranges
+		 * @return
+		 */
+		public SheetReader process(final String identifier, final List<Structures> structList,
+				final List<Ranges> ranges, final List<StoredFile> storedMasters) {
+			this.wb.sheetIterator()
+				.forEachRemaining(sheet -> readSheet(sheet, identifier, structList, ranges, storedMasters));
+			return this;
+		}
 
-            final Optional<String> value = getCell(sheet, 0, 0).filter(cell -> cell != null && CellType.STRING.equals(cell.getCellType())).map(Cell::getStringCellValue);
+		/**
+		 * Lecture des feuilles du classeur excel.
+		 * @param sheet
+		 * @param identifier
+		 * @param structList
+		 * @param ranges
+		 */
+		private void readSheet(final Sheet sheet, final String identifier, final List<Structures> structList,
+				final List<Ranges> ranges, final List<StoredFile> storedMasters) {
 
-            if (value.isPresent() && value.get().toUpperCase().contains(TOC_COL_ZERO_NAME)) {
-                LOG.debug("ok : TOC excel valorisée !");
-                // on traite
-                parseSheet(sheet, identifier, structList, ranges, storedMasters);
-            }
-        }
+			final Optional<String> value = getCell(sheet, 0, 0)
+				.filter(cell -> cell != null && CellType.STRING.equals(cell.getCellType()))
+				.map(Cell::getStringCellValue);
 
-        /**
-         * Lecture des valeurs et valorisation des structures correspondantes.
-         *
-         * @param sheet
-         * @param identifier
-         * @param structList
-         * @param ranges
-         */
-        private void parseSheet(final Sheet sheet, final String identifier, final List<Structures> structList, final List<Ranges> ranges, final List<StoredFile> storedMasters) {
+			if (value.isPresent() && value.get().toUpperCase().contains(TOC_COL_ZERO_NAME)) {
+				LOG.debug("ok : TOC excel valorisée !");
+				// on traite
+				parseSheet(sheet, identifier, structList, ranges, storedMasters);
+			}
+		}
 
-            /* Le classeur doit etre structuré en colonnes comme suit : */
-            /* Fichier || Type || Page || Chapitre || Titre */
+		/**
+		 * Lecture des valeurs et valorisation des structures correspondantes.
+		 * @param sheet
+		 * @param identifier
+		 * @param structList
+		 * @param ranges
+		 */
+		private void parseSheet(final Sheet sheet, final String identifier, final List<Structures> structList,
+				final List<Ranges> ranges, final List<StoredFile> storedMasters) {
 
-            final Iterator<Row> rowIterator = sheet.rowIterator();
-            while (rowIterator.hasNext()) {
-                final Row row = rowIterator.next();
-                final int pgNum = row.getRowNum();
-                // on bypass la ligne d'entetes.
-                if (pgNum == 0) {
-                    continue;
-                }
-                final Optional<String> optFile = Optional.ofNullable(row.getCell(0)).map(Cell::getStringCellValue);
-                // Le nom de fichier doit etre renseigné.
-                if (!optFile.isPresent() || StringUtils.isBlank(optFile.get())) {
-                    LOG.warn("TDM excel : nom de fichier non renseigné");
-                    return;
-                }
+			/* Le classeur doit etre structuré en colonnes comme suit : */
+			/* Fichier || Type || Page || Chapitre || Titre */
 
-                // trop d'entrees dans le tableau => on se limite au nbre de fichiers.
-                if (pgNum > storedMasters.size()) {
-                    return;
-                }
+			final Iterator<Row> rowIterator = sheet.rowIterator();
+			while (rowIterator.hasNext()) {
+				final Row row = rowIterator.next();
+				final int pgNum = row.getRowNum();
+				// on bypass la ligne d'entetes.
+				if (pgNum == 0) {
+					continue;
+				}
+				final Optional<String> optFile = Optional.ofNullable(row.getCell(0)).map(Cell::getStringCellValue);
+				// Le nom de fichier doit etre renseigné.
+				if (!optFile.isPresent() || StringUtils.isBlank(optFile.get())) {
+					LOG.warn("TDM excel : nom de fichier non renseigné");
+					return;
+				}
 
-                final StringBuilder title = new StringBuilder();
-                // pour parer aux conversions automatiques d'excel qui peuvent faire planter, on passe par le formatteur...
-                final DataFormatter format = new DataFormatter();
-                final Optional<String> optType = Optional.ofNullable(format.formatCellValue(row.getCell(1)));
-                final Optional<String> optPage = Optional.ofNullable(format.formatCellValue(row.getCell(2)));
-                final Optional<String> optChap = Optional.ofNullable(format.formatCellValue(row.getCell(3)));
-                final Optional<String> optTitle = Optional.ofNullable(format.formatCellValue(row.getCell(4)));
+				// trop d'entrees dans le tableau => on se limite au nbre de fichiers.
+				if (pgNum > storedMasters.size()) {
+					return;
+				}
 
-                if (optChap.isPresent() && StringUtils.isNotBlank(optChap.get())) {
-                    title.append(optChap.get());
-                }
-                if (optTitle.isPresent() && StringUtils.isNotBlank(optTitle.get())) {
-                    if (StringUtils.isNoneBlank(title)) {
-                        title.append(" - ");
-                    }
-                    title.append(optTitle.get());
-                }
-                final String type = optType.isPresent() && StringUtils.isNotBlank(optType.get()) ? optType.get()
-                                                                                                 : "";
-                final String orderPg = optPage.isPresent() && StringUtils.isNotBlank(optPage.get()) ? optPage.get()
-                                                                                                    : "";
+				final StringBuilder title = new StringBuilder();
+				// pour parer aux conversions automatiques d'excel qui peuvent faire
+				// planter, on passe par le formatteur...
+				final DataFormatter format = new DataFormatter();
+				final Optional<String> optType = Optional.ofNullable(format.formatCellValue(row.getCell(1)));
+				final Optional<String> optPage = Optional.ofNullable(format.formatCellValue(row.getCell(2)));
+				final Optional<String> optChap = Optional.ofNullable(format.formatCellValue(row.getCell(3)));
+				final Optional<String> optTitle = Optional.ofNullable(format.formatCellValue(row.getCell(4)));
 
-                final Structures s = buildStructure(identifier, String.valueOf(pgNum), type, orderPg, title.toString(), storedMasters.get(pgNum - 1), ranges);
-                structList.add(s);
-            }
-        }
+				if (optChap.isPresent() && StringUtils.isNotBlank(optChap.get())) {
+					title.append(optChap.get());
+				}
+				if (optTitle.isPresent() && StringUtils.isNotBlank(optTitle.get())) {
+					if (StringUtils.isNoneBlank(title)) {
+						title.append(" - ");
+					}
+					title.append(optTitle.get());
+				}
+				final String type = optType.isPresent() && StringUtils.isNotBlank(optType.get()) ? optType.get() : "";
+				final String orderPg = optPage.isPresent() && StringUtils.isNotBlank(optPage.get()) ? optPage.get()
+						: "";
 
-        private Optional<Cell> getCell(final Sheet sheet, final int rowNb, final int cellNb) {
-            final Row row = sheet.getRow(rowNb);
-            if (row == null) {
-                return Optional.empty();
-            }
-            final Cell cell = row.getCell(cellNb);
-            return Optional.ofNullable(cell);
-        }
+				final Structures s = buildStructure(identifier, String.valueOf(pgNum), type, orderPg, title.toString(),
+						storedMasters.get(pgNum - 1), ranges);
+				structList.add(s);
+			}
+		}
 
-    }
+		private Optional<Cell> getCell(final Sheet sheet, final int rowNb, final int cellNb) {
+			final Row row = sheet.getRow(rowNb);
+			if (row == null) {
+				return Optional.empty();
+			}
+			final Cell cell = row.getCell(cellNb);
+			return Optional.ofNullable(cell);
+		}
+
+	}
 
 }

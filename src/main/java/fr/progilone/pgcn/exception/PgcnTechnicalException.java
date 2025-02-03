@@ -5,15 +5,16 @@ package fr.progilone.pgcn.exception;
  */
 public class PgcnTechnicalException extends Exception {
 
-    public PgcnTechnicalException() {
-        super();
-    }
+	public PgcnTechnicalException() {
+		super();
+	}
 
-    public PgcnTechnicalException(String message) {
-        super(message);
-    }
+	public PgcnTechnicalException(String message) {
+		super(message);
+	}
 
-    public PgcnTechnicalException(final Throwable cause) {
-        super(cause);
-    }
+	public PgcnTechnicalException(final Throwable cause) {
+		super(cause);
+	}
+
 }

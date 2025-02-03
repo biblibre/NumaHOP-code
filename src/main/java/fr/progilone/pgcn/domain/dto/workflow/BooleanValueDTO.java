@@ -4,17 +4,18 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
 
 public class BooleanValueDTO extends AbstractDTO {
 
-    private boolean value;
+	private boolean value;
 
-    public BooleanValueDTO() {
+	public BooleanValueDTO() {
 
-    }
+	}
 
-    public boolean isValue() {
-        return value;
-    }
+	public boolean isValue() {
+		return value;
+	}
 
-    public void setValue(boolean value) {
-        this.value = value;
-    }
+	public void setValue(boolean value) {
+		this.value = value;
+	}
+
 }

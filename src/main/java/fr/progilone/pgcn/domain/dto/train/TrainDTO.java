@@ -10,274 +10,279 @@ import java.util.Set;
 
 public class TrainDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private SimpleProjectDTO project;
-    private String label;
-    private String description;
-    private Boolean active;
-    private Train.TrainStatus status;
-    private LocalDate providerSendingDate;
-    private LocalDate returnDate;
-    private Set<SimplePhysicalDocumentDTO> physicalDocuments;
-    /**
-     * Ajout des infos de création
-     */
-    private String createdBy;
-    private LocalDateTime createdDate;
-    /**
-     * Ajout des infos de modifications
-     */
-    private String lastModifiedBy;
-    private LocalDateTime lastModifiedDate;
+	private String identifier;
 
-    public TrainDTO(String identifier,
-                    SimpleProjectDTO project,
-                    String label,
-                    String description,
-                    Boolean active,
-                    Train.TrainStatus status,
-                    LocalDate providerSendingDate,
-                    LocalDate returnDate,
-                    Set<SimplePhysicalDocumentDTO> physicalDocuments,
-                    String createdBy,
-                    LocalDateTime createdDate,
-                    String lastModifiedBy,
-                    LocalDateTime lastModifiedDate) {
-        this.identifier = identifier;
-        this.project = project;
-        this.label = label;
-        this.description = description;
-        this.active = active;
-        this.status = status;
-        this.providerSendingDate = providerSendingDate;
-        this.returnDate = returnDate;
-        this.physicalDocuments = physicalDocuments;
-        this.createdBy = createdBy;
-        this.createdDate = createdDate;
-        this.lastModifiedBy = lastModifiedBy;
-        this.lastModifiedDate = lastModifiedDate;
-    }
+	private SimpleProjectDTO project;
 
-    public TrainDTO() {
-    }
+	private String label;
 
-    public String getLabel() {
-        return label;
-    }
+	private String description;
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+	private Boolean active;
 
-    public String getDescription() {
-        return description;
-    }
+	private Train.TrainStatus status;
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	private LocalDate providerSendingDate;
 
-    public Boolean getActive() {
-        return active;
-    }
+	private LocalDate returnDate;
 
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+	private Set<SimplePhysicalDocumentDTO> physicalDocuments;
 
-    public Train.TrainStatus getStatus() {
-        return status;
-    }
+	/**
+	 * Ajout des infos de création
+	 */
+	private String createdBy;
 
-    public void setStatus(Train.TrainStatus status) {
-        this.status = status;
-    }
+	private LocalDateTime createdDate;
 
-    public LocalDate getProviderSendingDate() {
-        return providerSendingDate;
-    }
+	/**
+	 * Ajout des infos de modifications
+	 */
+	private String lastModifiedBy;
 
-    public void setProviderSendingDate(LocalDate providerSendingDate) {
-        this.providerSendingDate = providerSendingDate;
-    }
+	private LocalDateTime lastModifiedDate;
 
-    public LocalDate getReturnDate() {
-        return returnDate;
-    }
+	public TrainDTO(String identifier, SimpleProjectDTO project, String label, String description, Boolean active,
+			Train.TrainStatus status, LocalDate providerSendingDate, LocalDate returnDate,
+			Set<SimplePhysicalDocumentDTO> physicalDocuments, String createdBy, LocalDateTime createdDate,
+			String lastModifiedBy, LocalDateTime lastModifiedDate) {
+		this.identifier = identifier;
+		this.project = project;
+		this.label = label;
+		this.description = description;
+		this.active = active;
+		this.status = status;
+		this.providerSendingDate = providerSendingDate;
+		this.returnDate = returnDate;
+		this.physicalDocuments = physicalDocuments;
+		this.createdBy = createdBy;
+		this.createdDate = createdDate;
+		this.lastModifiedBy = lastModifiedBy;
+		this.lastModifiedDate = lastModifiedDate;
+	}
 
-    public void setReturnDate(LocalDate returnDate) {
-        this.returnDate = returnDate;
-    }
+	public TrainDTO() {
+	}
 
-    public Set<SimplePhysicalDocumentDTO> getPhysicalDocuments() {
-        return physicalDocuments;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setPhysicalDocuments(Set<SimplePhysicalDocumentDTO> physicalDocuments) {
-        this.physicalDocuments = physicalDocuments;
-    }
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public SimpleProjectDTO getProject() {
-        return project;
-    }
+	public Boolean getActive() {
+		return active;
+	}
 
-    public void setProject(SimpleProjectDTO project) {
-        this.project = project;
-    }
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	public Train.TrainStatus getStatus() {
+		return status;
+	}
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
+	public void setStatus(Train.TrainStatus status) {
+		this.status = status;
+	}
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
+	public LocalDate getProviderSendingDate() {
+		return providerSendingDate;
+	}
 
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
+	public void setProviderSendingDate(LocalDate providerSendingDate) {
+		this.providerSendingDate = providerSendingDate;
+	}
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
+	public LocalDate getReturnDate() {
+		return returnDate;
+	}
 
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
+	public void setReturnDate(LocalDate returnDate) {
+		this.returnDate = returnDate;
+	}
 
-    public LocalDateTime getLastModifiedDate() {
-        return lastModifiedDate;
-    }
+	public Set<SimplePhysicalDocumentDTO> getPhysicalDocuments() {
+		return physicalDocuments;
+	}
 
-    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
+	public void setPhysicalDocuments(Set<SimplePhysicalDocumentDTO> physicalDocuments) {
+		this.physicalDocuments = physicalDocuments;
+	}
 
-    public static final class Builder {
+	public String getIdentifier() {
+		return identifier;
+	}
 
-        private String identifier;
-        private SimpleProjectDTO project;
-        private String label;
-        private String description;
-        private Boolean active;
-        private Train.TrainStatus status;
-        private LocalDate providerSendingDate;
-        private LocalDate returnDate;
-        private Set<SimplePhysicalDocumentDTO> physicalDocuments;
-        private String createdBy;
-        private LocalDateTime createdDate;
-        private String lastModifiedBy;
-        private LocalDateTime lastModifiedDate;
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-        public Builder reinit() {
-            this.identifier = null;
-            this.project = null;
-            this.label = null;
-            this.description = null;
-            this.active = null;
-            this.status = null;
-            this.providerSendingDate = null;
-            this.returnDate = null;
-            this.physicalDocuments = null;
-            this.createdBy = null;
-            this.createdDate = null;
-            this.lastModifiedBy = null;
-            this.lastModifiedDate = null;
-            return this;
-        }
+	public SimpleProjectDTO getProject() {
+		return project;
+	}
 
-        public Builder setIdentifier(String identifier) {
-            this.identifier = identifier;
-            return this;
-        }
+	public void setProject(SimpleProjectDTO project) {
+		this.project = project;
+	}
 
-        public Builder setProject(SimpleProjectDTO project) {
-            this.project = project;
-            return this;
-        }
+	public String getCreatedBy() {
+		return createdBy;
+	}
 
-        public Builder setLabel(String label) {
-            this.label = label;
-            return this;
-        }
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
 
-        public Builder setDescription(String description) {
-            this.description = description;
-            return this;
-        }
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
 
-        public Builder setActive(Boolean active) {
-            this.active = active;
-            return this;
-        }
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
 
-        public Builder setStatus(Train.TrainStatus status) {
-            this.status = status;
-            return this;
-        }
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
 
-        public Builder setProviderSendingDate(LocalDate providerSendingDate) {
-            this.providerSendingDate = providerSendingDate;
-            return this;
-        }
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
 
-        public Builder setReturnDate(LocalDate returnDate) {
-            this.returnDate = returnDate;
-            return this;
-        }
+	public LocalDateTime getLastModifiedDate() {
+		return lastModifiedDate;
+	}
 
-        public Builder setPhysicalDocuments(Set<SimplePhysicalDocumentDTO> physicalDocuments) {
-            this.physicalDocuments = physicalDocuments;
-            return this;
-        }
+	public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
 
-        public Builder setCreatedBy(String createdBy) {
-            this.createdBy = createdBy;
-            return this;
-        }
+	public static final class Builder {
 
-        public Builder setCreatedDate(LocalDateTime createdDate) {
-            this.createdDate = createdDate;
-            return this;
-        }
+		private String identifier;
 
-        public Builder setLastModifiedBy(String lastModifiedBy) {
-            this.lastModifiedBy = lastModifiedBy;
-            return this;
-        }
+		private SimpleProjectDTO project;
 
-        public Builder setLastModifiedDate(LocalDateTime lastModifiedDate) {
-            this.lastModifiedDate = lastModifiedDate;
-            return this;
-        }
+		private String label;
 
-        public TrainDTO build() {
-            return new TrainDTO(identifier,
-                                project,
-                                label,
-                                description,
-                                active,
-                                status,
-                                providerSendingDate,
-                                returnDate,
-                                physicalDocuments,
-                                createdBy,
-                                createdDate,
-                                lastModifiedBy,
-                                lastModifiedDate);
-        }
+		private String description;
 
-    }
+		private Boolean active;
+
+		private Train.TrainStatus status;
+
+		private LocalDate providerSendingDate;
+
+		private LocalDate returnDate;
+
+		private Set<SimplePhysicalDocumentDTO> physicalDocuments;
+
+		private String createdBy;
+
+		private LocalDateTime createdDate;
+
+		private String lastModifiedBy;
+
+		private LocalDateTime lastModifiedDate;
+
+		public Builder reinit() {
+			this.identifier = null;
+			this.project = null;
+			this.label = null;
+			this.description = null;
+			this.active = null;
+			this.status = null;
+			this.providerSendingDate = null;
+			this.returnDate = null;
+			this.physicalDocuments = null;
+			this.createdBy = null;
+			this.createdDate = null;
+			this.lastModifiedBy = null;
+			this.lastModifiedDate = null;
+			return this;
+		}
+
+		public Builder setIdentifier(String identifier) {
+			this.identifier = identifier;
+			return this;
+		}
+
+		public Builder setProject(SimpleProjectDTO project) {
+			this.project = project;
+			return this;
+		}
+
+		public Builder setLabel(String label) {
+			this.label = label;
+			return this;
+		}
+
+		public Builder setDescription(String description) {
+			this.description = description;
+			return this;
+		}
+
+		public Builder setActive(Boolean active) {
+			this.active = active;
+			return this;
+		}
+
+		public Builder setStatus(Train.TrainStatus status) {
+			this.status = status;
+			return this;
+		}
+
+		public Builder setProviderSendingDate(LocalDate providerSendingDate) {
+			this.providerSendingDate = providerSendingDate;
+			return this;
+		}
+
+		public Builder setReturnDate(LocalDate returnDate) {
+			this.returnDate = returnDate;
+			return this;
+		}
+
+		public Builder setPhysicalDocuments(Set<SimplePhysicalDocumentDTO> physicalDocuments) {
+			this.physicalDocuments = physicalDocuments;
+			return this;
+		}
+
+		public Builder setCreatedBy(String createdBy) {
+			this.createdBy = createdBy;
+			return this;
+		}
+
+		public Builder setCreatedDate(LocalDateTime createdDate) {
+			this.createdDate = createdDate;
+			return this;
+		}
+
+		public Builder setLastModifiedBy(String lastModifiedBy) {
+			this.lastModifiedBy = lastModifiedBy;
+			return this;
+		}
+
+		public Builder setLastModifiedDate(LocalDateTime lastModifiedDate) {
+			this.lastModifiedDate = lastModifiedDate;
+			return this;
+		}
+
+		public TrainDTO build() {
+			return new TrainDTO(identifier, project, label, description, active, status, providerSendingDate,
+					returnDate, physicalDocuments, createdBy, createdDate, lastModifiedBy, lastModifiedDate);
+		}
+
+	}
+
 }

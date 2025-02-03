@@ -37,91 +37,72 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "metadataFormatType",
-         propOrder = {"metadataPrefix",
-                      "schema",
-                      "metadataNamespace"})
+@XmlType(name = "metadataFormatType", propOrder = { "metadataPrefix", "schema", "metadataNamespace" })
 public class MetadataFormatType {
 
-    @XmlElement(required = true)
-    protected String metadataPrefix;
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String schema;
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String metadataNamespace;
+	@XmlElement(required = true)
+	protected String metadataPrefix;
 
-    /**
-     * Obtient la valeur de la propriété metadataPrefix.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getMetadataPrefix() {
-        return metadataPrefix;
-    }
+	@XmlElement(required = true)
+	@XmlSchemaType(name = "anyURI")
+	protected String schema;
 
-    /**
-     * Définit la valeur de la propriété metadataPrefix.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setMetadataPrefix(String value) {
-        this.metadataPrefix = value;
-    }
+	@XmlElement(required = true)
+	@XmlSchemaType(name = "anyURI")
+	protected String metadataNamespace;
 
-    /**
-     * Obtient la valeur de la propriété schema.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getSchema() {
-        return schema;
-    }
+	/**
+	 * Obtient la valeur de la propriété metadataPrefix.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getMetadataPrefix() {
+		return metadataPrefix;
+	}
 
-    /**
-     * Définit la valeur de la propriété schema.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setSchema(String value) {
-        this.schema = value;
-    }
+	/**
+	 * Définit la valeur de la propriété metadataPrefix.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setMetadataPrefix(String value) {
+		this.metadataPrefix = value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété metadataNamespace.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getMetadataNamespace() {
-        return metadataNamespace;
-    }
+	/**
+	 * Obtient la valeur de la propriété schema.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getSchema() {
+		return schema;
+	}
 
-    /**
-     * Définit la valeur de la propriété metadataNamespace.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setMetadataNamespace(String value) {
-        this.metadataNamespace = value;
-    }
+	/**
+	 * Définit la valeur de la propriété schema.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setSchema(String value) {
+		this.schema = value;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété metadataNamespace.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getMetadataNamespace() {
+		return metadataNamespace;
+	}
+
+	/**
+	 * Définit la valeur de la propriété metadataNamespace.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setMetadataNamespace(String value) {
+		this.metadataNamespace = value;
+	}
 
 }

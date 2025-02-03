@@ -7,5 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface ViewsFormatConfigurationRepositoryCustom {
 
-    Page<ViewsFormatConfiguration> search(String search, List<String> libraries, Pageable pageable);
+	Page<ViewsFormatConfiguration> search(String search, List<String> libraries, Pageable pageable);
+
 }

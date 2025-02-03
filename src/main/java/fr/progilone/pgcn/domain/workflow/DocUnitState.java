@@ -25,383 +25,376 @@ import java.util.stream.Collectors;
 @Table(name = DocUnitState.TABLE_NAME)
 public abstract class DocUnitState extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "doc_workflow_state";
-    protected static final String SYSTEM_USER = "system";
+	public static final String TABLE_NAME = "doc_workflow_state";
 
-    @Column(name = "status", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private WorkflowStateStatus status;
+	protected static final String SYSTEM_USER = "system";
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "model_state", nullable = false)
-    private WorkflowModelState modelState;
+	@Column(name = "status", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private WorkflowStateStatus status;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "workflow", nullable = false)
-    private DocUnitWorkflow workflow;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "model_state", nullable = false)
+	private WorkflowModelState modelState;
 
-    /**
-     * Date de début effective de la tache
-     */
-    @Column(name = "start_date")
-    private LocalDateTime startDate;
-    /**
-     * Date de fin effective de la tache (réalisation)
-     */
-    @Column(name = "end_date")
-    private LocalDateTime endDate;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "workflow", nullable = false)
+	private DocUnitWorkflow workflow;
 
-    /**
-     * Date à partir de laquelle la tâche est considérée comme "en retard"
-     * calculée à partir du début (startDate) de la tâche
-     * et du temps imparti {@link WorkflowModelState#getLimitDuration()}
-     */
-    @Column(name = "due_date")
-    private LocalDateTime dueDate;
+	/**
+	 * Date de début effective de la tache
+	 */
+	@Column(name = "start_date")
+	private LocalDateTime startDate;
 
-    /**
-     * Champ non modifiable pour requêter sur le discriminator
-     */
-    @Column(name = "`key`", insertable = false, updatable = false)
-    @Enumerated(EnumType.STRING)
-    private WorkflowStateKey discriminator;
+	/**
+	 * Date de fin effective de la tache (réalisation)
+	 */
+	@Column(name = "end_date")
+	private LocalDateTime endDate;
 
-    /**
-     * Utilisateur qui complète la tâche (username pour ne pas bloquer les utilisateurs)
-     * {@link User#getLogin()}
-     */
-    @Column
-    private String user;
+	/**
+	 * Date à partir de laquelle la tâche est considérée comme "en retard" calculée à
+	 * partir du début (startDate) de la tâche et du temps imparti
+	 * {@link WorkflowModelState#getLimitDuration()}
+	 */
+	@Column(name = "due_date")
+	private LocalDateTime dueDate;
 
-    public WorkflowModelState getModelState() {
-        return modelState;
-    }
+	/**
+	 * Champ non modifiable pour requêter sur le discriminator
+	 */
+	@Column(name = "`key`", insertable = false, updatable = false)
+	@Enumerated(EnumType.STRING)
+	private WorkflowStateKey discriminator;
 
-    public WorkflowStateStatus getStatus() {
-        return status;
-    }
+	/**
+	 * Utilisateur qui complète la tâche (username pour ne pas bloquer les utilisateurs)
+	 * {@link User#getLogin()}
+	 */
+	@Column
+	private String user;
 
-    public void setStatus(final WorkflowStateStatus status) {
-        this.status = status;
-    }
+	public WorkflowModelState getModelState() {
+		return modelState;
+	}
 
-    public void setModelState(final WorkflowModelState modelState) {
-        this.modelState = modelState;
-    }
+	public WorkflowStateStatus getStatus() {
+		return status;
+	}
 
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
+	public void setStatus(final WorkflowStateStatus status) {
+		this.status = status;
+	}
 
-    public void setStartDate(final LocalDateTime startDate) {
-        this.startDate = startDate;
-    }
+	public void setModelState(final WorkflowModelState modelState) {
+		this.modelState = modelState;
+	}
 
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
 
-    public void setEndDate(final LocalDateTime endDate) {
-        this.endDate = endDate;
-    }
+	public void setStartDate(final LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
 
-    public LocalDateTime getDueDate() {
-        return dueDate;
-    }
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
 
-    public void setDueDate(final LocalDateTime dueDate) {
-        this.dueDate = dueDate;
-    }
+	public void setEndDate(final LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
 
-    public String getUser() {
-        return user;
-    }
+	public LocalDateTime getDueDate() {
+		return dueDate;
+	}
 
-    public void setUser(final String user) {
-        this.user = user;
-    }
+	public void setDueDate(final LocalDateTime dueDate) {
+		this.dueDate = dueDate;
+	}
 
-    public DocUnitWorkflow getWorkflow() {
-        return workflow;
-    }
+	public String getUser() {
+		return user;
+	}
 
-    public void setWorkflow(final DocUnitWorkflow workflow) {
-        this.workflow = workflow;
-    }
+	public void setUser(final String user) {
+		this.user = user;
+	}
 
-    public WorkflowStateKey getDiscriminator() {
-        return discriminator;
-    }
+	public DocUnitWorkflow getWorkflow() {
+		return workflow;
+	}
 
-    public void setDiscriminator(final WorkflowStateKey discriminator) {
-        this.discriminator = discriminator;
-    }
+	public void setWorkflow(final DocUnitWorkflow workflow) {
+		this.workflow = workflow;
+	}
 
-    /**
-     * Retourne vrai si l'étape ne s'est pas encore finie
-     *
-     * @return
-     */
-    public boolean isFutureOrCurrentState() {
-        return WorkflowStateStatus.NOT_STARTED.equals(status) || WorkflowStateStatus.PENDING.equals(status)
-               || WorkflowStateStatus.TO_SKIP.equals(status)
-               || WorkflowStateStatus.TO_WAIT.equals(status)
-               || WorkflowStateStatus.WAITING.equals(status)
-               || WorkflowStateStatus.WAITING_NEXT_COMPLETED.equals(status);
-    }
+	public WorkflowStateKey getDiscriminator() {
+		return discriminator;
+	}
 
-    /**
-     * Retourne vrai si l'étape est en cours
-     *
-     * @return
-     */
-    public boolean isCurrentState() {
-        return WorkflowStateStatus.PENDING.equals(status) || WorkflowStateStatus.WAITING.equals(status)
-               || WorkflowStateStatus.WAITING_NEXT_COMPLETED.equals(status);
-    }
+	public void setDiscriminator(final WorkflowStateKey discriminator) {
+		this.discriminator = discriminator;
+	}
 
-    /**
-     * Récupération de la clé
-     *
-     * @return
-     */
-    public abstract WorkflowStateKey getKey();
+	/**
+	 * Retourne vrai si l'étape ne s'est pas encore finie
+	 * @return
+	 */
+	public boolean isFutureOrCurrentState() {
+		return WorkflowStateStatus.NOT_STARTED.equals(status) || WorkflowStateStatus.PENDING.equals(status)
+				|| WorkflowStateStatus.TO_SKIP.equals(status) || WorkflowStateStatus.TO_WAIT.equals(status)
+				|| WorkflowStateStatus.WAITING.equals(status)
+				|| WorkflowStateStatus.WAITING_NEXT_COMPLETED.equals(status);
+	}
 
-    /**
-     * Traitement de {@link DocUnitState} du {@link DocUnitWorkflow} par {@link User}
-     *
-     * @param user
-     */
-    public abstract void process(User user);
+	/**
+	 * Retourne vrai si l'étape est en cours
+	 * @return
+	 */
+	public boolean isCurrentState() {
+		return WorkflowStateStatus.PENDING.equals(status) || WorkflowStateStatus.WAITING.equals(status)
+				|| WorkflowStateStatus.WAITING_NEXT_COMPLETED.equals(status);
+	}
 
-    /**
-     * Rejet de {@link DocUnitState} du {@link DocUnitWorkflow} par {@link User}
-     *
-     * @param user
-     */
-    public abstract void reject(User user);
+	/**
+	 * Récupération de la clé
+	 * @return
+	 */
+	public abstract WorkflowStateKey getKey();
 
-    /**
-     * Récupération des étapes suivantes
-     *
-     * @return
-     */
-    protected abstract List<DocUnitState> getNextStates();
+	/**
+	 * Traitement de {@link DocUnitState} du {@link DocUnitWorkflow} par {@link User}
+	 * @param user
+	 */
+	public abstract void process(User user);
 
-    /**
-     * Initialisation de l'étape
-     *
-     * @param startDate
-     *            (si null alors {@link LocalDateTime#now()})
-     * @param endDate
-     * @param status
-     *            (si non précisé, calculé automatiquement)
-     */
-    public void initializeState(LocalDateTime startDate, final LocalDateTime endDate, final WorkflowStateStatus status) {
-        if (isDone()) {
-            return;
-        }
-        if (startDate == null) {
-            startDate = LocalDateTime.now();
-        }
-        setStartDate(startDate);
+	/**
+	 * Rejet de {@link DocUnitState} du {@link DocUnitWorkflow} par {@link User}
+	 * @param user
+	 */
+	public abstract void reject(User user);
 
-        setEndDate(endDate);  // reset to null
+	/**
+	 * Récupération des étapes suivantes
+	 * @return
+	 */
+	protected abstract List<DocUnitState> getNextStates();
 
-        if (status != null) {
-            setStatus(status);
-            if (WorkflowStateStatus.FINISHED.equals(status) || WorkflowStateStatus.FAILED.equals(status)
-                || WorkflowStateStatus.CANCELED.equals(status)
-                || WorkflowStateStatus.SKIPPED.equals(status)) {
-                setUser(SYSTEM_USER);
-                setEndDate(startDate);
-            }
-        } else {
-            if (getModelState() != null) {
-                if (getModelState().getLimitDuration() != null) {
-                    setDueDate(startDate.plus(getModelState().getLimitDuration()));
-                }
-                switch (getModelState().getType()) {
-                    case REQUIRED:
-                        setStatus(WorkflowStateStatus.PENDING);
-                        break;
-                    case TO_SKIP:
-                        setStatus(WorkflowStateStatus.SKIPPED);
-                        setUser(SYSTEM_USER);
-                        setEndDate(startDate);
-                        // On continue d'initialiser si il n'y a pas d'étape en attente ou juste la validation de notice
-                        final List<DocUnitState> currentStates = getWorkflow().getCurrentStates();
-                        final List<DocUnitState> notStartedNextStates = getWorkflow().getFutureOrRunning()
-                                                                                     .stream()
-                                                                                     .filter(state -> state.getStatus().equals(WorkflowStateStatus.NOT_STARTED) && !state.getKey()
-                                                                                                                                                                         .equals(WorkflowStateKey.CLOTURE_DOCUMENT))
-                                                                                     .collect(Collectors.toList());
-                        if (currentStates.isEmpty() || (currentStates.size() == 1 && WorkflowStateKey.VALIDATION_NOTICES == currentStates.get(0).getKey())) {
-                            for (final DocUnitState state : getNextStates()) {
-                                // #5455 - Ne pas cloture le workflow s'il y a des étapes NOT_STARTED à après (cas CINES ignoré qui entraine la
-                                // cloture du document)
-                                if (!WorkflowStateKey.CLOTURE_DOCUMENT.equals(state.getKey()) || notStartedNextStates.isEmpty()) {
-                                    state.initializeState(startDate, null, null);
-                                }
-                            }
-                        }
-                        break;
-                    case TO_WAIT:
-                        // Cas spécial de l'étape de NUMERISATION_EN_ATTENTE qui est validé ultérieurement
-                        if (WorkflowStateKey.NUMERISATION_EN_ATTENTE.equals(getKey())) {
-                            setStatus(WorkflowStateStatus.WAITING_NEXT_COMPLETED);
-                            // On démarre la prochaine étape
-                            for (final DocUnitState state : getNextStates()) {
-                                state.initializeState(startDate, null, null);
-                            }
-                        } else {
-                            setStatus(WorkflowStateStatus.WAITING);
-                        }
+	/**
+	 * Initialisation de l'étape
+	 * @param startDate (si null alors {@link LocalDateTime#now()})
+	 * @param endDate
+	 * @param status (si non précisé, calculé automatiquement)
+	 */
+	public void initializeState(LocalDateTime startDate, final LocalDateTime endDate,
+			final WorkflowStateStatus status) {
+		if (isDone()) {
+			return;
+		}
+		if (startDate == null) {
+			startDate = LocalDateTime.now();
+		}
+		setStartDate(startDate);
 
-                        break;
-                    default:
-                        setStatus(WorkflowStateStatus.NOT_STARTED);
-                        break;
+		setEndDate(endDate); // reset to null
 
-                }
-            }
-        }
+		if (status != null) {
+			setStatus(status);
+			if (WorkflowStateStatus.FINISHED.equals(status) || WorkflowStateStatus.FAILED.equals(status)
+					|| WorkflowStateStatus.CANCELED.equals(status) || WorkflowStateStatus.SKIPPED.equals(status)) {
+				setUser(SYSTEM_USER);
+				setEndDate(startDate);
+			}
+		}
+		else {
+			if (getModelState() != null) {
+				if (getModelState().getLimitDuration() != null) {
+					setDueDate(startDate.plus(getModelState().getLimitDuration()));
+				}
+				switch (getModelState().getType()) {
+					case REQUIRED:
+						setStatus(WorkflowStateStatus.PENDING);
+						break;
+					case TO_SKIP:
+						setStatus(WorkflowStateStatus.SKIPPED);
+						setUser(SYSTEM_USER);
+						setEndDate(startDate);
+						// On continue d'initialiser si il n'y a pas d'étape en attente ou
+						// juste la validation de notice
+						final List<DocUnitState> currentStates = getWorkflow().getCurrentStates();
+						final List<DocUnitState> notStartedNextStates = getWorkflow().getFutureOrRunning()
+							.stream()
+							.filter(state -> state.getStatus().equals(WorkflowStateStatus.NOT_STARTED)
+									&& !state.getKey().equals(WorkflowStateKey.CLOTURE_DOCUMENT))
+							.collect(Collectors.toList());
+						if (currentStates.isEmpty() || (currentStates.size() == 1
+								&& WorkflowStateKey.VALIDATION_NOTICES == currentStates.get(0).getKey())) {
+							for (final DocUnitState state : getNextStates()) {
+								// #5455 - Ne pas cloture le workflow s'il y a des étapes
+								// NOT_STARTED à après (cas CINES ignoré qui entraine la
+								// cloture du document)
+								if (!WorkflowStateKey.CLOTURE_DOCUMENT.equals(state.getKey())
+										|| notStartedNextStates.isEmpty()) {
+									state.initializeState(startDate, null, null);
+								}
+							}
+						}
+						break;
+					case TO_WAIT:
+						// Cas spécial de l'étape de NUMERISATION_EN_ATTENTE qui est
+						// validé ultérieurement
+						if (WorkflowStateKey.NUMERISATION_EN_ATTENTE.equals(getKey())) {
+							setStatus(WorkflowStateStatus.WAITING_NEXT_COMPLETED);
+							// On démarre la prochaine étape
+							for (final DocUnitState state : getNextStates()) {
+								state.initializeState(startDate, null, null);
+							}
+						}
+						else {
+							setStatus(WorkflowStateStatus.WAITING);
+						}
 
-        // Cas de l'étape de fin
-        if (WorkflowStateKey.CLOTURE_DOCUMENT.equals(getKey())) {
-            setStatus(WorkflowStateStatus.FINISHED);
-            setUser(SYSTEM_USER);
-            setEndDate(startDate);
-        }
-    }
+						break;
+					default:
+						setStatus(WorkflowStateStatus.NOT_STARTED);
+						break;
 
-    /**
-     * Retourne vrai si la tâche s'est déjà déroulée
-     *
-     * @return
-     */
-    public boolean isDone() {
-        return endDate != null;
-    }
+				}
+			}
+		}
 
-    /**
-     * Retourne vrai si la tâche est en cours
-     *
-     * @return
-     */
-    public boolean isRunning() {
-        return startDate != null && endDate == null;
-    }
+		// Cas de l'étape de fin
+		if (WorkflowStateKey.CLOTURE_DOCUMENT.equals(getKey())) {
+			setStatus(WorkflowStateStatus.FINISHED);
+			setUser(SYSTEM_USER);
+			setEndDate(startDate);
+		}
+	}
 
-    /**
-     * Retourne vrai si la tâche a été ignorée.
-     *
-     * @return
-     */
-    public boolean isSkipped() {
-        return WorkflowStateStatus.SKIPPED.equals(status);
-    }
+	/**
+	 * Retourne vrai si la tâche s'est déjà déroulée
+	 * @return
+	 */
+	public boolean isDone() {
+		return endDate != null;
+	}
 
-    /**
-     * Retourne vrai si la tâche est à ignorer.
-     *
-     * @return
-     */
-    public boolean isToSkip() {
-        return WorkflowStateStatus.TO_SKIP.equals(status);
-    }
+	/**
+	 * Retourne vrai si la tâche est en cours
+	 * @return
+	 */
+	public boolean isRunning() {
+		return startDate != null && endDate == null;
+	}
 
-    /**
-     * Retourne vrai si la tâche a été ignorée ou annulée.
-     *
-     * @return
-     */
-    public boolean isSkippedOrCanceled() {
-        return WorkflowStateStatus.CANCELED.equals(status) || WorkflowStateStatus.SKIPPED.equals(status);
-    }
+	/**
+	 * Retourne vrai si la tâche a été ignorée.
+	 * @return
+	 */
+	public boolean isSkipped() {
+		return WorkflowStateStatus.SKIPPED.equals(status);
+	}
 
-    /**
-     * Retourne vrai si la tâche est en attente system
-     *
-     * @return
-     */
-    public boolean isWaiting() {
-        return startDate != null && endDate == null
-               && (WorkflowStateStatus.WAITING.equals(status) || WorkflowStateStatus.PENDING.equals(status));
-    }
+	/**
+	 * Retourne vrai si la tâche est à ignorer.
+	 * @return
+	 */
+	public boolean isToSkip() {
+		return WorkflowStateStatus.TO_SKIP.equals(status);
+	}
 
-    /**
-     * Retourne vrai si la tâche s'est déjà déroulée et a été validée
-     *
-     * @return
-     */
-    public boolean isValidated() {
-        return isDone() && WorkflowStateStatus.FINISHED.equals(status);
-    }
+	/**
+	 * Retourne vrai si la tâche a été ignorée ou annulée.
+	 * @return
+	 */
+	public boolean isSkippedOrCanceled() {
+		return WorkflowStateStatus.CANCELED.equals(status) || WorkflowStateStatus.SKIPPED.equals(status);
+	}
 
-    public boolean isRejected() {
-        return isDone() && WorkflowStateStatus.FAILED.equals(status);
-    }
+	/**
+	 * Retourne vrai si la tâche est en attente system
+	 * @return
+	 */
+	public boolean isWaiting() {
+		return startDate != null && endDate == null
+				&& (WorkflowStateStatus.WAITING.equals(status) || WorkflowStateStatus.PENDING.equals(status));
+	}
 
-    /**
-     * Mise à jour de la date de réalisation de la tâche
-     */
-    protected void processEndDate() {
-        setEndDate(LocalDateTime.now());
-    }
+	/**
+	 * Retourne vrai si la tâche s'est déjà déroulée et a été validée
+	 * @return
+	 */
+	public boolean isValidated() {
+		return isDone() && WorkflowStateStatus.FINISHED.equals(status);
+	}
 
-    /**
-     * Inscription de l'utilisateur
-     *
-     * @param user
-     */
-    protected void processUser(final User user) {
-        if (user != null) {
-            setUser(user.getLogin());
-        } else {
-            setUser(SYSTEM_USER);
-        }
-    }
+	public boolean isRejected() {
+		return isDone() && WorkflowStateStatus.FAILED.equals(status);
+	}
 
-    /**
-     * Mise à jour du statut
-     */
-    protected void processStatus() {
-        // Normalement géré à l'initialisation
-        if (WorkflowStateStatus.TO_SKIP.equals(status)) {
-            setStatus(WorkflowStateStatus.SKIPPED);
-        } else {
-            setStatus(WorkflowStateStatus.FINISHED);
-        }
-    }
+	/**
+	 * Mise à jour de la date de réalisation de la tâche
+	 */
+	protected void processEndDate() {
+		setEndDate(LocalDateTime.now());
+	}
 
-    /**
-     * Echec de la tâche
-     */
-    protected void failStatus() {
-        setStatus(WorkflowStateStatus.FAILED);
-    }
+	/**
+	 * Inscription de l'utilisateur
+	 * @param user
+	 */
+	protected void processUser(final User user) {
+		if (user != null) {
+			setUser(user.getLogin());
+		}
+		else {
+			setUser(SYSTEM_USER);
+		}
+	}
 
-    /**
-     * Retire les states inexistantes
-     *
-     * @param states
-     */
-    protected void cleanNullStates(final List<DocUnitState> states) {
-        if (states != null) {
-            states.removeIf(Objects::isNull);
-        }
-    }
+	/**
+	 * Mise à jour du statut
+	 */
+	protected void processStatus() {
+		// Normalement géré à l'initialisation
+		if (WorkflowStateStatus.TO_SKIP.equals(status)) {
+			setStatus(WorkflowStateStatus.SKIPPED);
+		}
+		else {
+			setStatus(WorkflowStateStatus.FINISHED);
+		}
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                          .omitNullValues()
-                          .add("key", getKey())
-                          .add("status", status)
-                          .add("started", startDate)
-                          .add("ended", endDate)
-                          .add("User", user)
-                          .toString();
-    }
+	/**
+	 * Echec de la tâche
+	 */
+	protected void failStatus() {
+		setStatus(WorkflowStateStatus.FAILED);
+	}
+
+	/**
+	 * Retire les states inexistantes
+	 * @param states
+	 */
+	protected void cleanNullStates(final List<DocUnitState> states) {
+		if (states != null) {
+			states.removeIf(Objects::isNull);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+			.omitNullValues()
+			.add("key", getKey())
+			.add("status", status)
+			.add("started", startDate)
+			.add("ended", endDate)
+			.add("User", user)
+			.toString();
+	}
+
 }

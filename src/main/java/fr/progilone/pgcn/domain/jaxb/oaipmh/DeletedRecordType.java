@@ -34,30 +34,28 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum DeletedRecordType {
 
-    @XmlEnumValue("no")
-    NO("no"),
-    @XmlEnumValue("persistent")
-    PERSISTENT("persistent"),
-    @XmlEnumValue("transient")
-    TRANSIENT("transient");
+	@XmlEnumValue("no")
+	NO("no"), @XmlEnumValue("persistent")
+	PERSISTENT("persistent"), @XmlEnumValue("transient")
+	TRANSIENT("transient");
 
-    private final String value;
+	private final String value;
 
-    DeletedRecordType(String v) {
-        value = v;
-    }
+	DeletedRecordType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static DeletedRecordType fromValue(String v) {
-        for (DeletedRecordType c : DeletedRecordType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static DeletedRecordType fromValue(String v) {
+		for (DeletedRecordType c : DeletedRecordType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

@@ -33,28 +33,27 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TargetTypeType {
 
-    @XmlEnumValue("external")
-    EXTERNAL("external"),
-    @XmlEnumValue("internal")
-    INTERNAL("internal");
+	@XmlEnumValue("external")
+	EXTERNAL("external"), @XmlEnumValue("internal")
+	INTERNAL("internal");
 
-    private final String value;
+	private final String value;
 
-    TargetTypeType(String v) {
-        value = v;
-    }
+	TargetTypeType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static TargetTypeType fromValue(String v) {
-        for (TargetTypeType c : TargetTypeType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static TargetTypeType fromValue(String v) {
+		for (TargetTypeType c : TargetTypeType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

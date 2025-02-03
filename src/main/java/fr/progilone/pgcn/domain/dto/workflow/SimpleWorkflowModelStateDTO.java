@@ -4,25 +4,27 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
 
 public class SimpleWorkflowModelStateDTO extends AbstractDTO {
 
-    private String identifier;
-    private String key;
+	private String identifier;
 
-    public SimpleWorkflowModelStateDTO() {
-    }
+	private String key;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public SimpleWorkflowModelStateDTO() {
+	}
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getKey() {
-        return key;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
 }

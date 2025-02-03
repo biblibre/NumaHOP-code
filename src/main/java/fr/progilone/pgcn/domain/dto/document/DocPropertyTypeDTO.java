@@ -11,51 +11,55 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
  */
 public class DocPropertyTypeDTO extends AbstractDTO {
 
-    private String identifier;
-    private String label;
-    private String superType;
-    private Integer rank;
+	private String identifier;
 
-    public DocPropertyTypeDTO(String identifier, String label, String superType, Integer rank) {
-        super();
-        this.identifier = identifier;
-        this.label = label;
-        this.superType = superType;
-        this.rank = rank;
-    }
+	private String label;
 
-    public final String getIdentifier() {
-        return identifier;
-    }
+	private String superType;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private Integer rank;
 
-    public final String getLabel() {
-        return label;
-    }
+	public DocPropertyTypeDTO(String identifier, String label, String superType, Integer rank) {
+		super();
+		this.identifier = identifier;
+		this.label = label;
+		this.superType = superType;
+		this.rank = rank;
+	}
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+	public final String getIdentifier() {
+		return identifier;
+	}
 
-    public final String getSuperType() {
-        return superType;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setSuperType(String superType) {
-        this.superType = superType;
-    }
+	public final String getLabel() {
+		return label;
+	}
 
-    public final Integer getRank() {
-        return rank;
-    }
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
-    public void setRank(Integer rank) {
-        this.rank = rank;
-    }
+	public final String getSuperType() {
+		return superType;
+	}
 
-    public DocPropertyTypeDTO() {
-    }
+	public void setSuperType(String superType) {
+		this.superType = superType;
+	}
+
+	public final Integer getRank() {
+		return rank;
+	}
+
+	public void setRank(Integer rank) {
+		this.rank = rank;
+	}
+
+	public DocPropertyTypeDTO() {
+	}
+
 }

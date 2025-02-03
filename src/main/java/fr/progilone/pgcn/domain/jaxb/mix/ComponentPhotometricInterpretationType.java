@@ -37,32 +37,27 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ComponentPhotometricInterpretationType {
 
-    R("R"),
-    G("G"),
-    B("B"),
-    Y("Y"),
-    @XmlEnumValue("Cb")
-    CB("Cb"),
-    @XmlEnumValue("Cr")
-    CR("Cr");
+	R("R"), G("G"), B("B"), Y("Y"), @XmlEnumValue("Cb")
+	CB("Cb"), @XmlEnumValue("Cr")
+	CR("Cr");
 
-    private final String value;
+	private final String value;
 
-    ComponentPhotometricInterpretationType(String v) {
-        value = v;
-    }
+	ComponentPhotometricInterpretationType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static ComponentPhotometricInterpretationType fromValue(String v) {
-        for (ComponentPhotometricInterpretationType c : ComponentPhotometricInterpretationType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static ComponentPhotometricInterpretationType fromValue(String v) {
+		for (ComponentPhotometricInterpretationType c : ComponentPhotometricInterpretationType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

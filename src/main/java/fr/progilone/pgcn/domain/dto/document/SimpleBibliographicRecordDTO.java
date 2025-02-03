@@ -11,41 +11,44 @@ import fr.progilone.pgcn.domain.document.BibliographicRecord;
  */
 public class SimpleBibliographicRecordDTO {
 
-    private String identifier;
-    private String title;
-    private SimpleDocUnitDTO docUnit;
+	private String identifier;
 
-    public SimpleBibliographicRecordDTO(String identifier, String title) {
-        super();
-        this.identifier = identifier;
-        this.title = title;
-    }
+	private String title;
 
-    public final String getIdentifier() {
-        return identifier;
-    }
+	private SimpleDocUnitDTO docUnit;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public SimpleBibliographicRecordDTO(String identifier, String title) {
+		super();
+		this.identifier = identifier;
+		this.title = title;
+	}
 
-    public final String getTitle() {
-        return title;
-    }
+	public final String getIdentifier() {
+		return identifier;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public SimpleDocUnitDTO getDocUnit() {
-        return docUnit;
-    }
+	public final String getTitle() {
+		return title;
+	}
 
-    public void setDocUnit(SimpleDocUnitDTO docUnit) {
-        this.docUnit = docUnit;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public SimpleBibliographicRecordDTO() {
+	public SimpleDocUnitDTO getDocUnit() {
+		return docUnit;
+	}
 
-    }
+	public void setDocUnit(SimpleDocUnitDTO docUnit) {
+		this.docUnit = docUnit;
+	}
+
+	public SimpleBibliographicRecordDTO() {
+
+	}
+
 }

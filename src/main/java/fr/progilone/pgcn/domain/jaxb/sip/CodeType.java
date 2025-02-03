@@ -35,76 +35,64 @@ import jakarta.xml.bind.annotation.XmlValue;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "codeType", propOrder = {"value"})
+@XmlType(name = "codeType", propOrder = { "value" })
 public class CodeType {
 
-    @XmlValue
-    protected AccessRestrictionCodeType value;
-    @XmlAttribute(name = "type", required = true)
-    @XmlSchemaType(name = "anySimpleType")
-    protected String type;
+	@XmlValue
+	protected AccessRestrictionCodeType value;
 
-    /**
-     *
-     *
-     * <pre>
-     * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;ccts:Name xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:clmDAFAccessRestrictionCode="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;Table des codes pour la restriction d'accès&lt;/ccts:Name&gt;
-     * </pre>
-     *
-     *
-     * <pre>
-     * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;ccts:Description xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:clmDAFAccessRestrictionCode="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;Les différentes valeurs de cette table sont tirées de la loi archive.&lt;/ccts:Description&gt;
-     * </pre>
-     *
-     *
-     *
-     * @return
-     *         possible object is
-     *         {@link AccessRestrictionCodeType }
-     *
-     */
-    public AccessRestrictionCodeType getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "type", required = true)
+	@XmlSchemaType(name = "anySimpleType")
+	protected String type;
 
-    /**
-     * Définit la valeur de la propriété value.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link AccessRestrictionCodeType }
-     *
-     */
-    public void setValue(AccessRestrictionCodeType value) {
-        this.value = value;
-    }
+	/**
+	 *
+	 *
+	 * <pre>
+	 * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;ccts:Name xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:clmDAFAccessRestrictionCode="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;Table des codes pour la restriction d'accès&lt;/ccts:Name&gt;
+	 * </pre>
+	 *
+	 *
+	 * <pre>
+	 * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;ccts:Description xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:clmDAFAccessRestrictionCode="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;Les différentes valeurs de cette table sont tirées de la loi archive.&lt;/ccts:Description&gt;
+	 * </pre>
+	 * @return possible object is {@link AccessRestrictionCodeType }
+	 *
+	 */
+	public AccessRestrictionCodeType getValue() {
+		return value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété type.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getType() {
-        if (type == null) {
-            return "SEDA";
-        } else {
-            return type;
-        }
-    }
+	/**
+	 * Définit la valeur de la propriété value.
+	 * @param value allowed object is {@link AccessRestrictionCodeType }
+	 *
+	 */
+	public void setValue(AccessRestrictionCodeType value) {
+		this.value = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété type.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setType(String value) {
-        this.type = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété type.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getType() {
+		if (type == null) {
+			return "SEDA";
+		}
+		else {
+			return type;
+		}
+	}
+
+	/**
+	 * Définit la valeur de la propriété type.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setType(String value) {
+		this.type = value;
+	}
 
 }

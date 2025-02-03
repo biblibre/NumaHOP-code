@@ -18,19 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/sample")
 public class SampleController {
 
-    private final SampleService sampleService;
+	private final SampleService sampleService;
 
-    public SampleController(final SampleService sampleService) {
-        this.sampleService = sampleService;
-    }
+	public SampleController(final SampleService sampleService) {
+		this.sampleService = sampleService;
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(DEL_HAB0)
-    public ResponseEntity<SampleDTO> getSample(@PathVariable final String id) {
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(DEL_HAB0)
+	public ResponseEntity<SampleDTO> getSample(@PathVariable final String id) {
 
-        final SampleDTO sample = sampleService.getOne(id);
-        return new ResponseEntity<>(sample, HttpStatus.OK);
-    }
+		final SampleDTO sample = sampleService.getOne(id);
+		return new ResponseEntity<>(sample, HttpStatus.OK);
+	}
 
 }

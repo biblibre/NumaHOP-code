@@ -7,9 +7,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JacksonConfiguration {
 
-    @Bean
-    public Hibernate5JakartaModule hibernate5JakartaModule() {
-        return new Hibernate5JakartaModule();
-    }
+	@Bean
+	public Hibernate5JakartaModule hibernate5JakartaModule() {
+		return new Hibernate5JakartaModule();
+	}
 
 }

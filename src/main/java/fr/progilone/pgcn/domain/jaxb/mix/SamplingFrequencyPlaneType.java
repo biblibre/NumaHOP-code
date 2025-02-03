@@ -34,30 +34,28 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum SamplingFrequencyPlaneType {
 
-    @XmlEnumValue("camera/scanner focal plane")
-    CAMERA_SCANNER_FOCAL_PLANE("camera/scanner focal plane"),
-    @XmlEnumValue("object plane")
-    OBJECT_PLANE("object plane"),
-    @XmlEnumValue("source object plane")
-    SOURCE_OBJECT_PLANE("source object plane");
+	@XmlEnumValue("camera/scanner focal plane")
+	CAMERA_SCANNER_FOCAL_PLANE("camera/scanner focal plane"), @XmlEnumValue("object plane")
+	OBJECT_PLANE("object plane"), @XmlEnumValue("source object plane")
+	SOURCE_OBJECT_PLANE("source object plane");
 
-    private final String value;
+	private final String value;
 
-    SamplingFrequencyPlaneType(String v) {
-        value = v;
-    }
+	SamplingFrequencyPlaneType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static SamplingFrequencyPlaneType fromValue(String v) {
-        for (SamplingFrequencyPlaneType c : SamplingFrequencyPlaneType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static SamplingFrequencyPlaneType fromValue(String v) {
+		for (SamplingFrequencyPlaneType c : SamplingFrequencyPlaneType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

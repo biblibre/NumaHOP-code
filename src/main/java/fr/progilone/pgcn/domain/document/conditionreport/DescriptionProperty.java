@@ -19,120 +19,117 @@ import java.util.Set;
  */
 @Entity
 @Table(name = DescriptionProperty.TABLE_NAME)
-@JsonSubTypes({@JsonSubTypes.Type(name = "doc_condreport_desc_property", value = DescriptionProperty.class)})
+@JsonSubTypes({ @JsonSubTypes.Type(name = "doc_condreport_desc_property", value = DescriptionProperty.class) })
 public class DescriptionProperty extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "doc_condreport_desc_property";
+	public static final String TABLE_NAME = "doc_condreport_desc_property";
 
-    /**
-     * Type de propriété
-     */
-    public enum Type {
-        TYPE,
-        DESCRIPTION,
-        STATE,
-        NUMBERING,
-        BINDING,
-        VIGILANCE,
-    }
+	/**
+	 * Type de propriété
+	 */
+	public enum Type {
 
-    /**
-     * Libellé de la propriété
-     */
-    @Column(name = "label", nullable = false)
-    private String label;
+		TYPE, DESCRIPTION, STATE, NUMBERING, BINDING, VIGILANCE,
 
-    /**
-     * Code de la propriété
-     */
-    @Column(name = "code", nullable = false)
-    private String code;
+	}
 
-    /**
-     * Type de la propriété
-     */
-    @Column(name = "type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Type type;
+	/**
+	 * Libellé de la propriété
+	 */
+	@Column(name = "label", nullable = false)
+	private String label;
 
-    /**
-     * Configuration par défaut: commentaire saisissable pour ce champ
-     */
-    @Column(name = "allow_comment")
-    private boolean allowComment = false;
+	/**
+	 * Code de la propriété
+	 */
+	@Column(name = "code", nullable = false)
+	private String code;
 
-    /**
-     * Configuration spécifique par bibliothèque,
-     * écrase les configurations par défaut
-     */
-    @OneToMany(mappedBy = "descProperty", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final Set<PropertyConfiguration> configurations = new HashSet<>();
+	/**
+	 * Type de la propriété
+	 */
+	@Column(name = "type", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Type type;
 
-    /**
-     * numero d'ordre
-     */
-    @Column(name = "sort_order")
-    private int order;
+	/**
+	 * Configuration par défaut: commentaire saisissable pour ce champ
+	 */
+	@Column(name = "allow_comment")
+	private boolean allowComment = false;
 
-    public Type getType() {
-        return type;
-    }
+	/**
+	 * Configuration spécifique par bibliothèque, écrase les configurations par défaut
+	 */
+	@OneToMany(mappedBy = "descProperty", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private final Set<PropertyConfiguration> configurations = new HashSet<>();
 
-    public void setType(final Type type) {
-        this.type = type;
-    }
+	/**
+	 * numero d'ordre
+	 */
+	@Column(name = "sort_order")
+	private int order;
 
-    public String getLabel() {
-        return label;
-    }
+	public Type getType() {
+		return type;
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public void setType(final Type type) {
+		this.type = type;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setCode(final String code) {
-        this.code = code;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public boolean isAllowComment() {
-        return allowComment;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setAllowComment(final boolean allowComment) {
-        this.allowComment = allowComment;
-    }
+	public void setCode(final String code) {
+		this.code = code;
+	}
 
-    public Set<PropertyConfiguration> getConfigurations() {
-        return configurations;
-    }
+	public boolean isAllowComment() {
+		return allowComment;
+	}
 
-    public void setConfigurations(final Set<PropertyConfiguration> configurations) {
-        this.configurations.clear();
-        if (configurations != null) {
-            configurations.forEach(this::addConfiguration);
-        }
-    }
+	public void setAllowComment(final boolean allowComment) {
+		this.allowComment = allowComment;
+	}
 
-    public void addConfiguration(final PropertyConfiguration configuration) {
-        if (configuration != null) {
-            this.configurations.add(configuration);
-        }
-    }
+	public Set<PropertyConfiguration> getConfigurations() {
+		return configurations;
+	}
 
-    public int getOrder() {
-        return order;
-    }
+	public void setConfigurations(final Set<PropertyConfiguration> configurations) {
+		this.configurations.clear();
+		if (configurations != null) {
+			configurations.forEach(this::addConfiguration);
+		}
+	}
 
-    public void setOrder(final int order) {
-        this.order = order;
-    }
+	public void addConfiguration(final PropertyConfiguration configuration) {
+		if (configuration != null) {
+			this.configurations.add(configuration);
+		}
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("label", label).toString();
-    }
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(final int order) {
+		this.order = order;
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this).add("label", label).toString();
+	}
+
 }

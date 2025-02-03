@@ -23,10 +23,12 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 /**
- * amdSecType: Complex Type for Administrative Metadata Sections
- * The administrative metadata section consists of four possible subsidiary sections: techMD (technical metadata for text/image/audio/video files),
- * rightsMD (intellectual property rights metadata), sourceMD (analog/digital source metadata), and digiprovMD (digital provenance metadata, that is,
- * the history of migrations/translations performed on a digital library object from it's original digital capture/encoding).
+ * amdSecType: Complex Type for Administrative Metadata Sections The administrative
+ * metadata section consists of four possible subsidiary sections: techMD (technical
+ * metadata for text/image/audio/video files), rightsMD (intellectual property rights
+ * metadata), sourceMD (analog/digital source metadata), and digiprovMD (digital
+ * provenance metadata, that is, the history of migrations/translations performed on a
+ * digital library object from it's original digital capture/encoding).
  *
  *
  * <p>
@@ -55,185 +57,174 @@ import javax.xml.namespace.QName;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "amdSecType",
-         propOrder = {"techMD",
-                      "rightsMD",
-                      "sourceMD",
-                      "digiprovMD"})
+@XmlType(name = "amdSecType", propOrder = { "techMD", "rightsMD", "sourceMD", "digiprovMD" })
 public class AmdSecType {
 
-    protected List<MdSecType> techMD;
-    protected List<MdSecType> rightsMD;
-    protected List<MdSecType> sourceMD;
-    protected List<MdSecType> digiprovMD;
-    @XmlAttribute(name = "ID")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
-    @XmlAnyAttribute
-    private Map<QName, String> otherAttributes = new HashMap<>();
+	protected List<MdSecType> techMD;
 
-    /**
-     * Gets the value of the techMD property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the techMD property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getTechMD().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link MdSecType }
-     *
-     *
-     */
-    public List<MdSecType> getTechMD() {
-        if (techMD == null) {
-            techMD = new ArrayList<>();
-        }
-        return this.techMD;
-    }
+	protected List<MdSecType> rightsMD;
 
-    /**
-     * Gets the value of the rightsMD property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the rightsMD property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getRightsMD().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link MdSecType }
-     *
-     *
-     */
-    public List<MdSecType> getRightsMD() {
-        if (rightsMD == null) {
-            rightsMD = new ArrayList<>();
-        }
-        return this.rightsMD;
-    }
+	protected List<MdSecType> sourceMD;
 
-    /**
-     * Gets the value of the sourceMD property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the sourceMD property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getSourceMD().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link MdSecType }
-     *
-     *
-     */
-    public List<MdSecType> getSourceMD() {
-        if (sourceMD == null) {
-            sourceMD = new ArrayList<>();
-        }
-        return this.sourceMD;
-    }
+	protected List<MdSecType> digiprovMD;
 
-    /**
-     * Gets the value of the digiprovMD property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the digiprovMD property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getDigiprovMD().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link MdSecType }
-     *
-     *
-     */
-    public List<MdSecType> getDigiprovMD() {
-        if (digiprovMD == null) {
-            digiprovMD = new ArrayList<>();
-        }
-        return this.digiprovMD;
-    }
+	@XmlAttribute(name = "ID")
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
 
-    /**
-     * Obtient la valeur de la propriété id.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getID() {
-        return id;
-    }
+	@XmlAnyAttribute
+	private Map<QName, String> otherAttributes = new HashMap<>();
 
-    /**
-     * Définit la valeur de la propriété id.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setID(String value) {
-        this.id = value;
-    }
+	/**
+	 * Gets the value of the techMD property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the techMD
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getTechMD().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link MdSecType }
+	 *
+	 *
+	 */
+	public List<MdSecType> getTechMD() {
+		if (techMD == null) {
+			techMD = new ArrayList<>();
+		}
+		return this.techMD;
+	}
 
-    /**
-     * Gets a map that contains attributes that aren't bound to any typed property on this class.
-     *
-     * <p>
-     * the map is keyed by the name of the attribute and
-     * the value is the string value of the attribute.
-     *
-     * the map returned by this method is live, and you can add new attribute
-     * by updating the map directly. Because of this design, there's no setter.
-     *
-     *
-     * @return
-     *         always non-null
-     */
-    public Map<QName, String> getOtherAttributes() {
-        return otherAttributes;
-    }
+	/**
+	 * Gets the value of the rightsMD property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the rightsMD
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getRightsMD().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link MdSecType }
+	 *
+	 *
+	 */
+	public List<MdSecType> getRightsMD() {
+		if (rightsMD == null) {
+			rightsMD = new ArrayList<>();
+		}
+		return this.rightsMD;
+	}
+
+	/**
+	 * Gets the value of the sourceMD property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the sourceMD
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getSourceMD().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link MdSecType }
+	 *
+	 *
+	 */
+	public List<MdSecType> getSourceMD() {
+		if (sourceMD == null) {
+			sourceMD = new ArrayList<>();
+		}
+		return this.sourceMD;
+	}
+
+	/**
+	 * Gets the value of the digiprovMD property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the digiprovMD
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getDigiprovMD().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link MdSecType }
+	 *
+	 *
+	 */
+	public List<MdSecType> getDigiprovMD() {
+		if (digiprovMD == null) {
+			digiprovMD = new ArrayList<>();
+		}
+		return this.digiprovMD;
+	}
+
+	/**
+	 * Obtient la valeur de la propriété id.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getID() {
+		return id;
+	}
+
+	/**
+	 * Définit la valeur de la propriété id.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setID(String value) {
+		this.id = value;
+	}
+
+	/**
+	 * Gets a map that contains attributes that aren't bound to any typed property on this
+	 * class.
+	 *
+	 * <p>
+	 * the map is keyed by the name of the attribute and the value is the string value of
+	 * the attribute.
+	 *
+	 * the map returned by this method is live, and you can add new attribute by updating
+	 * the map directly. Because of this design, there's no setter.
+	 * @return always non-null
+	 */
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes;
+	}
 
 }

@@ -12,75 +12,77 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class PgcnException extends RuntimeException {
 
-    private PgcnExceptionLevel level;
-    private final List<PgcnError> errors = new ArrayList<>();
+	private PgcnExceptionLevel level;
 
-    public PgcnException() {
-        super();
-    }
+	private final List<PgcnError> errors = new ArrayList<>();
 
-    public PgcnException(final PgcnList<PgcnError> errors) {
-        if (errors != null) {
-            this.errors.addAll(errors.get());
-        }
-        this.level = PgcnExceptionLevel.ERROR;
-    }
+	public PgcnException() {
+		super();
+	}
 
-    public PgcnException(final PgcnList<PgcnError> errors, final PgcnExceptionLevel level) {
-        if (errors != null) {
-            this.errors.addAll(errors.get());
-        }
-        this.level = level;
-    }
+	public PgcnException(final PgcnList<PgcnError> errors) {
+		if (errors != null) {
+			this.errors.addAll(errors.get());
+		}
+		this.level = PgcnExceptionLevel.ERROR;
+	}
 
-    public PgcnException(final PgcnError error) {
-        if (error != null) {
-            errors.add(error);
-        }
-    }
+	public PgcnException(final PgcnList<PgcnError> errors, final PgcnExceptionLevel level) {
+		if (errors != null) {
+			this.errors.addAll(errors.get());
+		}
+		this.level = level;
+	}
 
-    public PgcnException(final PgcnError error, final PgcnExceptionLevel level) {
-        if (error != null) {
-            errors.add(error);
-        }
-        this.level = level;
-    }
+	public PgcnException(final PgcnError error) {
+		if (error != null) {
+			errors.add(error);
+		}
+	}
 
-    public PgcnException(final PgcnError error, final Throwable e) {
-        super(e);
-        if (error != null) {
-            errors.add(error);
-        }
-        this.level = PgcnExceptionLevel.ERROR;
-    }
+	public PgcnException(final PgcnError error, final PgcnExceptionLevel level) {
+		if (error != null) {
+			errors.add(error);
+		}
+		this.level = level;
+	}
 
-    public List<PgcnError> getErrors() {
-        return Collections.unmodifiableList(errors);
-    }
+	public PgcnException(final PgcnError error, final Throwable e) {
+		super(e);
+		if (error != null) {
+			errors.add(error);
+		}
+		this.level = PgcnExceptionLevel.ERROR;
+	}
 
-    public void addError(final PgcnError error) {
-        errors.add(error);
-    }
+	public List<PgcnError> getErrors() {
+		return Collections.unmodifiableList(errors);
+	}
 
-    public boolean isErrorListEmpty() {
-        return errors.isEmpty();
-    }
+	public void addError(final PgcnError error) {
+		errors.add(error);
+	}
 
-    public PgcnExceptionLevel getLevel() {
-        return level;
-    }
+	public boolean isErrorListEmpty() {
+		return errors.isEmpty();
+	}
 
-    public void setLevel(final PgcnExceptionLevel level) {
-        this.level = level;
-    }
+	public PgcnExceptionLevel getLevel() {
+		return level;
+	}
 
-    @Override
-    public String toString() {
-        return StringUtils.join(errors, ", ");
-    }
+	public void setLevel(final PgcnExceptionLevel level) {
+		this.level = level;
+	}
 
-    @Override
-    public String getMessage() {
-        return toString();
-    }
+	@Override
+	public String toString() {
+		return StringUtils.join(errors, ", ");
+	}
+
+	@Override
+	public String getMessage() {
+		return toString();
+	}
+
 }

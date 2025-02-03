@@ -37,67 +37,59 @@ import java.util.List;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ListRecordsType",
-         propOrder = {"record",
-                      "resumptionToken"})
+@XmlType(name = "ListRecordsType", propOrder = { "record", "resumptionToken" })
 public class ListRecordsType {
 
-    @XmlElement(required = true)
-    protected List<RecordType> record;
-    protected ResumptionTokenType resumptionToken;
+	@XmlElement(required = true)
+	protected List<RecordType> record;
 
-    /**
-     * Gets the value of the record property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the record property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     *
-     * <pre>
-     * getRecord().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link RecordType }
-     *
-     *
-     */
-    public List<RecordType> getRecord() {
-        if (record == null) {
-            record = new ArrayList<>();
-        }
-        return this.record;
-    }
+	protected ResumptionTokenType resumptionToken;
 
-    /**
-     * Obtient la valeur de la propriété resumptionToken.
-     *
-     * @return
-     *         possible object is
-     *         {@link ResumptionTokenType }
-     *
-     */
-    public ResumptionTokenType getResumptionToken() {
-        return resumptionToken;
-    }
+	/**
+	 * Gets the value of the record property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * JAXB object. This is why there is not a <CODE>set</CODE> method for the record
+	 * property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 *
+	 * <pre>
+	 * getRecord().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link RecordType }
+	 *
+	 *
+	 */
+	public List<RecordType> getRecord() {
+		if (record == null) {
+			record = new ArrayList<>();
+		}
+		return this.record;
+	}
 
-    /**
-     * Définit la valeur de la propriété resumptionToken.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link ResumptionTokenType }
-     *
-     */
-    public void setResumptionToken(ResumptionTokenType value) {
-        this.resumptionToken = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété resumptionToken.
+	 * @return possible object is {@link ResumptionTokenType }
+	 *
+	 */
+	public ResumptionTokenType getResumptionToken() {
+		return resumptionToken;
+	}
+
+	/**
+	 * Définit la valeur de la propriété resumptionToken.
+	 * @param value allowed object is {@link ResumptionTokenType }
+	 *
+	 */
+	public void setResumptionToken(ResumptionTokenType value) {
+		this.resumptionToken = value;
+	}
 
 }

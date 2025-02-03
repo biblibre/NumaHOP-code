@@ -13,48 +13,48 @@ import java.util.Objects;
 @DiscriminatorValue(value = WorkflowStateKey.Values.RAPPORT_CONTROLES)
 public class RapportsControleState extends DocUnitState {
 
-    @Override
-    public WorkflowStateKey getKey() {
-        return WorkflowStateKey.RAPPORT_CONTROLES;
-    }
+	@Override
+	public WorkflowStateKey getKey() {
+		return WorkflowStateKey.RAPPORT_CONTROLES;
+	}
 
-    @Override
-    public void process(final User user) {
-        processEndDate();
-        processUser(user);
-        processStatus();
+	@Override
+	public void process(final User user) {
+		processEndDate();
+		processUser(user);
+		processStatus();
 
-        handleWorkflow();
-    }
+		handleWorkflow();
+	}
 
-    @Override
-    protected List<DocUnitState> getNextStates() {
-        final List<DocUnitState> states = new ArrayList<>();
+	@Override
+	protected List<DocUnitState> getNextStates() {
+		final List<DocUnitState> states = new ArrayList<>();
 
-        if (getWorkflow().isDocumentValidated()) {
-            states.add(getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.ARCHIVAGE_DOCUMENT));
-            states.add(getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.DIFFUSION_DOCUMENT));
-            states.add(getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.DIFFUSION_DOCUMENT_OMEKA));
-            states.add(getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.DIFFUSION_DOCUMENT_DIGITAL_LIBRARY));
-            states.add(getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.DIFFUSION_DOCUMENT_LOCALE));
-        }
-        cleanNullStates(states);
-        return states;
-    }
+		if (getWorkflow().isDocumentValidated()) {
+			states.add(getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.ARCHIVAGE_DOCUMENT));
+			states.add(getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.DIFFUSION_DOCUMENT));
+			states.add(getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.DIFFUSION_DOCUMENT_OMEKA));
+			states.add(getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.DIFFUSION_DOCUMENT_DIGITAL_LIBRARY));
+			states.add(getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.DIFFUSION_DOCUMENT_LOCALE));
+		}
+		cleanNullStates(states);
+		return states;
+	}
 
-    @Override
-    public void reject(final User user) {
-        processEndDate();
-        processUser(user);
-        failStatus();
+	@Override
+	public void reject(final User user) {
+		processEndDate();
+		processUser(user);
+		failStatus();
 
-        handleWorkflow();
-    }
+		handleWorkflow();
+	}
 
-    private void handleWorkflow() {
-        if (getWorkflow().getCurrentStates().isEmpty() && getWorkflow().isNoticeValidated()) {
-            getNextStates().stream().filter(Objects::nonNull).forEach(state -> state.initializeState(null, null, null));
-        }
-    }
+	private void handleWorkflow() {
+		if (getWorkflow().getCurrentStates().isEmpty() && getWorkflow().isNoticeValidated()) {
+			getNextStates().stream().filter(Objects::nonNull).forEach(state -> state.initializeState(null, null, null));
+		}
+	}
 
 }

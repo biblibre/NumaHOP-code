@@ -20,37 +20,39 @@ import org.xml.sax.SAXException;
  */
 public class EadTestUtils {
 
-    public static Pair<Eadheader, C> parseXml(final String xml) throws IOException, JAXBException, ParserConfigurationException, SAXException {
-        final File tmpFile = new File(FileUtils.getTempDirectory(),
-                                      "EadTestUtils_" + System.currentTimeMillis()
-                                                                    + ".xml");
-        try (final FileWriter writer = new FileWriter(tmpFile)) {
-            IOUtils.write(xml.getBytes(), writer, StandardCharsets.UTF_8);
-        }
-        try {
-            final List<Eadheader> headers = new ArrayList<>();
-            final List<C> cs = new ArrayList<>();
-            new EadCEntityHandler((h, c) -> {
-                headers.add(h);
-                cs.add(c);
-            }).parse(tmpFile);
+	public static Pair<Eadheader, C> parseXml(final String xml)
+			throws IOException, JAXBException, ParserConfigurationException, SAXException {
+		final File tmpFile = new File(FileUtils.getTempDirectory(),
+				"EadTestUtils_" + System.currentTimeMillis() + ".xml");
+		try (final FileWriter writer = new FileWriter(tmpFile)) {
+			IOUtils.write(xml.getBytes(), writer, StandardCharsets.UTF_8);
+		}
+		try {
+			final List<Eadheader> headers = new ArrayList<>();
+			final List<C> cs = new ArrayList<>();
+			new EadCEntityHandler((h, c) -> {
+				headers.add(h);
+				cs.add(c);
+			}).parse(tmpFile);
 
-            final Eadheader header = !headers.isEmpty() ? headers.get(0)
-                                                        : null;
-            final C c = !cs.isEmpty() ? cs.get(0)
-                                      : null;
-            return Pair.of(header, c);
+			final Eadheader header = !headers.isEmpty() ? headers.get(0) : null;
+			final C c = !cs.isEmpty() ? cs.get(0) : null;
+			return Pair.of(header, c);
 
-        } finally {
-            FileUtils.deleteQuietly(tmpFile);
-        }
-    }
+		}
+		finally {
+			FileUtils.deleteQuietly(tmpFile);
+		}
+	}
 
-    public static C getCFromXml(final String xml) throws IOException, JAXBException, ParserConfigurationException, SAXException {
-        return parseXml(xml).getRight();
-    }
+	public static C getCFromXml(final String xml)
+			throws IOException, JAXBException, ParserConfigurationException, SAXException {
+		return parseXml(xml).getRight();
+	}
 
-    public static Eadheader getEadheaderFromXml(final String xml) throws IOException, JAXBException, ParserConfigurationException, SAXException {
-        return parseXml(xml).getLeft();
-    }
+	public static Eadheader getEadheaderFromXml(final String xml)
+			throws IOException, JAXBException, ParserConfigurationException, SAXException {
+		return parseXml(xml).getLeft();
+	}
+
 }

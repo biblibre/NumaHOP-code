@@ -6,105 +6,115 @@ import java.util.List;
 
 public class OcrLangConfigurationDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String label;
-    // private String description;
-    private SimpleLibraryDTO library;
-    private boolean active;
+	private String identifier;
 
-    private List<OcrLanguageDTO> ocrLanguages;
+	private String label;
 
-    public OcrLangConfigurationDTO(final String identifier, final String label, final SimpleLibraryDTO library, final boolean active, final List<OcrLanguageDTO> ocrLanguages) {
-        this.identifier = identifier;
-        this.label = label;
-        this.library = library;
-        this.active = active;
-        this.ocrLanguages = ocrLanguages;
-    }
+	// private String description;
+	private SimpleLibraryDTO library;
 
-    public OcrLangConfigurationDTO() {
+	private boolean active;
 
-    }
+	private List<OcrLanguageDTO> ocrLanguages;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public OcrLangConfigurationDTO(final String identifier, final String label, final SimpleLibraryDTO library,
+			final boolean active, final List<OcrLanguageDTO> ocrLanguages) {
+		this.identifier = identifier;
+		this.label = label;
+		this.library = library;
+		this.active = active;
+		this.ocrLanguages = ocrLanguages;
+	}
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	public OcrLangConfigurationDTO() {
 
-    public String getLabel() {
-        return label;
-    }
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setLibrary(final SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
 
-    public List<OcrLanguageDTO> getOcrLanguages() {
-        return ocrLanguages;
-    }
+	public void setLibrary(final SimpleLibraryDTO library) {
+		this.library = library;
+	}
 
-    public void setOcrLanguages(final List<OcrLanguageDTO> ocrLanguages) {
-        this.ocrLanguages = ocrLanguages;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public static final class Builder {
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
 
-        private String identifier;
-        private String label;
-        private SimpleLibraryDTO library;
-        private boolean active;
-        private List<OcrLanguageDTO> ocrLanguages;
+	public List<OcrLanguageDTO> getOcrLanguages() {
+		return ocrLanguages;
+	}
 
-        public Builder init() {
-            this.identifier = null;
-            this.label = null;
-            this.library = null;
-            this.active = false;
-            this.ocrLanguages = null;
-            return this;
-        }
+	public void setOcrLanguages(final List<OcrLanguageDTO> ocrLanguages) {
+		this.ocrLanguages = ocrLanguages;
+	}
 
-        public Builder setIdentifier(final String identifier) {
-            this.identifier = identifier;
-            return this;
-        }
+	public static final class Builder {
 
-        public Builder setLabel(final String label) {
-            this.label = label;
-            return this;
-        }
+		private String identifier;
 
-        public Builder setLibrary(final SimpleLibraryDTO library) {
-            this.library = library;
-            return this;
-        }
+		private String label;
 
-        public Builder setOcrLanguages(final List<OcrLanguageDTO> ocrLanguages) {
-            this.ocrLanguages = ocrLanguages;
-            return this;
-        }
+		private SimpleLibraryDTO library;
 
-        public OcrLangConfigurationDTO build() {
-            return new OcrLangConfigurationDTO(identifier, label, library, active, ocrLanguages);
-        }
-    }
+		private boolean active;
+
+		private List<OcrLanguageDTO> ocrLanguages;
+
+		public Builder init() {
+			this.identifier = null;
+			this.label = null;
+			this.library = null;
+			this.active = false;
+			this.ocrLanguages = null;
+			return this;
+		}
+
+		public Builder setIdentifier(final String identifier) {
+			this.identifier = identifier;
+			return this;
+		}
+
+		public Builder setLabel(final String label) {
+			this.label = label;
+			return this;
+		}
+
+		public Builder setLibrary(final SimpleLibraryDTO library) {
+			this.library = library;
+			return this;
+		}
+
+		public Builder setOcrLanguages(final List<OcrLanguageDTO> ocrLanguages) {
+			this.ocrLanguages = ocrLanguages;
+			return this;
+		}
+
+		public OcrLangConfigurationDTO build() {
+			return new OcrLangConfigurationDTO(identifier, label, library, active, ocrLanguages);
+		}
+
+	}
+
 }

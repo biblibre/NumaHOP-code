@@ -36,126 +36,147 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ExtendWith(MockitoExtension.class)
 public class DeliveryControllerTest {
 
-    @Mock
-    private UIDeliveryService uiDeliveryService;
-    @Mock
-    private DeliveryService deliveryService;
-    @Mock
-    private DeliveryProgressService deliveryProgressService;
-    @Mock
-    private EsDeliveryService esDeliveryService;
-    @Mock
-    private AccessHelper accessHelper;
-    @Mock
-    private LibraryAccesssHelper libraryAccesssHelper;
+	@Mock
+	private UIDeliveryService uiDeliveryService;
 
-    @Mock
-    private DeliveryReportingService deliveryReportingService;
+	@Mock
+	private DeliveryService deliveryService;
 
-    @Mock
-    private SampleService sampleService;
+	@Mock
+	private DeliveryProgressService deliveryProgressService;
 
-    private MockMvc restMockMvc;
+	@Mock
+	private EsDeliveryService esDeliveryService;
 
-    private final RequestPostProcessor admin = roles(DEL_HAB8);
-    private final RequestPostProcessor presta = roles(DEL_HAB2);
+	@Mock
+	private AccessHelper accessHelper;
 
-    @BeforeEach
-    public void setUp() throws Exception {
-        final DeliveryController controller = new DeliveryController(uiDeliveryService,
-                                                                     deliveryService,
-                                                                     deliveryReportingService,
-                                                                     esDeliveryService,
-                                                                     accessHelper,
-                                                                     libraryAccesssHelper,
-                                                                     sampleService);
-        this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+	@Mock
+	private LibraryAccesssHelper libraryAccesssHelper;
 
-        when(uiDeliveryService.update(any(ManualDeliveryDTO.class))).then((Answer<DeliveryDTO>) invocation -> {
-            final ManualDeliveryDTO delivery = invocation.getArgument(0, ManualDeliveryDTO.class);
-            final DeliveryDTO dto1 = new DeliveryDTO();
-            dto1.setIdentifier(delivery.getIdentifier());
-            return dto1;
-        });
-    }
+	@Mock
+	private DeliveryReportingService deliveryReportingService;
 
-    @Test
-    public void testUpdateAdmin() throws Exception {
-        final String identifier = "7ba77eb6-da75-4fd8-b3c6-cd1da2659032";
-        final ManualDeliveryDTO dto = new ManualDeliveryDTO();
-        dto.setIdentifier(identifier);
+	@Mock
+	private SampleService sampleService;
 
-        when(accessHelper.checkDelivery(identifier)).thenReturn(false, true);
+	private MockMvc restMockMvc;
 
-        // 403, admin
-        this.restMockMvc.perform(post("/api/rest/delivery/" + identifier).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(dto)).with(admin))
-                        // check
-                        .andExpect(status().isForbidden());
+	private final RequestPostProcessor admin = roles(DEL_HAB8);
 
-        // 200, admin
-        this.restMockMvc.perform(post("/api/rest/delivery/" + identifier).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(dto)).with(admin))
-                        // check
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("identifier").value(identifier));
-    }
+	private final RequestPostProcessor presta = roles(DEL_HAB2);
 
-    @Test
-    public void testUpdatePresta() throws Exception {
-        final String identifier = "7ba77eb6-da75-4fd8-b3c6-cd1da2659032";
-        final String lotId1 = "6e55d2e0-3f10-4410-85b0-75d2a24de93d";
-        final String lotId2 = "68e95a86-932e-4538-907f-fc4d5279790b";
+	@BeforeEach
+	public void setUp() throws Exception {
+		final DeliveryController controller = new DeliveryController(uiDeliveryService, deliveryService,
+				deliveryReportingService, esDeliveryService, accessHelper, libraryAccesssHelper, sampleService);
+		this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
-        final ManualDeliveryDTO dto = new ManualDeliveryDTO();
-        dto.setIdentifier(identifier);
-        dto.setPayment(Delivery.DeliveryPayment.UNPAID.name());
-        dto.setMethod(Delivery.DeliveryMethod.FTP.name());
-        dto.setLot(new SimpleLotDTO());
-        dto.getLot().setIdentifier(lotId1);
+		when(uiDeliveryService.update(any(ManualDeliveryDTO.class))).then((Answer<DeliveryDTO>) invocation -> {
+			final ManualDeliveryDTO delivery = invocation.getArgument(0, ManualDeliveryDTO.class);
+			final DeliveryDTO dto1 = new DeliveryDTO();
+			dto1.setIdentifier(delivery.getIdentifier());
+			return dto1;
+		});
+	}
 
-        final Delivery dbDelivery = new Delivery();
-        dbDelivery.setIdentifier(identifier);
-        dbDelivery.setPayment(Delivery.DeliveryPayment.UNPAID);
-        dbDelivery.setMethod(Delivery.DeliveryMethod.FTP);
-        dbDelivery.setLot(new Lot());
-        dbDelivery.getLot().setIdentifier(lotId1);
+	@Test
+	public void testUpdateAdmin() throws Exception {
+		final String identifier = "7ba77eb6-da75-4fd8-b3c6-cd1da2659032";
+		final ManualDeliveryDTO dto = new ManualDeliveryDTO();
+		dto.setIdentifier(identifier);
 
-        when(accessHelper.checkDelivery(identifier)).thenReturn(false, true);
-        when(deliveryService.getOne(identifier)).thenReturn(dbDelivery);
+		when(accessHelper.checkDelivery(identifier)).thenReturn(false, true);
 
-        // 403, presta, checkDelivery ko
-        final ResultActions perform = this.restMockMvc.perform(post("/api/rest/delivery/" + identifier).contentType(MediaType.APPLICATION_JSON)
-                                                                                                       .content(TestUtil.convertObjectToJsonBytes(dto))
-                                                                                                       .with(presta));
-        perform
-               // check
-               .andExpect(status().isForbidden());
+		// 403, admin
+		this.restMockMvc
+			.perform(post("/api/rest/delivery/" + identifier).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(dto))
+				.with(admin))
+			// check
+			.andExpect(status().isForbidden());
 
-        // 403, presta, hasProtectedChanges payment ko
-        dto.setPayment(Delivery.DeliveryPayment.PAID.name());
-        this.restMockMvc.perform(post("/api/rest/delivery/" + identifier).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(dto)).with(presta))
-                        // check
-                        .andExpect(status().isForbidden());
+		// 200, admin
+		this.restMockMvc
+			.perform(post("/api/rest/delivery/" + identifier).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(dto))
+				.with(admin))
+			// check
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("identifier").value(identifier));
+	}
 
-        // 403, presta, hasProtectedChanges method ko
-        dto.setPayment(Delivery.DeliveryPayment.UNPAID.name());
-        dto.setMethod(Delivery.DeliveryMethod.DISK.name());
-        this.restMockMvc.perform(post("/api/rest/delivery/" + identifier).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(dto)).with(presta))
-                        // check
-                        .andExpect(status().isForbidden());
+	@Test
+	public void testUpdatePresta() throws Exception {
+		final String identifier = "7ba77eb6-da75-4fd8-b3c6-cd1da2659032";
+		final String lotId1 = "6e55d2e0-3f10-4410-85b0-75d2a24de93d";
+		final String lotId2 = "68e95a86-932e-4538-907f-fc4d5279790b";
 
-        // 403, presta, hasProtectedChanges lot ko
-        dto.setMethod(Delivery.DeliveryMethod.FTP.name());
-        dto.getLot().setIdentifier(lotId2);
-        this.restMockMvc.perform(post("/api/rest/delivery/" + identifier).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(dto)).with(presta))
-                        // check
-                        .andExpect(status().isForbidden());
+		final ManualDeliveryDTO dto = new ManualDeliveryDTO();
+		dto.setIdentifier(identifier);
+		dto.setPayment(Delivery.DeliveryPayment.UNPAID.name());
+		dto.setMethod(Delivery.DeliveryMethod.FTP.name());
+		dto.setLot(new SimpleLotDTO());
+		dto.getLot().setIdentifier(lotId1);
 
-        // 200, presta
-        dto.getLot().setIdentifier(lotId1);
-        this.restMockMvc.perform(post("/api/rest/delivery/" + identifier).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(dto)).with(presta))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("identifier").value(identifier));
-    }
+		final Delivery dbDelivery = new Delivery();
+		dbDelivery.setIdentifier(identifier);
+		dbDelivery.setPayment(Delivery.DeliveryPayment.UNPAID);
+		dbDelivery.setMethod(Delivery.DeliveryMethod.FTP);
+		dbDelivery.setLot(new Lot());
+		dbDelivery.getLot().setIdentifier(lotId1);
+
+		when(accessHelper.checkDelivery(identifier)).thenReturn(false, true);
+		when(deliveryService.getOne(identifier)).thenReturn(dbDelivery);
+
+		// 403, presta, checkDelivery ko
+		final ResultActions perform = this.restMockMvc
+			.perform(post("/api/rest/delivery/" + identifier).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(dto))
+				.with(presta));
+		perform
+			// check
+			.andExpect(status().isForbidden());
+
+		// 403, presta, hasProtectedChanges payment ko
+		dto.setPayment(Delivery.DeliveryPayment.PAID.name());
+		this.restMockMvc
+			.perform(post("/api/rest/delivery/" + identifier).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(dto))
+				.with(presta))
+			// check
+			.andExpect(status().isForbidden());
+
+		// 403, presta, hasProtectedChanges method ko
+		dto.setPayment(Delivery.DeliveryPayment.UNPAID.name());
+		dto.setMethod(Delivery.DeliveryMethod.DISK.name());
+		this.restMockMvc
+			.perform(post("/api/rest/delivery/" + identifier).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(dto))
+				.with(presta))
+			// check
+			.andExpect(status().isForbidden());
+
+		// 403, presta, hasProtectedChanges lot ko
+		dto.setMethod(Delivery.DeliveryMethod.FTP.name());
+		dto.getLot().setIdentifier(lotId2);
+		this.restMockMvc
+			.perform(post("/api/rest/delivery/" + identifier).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(dto))
+				.with(presta))
+			// check
+			.andExpect(status().isForbidden());
+
+		// 200, presta
+		dto.getLot().setIdentifier(lotId1);
+		this.restMockMvc
+			.perform(post("/api/rest/delivery/" + identifier).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(dto))
+				.with(presta))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("identifier").value(identifier));
+	}
+
 }
