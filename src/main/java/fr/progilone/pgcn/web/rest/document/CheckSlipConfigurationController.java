@@ -42,7 +42,7 @@ public class CheckSlipConfigurationController extends AbstractRestController {
 	}
 
 	@RolesAllowed(DEL_HAB0)
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@Timed
 	public ResponseEntity<CheckSlipConfiguration> getById(final HttpServletRequest request,
 			@PathVariable final String id) {
