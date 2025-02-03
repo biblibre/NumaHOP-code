@@ -52,7 +52,7 @@ $(call build_targets, build-)
 	$(call mvn_cmd_pattern,compile,$($*))
 
 # Build java, front-end, docker and javadoc
-full-rebuild: -app-down clean build-full build-docs
+full-rebuild: -app-down clean build-all build-docs
 
 clean:
 	mvn clean
