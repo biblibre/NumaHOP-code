@@ -185,7 +185,6 @@ uploadPath:
     user: ${base-path}/upload/user
     template: ${base-path}/upload/templates
 
-# Services externes
 services:
     cines:
         updating:
@@ -196,6 +195,7 @@ services:
         xsd:
             sip: ${base-path}/xsd/sip.xsd
     archive:
+        s3-url: https://s3.us.archive.org
         alto: ${base-path}/archive/alto
         text: ${base-path}/archive/text
     metaDatas:

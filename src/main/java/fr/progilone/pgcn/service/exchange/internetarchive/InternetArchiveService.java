@@ -95,6 +95,9 @@ public class InternetArchiveService {
 	@Value("${services.archive.alto}")
 	private String outputPath;
 
+	@Value("${services.archive.s3-url}")
+	private String internetArchiveS3Url;
+
 	private final BinaryStorageManager bm;
 
 	private final DocUnitService docUnitService;
@@ -407,7 +410,7 @@ public class InternetArchiveService {
 			final AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(awsCreds))
 				.withClientConfiguration(new ClientConfiguration().withSignerOverride("S3SignerType"))
-				.withEndpointConfiguration(new EndpointConfiguration("https://s3.us.archive.org", ""))
+				.withEndpointConfiguration(new EndpointConfiguration(internetArchiveS3Url, ""))
 				.build();
 
 			// Handle Metadata
