@@ -31,13 +31,14 @@
 
         scripts = {
           nodefix.exec = "rm node/npm; rm node/node; ln -s ${pkgs.nodejs_18}/bin/node node/node; ln -s ${pkgs.nodejs_18}/bin/npm node/npm";
-          fixmvn.exec = "${pkgs.maven}/bin/mvn -Dskip.installnodenpm $@";
+          mvn.exec = "${pkgs.maven}/bin/mvn -Dskip.installnodenpm $@";
         };
 
         services.mysql = {
           enable = true;
           package = pkgs.mariadb;
         };
+        env.MVN_EXTRA_ARGS="-Dskip.installnodenpm ";
         # TODO: Add elastic search service.
       };
     };
