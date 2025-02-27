@@ -57,7 +57,6 @@ public class DeduplicationServiceTest {
 		when(docUnitRepository.searchDuplicates(eq(docUnit), any()))
 			.thenReturn(Collections.singletonList(duplDocUnit2));
 
-
 		final Collection<DocUnit> actual = service.lookupDuplicates(docUnit);
 
 		assertEquals(2, actual.size());
