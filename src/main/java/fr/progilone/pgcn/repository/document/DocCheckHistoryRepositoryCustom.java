@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DocCheckHistoryRepositoryCustom {
 
-    List<DocCheckHistory> findDocCheckHistories(List<String> libraries, List<String> projects, List<String> lots, List<String> deliveries, LocalDate fromDate, LocalDate toDate);
+	List<DocCheckHistory> findDocCheckHistories(List<String> libraries, List<String> projects, List<String> lots,
+			List<String> deliveries, LocalDate fromDate, LocalDate toDate);
 
 }

@@ -47,307 +47,334 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UIProjectService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UIProjectService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(UIProjectService.class);
 
-    private final ProjectService projectService;
-    private final DocUnitService docUnitService;
-    private final LibraryService libraryService;
-    private final UIProjectMapper uiProjectMapper;
-    private final WorkflowService workflowService;
-    private final AccessHelper accessHelper;
+	private final ProjectService projectService;
 
-    @Autowired
-    public UIProjectService(final ProjectService projectService,
-                            final DocUnitService docUnitService,
-                            final LibraryService libraryService,
-                            final UIProjectMapper uiProjectMapper,
-                            final WorkflowService workflowService,
-                            final AccessHelper accessHelper) {
-        this.projectService = projectService;
-        this.docUnitService = docUnitService;
-        this.libraryService = libraryService;
-        this.uiProjectMapper = uiProjectMapper;
-        this.workflowService = workflowService;
-        this.accessHelper = accessHelper;
-    }
+	private final DocUnitService docUnitService;
 
-    @Transactional
-    public ProjectDTO create(final ProjectDTO request) throws PgcnValidationException {
-        final Project project = new Project();
-        project.setStatus(ProjectStatus.CREATED);
-        uiProjectMapper.mapInto(request, project);
-        defaultValues(project);
-        try {
-            final Project savedProject = projectService.save(project);
-            final Project projectWithProperties = projectService.findByIdentifierWithDependencies(savedProject.getIdentifier());
-            return ProjectMapper.INSTANCE.projectToProjectDTO(projectWithProperties);
-        } catch (final PgcnBusinessException e) {
-            e.getErrors().forEach(semanthequeError -> request.addError(buildError(semanthequeError.getCode())));
-            throw new PgcnValidationException(request);
-        }
-    }
+	private final LibraryService libraryService;
 
-    private void defaultValues(final Project project) {
-        final CustomUserDetails deets = SecurityUtils.getCurrentUser();
-        if (deets != null && !deets.isSuperuser()
-            && deets.getLibraryId() != null) {
-            final Library lib = libraryService.findByIdentifier(deets.getLibraryId());
-            project.setLibrary(lib);
-        }
-    }
+	private final UIProjectMapper uiProjectMapper;
 
-    /**
-     * Mise à jour d'un projet
-     *
-     * @param request
-     *            un objet contenant les informations necessaires à l'enregistrement d'un projet
-     * @return le projet nouvellement créé ou mis à jour
-     * @throws PgcnValidationException
-     */
-    @Transactional
-    public ProjectDTO update(final ProjectDTO request) throws PgcnValidationException {
-        final Project project = projectService.findByIdentifierWithDependencies(request.getIdentifier());
+	private final WorkflowService workflowService;
 
-        // Contrôle d'accès concurrents
-        VersionValidationService.checkForStateObject(project, request);
+	private final AccessHelper accessHelper;
 
-        uiProjectMapper.mapInto(request, project);
-        try {
-            final Project savedProject = projectService.save(project);
-            final Project projectWithProperties = projectService.findByIdentifierWithDependencies(savedProject.getIdentifier());
-            return ProjectMapper.INSTANCE.projectToProjectDTO(projectWithProperties);
-        } catch (final PgcnBusinessException e) {
-            e.getErrors().forEach(semanthequeError -> request.addError(buildError(semanthequeError.getCode())));
-            throw new PgcnValidationException(request);
-        }
-    }
+	@Autowired
+	public UIProjectService(final ProjectService projectService, final DocUnitService docUnitService,
+			final LibraryService libraryService, final UIProjectMapper uiProjectMapper,
+			final WorkflowService workflowService, final AccessHelper accessHelper) {
+		this.projectService = projectService;
+		this.docUnitService = docUnitService;
+		this.libraryService = libraryService;
+		this.uiProjectMapper = uiProjectMapper;
+		this.workflowService = workflowService;
+		this.accessHelper = accessHelper;
+	}
 
-    /**
-     * Annulation projet.
-     *
-     * @param dto
-     * @return
-     */
-    @Transactional
-    public ProjectDTO cancelProject(final ProjectDTO dto) {
+	@Transactional
+	public ProjectDTO create(final ProjectDTO request) throws PgcnValidationException {
+		final Project project = new Project();
+		project.setStatus(ProjectStatus.CREATED);
+		uiProjectMapper.mapInto(request, project);
+		defaultValues(project);
+		try {
+			final Project savedProject = projectService.save(project);
+			final Project projectWithProperties = projectService
+				.findByIdentifierWithDependencies(savedProject.getIdentifier());
+			return ProjectMapper.INSTANCE.projectToProjectDTO(projectWithProperties);
+		}
+		catch (final PgcnBusinessException e) {
+			e.getErrors().forEach(semanthequeError -> request.addError(buildError(semanthequeError.getCode())));
+			throw new PgcnValidationException(request);
+		}
+	}
 
-        final Project project = projectService.findByIdentifierWithLightDependencies(dto.getIdentifier());
-        final LocalDate cancelDate = LocalDate.now();
+	private void defaultValues(final Project project) {
+		final CustomUserDetails deets = SecurityUtils.getCurrentUser();
+		if (deets != null && !deets.isSuperuser() && deets.getLibraryId() != null) {
+			final Library lib = libraryService.findByIdentifier(deets.getLibraryId());
+			project.setLibrary(lib);
+		}
+	}
 
-        project.getLots().forEach(lot -> {
-            // termine les workflows et pose les statuts 'CANCELED' sur les docs.
-            workflowService.endWorkflowForCancelingProject(lot.getDocUnits());
-            final List<DocUnit> pendingDus = lot.getDocUnits().stream().filter(du -> du.getWorkflow() != null && !du.getWorkflow().isDone()).collect(Collectors.toList());
-            if (pendingDus.isEmpty()) {
-                // Tous les documents du lots sont finis, on annule aussi le lot du coup
-                lot.setRealEndDate(cancelDate);
-                lot.setStatus(LotStatus.CANCELED);
-                lot.setActive(false);
-                // voir si besoin du save?
-                // lotService.save(lot);
-                LOG.info("Mise a jour du lot {} => CANCELED", lot.getLabel());
-            }
+	/**
+	 * Mise à jour d'un projet
+	 * @param request un objet contenant les informations necessaires à l'enregistrement
+	 * d'un projet
+	 * @return le projet nouvellement créé ou mis à jour
+	 * @throws PgcnValidationException
+	 */
+	@Transactional
+	public ProjectDTO update(final ProjectDTO request) throws PgcnValidationException {
+		final Project project = projectService.findByIdentifierWithDependencies(request.getIdentifier());
 
-        });
+		// Contrôle d'accès concurrents
+		VersionValidationService.checkForStateObject(project, request);
 
-        final List<Lot> pendingLots = project.getLots().stream().filter(lp -> !LotStatus.CANCELED.equals(lp.getStatus())).collect(Collectors.toList());
-        if (pendingLots.isEmpty()) {
-            // Tous les lots sont annulés, on annnule aussi le projet et les trains éventuels
-            project.setRealEndDate(cancelDate);
-            project.setStatus(ProjectStatus.CANCELED);
-            project.setCancelingComment(dto.getCancelingComment());
-            project.setActive(false);
-            project.getTrains().forEach(train -> {
-                train.setActive(false);
-                train.setStatus(TrainStatus.CANCELED);
-            });
-            projectService.save(project);
-            LOG.info("Mise à jour du project {} => CANCELED", project.getName());
-        }
+		uiProjectMapper.mapInto(request, project);
+		try {
+			final Project savedProject = projectService.save(project);
+			final Project projectWithProperties = projectService
+				.findByIdentifierWithDependencies(savedProject.getIdentifier());
+			return ProjectMapper.INSTANCE.projectToProjectDTO(projectWithProperties);
+		}
+		catch (final PgcnBusinessException e) {
+			e.getErrors().forEach(semanthequeError -> request.addError(buildError(semanthequeError.getCode())));
+			throw new PgcnValidationException(request);
+		}
+	}
 
-        // on recharge le projet
-        final Project projectWithProperties = projectService.findByIdentifierWithDependencies(dto.getIdentifier());
-        return ProjectMapper.INSTANCE.projectToProjectDTO(projectWithProperties);
-    }
+	/**
+	 * Annulation projet.
+	 * @param dto
+	 * @return
+	 */
+	@Transactional
+	public ProjectDTO cancelProject(final ProjectDTO dto) {
 
-    @Transactional
-    public ProjectDTO suspendProject(final ProjectDTO dto) {
+		final Project project = projectService.findByIdentifierWithLightDependencies(dto.getIdentifier());
+		final LocalDate cancelDate = LocalDate.now();
 
-        final Project project = projectService.findByIdentifierWithLightDependencies(dto.getIdentifier());
-        project.setStatus(ProjectStatus.PENDING);
-        project.getLots().forEach(lot -> {
-            lot.setStatus(LotStatus.PENDING);
-        });
-        projectService.save(project);
-        LOG.info("Mise à jour du project {} => SUSPENDU", project.getName());
+		project.getLots().forEach(lot -> {
+			// termine les workflows et pose les statuts 'CANCELED' sur les docs.
+			workflowService.endWorkflowForCancelingProject(lot.getDocUnits());
+			final List<DocUnit> pendingDus = lot.getDocUnits()
+				.stream()
+				.filter(du -> du.getWorkflow() != null && !du.getWorkflow().isDone())
+				.collect(Collectors.toList());
+			if (pendingDus.isEmpty()) {
+				// Tous les documents du lots sont finis, on annule aussi le lot du coup
+				lot.setRealEndDate(cancelDate);
+				lot.setStatus(LotStatus.CANCELED);
+				lot.setActive(false);
+				// voir si besoin du save?
+				// lotService.save(lot);
+				LOG.info("Mise a jour du lot {} => CANCELED", lot.getLabel());
+			}
 
-        // on recharge le projet
-        final Project projectWithProperties = projectService.findByIdentifierWithDependencies(dto.getIdentifier());
-        return ProjectMapper.INSTANCE.projectToProjectDTO(projectWithProperties);
-    }
+		});
 
-    @Transactional
-    public ProjectDTO reactivateProject(final ProjectDTO dto) {
+		final List<Lot> pendingLots = project.getLots()
+			.stream()
+			.filter(lp -> !LotStatus.CANCELED.equals(lp.getStatus()))
+			.collect(Collectors.toList());
+		if (pendingLots.isEmpty()) {
+			// Tous les lots sont annulés, on annnule aussi le projet et les trains
+			// éventuels
+			project.setRealEndDate(cancelDate);
+			project.setStatus(ProjectStatus.CANCELED);
+			project.setCancelingComment(dto.getCancelingComment());
+			project.setActive(false);
+			project.getTrains().forEach(train -> {
+				train.setActive(false);
+				train.setStatus(TrainStatus.CANCELED);
+			});
+			projectService.save(project);
+			LOG.info("Mise à jour du project {} => CANCELED", project.getName());
+		}
 
-        final Project project = projectService.findByIdentifierWithLightDependencies(dto.getIdentifier());
-        // il faut retrouver le statut des lots avant la mise en attente..
-        project.getLots().forEach(lot -> {
-            final Long nbPendingDocs = lot.getDocUnits().stream().filter(du -> workflowService.isWorkflowRunning(du.getIdentifier())).count();
-            if (nbPendingDocs == 0) {
-                // aucun workflow demarré sur les dus du lot.
-                lot.setStatus(LotStatus.CREATED);
-            } else {
-                lot.setStatus(LotStatus.ONGOING);
-            }
-        });
-        // ... et en déduire celui du projet.
-        final Long nbprocessingLots = project.getLots().stream().filter(lot -> LotStatus.ONGOING.equals(lot.getStatus())).count();
-        if (nbprocessingLots == 0) {
-            project.setStatus(ProjectStatus.CREATED);
-        } else {
-            project.setStatus(ProjectStatus.ONGOING);
-        }
-        projectService.save(project);
-        LOG.info("Mise à jour du project {} => REACTIVE", project.getName());
+		// on recharge le projet
+		final Project projectWithProperties = projectService.findByIdentifierWithDependencies(dto.getIdentifier());
+		return ProjectMapper.INSTANCE.projectToProjectDTO(projectWithProperties);
+	}
 
-        // on recharge le projet
-        final Project projectWithProperties = projectService.findByIdentifierWithDependencies(dto.getIdentifier());
-        return ProjectMapper.INSTANCE.projectToProjectDTO(projectWithProperties);
-    }
+	@Transactional
+	public ProjectDTO suspendProject(final ProjectDTO dto) {
 
-    private PgcnError buildError(final PgcnErrorCode pgcnErrorCode) {
-        final PgcnError.Builder builder = new PgcnError.Builder();
-        switch (pgcnErrorCode) {
-            case PROJECT_DUPLICATE_NAME:
-                builder.setCode(pgcnErrorCode).setField("name");
-                break;
-            default:
-                break;
-        }
-        return builder.build();
-    }
+		final Project project = projectService.findByIdentifierWithLightDependencies(dto.getIdentifier());
+		project.setStatus(ProjectStatus.PENDING);
+		project.getLots().forEach(lot -> {
+			lot.setStatus(LotStatus.PENDING);
+		});
+		projectService.save(project);
+		LOG.info("Mise à jour du project {} => SUSPENDU", project.getName());
 
-    @Transactional
-    public List<SimpleProjectDTO> loadCreatedProjects(final String searchProject,
-                                                      final String initiale,
-                                                      final List<String> libraries,
-                                                      final List<ProjectStatus> statuses,
-                                                      final boolean active) {
+		// on recharge le projet
+		final Project projectWithProperties = projectService.findByIdentifierWithDependencies(dto.getIdentifier());
+		return ProjectMapper.INSTANCE.projectToProjectDTO(projectWithProperties);
+	}
 
-        final List<Project> projects = projectService.loadCreatedProjects(searchProject, initiale, libraries, statuses, active);
-        return projects.stream().map(SimpleProjectMapper.INSTANCE::projectToSimpleProjectDTO).collect(Collectors.toList());
-    }
+	@Transactional
+	public ProjectDTO reactivateProject(final ProjectDTO dto) {
 
-    @Transactional
-    public void addDocUnits(final String idProjet, final List<String> idDocs) {
-        final Project project = projectService.findByIdentifierWithDependencies(idProjet);
-        final List<DocUnit> docUnitSet = docUnitService.canDocUnitsBeAdded(idDocs);
-        final Set<DocUnit> docUnits = docUnitService.findAllById(idDocs);
+		final Project project = projectService.findByIdentifierWithLightDependencies(dto.getIdentifier());
+		// il faut retrouver le statut des lots avant la mise en attente..
+		project.getLots().forEach(lot -> {
+			final Long nbPendingDocs = lot.getDocUnits()
+				.stream()
+				.filter(du -> workflowService.isWorkflowRunning(du.getIdentifier()))
+				.count();
+			if (nbPendingDocs == 0) {
+				// aucun workflow demarré sur les dus du lot.
+				lot.setStatus(LotStatus.CREATED);
+			}
+			else {
+				lot.setStatus(LotStatus.ONGOING);
+			}
+		});
+		// ... et en déduire celui du projet.
+		final Long nbprocessingLots = project.getLots()
+			.stream()
+			.filter(lot -> LotStatus.ONGOING.equals(lot.getStatus()))
+			.count();
+		if (nbprocessingLots == 0) {
+			project.setStatus(ProjectStatus.CREATED);
+		}
+		else {
+			project.setStatus(ProjectStatus.ONGOING);
+		}
+		projectService.save(project);
+		LOG.info("Mise à jour du project {} => REACTIVE", project.getName());
 
-        docUnits.forEach(docUnit -> {
-            if (docUnitSet.contains(docUnit)) {
-                project.addDocUnit(docUnit);
-            } else {
-                ErrorThrowerService.addAndThrow(project, Collections.singletonList(PgcnErrorCode.DOC_UNIT_IN_PROJECT));
-            }
-        });
-        projectService.save(project);
-    }
+		// on recharge le projet
+		final Project projectWithProperties = projectService.findByIdentifierWithDependencies(dto.getIdentifier());
+		return ProjectMapper.INSTANCE.projectToProjectDTO(projectWithProperties);
+	}
 
-    @Transactional
-    public void addLibraries(final String idProjet, final List<String> idLibraries) {
-        final Project project = projectService.findByIdentifierWithDependencies(idProjet);
-        final List<Library> librariesSet = libraryService.findAll(idLibraries);
+	private PgcnError buildError(final PgcnErrorCode pgcnErrorCode) {
+		final PgcnError.Builder builder = new PgcnError.Builder();
+		switch (pgcnErrorCode) {
+			case PROJECT_DUPLICATE_NAME:
+				builder.setCode(pgcnErrorCode).setField("name");
+				break;
+			default:
+				break;
+		}
+		return builder.build();
+	}
 
-        librariesSet.forEach(library -> {
-            if (!librariesSet.contains(library)) {
-                project.addLibrary(library);
-            } else {
-                ErrorThrowerService.addAndThrow(project, Collections.singletonList(PgcnErrorCode.LIBRARY_IN_PROJECT));
-            }
-        });
-        projectService.save(project);
-    }
+	@Transactional
+	public List<SimpleProjectDTO> loadCreatedProjects(final String searchProject, final String initiale,
+			final List<String> libraries, final List<ProjectStatus> statuses, final boolean active) {
 
-    @Transactional(readOnly = true)
-    public ProjectDTO getOne(final String id) {
-        final Project project = projectService.findByIdentifier(id);
-        if (project == null) {
-            return null;
-        }
+		final List<Project> projects = projectService.loadCreatedProjects(searchProject, initiale, libraries, statuses,
+				active);
+		return projects.stream()
+			.map(SimpleProjectMapper.INSTANCE::projectToSimpleProjectDTO)
+			.collect(Collectors.toList());
+	}
 
-        final ProjectDTO toReturn = ProjectMapper.INSTANCE.projectToProjectDTO(project);
-        toReturn.setOtherProviders(new ArrayList<>());
+	@Transactional
+	public void addDocUnits(final String idProjet, final List<String> idDocs) {
+		final Project project = projectService.findByIdentifierWithDependencies(idProjet);
+		final List<DocUnit> docUnitSet = docUnitService.canDocUnitsBeAdded(idDocs);
+		final Set<DocUnit> docUnits = docUnitService.findAllById(idDocs);
 
-        // for (final Lot lot : project.getLots()) {
-        // if (lot.getProvider() != null
-        // && toReturn.getOtherProviders()
-        // .stream()
-        // .noneMatch(dto -> StringUtils.equals(dto.getIdentifier(), lot.getProvider().getIdentifier()))
-        // && !Objects.equals(lot.getProvider(), project.getProvider())) {
-        //
-        // toReturn.addOtherProvider(UserMapper.INSTANCE.userToSimpleUserDTO(lot.getProvider()));
-        // }
-        // }
-        return toReturn;
-    }
+		docUnits.forEach(docUnit -> {
+			if (docUnitSet.contains(docUnit)) {
+				project.addDocUnit(docUnit);
+			}
+			else {
+				ErrorThrowerService.addAndThrow(project, Collections.singletonList(PgcnErrorCode.DOC_UNIT_IN_PROJECT));
+			}
+		});
+		projectService.save(project);
+	}
 
-    @Transactional
-    public void delete(final Collection<Project> projects) throws PgcnBusinessException {
-        projectService.delete(projects);
-    }
+	@Transactional
+	public void addLibraries(final String idProjet, final List<String> idLibraries) {
+		final Project project = projectService.findByIdentifierWithDependencies(idProjet);
+		final List<Library> librariesSet = libraryService.findAll(idLibraries);
 
-    @Transactional(readOnly = true)
-    public List<SimpleProjectDTO> findAllActiveDTO() {
-        final List<Project> projects = projectService.findAllByActive(true);
-        return projects.stream().map(SimpleProjectMapper.INSTANCE::projectToSimpleProjectDTO).collect(Collectors.toList());
-    }
+		librariesSet.forEach(library -> {
+			if (!librariesSet.contains(library)) {
+				project.addLibrary(library);
+			}
+			else {
+				ErrorThrowerService.addAndThrow(project, Collections.singletonList(PgcnErrorCode.LIBRARY_IN_PROJECT));
+			}
+		});
+		projectService.save(project);
+	}
 
-    @Transactional(readOnly = true)
-    public List<SimpleProjectDTO> findAllDTO() {
-        final List<Project> projects = projectService.findAll();
-        return projects.stream().map(SimpleProjectMapper.INSTANCE::projectToSimpleProjectDTO).collect(Collectors.toList());
-    }
+	@Transactional(readOnly = true)
+	public ProjectDTO getOne(final String id) {
+		final Project project = projectService.findByIdentifier(id);
+		if (project == null) {
+			return null;
+		}
 
-    @Transactional(readOnly = true)
-    public List<SimpleProjectDTO> findAllActiveByLibraryIn(final List<String> libraries) {
-        final List<Project> projects = projectService.findAllByActiveAndLibraryIn(libraries);
-        return projects.stream().map(SimpleProjectMapper.INSTANCE::projectToSimpleProjectDTO).collect(Collectors.toList());
-    }
+		final ProjectDTO toReturn = ProjectMapper.INSTANCE.projectToProjectDTO(project);
+		toReturn.setOtherProviders(new ArrayList<>());
 
-    @Transactional(readOnly = true)
-    public List<SimpleProjectDTO> findAllByLibraryIn(final List<String> libraries) {
-        final List<Project> projects = projectService.findAllByLibraryIn(libraries);
-        return projects.stream().map(SimpleProjectMapper.INSTANCE::projectToSimpleProjectDTO).collect(Collectors.toList());
-    }
+		// for (final Lot lot : project.getLots()) {
+		// if (lot.getProvider() != null
+		// && toReturn.getOtherProviders()
+		// .stream()
+		// .noneMatch(dto -> StringUtils.equals(dto.getIdentifier(),
+		// lot.getProvider().getIdentifier()))
+		// && !Objects.equals(lot.getProvider(), project.getProvider())) {
+		//
+		// toReturn.addOtherProvider(UserMapper.INSTANCE.userToSimpleUserDTO(lot.getProvider()));
+		// }
+		// }
+		return toReturn;
+	}
 
-    @Transactional(readOnly = true)
-    public Page<SimpleProjectDTO> search(final String search,
-                                         final String initiale,
-                                         final boolean active,
-                                         final List<String> libraries,
-                                         final List<ProjectStatus> status,
-                                         final List<String> providers,
-                                         final Integer page,
-                                         final Integer size) {
-        final Page<Project> projects = projectService.search(search, initiale, libraries, status, providers, active, page, size);
-        return projects.map(SimpleProjectMapper.INSTANCE::projectToSimpleProjectDTO);
-    }
+	@Transactional
+	public void delete(final Collection<Project> projects) throws PgcnBusinessException {
+		projectService.delete(projects);
+	}
 
-    @Transactional(readOnly = true)
-    public List<AuditProjectRevisionDTO> getProjectsForWidget(final LocalDate fromDate, final List<String> libraries, final List<Project.ProjectStatus> statuses) {
+	@Transactional(readOnly = true)
+	public List<SimpleProjectDTO> findAllActiveDTO() {
+		final List<Project> projects = projectService.findAllByActive(true);
+		return projects.stream()
+			.map(SimpleProjectMapper.INSTANCE::projectToSimpleProjectDTO)
+			.collect(Collectors.toList());
+	}
 
-        final List<Project> projects = projectService.findProjectsForWidget(fromDate, libraries, statuses);
-        final List<AuditProjectRevisionDTO> revs = new ArrayList<>();
+	@Transactional(readOnly = true)
+	public List<SimpleProjectDTO> findAllDTO() {
+		final List<Project> projects = projectService.findAll();
+		return projects.stream()
+			.map(SimpleProjectMapper.INSTANCE::projectToSimpleProjectDTO)
+			.collect(Collectors.toList());
+	}
 
-        projects.stream().filter(proj -> accessHelper.checkProject(proj.getIdentifier())).forEach(proj -> {
-            final AuditProjectRevisionDTO dto = new AuditProjectRevisionDTO();
-            dto.setIdentifier(proj.getIdentifier());
-            dto.setName(proj.getName());
-            dto.setStatus(proj.getStatus());
-            dto.setTimestamp(proj.getStartDate().atStartOfDay().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
-            revs.add(dto);
-        });
-        return revs;
-    }
+	@Transactional(readOnly = true)
+	public List<SimpleProjectDTO> findAllActiveByLibraryIn(final List<String> libraries) {
+		final List<Project> projects = projectService.findAllByActiveAndLibraryIn(libraries);
+		return projects.stream()
+			.map(SimpleProjectMapper.INSTANCE::projectToSimpleProjectDTO)
+			.collect(Collectors.toList());
+	}
+
+	@Transactional(readOnly = true)
+	public List<SimpleProjectDTO> findAllByLibraryIn(final List<String> libraries) {
+		final List<Project> projects = projectService.findAllByLibraryIn(libraries);
+		return projects.stream()
+			.map(SimpleProjectMapper.INSTANCE::projectToSimpleProjectDTO)
+			.collect(Collectors.toList());
+	}
+
+	@Transactional(readOnly = true)
+	public Page<SimpleProjectDTO> search(final String search, final String initiale, final boolean active,
+			final List<String> libraries, final List<ProjectStatus> status, final List<String> providers,
+			final Integer page, final Integer size) {
+		final Page<Project> projects = projectService.search(search, initiale, libraries, status, providers, active,
+				page, size);
+		return projects.map(SimpleProjectMapper.INSTANCE::projectToSimpleProjectDTO);
+	}
+
+	@Transactional(readOnly = true)
+	public List<AuditProjectRevisionDTO> getProjectsForWidget(final LocalDate fromDate, final List<String> libraries,
+			final List<Project.ProjectStatus> statuses) {
+
+		final List<Project> projects = projectService.findProjectsForWidget(fromDate, libraries, statuses);
+		final List<AuditProjectRevisionDTO> revs = new ArrayList<>();
+
+		projects.stream().filter(proj -> accessHelper.checkProject(proj.getIdentifier())).forEach(proj -> {
+			final AuditProjectRevisionDTO dto = new AuditProjectRevisionDTO();
+			dto.setIdentifier(proj.getIdentifier());
+			dto.setName(proj.getName());
+			dto.setStatus(proj.getStatus());
+			dto.setTimestamp(proj.getStartDate().atStartOfDay().toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
+			revs.add(dto);
+		});
+		return revs;
+	}
+
 }

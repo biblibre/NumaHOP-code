@@ -35,60 +35,70 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ExtendWith(MockitoExtension.class)
 public class ImportDocUnitControllerTest {
 
-    @Mock
-    private ImportDocUnitService importDocUnitService;
-    @Mock
-    private ImportReportService importReportService;
-    @Mock
-    private LibraryAccesssHelper libraryAccesssHelper;
+	@Mock
+	private ImportDocUnitService importDocUnitService;
 
-    private MockMvc restMockMvc;
+	@Mock
+	private ImportReportService importReportService;
 
-    private final RequestPostProcessor allPermissions = roles(EXC_HAB0, EXC_HAB2);
+	@Mock
+	private LibraryAccesssHelper libraryAccesssHelper;
 
-    @BeforeEach
-    public void setUp() {
-        final ImportedDocUnitController controller = new ImportedDocUnitController(importDocUnitService, importReportService, libraryAccesssHelper);
+	private MockMvc restMockMvc;
 
-        final FormattingConversionService convService = new DefaultFormattingConversionService();
-        convService.addConverter(String.class, ImportReport.class, TestConverterFactory.getConverter(ImportReport.class));
-        this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).setConversionService(convService).build();
+	private final RequestPostProcessor allPermissions = roles(EXC_HAB0, EXC_HAB2);
 
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
-    }
+	@BeforeEach
+	public void setUp() {
+		final ImportedDocUnitController controller = new ImportedDocUnitController(importDocUnitService,
+				importReportService, libraryAccesssHelper);
 
-    @Test
-    public void testFindAll() throws Exception {
-        final ImportReport report = new ImportReport();
-        report.setIdentifier("ABCD-0001");
-        final ImportedDocUnit units = new ImportedDocUnit();
-        units.setIdentifier("UNIT-001");
-        final Page<ImportedDocUnit> page = new PageImpl<>(Collections.singletonList(units));
+		final FormattingConversionService convService = new DefaultFormattingConversionService();
+		convService.addConverter(String.class, ImportReport.class,
+				TestConverterFactory.getConverter(ImportReport.class));
+		this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).setConversionService(convService).build();
 
-        when(importReportService.findByIdentifier(report.getIdentifier())).thenReturn(report);
-        when(importDocUnitService.findByImportReport(eq(report), eq(0), eq(10), any(), anyBoolean(), anyBoolean())).thenReturn(page);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+	}
 
-        // test findAllActive
-        this.restMockMvc.perform(get("/api/rest/impdocunit").param("report", report.getIdentifier())
-                                                            .param("state", "AVAILABLE")
-                                                            .accept(MediaType.APPLICATION_JSON)
-                                                            .with(allPermissions))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("content[0].identifier").value(units.getIdentifier()));
-    }
+	@Test
+	public void testFindAll() throws Exception {
+		final ImportReport report = new ImportReport();
+		report.setIdentifier("ABCD-0001");
+		final ImportedDocUnit units = new ImportedDocUnit();
+		units.setIdentifier("UNIT-001");
+		final Page<ImportedDocUnit> page = new PageImpl<>(Collections.singletonList(units));
 
-    @Test
-    public void testUpdate() throws Exception {
-        final ImportedDocUnit units = new ImportedDocUnit();
-        units.setIdentifier("UNIT-001");
+		when(importReportService.findByIdentifier(report.getIdentifier())).thenReturn(report);
+		when(importDocUnitService.findByImportReport(eq(report), eq(0), eq(10), any(), anyBoolean(), anyBoolean()))
+			.thenReturn(page);
 
-        when(importDocUnitService.findByIdentifier(units.getIdentifier())).thenReturn(units);
+		// test findAllActive
+		this.restMockMvc
+			.perform(get("/api/rest/impdocunit").param("report", report.getIdentifier())
+				.param("state", "AVAILABLE")
+				.accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("content[0].identifier").value(units.getIdentifier()));
+	}
 
-        // test update
-        this.restMockMvc.perform(post("/api/rest/impdocunit/" + units.getIdentifier()).param("process", "ADD").contentType(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isOk());
+	@Test
+	public void testUpdate() throws Exception {
+		final ImportedDocUnit units = new ImportedDocUnit();
+		units.setIdentifier("UNIT-001");
 
-        verify(importDocUnitService).updateProcess(units.getIdentifier(), ImportedDocUnit.Process.ADD);
-    }
+		when(importDocUnitService.findByIdentifier(units.getIdentifier())).thenReturn(units);
+
+		// test update
+		this.restMockMvc
+			.perform(post("/api/rest/impdocunit/" + units.getIdentifier()).param("process", "ADD")
+				.contentType(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isOk());
+
+		verify(importDocUnitService).updateProcess(units.getIdentifier(), ImportedDocUnit.Process.ADD);
+	}
+
 }

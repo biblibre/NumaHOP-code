@@ -10,14 +10,14 @@ import org.mapstruct.factory.Mappers;
 @Mapper()
 public interface OmekaListMapper {
 
-    OmekaListMapper INSTANCE = Mappers.getMapper(OmekaListMapper.class);
+	OmekaListMapper INSTANCE = Mappers.getMapper(OmekaListMapper.class);
 
-    OmekaListDTO objToDto(OmekaList conf);
+	OmekaListDTO objToDto(OmekaList conf);
 
-    OmekaList dtoToObj(OmekaListDTO dto);
+	OmekaList dtoToObj(OmekaListDTO dto);
 
-    Set<OmekaListDTO> objsToDtos(Set<OmekaList> conf);
+	Set<OmekaListDTO> objsToDtos(Set<OmekaList> conf);
 
-    List<OmekaList> dtosToObjs(List<OmekaListDTO> dto);
+	List<OmekaList> dtosToObjs(List<OmekaListDTO> dto);
 
 }

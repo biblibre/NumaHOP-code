@@ -15,28 +15,29 @@ import org.springframework.test.util.ReflectionTestUtils;
  */
 public class SftpConfigurationMapperTest {
 
-    private SftpConfigurationMapper mapper;
+	private SftpConfigurationMapper mapper;
 
-    @BeforeEach
-    public void setUp() {
-        mapper = SftpConfigurationMapper.INSTANCE;
-        ReflectionTestUtils.setField(mapper, "simpleLibraryMapper", SimpleLibraryMapper.INSTANCE);
-    }
+	@BeforeEach
+	public void setUp() {
+		mapper = SftpConfigurationMapper.INSTANCE;
+		ReflectionTestUtils.setField(mapper, "simpleLibraryMapper", SimpleLibraryMapper.INSTANCE);
+	}
 
-    @Test
-    public void shouldConfigurationSftpToDto() {
-        final Library library = new Library();
-        library.setIdentifier("LIB-001");
+	@Test
+	public void shouldConfigurationSftpToDto() {
+		final Library library = new Library();
+		library.setIdentifier("LIB-001");
 
-        final SftpConfiguration mapping = new SftpConfiguration();
-        mapping.setIdentifier("MAPPING-001");
-        mapping.setLabel("Mapping de test");
-        mapping.setLibrary(library);
-        mapping.setVersion(10);
+		final SftpConfiguration mapping = new SftpConfiguration();
+		mapping.setIdentifier("MAPPING-001");
+		mapping.setLabel("Mapping de test");
+		mapping.setLibrary(library);
+		mapping.setVersion(10);
 
-        final SftpConfigurationDTO actual = mapper.configurationSftpToDto(mapping);
+		final SftpConfigurationDTO actual = mapper.configurationSftpToDto(mapping);
 
-        assertNotNull(actual);
-        assertEquals(mapping.getIdentifier(), actual.getIdentifier());
-    }
+		assertNotNull(actual);
+		assertEquals(mapping.getIdentifier(), actual.getIdentifier());
+	}
+
 }

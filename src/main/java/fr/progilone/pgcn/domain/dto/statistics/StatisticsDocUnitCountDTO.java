@@ -2,58 +2,64 @@ package fr.progilone.pgcn.domain.dto.statistics;
 
 public class StatisticsDocUnitCountDTO {
 
-    private String identifier;
-    private String pgcnId;
-    private boolean ia;
-    private boolean cines;
-    private Integer totalPage;
-    private Long totalLength;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String pgcnId;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private boolean ia;
 
-    public String getPgcnId() {
-        return pgcnId;
-    }
+	private boolean cines;
 
-    public void setPgcnId(final String pgcnId) {
-        this.pgcnId = pgcnId;
-    }
+	private Integer totalPage;
 
-    public boolean isIa() {
-        return ia;
-    }
+	private Long totalLength;
 
-    public void setIa(final boolean ia) {
-        this.ia = ia;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public boolean isCines() {
-        return cines;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setCines(final boolean cines) {
-        this.cines = cines;
-    }
+	public String getPgcnId() {
+		return pgcnId;
+	}
 
-    public Integer getTotalPage() {
-        return totalPage;
-    }
+	public void setPgcnId(final String pgcnId) {
+		this.pgcnId = pgcnId;
+	}
 
-    public void setTotalPage(final Integer totalPage) {
-        this.totalPage = totalPage;
-    }
+	public boolean isIa() {
+		return ia;
+	}
 
-    public Long getTotalLength() {
-        return totalLength;
-    }
+	public void setIa(final boolean ia) {
+		this.ia = ia;
+	}
 
-    public void setTotalLength(final Long totalLength) {
-        this.totalLength = totalLength;
-    }
+	public boolean isCines() {
+		return cines;
+	}
+
+	public void setCines(final boolean cines) {
+		this.cines = cines;
+	}
+
+	public Integer getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(final Integer totalPage) {
+		this.totalPage = totalPage;
+	}
+
+	public Long getTotalLength() {
+		return totalLength;
+	}
+
+	public void setTotalLength(final Long totalLength) {
+		this.totalLength = totalLength;
+	}
+
 }

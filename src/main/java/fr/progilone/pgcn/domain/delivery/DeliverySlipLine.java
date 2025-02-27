@@ -14,104 +14,111 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = DeliverySlipLine.TABLE_NAME)
-@JsonSubTypes({@JsonSubTypes.Type(name = "del_slip_line", value = DeliverySlipLine.class)})
+@JsonSubTypes({ @JsonSubTypes.Type(name = "del_slip_line", value = DeliverySlipLine.class) })
 public class DeliverySlipLine extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "del_slip_line";
+	public static final String TABLE_NAME = "del_slip_line";
 
-    @Column(name = "pgcn_id", columnDefinition = "text")
-    private String pgcnId;
-    @Column(name = "lot", columnDefinition = "text")
-    private String lot;
-    @Column(name = "train", columnDefinition = "text")
-    private String train;
-    @Column(name = "radical", columnDefinition = "text")
-    private String radical;
-    @Column(name = "title", columnDefinition = "text")
-    private String title;
-    @Column(name = "nb_pages", columnDefinition = "text")
-    private String nbPages;
-    @Column(name = "date", columnDefinition = "text")
-    private String date;
+	@Column(name = "pgcn_id", columnDefinition = "text")
+	private String pgcnId;
 
-    /**
-     * Bordereau rattaché
-     */
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "slip")
-    private DeliverySlip slip;
+	@Column(name = "lot", columnDefinition = "text")
+	private String lot;
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
+	@Column(name = "train", columnDefinition = "text")
+	private String train;
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
+	@Column(name = "radical", columnDefinition = "text")
+	private String radical;
 
-    public String getPgcnId() {
-        return pgcnId;
-    }
+	@Column(name = "title", columnDefinition = "text")
+	private String title;
 
-    public void setPgcnId(String pgcnId) {
-        this.pgcnId = pgcnId;
-    }
+	@Column(name = "nb_pages", columnDefinition = "text")
+	private String nbPages;
 
-    public String getLot() {
-        return lot;
-    }
+	@Column(name = "date", columnDefinition = "text")
+	private String date;
 
-    public void setLot(String lot) {
-        this.lot = lot;
-    }
+	/**
+	 * Bordereau rattaché
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "slip")
+	private DeliverySlip slip;
 
-    public String getTrain() {
-        return train;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
 
-    public void setTrain(String train) {
-        this.train = train;
-    }
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
 
-    public String getRadical() {
-        return radical;
-    }
+	public String getPgcnId() {
+		return pgcnId;
+	}
 
-    public void setRadical(String radical) {
-        this.radical = radical;
-    }
+	public void setPgcnId(String pgcnId) {
+		this.pgcnId = pgcnId;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getLot() {
+		return lot;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setLot(String lot) {
+		this.lot = lot;
+	}
 
-    public String getNbPages() {
-        return nbPages;
-    }
+	public String getTrain() {
+		return train;
+	}
 
-    public void setNbPages(String nbPages) {
-        this.nbPages = nbPages;
-    }
+	public void setTrain(String train) {
+		this.train = train;
+	}
 
-    public String getDate() {
-        return date;
-    }
+	public String getRadical() {
+		return radical;
+	}
 
-    public void setDate(String date) {
-        this.date = date;
-    }
+	public void setRadical(String radical) {
+		this.radical = radical;
+	}
 
-    public DeliverySlip getSlip() {
-        return slip;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setSlip(DeliverySlip slip) {
-        this.slip = slip;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getNbPages() {
+		return nbPages;
+	}
+
+	public void setNbPages(String nbPages) {
+		this.nbPages = nbPages;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public DeliverySlip getSlip() {
+		return slip;
+	}
+
+	public void setSlip(DeliverySlip slip) {
+		this.slip = slip;
+	}
+
 }

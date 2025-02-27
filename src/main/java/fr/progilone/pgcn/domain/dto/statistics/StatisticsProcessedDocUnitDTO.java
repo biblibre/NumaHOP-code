@@ -7,49 +7,54 @@ import java.time.LocalDateTime;
  */
 public class StatisticsProcessedDocUnitDTO {
 
-    private String identifier;
-    private String pgcnId;
-    private String status;
-    private String message;
-    private LocalDateTime date;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String pgcnId;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private String status;
 
-    public String getPgcnId() {
-        return pgcnId;
-    }
+	private String message;
 
-    public void setPgcnId(final String pgcnId) {
-        this.pgcnId = pgcnId;
-    }
+	private LocalDateTime date;
 
-    public String getStatus() {
-        return status;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setStatus(final String status) {
-        this.status = status;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public String getPgcnId() {
+		return pgcnId;
+	}
 
-    public void setMessage(final String message) {
-        this.message = message;
-    }
+	public void setPgcnId(final String pgcnId) {
+		this.pgcnId = pgcnId;
+	}
 
-    public LocalDateTime getDate() {
-        return date;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public void setDate(final LocalDateTime date) {
-        this.date = date;
-    }
+	public void setStatus(final String status) {
+		this.status = status;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(final String message) {
+		this.message = message;
+	}
+
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	public void setDate(final LocalDateTime date) {
+		this.date = date;
+	}
+
 }

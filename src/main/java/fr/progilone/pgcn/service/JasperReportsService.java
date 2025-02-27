@@ -32,143 +32,138 @@ import org.springframework.stereotype.Service;
 @Service
 public class JasperReportsService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JasperReportsService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(JasperReportsService.class);
 
-    public static final String ENCODING_UTF8 = "utf-8";
+	public static final String ENCODING_UTF8 = "utf-8";
 
-    /**
-     * Rapports (sans l'extension jasper)
-     */
-    public static final String REPORT_TEST = "test";
+	/**
+	 * Rapports (sans l'extension jasper)
+	 */
+	public static final String REPORT_TEST = "test";
 
-    // Bordereau de livraison
-    public static final String REPORT_DELIV_SLIP = "deliverySlip";
-    // Bordereau de controle
-    public static final String REPORT_CHECK_SLIP = "checkSlip";
-    // Bordereau d'envoi du train (de constat d'etat)
-    public static final String REPORT_CONDREPORT_SLIP = "condReportSlip";
+	// Bordereau de livraison
+	public static final String REPORT_DELIV_SLIP = "deliverySlip";
 
-    /**
-     * Types d'export
-     */
-    public enum ExportType {
-        PDF,
-        XLS
-    }
+	// Bordereau de controle
+	public static final String REPORT_CHECK_SLIP = "checkSlip";
 
-    /**
-     * Répertoire contenant les images inclues dans les rapports
-     */
-    @Value("${report.imagePath}")
-    private String imagePath;
+	// Bordereau d'envoi du train (de constat d'etat)
+	public static final String REPORT_CONDREPORT_SLIP = "condReportSlip";
 
-    /**
-     * Repertoire contenant les logos des bibliotheques.
-     */
-    @Value("${uploadPath.library}")
-    private String libraryDir;
+	/**
+	 * Types d'export
+	 */
+	public enum ExportType {
 
-    /**
-     * Cette méthode génère le rapport <i>report</i> dans le format <i>exportType</i>
-     * à partir d'une collection de beans, et d'une Map de paramètres.
-     * Le rapport est écrit dans le flux <i>outputStream</i>
-     * <p>
-     * Pour ce faire, les API jasperreports sont utilisées.
-     * On part du rapport compilé (<i>.jasper</i>), auquel sont passés une source de données basées sur la collection de beans
-     * et les divers paramètres, pour obtenir un fichier <i>.jasperprint</i>
-     * Ce <i>.jasperprint</i> sert ensuite à générer le rapport dans son format final (PDF, XLS, ...),
-     * tel qu'il sera écrit dans le flux de sortie.
-     * <p>
-     * ((jrxml -> jasper) + datasource + parameters) -> jasperprint -> pdf, xls, ...
-     *
-     * @param report
-     * @param exportType
-     * @param parameters
-     * @param beanCollection
-     * @param outputStream
-     * @throws PgcnException
-     */
-    public void exportReportToStream(final String report,
-                                     final ExportType exportType,
-                                     final Map<String, Object> parameters,
-                                     final Collection<?> beanCollection,
-                                     final OutputStream outputStream,
-                                     final String libraryId) throws PgcnException {
+		PDF, XLS
 
-        try (InputStream reportStream = this.getClass()
-                                            .getResourceAsStream("/reporting/" + report
-                                                                 + ".jasper")) {
-            // Rapport
-            final JasperReport jasperReport = (JasperReport) JRLoader.loadObject(reportStream);
+	}
 
-            // Emplacement des images des rapports
-            parameters.put("P_IMAGE_PATH",
-                           libraryDir + "/"
-                                           + libraryId);
-            parameters.put("P_REPORT_PATH", "reporting");
+	/**
+	 * Répertoire contenant les images inclues dans les rapports
+	 */
+	@Value("${report.imagePath}")
+	private String imagePath;
 
-            // pas de pagination avec excel
-            if (exportType == ExportType.XLS) {
-                parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
-            }
+	/**
+	 * Repertoire contenant les logos des bibliotheques.
+	 */
+	@Value("${uploadPath.library}")
+	private String libraryDir;
 
-            // DataSouce
-            final JRDataSource source = new JRBeanCollectionDataSource(beanCollection);
+	/**
+	 * Cette méthode génère le rapport <i>report</i> dans le format <i>exportType</i> à
+	 * partir d'une collection de beans, et d'une Map de paramètres. Le rapport est écrit
+	 * dans le flux <i>outputStream</i>
+	 * <p>
+	 * Pour ce faire, les API jasperreports sont utilisées. On part du rapport compilé
+	 * (<i>.jasper</i>), auquel sont passés une source de données basées sur la collection
+	 * de beans et les divers paramètres, pour obtenir un fichier <i>.jasperprint</i> Ce
+	 * <i>.jasperprint</i> sert ensuite à générer le rapport dans son format final (PDF,
+	 * XLS, ...), tel qu'il sera écrit dans le flux de sortie.
+	 * <p>
+	 * ((jrxml -> jasper) + datasource + parameters) -> jasperprint -> pdf, xls, ...
+	 * @param report
+	 * @param exportType
+	 * @param parameters
+	 * @param beanCollection
+	 * @param outputStream
+	 * @throws PgcnException
+	 */
+	public void exportReportToStream(final String report, final ExportType exportType,
+			final Map<String, Object> parameters, final Collection<?> beanCollection, final OutputStream outputStream,
+			final String libraryId) throws PgcnException {
 
-            // JasperPrint
-            final JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, source);
+		try (InputStream reportStream = this.getClass().getResourceAsStream("/reporting/" + report + ".jasper")) {
+			// Rapport
+			final JasperReport jasperReport = (JasperReport) JRLoader.loadObject(reportStream);
 
-            // Export report
-            switch (exportType) {
-                case PDF:
-                    exportReportToPdfStream(jasperPrint, outputStream);
-                    break;
-                case XLS:
-                    exportReportToXlsStream(jasperPrint, outputStream);
-                    break;
-            }
+			// Emplacement des images des rapports
+			parameters.put("P_IMAGE_PATH", libraryDir + "/" + libraryId);
+			parameters.put("P_REPORT_PATH", "reporting");
 
-        } catch (final JRException | IOException e) {
-            LOG.error(e.getMessage(), e);
+			// pas de pagination avec excel
+			if (exportType == ExportType.XLS) {
+				parameters.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE);
+			}
 
-            final PgcnError error = new PgcnError.Builder().setCode(PgcnErrorCode.REPORT_GENERATION)
-                                                           .setMessage("Une erreur est survenue lors de la génération du rapport " + report
-                                                                       + ": "
-                                                                       + e.getMessage())
-                                                           .build();
-            throw new PgcnException(error);
-        }
-    }
+			// DataSouce
+			final JRDataSource source = new JRBeanCollectionDataSource(beanCollection);
 
-    /**
-     * Génération du rapport au format XLS
-     *
-     * @param jasperPrint
-     * @param outputStream
-     * @throws JRException
-     */
-    private void exportReportToXlsStream(final JasperPrint jasperPrint, final OutputStream outputStream) throws JRException {
-        final JRXlsExporter exporter = new JRXlsExporter();
-        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+			// JasperPrint
+			final JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, source);
 
-        final SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
-        configuration.setDetectCellType(true);
-        configuration.setWhitePageBackground(false);
-        exporter.setConfiguration(configuration);
+			// Export report
+			switch (exportType) {
+				case PDF:
+					exportReportToPdfStream(jasperPrint, outputStream);
+					break;
+				case XLS:
+					exportReportToXlsStream(jasperPrint, outputStream);
+					break;
+			}
 
-        exporter.exportReport();
-    }
+		}
+		catch (final JRException | IOException e) {
+			LOG.error(e.getMessage(), e);
 
-    /**
-     * Génération du rapport au format PDF
-     *
-     * @param jasperPrint
-     * @param outputStream
-     * @throws JRException
-     */
-    private void exportReportToPdfStream(final JasperPrint jasperPrint, final OutputStream outputStream) throws JRException {
-        JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
-    }
+			final PgcnError error = new PgcnError.Builder().setCode(PgcnErrorCode.REPORT_GENERATION)
+				.setMessage(
+						"Une erreur est survenue lors de la génération du rapport " + report + ": " + e.getMessage())
+				.build();
+			throw new PgcnException(error);
+		}
+	}
+
+	/**
+	 * Génération du rapport au format XLS
+	 * @param jasperPrint
+	 * @param outputStream
+	 * @throws JRException
+	 */
+	private void exportReportToXlsStream(final JasperPrint jasperPrint, final OutputStream outputStream)
+			throws JRException {
+		final JRXlsExporter exporter = new JRXlsExporter();
+		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+
+		final SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
+		configuration.setDetectCellType(true);
+		configuration.setWhitePageBackground(false);
+		exporter.setConfiguration(configuration);
+
+		exporter.exportReport();
+	}
+
+	/**
+	 * Génération du rapport au format PDF
+	 * @param jasperPrint
+	 * @param outputStream
+	 * @throws JRException
+	 */
+	private void exportReportToPdfStream(final JasperPrint jasperPrint, final OutputStream outputStream)
+			throws JRException {
+		JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
+	}
 
 }

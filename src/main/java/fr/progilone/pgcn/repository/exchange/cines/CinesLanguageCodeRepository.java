@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CinesLanguageCodeRepository extends JpaRepository<CinesLanguageCode, String> {
 
-    List<CinesLanguageCode> findByOrderByIdentifier();
+	List<CinesLanguageCode> findByOrderByIdentifier();
 
-    CinesLanguageCode findOneByIdentifier(String identifier);
+	CinesLanguageCode findOneByIdentifier(String identifier);
 
-    CinesLanguageCode findOneByLangDC(String langDC);
+	CinesLanguageCode findOneByLangDC(String langDC);
+
 }

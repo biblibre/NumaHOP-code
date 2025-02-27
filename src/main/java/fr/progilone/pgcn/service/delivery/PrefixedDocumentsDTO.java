@@ -12,73 +12,74 @@ import java.util.List;
  * <li>document numérique associé : identifiant</li>
  * </ul>
  *
- * @author jbrunet
- *         Créé le 27 mars 2017
+ * @author jbrunet Créé le 27 mars 2017
  */
 public class PrefixedDocumentsDTO {
 
-    private List<File> files = new ArrayList<>();
-    private List<String> physicalDocuments = new ArrayList<>();
-    private List<String> digitalDocuments = new ArrayList<>();
+	private List<File> files = new ArrayList<>();
 
-    public PrefixedDocumentsDTO(List<File> files, List<String> physicalDocuments, List<String> digitalDocuments) {
-        this.files = files;
-        this.physicalDocuments = physicalDocuments;
-        this.digitalDocuments = digitalDocuments;
-    }
+	private List<String> physicalDocuments = new ArrayList<>();
 
-    public PrefixedDocumentsDTO() {
-    }
+	private List<String> digitalDocuments = new ArrayList<>();
 
-    public List<File> getFiles() {
-        return files;
-    }
+	public PrefixedDocumentsDTO(List<File> files, List<String> physicalDocuments, List<String> digitalDocuments) {
+		this.files = files;
+		this.physicalDocuments = physicalDocuments;
+		this.digitalDocuments = digitalDocuments;
+	}
 
-    public void setFiles(List<File> files) {
-        this.files.clear();
-        if (files != null) {
-            files.forEach(this::addFile);
-        }
-    }
+	public PrefixedDocumentsDTO() {
+	}
 
-    public void addFile(File file) {
-        if (file != null) {
-            files.add(file);
-        }
-    }
+	public List<File> getFiles() {
+		return files;
+	}
 
-    public List<String> getPhysicalDocuments() {
-        return physicalDocuments;
-    }
+	public void setFiles(List<File> files) {
+		this.files.clear();
+		if (files != null) {
+			files.forEach(this::addFile);
+		}
+	}
 
-    public void setPhysicalDocuments(List<String> physicalDocuments) {
-        this.physicalDocuments.clear();
-        if (physicalDocuments != null) {
-            physicalDocuments.forEach(this::addPhysicalDocument);
-        }
-    }
+	public void addFile(File file) {
+		if (file != null) {
+			files.add(file);
+		}
+	}
 
-    public void addPhysicalDocument(String doc) {
-        if (doc != null) {
-            physicalDocuments.add(doc);
-        }
-    }
+	public List<String> getPhysicalDocuments() {
+		return physicalDocuments;
+	}
 
-    public List<String> getDigitalDocuments() {
-        return digitalDocuments;
-    }
+	public void setPhysicalDocuments(List<String> physicalDocuments) {
+		this.physicalDocuments.clear();
+		if (physicalDocuments != null) {
+			physicalDocuments.forEach(this::addPhysicalDocument);
+		}
+	}
 
-    public void setDigitalDocuments(List<String> digitalDocuments) {
-        this.digitalDocuments.clear();
-        if (digitalDocuments != null) {
-            digitalDocuments.forEach(this::addDigitalDocument);
-        }
-    }
+	public void addPhysicalDocument(String doc) {
+		if (doc != null) {
+			physicalDocuments.add(doc);
+		}
+	}
 
-    public void addDigitalDocument(String doc) {
-        if (doc != null) {
-            digitalDocuments.add(doc);
-        }
-    }
+	public List<String> getDigitalDocuments() {
+		return digitalDocuments;
+	}
+
+	public void setDigitalDocuments(List<String> digitalDocuments) {
+		this.digitalDocuments.clear();
+		if (digitalDocuments != null) {
+			digitalDocuments.forEach(this::addDigitalDocument);
+		}
+	}
+
+	public void addDigitalDocument(String doc) {
+		if (doc != null) {
+			digitalDocuments.add(doc);
+		}
+	}
 
 }

@@ -29,42 +29,46 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/delivery_configuration")
 public class DeliveryConfigurationController extends AbstractRestController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DeliveryConfigurationController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DeliveryConfigurationController.class);
 
-    private final DeliveryConfigurationService deliveryConfigurationService;
-    private final AccessHelper accessHelper;
-    private final LibraryAccesssHelper libraryAccesssHelper;
+	private final DeliveryConfigurationService deliveryConfigurationService;
 
-    @Autowired
-    public DeliveryConfigurationController(final DeliveryConfigurationService deliveryConfigurationService,
-                                           final AccessHelper accessHelper,
-                                           final LibraryAccesssHelper libraryAccesssHelper) {
-        this.deliveryConfigurationService = deliveryConfigurationService;
-        this.accessHelper = accessHelper;
-        this.libraryAccesssHelper = libraryAccesssHelper;
-    }
+	private final AccessHelper accessHelper;
 
-    @RolesAllowed(DEL_HAB0)
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<DeliverySlipConfiguration> getById(final HttpServletRequest request, @PathVariable final String id) {
-        if (!libraryAccesssHelper.checkLibrary(request, id)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        Optional<DeliverySlipConfiguration> deliverySlipConfiguration = deliveryConfigurationService.getOneByLibrary(id);
-        return createResponseEntity(deliveryConfigurationService.getOneByLibrary(id));
-    }
+	private final LibraryAccesssHelper libraryAccesssHelper;
 
-    @RolesAllowed({DEL_HAB2})
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    @Timed
-    public ResponseEntity<DeliverySlipConfiguration> update(final HttpServletRequest request, @RequestBody final DeliverySlipConfiguration deliverySlipConfiguration)
-                                                                                                                                                                      throws PgcnException {
+	@Autowired
+	public DeliveryConfigurationController(final DeliveryConfigurationService deliveryConfigurationService,
+			final AccessHelper accessHelper, final LibraryAccesssHelper libraryAccesssHelper) {
+		this.deliveryConfigurationService = deliveryConfigurationService;
+		this.accessHelper = accessHelper;
+		this.libraryAccesssHelper = libraryAccesssHelper;
+	}
 
-        if (!libraryAccesssHelper.checkLibrary(request, deliverySlipConfiguration.getLibrary())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+	@RolesAllowed(DEL_HAB0)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<DeliverySlipConfiguration> getById(final HttpServletRequest request,
+			@PathVariable final String id) {
+		if (!libraryAccesssHelper.checkLibrary(request, id)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		Optional<DeliverySlipConfiguration> deliverySlipConfiguration = deliveryConfigurationService
+			.getOneByLibrary(id);
+		return createResponseEntity(deliveryConfigurationService.getOneByLibrary(id));
+	}
 
-        return createResponseEntity(deliveryConfigurationService.update(deliverySlipConfiguration));
-    }
+	@RolesAllowed({ DEL_HAB2 })
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	@Timed
+	public ResponseEntity<DeliverySlipConfiguration> update(final HttpServletRequest request,
+			@RequestBody final DeliverySlipConfiguration deliverySlipConfiguration) throws PgcnException {
+
+		if (!libraryAccesssHelper.checkLibrary(request, deliverySlipConfiguration.getLibrary())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+
+		return createResponseEntity(deliveryConfigurationService.update(deliverySlipConfiguration));
+	}
+
 }

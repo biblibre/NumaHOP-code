@@ -8,16 +8,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class AuditingRevisionListener implements RevisionListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RevisionListener.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RevisionListener.class);
 
-    @Override
-    public void newRevision(final Object revisionEntity) {
-        LOG.debug("AuditingRevisionListener newRevision: {}", revisionEntity);
-        final AuditRevision revision = (AuditRevision) revisionEntity;
-        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	@Override
+	public void newRevision(final Object revisionEntity) {
+		LOG.debug("AuditingRevisionListener newRevision: {}", revisionEntity);
+		final AuditRevision revision = (AuditRevision) revisionEntity;
+		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if (auth != null) {
-            revision.setUsername(auth.getName());
-        }
-    }
+		if (auth != null) {
+			revision.setUsername(auth.getName());
+		}
+	}
+
 }

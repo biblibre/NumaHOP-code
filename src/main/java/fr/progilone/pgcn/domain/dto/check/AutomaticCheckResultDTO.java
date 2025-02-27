@@ -6,54 +6,58 @@ import java.time.LocalDateTime;
 /**
  * Résultats de contrôles automatiques
  *
- * @author jbrunet
- *         Créé le 2 mars 2017
+ * @author jbrunet Créé le 2 mars 2017
  */
 public class AutomaticCheckResultDTO extends AbstractDTO {
 
-    private String identifier;
-    private AutomaticCheckTypeDTO check;
-    private String result;
-    private String message;
-    private LocalDateTime createdDate;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private AutomaticCheckTypeDTO check;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private String result;
 
-    public AutomaticCheckTypeDTO getCheck() {
-        return check;
-    }
+	private String message;
 
-    public void setCheck(AutomaticCheckTypeDTO check) {
-        this.check = check;
-    }
+	private LocalDateTime createdDate;
 
-    public String getResult() {
-        return result;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setResult(String result) {
-        this.result = result;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public AutomaticCheckTypeDTO getCheck() {
+		return check;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public void setCheck(AutomaticCheckTypeDTO check) {
+		this.check = check;
+	}
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
+	public String getResult() {
+		return result;
+	}
 
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
 }

@@ -22,119 +22,121 @@ import java.util.Set;
  */
 @Entity
 @Table(name = PropertyConfiguration.TABLE_NAME)
-@JsonSubTypes({@JsonSubTypes.Type(name = "doc_condreport_property_config", value = PropertyConfiguration.class)})
+@JsonSubTypes({ @JsonSubTypes.Type(name = "doc_condreport_property_config", value = PropertyConfiguration.class) })
 public class PropertyConfiguration extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "doc_condreport_property_config";
-    public static final String TABLE_NAME_TYPE = "doc_condreport_property_config_type";
+	public static final String TABLE_NAME = "doc_condreport_property_config";
 
-    public enum InternalProperty {
-        BINDING_DESC,
-        BODY_DESC,
-        DIMENSION
-    }
+	public static final String TABLE_NAME_TYPE = "doc_condreport_property_config_type";
 
-    /**
-     * la propriété associée est obligatoire
-     */
-    @Column(name = "required")
-    private boolean required = false;
+	public enum InternalProperty {
 
-    /**
-     * saisie d'une description succinte pour la propriété associée
-     */
-    @Column(name = "allow_comment")
-    private boolean allowComment = false;
+		BINDING_DESC, BODY_DESC, DIMENSION
 
-    @Column(name = "show_on_creation")
-    private boolean showOnCreation = true;
+	}
 
-    /**
-     * types de constats d'état sur lesquels ce champ apparait à la création
-     */
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = TABLE_NAME_TYPE, joinColumns = @JoinColumn(name = "conf"))
-    @Column(name = "type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private final Set<DocUnit.CondReportType> types = new HashSet<>();
+	/**
+	 * la propriété associée est obligatoire
+	 */
+	@Column(name = "required")
+	private boolean required = false;
 
-    /**
-     * Bib concernée
-     */
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "library")
-    private Library library;
+	/**
+	 * saisie d'une description succinte pour la propriété associée
+	 */
+	@Column(name = "allow_comment")
+	private boolean allowComment = false;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "desc_property")
-    private DescriptionProperty descProperty;
+	@Column(name = "show_on_creation")
+	private boolean showOnCreation = true;
 
-    @Column(name = "internal_prop")
-    @Enumerated(EnumType.STRING)
-    private InternalProperty internalProperty;
+	/**
+	 * types de constats d'état sur lesquels ce champ apparait à la création
+	 */
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = TABLE_NAME_TYPE, joinColumns = @JoinColumn(name = "conf"))
+	@Column(name = "type", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private final Set<DocUnit.CondReportType> types = new HashSet<>();
 
-    public boolean isRequired() {
-        return required;
-    }
+	/**
+	 * Bib concernée
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "library")
+	private Library library;
 
-    public void setRequired(final boolean required) {
-        this.required = required;
-    }
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "desc_property")
+	private DescriptionProperty descProperty;
 
-    public boolean isAllowComment() {
-        return allowComment;
-    }
+	@Column(name = "internal_prop")
+	@Enumerated(EnumType.STRING)
+	private InternalProperty internalProperty;
 
-    public void setAllowComment(final boolean allowComment) {
-        this.allowComment = allowComment;
-    }
+	public boolean isRequired() {
+		return required;
+	}
 
-    public boolean isShowOnCreation() {
-        return showOnCreation;
-    }
+	public void setRequired(final boolean required) {
+		this.required = required;
+	}
 
-    public void setShowOnCreation(final boolean showOnCreation) {
-        this.showOnCreation = showOnCreation;
-    }
+	public boolean isAllowComment() {
+		return allowComment;
+	}
 
-    public Set<DocUnit.CondReportType> getTypes() {
-        return types;
-    }
+	public void setAllowComment(final boolean allowComment) {
+		this.allowComment = allowComment;
+	}
 
-    public void setTypes(final Set<DocUnit.CondReportType> types) {
-        this.types.clear();
-        if (types != null) {
-            types.forEach(this::addType);
-        }
-    }
+	public boolean isShowOnCreation() {
+		return showOnCreation;
+	}
 
-    private void addType(final DocUnit.CondReportType type) {
-        if (type != null) {
-            this.types.add(type);
-        }
-    }
+	public void setShowOnCreation(final boolean showOnCreation) {
+		this.showOnCreation = showOnCreation;
+	}
 
-    public Library getLibrary() {
-        return library;
-    }
+	public Set<DocUnit.CondReportType> getTypes() {
+		return types;
+	}
 
-    public void setLibrary(final Library library) {
-        this.library = library;
-    }
+	public void setTypes(final Set<DocUnit.CondReportType> types) {
+		this.types.clear();
+		if (types != null) {
+			types.forEach(this::addType);
+		}
+	}
 
-    public DescriptionProperty getDescProperty() {
-        return descProperty;
-    }
+	private void addType(final DocUnit.CondReportType type) {
+		if (type != null) {
+			this.types.add(type);
+		}
+	}
 
-    public void setDescProperty(final DescriptionProperty descProperty) {
-        this.descProperty = descProperty;
-    }
+	public Library getLibrary() {
+		return library;
+	}
 
-    public InternalProperty getInternalProperty() {
-        return internalProperty;
-    }
+	public void setLibrary(final Library library) {
+		this.library = library;
+	}
 
-    public void setInternalProperty(final InternalProperty internalProperty) {
-        this.internalProperty = internalProperty;
-    }
+	public DescriptionProperty getDescProperty() {
+		return descProperty;
+	}
+
+	public void setDescProperty(final DescriptionProperty descProperty) {
+		this.descProperty = descProperty;
+	}
+
+	public InternalProperty getInternalProperty() {
+		return internalProperty;
+	}
+
+	public void setInternalProperty(final InternalProperty internalProperty) {
+		this.internalProperty = internalProperty;
+	}
+
 }

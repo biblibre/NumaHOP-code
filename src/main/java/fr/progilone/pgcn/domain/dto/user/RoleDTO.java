@@ -8,79 +8,85 @@ package fr.progilone.pgcn.domain.dto.user;
  */
 public class RoleDTO {
 
-    private String identifier;
-    private String code;
-    private String label;
+	private String identifier;
 
-    public RoleDTO() {
-    }
+	private String code;
 
-    public RoleDTO(final String identifier, final String code, final String label) {
-        super();
-        this.identifier = identifier;
-        this.code = code;
-        this.label = label;
-    }
+	private String label;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public RoleDTO() {
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public RoleDTO(final String identifier, final String code, final String label) {
+		super();
+		this.identifier = identifier;
+		this.code = code;
+		this.label = label;
+	}
 
-    public String getLabel() {
-        return label;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    /**
-     * Builder pour la classe RoleDTO
-     *
-     * @author Sebastien
-     */
-    public static final class Builder {
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-        private String identifier;
-        private String code;
-        private String label;
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
-        public Builder reinit() {
-            this.identifier = null;
-            this.code = null;
-            this.label = null;
-            return this;
-        }
+	/**
+	 * Builder pour la classe RoleDTO
+	 *
+	 * @author Sebastien
+	 */
+	public static final class Builder {
 
-        public Builder setIdentifier(final String identifier) {
-            this.identifier = identifier;
-            return this;
-        }
+		private String identifier;
 
-        public Builder setCode(final String code) {
-            this.code = code;
-            return this;
-        }
+		private String code;
 
-        public Builder setLabel(final String label) {
-            this.label = label;
-            return this;
-        }
+		private String label;
 
-        public RoleDTO build() {
-            return new RoleDTO(identifier, code, label);
-        }
-    }
+		public Builder reinit() {
+			this.identifier = null;
+			this.code = null;
+			this.label = null;
+			return this;
+		}
+
+		public Builder setIdentifier(final String identifier) {
+			this.identifier = identifier;
+			return this;
+		}
+
+		public Builder setCode(final String code) {
+			this.code = code;
+			return this;
+		}
+
+		public Builder setLabel(final String label) {
+			this.label = label;
+			return this;
+		}
+
+		public RoleDTO build() {
+			return new RoleDTO(identifier, code, label);
+		}
+
+	}
+
 }

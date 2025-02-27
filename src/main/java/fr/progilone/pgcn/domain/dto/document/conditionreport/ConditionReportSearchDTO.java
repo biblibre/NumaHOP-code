@@ -6,62 +6,68 @@ import java.util.List;
 
 public class ConditionReportSearchDTO {
 
-    // Unité documentaire
-    private String docUnitId;
-    private String docUnitPgcnId;
-    private String docUnitLabel;
-    // Dernier détail du constat d'état
-    private String type;
-    private LocalDate date;
-    // Description
-    private final List<ConditionReportValueDTO> properties = new ArrayList<>();
+	// Unité documentaire
+	private String docUnitId;
 
-    public String getDocUnitId() {
-        return docUnitId;
-    }
+	private String docUnitPgcnId;
 
-    public void setDocUnitId(final String docUnitId) {
-        this.docUnitId = docUnitId;
-    }
+	private String docUnitLabel;
 
-    public String getDocUnitPgcnId() {
-        return docUnitPgcnId;
-    }
+	// Dernier détail du constat d'état
+	private String type;
 
-    public void setDocUnitPgcnId(final String docUnitPgcnId) {
-        this.docUnitPgcnId = docUnitPgcnId;
-    }
+	private LocalDate date;
 
-    public String getDocUnitLabel() {
-        return docUnitLabel;
-    }
+	// Description
+	private final List<ConditionReportValueDTO> properties = new ArrayList<>();
 
-    public void setDocUnitLabel(final String docUnitLabel) {
-        this.docUnitLabel = docUnitLabel;
-    }
+	public String getDocUnitId() {
+		return docUnitId;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public void setDocUnitId(final String docUnitId) {
+		this.docUnitId = docUnitId;
+	}
 
-    public void setType(final String type) {
-        this.type = type;
-    }
+	public String getDocUnitPgcnId() {
+		return docUnitPgcnId;
+	}
 
-    public LocalDate getDate() {
-        return date;
-    }
+	public void setDocUnitPgcnId(final String docUnitPgcnId) {
+		this.docUnitPgcnId = docUnitPgcnId;
+	}
 
-    public void setDate(final LocalDate date) {
-        this.date = date;
-    }
+	public String getDocUnitLabel() {
+		return docUnitLabel;
+	}
 
-    public List<ConditionReportValueDTO> getProperties() {
-        return properties;
-    }
+	public void setDocUnitLabel(final String docUnitLabel) {
+		this.docUnitLabel = docUnitLabel;
+	}
 
-    public void setProperties(final List<ConditionReportValueDTO> properties) {
-        this.properties.clear();
-        this.properties.addAll(properties);
-    }
+	public String getType() {
+		return type;
+	}
+
+	public void setType(final String type) {
+		this.type = type;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(final LocalDate date) {
+		this.date = date;
+	}
+
+	public List<ConditionReportValueDTO> getProperties() {
+		return properties;
+	}
+
+	public void setProperties(final List<ConditionReportValueDTO> properties) {
+		this.properties.clear();
+		this.properties.addAll(properties);
+	}
+
 }

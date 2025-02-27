@@ -40,118 +40,125 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class DeliveryAsyncServiceTest {
 
-    private static final String RESOURCE_FOLDER = "src/test/resources/delivery";
+	private static final String RESOURCE_FOLDER = "src/test/resources/delivery";
 
-    @Mock
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+	@Mock
+	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    @Mock
-    private DeliveryService deliveryService;
-    @Mock
-    private EsDeliveryService esDeliveryService;
-    @Mock
-    private PhysicalDocumentRepository physicalDocumentRepository;
-    @Mock
-    private DocPageService docPageService;
-    @Mock
-    private DigitalDocumentService digitalDocumentService;
-    @Mock
-    private AutomaticCheckService autoCheckService;
-    @Mock
-    private BinaryStorageManager bm;
-    @Mock
-    private TransactionService transactionService;
-    @Mock
-    private PrefixedDocumentsMapper mapper;
-    @Mock
-    private MetaDatasCheckService metaDatasCheckService;
-    @Mock
-    private LotService lotService;
-    @Mock
-    private DeliveryReportingService reportService;
-    @Mock
-    private ImageMagickService imService;
-    @Mock
-    private SampleService sampleService;
-    @Mock
-    private WorkflowService workflowService;
-    @Mock
-    private BinaryRepository binaryRepository;
-    @Mock
-    private DeliveryProgressService deliveryProgressService;
-    @Mock
-    private SlipService slipService;
-    @Mock
-    private DocPropertyTypeService docPropertyTypeService;
-    @Mock
-    private BibliographicRecordService bibliographicRecordService;
-    @Mock
-    private TesseractService tesseractService;
-    @Mock
-    private DocUnitService docUnitService;
-    @Mock
-    private UIDigitalDocumentService uidigitalDocumentService;
-    @Mock
-    private ImageMetadataRepository imageMetadataRepository;
+	@Mock
+	private DeliveryService deliveryService;
 
-    private DeliveryAsyncService service;
+	@Mock
+	private EsDeliveryService esDeliveryService;
 
-    @BeforeEach
-    public void setUp() {
-        service = new DeliveryAsyncService(deliveryService,
-                                           esDeliveryService,
-                                           physicalDocumentRepository,
-                                           docPageService,
-                                           digitalDocumentService,
-                                           transactionService,
-                                           autoCheckService,
-                                           bm,
-                                           mapper,
-                                           metaDatasCheckService,
-                                           lotService,
-                                           reportService,
-                                           imService,
-                                           sampleService,
-                                           workflowService,
-                                           binaryRepository,
-                                           deliveryProgressService,
-                                           slipService,
-                                           docPropertyTypeService,
-                                           bibliographicRecordService,
-                                           tesseractService,
-                                           docUnitService,
-                                           uidigitalDocumentService,
-                                           imageMetadataRepository);
-    }
+	@Mock
+	private PhysicalDocumentRepository physicalDocumentRepository;
 
-    @Test
-    public void getFormatFilterTest() {
-        final List<File> files = new ArrayList<>();
-        final String expectedFormat = "TIFF";
-        final File baseDirectory = new File(RESOURCE_FOLDER + "/format");
+	@Mock
+	private DocPageService docPageService;
 
-        final File file1 = new File(baseDirectory, "IHE14001000.tiff");
-        final File file2 = new File(baseDirectory, "IHE14001000.TIFF");
-        final File file3 = new File(baseDirectory, "IHE14001000.png");
-        final File file4 = new File(baseDirectory, "IHE14001000.pdf");
+	@Mock
+	private DigitalDocumentService digitalDocumentService;
 
-        files.addAll(FileUtils.listFiles(baseDirectory, service.getFormatFilter(expectedFormat), TrueFileFilter.TRUE));
-        assertEquals(2, files.size());
-    }
+	@Mock
+	private AutomaticCheckService autoCheckService;
 
-    @Test
-    public void getPrefixFilterTest() {
-        final List<File> files = new ArrayList<>();
-        final String prefix = "BSG_120587445";
-        final String seqSeparator = "_";
-        final File baseDirectory = new File(RESOURCE_FOLDER + "/prefix");
+	@Mock
+	private BinaryStorageManager bm;
 
-        final File file1 = new File(baseDirectory, "BSG_120587445_001.tiff");
-        final File file2 = new File(baseDirectory, "BSG_120587445_002.TIFF");
-        final File file3 = new File(baseDirectory, "BSG_120587445_003.png");
-        final File file4 = new File(baseDirectory, "BSG_120587445_004.pdf");
+	@Mock
+	private TransactionService transactionService;
 
-        files.addAll(FileUtils.listFiles(baseDirectory, service.getPrefixFilter(prefix, seqSeparator, false, false), TrueFileFilter.TRUE));
-        assertEquals(4, files.size());
-    }
+	@Mock
+	private PrefixedDocumentsMapper mapper;
+
+	@Mock
+	private MetaDatasCheckService metaDatasCheckService;
+
+	@Mock
+	private LotService lotService;
+
+	@Mock
+	private DeliveryReportingService reportService;
+
+	@Mock
+	private ImageMagickService imService;
+
+	@Mock
+	private SampleService sampleService;
+
+	@Mock
+	private WorkflowService workflowService;
+
+	@Mock
+	private BinaryRepository binaryRepository;
+
+	@Mock
+	private DeliveryProgressService deliveryProgressService;
+
+	@Mock
+	private SlipService slipService;
+
+	@Mock
+	private DocPropertyTypeService docPropertyTypeService;
+
+	@Mock
+	private BibliographicRecordService bibliographicRecordService;
+
+	@Mock
+	private TesseractService tesseractService;
+
+	@Mock
+	private DocUnitService docUnitService;
+
+	@Mock
+	private UIDigitalDocumentService uidigitalDocumentService;
+
+	@Mock
+	private ImageMetadataRepository imageMetadataRepository;
+
+	private DeliveryAsyncService service;
+
+	@BeforeEach
+	public void setUp() {
+		service = new DeliveryAsyncService(deliveryService, esDeliveryService, physicalDocumentRepository,
+				docPageService, digitalDocumentService, transactionService, autoCheckService, bm, mapper,
+				metaDatasCheckService, lotService, reportService, imService, sampleService, workflowService,
+				binaryRepository, deliveryProgressService, slipService, docPropertyTypeService,
+				bibliographicRecordService, tesseractService, docUnitService, uidigitalDocumentService,
+				imageMetadataRepository);
+	}
+
+	@Test
+	public void getFormatFilterTest() {
+		final List<File> files = new ArrayList<>();
+		final String expectedFormat = "TIFF";
+		final File baseDirectory = new File(RESOURCE_FOLDER + "/format");
+
+		final File file1 = new File(baseDirectory, "IHE14001000.tiff");
+		final File file2 = new File(baseDirectory, "IHE14001000.TIFF");
+		final File file3 = new File(baseDirectory, "IHE14001000.png");
+		final File file4 = new File(baseDirectory, "IHE14001000.pdf");
+
+		files.addAll(FileUtils.listFiles(baseDirectory, service.getFormatFilter(expectedFormat), TrueFileFilter.TRUE));
+		assertEquals(2, files.size());
+	}
+
+	@Test
+	public void getPrefixFilterTest() {
+		final List<File> files = new ArrayList<>();
+		final String prefix = "BSG_120587445";
+		final String seqSeparator = "_";
+		final File baseDirectory = new File(RESOURCE_FOLDER + "/prefix");
+
+		final File file1 = new File(baseDirectory, "BSG_120587445_001.tiff");
+		final File file2 = new File(baseDirectory, "BSG_120587445_002.TIFF");
+		final File file3 = new File(baseDirectory, "BSG_120587445_003.png");
+		final File file4 = new File(baseDirectory, "BSG_120587445_004.pdf");
+
+		files.addAll(FileUtils.listFiles(baseDirectory, service.getPrefixFilter(prefix, seqSeparator, false, false),
+				TrueFileFilter.TRUE));
+		assertEquals(4, files.size());
+	}
+
 }

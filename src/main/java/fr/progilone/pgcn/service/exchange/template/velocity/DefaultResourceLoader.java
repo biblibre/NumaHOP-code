@@ -8,13 +8,14 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.util.ExtProperties;
 
 /**
- * Ce {@link org.apache.velocity.runtime.resource.loader.ResourceLoader} par défaut est en fait un {@link ClasspathResourceLoader}
- * qui cherche à partir d'un répertoire donné, configuré avec ds.resource.loader.basepath.
+ * Ce {@link org.apache.velocity.runtime.resource.loader.ResourceLoader} par défaut est en
+ * fait un {@link ClasspathResourceLoader} qui cherche à partir d'un répertoire donné,
+ * configuré avec ds.resource.loader.basepath.
  * <p>
- * Exemple de configuration:
- * <code>
+ * Exemple de configuration: <code>
  * Velocity.setProperty(Velocity.RESOURCE_LOADER, "ds");
- * Velocity.setProperty("ds.resource.loader.class", "fr.progilone.pgcn.service.exchange.template.velocity.DefaultResourceLoader");
+ * Velocity.setProperty("ds.resource.loader.class",
+ * "fr.progilone.pgcn.service.exchange.template.velocity.DefaultResourceLoader");
  * Velocity.setProperty("ds.resource.loader.basepath", "/templates/");
  * </code>
  *
@@ -22,27 +23,28 @@ import org.apache.velocity.util.ExtProperties;
  */
 public class DefaultResourceLoader extends ClasspathResourceLoader {
 
-    private fr.progilone.pgcn.service.exchange.template.loader.DefaultResourceLoader delegate;
+	private fr.progilone.pgcn.service.exchange.template.loader.DefaultResourceLoader delegate;
 
-    @Override
-    public void init(final ExtProperties configuration) {
-        final String basePath = configuration.getString("basepath", "");
-        delegate = new fr.progilone.pgcn.service.exchange.template.loader.DefaultResourceLoader(basePath);
-        super.init(configuration);
-    }
+	@Override
+	public void init(final ExtProperties configuration) {
+		final String basePath = configuration.getString("basepath", "");
+		delegate = new fr.progilone.pgcn.service.exchange.template.loader.DefaultResourceLoader(basePath);
+		super.init(configuration);
+	}
 
-    @Override
-    public Reader getResourceReader(final String name, final String encoding) {
-        return new InputStreamReader(delegate.getResourceStream(new ResourceName(name)));
-    }
+	@Override
+	public Reader getResourceReader(final String name, final String encoding) {
+		return new InputStreamReader(delegate.getResourceStream(new ResourceName(name)));
+	}
 
-    @Override
-    public boolean isSourceModified(final Resource resource) {
-        return super.isSourceModified(resource);
-    }
+	@Override
+	public boolean isSourceModified(final Resource resource) {
+		return super.isSourceModified(resource);
+	}
 
-    @Override
-    public long getLastModified(final Resource resource) {
-        return super.getLastModified(resource);
-    }
+	@Override
+	public long getLastModified(final Resource resource) {
+		return super.getLastModified(resource);
+	}
+
 }

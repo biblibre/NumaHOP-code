@@ -27,88 +27,92 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UICheckConfigurationService {
 
-    private final CheckConfigurationMapper checkConfigMapper = Mappers.getMapper(CheckConfigurationMapper.class);
+	private final CheckConfigurationMapper checkConfigMapper = Mappers.getMapper(CheckConfigurationMapper.class);
 
-    private final CheckConfigurationService checkConfigurationService;
-    private final ProjectService projectService;
-    private final UICheckConfigurationMapper uiCheckConfigurationMapper;
+	private final CheckConfigurationService checkConfigurationService;
 
-    @Autowired
-    public UICheckConfigurationService(final CheckConfigurationService checkConfigurationService,
-                                       final ProjectService projectService,
-                                       final AutomaticCheckService automaticCheckService,
-                                       final UICheckConfigurationMapper uiCheckConfigurationMapper) {
-        this.checkConfigurationService = checkConfigurationService;
-        this.projectService = projectService;
-        this.uiCheckConfigurationMapper = uiCheckConfigurationMapper;
-    }
+	private final ProjectService projectService;
 
-    @Transactional
-    public CheckConfigurationDTO create(final CheckConfigurationDTO checkConfigurationDTO) {
-        final CheckConfiguration checkConfiguration = new CheckConfiguration();
-        uiCheckConfigurationMapper.mapInto(checkConfigurationDTO, checkConfiguration);
-        return checkConfigMapper.checkConfigurationToCheckConfigurationDTO(checkConfigurationService.save(checkConfiguration));
-    }
+	private final UICheckConfigurationMapper uiCheckConfigurationMapper;
 
-    @Transactional
-    public CheckConfigurationDTO update(final CheckConfigurationDTO checkConfigurationDTO) {
-        final CheckConfiguration checkConfiguration = checkConfigurationService.findOne(checkConfigurationDTO.getIdentifier());
+	@Autowired
+	public UICheckConfigurationService(final CheckConfigurationService checkConfigurationService,
+			final ProjectService projectService, final AutomaticCheckService automaticCheckService,
+			final UICheckConfigurationMapper uiCheckConfigurationMapper) {
+		this.checkConfigurationService = checkConfigurationService;
+		this.projectService = projectService;
+		this.uiCheckConfigurationMapper = uiCheckConfigurationMapper;
+	}
 
-        // Contrôle d'accès concurrents
-        VersionValidationService.checkForStateObject(checkConfiguration, checkConfigurationDTO);
-        uiCheckConfigurationMapper.mapInto(checkConfigurationDTO, checkConfiguration);
-        // persist object
-        final CheckConfiguration savedConf = checkConfigurationService.save(checkConfiguration);
-        // and return dto.
-        return checkConfigMapper.checkConfigurationToCheckConfigurationDTO(savedConf);
-    }
+	@Transactional
+	public CheckConfigurationDTO create(final CheckConfigurationDTO checkConfigurationDTO) {
+		final CheckConfiguration checkConfiguration = new CheckConfiguration();
+		uiCheckConfigurationMapper.mapInto(checkConfigurationDTO, checkConfiguration);
+		return checkConfigMapper
+			.checkConfigurationToCheckConfigurationDTO(checkConfigurationService.save(checkConfiguration));
+	}
 
-    @Transactional(readOnly = true)
-    public CheckConfigurationDTO getOne(final String id) {
-        return checkConfigMapper.checkConfigurationToCheckConfigurationDTO(checkConfigurationService.findOne(id));
-    }
+	@Transactional
+	public CheckConfigurationDTO update(final CheckConfigurationDTO checkConfigurationDTO) {
+		final CheckConfiguration checkConfiguration = checkConfigurationService
+			.findOne(checkConfigurationDTO.getIdentifier());
 
-    @Transactional(readOnly = true)
-    public CheckConfigurationDTO getOneForEdition(final String id) {
-        return checkConfigMapper.checkConfigurationToCheckConfigurationDTO(checkConfigurationService.findAndEnrich(id));
-    }
+		// Contrôle d'accès concurrents
+		VersionValidationService.checkForStateObject(checkConfiguration, checkConfigurationDTO);
+		uiCheckConfigurationMapper.mapInto(checkConfigurationDTO, checkConfiguration);
+		// persist object
+		final CheckConfiguration savedConf = checkConfigurationService.save(checkConfiguration);
+		// and return dto.
+		return checkConfigMapper.checkConfigurationToCheckConfigurationDTO(savedConf);
+	}
 
-    /**
-     * Recherche paramétrée paginée
-     *
-     * @param search
-     * @param libraries
-     * @param page
-     * @param size
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Page<SimpleCheckConfigurationDTO> search(final String search, final List<String> libraries, final Integer page, final Integer size) {
-        final Pageable pageRequest = PageRequest.of(page, size);
-        final Page<CheckConfiguration> checkConfigurations = checkConfigurationService.search(search, libraries, pageRequest);
-        return checkConfigurations.map(SimpleCheckConfigurationMapper.INSTANCE::checkConfigurationToSimpleCheckConfigurationDTO);
-    }
+	@Transactional(readOnly = true)
+	public CheckConfigurationDTO getOne(final String id) {
+		return checkConfigMapper.checkConfigurationToCheckConfigurationDTO(checkConfigurationService.findOne(id));
+	}
 
-    /**
-     * Récupération des configurations par projet
-     *
-     * @param id
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public List<SimpleCheckConfigurationDTO> getAllByProjectId(final String id) {
-        final Project project = projectService.findOneWithFTPConfiguration(id);
-        return project.getLibrary()
-                      .getCheckConfigurations()
-                      .stream()
-                      .map(SimpleCheckConfigurationMapper.INSTANCE::checkConfigurationToSimpleCheckConfigurationDTO)
-                      .collect(Collectors.toList());
-    }
+	@Transactional(readOnly = true)
+	public CheckConfigurationDTO getOneForEdition(final String id) {
+		return checkConfigMapper.checkConfigurationToCheckConfigurationDTO(checkConfigurationService.findAndEnrich(id));
+	}
 
-    @Transactional
-    public CheckConfigurationDTO duplicateCheckConfiguration(final String id) {
-        final CheckConfiguration duplicated = checkConfigurationService.duplicateCheckConfiguration(id);
-        return checkConfigMapper.checkConfigurationToCheckConfigurationDTO(duplicated);
-    }
+	/**
+	 * Recherche paramétrée paginée
+	 * @param search
+	 * @param libraries
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Page<SimpleCheckConfigurationDTO> search(final String search, final List<String> libraries,
+			final Integer page, final Integer size) {
+		final Pageable pageRequest = PageRequest.of(page, size);
+		final Page<CheckConfiguration> checkConfigurations = checkConfigurationService.search(search, libraries,
+				pageRequest);
+		return checkConfigurations
+			.map(SimpleCheckConfigurationMapper.INSTANCE::checkConfigurationToSimpleCheckConfigurationDTO);
+	}
+
+	/**
+	 * Récupération des configurations par projet
+	 * @param id
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public List<SimpleCheckConfigurationDTO> getAllByProjectId(final String id) {
+		final Project project = projectService.findOneWithFTPConfiguration(id);
+		return project.getLibrary()
+			.getCheckConfigurations()
+			.stream()
+			.map(SimpleCheckConfigurationMapper.INSTANCE::checkConfigurationToSimpleCheckConfigurationDTO)
+			.collect(Collectors.toList());
+	}
+
+	@Transactional
+	public CheckConfigurationDTO duplicateCheckConfiguration(final String id) {
+		final CheckConfiguration duplicated = checkConfigurationService.duplicateCheckConfiguration(id);
+		return checkConfigMapper.checkConfigurationToCheckConfigurationDTO(duplicated);
+	}
 
 }

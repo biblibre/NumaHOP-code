@@ -38,364 +38,364 @@ import org.springframework.transaction.TransactionStatus;
 @Service
 public class ImportEadService extends AbstractImportService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ImportEadService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ImportEadService.class);
 
-    private final DocPropertyTypeService docPropertyTypeService;
-    private final EadToDocUnitConvertService convertService;
-    private final EadMappingEvaluationService mappingEvaluationService;
-    private final ExportEadService exportEadService;
-    private final ImportDocUnitService importDocUnitService;
-    private final ImportReportService importReportService;
-    private final MappingService mappingService;
-    private final TransactionService transactionService;
-    private final WebsocketService websocketService;
+	private final DocPropertyTypeService docPropertyTypeService;
 
-    @Autowired
-    public ImportEadService(final DeduplicationService deduplicationService,
-                            final DocPropertyTypeService docPropertyTypeService,
-                            final DocUnitService docUnitService,
-                            final EadToDocUnitConvertService convertService,
-                            final EadMappingEvaluationService mappingEvaluationService,
-                            final ExportEadService exportEadService,
-                            final EsDocUnitService esDocUnitService,
-                            final ImportDocUnitService importDocUnitService,
-                            final ImportReportService importReportService,
-                            final MappingService mappingService,
-                            final TransactionService transactionService,
-                            final WebsocketService websocketService) {
-        super(deduplicationService, docUnitService, esDocUnitService, importDocUnitService, importReportService, transactionService, websocketService);
-        this.convertService = convertService;
-        this.docPropertyTypeService = docPropertyTypeService;
-        this.mappingEvaluationService = mappingEvaluationService;
-        this.exportEadService = exportEadService;
-        this.importDocUnitService = importDocUnitService;
-        this.importReportService = importReportService;
-        this.mappingService = mappingService;
-        this.transactionService = transactionService;
-        this.websocketService = websocketService;
-    }
+	private final EadToDocUnitConvertService convertService;
 
-    /**
-     * Import asynchrone d'un flux de notices Dublin Core
-     *
-     * @param importFile
-     *            Fichier de notices à importer
-     * @param mappingId
-     *            Identifiant du mapping
-     * @param mappingChildId
-     *            Identifiant du mapping enfant
-     * @param report
-     *            Rapport d'exécution de cet import
-     * @param stepValidation
-     *            Étape de validation par l'utilisateur
-     * @param stepDeduplication
-     *            Étape de dédoublonnage
-     */
-    @Async
-    public void importEadAsync(final File importFile,
-                               final ImportReport.Type type,
-                               final String mappingId,
-                               final String mappingChildId,
-                               ImportReport report,
-                               final boolean stepValidation,
-                               final boolean stepDeduplication,
-                               final ImportedDocUnit.Process defaultDedupProcess,
-                               final PropertyOrder propertyOrder,
-                               final boolean archivable,
-                               final boolean distributable) {
-        try {
-            /* Pré-import */
-            LOG.info("Pré-import du fichier EAD {}", importFile.getAbsolutePath());
-            report = importEadRecords(importFile, type, mappingId, mappingChildId, report, propertyOrder, archivable, distributable);
+	private final EadMappingEvaluationService mappingEvaluationService;
 
-            /* Poursuite du traitement des unités documentaires pré-importées: recherche de doublons, validation utilisateur, import */
-            importDocUnit(report, null, stepValidation, stepDeduplication, defaultDedupProcess);
-            LOG.info("Le fichier EAD {} est traité avec le statut {}", importFile.getAbsolutePath(), report.getStatus());
+	private final ExportEadService exportEadService;
 
-        } catch (final Exception e) {
-            LOG.error(e.getMessage(), e);
-            importReportService.failReport(report, e);
-        }
-    }
+	private final ImportDocUnitService importDocUnitService;
 
-    /**
-     * Import des notices à partir d'un fichier RDFXML contenant les Description Dublin Core
-     *
-     * @param importFile
-     * @param mappingId
-     * @param mappingChildId
-     * @param report
-     * @param propertyOrder
-     * @return
-     * @throws PgcnTechnicalException
-     * @see fr.progilone.pgcn.domain.jaxb.rdf.RDF
-     */
-    private ImportReport importEadRecords(final File importFile,
-                                          final ImportReport.Type type,
-                                          final String mappingId,
-                                          final String mappingChildId,
-                                          final ImportReport report,
-                                          final PropertyOrder propertyOrder,
-                                          final boolean archivable,
-                                          final boolean distributable) throws PgcnTechnicalException {
-        try {
-            final TransactionStatus status = transactionService.startTransaction(true);
+	private final ImportReportService importReportService;
 
-            // Chargement du mapping
-            final Mapping mapping = mappingService.findOne(mappingId);
-            if (mapping == null) {
-                throw new PgcnTechnicalException("Il n'existe pas de mapping avec l'identifiant " + mappingId);
-            }
-            // Pré-compilation du mapping
-            final CompiledMapping compiledMapping = mappingEvaluationService.compileMapping(mapping);
+	private final MappingService mappingService;
 
-            // Mapping des composants EAD enfant
-            final Mapping mappingChild;
-            final CompiledMapping compiledMappingChild;
+	private final TransactionService transactionService;
 
-            if (mappingChildId != null) {
-                // Chargement du mapping
-                mappingChild = mappingService.findOne(mappingChildId);
-                if (mappingChild == null) {
-                    throw new PgcnTechnicalException("Il n'existe pas de mapping avec l'identifiant " + mappingChildId
-                                                     + " (composants enfant)");
-                }
-                // Pré-compilation du mapping
-                compiledMappingChild = mappingEvaluationService.compileMapping(mappingChild);
+	private final WebsocketService websocketService;
 
-            } else {
-                mappingChild = null;
-                compiledMappingChild = null;
-            }
+	@Autowired
+	public ImportEadService(final DeduplicationService deduplicationService,
+			final DocPropertyTypeService docPropertyTypeService, final DocUnitService docUnitService,
+			final EadToDocUnitConvertService convertService, final EadMappingEvaluationService mappingEvaluationService,
+			final ExportEadService exportEadService, final EsDocUnitService esDocUnitService,
+			final ImportDocUnitService importDocUnitService, final ImportReportService importReportService,
+			final MappingService mappingService, final TransactionService transactionService,
+			final WebsocketService websocketService) {
+		super(deduplicationService, docUnitService, esDocUnitService, importDocUnitService, importReportService,
+				transactionService, websocketService);
+		this.convertService = convertService;
+		this.docPropertyTypeService = docPropertyTypeService;
+		this.mappingEvaluationService = mappingEvaluationService;
+		this.exportEadService = exportEadService;
+		this.importDocUnitService = importDocUnitService;
+		this.importReportService = importReportService;
+		this.mappingService = mappingService;
+		this.transactionService = transactionService;
+		this.websocketService = websocketService;
+	}
 
-            // Chargement des types de propriété
-            final Map<String, DocPropertyType> propertyTypes = docPropertyTypeService.findAll()
-                                                                                     .stream()
-                                                                                     .collect(Collectors.toMap(DocPropertyType::getIdentifier, Function.identity()));
+	/**
+	 * Import asynchrone d'un flux de notices Dublin Core
+	 * @param importFile Fichier de notices à importer
+	 * @param mappingId Identifiant du mapping
+	 * @param mappingChildId Identifiant du mapping enfant
+	 * @param report Rapport d'exécution de cet import
+	 * @param stepValidation Étape de validation par l'utilisateur
+	 * @param stepDeduplication Étape de dédoublonnage
+	 */
+	@Async
+	public void importEadAsync(final File importFile, final ImportReport.Type type, final String mappingId,
+			final String mappingChildId, ImportReport report, final boolean stepValidation,
+			final boolean stepDeduplication, final ImportedDocUnit.Process defaultDedupProcess,
+			final PropertyOrder propertyOrder, final boolean archivable, final boolean distributable) {
+		try {
+			/* Pré-import */
+			LOG.info("Pré-import du fichier EAD {}", importFile.getAbsolutePath());
+			report = importEadRecords(importFile, type, mappingId, mappingChildId, report, propertyOrder, archivable,
+					distributable);
 
-            // Résumé d'exécution
-            report.setMapping(mapping);   // lien avec le mapping qui vient d'être chargé
-            report.setMappingChildren(mappingChild);
-            final ImportReport runningReport = importReportService.startReport(report);
+			/*
+			 * Poursuite du traitement des unités documentaires pré-importées: recherche
+			 * de doublons, validation utilisateur, import
+			 */
+			importDocUnit(report, null, stepValidation, stepDeduplication, defaultDedupProcess);
+			LOG.info("Le fichier EAD {} est traité avec le statut {}", importFile.getAbsolutePath(),
+					report.getStatus());
 
-            transactionService.commitTransaction(status);
+		}
+		catch (final Exception e) {
+			LOG.error(e.getMessage(), e);
+			importReportService.failReport(report, e);
+		}
+	}
 
-            // Initialisation de la transaction
-            LOG.debug("Initialisation de l'import");
-            final TransactionManager tMgr = new TransactionManager(false);
+	/**
+	 * Import des notices à partir d'un fichier RDFXML contenant les Description Dublin
+	 * Core
+	 * @param importFile
+	 * @param mappingId
+	 * @param mappingChildId
+	 * @param report
+	 * @param propertyOrder
+	 * @return
+	 * @throws PgcnTechnicalException
+	 * @see fr.progilone.pgcn.domain.jaxb.rdf.RDF
+	 */
+	private ImportReport importEadRecords(final File importFile, final ImportReport.Type type, final String mappingId,
+			final String mappingChildId, final ImportReport report, final PropertyOrder propertyOrder,
+			final boolean archivable, final boolean distributable) throws PgcnTechnicalException {
+		try {
+			final TransactionStatus status = transactionService.startTransaction(true);
 
-            tMgr.setProgressJob((nb) -> {
-                final Map<String, Object> statusMap = importReportService.getStatus(runningReport);
-                statusMap.put("processed", nb);
-                websocketService.sendObject(runningReport.getIdentifier(), statusMap);
-            });
+			// Chargement du mapping
+			final Mapping mapping = mappingService.findOne(mappingId);
+			if (mapping == null) {
+				throw new PgcnTechnicalException("Il n'existe pas de mapping avec l'identifiant " + mappingId);
+			}
+			// Pré-compilation du mapping
+			final CompiledMapping compiledMapping = mappingEvaluationService.compileMapping(mapping);
 
-            // SIMPLE: 1 composant EAD enfant = 1 notice dans PGCN
-            if (mappingChild == null) {
-                getSimpleEadCEntityHandler(compiledMapping, propertyTypes, propertyOrder, runningReport, tMgr, archivable, distributable)
-                                                                                                                                         // Lecture du
-                                                                                                                                         // fichier
-                                                                                                                                         // d'entrée
-                                                                                                                                         .parse(importFile);
-            }
-            // SIMPLE_MULTI_NOTICE: 1 composant EAD parent + composants enfant = 1 notice dans PGCN
-            else {
-                final boolean simpleNotice = type.equals(ImportReport.Type.SIMPLE_MULTI_NOTICE);
-                getMultipleEadCEntityHandler(simpleNotice, compiledMapping, compiledMappingChild, propertyTypes, propertyOrder, runningReport, tMgr)
-                                                                                                                                                    // Lecture
-                                                                                                                                                    // du
-                                                                                                                                                    // fichier
-                                                                                                                                                    // d'entrée
-                                                                                                                                                    .parse(importFile);
-            }
+			// Mapping des composants EAD enfant
+			final Mapping mappingChild;
+			final CompiledMapping compiledMappingChild;
 
-            // Fermeture finale de la transaction
-            tMgr.close();
+			if (mappingChildId != null) {
+				// Chargement du mapping
+				mappingChild = mappingService.findOne(mappingChildId);
+				if (mappingChild == null) {
+					throw new PgcnTechnicalException(
+							"Il n'existe pas de mapping avec l'identifiant " + mappingChildId + " (composants enfant)");
+				}
+				// Pré-compilation du mapping
+				compiledMappingChild = mappingEvaluationService.compileMapping(mappingChild);
 
-            return runningReport;
+			}
+			else {
+				mappingChild = null;
+				compiledMappingChild = null;
+			}
 
-        } catch (final Exception e) {
-            throw new PgcnTechnicalException(e);
-        }
-    }
+			// Chargement des types de propriété
+			final Map<String, DocPropertyType> propertyTypes = docPropertyTypeService.findAll()
+				.stream()
+				.collect(Collectors.toMap(DocPropertyType::getIdentifier, Function.identity()));
 
-    /**
-     * Lecture du fichier EAD
-     * Traitement de type SIMPLE: 1 composant EAD enfant = 1 notice dans PGCN
-     *
-     * @param compiledMapping
-     * @param propertyTypes
-     * @param propertyOrder
-     * @param runningReport
-     * @param tMgr
-     * @return
-     */
-    private EadCEntityHandler getSimpleEadCEntityHandler(final CompiledMapping compiledMapping,
-                                                         final Map<String, DocPropertyType> propertyTypes,
-                                                         final PropertyOrder propertyOrder,
-                                                         final ImportReport runningReport,
-                                                         final TransactionManager tMgr,
-                                                         final boolean archivable,
-                                                         final boolean distributable) {
-        return new EadCEntityHandler((eadheader, rootC) -> {
-            final EadCParser eadCParser = new EadCParser(eadheader, rootC);
+			// Résumé d'exécution
+			report.setMapping(mapping); // lien avec le mapping qui vient d'être chargé
+			report.setMappingChildren(mappingChild);
+			final ImportReport runningReport = importReportService.startReport(report);
 
-            for (final C c : eadCParser.getcLeaves()) {
-                try {
-                    // Conversion du XML en unité documentaire
-                    final DocUnit docUnit = convertService.convert(c, eadCParser, compiledMapping, propertyTypes, propertyOrder);
-                    docUnit.setArchivable(archivable);
-                    docUnit.setDistributable(distributable);
+			transactionService.commitTransaction(status);
 
-                    // Sauvegarde
-                    final ImportedDocUnit imp = new ImportedDocUnit();
-                    imp.initDocUnitFields(docUnit);
-                    imp.setReport(runningReport);
-                    final ImportedDocUnit savedUnit = importDocUnitService.create(imp);
+			// Initialisation de la transaction
+			LOG.debug("Initialisation de l'import");
+			final TransactionManager tMgr = new TransactionManager(false);
 
-                    // Sauvegarde du fichier EAD sur le serveur
-                    final String docUnitId = savedUnit.getDocUnit().getIdentifier();
-                    exportEadService.exportEad(docUnitId, eadheader, eadCParser.getBranch(c));
+			tMgr.setProgressJob((nb) -> {
+				final Map<String, Object> statusMap = importReportService.getStatus(runningReport);
+				statusMap.put("processed", nb);
+				websocketService.sendObject(runningReport.getIdentifier(), statusMap);
+			});
 
-                    synchronized (runningReport) {
-                        runningReport.incrementNbImp(1);
-                    }
+			// SIMPLE: 1 composant EAD enfant = 1 notice dans PGCN
+			if (mappingChild == null) {
+				getSimpleEadCEntityHandler(compiledMapping, propertyTypes, propertyOrder, runningReport, tMgr,
+						archivable, distributable)
+					// Lecture du
+					// fichier
+					// d'entrée
+					.parse(importFile);
+			}
+			// SIMPLE_MULTI_NOTICE: 1 composant EAD parent + composants enfant = 1 notice
+			// dans PGCN
+			else {
+				final boolean simpleNotice = type.equals(ImportReport.Type.SIMPLE_MULTI_NOTICE);
+				getMultipleEadCEntityHandler(simpleNotice, compiledMapping, compiledMappingChild, propertyTypes,
+						propertyOrder, runningReport, tMgr)
+					// Lecture
+					// du
+					// fichier
+					// d'entrée
+					.parse(importFile);
+			}
 
-                } catch (final Exception e) {
-                    LOG.error(e.getMessage(), e);
-                }
-                // Gestion de la transaction
-                finally {
-                    synchronized (tMgr) {
-                        tMgr.update();
-                    }
-                }
-            }
-        });
-    }
+			// Fermeture finale de la transaction
+			tMgr.close();
 
-    /**
-     * Lecture du fichier EAD
-     * Traitement de type SIMPLE_MULTI_NOTICE: 1 composant EAD parent + composants enfant = 1 notice dans PGCN
-     *
-     * @return
-     */
-    private EadCEntityHandler getMultipleEadCEntityHandler(final boolean simpleNotice,
-                                                           final CompiledMapping compiledMapping,
-                                                           final CompiledMapping compiledMappingChild,
-                                                           final Map<String, DocPropertyType> propertyTypes,
-                                                           final PropertyOrder propertyOrder,
-                                                           final ImportReport runningReport,
-                                                           final TransactionManager tMgr) {
-        return new EadCEntityHandler((eadheader, rootC) -> {
-            final EadCParser eadCParser = new EadCParser(eadheader, rootC);
+			return runningReport;
 
-            try {
-                // Conversion du XML en unité documentaire
-                final DocUnit docUnit = convertService.convert(rootC, eadCParser, compiledMapping, propertyTypes, propertyOrder);
+		}
+		catch (final Exception e) {
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-                // Sauvegarde
-                final ImportedDocUnit imp = new ImportedDocUnit();
-                imp.initDocUnitFields(docUnit);
-                imp.setReport(runningReport);
-                final ImportedDocUnit savedUnit = importDocUnitService.create(imp);
+	/**
+	 * Lecture du fichier EAD Traitement de type SIMPLE: 1 composant EAD enfant = 1 notice
+	 * dans PGCN
+	 * @param compiledMapping
+	 * @param propertyTypes
+	 * @param propertyOrder
+	 * @param runningReport
+	 * @param tMgr
+	 * @return
+	 */
+	private EadCEntityHandler getSimpleEadCEntityHandler(final CompiledMapping compiledMapping,
+			final Map<String, DocPropertyType> propertyTypes, final PropertyOrder propertyOrder,
+			final ImportReport runningReport, final TransactionManager tMgr, final boolean archivable,
+			final boolean distributable) {
+		return new EadCEntityHandler((eadheader, rootC) -> {
+			final EadCParser eadCParser = new EadCParser(eadheader, rootC);
 
-                // Dans le cas SIMPLE_MULTI_NOTICE, on n'importe les pptés de l'élément C racine qu'une seule fois => on empêche le parser d'aller
-                // rechercher les pptés dans rootC
-                if (propertyOrder == PropertyOrder.BY_CREATION) {
-                    eadCParser.getParentMap()
-                              .entrySet()
-                              .stream()
-                              .filter(e -> Objects.equals(e.getValue(), rootC))
-                              .map(Map.Entry::getKey)
-                              .collect(Collectors.toList())
-                              .forEach(k -> eadCParser.getParentMap().remove(k));
-                }
+			for (final C c : eadCParser.getcLeaves()) {
+				try {
+					// Conversion du XML en unité documentaire
+					final DocUnit docUnit = convertService.convert(c, eadCParser, compiledMapping, propertyTypes,
+							propertyOrder);
+					docUnit.setArchivable(archivable);
+					docUnit.setDistributable(distributable);
 
-                // Ajout des composants enfant, mappés avec le sous-mapping
-                for (final C c : eadCParser.getcLeaves()) {
-                    if (!Objects.equals(c, rootC)) {
-                        if (simpleNotice) {
-                            convertService.convert(docUnit, c, eadCParser, compiledMappingChild, propertyTypes);
-                        } else {
-                            final DocUnit docUnitChild = convertService.convert(c, eadCParser, compiledMappingChild, propertyTypes, propertyOrder);
-                            docUnitChild.setParent(docUnit);
-                            // Sauvegarde
-                            final ImportedDocUnit impChild = new ImportedDocUnit();
-                            impChild.initDocUnitFields(docUnitChild);
-                            impChild.setReport(runningReport);
-                            impChild.setParentDocUnit(savedUnit.getIdentifier());
-                            importDocUnitService.create(impChild);
-                        }
-                    }
-                }
+					// Sauvegarde
+					final ImportedDocUnit imp = new ImportedDocUnit();
+					imp.initDocUnitFields(docUnit);
+					imp.setReport(runningReport);
+					final ImportedDocUnit savedUnit = importDocUnitService.create(imp);
 
-                // Sauvegarde du fichier EAD sur le serveur
-                final String docUnitId = savedUnit.getDocUnit().getIdentifier();
-                exportEadService.exportEad(docUnitId, eadheader, rootC);
+					// Sauvegarde du fichier EAD sur le serveur
+					final String docUnitId = savedUnit.getDocUnit().getIdentifier();
+					exportEadService.exportEad(docUnitId, eadheader, eadCParser.getBranch(c));
 
-                synchronized (runningReport) {
-                    runningReport.incrementNbImp(1);
-                }
+					synchronized (runningReport) {
+						runningReport.incrementNbImp(1);
+					}
 
-            } catch (final Exception e) {
-                LOG.error(e.getMessage(), e);
-            }
-            // Gestion de la transaction
-            finally {
-                synchronized (tMgr) {
-                    tMgr.update();
-                }
-            }
-        });
-    }
+				}
+				catch (final Exception e) {
+					LOG.error(e.getMessage(), e);
+				}
+				// Gestion de la transaction
+				finally {
+					synchronized (tMgr) {
+						tMgr.update();
+					}
+				}
+			}
+		});
+	}
 
-    /**
-     * Gestion des transactions avec commit tous les x appels
-     */
-    private class TransactionManager {
+	/**
+	 * Lecture du fichier EAD Traitement de type SIMPLE_MULTI_NOTICE: 1 composant EAD
+	 * parent + composants enfant = 1 notice dans PGCN
+	 * @return
+	 */
+	private EadCEntityHandler getMultipleEadCEntityHandler(final boolean simpleNotice,
+			final CompiledMapping compiledMapping, final CompiledMapping compiledMappingChild,
+			final Map<String, DocPropertyType> propertyTypes, final PropertyOrder propertyOrder,
+			final ImportReport runningReport, final TransactionManager tMgr) {
+		return new EadCEntityHandler((eadheader, rootC) -> {
+			final EadCParser eadCParser = new EadCParser(eadheader, rootC);
 
-        private static final long COMMIT = 100L; // Committe tous les x éléments
+			try {
+				// Conversion du XML en unité documentaire
+				final DocUnit docUnit = convertService.convert(rootC, eadCParser, compiledMapping, propertyTypes,
+						propertyOrder);
 
-        private final boolean readonly; // transaction en lecture seule
-        private Consumer<Long> progressJob = lg -> {
-        };// Permet de suivre la progression du job
+				// Sauvegarde
+				final ImportedDocUnit imp = new ImportedDocUnit();
+				imp.initDocUnitFields(docUnit);
+				imp.setReport(runningReport);
+				final ImportedDocUnit savedUnit = importDocUnitService.create(imp);
 
-        private TransactionStatus status = null;
-        private long nbProcessed = 0;
+				// Dans le cas SIMPLE_MULTI_NOTICE, on n'importe les pptés de l'élément C
+				// racine
+				// qu'une seule fois => on empêche le parser d'aller
+				// rechercher les pptés dans rootC
+				if (propertyOrder == PropertyOrder.BY_CREATION) {
+					eadCParser.getParentMap()
+						.entrySet()
+						.stream()
+						.filter(e -> Objects.equals(e.getValue(), rootC))
+						.map(Map.Entry::getKey)
+						.collect(Collectors.toList())
+						.forEach(k -> eadCParser.getParentMap().remove(k));
+				}
 
-        public TransactionManager(final boolean readonly) {
-            this.readonly = readonly;
-            this.status = transactionService.startTransaction(readonly);
-        }
+				// Ajout des composants enfant, mappés avec le sous-mapping
+				for (final C c : eadCParser.getcLeaves()) {
+					if (!Objects.equals(c, rootC)) {
+						if (simpleNotice) {
+							convertService.convert(docUnit, c, eadCParser, compiledMappingChild, propertyTypes);
+						}
+						else {
+							final DocUnit docUnitChild = convertService.convert(c, eadCParser, compiledMappingChild,
+									propertyTypes, propertyOrder);
+							docUnitChild.setParent(docUnit);
+							// Sauvegarde
+							final ImportedDocUnit impChild = new ImportedDocUnit();
+							impChild.initDocUnitFields(docUnitChild);
+							impChild.setReport(runningReport);
+							impChild.setParentDocUnit(savedUnit.getIdentifier());
+							importDocUnitService.create(impChild);
+						}
+					}
+				}
 
-        /**
-         * {@link Consumer} de suivi de la progession de l'import
-         */
-        public void setProgressJob(final Consumer<Long> progressJob) {
-            this.progressJob = progressJob;
-        }
+				// Sauvegarde du fichier EAD sur le serveur
+				final String docUnitId = savedUnit.getDocUnit().getIdentifier();
+				exportEadService.exportEad(docUnitId, eadheader, rootC);
 
-        /**
-         * Commit de la transaction courante tous les COMMIT appels
-         */
-        public void update() {
-            nbProcessed++;
+				synchronized (runningReport) {
+					runningReport.incrementNbImp(1);
+				}
 
-            if (nbProcessed > 0 && nbProcessed % COMMIT == 0) {
-                transactionService.commitTransaction(status);
-                LOG.debug("{} enregistrements traités", nbProcessed);
-                progressJob.accept(nbProcessed);
+			}
+			catch (final Exception e) {
+				LOG.error(e.getMessage(), e);
+			}
+			// Gestion de la transaction
+			finally {
+				synchronized (tMgr) {
+					tMgr.update();
+				}
+			}
+		});
+	}
 
-                status = transactionService.startTransaction(readonly);
-            }
-        }
+	/**
+	 * Gestion des transactions avec commit tous les x appels
+	 */
+	private class TransactionManager {
 
-        /**
-         * Commit final de la transaction courante
-         */
-        public void close() {
-            transactionService.commitTransaction(status);
-        }
-    }
+		private static final long COMMIT = 100L; // Committe tous les x éléments
+
+		private final boolean readonly; // transaction en lecture seule
+
+		private Consumer<Long> progressJob = lg -> {
+		};// Permet de suivre la progression du job
+
+		private TransactionStatus status = null;
+
+		private long nbProcessed = 0;
+
+		public TransactionManager(final boolean readonly) {
+			this.readonly = readonly;
+			this.status = transactionService.startTransaction(readonly);
+		}
+
+		/**
+		 * {@link Consumer} de suivi de la progession de l'import
+		 */
+		public void setProgressJob(final Consumer<Long> progressJob) {
+			this.progressJob = progressJob;
+		}
+
+		/**
+		 * Commit de la transaction courante tous les COMMIT appels
+		 */
+		public void update() {
+			nbProcessed++;
+
+			if (nbProcessed > 0 && nbProcessed % COMMIT == 0) {
+				transactionService.commitTransaction(status);
+				LOG.debug("{} enregistrements traités", nbProcessed);
+				progressJob.accept(nbProcessed);
+
+				status = transactionService.startTransaction(readonly);
+			}
+		}
+
+		/**
+		 * Commit final de la transaction courante
+		 */
+		public void close() {
+			transactionService.commitTransaction(status);
+		}
+
+	}
+
 }

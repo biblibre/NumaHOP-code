@@ -17,78 +17,85 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DescriptionValueService {
 
-    private final DescriptionRepository descriptionRepository;
-    private final DescriptionValueRepository descriptionValueRepository;
+	private final DescriptionRepository descriptionRepository;
 
-    @Autowired
-    public DescriptionValueService(final DescriptionRepository descriptionRepository, final DescriptionValueRepository descriptionValueRepository) {
-        this.descriptionRepository = descriptionRepository;
-        this.descriptionValueRepository = descriptionValueRepository;
-    }
+	private final DescriptionValueRepository descriptionValueRepository;
 
-    @Transactional(readOnly = true)
-    public List<DescriptionValue> findAll() {
-        return descriptionValueRepository.findAll();
-    }
+	@Autowired
+	public DescriptionValueService(final DescriptionRepository descriptionRepository,
+			final DescriptionValueRepository descriptionValueRepository) {
+		this.descriptionRepository = descriptionRepository;
+		this.descriptionValueRepository = descriptionValueRepository;
+	}
 
-    @Transactional(readOnly = true)
-    public List<DescriptionValue> findByProperty(final DescriptionProperty property) {
-        return descriptionValueRepository.findByProperty(property);
-    }
+	@Transactional(readOnly = true)
+	public List<DescriptionValue> findAll() {
+		return descriptionValueRepository.findAll();
+	}
 
-    @Transactional(readOnly = true)
-    public List<DescriptionValue> findByPropertyIdentifier(final String propertyId) {
-        return descriptionValueRepository.findByPropertyIdentifier(propertyId);
-    }
+	@Transactional(readOnly = true)
+	public List<DescriptionValue> findByProperty(final DescriptionProperty property) {
+		return descriptionValueRepository.findByProperty(property);
+	}
 
-    @Transactional
-    public void delete(final String identifier) throws PgcnValidationException {
-        descriptionValueRepository.findById(identifier).ifPresent(value -> {
-            // Validation de la suppression
-            validateDeletion(value);
-            // Suppression
-            descriptionValueRepository.delete(value);
-        });
-    }
+	@Transactional(readOnly = true)
+	public List<DescriptionValue> findByPropertyIdentifier(final String propertyId) {
+		return descriptionValueRepository.findByPropertyIdentifier(propertyId);
+	}
 
-    private void validateDeletion(final DescriptionValue value) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
+	@Transactional
+	public void delete(final String identifier) throws PgcnValidationException {
+		descriptionValueRepository.findById(identifier).ifPresent(value -> {
+			// Validation de la suppression
+			validateDeletion(value);
+			// Suppression
+			descriptionValueRepository.delete(value);
+		});
+	}
 
-        // Descriptions
-        final Long descCount = descriptionRepository.countByValue(value);
-        if (descCount > 0) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.DESC_VALUE_DEL_EXISTS_DESC).setAdditionalComplement(descCount).build());
-        }
+	private void validateDeletion(final DescriptionValue value) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
 
-        if (!errors.isEmpty()) {
-            value.setErrors(errors);
-            throw new PgcnValidationException(value, errors);
-        }
-    }
+		// Descriptions
+		final Long descCount = descriptionRepository.countByValue(value);
+		if (descCount > 0) {
+			errors.add(builder.reinit()
+				.setCode(PgcnErrorCode.DESC_VALUE_DEL_EXISTS_DESC)
+				.setAdditionalComplement(descCount)
+				.build());
+		}
 
-    @Transactional
-    public DescriptionValue save(final DescriptionValue value) throws PgcnValidationException {
-        validate(value);
-        return descriptionValueRepository.save(value);
-    }
+		if (!errors.isEmpty()) {
+			value.setErrors(errors);
+			throw new PgcnValidationException(value, errors);
+		}
+	}
 
-    private void validate(final DescriptionValue value) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
+	@Transactional
+	public DescriptionValue save(final DescriptionValue value) throws PgcnValidationException {
+		validate(value);
+		return descriptionValueRepository.save(value);
+	}
 
-        // le libellé est obligatoire
-        if (StringUtils.isBlank(value.getLabel())) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.DESC_VALUE_LABEL_MANDATORY).setField("label").build());
-        }
-        // la ppté parente est obligatoire
-        if (value.getProperty() == null) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.DESC_VALUE_PROPERTY_MANDATORY).setField("property").build());
-        }
+	private void validate(final DescriptionValue value) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
 
-        if (!errors.isEmpty()) {
-            value.setErrors(errors);
-            throw new PgcnValidationException(value, errors);
-        }
-    }
+		// le libellé est obligatoire
+		if (StringUtils.isBlank(value.getLabel())) {
+			errors.add(builder.reinit().setCode(PgcnErrorCode.DESC_VALUE_LABEL_MANDATORY).setField("label").build());
+		}
+		// la ppté parente est obligatoire
+		if (value.getProperty() == null) {
+			errors.add(
+					builder.reinit().setCode(PgcnErrorCode.DESC_VALUE_PROPERTY_MANDATORY).setField("property").build());
+		}
+
+		if (!errors.isEmpty()) {
+			value.setErrors(errors);
+			throw new PgcnValidationException(value, errors);
+		}
+	}
+
 }

@@ -20,56 +20,58 @@ import org.springframework.web.bind.annotation.*;
 @PermitAll
 public class HelpPageController extends AbstractRestController {
 
-    private final HelpPageService helpPageService;
+	private final HelpPageService helpPageService;
 
-    @Autowired
-    public HelpPageController(final HelpPageService helpPageService) {
-        super();
-        this.helpPageService = helpPageService;
-    }
+	@Autowired
+	public HelpPageController(final HelpPageService helpPageService) {
+		super();
+		this.helpPageService = helpPageService;
+	}
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<List<ModuleDto>> search(@RequestParam(required = false, value = "modules") final List<String> modules,
-                                                  @RequestParam(required = false, value = "types") final List<HelpPageType> types,
-                                                  @RequestParam(required = false, value = "search") final String search) {
-        return createResponseEntity(helpPageService.search(modules, types, search));
-    }
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<List<ModuleDto>> search(
+			@RequestParam(required = false, value = "modules") final List<String> modules,
+			@RequestParam(required = false, value = "types") final List<HelpPageType> types,
+			@RequestParam(required = false, value = "search") final String search) {
+		return createResponseEntity(helpPageService.search(modules, types, search));
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"tag"})
-    @Timed
-    public ResponseEntity<HelpPageDto> searchByTag(@RequestParam final String tag) {
-        return new ResponseEntity<>(helpPageService.searchByTag(tag), HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "tag" })
+	@Timed
+	public ResponseEntity<HelpPageDto> searchByTag(@RequestParam final String tag) {
+		return new ResponseEntity<>(helpPageService.searchByTag(tag), HttpStatus.OK);
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @Timed
-    public ResponseEntity<HelpPage> getById(@PathVariable final String id) {
-        return createResponseEntity(helpPageService.findOneByIdentifier(id));
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@Timed
+	public ResponseEntity<HelpPage> getById(@PathVariable final String id) {
+		return createResponseEntity(helpPageService.findOneByIdentifier(id));
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    @Timed
-    public ResponseEntity<HelpPage> save(@RequestBody final HelpPage helpPage) {
-        return createResponseEntity(helpPageService.save(helpPage));
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	@Timed
+	public ResponseEntity<HelpPage> save(@RequestBody final HelpPage helpPage) {
+		return createResponseEntity(helpPageService.save(helpPage));
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.OK)
-    @Timed
-    public void delete(@PathVariable final String id) {
-        helpPageService.delete(id);
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.OK)
+	@Timed
+	public void delete(@PathVariable final String id) {
+		helpPageService.delete(id);
+	}
 
-    @RequestMapping(method = RequestMethod.POST)
-    @Timed
-    public ResponseEntity<HelpPage> create(@RequestBody final HelpPage helpPage) {
-        return createResponseEntity(helpPageService.save(helpPage));
-    }
+	@RequestMapping(method = RequestMethod.POST)
+	@Timed
+	public ResponseEntity<HelpPage> create(@RequestBody final HelpPage helpPage) {
+		return createResponseEntity(helpPageService.save(helpPage));
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"modulelist"})
-    @Timed
-    public ResponseEntity<List<String>> findAllLevels() {
-        return createResponseEntity(helpPageService.findAllModules());
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "modulelist" })
+	@Timed
+	public ResponseEntity<List<String>> findAllLevels() {
+		return createResponseEntity(helpPageService.findAllModules());
+	}
+
 }

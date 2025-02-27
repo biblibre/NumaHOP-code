@@ -13,39 +13,39 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SampleService {
 
-    private final SampleRepository sampleRepository;
+	private final SampleRepository sampleRepository;
 
-    @Autowired
-    public SampleService(final SampleRepository sampleRepository) {
-        this.sampleRepository = sampleRepository;
-    }
+	@Autowired
+	public SampleService(final SampleRepository sampleRepository) {
+		this.sampleRepository = sampleRepository;
+	}
 
-    @Transactional
-    public Sample save(final Sample sample) throws PgcnValidationException, PgcnBusinessException {
-        final Sample savedSample = sampleRepository.save(sample);
-        return sampleRepository.getOne(savedSample.getIdentifier());
-    }
+	@Transactional
+	public Sample save(final Sample sample) throws PgcnValidationException, PgcnBusinessException {
+		final Sample savedSample = sampleRepository.save(sample);
+		return sampleRepository.getOne(savedSample.getIdentifier());
+	}
 
-    @Transactional
-    public void delete(final String identifier) {
-        sampleRepository.deleteById(identifier);
-    }
+	@Transactional
+	public void delete(final String identifier) {
+		sampleRepository.deleteById(identifier);
+	}
 
-    @Transactional(readOnly = true)
-    public Sample getOneWithDep(final String id) {
-        return sampleRepository.getSampleWithDep(id);
-    }
+	@Transactional(readOnly = true)
+	public Sample getOneWithDep(final String id) {
+		return sampleRepository.getSampleWithDep(id);
+	}
 
-    @Transactional(readOnly = true)
-    public SampleDTO getOne(final String id) {
-        final Sample sample = sampleRepository.getOne(id);
-        return SampleMapper.INSTANCE.sampleToSampleDTO(sample);
-    }
+	@Transactional(readOnly = true)
+	public SampleDTO getOne(final String id) {
+		final Sample sample = sampleRepository.getOne(id);
+		return SampleMapper.INSTANCE.sampleToSampleDTO(sample);
+	}
 
-    @Transactional(readOnly = true)
-    public SampleDTO findByDelivery(final String deliveryId) {
-        final Sample sample = sampleRepository.findByDeliveryIdentifier(deliveryId);
-        return SampleMapper.INSTANCE.sampleToSampleDTO(sample);
-    }
+	@Transactional(readOnly = true)
+	public SampleDTO findByDelivery(final String deliveryId) {
+		final Sample sample = sampleRepository.findByDeliveryIdentifier(deliveryId);
+		return SampleMapper.INSTANCE.sampleToSampleDTO(sample);
+	}
 
 }

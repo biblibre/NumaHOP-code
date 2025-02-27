@@ -17,94 +17,96 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DescriptionPropertyService {
 
-    private final DescriptionRepository descriptionRepository;
-    private final DescriptionPropertyRepository descriptionPropertyRepository;
-    private final DescriptionValueRepository descriptionValueRepository;
+	private final DescriptionRepository descriptionRepository;
 
-    @Autowired
-    public DescriptionPropertyService(final DescriptionRepository descriptionRepository,
-                                      final DescriptionPropertyRepository descriptionPropertyRepository,
-                                      final DescriptionValueRepository descriptionValueRepository) {
-        this.descriptionRepository = descriptionRepository;
-        this.descriptionPropertyRepository = descriptionPropertyRepository;
-        this.descriptionValueRepository = descriptionValueRepository;
-    }
+	private final DescriptionPropertyRepository descriptionPropertyRepository;
 
-    @Transactional(readOnly = true)
-    public List<DescriptionProperty> findAll() {
-        return descriptionPropertyRepository.findAll();
-    }
+	private final DescriptionValueRepository descriptionValueRepository;
 
-    @Transactional(readOnly = true)
-    public List<DescriptionProperty> findAllOrderByOrder() {
-        return descriptionPropertyRepository.findAllByOrderByOrderAsc();
-    }
+	@Autowired
+	public DescriptionPropertyService(final DescriptionRepository descriptionRepository,
+			final DescriptionPropertyRepository descriptionPropertyRepository,
+			final DescriptionValueRepository descriptionValueRepository) {
+		this.descriptionRepository = descriptionRepository;
+		this.descriptionPropertyRepository = descriptionPropertyRepository;
+		this.descriptionValueRepository = descriptionValueRepository;
+	}
 
-    @Transactional(readOnly = true)
-    public DescriptionProperty findByIdentifier(final String identifier) {
-        return descriptionPropertyRepository.findById(identifier).orElseThrow();
-    }
+	@Transactional(readOnly = true)
+	public List<DescriptionProperty> findAll() {
+		return descriptionPropertyRepository.findAll();
+	}
 
-    @Transactional
-    public void delete(final String identifier) {
-        descriptionPropertyRepository.findById(identifier).ifPresent(property -> {
-            // Validation de la suppression
-            validateDeletion(property);
-            // Suppression
-            descriptionValueRepository.deleteByPropertyIdentifier(identifier);
-            descriptionPropertyRepository.deleteById(identifier);
-        });
-    }
+	@Transactional(readOnly = true)
+	public List<DescriptionProperty> findAllOrderByOrder() {
+		return descriptionPropertyRepository.findAllByOrderByOrderAsc();
+	}
 
-    private void validateDeletion(final DescriptionProperty property) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
+	@Transactional(readOnly = true)
+	public DescriptionProperty findByIdentifier(final String identifier) {
+		return descriptionPropertyRepository.findById(identifier).orElseThrow();
+	}
 
-        // Descriptions
-        final Long descCount = descriptionRepository.countByProperty(property);
-        if (descCount > 0) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.DESC_PROPERTY_DEL_EXISTS_DESC).setAdditionalComplement(descCount).build());
-        }
+	@Transactional
+	public void delete(final String identifier) {
+		descriptionPropertyRepository.findById(identifier).ifPresent(property -> {
+			// Validation de la suppression
+			validateDeletion(property);
+			// Suppression
+			descriptionValueRepository.deleteByPropertyIdentifier(identifier);
+			descriptionPropertyRepository.deleteById(identifier);
+		});
+	}
 
-        if (!errors.isEmpty()) {
-            property.setErrors(errors);
-            throw new PgcnValidationException(property, errors);
-        }
-    }
+	private void validateDeletion(final DescriptionProperty property) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
 
-    @Transactional
-    public DescriptionProperty save(final DescriptionProperty property) throws PgcnValidationException {
-        validate(property);
-        return descriptionPropertyRepository.save(property);
-    }
+		// Descriptions
+		final Long descCount = descriptionRepository.countByProperty(property);
+		if (descCount > 0) {
+			errors.add(builder.reinit()
+				.setCode(PgcnErrorCode.DESC_PROPERTY_DEL_EXISTS_DESC)
+				.setAdditionalComplement(descCount)
+				.build());
+		}
 
-    private void validate(final DescriptionProperty property) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
+		if (!errors.isEmpty()) {
+			property.setErrors(errors);
+			throw new PgcnValidationException(property, errors);
+		}
+	}
 
-        // le libellé est obligatoire
-        if (StringUtils.isBlank(property.getLabel())) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.DESC_PROPERTY_LABEL_MANDATORY).setField("label").build());
-        }
-        // le type est obligatoire
-        if (property.getType() == null) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.DESC_PROPERTY_TYPE_MANDATORY).setField("type").build());
-        }
+	@Transactional
+	public DescriptionProperty save(final DescriptionProperty property) throws PgcnValidationException {
+		validate(property);
+		return descriptionPropertyRepository.save(property);
+	}
 
-        if (!errors.isEmpty()) {
-            property.setErrors(errors);
-            throw new PgcnValidationException(property, errors);
-        }
-    }
+	private void validate(final DescriptionProperty property) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
 
-    public enum FakeDescriptionProperty {
-        INSURANCE,
-        NB_VIEW_BODY,
-        NB_VIEW_BINDING,
-        NB_VIEW_ADDITIONNAL,
-        ADDITIONNAL_DESC,
-        BODY_DESC,
-        BINDING_DESC,
-        DIMENSION
-    }
+		// le libellé est obligatoire
+		if (StringUtils.isBlank(property.getLabel())) {
+			errors.add(builder.reinit().setCode(PgcnErrorCode.DESC_PROPERTY_LABEL_MANDATORY).setField("label").build());
+		}
+		// le type est obligatoire
+		if (property.getType() == null) {
+			errors.add(builder.reinit().setCode(PgcnErrorCode.DESC_PROPERTY_TYPE_MANDATORY).setField("type").build());
+		}
+
+		if (!errors.isEmpty()) {
+			property.setErrors(errors);
+			throw new PgcnValidationException(property, errors);
+		}
+	}
+
+	public enum FakeDescriptionProperty {
+
+		INSURANCE, NB_VIEW_BODY, NB_VIEW_BINDING, NB_VIEW_ADDITIONNAL, ADDITIONNAL_DESC, BODY_DESC, BINDING_DESC,
+		DIMENSION
+
+	}
+
 }

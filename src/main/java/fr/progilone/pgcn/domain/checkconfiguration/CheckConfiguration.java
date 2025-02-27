@@ -19,122 +19,122 @@ import java.util.List;
  */
 @Entity
 @Table(name = CheckConfiguration.TABLE_NAME)
-@JsonSubTypes({@JsonSubTypes.Type(name = "configurationCheck", value = CheckConfiguration.class)})
+@JsonSubTypes({ @JsonSubTypes.Type(name = "configurationCheck", value = CheckConfiguration.class) })
 public class CheckConfiguration extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "conf_configuration_check";
+	public static final String TABLE_NAME = "conf_configuration_check";
 
-    @Column(name = "label")
-    private String label;
+	@Column(name = "label")
+	private String label;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "library")
-    private Library library;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "library")
+	private Library library;
 
-    @Column(name = "major_error_rate")
-    private Double majorErrorRate;
+	@Column(name = "major_error_rate")
+	private Double majorErrorRate;
 
-    @Column(name = "minor_error_rate")
-    private Double minorErrorRate;
+	@Column(name = "minor_error_rate")
+	private Double minorErrorRate;
 
-    @Column(name = "sample_rate")
-    private Double sampleRate;
+	@Column(name = "sample_rate")
+	private Double sampleRate;
 
-    @Column(name = "definition_error_rate")
-    private Double definitionErrorRate;
+	@Column(name = "definition_error_rate")
+	private Double definitionErrorRate;
 
-    @Column(name = "sample_mode")
-    private String sampleMode;
+	@Column(name = "sample_mode")
+	private String sampleMode;
 
-    @Column(name = "separators")
-    private String separators;
+	@Column(name = "separators")
+	private String separators;
 
-    /**
-     * Liste des regles de contrôles automatiques associés
-     */
-    @OneToMany(mappedBy = "checkConfiguration", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final List<AutomaticCheckRule> automaticCheckRules = new ArrayList<>();
+	/**
+	 * Liste des regles de contrôles automatiques associés
+	 */
+	@OneToMany(mappedBy = "checkConfiguration", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private final List<AutomaticCheckRule> automaticCheckRules = new ArrayList<>();
 
-    public String getLabel() {
-        return label;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
-    public Library getLibrary() {
-        return library;
-    }
+	public Library getLibrary() {
+		return library;
+	}
 
-    public void setLibrary(Library library) {
-        this.library = library;
-    }
+	public void setLibrary(Library library) {
+		this.library = library;
+	}
 
-    public Double getMajorErrorRate() {
-        return majorErrorRate;
-    }
+	public Double getMajorErrorRate() {
+		return majorErrorRate;
+	}
 
-    public void setMajorErrorRate(Double majorErrorRate) {
-        this.majorErrorRate = majorErrorRate;
-    }
+	public void setMajorErrorRate(Double majorErrorRate) {
+		this.majorErrorRate = majorErrorRate;
+	}
 
-    public Double getMinorErrorRate() {
-        return minorErrorRate;
-    }
+	public Double getMinorErrorRate() {
+		return minorErrorRate;
+	}
 
-    public void setMinorErrorRate(Double minorErrorRate) {
-        this.minorErrorRate = minorErrorRate;
-    }
+	public void setMinorErrorRate(Double minorErrorRate) {
+		this.minorErrorRate = minorErrorRate;
+	}
 
-    public Double getSampleRate() {
-        return sampleRate;
-    }
+	public Double getSampleRate() {
+		return sampleRate;
+	}
 
-    public void setSampleRate(Double sampleRate) {
-        this.sampleRate = sampleRate;
-    }
+	public void setSampleRate(Double sampleRate) {
+		this.sampleRate = sampleRate;
+	}
 
-    public String getSampleMode() {
-        return sampleMode;
-    }
+	public String getSampleMode() {
+		return sampleMode;
+	}
 
-    public void setSampleMode(String sampleMode) {
-        this.sampleMode = sampleMode;
-    }
+	public void setSampleMode(String sampleMode) {
+		this.sampleMode = sampleMode;
+	}
 
-    public Double getDefinitionErrorRate() {
-        return definitionErrorRate;
-    }
+	public Double getDefinitionErrorRate() {
+		return definitionErrorRate;
+	}
 
-    public void setDefinitionErrorRate(Double definitionRate) {
-        this.definitionErrorRate = definitionRate;
-    }
+	public void setDefinitionErrorRate(Double definitionRate) {
+		this.definitionErrorRate = definitionRate;
+	}
 
-    public String getSeparators() {
-        return separators;
-    }
+	public String getSeparators() {
+		return separators;
+	}
 
-    public void setSeparators(String separators) {
-        this.separators = separators;
-    }
+	public void setSeparators(String separators) {
+		this.separators = separators;
+	}
 
-    public List<AutomaticCheckRule> getAutomaticCheckRules() {
-        return automaticCheckRules;
-    }
+	public List<AutomaticCheckRule> getAutomaticCheckRules() {
+		return automaticCheckRules;
+	}
 
-    public void setAutomaticCheckRules(List<AutomaticCheckRule> rules) {
-        this.automaticCheckRules.clear();
-        if (rules != null) {
-            rules.forEach(this::addAutomaticCheckRule);
-        }
-    }
+	public void setAutomaticCheckRules(List<AutomaticCheckRule> rules) {
+		this.automaticCheckRules.clear();
+		if (rules != null) {
+			rules.forEach(this::addAutomaticCheckRule);
+		}
+	}
 
-    public void addAutomaticCheckRule(AutomaticCheckRule rule) {
-        if (rule != null) {
-            this.automaticCheckRules.add(rule);
-            rule.setCheckConfiguration(this);
-        }
-    }
+	public void addAutomaticCheckRule(AutomaticCheckRule rule) {
+		if (rule != null) {
+			this.automaticCheckRules.add(rule);
+			rule.setCheckConfiguration(this);
+		}
+	}
 
 }

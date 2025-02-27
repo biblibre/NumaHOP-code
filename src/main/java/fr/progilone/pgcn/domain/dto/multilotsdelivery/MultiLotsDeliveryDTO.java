@@ -10,155 +10,168 @@ import java.util.List;
 
 public class MultiLotsDeliveryDTO extends AbstractDTO {
 
-    private String identifier;
-    private String label;
-    private String description;
-    private String payment;
-    private String status;
-    private String method;
-    private LocalDate receptionDate;
-    private String folderPath;
-    private String digitizingNotes;
-    private String controlNotes;
-    private String trainId;
-    private boolean selectedByTrain;
-    private SimpleTrainDTO train;
-    private String createdBy;
+	private String identifier;
 
-    private List<SimpleDeliveryLotDTO> deliveries = new ArrayList<>();
+	private String label;
 
-    private List<SimpleLotForDeliveryDTO> lots = new ArrayList<>();
+	private String description;
 
-    public MultiLotsDeliveryDTO() {
+	private String payment;
 
-    }
+	private String status;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String method;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private LocalDate receptionDate;
 
-    public String getLabel() {
-        return label;
-    }
+	private String folderPath;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	private String digitizingNotes;
 
-    public String getDescription() {
-        return description;
-    }
+	private String controlNotes;
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	private String trainId;
 
-    public String getPayment() {
-        return payment;
-    }
+	private boolean selectedByTrain;
 
-    public void setPayment(final String payment) {
-        this.payment = payment;
-    }
+	private SimpleTrainDTO train;
 
-    public String getStatus() {
-        return status;
-    }
+	private String createdBy;
 
-    public void setStatus(final String status) {
-        this.status = status;
-    }
+	private List<SimpleDeliveryLotDTO> deliveries = new ArrayList<>();
 
-    public String getMethod() {
-        return method;
-    }
+	private List<SimpleLotForDeliveryDTO> lots = new ArrayList<>();
 
-    public void setMethod(final String method) {
-        this.method = method;
-    }
+	public MultiLotsDeliveryDTO() {
 
-    public LocalDate getReceptionDate() {
-        return receptionDate;
-    }
+	}
 
-    public void setReceptionDate(final LocalDate receptionDate) {
-        this.receptionDate = receptionDate;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getFolderPath() {
-        return folderPath;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setFolderPath(final String folderPath) {
-        this.folderPath = folderPath;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public String getDigitizingNotes() {
-        return digitizingNotes;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setDigitizingNotes(final String digitizingNotes) {
-        this.digitizingNotes = digitizingNotes;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public String getControlNotes() {
-        return controlNotes;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public void setControlNotes(final String controlNotes) {
-        this.controlNotes = controlNotes;
-    }
+	public String getPayment() {
+		return payment;
+	}
 
-    public String getTrainId() {
-        return trainId;
-    }
+	public void setPayment(final String payment) {
+		this.payment = payment;
+	}
 
-    public void setTrainId(final String trainId) {
-        this.trainId = trainId;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public boolean isSelectedByTrain() {
-        return selectedByTrain;
-    }
+	public void setStatus(final String status) {
+		this.status = status;
+	}
 
-    public void setSelectedByTrain(final boolean selectedByTrain) {
-        this.selectedByTrain = selectedByTrain;
-    }
+	public String getMethod() {
+		return method;
+	}
 
-    public List<SimpleDeliveryLotDTO> getDeliveries() {
-        return deliveries;
-    }
+	public void setMethod(final String method) {
+		this.method = method;
+	}
 
-    public void setDeliveries(final List<SimpleDeliveryLotDTO> deliveries) {
-        this.deliveries = deliveries;
-    }
+	public LocalDate getReceptionDate() {
+		return receptionDate;
+	}
 
-    public List<SimpleLotForDeliveryDTO> getLots() {
-        return lots;
-    }
+	public void setReceptionDate(final LocalDate receptionDate) {
+		this.receptionDate = receptionDate;
+	}
 
-    public void setLots(final List<SimpleLotForDeliveryDTO> lots) {
-        this.lots = lots;
-    }
+	public String getFolderPath() {
+		return folderPath;
+	}
 
-    public SimpleTrainDTO getTrain() {
-        return train;
-    }
+	public void setFolderPath(final String folderPath) {
+		this.folderPath = folderPath;
+	}
 
-    public void setTrain(final SimpleTrainDTO train) {
-        this.train = train;
-    }
+	public String getDigitizingNotes() {
+		return digitizingNotes;
+	}
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	public void setDigitizingNotes(final String digitizingNotes) {
+		this.digitizingNotes = digitizingNotes;
+	}
 
-    public void setCreatedBy(final String createdBy) {
-        this.createdBy = createdBy;
-    }
+	public String getControlNotes() {
+		return controlNotes;
+	}
+
+	public void setControlNotes(final String controlNotes) {
+		this.controlNotes = controlNotes;
+	}
+
+	public String getTrainId() {
+		return trainId;
+	}
+
+	public void setTrainId(final String trainId) {
+		this.trainId = trainId;
+	}
+
+	public boolean isSelectedByTrain() {
+		return selectedByTrain;
+	}
+
+	public void setSelectedByTrain(final boolean selectedByTrain) {
+		this.selectedByTrain = selectedByTrain;
+	}
+
+	public List<SimpleDeliveryLotDTO> getDeliveries() {
+		return deliveries;
+	}
+
+	public void setDeliveries(final List<SimpleDeliveryLotDTO> deliveries) {
+		this.deliveries = deliveries;
+	}
+
+	public List<SimpleLotForDeliveryDTO> getLots() {
+		return lots;
+	}
+
+	public void setLots(final List<SimpleLotForDeliveryDTO> lots) {
+		this.lots = lots;
+	}
+
+	public SimpleTrainDTO getTrain() {
+		return train;
+	}
+
+	public void setTrain(final SimpleTrainDTO train) {
+		this.train = train;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(final String createdBy) {
+		this.createdBy = createdBy;
+	}
 
 }

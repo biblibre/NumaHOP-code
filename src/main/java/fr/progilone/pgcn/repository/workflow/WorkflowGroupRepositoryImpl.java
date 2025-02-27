@@ -19,60 +19,64 @@ import org.springframework.data.domain.Sort;
 
 public class WorkflowGroupRepositoryImpl implements WorkflowGroupRepositoryCustom {
 
-    private final JPAQueryFactory queryFactory;
+	private final JPAQueryFactory queryFactory;
 
-    public WorkflowGroupRepositoryImpl(final JPAQueryFactory queryFactory) {
-        this.queryFactory = queryFactory;
-    }
+	public WorkflowGroupRepositoryImpl(final JPAQueryFactory queryFactory) {
+		this.queryFactory = queryFactory;
+	}
 
-    @Override
-    public Page<WorkflowGroup> search(final String search, final String initiale, final List<String> libraries, final Pageable pageable) {
+	@Override
+	public Page<WorkflowGroup> search(final String search, final String initiale, final List<String> libraries,
+			final Pageable pageable) {
 
-        final QWorkflowGroup group = QWorkflowGroup.workflowGroup;
+		final QWorkflowGroup group = QWorkflowGroup.workflowGroup;
 
-        final BooleanBuilder builder = new BooleanBuilder();
+		final BooleanBuilder builder = new BooleanBuilder();
 
-        if (StringUtils.isNotBlank(search)) {
-            final BooleanExpression nameFilter = group.name.containsIgnoreCase(search);
-            builder.andAnyOf(nameFilter);
-        }
+		if (StringUtils.isNotBlank(search)) {
+			final BooleanExpression nameFilter = group.name.containsIgnoreCase(search);
+			builder.andAnyOf(nameFilter);
+		}
 
-        if (libraries != null && !libraries.isEmpty()) {
-            final BooleanExpression sitesFilter = group.library.identifier.in(libraries);
-            builder.and(sitesFilter);
-        }
+		if (libraries != null && !libraries.isEmpty()) {
+			final BooleanExpression sitesFilter = group.library.identifier.in(libraries);
+			builder.and(sitesFilter);
+		}
 
-        // Filter initiale
-        QueryDSLBuilderUtils.addFilterForInitiale(builder, initiale, group.name);
+		// Filter initiale
+		QueryDSLBuilderUtils.addFilterForInitiale(builder, initiale, group.name);
 
-        final JPAQuery<WorkflowGroup> baseQuery = queryFactory.selectDistinct(group).from(group).where(builder.getValue());
+		final JPAQuery<WorkflowGroup> baseQuery = queryFactory.selectDistinct(group)
+			.from(group)
+			.where(builder.getValue());
 
-        if (pageable != null) {
-            baseQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
-            applySorting(pageable.getSort(), baseQuery, group);
-        }
+		if (pageable != null) {
+			baseQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
+			applySorting(pageable.getSort(), baseQuery, group);
+		}
 
-        final long total = baseQuery.clone().select(group.countDistinct()).fetchOne();
-        return new PageImpl<>(baseQuery.orderBy(group.name.asc()).fetch(), pageable, total);
-    }
+		final long total = baseQuery.clone().select(group.countDistinct()).fetchOne();
+		return new PageImpl<>(baseQuery.orderBy(group.name.asc()).fetch(), pageable, total);
+	}
 
-    protected JPAQuery<WorkflowGroup> applySorting(final Sort sort, final JPAQuery<WorkflowGroup> query, final QWorkflowGroup group) {
+	protected JPAQuery<WorkflowGroup> applySorting(final Sort sort, final JPAQuery<WorkflowGroup> query,
+			final QWorkflowGroup group) {
 
-        final List<OrderSpecifier<?>> orders = new ArrayList<>();
-        if (sort == null) {
-            return query;
-        }
+		final List<OrderSpecifier<?>> orders = new ArrayList<>();
+		if (sort == null) {
+			return query;
+		}
 
-        for (final Sort.Order order : sort) {
-            final Order qOrder = order.isAscending() ? Order.ASC
-                                                     : Order.DESC;
-            if (order.getProperty().equals("name")) {
-                orders.add(new OrderSpecifier<>(qOrder, group.name));
-            }
-        }
-        OrderSpecifier<?>[] orderArray = new OrderSpecifier[orders.size()];
-        orderArray = orders.toArray(orderArray);
+		for (final Sort.Order order : sort) {
+			final Order qOrder = order.isAscending() ? Order.ASC : Order.DESC;
+			if (order.getProperty().equals("name")) {
+				orders.add(new OrderSpecifier<>(qOrder, group.name));
+			}
+		}
+		OrderSpecifier<?>[] orderArray = new OrderSpecifier[orders.size()];
+		orderArray = orders.toArray(orderArray);
 
-        return query.orderBy(orderArray);
-    }
+		return query.orderBy(orderArray);
+	}
+
 }

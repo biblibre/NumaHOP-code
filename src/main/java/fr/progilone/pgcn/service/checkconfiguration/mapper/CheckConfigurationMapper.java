@@ -10,13 +10,11 @@ import org.mapstruct.factory.Mappers;
 /**
  * Created by lebouchp on 03/02/2017.
  */
-@Mapper(uses = {AutomaticCheckRuleMapper.class,
-                AutomaticCheckTypeMapper.class,
-                SimpleLibraryMapper.class})
+@Mapper(uses = { AutomaticCheckRuleMapper.class, AutomaticCheckTypeMapper.class, SimpleLibraryMapper.class })
 public interface CheckConfigurationMapper {
 
-    CheckConfigurationMapper INSTANCE = Mappers.getMapper(CheckConfigurationMapper.class);
+	CheckConfigurationMapper INSTANCE = Mappers.getMapper(CheckConfigurationMapper.class);
 
-    CheckConfigurationDTO checkConfigurationToCheckConfigurationDTO(CheckConfiguration checkConfiguration);
+	CheckConfigurationDTO checkConfigurationToCheckConfigurationDTO(CheckConfiguration checkConfiguration);
 
 }

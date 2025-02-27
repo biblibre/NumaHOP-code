@@ -8,14 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface DocPropertyRepository extends JpaRepository<DocProperty, String> {
 
-    @Query("Select max(p.rank) " + "from DocProperty p "
-           + "where p.record = ?1 "
-           + "and p.type = ?2")
-    Integer findCurrentRankForProperty(BibliographicRecord record, DocPropertyType type);
+	@Query("Select max(p.rank) " + "from DocProperty p " + "where p.record = ?1 " + "and p.type = ?2")
+	Integer findCurrentRankForProperty(BibliographicRecord record, DocPropertyType type);
 
-    @Query("Select max(p.rank) " + "from DocProperty p "
-           + "where p.record = ?1")
-    Integer findCurrentRankForProperty(BibliographicRecord record);
+	@Query("Select max(p.rank) " + "from DocProperty p " + "where p.record = ?1")
+	Integer findCurrentRankForProperty(BibliographicRecord record);
 
-    Integer countByType(DocPropertyType type);
+	Integer countByType(DocPropertyType type);
+
 }

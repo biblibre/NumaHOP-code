@@ -51,235 +51,251 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/multidelivery")
 public class MultiLotsDeliveryController extends AbstractRestController {
 
-    private final AccessHelper accessHelper;
-    private final LibraryAccesssHelper libraryAccesssHelper;
-    private final UIMultiLotsDeliveryService uiMultiService;
-    private final UIDeliveryService uiDeliveryService;
-    private final EsDeliveryService esDeliveryService;
+	private final AccessHelper accessHelper;
 
-    @Autowired
-    public MultiLotsDeliveryController(final AccessHelper accessHelper,
-                                       final LibraryAccesssHelper libraryAccesssHelper,
-                                       final UIMultiLotsDeliveryService uiMultiService,
-                                       final UIDeliveryService uiDeliveryService,
-                                       final EsDeliveryService esDeliveryService) {
+	private final LibraryAccesssHelper libraryAccesssHelper;
 
-        this.accessHelper = accessHelper;
-        this.libraryAccesssHelper = libraryAccesssHelper;
-        this.uiMultiService = uiMultiService;
-        this.uiDeliveryService = uiDeliveryService;
-        this.esDeliveryService = esDeliveryService;
-    }
+	private final UIMultiLotsDeliveryService uiMultiService;
 
-    /**
-     *
-     * @param id
-     * @return
-     */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, params = {"predeliver"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(DEL_HAB5)
-    public ResponseEntity<Map<String, PreDeliveryDTO>> predeliver(final HttpServletRequest request, @PathVariable final String id) {
+	private final UIDeliveryService uiDeliveryService;
 
-        final MultiLotsDeliveryDTO multiDelivery = uiMultiService.findOneByIdWithDeliveries(id);
-        // Droits d'accès par delivery
-        for (final SimpleDeliveryLotDTO deliv : multiDelivery.getDeliveries()) {
-            if (!accessHelper.checkDelivery(deliv.getIdentifier())) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-        }
-        final Map<String, PreDeliveryDTO> pddtosByDeliv = new HashMap<>();
-        multiDelivery.getDeliveries().forEach(del -> {
-            pddtosByDeliv.put(del.getLabel(), uiDeliveryService.predeliver(del.getIdentifier(), false));
-        });
-        return new ResponseEntity<>(pddtosByDeliv, HttpStatus.OK);
-    }
+	private final EsDeliveryService esDeliveryService;
 
-    /**
-     *
-     * @param request
-     * @param id
-     * @param wrapper
-     * @param prefixToExclude
-     * @return
-     * @throws PgcnTechnicalException
-     */
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST, params = {"deliver"})
-    @Timed
-    @ResponseStatus(HttpStatus.OK)
-    @RolesAllowed({DEL_HAB5,
-                   DEL_HAB5_2})
-    public ResponseEntity<?> deliver(final HttpServletRequest request,
-                                     @PathVariable final String id,
-                                     @RequestBody final MultiLotsDeliveryRequestWrapper wrapper,
-                                     @RequestParam(value = "prefixToExclude", required = false) final List<String> prefixToExclude) throws PgcnTechnicalException {
+	@Autowired
+	public MultiLotsDeliveryController(final AccessHelper accessHelper, final LibraryAccesssHelper libraryAccesssHelper,
+			final UIMultiLotsDeliveryService uiMultiService, final UIDeliveryService uiDeliveryService,
+			final EsDeliveryService esDeliveryService) {
 
-        final MultiLotsDeliveryDTO multiDelivery = uiMultiService.findOneByIdWithDeliveries(id);
-        // Droits d'accès par delivery
-        for (final SimpleDeliveryLotDTO deliv : multiDelivery.getDeliveries()) {
-            if (!accessHelper.checkDelivery(deliv.getIdentifier())) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-        }
+		this.accessHelper = accessHelper;
+		this.libraryAccesssHelper = libraryAccesssHelper;
+		this.uiMultiService = uiMultiService;
+		this.uiDeliveryService = uiDeliveryService;
+		this.esDeliveryService = esDeliveryService;
+	}
 
-        final List<PreDeliveryLockedDocsDTO> lockedDocs = wrapper.getLockedDocs();
-        final List<PreDeliveryDocumentDTO> metaDatas = wrapper.getMetadatas();
+	/**
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, params = { "predeliver" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(DEL_HAB5)
+	public ResponseEntity<Map<String, PreDeliveryDTO>> predeliver(final HttpServletRequest request,
+			@PathVariable final String id) {
 
-        uiMultiService.deliver(multiDelivery, lockedDocs, metaDatas, prefixToExclude);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+		final MultiLotsDeliveryDTO multiDelivery = uiMultiService.findOneByIdWithDeliveries(id);
+		// Droits d'accès par delivery
+		for (final SimpleDeliveryLotDTO deliv : multiDelivery.getDeliveries()) {
+			if (!accessHelper.checkDelivery(deliv.getIdentifier())) {
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		}
+		final Map<String, PreDeliveryDTO> pddtosByDeliv = new HashMap<>();
+		multiDelivery.getDeliveries().forEach(del -> {
+			pddtosByDeliv.put(del.getLabel(), uiDeliveryService.predeliver(del.getIdentifier(), false));
+		});
+		return new ResponseEntity<>(pddtosByDeliv, HttpStatus.OK);
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"search"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(DEL_HAB0)
-    public ResponseEntity<Page<MultiLotsDeliveryDTO>> search(final HttpServletRequest request,
-                                                             @RequestParam(value = "search", required = false) final String search,
-                                                             @RequestParam(value = "libraries", required = false) final List<String> libraries,
-                                                             @RequestParam(value = "projects", required = false) final List<String> projects,
-                                                             @RequestParam(value = "lots", required = false) final List<String> lots,
-                                                             @RequestParam(value = "providers", required = false) final List<String> providers,
-                                                             @RequestParam(value = "status", required = false) final List<Delivery.DeliveryStatus> status,
-                                                             @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(value = "deliveryDateFrom",
-                                                                                                                   required = false) final LocalDate dateFrom,
-                                                             @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(value = "deliveryDateTo",
-                                                                                                                   required = false) final LocalDate dateTo,
-                                                             @RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
-                                                             @RequestParam(value = "size", required = false, defaultValue = "10") final Integer size) {
+	/**
+	 * @param request
+	 * @param id
+	 * @param wrapper
+	 * @param prefixToExclude
+	 * @return
+	 * @throws PgcnTechnicalException
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST, params = { "deliver" })
+	@Timed
+	@ResponseStatus(HttpStatus.OK)
+	@RolesAllowed({ DEL_HAB5, DEL_HAB5_2 })
+	public ResponseEntity<?> deliver(final HttpServletRequest request, @PathVariable final String id,
+			@RequestBody final MultiLotsDeliveryRequestWrapper wrapper,
+			@RequestParam(value = "prefixToExclude", required = false) final List<String> prefixToExclude)
+			throws PgcnTechnicalException {
 
-        final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request, libraries);
-        final List<String> filteredProjects = accessHelper.filterProjects(projects).stream().map(AbstractDomainObject::getIdentifier).collect(Collectors.toList());
-        return new ResponseEntity<>(uiMultiService.search(search, filteredLibraries, filteredProjects, lots, providers, status, dateFrom, dateTo, page, size), HttpStatus.OK);
-    }
+		final MultiLotsDeliveryDTO multiDelivery = uiMultiService.findOneByIdWithDeliveries(id);
+		// Droits d'accès par delivery
+		for (final SimpleDeliveryLotDTO deliv : multiDelivery.getDeliveries()) {
+			if (!accessHelper.checkDelivery(deliv.getIdentifier())) {
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		}
 
-    @RolesAllowed(DEL_HAB0)
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<MultiLotsDeliveryDTO> getById(@PathVariable final String id) {
+		final List<PreDeliveryLockedDocsDTO> lockedDocs = wrapper.getLockedDocs();
+		final List<PreDeliveryDocumentDTO> metaDatas = wrapper.getMetadatas();
 
-        final MultiLotsDeliveryDTO multiDelivery = uiMultiService.findOneByIdWithDeliveries(id);
-        // Droits d'accès par delivery
-        for (final SimpleDeliveryLotDTO deliv : multiDelivery.getDeliveries()) {
-            if (!accessHelper.checkDelivery(deliv.getIdentifier())) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-        }
-        return createResponseEntity(multiDelivery);
-    }
+		uiMultiService.deliver(multiDelivery, lockedDocs, metaDatas, prefixToExclude);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, params = {"digitalDocuments"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(DEL_HAB0)
-    public ResponseEntity<Map<String, List<SimpleDeliveredDigitalDocDTO>>> getSimpleDigitalDocuments(@PathVariable final String id) {
+	@RequestMapping(method = RequestMethod.GET, params = { "search" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(DEL_HAB0)
+	public ResponseEntity<Page<MultiLotsDeliveryDTO>> search(final HttpServletRequest request,
+			@RequestParam(value = "search", required = false) final String search,
+			@RequestParam(value = "libraries", required = false) final List<String> libraries,
+			@RequestParam(value = "projects", required = false) final List<String> projects,
+			@RequestParam(value = "lots", required = false) final List<String> lots,
+			@RequestParam(value = "providers", required = false) final List<String> providers,
+			@RequestParam(value = "status", required = false) final List<Delivery.DeliveryStatus> status,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(value = "deliveryDateFrom",
+					required = false) final LocalDate dateFrom,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(value = "deliveryDateTo",
+					required = false) final LocalDate dateTo,
+			@RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
+			@RequestParam(value = "size", required = false, defaultValue = "10") final Integer size) {
 
-        final MultiLotsDeliveryDTO multiDelivery = uiMultiService.findOneByIdWithDeliveries(id);
-        // Droits d'accès par delivery
-        for (final SimpleDeliveryLotDTO deliv : multiDelivery.getDeliveries()) {
-            if (!accessHelper.checkDelivery(deliv.getIdentifier())) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-        }
+		final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request, libraries);
+		final List<String> filteredProjects = accessHelper.filterProjects(projects)
+			.stream()
+			.map(AbstractDomainObject::getIdentifier)
+			.collect(Collectors.toList());
+		return new ResponseEntity<>(uiMultiService.search(search, filteredLibraries, filteredProjects, lots, providers,
+				status, dateFrom, dateTo, page, size), HttpStatus.OK);
+	}
 
-        final Map<String, List<SimpleDeliveredDigitalDocDTO>> multiDocs = new HashMap<>();
+	@RolesAllowed(DEL_HAB0)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<MultiLotsDeliveryDTO> getById(@PathVariable final String id) {
 
-        multiDelivery.getDeliveries().forEach(del -> {
-            final Set<SimpleDeliveredDigitalDocDTO> docs = uiDeliveryService.getSimpleDigitalDocuments(del.getIdentifier());
-            final List<SimpleDeliveredDigitalDocDTO> sortedDocs = docs.stream()
-                                                                      .sorted(Comparator.comparing(SimpleDeliveredDigitalDocDTO::getDigitalId))
-                                                                      .collect(Collectors.toList());
-            multiDocs.put(del.getIdentifier(), sortedDocs);
-        });
+		final MultiLotsDeliveryDTO multiDelivery = uiMultiService.findOneByIdWithDeliveries(id);
+		// Droits d'accès par delivery
+		for (final SimpleDeliveryLotDTO deliv : multiDelivery.getDeliveries()) {
+			if (!accessHelper.checkDelivery(deliv.getIdentifier())) {
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		}
+		return createResponseEntity(multiDelivery);
+	}
 
-        return new ResponseEntity<>(multiDocs, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, params = { "digitalDocuments" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(DEL_HAB0)
+	public ResponseEntity<Map<String, List<SimpleDeliveredDigitalDocDTO>>> getSimpleDigitalDocuments(
+			@PathVariable final String id) {
 
-    @RolesAllowed(DEL_HAB1)
-    @RequestMapping(method = RequestMethod.POST)
-    @Timed
-    public ResponseEntity<MultiLotsDeliveryDTO> create(final HttpServletRequest request, @RequestBody final MultiLotsDeliveryDTO multiDelivery) throws PgcnException {
+		final MultiLotsDeliveryDTO multiDelivery = uiMultiService.findOneByIdWithDeliveries(id);
+		// Droits d'accès par delivery
+		for (final SimpleDeliveryLotDTO deliv : multiDelivery.getDeliveries()) {
+			if (!accessHelper.checkDelivery(deliv.getIdentifier())) {
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		}
 
-        if (multiDelivery.isSelectedByTrain() && StringUtils.isNotBlank(multiDelivery.getTrainId())) {
-            // Recup tous les lots du train
-            final List<SimpleLotForDeliveryDTO> lotsDto = uiMultiService.findLotsByTrainIdentifier(multiDelivery.getTrainId());
-            multiDelivery.setLots(lotsDto);
-        }
+		final Map<String, List<SimpleDeliveredDigitalDocDTO>> multiDocs = new HashMap<>();
 
-        // Droits d'accès aux lots
-        for (final SimpleLotForDeliveryDTO lot : multiDelivery.getLots()) {
-            if (!accessHelper.checkLot(lot.getIdentifier())) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-        }
-        // Droits d'accès à la livraison: paiment
-        if (StringUtils.equals(multiDelivery.getPayment(), PAID.name()) && !request.isUserInRole(DEL_HAB8)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+		multiDelivery.getDeliveries().forEach(del -> {
+			final Set<SimpleDeliveredDigitalDocDTO> docs = uiDeliveryService
+				.getSimpleDigitalDocuments(del.getIdentifier());
+			final List<SimpleDeliveredDigitalDocDTO> sortedDocs = docs.stream()
+				.sorted(Comparator.comparing(SimpleDeliveredDigitalDocDTO::getDigitalId))
+				.collect(Collectors.toList());
+			multiDocs.put(del.getIdentifier(), sortedDocs);
+		});
 
-        final MultiLotsDeliveryDTO savedDelivery = uiMultiService.create(multiDelivery);
-        savedDelivery.getDeliveries().forEach(deliv -> esDeliveryService.indexAsync(deliv.getIdentifier())); // Moteur de recherche
-        return new ResponseEntity<>(savedDelivery, HttpStatus.CREATED);
-    }
+		return new ResponseEntity<>(multiDocs, HttpStatus.OK);
+	}
 
-    @RolesAllowed({DEL_HAB2,
-                   DEL_HAB8})
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    @Timed
-    public ResponseEntity<MultiLotsDeliveryDTO> update(final HttpServletRequest request, @RequestBody final MultiLotsDeliveryDTO multiDelivery) throws PgcnException {
+	@RolesAllowed(DEL_HAB1)
+	@RequestMapping(method = RequestMethod.POST)
+	@Timed
+	public ResponseEntity<MultiLotsDeliveryDTO> create(final HttpServletRequest request,
+			@RequestBody final MultiLotsDeliveryDTO multiDelivery) throws PgcnException {
 
-        if (multiDelivery.isSelectedByTrain() && StringUtils.isNotBlank(multiDelivery.getTrainId())) {
-            // Recup tous les lots du train
-            final List<SimpleLotForDeliveryDTO> lotsDto = uiMultiService.findLotsByTrainIdentifier(multiDelivery.getTrainId());
-            multiDelivery.setLots(lotsDto);
-        }
+		if (multiDelivery.isSelectedByTrain() && StringUtils.isNotBlank(multiDelivery.getTrainId())) {
+			// Recup tous les lots du train
+			final List<SimpleLotForDeliveryDTO> lotsDto = uiMultiService
+				.findLotsByTrainIdentifier(multiDelivery.getTrainId());
+			multiDelivery.setLots(lotsDto);
+		}
 
-        // Droits d'accès aux lots
-        for (final SimpleDeliveryLotDTO deliv : multiDelivery.getDeliveries()) {
-            if (!accessHelper.checkLot(deliv.getLot().getIdentifier())) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-        }
+		// Droits d'accès aux lots
+		for (final SimpleLotForDeliveryDTO lot : multiDelivery.getLots()) {
+			if (!accessHelper.checkLot(lot.getIdentifier())) {
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		}
+		// Droits d'accès à la livraison: paiment
+		if (StringUtils.equals(multiDelivery.getPayment(), PAID.name()) && !request.isUserInRole(DEL_HAB8)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
 
-        // Droits de modification restreints: pas le paiement, la date de réception, le mode de livraison, les lots de rattachement (#874)
-        if (!request.isUserInRole(DEL_HAB8)) {
-            final MultiLotsDelivery dbMultiDelivery = uiMultiService.getOne(multiDelivery.getIdentifier());
-            if (hasProtectedChanges(multiDelivery, dbMultiDelivery)) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-        }
-        final MultiLotsDeliveryDTO saved = uiMultiService.update(multiDelivery);
-        saved.getDeliveries().forEach(deliv -> esDeliveryService.indexAsync(deliv.getIdentifier())); // Moteur de recherche
-        return new ResponseEntity<>(saved, HttpStatus.OK);
-    }
+		final MultiLotsDeliveryDTO savedDelivery = uiMultiService.create(multiDelivery);
+		savedDelivery.getDeliveries().forEach(deliv -> esDeliveryService.indexAsync(deliv.getIdentifier())); // Moteur
+																												// de
+																												// recherche
+		return new ResponseEntity<>(savedDelivery, HttpStatus.CREATED);
+	}
 
-    @RolesAllowed(DEL_HAB3)
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.OK)
-    @Timed
-    public ResponseEntity<?> delete(final HttpServletRequest request, @PathVariable final String id) {
+	@RolesAllowed({ DEL_HAB2, DEL_HAB8 })
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	@Timed
+	public ResponseEntity<MultiLotsDeliveryDTO> update(final HttpServletRequest request,
+			@RequestBody final MultiLotsDeliveryDTO multiDelivery) throws PgcnException {
 
-        final MultiLotsDeliveryDTO multi = uiMultiService.findOneByIdWithDeliveries(id);
-        for (final SimpleDeliveryLotDTO d : multi.getDeliveries()) {
-            if (!accessHelper.checkDelivery(d.getIdentifier())) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-        }
-        uiMultiService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+		if (multiDelivery.isSelectedByTrain() && StringUtils.isNotBlank(multiDelivery.getTrainId())) {
+			// Recup tous les lots du train
+			final List<SimpleLotForDeliveryDTO> lotsDto = uiMultiService
+				.findLotsByTrainIdentifier(multiDelivery.getTrainId());
+			multiDelivery.setLots(lotsDto);
+		}
 
-    /**
-     * Verif des champs proteges.
-     *
-     * @param newDelivery
-     * @param oldDelivery
-     * @return
-     */
-    private boolean hasProtectedChanges(final MultiLotsDeliveryDTO newDelivery, final MultiLotsDelivery oldDelivery) {
-        // paiement
-        return !StringUtils.equals(newDelivery.getPayment(), oldDelivery.getPayment().name())
-               // date de réception
-               || !Objects.equals(newDelivery.getReceptionDate(), oldDelivery.getReceptionDate())
-               // mode de livraison
-               || !StringUtils.equals(newDelivery.getMethod(), oldDelivery.getMethod().name());
+		// Droits d'accès aux lots
+		for (final SimpleDeliveryLotDTO deliv : multiDelivery.getDeliveries()) {
+			if (!accessHelper.checkLot(deliv.getLot().getIdentifier())) {
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		}
 
-    }
+		// Droits de modification restreints: pas le paiement, la date de réception, le
+		// mode de livraison, les lots de rattachement (#874)
+		if (!request.isUserInRole(DEL_HAB8)) {
+			final MultiLotsDelivery dbMultiDelivery = uiMultiService.getOne(multiDelivery.getIdentifier());
+			if (hasProtectedChanges(multiDelivery, dbMultiDelivery)) {
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		}
+		final MultiLotsDeliveryDTO saved = uiMultiService.update(multiDelivery);
+		saved.getDeliveries().forEach(deliv -> esDeliveryService.indexAsync(deliv.getIdentifier())); // Moteur
+																										// de
+																										// recherche
+		return new ResponseEntity<>(saved, HttpStatus.OK);
+	}
+
+	@RolesAllowed(DEL_HAB3)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.OK)
+	@Timed
+	public ResponseEntity<?> delete(final HttpServletRequest request, @PathVariable final String id) {
+
+		final MultiLotsDeliveryDTO multi = uiMultiService.findOneByIdWithDeliveries(id);
+		for (final SimpleDeliveryLotDTO d : multi.getDeliveries()) {
+			if (!accessHelper.checkDelivery(d.getIdentifier())) {
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		}
+		uiMultiService.delete(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	/**
+	 * Verif des champs proteges.
+	 * @param newDelivery
+	 * @param oldDelivery
+	 * @return
+	 */
+	private boolean hasProtectedChanges(final MultiLotsDeliveryDTO newDelivery, final MultiLotsDelivery oldDelivery) {
+		// paiement
+		return !StringUtils.equals(newDelivery.getPayment(), oldDelivery.getPayment().name())
+				// date de réception
+				|| !Objects.equals(newDelivery.getReceptionDate(), oldDelivery.getReceptionDate())
+				// mode de livraison
+				|| !StringUtils.equals(newDelivery.getMethod(), oldDelivery.getMethod().name());
+
+	}
+
 }

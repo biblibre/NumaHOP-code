@@ -11,132 +11,142 @@ import java.util.List;
  *
  * @author jbrunet
  * @see BibliographicRecord
- *
  */
 public class BibliographicRecordDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String title;
-    private String calames;
-    private String sigb;
-    private String sudoc;
-    private String docElectronique;
-    private SimpleLibraryDTO library;
-    private SimpleDocUnitDTO docUnit;
-    private List<DocPropertyDTO> properties;
+	private String identifier;
 
-    /** Ajout des infos de création */
-    private String createdBy;
-    private LocalDateTime createdDate;
+	private String title;
 
-    /** Ajout des infos de modifications */
-    private String lastModifiedBy;
-    private LocalDateTime lastModifiedDate;
+	private String calames;
 
-    public BibliographicRecordDTO() {
-    }
+	private String sigb;
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	private String sudoc;
 
-    public void setLibrary(SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	private String docElectronique;
 
-    public final SimpleDocUnitDTO getDocUnit() {
-        return docUnit;
-    }
+	private SimpleLibraryDTO library;
 
-    public void setDocUnit(SimpleDocUnitDTO docUnit) {
-        this.docUnit = docUnit;
-    }
+	private SimpleDocUnitDTO docUnit;
 
-    public final List<DocPropertyDTO> getProperties() {
-        return properties;
-    }
+	private List<DocPropertyDTO> properties;
 
-    public void setProperties(List<DocPropertyDTO> properties) {
-        this.properties = properties;
-    }
+	/** Ajout des infos de création */
+	private String createdBy;
 
-    public final String getIdentifier() {
-        return identifier;
-    }
+	private LocalDateTime createdDate;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	/** Ajout des infos de modifications */
+	private String lastModifiedBy;
 
-    public final String getTitle() {
-        return title;
-    }
+	private LocalDateTime lastModifiedDate;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public BibliographicRecordDTO() {
+	}
 
-    public final String getCalames() {
-        return calames;
-    }
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
 
-    public void setCalames(String calames) {
-        this.calames = calames;
-    }
+	public void setLibrary(SimpleLibraryDTO library) {
+		this.library = library;
+	}
 
-    public final String getSigb() {
-        return sigb;
-    }
+	public final SimpleDocUnitDTO getDocUnit() {
+		return docUnit;
+	}
 
-    public void setSigb(String sigb) {
-        this.sigb = sigb;
-    }
+	public void setDocUnit(SimpleDocUnitDTO docUnit) {
+		this.docUnit = docUnit;
+	}
 
-    public final String getSudoc() {
-        return sudoc;
-    }
+	public final List<DocPropertyDTO> getProperties() {
+		return properties;
+	}
 
-    public void setSudoc(String sudoc) {
-        this.sudoc = sudoc;
-    }
+	public void setProperties(List<DocPropertyDTO> properties) {
+		this.properties = properties;
+	}
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	public final String getIdentifier() {
+		return identifier;
+	}
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
+	public final String getTitle() {
+		return title;
+	}
 
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
+	public final String getCalames() {
+		return calames;
+	}
 
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
+	public void setCalames(String calames) {
+		this.calames = calames;
+	}
 
-    public LocalDateTime getLastModifiedDate() {
-        return lastModifiedDate;
-    }
+	public final String getSigb() {
+		return sigb;
+	}
 
-    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
+	public void setSigb(String sigb) {
+		this.sigb = sigb;
+	}
 
-    public String getDocElectronique() {
-        return docElectronique;
-    }
+	public final String getSudoc() {
+		return sudoc;
+	}
 
-    public void setDocElectronique(String docElectronique) {
-        this.docElectronique = docElectronique;
-    }
+	public void setSudoc(String sudoc) {
+		this.sudoc = sudoc;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public LocalDateTime getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public String getDocElectronique() {
+		return docElectronique;
+	}
+
+	public void setDocElectronique(String docElectronique) {
+		this.docElectronique = docElectronique;
+	}
+
 }

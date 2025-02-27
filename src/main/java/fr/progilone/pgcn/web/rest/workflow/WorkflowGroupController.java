@@ -38,91 +38,98 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/workflow_group")
 public class WorkflowGroupController extends AbstractRestController {
 
-    private final WorkflowGroupService service;
-    private final UIWorkflowGroupService uiService;
-    private final LibraryAccesssHelper accessHelper;
-    private final WorkflowAccessHelper workflowAccessHelper;
+	private final WorkflowGroupService service;
 
-    @Autowired
-    public WorkflowGroupController(final WorkflowGroupService service,
-                                   final UIWorkflowGroupService uiService,
-                                   final LibraryAccesssHelper accessHelper,
-                                   final WorkflowAccessHelper workflowAccessHelper) {
-        this.service = service;
-        this.uiService = uiService;
-        this.accessHelper = accessHelper;
-        this.workflowAccessHelper = workflowAccessHelper;
-    }
+	private final UIWorkflowGroupService uiService;
 
-    @RequestMapping(method = RequestMethod.POST)
-    @Timed
-    @RolesAllowed({WORKFLOW_HAB1})
-    public ResponseEntity<WorkflowGroupDTO> create(final HttpServletRequest request, @RequestBody final WorkflowGroupDTO dto) throws PgcnException {
-        if (dto.getLibrary() != null && !accessHelper.checkLibrary(request, dto.getLibrary().getIdentifier())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        final WorkflowGroupDTO saved = uiService.create(dto);
-        return new ResponseEntity<>(saved, HttpStatus.CREATED);
-    }
+	private final LibraryAccesssHelper accessHelper;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @Timed
-    @RolesAllowed({WORKFLOW_HAB3})
-    public ResponseEntity<?> delete(final HttpServletRequest request, @PathVariable final String id) {
-        // Vérification que le group n'est pas lié à une étape en cours ou à venir
-        if (!workflowAccessHelper.canWorkflowGroupBeDeleted(id)) {
-            final PgcnError.Builder builder = new PgcnError.Builder();
-            throw new PgcnBusinessException(builder.reinit().setCode(PgcnErrorCode.WORKFLOW_GROUP_IS_IN_FUTURE_STATE).build());
-        }
-        service.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	private final WorkflowAccessHelper workflowAccessHelper;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"search"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({WORKFLOW_HAB4})
-    public ResponseEntity<Page<SimpleWorkflowGroupDTO>> search(final HttpServletRequest request,
-                                                               @RequestParam(value = "search", required = false) final String search,
-                                                               @RequestParam(value = "initiale", required = false) final String initiale,
-                                                               @RequestParam(value = "libraries", required = false) final List<String> libraries,
-                                                               @RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
-                                                               @RequestParam(value = "size", required = false, defaultValue = "10") final Integer size,
-                                                               @RequestParam(value = "sorts", required = false) final List<String> sorts) {
-        final List<String> filteredLibraries = accessHelper.getLibraryFilter(request, libraries);
-        return new ResponseEntity<>(uiService.search(search, initiale, filteredLibraries, page, size, sorts), HttpStatus.OK);
-    }
+	@Autowired
+	public WorkflowGroupController(final WorkflowGroupService service, final UIWorkflowGroupService uiService,
+			final LibraryAccesssHelper accessHelper, final WorkflowAccessHelper workflowAccessHelper) {
+		this.service = service;
+		this.uiService = uiService;
+		this.accessHelper = accessHelper;
+		this.workflowAccessHelper = workflowAccessHelper;
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({WORKFLOW_HAB4})
-    public ResponseEntity<WorkflowGroupDTO> getById(final HttpServletRequest request, @PathVariable final String id) {
-        final WorkflowGroupDTO group = uiService.getOne(id);
-        return createResponseEntity(group);
-    }
+	@RequestMapping(method = RequestMethod.POST)
+	@Timed
+	@RolesAllowed({ WORKFLOW_HAB1 })
+	public ResponseEntity<WorkflowGroupDTO> create(final HttpServletRequest request,
+			@RequestBody final WorkflowGroupDTO dto) throws PgcnException {
+		if (dto.getLibrary() != null && !accessHelper.checkLibrary(request, dto.getLibrary().getIdentifier())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		final WorkflowGroupDTO saved = uiService.create(dto);
+		return new ResponseEntity<>(saved, HttpStatus.CREATED);
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    @Timed
-    @RolesAllowed({WORKFLOW_HAB2})
-    public ResponseEntity<WorkflowGroupDTO> update(final HttpServletRequest request, @RequestBody final WorkflowGroupDTO dto) throws PgcnException {
-        if (dto.getLibrary() != null && !accessHelper.checkLibrary(request, dto.getLibrary().getIdentifier())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        if (CollectionUtils.isEmpty(dto.getUsers()) && !workflowAccessHelper.canWorkflowGroupBeDeleted(dto.getIdentifier())) {
-            final PgcnError.Builder builder = new PgcnError.Builder();
-            throw new PgcnBusinessException(builder.reinit().setCode(PgcnErrorCode.WORKFLOW_GROUP_IS_IN_FUTURE_STATE).build());
-        }
-        final WorkflowGroupDTO saved = uiService.update(dto);
-        return new ResponseEntity<>(saved, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@Timed
+	@RolesAllowed({ WORKFLOW_HAB3 })
+	public ResponseEntity<?> delete(final HttpServletRequest request, @PathVariable final String id) {
+		// Vérification que le group n'est pas lié à une étape en cours ou à venir
+		if (!workflowAccessHelper.canWorkflowGroupBeDeleted(id)) {
+			final PgcnError.Builder builder = new PgcnError.Builder();
+			throw new PgcnBusinessException(
+					builder.reinit().setCode(PgcnErrorCode.WORKFLOW_GROUP_IS_IN_FUTURE_STATE).build());
+		}
+		service.delete(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-    @RequestMapping(method = RequestMethod.GET,
-                    params = {"groups",
-                              "library"},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({WORKFLOW_HAB4})
-    public ResponseEntity<Collection<SimpleWorkflowGroupDTO>> findGroupsByLibrary(@RequestParam(name = "library") final String libraryId) {
-        // Réponse
-        return new ResponseEntity<>(uiService.findAllForLibrary(libraryId), HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "search" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ WORKFLOW_HAB4 })
+	public ResponseEntity<Page<SimpleWorkflowGroupDTO>> search(final HttpServletRequest request,
+			@RequestParam(value = "search", required = false) final String search,
+			@RequestParam(value = "initiale", required = false) final String initiale,
+			@RequestParam(value = "libraries", required = false) final List<String> libraries,
+			@RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
+			@RequestParam(value = "size", required = false, defaultValue = "10") final Integer size,
+			@RequestParam(value = "sorts", required = false) final List<String> sorts) {
+		final List<String> filteredLibraries = accessHelper.getLibraryFilter(request, libraries);
+		return new ResponseEntity<>(uiService.search(search, initiale, filteredLibraries, page, size, sorts),
+				HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ WORKFLOW_HAB4 })
+	public ResponseEntity<WorkflowGroupDTO> getById(final HttpServletRequest request, @PathVariable final String id) {
+		final WorkflowGroupDTO group = uiService.getOne(id);
+		return createResponseEntity(group);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	@Timed
+	@RolesAllowed({ WORKFLOW_HAB2 })
+	public ResponseEntity<WorkflowGroupDTO> update(final HttpServletRequest request,
+			@RequestBody final WorkflowGroupDTO dto) throws PgcnException {
+		if (dto.getLibrary() != null && !accessHelper.checkLibrary(request, dto.getLibrary().getIdentifier())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		if (CollectionUtils.isEmpty(dto.getUsers())
+				&& !workflowAccessHelper.canWorkflowGroupBeDeleted(dto.getIdentifier())) {
+			final PgcnError.Builder builder = new PgcnError.Builder();
+			throw new PgcnBusinessException(
+					builder.reinit().setCode(PgcnErrorCode.WORKFLOW_GROUP_IS_IN_FUTURE_STATE).build());
+		}
+		final WorkflowGroupDTO saved = uiService.update(dto);
+		return new ResponseEntity<>(saved, HttpStatus.OK);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, params = { "groups", "library" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed({ WORKFLOW_HAB4 })
+	public ResponseEntity<Collection<SimpleWorkflowGroupDTO>> findGroupsByLibrary(
+			@RequestParam(name = "library") final String libraryId) {
+		// Réponse
+		return new ResponseEntity<>(uiService.findAllForLibrary(libraryId), HttpStatus.OK);
+	}
+
 }

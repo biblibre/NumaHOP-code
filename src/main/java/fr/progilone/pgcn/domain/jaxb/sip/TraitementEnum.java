@@ -14,47 +14,45 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour traitementEnum.
- *
+ * </p>
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
+ * </p>
  *
  * <pre>
  * &lt;simpleType name="traitementEnum"&gt;
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
- *     &lt;enumeration value="conservation définitive"/&gt;
- *     &lt;enumeration value="élimination"/&gt;
- *   &lt;/restriction&gt;
+ * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ * &lt;enumeration value="conservation définitive"/&gt;
+ * &lt;enumeration value="élimination"/&gt;
+ * &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- *
  */
 @XmlType(name = "traitementEnum")
 @XmlEnum
 public enum TraitementEnum {
 
-    @XmlEnumValue("conservation d\u00e9finitive")
-    CONSERVATION_DÉFINITIVE("conservation d\u00e9finitive"),
-    @XmlEnumValue("\u00e9limination")
-    ÉLIMINATION("\u00e9limination");
+	@XmlEnumValue("conservation d\u00e9finitive")
+	CONSERVATION_DÉFINITIVE("conservation d\u00e9finitive"), @XmlEnumValue("\u00e9limination")
+	ÉLIMINATION("\u00e9limination");
 
-    private final String value;
+	private final String value;
 
-    TraitementEnum(String v) {
-        value = v;
-    }
+	TraitementEnum(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static TraitementEnum fromValue(String v) {
-        for (TraitementEnum c : TraitementEnum.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static TraitementEnum fromValue(String v) {
+		for (TraitementEnum c : TraitementEnum.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

@@ -15,70 +15,74 @@ import org.springframework.stereotype.Service;
 @Service
 public class ImageDispatcherService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ImageDispatcherService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ImageDispatcherService.class);
 
-    @Autowired
-    private ImageMagickService imageMagickService;
-    @Autowired
-    private ExifToolService exifToolService;
+	@Autowired
+	private ImageMagickService imageMagickService;
 
-    /**
-     * Création des fichiers dérivés.
-     * - La qualité diffère selon le format spécifié.
-     * - la conversion via Image Magick est privilégiée (meilleure qualité perçue)
-     *
-     * @param mimeType
-     * @param masterFile
-     * @param destinationFile
-     *            peut être une vignette ou une dérivé
-     * @param format
-     * @return
-     */
-    public boolean createThumbnailDerived(final String mimeType,
-                                          final File masterFile,
-                                          final File destinationFile,
-                                          final ViewsFormatConfiguration.FileFormat format,
-                                          final ViewsFormatConfiguration formatConfiguration,
-                                          final Long[] masterDims) {
-        boolean success = false;
+	@Autowired
+	private ExifToolService exifToolService;
 
-        if (imageMagickService.isConfigured()) {
-            try {
-                if (ViewsFormatConfiguration.FileFormat.THUMB.equals(format)) {
-                    success = imageMagickService.generateThumbnail(masterFile, destinationFile, format, formatConfiguration, masterDims);
-                } else {
-                    success = imageMagickService.generateDerived(masterFile, destinationFile, format, formatConfiguration, masterDims);
-                }
-                if (success) {
-                    exifToolService.copyAllMetadatas(masterFile, destinationFile);
-                }
-            } catch (final PgcnTechnicalException e) {
-                LOG.error("Utilisation impossible du service ImageMagick pour la conversion", e);
-                success = false;
-            }
-        } else {
-            LOG.info("Le service ImageMagick n'est pas configuré => Passage au Mode Dégradé");
+	/**
+	 * Création des fichiers dérivés. - La qualité diffère selon le format spécifié. - la
+	 * conversion via Image Magick est privilégiée (meilleure qualité perçue)
+	 * @param mimeType
+	 * @param masterFile
+	 * @param destinationFile peut être une vignette ou une dérivé
+	 * @param format
+	 * @return
+	 */
+	public boolean createThumbnailDerived(final String mimeType, final File masterFile, final File destinationFile,
+			final ViewsFormatConfiguration.FileFormat format, final ViewsFormatConfiguration formatConfiguration,
+			final Long[] masterDims) {
+		boolean success = false;
 
-            switch (mimeType) {
-                case "image/jp2":
-                case "image/svg+xml":
-                case "application/pdf":
-                    success = false;
-                    LOG.info("Opération non supportée pour le type {} sans ImageMagick.", mimeType);
-                    break;
-                default:
+		if (imageMagickService.isConfigured()) {
+			try {
+				if (ViewsFormatConfiguration.FileFormat.THUMB.equals(format)) {
+					success = imageMagickService.generateThumbnail(masterFile, destinationFile, format,
+							formatConfiguration, masterDims);
+				}
+				else {
+					success = imageMagickService.generateDerived(masterFile, destinationFile, format,
+							formatConfiguration, masterDims);
+				}
+				if (success) {
+					exifToolService.copyAllMetadatas(masterFile, destinationFile);
+				}
+			}
+			catch (final PgcnTechnicalException e) {
+				LOG.error("Utilisation impossible du service ImageMagick pour la conversion", e);
+				success = false;
+			}
+		}
+		else {
+			LOG.info("Le service ImageMagick n'est pas configuré => Passage au Mode Dégradé");
 
-                    // Mode degrade => ImageIO.
-                    if (ViewsFormatConfiguration.FileFormat.THUMB.equals(format)) {
-                        final int thumbHeight = (int) formatConfiguration.getHeightByFormat(ViewsFormatConfiguration.FileFormat.THUMB);
-                        final int thumbWidth = (int) formatConfiguration.getWidthByFormat(ViewsFormatConfiguration.FileFormat.THUMB);
-                        success = ImageUtils.createThumbnail(masterFile, destinationFile, thumbWidth, thumbHeight);
-                    } else {
-                        success = ImageUtils.createDerived(masterFile, destinationFile, format, formatConfiguration);
-                    }
-                    break;
-            }
-        }
-        return success;
-    }
+			switch (mimeType) {
+				case "image/jp2":
+				case "image/svg+xml":
+				case "application/pdf":
+					success = false;
+					LOG.info("Opération non supportée pour le type {} sans ImageMagick.", mimeType);
+					break;
+				default:
+
+					// Mode degrade => ImageIO.
+					if (ViewsFormatConfiguration.FileFormat.THUMB.equals(format)) {
+						final int thumbHeight = (int) formatConfiguration
+							.getHeightByFormat(ViewsFormatConfiguration.FileFormat.THUMB);
+						final int thumbWidth = (int) formatConfiguration
+							.getWidthByFormat(ViewsFormatConfiguration.FileFormat.THUMB);
+						success = ImageUtils.createThumbnail(masterFile, destinationFile, thumbWidth, thumbHeight);
+					}
+					else {
+						success = ImageUtils.createDerived(masterFile, destinationFile, format, formatConfiguration);
+					}
+					break;
+			}
+		}
+		return success;
+	}
+
 }

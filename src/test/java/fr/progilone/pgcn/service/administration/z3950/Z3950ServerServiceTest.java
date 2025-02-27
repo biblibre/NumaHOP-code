@@ -21,57 +21,58 @@ import org.springframework.data.domain.Sort;
 @ExtendWith(MockitoExtension.class)
 public class Z3950ServerServiceTest {
 
-    @Mock
-    private Z3950ServerRepository z3950ServerRepository;
+	@Mock
+	private Z3950ServerRepository z3950ServerRepository;
 
-    private Z3950ServerService service;
+	private Z3950ServerService service;
 
-    @BeforeEach
-    public void setUp() {
-        service = new Z3950ServerService(z3950ServerRepository);
-    }
+	@BeforeEach
+	public void setUp() {
+		service = new Z3950ServerService(z3950ServerRepository);
+	}
 
-    @Test
-    public void testDelete() {
-        final String identifier = "SERVER-001";
-        service.delete(identifier);
-        verify(z3950ServerRepository).deleteById(identifier);
-    }
+	@Test
+	public void testDelete() {
+		final String identifier = "SERVER-001";
+		service.delete(identifier);
+		verify(z3950ServerRepository).deleteById(identifier);
+	}
 
-    @Test
-    public void testFindOne() {
-        final Z3950Server z3950Server = new Z3950Server();
-        final String identifier = "123";
-        when(z3950ServerRepository.findById(identifier)).thenReturn(Optional.of(z3950Server));
+	@Test
+	public void testFindOne() {
+		final Z3950Server z3950Server = new Z3950Server();
+		final String identifier = "123";
+		when(z3950ServerRepository.findById(identifier)).thenReturn(Optional.of(z3950Server));
 
-        final Z3950Server actual = service.findOne(identifier);
-        assertSame(z3950Server, actual);
-    }
+		final Z3950Server actual = service.findOne(identifier);
+		assertSame(z3950Server, actual);
+	}
 
-    @Test
-    public void testFindAllDTO() {
-        final Z3950Server server = new Z3950Server();
-        server.setIdentifier("identifier");
-        server.setName("name");
-        when(z3950ServerRepository.findAll(any(Sort.class))).thenReturn(Collections.singletonList(server));
+	@Test
+	public void testFindAllDTO() {
+		final Z3950Server server = new Z3950Server();
+		server.setIdentifier("identifier");
+		server.setName("name");
+		when(z3950ServerRepository.findAll(any(Sort.class))).thenReturn(Collections.singletonList(server));
 
-        final List<Z3950ServerDTO> actual = service.findAllDTO();
-        assertEquals(1, actual.size());
-        final Z3950ServerDTO dto = actual.get(0);
-        assertEquals(server.getIdentifier(), dto.getIdentifier());
-        assertEquals(server.getName(), dto.getName());
-    }
+		final List<Z3950ServerDTO> actual = service.findAllDTO();
+		assertEquals(1, actual.size());
+		final Z3950ServerDTO dto = actual.get(0);
+		assertEquals(server.getIdentifier(), dto.getIdentifier());
+		assertEquals(server.getName(), dto.getName());
+	}
 
-    @Test
-    public void testFindAll() {
-        final List<Z3950Server> servers = new ArrayList<>();
-        final Z3950Server server = new Z3950Server();
-        server.setIdentifier("identifier");
-        server.setName("name");
-        servers.add(server);
-        when(z3950ServerRepository.findAll()).thenReturn(servers);
+	@Test
+	public void testFindAll() {
+		final List<Z3950Server> servers = new ArrayList<>();
+		final Z3950Server server = new Z3950Server();
+		server.setIdentifier("identifier");
+		server.setName("name");
+		servers.add(server);
+		when(z3950ServerRepository.findAll()).thenReturn(servers);
 
-        final List<Z3950Server> actual = service.findAll();
-        assertSame(servers, actual);
-    }
+		final List<Z3950Server> actual = service.findAll();
+		assertSame(servers, actual);
+	}
+
 }

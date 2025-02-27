@@ -12,19 +12,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class WebsocketService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(WebsocketService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(WebsocketService.class);
 
-    @Autowired
-    private SimpMessageSendingOperations messagingTemplate;
+	@Autowired
+	private SimpMessageSendingOperations messagingTemplate;
 
-    public void sendNotification(final String userLogin, final NotificationCode notificationCode, final NotificationLevel notificationLevel) {
-        final NotificationDTO notificationDTO = new NotificationDTO(userLogin, notificationCode, notificationLevel);
-        LOG.trace("sendNotification : {}", notificationDTO);
-        messagingTemplate.convertAndSend("/topic/notification", notificationDTO);
-    }
+	public void sendNotification(final String userLogin, final NotificationCode notificationCode,
+			final NotificationLevel notificationLevel) {
+		final NotificationDTO notificationDTO = new NotificationDTO(userLogin, notificationCode, notificationLevel);
+		LOG.trace("sendNotification : {}", notificationDTO);
+		messagingTemplate.convertAndSend("/topic/notification", notificationDTO);
+	}
 
-    public void sendObject(final String identifier, final Object object) {
-        LOG.trace("sendObject : {}", identifier);
-        messagingTemplate.convertAndSend("/topic/object/" + identifier, object);
-    }
+	public void sendObject(final String identifier, final Object object) {
+		LOG.trace("sendObject : {}", identifier);
+		messagingTemplate.convertAndSend("/topic/object/" + identifier, object);
+	}
+
 }

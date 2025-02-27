@@ -28,36 +28,42 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/audit/delivery")
 public class AuditDeliveryController {
 
-    private final AccessHelper accessHelper;
-    private final AuditDeliveryService auditDeliveryService;
+	private final AccessHelper accessHelper;
 
-    @Autowired
-    public AuditDeliveryController(final AccessHelper accessHelper, final AuditDeliveryService auditDeliveryService) {
-        this.accessHelper = accessHelper;
-        this.auditDeliveryService = auditDeliveryService;
-    }
+	private final AuditDeliveryService auditDeliveryService;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"from"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({DEL_HAB0})
-    public ResponseEntity<List<AuditDeliveryRevisionDTO>> getRevisions(@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from") final LocalDate fromDate,
-                                                                       @RequestParam(value = "library", required = false) final List<String> libraries,
-                                                                       @RequestParam(value = "project", required = false) final List<String> projects,
-                                                                       @RequestParam(value = "lot", required = false) final List<String> lots,
-                                                                       @RequestParam(value = "status", required = false) final List<Delivery.DeliveryStatus> status) {
+	@Autowired
+	public AuditDeliveryController(final AccessHelper accessHelper, final AuditDeliveryService auditDeliveryService) {
+		this.accessHelper = accessHelper;
+		this.auditDeliveryService = auditDeliveryService;
+	}
 
-        // Chargement
-        List<AuditDeliveryRevisionDTO> revisions = auditDeliveryService.getRevisions(fromDate, libraries, projects, lots, status);
-        // Droits d'accès
-        revisions = filterDTOs(revisions, AuditDeliveryRevisionDTO::getIdentifier);
-        // Réponse
-        return new ResponseEntity<>(revisions, HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "from" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(DEL_HAB0)
+	public ResponseEntity<List<AuditDeliveryRevisionDTO>> getRevisions(
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from") final LocalDate fromDate,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@RequestParam(value = "lot", required = false) final List<String> lots,
+			@RequestParam(value = "status", required = false) final List<Delivery.DeliveryStatus> status) {
 
-    private <T> List<T> filterDTOs(final Collection<T> dtos, final Function<T, String> getIdentifierFn) {
-        final Collection<Delivery> okDeliverys = accessHelper.filterDeliveries(dtos.stream().map(getIdentifierFn).collect(Collectors.toList()));
-        return dtos.stream()
-                   .filter(dto -> okDeliverys.stream().anyMatch(delivery -> StringUtils.equals(getIdentifierFn.apply(dto), delivery.getIdentifier())))
-                   .collect(Collectors.toList());
-    }
+		// Chargement
+		List<AuditDeliveryRevisionDTO> revisions = auditDeliveryService.getRevisions(fromDate, libraries, projects,
+				lots, status);
+		// Droits d'accès
+		revisions = filterDTOs(revisions, AuditDeliveryRevisionDTO::getIdentifier);
+		// Réponse
+		return new ResponseEntity<>(revisions, HttpStatus.OK);
+	}
+
+	private <T> List<T> filterDTOs(final Collection<T> dtos, final Function<T, String> getIdentifierFn) {
+		final Collection<Delivery> okDeliverys = accessHelper
+			.filterDeliveries(dtos.stream().map(getIdentifierFn).collect(Collectors.toList()));
+		return dtos.stream()
+			.filter(dto -> okDeliverys.stream()
+				.anyMatch(delivery -> StringUtils.equals(getIdentifierFn.apply(dto), delivery.getIdentifier())))
+			.collect(Collectors.toList());
+	}
+
 }

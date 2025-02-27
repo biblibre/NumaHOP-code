@@ -5,5 +5,6 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 
 public interface ResourceLoader {
 
-    InputStream getResourceStream(final ResourceName resourceName) throws ResourceNotFoundException;
+	InputStream getResourceStream(final ResourceName resourceName) throws ResourceNotFoundException;
+
 }

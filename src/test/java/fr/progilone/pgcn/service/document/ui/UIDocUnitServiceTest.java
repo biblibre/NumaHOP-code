@@ -34,117 +34,121 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class UIDocUnitServiceTest {
 
-    @Mock
-    private DocUnitService docUnitService;
-    @Mock
-    private ExportEadService exportEadService;
-    @Mock
-    private UIDocUnitMapper uiDocUnitMapper;
-    @Mock
-    private UICinesReportService uiCinesReportService;
-    @Mock
-    private UIInternetArchiveReportService uiIAReportService;
-    @Mock
-    private ExportMetsService exportMetsService;
-    @Mock
-    private BinaryStorageManager bm;
-    @Mock
-    private UIBibliographicRecordService uiBibliographicRecordService;
-    @Mock
-    private LockService lockService;
-    @Mock
-    private WorkflowService workflowService;
-    @Mock
-    private EsDocUnitService esDocUnitService;
-    @Mock
-    private CinesRequestHandlerService cinesRequestHandlerService;
-    @Mock
-    private ExportFTPConfigurationService exportFTPConfigurationService;
-    @Mock
-    private SftpService sftpService;
-    @Mock
-    private CryptoService cryptoService;
-    @Mock
-    private LotRepository lotRepository;
-    @Mock
-    private DeliveryService deliveryService;
-    @Mock
-    private DigitalDocumentService digitalDocumentService;
-    @Mock
-    private AltoService altoService;
+	@Mock
+	private DocUnitService docUnitService;
 
-    private UIDocUnitService service;
+	@Mock
+	private ExportEadService exportEadService;
 
-    @BeforeEach
-    public void setUp() {
-        service = new UIDocUnitService(docUnitService,
-                                       exportEadService,
-                                       uiDocUnitMapper,
-                                       uiCinesReportService,
-                                       uiIAReportService,
-                                       exportMetsService,
-                                       bm,
-                                       uiBibliographicRecordService,
-                                       lockService,
-                                       workflowService,
-                                       esDocUnitService,
-                                       cinesRequestHandlerService,
-                                       exportFTPConfigurationService,
-                                       sftpService,
-                                       cryptoService,
-                                       lotRepository,
-                                       deliveryService,
-                                       digitalDocumentService,
-                                       altoService);
+	@Mock
+	private UIDocUnitMapper uiDocUnitMapper;
 
-    }
+	@Mock
+	private UICinesReportService uiCinesReportService;
 
-    @Test
-    public void isLotRenumTest() {
+	@Mock
+	private UIInternetArchiveReportService uiIAReportService;
 
-        final Lot lot = getInitialLot();
+	@Mock
+	private ExportMetsService exportMetsService;
 
-        assertFalse(service.isLotRenum(Collections.emptySet(), lot));
+	@Mock
+	private BinaryStorageManager bm;
 
-        final DocUnit renumDoc = new DocUnit();
-        renumDoc.setIdentifier("id_1");
-        renumDoc.setLot(lot);
-        final Set<DocUnit> renumDus = new HashSet<>();
-        renumDus.add(renumDoc);
+	@Mock
+	private UIBibliographicRecordService uiBibliographicRecordService;
 
-        assertFalse(service.isLotRenum(renumDus, lot));
+	@Mock
+	private LockService lockService;
 
-        final Lot lot2 = new Lot();
-        lot2.setIdentifier("another");
-        final DocUnit renumDoc2 = new DocUnit();
-        renumDoc2.setIdentifier("id_2");
-        renumDoc2.setLot(lot2);
+	@Mock
+	private WorkflowService workflowService;
 
-        renumDus.add(renumDoc2);
+	@Mock
+	private EsDocUnitService esDocUnitService;
 
-        assertTrue(service.isLotRenum(renumDus, lot));
+	@Mock
+	private CinesRequestHandlerService cinesRequestHandlerService;
 
-    }
+	@Mock
+	private ExportFTPConfigurationService exportFTPConfigurationService;
 
-    private Lot getInitialLot() {
+	@Mock
+	private SftpService sftpService;
 
-        final Lot lot = new Lot();
-        lot.setIdentifier("id_lot_1");
+	@Mock
+	private CryptoService cryptoService;
 
-        final DocUnit doc1 = new DocUnit();
-        doc1.setIdentifier("id_doc_unit_1");
-        doc1.setLot(lot);
+	@Mock
+	private LotRepository lotRepository;
 
-        final DocUnit doc2 = new DocUnit();
-        doc2.setIdentifier("id_doc_unit_2");
-        doc2.setLot(lot);
+	@Mock
+	private DeliveryService deliveryService;
 
-        final Set<DocUnit> docUnits = new HashSet<>();
-        docUnits.add(doc1);
-        docUnits.add(doc2);
+	@Mock
+	private DigitalDocumentService digitalDocumentService;
 
-        lot.setDocUnits(docUnits);
+	@Mock
+	private AltoService altoService;
 
-        return lot;
-    }
+	private UIDocUnitService service;
+
+	@BeforeEach
+	public void setUp() {
+		service = new UIDocUnitService(docUnitService, exportEadService, uiDocUnitMapper, uiCinesReportService,
+				uiIAReportService, exportMetsService, bm, uiBibliographicRecordService, lockService, workflowService,
+				esDocUnitService, cinesRequestHandlerService, exportFTPConfigurationService, sftpService, cryptoService,
+				lotRepository, deliveryService, digitalDocumentService, altoService);
+
+	}
+
+	@Test
+	public void isLotRenumTest() {
+
+		final Lot lot = getInitialLot();
+
+		assertFalse(service.isLotRenum(Collections.emptySet(), lot));
+
+		final DocUnit renumDoc = new DocUnit();
+		renumDoc.setIdentifier("id_1");
+		renumDoc.setLot(lot);
+		final Set<DocUnit> renumDus = new HashSet<>();
+		renumDus.add(renumDoc);
+
+		assertFalse(service.isLotRenum(renumDus, lot));
+
+		final Lot lot2 = new Lot();
+		lot2.setIdentifier("another");
+		final DocUnit renumDoc2 = new DocUnit();
+		renumDoc2.setIdentifier("id_2");
+		renumDoc2.setLot(lot2);
+
+		renumDus.add(renumDoc2);
+
+		assertTrue(service.isLotRenum(renumDus, lot));
+
+	}
+
+	private Lot getInitialLot() {
+
+		final Lot lot = new Lot();
+		lot.setIdentifier("id_lot_1");
+
+		final DocUnit doc1 = new DocUnit();
+		doc1.setIdentifier("id_doc_unit_1");
+		doc1.setLot(lot);
+
+		final DocUnit doc2 = new DocUnit();
+		doc2.setIdentifier("id_doc_unit_2");
+		doc2.setLot(lot);
+
+		final Set<DocUnit> docUnits = new HashSet<>();
+		docUnits.add(doc1);
+		docUnits.add(doc2);
+
+		lot.setDocUnits(docUnits);
+
+		return lot;
+	}
+
 }

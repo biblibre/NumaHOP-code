@@ -34,101 +34,106 @@ import org.springframework.test.util.ReflectionTestUtils;
 @ExtendWith(MockitoExtension.class)
 public class MailboxConfigurationServiceTest {
 
-    @Mock
-    private MailboxConfigurationRepository mailboxConfigurationRepository;
-    @Mock
-    private CryptoService cryptoService;
+	@Mock
+	private MailboxConfigurationRepository mailboxConfigurationRepository;
 
-    private MailboxConfigurationService service;
+	@Mock
+	private CryptoService cryptoService;
 
-    @BeforeEach
-    public void setUp() {
-        final MailboxConfigurationMapper mapper = MailboxConfigurationMapper.INSTANCE;
-        ReflectionTestUtils.setField(mapper, "simpleLibraryMapper", SimpleLibraryMapper.INSTANCE);
-        service = new MailboxConfigurationService(mailboxConfigurationRepository, cryptoService);
-    }
+	private MailboxConfigurationService service;
 
-    @Test
-    public void testFindAll() {
-        final Set<MailboxConfiguration> mailboxConfigurations = new HashSet<>();
-        final String identifier = "M001";
-        mailboxConfigurations.add(getMailConfiguration(identifier));
+	@BeforeEach
+	public void setUp() {
+		final MailboxConfigurationMapper mapper = MailboxConfigurationMapper.INSTANCE;
+		ReflectionTestUtils.setField(mapper, "simpleLibraryMapper", SimpleLibraryMapper.INSTANCE);
+		service = new MailboxConfigurationService(mailboxConfigurationRepository, cryptoService);
+	}
 
-        when(mailboxConfigurationRepository.findAllWithDependencies()).thenReturn(mailboxConfigurations);
+	@Test
+	public void testFindAll() {
+		final Set<MailboxConfiguration> mailboxConfigurations = new HashSet<>();
+		final String identifier = "M001";
+		mailboxConfigurations.add(getMailConfiguration(identifier));
 
-        final List<MailboxConfigurationDTO> actual = service.findAllDto(null);
-        assertEquals(1, actual.size());
-        assertEquals(identifier, actual.iterator().next().getIdentifier());
-    }
+		when(mailboxConfigurationRepository.findAllWithDependencies()).thenReturn(mailboxConfigurations);
 
-    @Test
-    public void testSearch() {
-        final List<String> libraries = Collections.singletonList("new Library()");
-        final List<MailboxConfiguration> mailboxConfigurations = new ArrayList<>();
-        final String identifier = "M002";
-        mailboxConfigurations.add(getMailConfiguration(identifier));
+		final List<MailboxConfigurationDTO> actual = service.findAllDto(null);
+		assertEquals(1, actual.size());
+		assertEquals(identifier, actual.iterator().next().getIdentifier());
+	}
 
-        when(mailboxConfigurationRepository.search("test", libraries, true)).thenReturn(mailboxConfigurations);
+	@Test
+	public void testSearch() {
+		final List<String> libraries = Collections.singletonList("new Library()");
+		final List<MailboxConfiguration> mailboxConfigurations = new ArrayList<>();
+		final String identifier = "M002";
+		mailboxConfigurations.add(getMailConfiguration(identifier));
 
-        final List<MailboxConfigurationDTO> actual = service.search("test", libraries, true);
-        assertEquals(1, actual.size());
-        assertEquals(identifier, actual.iterator().next().getIdentifier());
-    }
+		when(mailboxConfigurationRepository.search("test", libraries, true)).thenReturn(mailboxConfigurations);
 
-    @Test
-    public void testFindOne() {
-        final String id = "MailConfiguration-001";
-        final MailboxConfiguration mailboxConfiguration = getMailConfiguration(id);
+		final List<MailboxConfigurationDTO> actual = service.search("test", libraries, true);
+		assertEquals(1, actual.size());
+		assertEquals(identifier, actual.iterator().next().getIdentifier());
+	}
 
-        when(mailboxConfigurationRepository.findOneWithDependencies(id)).thenReturn(mailboxConfiguration);
+	@Test
+	public void testFindOne() {
+		final String id = "MailConfiguration-001";
+		final MailboxConfiguration mailboxConfiguration = getMailConfiguration(id);
 
-        final MailboxConfiguration actual = service.findOne(id);
-        assertSame(mailboxConfiguration, actual);
-    }
+		when(mailboxConfigurationRepository.findOneWithDependencies(id)).thenReturn(mailboxConfiguration);
 
-    @Test
-    public void testDelete() {
-        final String id = "MailConfiguration-001";
-        service.delete(id);
-        verify(mailboxConfigurationRepository).deleteById(id);
-    }
+		final MailboxConfiguration actual = service.findOne(id);
+		assertSame(mailboxConfiguration, actual);
+	}
 
-    @Test
-    public void testSave() throws PgcnTechnicalException {
-        final MailboxConfiguration mailboxConfiguration = new MailboxConfiguration();
-        mailboxConfiguration.setIdentifier("MailConfiguration-001");
-        when(mailboxConfigurationRepository.save(any(MailboxConfiguration.class))).then(new ReturnsArgumentAt(0));
-        when(mailboxConfigurationRepository.findOneWithDependencies("MailConfiguration-001")).thenReturn(mailboxConfiguration);
+	@Test
+	public void testDelete() {
+		final String id = "MailConfiguration-001";
+		service.delete(id);
+		verify(mailboxConfigurationRepository).deleteById(id);
+	}
 
-        // #1: validation failed
-        try {
-            service.save(mailboxConfiguration);
-            fail("test Save should have failed !");
-        } catch (final PgcnTechnicalException e) {
-            fail("test Save should have failed with PgcnTechnicalException !");
-        } catch (final PgcnValidationException e) {
-            TestUtil.checkPgcnException(e, CONF_SFTP_LABEL_MANDATORY, CONF_SFTP_LIBRARY_MANDATORY);
-        }
+	@Test
+	public void testSave() throws PgcnTechnicalException {
+		final MailboxConfiguration mailboxConfiguration = new MailboxConfiguration();
+		mailboxConfiguration.setIdentifier("MailConfiguration-001");
+		when(mailboxConfigurationRepository.save(any(MailboxConfiguration.class))).then(new ReturnsArgumentAt(0));
+		when(mailboxConfigurationRepository.findOneWithDependencies("MailConfiguration-001"))
+			.thenReturn(mailboxConfiguration);
 
-        // #2 validation ok
-        mailboxConfiguration.setLabel("MailConfiguration des monographies");
-        final Library lib = new Library();
-        lib.setIdentifier("LIB-001");
-        mailboxConfiguration.setLibrary(lib);
-        final MailboxConfiguration actual = service.save(mailboxConfiguration);
+		// #1: validation failed
+		try {
+			service.save(mailboxConfiguration);
+			fail("test Save should have failed !");
+		}
+		catch (final PgcnTechnicalException e) {
+			fail("test Save should have failed with PgcnTechnicalException !");
+		}
+		catch (final PgcnValidationException e) {
+			TestUtil.checkPgcnException(e, CONF_SFTP_LABEL_MANDATORY, CONF_SFTP_LIBRARY_MANDATORY);
+		}
 
-        assertEquals(mailboxConfiguration.getIdentifier(), actual.getIdentifier());
-        assertNotNull(actual.getLabel());
-    }
+		// #2 validation ok
+		mailboxConfiguration.setLabel("MailConfiguration des monographies");
+		final Library lib = new Library();
+		lib.setIdentifier("LIB-001");
+		mailboxConfiguration.setLibrary(lib);
+		final MailboxConfiguration actual = service.save(mailboxConfiguration);
 
-    private MailboxConfiguration getMailConfiguration(final String identifier) {
-        final Library library = new Library();
-        library.setIdentifier("LIBRARY-001");
+		assertEquals(mailboxConfiguration.getIdentifier(), actual.getIdentifier());
+		assertNotNull(actual.getLabel());
+	}
 
-        final MailboxConfiguration mailboxConfiguration = new MailboxConfiguration();
-        mailboxConfiguration.setIdentifier(identifier);
-        mailboxConfiguration.setLabel("Chou-fleur");
-        mailboxConfiguration.setLibrary(library);
-        return mailboxConfiguration;
-    }
+	private MailboxConfiguration getMailConfiguration(final String identifier) {
+		final Library library = new Library();
+		library.setIdentifier("LIBRARY-001");
+
+		final MailboxConfiguration mailboxConfiguration = new MailboxConfiguration();
+		mailboxConfiguration.setIdentifier(identifier);
+		mailboxConfiguration.setLabel("Chou-fleur");
+		mailboxConfiguration.setLibrary(library);
+		return mailboxConfiguration;
+	}
+
 }

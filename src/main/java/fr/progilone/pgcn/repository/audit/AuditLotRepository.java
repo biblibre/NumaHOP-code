@@ -19,48 +19,50 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AuditLotRepository extends AbstractAuditRepository<Lot> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AuditLotRepository.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AuditLotRepository.class);
 
-    @PersistenceContext
-    private EntityManager em;
+	@PersistenceContext
+	private EntityManager em;
 
-    public AuditLotRepository() {
-        super(Lot.class);
-    }
+	public AuditLotRepository() {
+		super(Lot.class);
+	}
 
-    /**
-     * Recherche la liste des dernières révisions depuis une date donnée
-     *
-     * @param fromDate
-     * @param status
-     * @return
-     */
-    public List<AuditLotRevisionDTO> getRevisions(final LocalDate fromDate, final List<Lot.LotStatus> status) {
-        if (CollectionUtils.isNotEmpty(status)) {
-            final AuditCriterion filterStatus = AuditEntity.property("status").in(status);
-            return super.getRevisions(fromDate, em, Collections.singletonList(filterStatus), this::getAuditLotRevisionDTO);
-        } else {
-            return super.getRevisions(fromDate, em, this::getAuditLotRevisionDTO);
-        }
-    }
+	/**
+	 * Recherche la liste des dernières révisions depuis une date donnée
+	 * @param fromDate
+	 * @param status
+	 * @return
+	 */
+	public List<AuditLotRevisionDTO> getRevisions(final LocalDate fromDate, final List<Lot.LotStatus> status) {
+		if (CollectionUtils.isNotEmpty(status)) {
+			final AuditCriterion filterStatus = AuditEntity.property("status").in(status);
+			return super.getRevisions(fromDate, em, Collections.singletonList(filterStatus),
+					this::getAuditLotRevisionDTO);
+		}
+		else {
+			return super.getRevisions(fromDate, em, this::getAuditLotRevisionDTO);
+		}
+	}
 
-    private AuditLotRevisionDTO getAuditLotRevisionDTO(final Lot lot, final AuditRevision rev) {
-        final AuditLotRevisionDTO dto = new AuditLotRevisionDTO();
-        dto.setRev(rev.getId());
-        dto.setIdentifier(lot.getIdentifier());
+	private AuditLotRevisionDTO getAuditLotRevisionDTO(final Lot lot, final AuditRevision rev) {
+		final AuditLotRevisionDTO dto = new AuditLotRevisionDTO();
+		dto.setRev(rev.getId());
+		dto.setIdentifier(lot.getIdentifier());
 
-        // Révision
-        dto.setTimestamp(rev.getTimestamp());
-        dto.setUsername(rev.getUsername());
+		// Révision
+		dto.setTimestamp(rev.getTimestamp());
+		dto.setUsername(rev.getUsername());
 
-        // Lot
-        try {
-            dto.setStatus(lot.getStatus());
+		// Lot
+		try {
+			dto.setStatus(lot.getStatus());
 
-        } catch (final EntityNotFoundException e) {
-            LOG.warn(e.getMessage());
-        }
-        return dto;
-    }
+		}
+		catch (final EntityNotFoundException e) {
+			LOG.warn(e.getMessage());
+		}
+		return dto;
+	}
 
 }

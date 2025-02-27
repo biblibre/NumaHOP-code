@@ -10,23 +10,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class ImageMetadataValuesMapper {
 
-    private DocUnitRepository docUnitRepository;
-    private ImageMetadataRepository imageMetadataRepository;
+	private DocUnitRepository docUnitRepository;
 
-    @Autowired
-    public ImageMetadataValuesMapper(final DocUnitRepository docUnitRepository, final ImageMetadataRepository imageMetadataRepository) {
-        this.docUnitRepository = docUnitRepository;
-        this.imageMetadataRepository = imageMetadataRepository;
-    }
+	private ImageMetadataRepository imageMetadataRepository;
 
-    public void mapInto(final ImageMetadataValuesDTO valuesDto, final ImageMetadataValue values) {
+	@Autowired
+	public ImageMetadataValuesMapper(final DocUnitRepository docUnitRepository,
+			final ImageMetadataRepository imageMetadataRepository) {
+		this.docUnitRepository = docUnitRepository;
+		this.imageMetadataRepository = imageMetadataRepository;
+	}
 
-        if (valuesDto.getIdentifier() != null) {
-            values.setIdentifier(valuesDto.getIdentifier());
-        }
-        values.setDocUnit(docUnitRepository.getOne(valuesDto.getDocUnitId()));
-        values.setMetadata(imageMetadataRepository.getOne(valuesDto.getMetadataId()));
-        values.setValue(valuesDto.getValue());
+	public void mapInto(final ImageMetadataValuesDTO valuesDto, final ImageMetadataValue values) {
 
-    }
+		if (valuesDto.getIdentifier() != null) {
+			values.setIdentifier(valuesDto.getIdentifier());
+		}
+		values.setDocUnit(docUnitRepository.getOne(valuesDto.getDocUnitId()));
+		values.setMetadata(imageMetadataRepository.getOne(valuesDto.getMetadataId()));
+		values.setValue(valuesDto.getValue());
+
+	}
+
 }

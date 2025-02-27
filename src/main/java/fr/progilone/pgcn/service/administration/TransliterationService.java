@@ -18,48 +18,48 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TransliterationService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TransliterationService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(TransliterationService.class);
 
-    private final TransliterationRepository transliterationRepository;
+	private final TransliterationRepository transliterationRepository;
 
-    private final LoadingCache<Transliteration.TransliterationId, String> cache = CacheBuilder.newBuilder()
-                                                                                              .maximumSize(10000)
-                                                                                              .expireAfterWrite(1, TimeUnit.HOURS)
-                                                                                              .build(new CacheLoader<Transliteration.TransliterationId, String>() {
+	private final LoadingCache<Transliteration.TransliterationId, String> cache = CacheBuilder.newBuilder()
+		.maximumSize(10000)
+		.expireAfterWrite(1, TimeUnit.HOURS)
+		.build(new CacheLoader<Transliteration.TransliterationId, String>() {
 
-                                                                                                  @Override
-                                                                                                  public String load(final Transliteration.TransliterationId id) {
-                                                                                                      final Transliteration transliteration = transliterationRepository.findById(id)
-                                                                                                                                                                       .orElse(null);
-                                                                                                      return transliteration != null ? transliteration.getValue()
-                                                                                                                                     : id.getCode();
-                                                                                                  }
-                                                                                              });
+			@Override
+			public String load(final Transliteration.TransliterationId id) {
+				final Transliteration transliteration = transliterationRepository.findById(id).orElse(null);
+				return transliteration != null ? transliteration.getValue() : id.getCode();
+			}
+		});
 
-    @Autowired
-    public TransliterationService(final TransliterationRepository transliterationRepository) {
-        this.transliterationRepository = transliterationRepository;
-    }
+	@Autowired
+	public TransliterationService(final TransliterationRepository transliterationRepository) {
+		this.transliterationRepository = transliterationRepository;
+	}
 
-    @Transactional(readOnly = true)
-    public String getValue(final Transliteration.Type type, final String code) {
-        return cache.getUnchecked(new Transliteration.TransliterationId(type, code));
-    }
+	@Transactional(readOnly = true)
+	public String getValue(final Transliteration.Type type, final String code) {
+		return cache.getUnchecked(new Transliteration.TransliterationId(type, code));
+	}
 
-    @Transactional(readOnly = true)
-    public String getValue(final String type, final String code) {
-        try {
-            final Transliteration.Type typeValue = Transliteration.Type.valueOf(type);
-            return getValue(typeValue, code);
+	@Transactional(readOnly = true)
+	public String getValue(final String type, final String code) {
+		try {
+			final Transliteration.Type typeValue = Transliteration.Type.valueOf(type);
+			return getValue(typeValue, code);
 
-        } catch (IllegalArgumentException e) {
-            LOG.warn(e.getMessage(), e);
-            return code;
-        }
-    }
+		}
+		catch (IllegalArgumentException e) {
+			LOG.warn(e.getMessage(), e);
+			return code;
+		}
+	}
 
-    @Transactional(readOnly = true)
-    public String getFunction(final String code) {
-        return getValue(Transliteration.Type.FUNCTION, code);
-    }
+	@Transactional(readOnly = true)
+	public String getFunction(final String code) {
+		return getValue(Transliteration.Type.FUNCTION, code);
+	}
+
 }

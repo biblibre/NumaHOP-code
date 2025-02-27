@@ -6,80 +6,88 @@ import java.time.LocalDateTime;
 
 public class DocUnitStateDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String key;
-    private LocalDateTime startDate;
-    private LocalDateTime dueDate;
-    private LocalDateTime endDate;
-    private WorkflowStateStatus status;
-    private String user;
-    private boolean canStateBeProcessed;
+	private String identifier;
 
-    public DocUnitStateDTO() {
+	private String key;
 
-    }
+	private LocalDateTime startDate;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private LocalDateTime dueDate;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private LocalDateTime endDate;
 
-    public String getKey() {
-        return key;
-    }
+	private WorkflowStateStatus status;
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+	private String user;
 
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
+	private boolean canStateBeProcessed;
 
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
-    }
+	public DocUnitStateDTO() {
 
-    public LocalDateTime getDueDate() {
-        return dueDate;
-    }
+	}
 
-    public void setDueDate(LocalDateTime dueDate) {
-        this.dueDate = dueDate;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
-    }
+	public String getKey() {
+		return key;
+	}
 
-    public WorkflowStateStatus getStatus() {
-        return status;
-    }
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    public void setStatus(WorkflowStateStatus status) {
-        this.status = status;
-    }
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
 
-    public String getUser() {
-        return user;
-    }
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
 
-    public void setUser(String user) {
-        this.user = user;
-    }
+	public LocalDateTime getDueDate() {
+		return dueDate;
+	}
 
-    public boolean isCanStateBeProcessed() {
-        return canStateBeProcessed;
-    }
+	public void setDueDate(LocalDateTime dueDate) {
+		this.dueDate = dueDate;
+	}
 
-    public void setCanStateBeProcessed(boolean canStateBeProcessed) {
-        this.canStateBeProcessed = canStateBeProcessed;
-    }
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
+
+	public WorkflowStateStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(WorkflowStateStatus status) {
+		this.status = status;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public boolean isCanStateBeProcessed() {
+		return canStateBeProcessed;
+	}
+
+	public void setCanStateBeProcessed(boolean canStateBeProcessed) {
+		this.canStateBeProcessed = canStateBeProcessed;
+	}
+
 }

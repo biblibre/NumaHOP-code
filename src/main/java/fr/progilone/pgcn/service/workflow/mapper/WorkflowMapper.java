@@ -16,21 +16,20 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {SimpleLibraryMapper.class,
-                UserMapper.class,
-                SimpleWorkflowMapper.class})
+@Mapper(uses = { SimpleLibraryMapper.class, UserMapper.class, SimpleWorkflowMapper.class })
 public interface WorkflowMapper {
 
-    WorkflowMapper INSTANCE = Mappers.getMapper(WorkflowMapper.class);
+	WorkflowMapper INSTANCE = Mappers.getMapper(WorkflowMapper.class);
 
-    WorkflowGroupDTO groupToGroupDTO(WorkflowGroup group);
+	WorkflowGroupDTO groupToGroupDTO(WorkflowGroup group);
 
-    @Mapping(target = "states", source = "model.modelStates")
-    WorkflowModelDTO modelToModelDTO(WorkflowModel model);
+	@Mapping(target = "states", source = "model.modelStates")
+	WorkflowModelDTO modelToModelDTO(WorkflowModel model);
 
-    WorkflowModelStateDTO modelStateToModelStateDTO(WorkflowModelState state);
+	WorkflowModelStateDTO modelStateToModelStateDTO(WorkflowModelState state);
 
-    DocUnitWorkflowDTO workflowToWorkflowDTO(DocUnitWorkflow workflow);
+	DocUnitWorkflowDTO workflowToWorkflowDTO(DocUnitWorkflow workflow);
 
-    DocUnitStateDTO workflowStateToWorkflowStateDTO(DocUnitState state);
+	DocUnitStateDTO workflowStateToWorkflowStateDTO(DocUnitState state);
+
 }

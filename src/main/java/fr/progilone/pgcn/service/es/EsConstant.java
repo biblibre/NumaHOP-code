@@ -2,19 +2,28 @@ package fr.progilone.pgcn.service.es;
 
 public interface EsConstant {
 
-    String ANALYZER_KEYWORD = "keyword";
-    String ANALYZER_CI_AI = "ci_ai";
-    String ANALYZER_CI_AS = "ci_as";
-    String ANALYZER_PHRASE = "ci_ai_phr";
+	String ANALYZER_KEYWORD = "keyword";
 
-    String FIELD_LIBRARY = "libraryId";
+	String ANALYZER_CI_AI = "ci_ai";
 
-    String SUBFIELD_RAW = "raw";
-    String SUBFIELD_CI_AI = "ci_ai";
-    String SUBFIELD_CI_AS = "ci_as";
-    String SUBFIELD_PHRASE = "ci_ai_phr";
+	String ANALYZER_CI_AS = "ci_as";
 
-    String SUGGEST_FIELD = "suggest";
-    String SUGGEST_CTX_LIBRARY = "library";
-    String SUGGEST_CTX_GLOBAL = "___global___";
+	String ANALYZER_PHRASE = "ci_ai_phr";
+
+	String FIELD_LIBRARY = "libraryId";
+
+	String SUBFIELD_RAW = "raw";
+
+	String SUBFIELD_CI_AI = "ci_ai";
+
+	String SUBFIELD_CI_AS = "ci_as";
+
+	String SUBFIELD_PHRASE = "ci_ai_phr";
+
+	String SUGGEST_FIELD = "suggest";
+
+	String SUGGEST_CTX_LIBRARY = "library";
+
+	String SUGGEST_CTX_GLOBAL = "___global___";
+
 }

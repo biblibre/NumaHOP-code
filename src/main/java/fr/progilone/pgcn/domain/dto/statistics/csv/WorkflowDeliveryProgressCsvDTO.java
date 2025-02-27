@@ -7,80 +7,94 @@ import jakarta.annotation.Nullable;
 
 public class WorkflowDeliveryProgressCsvDTO implements Comparable<WorkflowDeliveryProgressCsvDTO> {
 
-    private static final Ordering<WorkflowDeliveryProgressCsvDTO> ORDER_DTO;
+	private static final Ordering<WorkflowDeliveryProgressCsvDTO> ORDER_DTO;
 
-    static {
-        final Ordering<WorkflowDeliveryProgressCsvDTO> orderLib = Ordering.natural().nullsFirst().onResultOf(WorkflowDeliveryProgressCsvDTO::getLibraryName);
-        final Ordering<WorkflowDeliveryProgressCsvDTO> orderPj = Ordering.natural().nullsFirst().onResultOf(WorkflowDeliveryProgressCsvDTO::getProjectName);
-        final Ordering<WorkflowDeliveryProgressCsvDTO> orderLot = Ordering.natural().nullsFirst().onResultOf(WorkflowDeliveryProgressCsvDTO::getLotLabel);
-        final Ordering<WorkflowDeliveryProgressCsvDTO> orderDlv = Ordering.natural().nullsFirst().onResultOf(WorkflowDeliveryProgressCsvDTO::getDeliveryLabel);
+	static {
+		final Ordering<WorkflowDeliveryProgressCsvDTO> orderLib = Ordering.natural()
+			.nullsFirst()
+			.onResultOf(WorkflowDeliveryProgressCsvDTO::getLibraryName);
+		final Ordering<WorkflowDeliveryProgressCsvDTO> orderPj = Ordering.natural()
+			.nullsFirst()
+			.onResultOf(WorkflowDeliveryProgressCsvDTO::getProjectName);
+		final Ordering<WorkflowDeliveryProgressCsvDTO> orderLot = Ordering.natural()
+			.nullsFirst()
+			.onResultOf(WorkflowDeliveryProgressCsvDTO::getLotLabel);
+		final Ordering<WorkflowDeliveryProgressCsvDTO> orderDlv = Ordering.natural()
+			.nullsFirst()
+			.onResultOf(WorkflowDeliveryProgressCsvDTO::getDeliveryLabel);
 
-        ORDER_DTO = orderLib.compound(orderPj).compound(orderLot).compound(orderDlv);
-    }
+		ORDER_DTO = orderLib.compound(orderPj).compound(orderLot).compound(orderDlv);
+	}
 
-    @CsvBindByName(column = "1.Bibliothèque")
-    private String libraryName;
-    @CsvBindByName(column = "2.Projet")
-    private String projectName;
-    @CsvBindByName(column = "3.Lot")
-    private String lotLabel;
-    @CsvBindByName(column = "4.Livraison")
-    private String deliveryLabel;
-    @CsvBindByName(column = "5.Étape")
-    private WorkflowStateKey key;
-    @CsvBindByName(column = "6.Nombre d'UD")
-    private long count = 0L;
+	@CsvBindByName(column = "1.Bibliothèque")
+	private String libraryName;
 
-    public String getLibraryName() {
-        return libraryName;
-    }
+	@CsvBindByName(column = "2.Projet")
+	private String projectName;
 
-    public void setLibraryName(final String libraryName) {
-        this.libraryName = libraryName;
-    }
+	@CsvBindByName(column = "3.Lot")
+	private String lotLabel;
 
-    public String getProjectName() {
-        return projectName;
-    }
+	@CsvBindByName(column = "4.Livraison")
+	private String deliveryLabel;
 
-    public void setProjectName(final String projectName) {
-        this.projectName = projectName;
-    }
+	@CsvBindByName(column = "5.Étape")
+	private WorkflowStateKey key;
 
-    public String getLotLabel() {
-        return lotLabel;
-    }
+	@CsvBindByName(column = "6.Nombre d'UD")
+	private long count = 0L;
 
-    public void setLotLabel(final String lotLabel) {
-        this.lotLabel = lotLabel;
-    }
+	public String getLibraryName() {
+		return libraryName;
+	}
 
-    public String getDeliveryLabel() {
-        return deliveryLabel;
-    }
+	public void setLibraryName(final String libraryName) {
+		this.libraryName = libraryName;
+	}
 
-    public void setDeliveryLabel(final String deliveryLabel) {
-        this.deliveryLabel = deliveryLabel;
-    }
+	public String getProjectName() {
+		return projectName;
+	}
 
-    public WorkflowStateKey getKey() {
-        return key;
-    }
+	public void setProjectName(final String projectName) {
+		this.projectName = projectName;
+	}
 
-    public void setKey(final WorkflowStateKey key) {
-        this.key = key;
-    }
+	public String getLotLabel() {
+		return lotLabel;
+	}
 
-    public long getCount() {
-        return count;
-    }
+	public void setLotLabel(final String lotLabel) {
+		this.lotLabel = lotLabel;
+	}
 
-    public void setCount(final long count) {
-        this.count = count;
-    }
+	public String getDeliveryLabel() {
+		return deliveryLabel;
+	}
 
-    @Override
-    public int compareTo(@Nullable final WorkflowDeliveryProgressCsvDTO o) {
-        return ORDER_DTO.compare(this, o);
-    }
+	public void setDeliveryLabel(final String deliveryLabel) {
+		this.deliveryLabel = deliveryLabel;
+	}
+
+	public WorkflowStateKey getKey() {
+		return key;
+	}
+
+	public void setKey(final WorkflowStateKey key) {
+		this.key = key;
+	}
+
+	public long getCount() {
+		return count;
+	}
+
+	public void setCount(final long count) {
+		this.count = count;
+	}
+
+	@Override
+	public int compareTo(@Nullable final WorkflowDeliveryProgressCsvDTO o) {
+		return ORDER_DTO.compare(this, o);
+	}
+
 }

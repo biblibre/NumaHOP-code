@@ -6,12 +6,12 @@ import java.util.Collection;
 
 public interface ObjectWithErrors {
 
-    Collection<PgcnError> getErrorsAsList();
+	Collection<PgcnError> getErrorsAsList();
 
-    PgcnList<PgcnError> getErrors();
+	PgcnList<PgcnError> getErrors();
 
-    void addError(PgcnError error);
+	void addError(PgcnError error);
 
-    void setErrors(PgcnList<PgcnError> errors);
+	void setErrors(PgcnList<PgcnError> errors);
 
 }

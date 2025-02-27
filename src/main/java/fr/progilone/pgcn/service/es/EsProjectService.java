@@ -19,44 +19,39 @@ import org.springframework.stereotype.Service;
 @Service
 public class EsProjectService extends AbstractElasticsearchOperations<Project, EsProject> {
 
-    private final ProjectRepository projectRepository;
-    private final EsProjectRepository esProjectRepository;
+	private final ProjectRepository projectRepository;
 
-    @Autowired
-    public EsProjectService(final ProjectRepository projectRepository,
-                            final EsProjectRepository esProjectRepository,
-                            final TransactionService transactionService,
-                            final ElasticsearchOperations elasticsearchOperations,
-                            @Value("${elasticsearch.bulk_size}") final Integer bulkSize) {
-        super(transactionService, elasticsearchOperations, bulkSize, EsProject.class, projectRepository, esProjectRepository);
-        this.projectRepository = projectRepository;
-        this.esProjectRepository = esProjectRepository;
-    }
+	private final EsProjectRepository esProjectRepository;
 
-    /**
-     * Recherche d'unités documentaires
-     */
-    public Page<EsProject> search(final String[] rawSearches,
-                                  final String[] rawFilters,
-                                  final List<String> libraries,
-                                  final boolean fuzzy,
-                                  final Integer page,
-                                  final Integer size,
-                                  final String[] rawSorts,
-                                  final boolean facet) {
-        final EsSearchOperation[] searches = EsSearchOperation.fromRawSearches(rawSearches);
-        final EsSearchOperation[] filters = EsSearchOperation.fromRawFilters(rawFilters);
-        final Sort sort = EsSort.fromRawSorts(rawSorts, SearchEntity.PROJECT);
-        return esProjectRepository.search(searches, libraries, fuzzy, filters, PageRequest.of(page, size, sort), facet);
-    }
+	@Autowired
+	public EsProjectService(final ProjectRepository projectRepository, final EsProjectRepository esProjectRepository,
+			final TransactionService transactionService, final ElasticsearchOperations elasticsearchOperations,
+			@Value("${elasticsearch.bulk_size}") final Integer bulkSize) {
+		super(transactionService, elasticsearchOperations, bulkSize, EsProject.class, projectRepository,
+				esProjectRepository);
+		this.projectRepository = projectRepository;
+		this.esProjectRepository = esProjectRepository;
+	}
 
-    @Override
-    protected EsProject convertToEsObject(final Project domainObject) {
-        return EsProject.from(domainObject);
-    }
+	/**
+	 * Recherche d'unités documentaires
+	 */
+	public Page<EsProject> search(final String[] rawSearches, final String[] rawFilters, final List<String> libraries,
+			final boolean fuzzy, final Integer page, final Integer size, final String[] rawSorts, final boolean facet) {
+		final EsSearchOperation[] searches = EsSearchOperation.fromRawSearches(rawSearches);
+		final EsSearchOperation[] filters = EsSearchOperation.fromRawFilters(rawFilters);
+		final Sort sort = EsSort.fromRawSorts(rawSorts, SearchEntity.PROJECT);
+		return esProjectRepository.search(searches, libraries, fuzzy, filters, PageRequest.of(page, size, sort), facet);
+	}
 
-    @Override
-    protected List<String> findAllIdentifiersToIndex() {
-        return projectRepository.findAllIdentifiers();
-    }
+	@Override
+	protected EsProject convertToEsObject(final Project domainObject) {
+		return EsProject.from(domainObject);
+	}
+
+	@Override
+	protected List<String> findAllIdentifiersToIndex() {
+		return projectRepository.findAllIdentifiers();
+	}
+
 }

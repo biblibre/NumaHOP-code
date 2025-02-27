@@ -29,52 +29,60 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/audit/mapping")
 public class AuditMappingController extends AbstractRestController {
 
-    private final LibraryAccesssHelper libraryAccesssHelper;
-    private final AuditMappingService auditMappingService;
-    private final MappingService mappingService;
+	private final LibraryAccesssHelper libraryAccesssHelper;
 
-    @Autowired
-    public AuditMappingController(LibraryAccesssHelper libraryAccesssHelper, AuditMappingService auditMappingService, MappingService mappingService) {
-        this.libraryAccesssHelper = libraryAccesssHelper;
-        this.auditMappingService = auditMappingService;
-        this.mappingService = mappingService;
-    }
+	private final AuditMappingService auditMappingService;
 
-    @RequestMapping(value = "/{id}", params = {"rev"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({MAP_HAB0})
-    public ResponseEntity<Mapping> getEntity(final HttpServletRequest request,
-                                             @PathVariable(value = "id") final String id,
-                                             @RequestParam(value = "rev", defaultValue = "1") final int rev) {
-        // Chargement du mapping existant
-        final Mapping dbMapping = mappingService.findOne(id);
-        // Non trouvé
-        if (dbMapping == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur, pour le mapping existant
-        if (!libraryAccesssHelper.checkLibrary(request, dbMapping, Mapping::getLibrary)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Réponse
-        return createResponseEntity(auditMappingService.getEntity(id, rev));
-    }
+	private final MappingService mappingService;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({MAP_HAB0})
-    public ResponseEntity<List<AuditRevision>> getRevisions(final HttpServletRequest request, @PathVariable(value = "id") final String id) {
-        // Chargement du mapping existant
-        final Mapping dbMapping = mappingService.findOne(id);
-        // Non trouvé
-        if (dbMapping == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur, pour le mapping existant
-        if (!libraryAccesssHelper.checkLibrary(request, dbMapping, Mapping::getLibrary)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Réponse
-        return new ResponseEntity<>(auditMappingService.getRevisions(id), HttpStatus.OK);
-    }
+	@Autowired
+	public AuditMappingController(LibraryAccesssHelper libraryAccesssHelper, AuditMappingService auditMappingService,
+			MappingService mappingService) {
+		this.libraryAccesssHelper = libraryAccesssHelper;
+		this.auditMappingService = auditMappingService;
+		this.mappingService = mappingService;
+	}
+
+	@RequestMapping(value = "/{id}", params = { "rev" }, method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(MAP_HAB0)
+	public ResponseEntity<Mapping> getEntity(final HttpServletRequest request,
+			@PathVariable(value = "id") final String id,
+			@RequestParam(value = "rev", defaultValue = "1") final int rev) {
+		// Chargement du mapping existant
+		final Mapping dbMapping = mappingService.findOne(id);
+		// Non trouvé
+		if (dbMapping == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// Vérification des droits d'accès par rapport à la bibliothèque de
+		// l'utilisateur, pour le mapping existant
+		if (!libraryAccesssHelper.checkLibrary(request, dbMapping, Mapping::getLibrary)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Réponse
+		return createResponseEntity(auditMappingService.getEntity(id, rev));
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(MAP_HAB0)
+	public ResponseEntity<List<AuditRevision>> getRevisions(final HttpServletRequest request,
+			@PathVariable(value = "id") final String id) {
+		// Chargement du mapping existant
+		final Mapping dbMapping = mappingService.findOne(id);
+		// Non trouvé
+		if (dbMapping == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// Vérification des droits d'accès par rapport à la bibliothèque de
+		// l'utilisateur, pour le mapping existant
+		if (!libraryAccesssHelper.checkLibrary(request, dbMapping, Mapping::getLibrary)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Réponse
+		return new ResponseEntity<>(auditMappingService.getRevisions(id), HttpStatus.OK);
+	}
+
 }

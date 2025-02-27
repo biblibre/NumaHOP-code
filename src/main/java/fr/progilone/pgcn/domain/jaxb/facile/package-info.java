@@ -5,7 +5,10 @@
 // Généré le : 2017.02.10 à 05:24:22 PM CET
 //
 
+/**
+ * Facile package.
+ */
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://facile.cines.fr",
-                                       elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
-                                       xmlns = {@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://facile.cines.fr", prefix = "")})
+		elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
+		xmlns = { @jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://facile.cines.fr", prefix = "") })
 package fr.progilone.pgcn.domain.jaxb.facile;

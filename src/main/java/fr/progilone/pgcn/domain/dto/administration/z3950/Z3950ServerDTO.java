@@ -5,43 +5,47 @@ package fr.progilone.pgcn.domain.dto.administration.z3950;
  */
 public class Z3950ServerDTO {
 
-    private String identifier;
-    private String name;
-    private boolean active;
-    private long version;
+	private String identifier;
 
-    public Z3950ServerDTO() {
-    }
+	private String name;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private boolean active;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private long version;
 
-    public String getName() {
-        return name;
-    }
+	public Z3950ServerDTO() {
+	}
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public long getVersion() {
-        return version;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public void setVersion(final long version) {
-        this.version = version;
-    }
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
+
+	public long getVersion() {
+		return version;
+	}
+
+	public void setVersion(final long version) {
+		this.version = version;
+	}
+
 }

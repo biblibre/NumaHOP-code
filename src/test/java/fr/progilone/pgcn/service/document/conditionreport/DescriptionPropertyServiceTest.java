@@ -23,53 +23,59 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class DescriptionPropertyServiceTest {
 
-    @Mock
-    private DescriptionRepository descriptionRepository;
-    @Mock
-    private DescriptionPropertyRepository descPropertyRepository;
-    @Mock
-    private DescriptionValueRepository descValueRepository;
+	@Mock
+	private DescriptionRepository descriptionRepository;
 
-    private DescriptionPropertyService service;
+	@Mock
+	private DescriptionPropertyRepository descPropertyRepository;
 
-    @BeforeEach
-    public void setUp() {
-        service = new DescriptionPropertyService(descriptionRepository, descPropertyRepository, descValueRepository);
-    }
+	@Mock
+	private DescriptionValueRepository descValueRepository;
 
-    @Test
-    public void testFindByProperty() {
-        final List<DescriptionProperty> values = new ArrayList<>();
-        when(descPropertyRepository.findAll()).thenReturn(values);
+	private DescriptionPropertyService service;
 
-        final List<DescriptionProperty> actual = service.findAll();
-        assertSame(values, actual);
-    }
+	@BeforeEach
+	public void setUp() {
+		service = new DescriptionPropertyService(descriptionRepository, descPropertyRepository, descValueRepository);
+	}
 
-    @Test
-    public void testSave() {
-        when(descPropertyRepository.save(any(DescriptionProperty.class))).then(new ReturnsArgumentAt(0));
+	@Test
+	public void testFindByProperty() {
+		final List<DescriptionProperty> values = new ArrayList<>();
+		when(descPropertyRepository.findAll()).thenReturn(values);
 
-        // #1
-        try {
-            final DescriptionProperty value = new DescriptionProperty();
-            service.save(value);
-            fail("testSave failed");
-        } catch (final PgcnValidationException e) {
-            TestUtil.checkPgcnException(e, PgcnErrorCode.DESC_PROPERTY_LABEL_MANDATORY, PgcnErrorCode.DESC_PROPERTY_TYPE_MANDATORY);
-        }
+		final List<DescriptionProperty> actual = service.findAll();
+		assertSame(values, actual);
+	}
 
-        // #2
-        try {
-            final DescriptionProperty value = new DescriptionProperty();
-            value.setLabel("Label");
-            value.setType(DescriptionProperty.Type.DESCRIPTION);
+	@Test
+	public void testSave() {
+		when(descPropertyRepository.save(any(DescriptionProperty.class))).then(new ReturnsArgumentAt(0));
 
-            final DescriptionProperty actual = service.save(value);
-            assertSame(value, actual);
+		// #1
+		try {
+			final DescriptionProperty value = new DescriptionProperty();
+			service.save(value);
+			fail("testSave failed");
+		}
+		catch (final PgcnValidationException e) {
+			TestUtil.checkPgcnException(e, PgcnErrorCode.DESC_PROPERTY_LABEL_MANDATORY,
+					PgcnErrorCode.DESC_PROPERTY_TYPE_MANDATORY);
+		}
 
-        } catch (final PgcnValidationException e) {
-            fail("testSave failed");
-        }
-    }
+		// #2
+		try {
+			final DescriptionProperty value = new DescriptionProperty();
+			value.setLabel("Label");
+			value.setType(DescriptionProperty.Type.DESCRIPTION);
+
+			final DescriptionProperty actual = service.save(value);
+			assertSame(value, actual);
+
+		}
+		catch (final PgcnValidationException e) {
+			fail("testSave failed");
+		}
+	}
+
 }

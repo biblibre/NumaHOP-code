@@ -26,168 +26,169 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Service de gestion des {@link InternetArchiveConfiguration}
  *
- * @author jbrunet
- *         Créé le 19 avr. 2017
+ * @author jbrunet Créé le 19 avr. 2017
  */
 @Service
 public class InternetArchiveConfigurationService {
 
-    private final InternetArchiveConfigurationRepository iaConfigurationRepository;
-    private final CryptoService cryptoService;
+	private final InternetArchiveConfigurationRepository iaConfigurationRepository;
 
-    @Autowired
-    public InternetArchiveConfigurationService(final InternetArchiveConfigurationRepository iaConfigurationRepository, final CryptoService cryptoService) {
-        this.iaConfigurationRepository = iaConfigurationRepository;
-        this.cryptoService = cryptoService;
-    }
+	private final CryptoService cryptoService;
 
-    @Transactional(readOnly = true)
-    public Set<InternetArchiveConfigurationDTO> findAllDto(final Boolean active) {
-        final Set<InternetArchiveConfiguration> confs = Boolean.TRUE.equals(active) ? iaConfigurationRepository.findByActiveWithDependencies(true)
-                                                                                    : iaConfigurationRepository.findAllWithDependencies();
-        return InternetArchiveConfigurationMapper.INSTANCE.configurationIAToDtos(confs);
-    }
+	@Autowired
+	public InternetArchiveConfigurationService(final InternetArchiveConfigurationRepository iaConfigurationRepository,
+			final CryptoService cryptoService) {
+		this.iaConfigurationRepository = iaConfigurationRepository;
+		this.cryptoService = cryptoService;
+	}
 
-    /**
-     * Liste par bibliothèque
-     *
-     * @param libraryId
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Set<InternetArchiveConfiguration> findByLibrary(final String libraryId) {
-        final Library library = new Library();
-        library.setIdentifier(libraryId);
-        return iaConfigurationRepository.findByLibrary(library);
-    }
+	@Transactional(readOnly = true)
+	public Set<InternetArchiveConfigurationDTO> findAllDto(final Boolean active) {
+		final Set<InternetArchiveConfiguration> confs = Boolean.TRUE.equals(active)
+				? iaConfigurationRepository.findByActiveWithDependencies(true)
+				: iaConfigurationRepository.findAllWithDependencies();
+		return InternetArchiveConfigurationMapper.INSTANCE.configurationIAToDtos(confs);
+	}
 
-    /**
-     * Liste par bibliothèque et actif/inactif
-     *
-     * @param library
-     * @param active
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Set<InternetArchiveConfiguration> findByLibraryAndActive(final Library library, final boolean active) {
-        return Boolean.TRUE.equals(active) ? iaConfigurationRepository.findByLibraryAndActive(library, true)
-                                           : iaConfigurationRepository.findByLibrary(library);
+	/**
+	 * Liste par bibliothèque
+	 * @param libraryId
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Set<InternetArchiveConfiguration> findByLibrary(final String libraryId) {
+		final Library library = new Library();
+		library.setIdentifier(libraryId);
+		return iaConfigurationRepository.findByLibrary(library);
+	}
 
-    }
+	/**
+	 * Liste par bibliothèque et actif/inactif
+	 * @param library
+	 * @param active
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Set<InternetArchiveConfiguration> findByLibraryAndActive(final Library library, final boolean active) {
+		return Boolean.TRUE.equals(active) ? iaConfigurationRepository.findByLibraryAndActive(library, true)
+				: iaConfigurationRepository.findByLibrary(library);
 
-    /**
-     * Récupération sous la forme de DTO
-     *
-     * @param library
-     * @param active
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Set<InternetArchiveConfigurationDTO> findDtoByLibrary(final Library library, final Boolean active) {
-        final Set<InternetArchiveConfiguration> confs = Boolean.TRUE.equals(active) ? iaConfigurationRepository.findByLibraryAndActive(library, true)
-                                                                                    : iaConfigurationRepository.findByLibrary(library);
-        return InternetArchiveConfigurationMapper.INSTANCE.configurationIAToDtos(confs);
-    }
+	}
 
-    /**
-     * Récupération d'un élément
-     *
-     * @param id
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public InternetArchiveConfiguration findOne(final String id) {
-        return iaConfigurationRepository.findOneWithDependencies(id);
-    }
+	/**
+	 * Récupération sous la forme de DTO
+	 * @param library
+	 * @param active
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Set<InternetArchiveConfigurationDTO> findDtoByLibrary(final Library library, final Boolean active) {
+		final Set<InternetArchiveConfiguration> confs = Boolean.TRUE.equals(active)
+				? iaConfigurationRepository.findByLibraryAndActive(library, true)
+				: iaConfigurationRepository.findByLibrary(library);
+		return InternetArchiveConfigurationMapper.INSTANCE.configurationIAToDtos(confs);
+	}
 
-    /**
-     * Récupération des résultats de recherche
-     *
-     * @param search
-     * @param libraries
-     * @param page
-     * @param size
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Page<InternetArchiveConfigurationDTO> search(String search, List<String> libraries, Integer page, Integer size) {
+	/**
+	 * Récupération d'un élément
+	 * @param id
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public InternetArchiveConfiguration findOne(final String id) {
+		return iaConfigurationRepository.findOneWithDependencies(id);
+	}
 
-        final Pageable pageRequest = PageRequest.of(page, size);
+	/**
+	 * Récupération des résultats de recherche
+	 * @param search
+	 * @param libraries
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Page<InternetArchiveConfigurationDTO> search(String search, List<String> libraries, Integer page,
+			Integer size) {
 
-        Page<InternetArchiveConfiguration> configurations = iaConfigurationRepository.search(search, libraries, pageRequest);
+		final Pageable pageRequest = PageRequest.of(page, size);
 
-        List<InternetArchiveConfigurationDTO> results = configurations.getContent()
-                                                                      .stream()
-                                                                      .map(InternetArchiveConfigurationMapper.INSTANCE::configurationIAToDto)
-                                                                      .collect(Collectors.toList());
+		Page<InternetArchiveConfiguration> configurations = iaConfigurationRepository.search(search, libraries,
+				pageRequest);
 
-        return new PageImpl<>(results, PageRequest.of(configurations.getNumber(), configurations.getSize(), configurations.getSort()), configurations.getTotalElements());
-    }
+		List<InternetArchiveConfigurationDTO> results = configurations.getContent()
+			.stream()
+			.map(InternetArchiveConfigurationMapper.INSTANCE::configurationIAToDto)
+			.collect(Collectors.toList());
 
-    @Transactional
-    public void delete(final String id) {
-        iaConfigurationRepository.deleteById(id);
-    }
+		return new PageImpl<>(results,
+				PageRequest.of(configurations.getNumber(), configurations.getSize(), configurations.getSort()),
+				configurations.getTotalElements());
+	}
 
-    /**
-     * Sauvegarde avec validation
-     *
-     * @param conf
-     * @return
-     * @throws PgcnValidationException
-     * @throws PgcnTechnicalException
-     */
-    @Transactional
-    public InternetArchiveConfiguration save(final InternetArchiveConfiguration conf) throws PgcnValidationException, PgcnTechnicalException {
-        setDefaultValues(conf);
-        validate(conf);
-        final InternetArchiveConfiguration savedConf = iaConfigurationRepository.save(conf);
-        return iaConfigurationRepository.findOneWithDependencies(savedConf.getIdentifier());
-    }
+	@Transactional
+	public void delete(final String id) {
+		iaConfigurationRepository.deleteById(id);
+	}
 
-    /**
-     * Cryptage de la clé au besoin
-     *
-     * @param conf
-     * @throws PgcnTechnicalException
-     */
-    private void setDefaultValues(final InternetArchiveConfiguration conf) throws PgcnTechnicalException {
-        // Cryptage de la clé secrète S3
-        if (conf.getSecretKey() != null) {
-            final String encryptedPassword = cryptoService.encrypt(conf.getSecretKey());
-            conf.setSecretKey(encryptedPassword);
-        }
-        // Sinon on reprend la clé secrète S3 existante
-        else if (conf.getIdentifier() != null) {
-            final String currentPassword = iaConfigurationRepository.findSecretKeyByIdentifier(conf.getIdentifier());
-            conf.setSecretKey(currentPassword);
-        }
-    }
+	/**
+	 * Sauvegarde avec validation
+	 * @param conf
+	 * @return
+	 * @throws PgcnValidationException
+	 * @throws PgcnTechnicalException
+	 */
+	@Transactional
+	public InternetArchiveConfiguration save(final InternetArchiveConfiguration conf)
+			throws PgcnValidationException, PgcnTechnicalException {
+		setDefaultValues(conf);
+		validate(conf);
+		final InternetArchiveConfiguration savedConf = iaConfigurationRepository.save(conf);
+		return iaConfigurationRepository.findOneWithDependencies(savedConf.getIdentifier());
+	}
 
-    /**
-     * Validation des champs requis
-     *
-     * @param conf
-     * @return
-     * @throws PgcnValidationException
-     */
-    private PgcnList<PgcnError> validate(final InternetArchiveConfiguration conf) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
+	/**
+	 * Cryptage de la clé au besoin
+	 * @param conf
+	 * @throws PgcnTechnicalException
+	 */
+	private void setDefaultValues(final InternetArchiveConfiguration conf) throws PgcnTechnicalException {
+		// Cryptage de la clé secrète S3
+		if (conf.getSecretKey() != null) {
+			final String encryptedPassword = cryptoService.encrypt(conf.getSecretKey());
+			conf.setSecretKey(encryptedPassword);
+		}
+		// Sinon on reprend la clé secrète S3 existante
+		else if (conf.getIdentifier() != null) {
+			final String currentPassword = iaConfigurationRepository.findSecretKeyByIdentifier(conf.getIdentifier());
+			conf.setSecretKey(currentPassword);
+		}
+	}
 
-        // le libellé est obligatoire
-        if (StringUtils.isEmpty(conf.getLabel())) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_IA_LABEL_MANDATORY).setField("label").build());
-        }
-        // la bibliothèque est obligatoire
-        if (conf.getLibrary() == null) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_IA_LIBRARY_MANDATORY).setField("library").build());
-        }
-        // Retour
-        if (!errors.isEmpty()) {
-            conf.setErrors(errors);
-            throw new PgcnValidationException(conf, errors);
-        }
-        return errors;
-    }
+	/**
+	 * Validation des champs requis
+	 * @param conf
+	 * @return
+	 * @throws PgcnValidationException
+	 */
+	private PgcnList<PgcnError> validate(final InternetArchiveConfiguration conf) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
+
+		// le libellé est obligatoire
+		if (StringUtils.isEmpty(conf.getLabel())) {
+			errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_IA_LABEL_MANDATORY).setField("label").build());
+		}
+		// la bibliothèque est obligatoire
+		if (conf.getLibrary() == null) {
+			errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_IA_LIBRARY_MANDATORY).setField("library").build());
+		}
+		// Retour
+		if (!errors.isEmpty()) {
+			conf.setErrors(errors);
+			throw new PgcnValidationException(conf, errors);
+		}
+		return errors;
+	}
+
 }

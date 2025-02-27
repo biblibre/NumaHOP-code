@@ -31,137 +31,165 @@ import org.springframework.stereotype.Service;
 @Service
 public class UIProjectMapper {
 
-    @Autowired
-    private LibraryService libraryService;
-    @Autowired
-    private FTPConfigurationService ftpConfigurationService;
-    @Autowired
-    private ExportFTPConfigurationService exportFTPConfigurationService;
-    @Autowired
-    private CheckConfigurationService checkConfigurationService;
-    @Autowired
-    private ViewsFormatConfigurationService viewsFormatConfigurationService;
-    @Autowired
-    private WorkflowModelService workflowModelService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private InternetArchiveCollectionService iaCollectionService;
-    @Autowired
-    private CinesPACService cinesPACService;
-    @Autowired
-    private OmekaListService omekaListService;
-    @Autowired
-    private OmekaConfigurationService omekaConfigurationService;
+	@Autowired
+	private LibraryService libraryService;
 
-    public void mapInto(final ProjectDTO projectDTO, final Project project) {
-        // Library
-        // Récupère libraryDTO du projectDTO
-        final SimpleLibraryDTO libraryDTO = projectDTO.getLibrary();
+	@Autowired
+	private FTPConfigurationService ftpConfigurationService;
 
-        if (libraryDTO.getIdentifier() != null) {
-            // Récupère bibliotheque depuis repository
-            final Library library = libraryService.findOne(libraryDTO.getIdentifier());
-            project.setLibrary(library);
-        }
+	@Autowired
+	private ExportFTPConfigurationService exportFTPConfigurationService;
 
-        project.setName(projectDTO.getName());
-        project.setDescription(projectDTO.getDescription());
-        project.setActive(projectDTO.isActive());
-        project.setStartDate(projectDTO.getStartDate());
-        project.setForecastEndDate(projectDTO.getForecastEndDate());
-        project.setRealEndDate(projectDTO.getRealEndDate());
+	@Autowired
+	private CheckConfigurationService checkConfigurationService;
 
-        // AssociatedLibraries
-        final Set<SimpleLibraryDTO> libraryDTOs = projectDTO.getAssociatedLibraries();
-        if (libraryDTOs != null) {
-            project.setAssociatedLibraries(libraryDTOs.stream().map(library -> libraryService.findOne(library.getIdentifier())).collect(Collectors.toSet()));
-        }
-        // AssociatedUsers
-        final Set<SimpleUserDTO> userDTOs = projectDTO.getAssociatedUsers();
-        if (userDTOs != null) {
-            project.setAssociatedUsers(userDTOs.stream().map(user -> userService.findByIdentifier(user.getIdentifier())).collect(Collectors.toSet()));
-        }
+	@Autowired
+	private ViewsFormatConfigurationService viewsFormatConfigurationService;
 
-        if (projectDTO.getActiveFTPConfiguration() != null) {
-            project.setActiveFTPConfiguration(ftpConfigurationService.getOne(projectDTO.getActiveFTPConfiguration().getIdentifier()));
-        }
-        if (projectDTO.getActiveExportFTPConfiguration() != null) {
-            project.setActiveExportFTPConfiguration(exportFTPConfigurationService.getOne(projectDTO.getActiveExportFTPConfiguration().getIdentifier()));
-            // delivery folders update
-            if (project.getActiveExportFTPConfiguration() != null && projectDTO.getActiveExportFTPDeliveryFolder() != null) {
-                ExportFTPDeliveryFolder newFolder = new ExportFTPDeliveryFolder();
-                newFolder.setIdentifier(projectDTO.getActiveExportFTPDeliveryFolder().getIdentifier());
-                newFolder.setName(projectDTO.getActiveExportFTPDeliveryFolder().getName());
-                project.setActiveExportFTPDeliveryFolder(newFolder);
-            } else {
-                project.setActiveExportFTPDeliveryFolder(null);
-            }
-        }
-        if (projectDTO.getActiveCheckConfiguration() != null) {
-            project.setActiveCheckConfiguration(checkConfigurationService.findOne(projectDTO.getActiveCheckConfiguration().getIdentifier()));
-        }
-        if (projectDTO.getActiveFormatConfiguration() != null) {
-            project.setActiveFormatConfiguration(viewsFormatConfigurationService.findOne(projectDTO.getActiveFormatConfiguration().getIdentifier()));
-        }
-        if (projectDTO.getWorkflowModel() != null) {
-            project.setWorkflowModel(workflowModelService.getOne(projectDTO.getWorkflowModel().getIdentifier()));
-        }
-        if (projectDTO.getOmekaConfiguration() != null) {
-            project.setOmekaConfiguration(omekaConfigurationService.findOne(projectDTO.getOmekaConfiguration().getIdentifier()));
-        }
+	@Autowired
+	private WorkflowModelService workflowModelService;
 
-        final InternetArchiveCollectionDTO iaCollection = projectDTO.getCollectionIA();
-        if (iaCollection != null && iaCollection.getIdentifier() != null) {
-            final InternetArchiveCollection internetArchiveCollection = iaCollectionService.findOne(iaCollection.getIdentifier());
-            project.setCollectionIA(internetArchiveCollection);
-        } else {
-            project.setCollectionIA(null);
-        }
+	@Autowired
+	private UserService userService;
 
-        if (projectDTO.getLicenseUrl() != null) {
-            project.setLicenseUrl(projectDTO.getLicenseUrl());
-        }
+	@Autowired
+	private InternetArchiveCollectionService iaCollectionService;
 
-        final CinesPACDTO cinesPACDTO = projectDTO.getPlanClassementPAC();
-        if (cinesPACDTO != null && cinesPACDTO.getIdentifier() != null) {
-            final CinesPAC cinesPAC = cinesPACService.findOne(cinesPACDTO.getIdentifier());
-            project.setPlanClassementPAC(cinesPAC);
-        } else {
-            project.setPlanClassementPAC(null);
-        }
+	@Autowired
+	private CinesPACService cinesPACService;
 
-        final OmekaListDTO collecOmeka = projectDTO.getOmekaCollection();
-        if (collecOmeka != null && collecOmeka.getIdentifier() != null) {
-            final OmekaList omekaCollection = omekaListService.findOne(collecOmeka.getIdentifier());
-            project.setOmekaCollection(omekaCollection);
-        } else {
-            project.setOmekaCollection(null);
-        }
+	@Autowired
+	private OmekaListService omekaListService;
 
-        final OmekaListDTO itemOmeka = projectDTO.getOmekaItem();
-        if (itemOmeka != null && itemOmeka.getIdentifier() != null) {
-            final OmekaList omekaItem = omekaListService.findOne(itemOmeka.getIdentifier());
-            project.setOmekaItem(omekaItem);
-        } else {
-            project.setOmekaItem(null);
-        }
+	@Autowired
+	private OmekaConfigurationService omekaConfigurationService;
 
-        final SimpleUserDTO providerDto = projectDTO.getProvider();
-        if (providerDto != null && providerDto.getIdentifier() != null) {
-            project.setProvider(userService.findByIdentifier(providerDto.getIdentifier()));
-        } else {
-            project.setProvider(null);
-        }
+	public void mapInto(final ProjectDTO projectDTO, final Project project) {
+		// Library
+		// Récupère libraryDTO du projectDTO
+		final SimpleLibraryDTO libraryDTO = projectDTO.getLibrary();
 
-        if (projectDTO.getLibRespName() != null) {
-            project.setLibRespName(projectDTO.getLibRespName());
-        }
-        if (projectDTO.getLibRespPhone() != null) {
-            project.setLibRespPhone(projectDTO.getLibRespPhone());
-        }
-        if (projectDTO.getLibRespEmail() != null) {
-            project.setLibRespEmail(projectDTO.getLibRespEmail());
-        }
-    }
+		if (libraryDTO.getIdentifier() != null) {
+			// Récupère bibliotheque depuis repository
+			final Library library = libraryService.findOne(libraryDTO.getIdentifier());
+			project.setLibrary(library);
+		}
+
+		project.setName(projectDTO.getName());
+		project.setDescription(projectDTO.getDescription());
+		project.setActive(projectDTO.isActive());
+		project.setStartDate(projectDTO.getStartDate());
+		project.setForecastEndDate(projectDTO.getForecastEndDate());
+		project.setRealEndDate(projectDTO.getRealEndDate());
+
+		// AssociatedLibraries
+		final Set<SimpleLibraryDTO> libraryDTOs = projectDTO.getAssociatedLibraries();
+		if (libraryDTOs != null) {
+			project.setAssociatedLibraries(libraryDTOs.stream()
+				.map(library -> libraryService.findOne(library.getIdentifier()))
+				.collect(Collectors.toSet()));
+		}
+		// AssociatedUsers
+		final Set<SimpleUserDTO> userDTOs = projectDTO.getAssociatedUsers();
+		if (userDTOs != null) {
+			project.setAssociatedUsers(userDTOs.stream()
+				.map(user -> userService.findByIdentifier(user.getIdentifier()))
+				.collect(Collectors.toSet()));
+		}
+
+		if (projectDTO.getActiveFTPConfiguration() != null) {
+			project.setActiveFTPConfiguration(
+					ftpConfigurationService.getOne(projectDTO.getActiveFTPConfiguration().getIdentifier()));
+		}
+		if (projectDTO.getActiveExportFTPConfiguration() != null) {
+			project.setActiveExportFTPConfiguration(
+					exportFTPConfigurationService.getOne(projectDTO.getActiveExportFTPConfiguration().getIdentifier()));
+			// delivery folders update
+			if (project.getActiveExportFTPConfiguration() != null
+					&& projectDTO.getActiveExportFTPDeliveryFolder() != null) {
+				ExportFTPDeliveryFolder newFolder = new ExportFTPDeliveryFolder();
+				newFolder.setIdentifier(projectDTO.getActiveExportFTPDeliveryFolder().getIdentifier());
+				newFolder.setName(projectDTO.getActiveExportFTPDeliveryFolder().getName());
+				project.setActiveExportFTPDeliveryFolder(newFolder);
+			}
+			else {
+				project.setActiveExportFTPDeliveryFolder(null);
+			}
+		}
+		if (projectDTO.getActiveCheckConfiguration() != null) {
+			project.setActiveCheckConfiguration(
+					checkConfigurationService.findOne(projectDTO.getActiveCheckConfiguration().getIdentifier()));
+		}
+		if (projectDTO.getActiveFormatConfiguration() != null) {
+			project.setActiveFormatConfiguration(
+					viewsFormatConfigurationService.findOne(projectDTO.getActiveFormatConfiguration().getIdentifier()));
+		}
+		if (projectDTO.getWorkflowModel() != null) {
+			project.setWorkflowModel(workflowModelService.getOne(projectDTO.getWorkflowModel().getIdentifier()));
+		}
+		if (projectDTO.getOmekaConfiguration() != null) {
+			project.setOmekaConfiguration(
+					omekaConfigurationService.findOne(projectDTO.getOmekaConfiguration().getIdentifier()));
+		}
+
+		final InternetArchiveCollectionDTO iaCollection = projectDTO.getCollectionIA();
+		if (iaCollection != null && iaCollection.getIdentifier() != null) {
+			final InternetArchiveCollection internetArchiveCollection = iaCollectionService
+				.findOne(iaCollection.getIdentifier());
+			project.setCollectionIA(internetArchiveCollection);
+		}
+		else {
+			project.setCollectionIA(null);
+		}
+
+		if (projectDTO.getLicenseUrl() != null) {
+			project.setLicenseUrl(projectDTO.getLicenseUrl());
+		}
+
+		final CinesPACDTO cinesPACDTO = projectDTO.getPlanClassementPAC();
+		if (cinesPACDTO != null && cinesPACDTO.getIdentifier() != null) {
+			final CinesPAC cinesPAC = cinesPACService.findOne(cinesPACDTO.getIdentifier());
+			project.setPlanClassementPAC(cinesPAC);
+		}
+		else {
+			project.setPlanClassementPAC(null);
+		}
+
+		final OmekaListDTO collecOmeka = projectDTO.getOmekaCollection();
+		if (collecOmeka != null && collecOmeka.getIdentifier() != null) {
+			final OmekaList omekaCollection = omekaListService.findOne(collecOmeka.getIdentifier());
+			project.setOmekaCollection(omekaCollection);
+		}
+		else {
+			project.setOmekaCollection(null);
+		}
+
+		final OmekaListDTO itemOmeka = projectDTO.getOmekaItem();
+		if (itemOmeka != null && itemOmeka.getIdentifier() != null) {
+			final OmekaList omekaItem = omekaListService.findOne(itemOmeka.getIdentifier());
+			project.setOmekaItem(omekaItem);
+		}
+		else {
+			project.setOmekaItem(null);
+		}
+
+		final SimpleUserDTO providerDto = projectDTO.getProvider();
+		if (providerDto != null && providerDto.getIdentifier() != null) {
+			project.setProvider(userService.findByIdentifier(providerDto.getIdentifier()));
+		}
+		else {
+			project.setProvider(null);
+		}
+
+		if (projectDTO.getLibRespName() != null) {
+			project.setLibRespName(projectDTO.getLibRespName());
+		}
+		if (projectDTO.getLibRespPhone() != null) {
+			project.setLibRespPhone(projectDTO.getLibRespPhone());
+		}
+		if (projectDTO.getLibRespEmail() != null) {
+			project.setLibRespEmail(projectDTO.getLibRespEmail());
+		}
+	}
+
 }

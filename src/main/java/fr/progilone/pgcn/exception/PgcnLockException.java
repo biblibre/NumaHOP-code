@@ -8,47 +8,52 @@ import java.util.Map;
 
 public class PgcnLockException extends PgcnTechnicalException {
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    private final String objectId;
-    private final String objectClass;
-    private final String lockedBy;
-    private final LocalDateTime lockedDate;
+	private final String objectId;
 
-    public PgcnLockException(final Lock lock) {
-        this.objectId = lock.getIdentifier();
-        this.objectClass = lock.getClazz();
-        this.lockedBy = lock.getLockedBy();
-        this.lockedDate = lock.getLockedDate();
-    }
+	private final String objectClass;
 
-    public String getObjectId() {
-        return objectId;
-    }
+	private final String lockedBy;
 
-    public String getObjectClass() {
-        return objectClass;
-    }
+	private final LocalDateTime lockedDate;
 
-    public String getLockedBy() {
-        return lockedBy;
-    }
+	public PgcnLockException(final Lock lock) {
+		this.objectId = lock.getIdentifier();
+		this.objectClass = lock.getClazz();
+		this.lockedBy = lock.getLockedBy();
+		this.lockedDate = lock.getLockedDate();
+	}
 
-    public LocalDateTime getLockedDate() {
-        return lockedDate;
-    }
+	public String getObjectId() {
+		return objectId;
+	}
 
-    public Map<String, Object> getLockDetails() {
-        final Map<String, Object> details = new HashMap<>();
-        details.put("objectId", objectId);
-        details.put("objectClass", objectClass);
-        details.put("lockedBy", lockedBy);
-        details.put("lockedDate", lockedDate);
-        return details;
-    }
+	public String getObjectClass() {
+		return objectClass;
+	}
 
-    @Override
-    public String getMessage() {
-        return String.format("L'objet [%s] %s est verrouillé par %s depuis le %s", objectClass, objectId, lockedBy, lockedDate.format(formatter));
-    }
+	public String getLockedBy() {
+		return lockedBy;
+	}
+
+	public LocalDateTime getLockedDate() {
+		return lockedDate;
+	}
+
+	public Map<String, Object> getLockDetails() {
+		final Map<String, Object> details = new HashMap<>();
+		details.put("objectId", objectId);
+		details.put("objectClass", objectClass);
+		details.put("lockedBy", lockedBy);
+		details.put("lockedDate", lockedDate);
+		return details;
+	}
+
+	@Override
+	public String getMessage() {
+		return String.format("L'objet [%s] %s est verrouillé par %s depuis le %s", objectClass, objectId, lockedBy,
+				lockedDate.format(formatter));
+	}
+
 }

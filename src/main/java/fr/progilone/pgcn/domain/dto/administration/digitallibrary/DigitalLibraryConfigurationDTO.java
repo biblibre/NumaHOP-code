@@ -4,40 +4,44 @@ import fr.progilone.pgcn.domain.library.Library;
 
 public class DigitalLibraryConfigurationDTO {
 
-    private String identifier;
-    private String label;
-    private Library library;
-    private boolean active;
+	private String identifier;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String label;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	private Library library;
 
-    public String getLabel() {
-        return label;
-    }
+	private boolean active;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public Library getLibrary() {
-        return library;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setLibrary(final Library library) {
-        this.library = library;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	public Library getLibrary() {
+		return library;
+	}
+
+	public void setLibrary(final Library library) {
+		this.library = library;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
+
 }

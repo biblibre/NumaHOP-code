@@ -26,37 +26,40 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/condreportslip_configuration")
 public class ConditionReportSlipConfigurationController extends AbstractRestController {
 
-    private final ConditionReportSlipConfigurationService confService;
-    private final LibraryAccesssHelper libraryAccesssHelper;
+	private final ConditionReportSlipConfigurationService confService;
 
-    @Autowired
-    public ConditionReportSlipConfigurationController(final ConditionReportSlipConfigurationService confService, final LibraryAccesssHelper libraryAccesssHelper) {
-        this.confService = confService;
-        this.libraryAccesssHelper = libraryAccesssHelper;
-    }
+	private final LibraryAccesssHelper libraryAccesssHelper;
 
-    @RolesAllowed(DEL_HAB0)
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<ConditionReportSlipConfiguration> getById(final HttpServletRequest request, @PathVariable final String id) {
-        if (!libraryAccesssHelper.checkLibrary(request, id)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        Optional<ConditionReportSlipConfiguration> condSlipConfiguration = confService.getOneByLibrary(id);
-        return createResponseEntity(condSlipConfiguration);
-    }
+	@Autowired
+	public ConditionReportSlipConfigurationController(final ConditionReportSlipConfigurationService confService,
+			final LibraryAccesssHelper libraryAccesssHelper) {
+		this.confService = confService;
+		this.libraryAccesssHelper = libraryAccesssHelper;
+	}
 
-    @RolesAllowed({DEL_HAB2})
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    @Timed
-    public ResponseEntity<ConditionReportSlipConfiguration> update(final HttpServletRequest request, @RequestBody final ConditionReportSlipConfiguration condSlipConfiguration)
-                                                                                                                                                                                throws PgcnException {
+	@RolesAllowed(DEL_HAB0)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<ConditionReportSlipConfiguration> getById(final HttpServletRequest request,
+			@PathVariable final String id) {
+		if (!libraryAccesssHelper.checkLibrary(request, id)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		Optional<ConditionReportSlipConfiguration> condSlipConfiguration = confService.getOneByLibrary(id);
+		return createResponseEntity(condSlipConfiguration);
+	}
 
-        if (!libraryAccesssHelper.checkLibrary(request, condSlipConfiguration.getLibrary())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+	@RolesAllowed({ DEL_HAB2 })
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	@Timed
+	public ResponseEntity<ConditionReportSlipConfiguration> update(final HttpServletRequest request,
+			@RequestBody final ConditionReportSlipConfiguration condSlipConfiguration) throws PgcnException {
 
-        return createResponseEntity(confService.update(condSlipConfiguration));
-    }
+		if (!libraryAccesssHelper.checkLibrary(request, condSlipConfiguration.getLibrary())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+
+		return createResponseEntity(confService.update(condSlipConfiguration));
+	}
 
 }

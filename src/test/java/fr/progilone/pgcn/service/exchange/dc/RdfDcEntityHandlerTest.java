@@ -41,282 +41,297 @@ import org.xml.sax.helpers.XMLFilterImpl;
  */
 public class RdfDcEntityHandlerTest {
 
-    @Test
-    public void test() throws IOException, JAXBException, ParserConfigurationException, SAXException {
-        final String xml = "<rdf:RDF\n" + "    xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n"
-                           + "    xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n"
-                           + "  <rdf:Description rdf:about=\"http://www-bsg.univ-paris1.fr/84b60cc1-274e-4334-ad22-6b5e0bb74fdf\">\n"
-                           + "    <dc:title>Le petit prince</dc:title>\n"
-                           + "  </rdf:Description>\n"
-                           + "</rdf:RDF>";
-        final File tmpFile = new File(FileUtils.getTempDirectory(),
-                                      "DcEntityHandlerTest_test_" + System.currentTimeMillis()
-                                                                    + ".xml");
-        try (final FileWriter writer = new FileWriter(tmpFile)) {
-            IOUtils.write(xml, writer);
-        }
-        try {
-            final List<String> identifiers = new ArrayList<>();
-            final List<String> titles = new ArrayList<>();
+	@Test
+	public void test() throws IOException, JAXBException, ParserConfigurationException, SAXException {
+		final String xml = "<rdf:RDF\n" + "    xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n"
+				+ "    xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n"
+				+ "  <rdf:Description rdf:about=\"http://www-bsg.univ-paris1.fr/84b60cc1-274e-4334-ad22-6b5e0bb74fdf\">\n"
+				+ "    <dc:title>Le petit prince</dc:title>\n" + "  </rdf:Description>\n" + "</rdf:RDF>";
+		final File tmpFile = new File(FileUtils.getTempDirectory(),
+				"DcEntityHandlerTest_test_" + System.currentTimeMillis() + ".xml");
+		try (final FileWriter writer = new FileWriter(tmpFile)) {
+			IOUtils.write(xml, writer);
+		}
+		try {
+			final List<String> identifiers = new ArrayList<>();
+			final List<String> titles = new ArrayList<>();
 
-            new RdfDcEntityHandler((rdf, descriptionType) -> {
-                identifiers.add(descriptionType.getAbout());
+			new RdfDcEntityHandler((rdf, descriptionType) -> {
+				identifiers.add(descriptionType.getAbout());
 
-                final List<JAXBElement<SimpleLiteral>> literals = descriptionType.getAny();
-                if (!literals.isEmpty()) {
-                    final List<String> content = literals.get(0).getValue().getContent();
+				final List<JAXBElement<SimpleLiteral>> literals = descriptionType.getAny();
+				if (!literals.isEmpty()) {
+					final List<String> content = literals.get(0).getValue().getContent();
 
-                    if (!content.isEmpty()) {
-                        titles.add(content.get(0));
-                    }
-                }
-            }).parse(tmpFile);
+					if (!content.isEmpty()) {
+						titles.add(content.get(0));
+					}
+				}
+			}).parse(tmpFile);
 
-            assertEquals(1, identifiers.size());
-            assertEquals("http://www-bsg.univ-paris1.fr/84b60cc1-274e-4334-ad22-6b5e0bb74fdf", identifiers.get(0));
+			assertEquals(1, identifiers.size());
+			assertEquals("http://www-bsg.univ-paris1.fr/84b60cc1-274e-4334-ad22-6b5e0bb74fdf", identifiers.get(0));
 
-            assertEquals(1, titles.size());
-            assertEquals("Le petit prince", titles.get(0));
-        } finally {
-            FileUtils.deleteQuietly(tmpFile);
-        }
-    }
+			assertEquals(1, titles.size());
+			assertEquals("Le petit prince", titles.get(0));
+		}
+		finally {
+			FileUtils.deleteQuietly(tmpFile);
+		}
+	}
 
-    // test de marshalling
-    @Disabled
-    @Test
-    public void test0() throws JAXBException {
-        final ObjectFactory rdfFactory = new ObjectFactory();
-        final fr.progilone.pgcn.domain.jaxb.dc.ObjectFactory dcFactory = new fr.progilone.pgcn.domain.jaxb.dc.ObjectFactory();
-        final RDF rdf = rdfFactory.createRDF();
-        final DescriptionType desc = rdfFactory.createDescriptionType();
+	// test de marshalling
+	@Disabled
+	@Test
+	public void test0() throws JAXBException {
+		final ObjectFactory rdfFactory = new ObjectFactory();
+		final fr.progilone.pgcn.domain.jaxb.dc.ObjectFactory dcFactory = new fr.progilone.pgcn.domain.jaxb.dc.ObjectFactory();
+		final RDF rdf = rdfFactory.createRDF();
+		final DescriptionType desc = rdfFactory.createDescriptionType();
 
-        desc.setAbout("toto");
+		desc.setAbout("toto");
 
-        final SimpleLiteral simpleLiteral = new SimpleLiteral();
-        final List<String> content = simpleLiteral.getContent();
-        content.add("toto fait du vélo");
-        final JAXBElement<SimpleLiteral> title = dcFactory.createTitle(simpleLiteral);
-        desc.getAny().add(title);
+		final SimpleLiteral simpleLiteral = new SimpleLiteral();
+		final List<String> content = simpleLiteral.getContent();
+		content.add("toto fait du vélo");
+		final JAXBElement<SimpleLiteral> title = dcFactory.createTitle(simpleLiteral);
+		desc.getAny().add(title);
 
-        rdf.getDescription().add(desc);
+		rdf.getDescription().add(desc);
 
-        // Écriture du XML dans le flux de sortie
-        final JAXBContext context = JAXBContext.newInstance(ObjectFactory.class, fr.progilone.pgcn.domain.jaxb.dc.ObjectFactory.class);
-        final Marshaller m = context.createMarshaller();
-        m.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8.name());
-        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        m.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NamespacePrefixMapper() {
+		// Écriture du XML dans le flux de sortie
+		final JAXBContext context = JAXBContext.newInstance(ObjectFactory.class,
+				fr.progilone.pgcn.domain.jaxb.dc.ObjectFactory.class);
+		final Marshaller m = context.createMarshaller();
+		m.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8.name());
+		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		m.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NamespacePrefixMapper() {
 
-            private final Map<String, String> namespaceMap = new HashMap<>();
+			private final Map<String, String> namespaceMap = new HashMap<>();
 
-            {
-                namespaceMap.put("http://purl.org/dc/elements/1.1/", "dc");
-                namespaceMap.put("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf");
-            }
+			{
+				namespaceMap.put("http://purl.org/dc/elements/1.1/", "dc");
+				namespaceMap.put("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf");
+			}
 
-            @Override
-            public String getPreferredPrefix(final String namespaceUri, final String suggestion, final boolean requirePrefix) {
-                return namespaceMap.getOrDefault(namespaceUri, suggestion);
-            }
+			@Override
+			public String getPreferredPrefix(final String namespaceUri, final String suggestion,
+					final boolean requirePrefix) {
+				return namespaceMap.getOrDefault(namespaceUri, suggestion);
+			}
 
-            @Override
-            public String[] getPreDeclaredNamespaceUris2() {
-                // on déclare le namespace dc à la racine, et non sur chaque élément
-                return new String[] {"dc",
-                                     "http://purl.org/dc/elements/1.1/"};
-            }
-        });
-        m.marshal(rdf, System.out);
-    }
+			@Override
+			public String[] getPreDeclaredNamespaceUris2() {
+				// on déclare le namespace dc à la racine, et non sur chaque élément
+				return new String[] { "dc", "http://purl.org/dc/elements/1.1/" };
+			}
+		});
+		m.marshal(rdf, System.out);
+	}
 
-    // jaxb-ri\samples\partial-unmarshalling
-    @Disabled
-    @Test
-    public void test1() throws JAXBException, ParserConfigurationException, SAXException, IOException {
-        final JAXBContext context = JAXBContext.newInstance(ObjectFactory.class);
+	// jaxb-ri\samples\partial-unmarshalling
+	@Disabled
+	@Test
+	public void test1() throws JAXBException, ParserConfigurationException, SAXException, IOException {
+		final JAXBContext context = JAXBContext.newInstance(ObjectFactory.class);
 
-        final SAXParserFactory factory = SAXParserFactory.newInstance();
-        factory.setNamespaceAware(true);
-        final XMLReader reader = factory.newSAXParser().getXMLReader();
+		final SAXParserFactory factory = SAXParserFactory.newInstance();
+		factory.setNamespaceAware(true);
+		final XMLReader reader = factory.newSAXParser().getXMLReader();
 
-        final Splitter splitter = new Splitter(context);
+		final Splitter splitter = new Splitter(context);
 
-        reader.setContentHandler(splitter);
+		reader.setContentHandler(splitter);
 
-        reader.parse(new File("C:\\Users\\Sébastien\\Desktop", "15c7a687-ac9e-4af1-8abb-25d41dd55bb3-dc.xml").toURI().toURL().toExternalForm());
-    }
+		reader.parse(new File("C:\\Users\\Sébastien\\Desktop", "15c7a687-ac9e-4af1-8abb-25d41dd55bb3-dc.xml").toURI()
+			.toURL()
+			.toExternalForm());
+	}
 
-    // jaxb-ri\samples\streaming-unmarshalling
-    @Disabled
-    @Test
-    public void test2() throws JAXBException, ParserConfigurationException, SAXException, IOException {
-        final JAXBContext context = JAXBContext.newInstance(ObjectFactory.class);
-        final Unmarshaller unmarshaller = context.createUnmarshaller();
+	// jaxb-ri\samples\streaming-unmarshalling
+	@Disabled
+	@Test
+	public void test2() throws JAXBException, ParserConfigurationException, SAXException, IOException {
+		final JAXBContext context = JAXBContext.newInstance(ObjectFactory.class);
+		final Unmarshaller unmarshaller = context.createUnmarshaller();
 
-        // purchase order notification callback
-        final RDF.Listener descriptionListener = (rdf, descriptionType) -> System.out.println(descriptionType.getAbout());
+		// purchase order notification callback
+		final RDF.Listener descriptionListener = (rdf, descriptionType) -> System.out
+			.println(descriptionType.getAbout());
 
-        // install the callback on all PurchaseOrders instances
-        unmarshaller.setListener(new Unmarshaller.Listener() {
+		// install the callback on all PurchaseOrders instances
+		unmarshaller.setListener(new Unmarshaller.Listener() {
 
-            @Override
-            public void beforeUnmarshal(final Object target, final Object parent) {
-                if (target instanceof RDF) {
-                    ((RDF) target).setDescriptionListener(descriptionListener);
-                }
-            }
+			@Override
+			public void beforeUnmarshal(final Object target, final Object parent) {
+				if (target instanceof RDF) {
+					((RDF) target).setDescriptionListener(descriptionListener);
+				}
+			}
 
-            @Override
-            public void afterUnmarshal(final Object target, final Object parent) {
-                if (target instanceof RDF) {
-                    ((RDF) target).setDescriptionListener(null);
-                }
-            }
-        });
+			@Override
+			public void afterUnmarshal(final Object target, final Object parent) {
+				if (target instanceof RDF) {
+					((RDF) target).setDescriptionListener(null);
+				}
+			}
+		});
 
-        // create a new XML parser
-        final SAXParserFactory factory = SAXParserFactory.newInstance();
-        factory.setNamespaceAware(true);
-        final XMLReader reader = factory.newSAXParser().getXMLReader();
-        reader.setContentHandler(unmarshaller.getUnmarshallerHandler());
+		// create a new XML parser
+		final SAXParserFactory factory = SAXParserFactory.newInstance();
+		factory.setNamespaceAware(true);
+		final XMLReader reader = factory.newSAXParser().getXMLReader();
+		reader.setContentHandler(unmarshaller.getUnmarshallerHandler());
 
-        reader.parse(new File("C:\\Users\\Sébastien\\Desktop", "15c7a687-ac9e-4af1-8abb-25d41dd55bb3-dc.xml").toURI().toURL().toExternalForm());
+		reader.parse(new File("C:\\Users\\Sébastien\\Desktop", "15c7a687-ac9e-4af1-8abb-25d41dd55bb3-dc.xml").toURI()
+			.toURL()
+			.toExternalForm());
 
-    }
+	}
 
-    private static class Splitter extends XMLFilterImpl {
+	private static class Splitter extends XMLFilterImpl {
 
-        private final JAXBContext context;
-        private int depth;
-        private UnmarshallerHandler unmarshallerHandler;
-        private Locator locator;
-        private final NamespaceSupport namespaces = new NamespaceSupport();
+		private final JAXBContext context;
 
-        public Splitter(final JAXBContext context) {
-            this.context = context;
-        }
+		private int depth;
 
-        @Override
-        public void startElement(final String namespaceURI, final String localName, final String qName, final Attributes atts) throws SAXException {
-            if (depth != 0) {
-                // we are in the middle of forwarding events.
-                // continue to do so.
-                depth++;
-                super.startElement(namespaceURI, localName, qName, atts);
-                return;
-            }
+		private UnmarshallerHandler unmarshallerHandler;
 
-            if (namespaceURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#") && localName.equals("Description")) {
-                // start a new unmarshaller
-                Unmarshaller unmarshaller;
-                try {
-                    unmarshaller = context.createUnmarshaller();
-                } catch (final JAXBException e) {
-                    // there's no way to recover from this error.
-                    // we will abort the processing.
-                    throw new SAXException(e);
-                }
-                unmarshallerHandler = unmarshaller.getUnmarshallerHandler();
+		private Locator locator;
 
-                // set it as the content handler so that it will receive
-                // SAX events from now on.
-                setContentHandler(unmarshallerHandler);
+		private final NamespaceSupport namespaces = new NamespaceSupport();
 
-                // fire SAX events to emulate the start of a new document.
-                unmarshallerHandler.startDocument();
-                unmarshallerHandler.setDocumentLocator(locator);
+		public Splitter(final JAXBContext context) {
+			this.context = context;
+		}
 
-                final Enumeration e = namespaces.getPrefixes();
-                while (e.hasMoreElements()) {
-                    final String prefix = (String) e.nextElement();
-                    final String uri = namespaces.getURI(prefix);
+		@Override
+		public void startElement(final String namespaceURI, final String localName, final String qName,
+				final Attributes atts) throws SAXException {
+			if (depth != 0) {
+				// we are in the middle of forwarding events.
+				// continue to do so.
+				depth++;
+				super.startElement(namespaceURI, localName, qName, atts);
+				return;
+			}
 
-                    unmarshallerHandler.startPrefixMapping(prefix, uri);
-                }
-                final String defaultURI = namespaces.getURI("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-                if (defaultURI != null) {
-                    unmarshallerHandler.startPrefixMapping("http://www.w3.org/1999/02/22-rdf-syntax-ns#", defaultURI);
-                }
+			if (namespaceURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#") && localName.equals("Description")) {
+				// start a new unmarshaller
+				Unmarshaller unmarshaller;
+				try {
+					unmarshaller = context.createUnmarshaller();
+				}
+				catch (final JAXBException e) {
+					// there's no way to recover from this error.
+					// we will abort the processing.
+					throw new SAXException(e);
+				}
+				unmarshallerHandler = unmarshaller.getUnmarshallerHandler();
 
-                super.startElement(namespaceURI, localName, qName, atts);
+				// set it as the content handler so that it will receive
+				// SAX events from now on.
+				setContentHandler(unmarshallerHandler);
 
-                // count the depth of elements and we will know when to stop.
-                depth = 1;
-            }
-        }
+				// fire SAX events to emulate the start of a new document.
+				unmarshallerHandler.startDocument();
+				unmarshallerHandler.setDocumentLocator(locator);
 
-        @Override
-        public void endElement(final String namespaceURI, final String localName, final String qName) throws SAXException {
-            // forward this event
-            super.endElement(namespaceURI, localName, qName);
+				final Enumeration e = namespaces.getPrefixes();
+				while (e.hasMoreElements()) {
+					final String prefix = (String) e.nextElement();
+					final String uri = namespaces.getURI(prefix);
 
-            if (depth != 0) {
-                depth--;
-                if (depth == 0) {
-                    // just finished sending one chunk.
+					unmarshallerHandler.startPrefixMapping(prefix, uri);
+				}
+				final String defaultURI = namespaces.getURI("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+				if (defaultURI != null) {
+					unmarshallerHandler.startPrefixMapping("http://www.w3.org/1999/02/22-rdf-syntax-ns#", defaultURI);
+				}
 
-                    // emulate the end of a document.
-                    final Enumeration e = namespaces.getPrefixes();
-                    while (e.hasMoreElements()) {
-                        final String prefix = (String) e.nextElement();
-                        unmarshallerHandler.endPrefixMapping(prefix);
-                    }
-                    final String defaultURI = namespaces.getURI("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-                    if (defaultURI != null) {
-                        unmarshallerHandler.endPrefixMapping("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-                    }
-                    unmarshallerHandler.endDocument();
+				super.startElement(namespaceURI, localName, qName, atts);
 
-                    // stop forwarding events by setting a dummy handler.
-                    // XMLFilter doesn't accept null, so we have to give it something,
-                    // hence a DefaultHandler, which does nothing.
-                    setContentHandler(new DefaultHandler());
+				// count the depth of elements and we will know when to stop.
+				depth = 1;
+			}
+		}
 
-                    // then retrieve the fully unmarshalled object
-                    try {
-                        // RDF result =
-                        // (RDF) unmarshallerHandler.getResult();
-                        final JAXBElement<DescriptionType> result = (JAXBElement<DescriptionType>) unmarshallerHandler.getResult();
+		@Override
+		public void endElement(final String namespaceURI, final String localName, final String qName)
+				throws SAXException {
+			// forward this event
+			super.endElement(namespaceURI, localName, qName);
 
-                        // process this new purchase order
-                        process(result.getValue());
-                        // System.out.println(result);
+			if (depth != 0) {
+				depth--;
+				if (depth == 0) {
+					// just finished sending one chunk.
 
-                    } catch (final JAXBException je) {
-                        // error was found during the unmarshalling.
-                        // you can either abort the processing by throwing a SAXException,
-                        // or you can continue processing by returning from this method.
-                        System.err.println("unable to process an order at line " + locator.getLineNumber());
-                        return;
-                    }
+					// emulate the end of a document.
+					final Enumeration e = namespaces.getPrefixes();
+					while (e.hasMoreElements()) {
+						final String prefix = (String) e.nextElement();
+						unmarshallerHandler.endPrefixMapping(prefix);
+					}
+					final String defaultURI = namespaces.getURI("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+					if (defaultURI != null) {
+						unmarshallerHandler.endPrefixMapping("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+					}
+					unmarshallerHandler.endDocument();
 
-                    unmarshallerHandler = null;
-                }
-            }
-        }
+					// stop forwarding events by setting a dummy handler.
+					// XMLFilter doesn't accept null, so we have to give it something,
+					// hence a DefaultHandler, which does nothing.
+					setContentHandler(new DefaultHandler());
 
-        private void process(final DescriptionType description) {
-            System.out.println(description.getAbout());
-        }
+					// then retrieve the fully unmarshalled object
+					try {
+						// RDF result =
+						// (RDF) unmarshallerHandler.getResult();
+						final JAXBElement<DescriptionType> result = (JAXBElement<DescriptionType>) unmarshallerHandler
+							.getResult();
 
-        @Override
-        public void setDocumentLocator(final Locator locator) {
-            super.setDocumentLocator(locator);
-            this.locator = locator;
-        }
+						// process this new purchase order
+						process(result.getValue());
+						// System.out.println(result);
 
-        @Override
-        public void startPrefixMapping(final String prefix, final String uri) throws SAXException {
-            namespaces.pushContext();
-            namespaces.declarePrefix(prefix, uri);
-            super.startPrefixMapping(prefix, uri);
-        }
+					}
+					catch (final JAXBException je) {
+						// error was found during the unmarshalling.
+						// you can either abort the processing by throwing a SAXException,
+						// or you can continue processing by returning from this method.
+						System.err.println("unable to process an order at line " + locator.getLineNumber());
+						return;
+					}
 
-        @Override
-        public void endPrefixMapping(final String prefix) throws SAXException {
-            namespaces.popContext();
-            super.endPrefixMapping(prefix);
-        }
-    }
+					unmarshallerHandler = null;
+				}
+			}
+		}
+
+		private void process(final DescriptionType description) {
+			System.out.println(description.getAbout());
+		}
+
+		@Override
+		public void setDocumentLocator(final Locator locator) {
+			super.setDocumentLocator(locator);
+			this.locator = locator;
+		}
+
+		@Override
+		public void startPrefixMapping(final String prefix, final String uri) throws SAXException {
+			namespaces.pushContext();
+			namespaces.declarePrefix(prefix, uri);
+			super.startPrefixMapping(prefix, uri);
+		}
+
+		@Override
+		public void endPrefixMapping(final String prefix) throws SAXException {
+			namespaces.popContext();
+			super.endPrefixMapping(prefix);
+		}
+
+	}
+
 }

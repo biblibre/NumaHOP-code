@@ -5,7 +5,10 @@
 // Généré le : 2017.06.16 à 03:03:54 PM CEST
 //
 
+/**
+ * Oaidc package.
+ */
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://purl.org/dc/elements/1.1/",
-                                       elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
-                                       xmlns = {@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://purl.org/dc/elements/1.1/", prefix = "")})
+		elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
+		xmlns = { @jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://purl.org/dc/elements/1.1/", prefix = "") })
 package fr.progilone.pgcn.domain.jaxb.oaidc;

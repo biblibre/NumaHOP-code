@@ -9,61 +9,67 @@ import fr.progilone.pgcn.domain.lot.Lot;
  */
 public class SimpleLotForDeliveryDTO {
 
-    private String identifier;
-    private String label;
-    private String code;
-    private Lot.LotStatus status;
-    private Lot.Type type;
-    private String requiredFormat;
+	private String identifier;
 
-    public SimpleLotForDeliveryDTO() {
-    }
+	private String label;
 
-    public Lot.LotStatus getStatus() {
-        return status;
-    }
+	private String code;
 
-    public void setStatus(Lot.LotStatus status) {
-        this.status = status;
-    }
+	private Lot.LotStatus status;
 
-    public Lot.Type getType() {
-        return type;
-    }
+	private Lot.Type type;
 
-    public void setType(Lot.Type type) {
-        this.type = type;
-    }
+	private String requiredFormat;
 
-    public final String getCode() {
-        return code;
-    }
+	public SimpleLotForDeliveryDTO() {
+	}
 
-    public final String getLabel() {
-        return label;
-    }
+	public Lot.LotStatus getStatus() {
+		return status;
+	}
 
-    public final String getIdentifier() {
-        return identifier;
-    }
+	public void setStatus(Lot.LotStatus status) {
+		this.status = status;
+	}
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public Lot.Type getType() {
+		return type;
+	}
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+	public void setType(Lot.Type type) {
+		this.type = type;
+	}
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+	public final String getCode() {
+		return code;
+	}
 
-    public String getRequiredFormat() {
-        return requiredFormat;
-    }
+	public final String getLabel() {
+		return label;
+	}
 
-    public void setRequiredFormat(String requiredFormat) {
-        this.requiredFormat = requiredFormat;
-    }
+	public final String getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getRequiredFormat() {
+		return requiredFormat;
+	}
+
+	public void setRequiredFormat(String requiredFormat) {
+		this.requiredFormat = requiredFormat;
+	}
+
 }

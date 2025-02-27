@@ -15,26 +15,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/numahop")
 public class NumahopController {
 
-    @Value("${info.build.artifact}")
-    private String buildArtifact;
+	@Value("${info.build.artifact}")
+	private String buildArtifact;
 
-    @Value("${info.build.name}")
-    private String buildName;
+	@Value("${info.build.name}")
+	private String buildName;
 
-    @Value("${info.build.description}")
-    private String buildDescription;
+	@Value("${info.build.description}")
+	private String buildDescription;
 
-    @Value("${info.build.version}")
-    private String buildVersion;
+	@Value("${info.build.version}")
+	private String buildVersion;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"build"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<Map<String, Object>> getBuild() {
-        final Map<String, Object> response = new HashMap<>();
-        response.put("artifact", buildArtifact);
-        response.put("name", buildName);
-        response.put("description", buildDescription);
-        response.put("version", buildVersion);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "build" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<Map<String, Object>> getBuild() {
+		final Map<String, Object> response = new HashMap<>();
+		response.put("artifact", buildArtifact);
+		response.put("name", buildName);
+		response.put("description", buildDescription);
+		response.put("version", buildVersion);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
 }

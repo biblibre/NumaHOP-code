@@ -17,34 +17,35 @@ import java.util.Set;
  */
 @Entity
 @Table(name = DeliverySlip.TABLE_NAME)
-@JsonSubTypes({@JsonSubTypes.Type(name = "del_slip", value = DeliverySlip.class)})
+@JsonSubTypes({ @JsonSubTypes.Type(name = "del_slip", value = DeliverySlip.class) })
 public class DeliverySlip extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "del_slip";
+	public static final String TABLE_NAME = "del_slip";
 
-    @OneToMany(mappedBy = "slip", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final Set<DeliverySlipLine> slipLines = new LinkedHashSet<>();
+	@OneToMany(mappedBy = "slip", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private final Set<DeliverySlipLine> slipLines = new LinkedHashSet<>();
 
-    /**
-     * Livraison rattachée
-     */
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "delivery")
-    private Delivery delivery;
+	/**
+	 * Livraison rattachée
+	 */
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "delivery")
+	private Delivery delivery;
 
-    public Set<DeliverySlipLine> getSlipLines() {
-        return slipLines;
-    }
+	public Set<DeliverySlipLine> getSlipLines() {
+		return slipLines;
+	}
 
-    public void addSlipLine(DeliverySlipLine line) {
-        this.slipLines.add(line);
-    }
+	public void addSlipLine(DeliverySlipLine line) {
+		this.slipLines.add(line);
+	}
 
-    public Delivery getDelivery() {
-        return delivery;
-    }
+	public Delivery getDelivery() {
+		return delivery;
+	}
 
-    public void setDelivery(Delivery delivery) {
-        this.delivery = delivery;
-    }
+	public void setDelivery(Delivery delivery) {
+		this.delivery = delivery;
+	}
+
 }

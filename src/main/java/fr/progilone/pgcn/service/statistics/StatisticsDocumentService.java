@@ -33,191 +33,192 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class StatisticsDocumentService {
 
-    public static final String ARCHIVE_BASE_URL = "https://archive.org/details/";
+	public static final String ARCHIVE_BASE_URL = "https://archive.org/details/";
 
-    private final DocUnitStateRepository docUnitStateRepository;
-    private final LotRepository lotRepository;
-    private final InternetArchiveReportService internetArchiveReportService;
+	private final DocUnitStateRepository docUnitStateRepository;
 
-    public StatisticsDocumentService(final DocUnitStateRepository docUnitStateRepository,
-                                     final LotRepository lotRepository,
-                                     final InternetArchiveReportService internetArchiveReportService) {
-        this.docUnitStateRepository = docUnitStateRepository;
-        this.lotRepository = lotRepository;
-        this.internetArchiveReportService = internetArchiveReportService;
-    }
+	private final LotRepository lotRepository;
 
-    @Transactional(readOnly = true)
-    public Page<StatisticsDocPublishedDTO> getDocPublishedStat(final List<String> libraries,
-                                                               final List<String> projects,
-                                                               final List<String> lots,
-                                                               final LocalDate fromDate,
-                                                               final LocalDate toDate,
-                                                               final List<String> types,
-                                                               final List<String> collections,
-                                                               final Integer page,
-                                                               final Integer size) {
+	private final InternetArchiveReportService internetArchiveReportService;
 
-        final Page<StatisticsDocPublishedDTO> results = docUnitStateRepository.findDocUnitStates(new DocUnitWorkflowSearchBuilder().setLibraries(libraries)
-                                                                                                                                   .setProjects(projects)
-                                                                                                                                   .setLots(lots)
-                                                                                                                                   .setFromDate(fromDate)
-                                                                                                                                   .setToDate(toDate)
-                                                                                                                                   .setTypes(types)
-                                                                                                                                   .setCollections(collections)
-                                                                                                                                   // Documents
-                                                                                                                                   // publiés
-                                                                                                                                   .addState(DIFFUSION_DOCUMENT)
-                                                                                                                                   .addState(DIFFUSION_DOCUMENT_LOCALE)
-                                                                                                                                   .addState(DIFFUSION_DOCUMENT_OMEKA)
-                                                                                                                                   .addState(DIFFUSION_DOCUMENT_DIGITAL_LIBRARY),
-                                                                                                 PageRequest.of(page, size)).map(this::initDto);
-        // Infos IA report => ia url
-        results.forEach(res -> {
-            if (res.getWorkflowState() == DIFFUSION_DOCUMENT) {
-                final InternetArchiveReport iaReport = internetArchiveReportService.findLastReportByDocUnit(res.getDocUnitIdentifier());
-                if (iaReport != null && iaReport.getInternetArchiveIdentifier() != null) {
-                    res.setLinkIA(ARCHIVE_BASE_URL + iaReport.getInternetArchiveIdentifier());
-                }
-            }
-        });
-        return results;
-    }
+	public StatisticsDocumentService(final DocUnitStateRepository docUnitStateRepository,
+			final LotRepository lotRepository, final InternetArchiveReportService internetArchiveReportService) {
+		this.docUnitStateRepository = docUnitStateRepository;
+		this.lotRepository = lotRepository;
+		this.internetArchiveReportService = internetArchiveReportService;
+	}
 
-    private StatisticsDocPublishedDTO initDto(final DocUnitState docUnitState) {
-        final StatisticsDocPublishedDTO dto = new StatisticsDocPublishedDTO();
-        dto.setWorkflowState(docUnitState.getKey());
+	@Transactional(readOnly = true)
+	public Page<StatisticsDocPublishedDTO> getDocPublishedStat(final List<String> libraries,
+			final List<String> projects, final List<String> lots, final LocalDate fromDate, final LocalDate toDate,
+			final List<String> types, final List<String> collections, final Integer page, final Integer size) {
 
-        final DocUnit docUnit = docUnitState.getWorkflow().getDocUnit();
+		final Page<StatisticsDocPublishedDTO> results = docUnitStateRepository
+			.findDocUnitStates(new DocUnitWorkflowSearchBuilder().setLibraries(libraries)
+				.setProjects(projects)
+				.setLots(lots)
+				.setFromDate(fromDate)
+				.setToDate(toDate)
+				.setTypes(types)
+				.setCollections(collections)
+				// Documents
+				// publiés
+				.addState(DIFFUSION_DOCUMENT)
+				.addState(DIFFUSION_DOCUMENT_LOCALE)
+				.addState(DIFFUSION_DOCUMENT_OMEKA)
+				.addState(DIFFUSION_DOCUMENT_DIGITAL_LIBRARY), PageRequest.of(page, size))
+			.map(this::initDto);
+		// Infos IA report => ia url
+		results.forEach(res -> {
+			if (res.getWorkflowState() == DIFFUSION_DOCUMENT) {
+				final InternetArchiveReport iaReport = internetArchiveReportService
+					.findLastReportByDocUnit(res.getDocUnitIdentifier());
+				if (iaReport != null && iaReport.getInternetArchiveIdentifier() != null) {
+					res.setLinkIA(ARCHIVE_BASE_URL + iaReport.getInternetArchiveIdentifier());
+				}
+			}
+		});
+		return results;
+	}
 
-        dto.setDocUnitIdentifier(docUnit.getIdentifier());
-        dto.setDocUnitLabel(docUnit.getLabel());
-        dto.setDocUnitPgcnId(docUnit.getPgcnId());
-        dto.setDocUnitType(docUnit.getType());
-        dto.setUrlArk(docUnit.getArkUrl());
+	private StatisticsDocPublishedDTO initDto(final DocUnitState docUnitState) {
+		final StatisticsDocPublishedDTO dto = new StatisticsDocPublishedDTO();
+		dto.setWorkflowState(docUnitState.getKey());
 
-        switch (docUnitState.getKey()) {
-            case DIFFUSION_DOCUMENT:
-                final InternetArchiveCollection collectionIA = docUnit.getCollectionIA();
-                if (collectionIA != null) {
-                    dto.setCollection(collectionIA.getName());
-                }
-                break;
-            case DIFFUSION_DOCUMENT_OMEKA:
-                final OmekaList collectionOmeka = docUnit.getOmekaCollection();
-                if (collectionOmeka != null) {
-                    dto.setCollection(collectionOmeka.getName());
-                }
-                break;
-        }
+		final DocUnit docUnit = docUnitState.getWorkflow().getDocUnit();
 
-        // Date de diffusion
-        if (docUnitState.getEndDate() != null) {
-            dto.setPublicationDate(docUnitState.getEndDate().toLocalDate());
-        }
+		dto.setDocUnitIdentifier(docUnit.getIdentifier());
+		dto.setDocUnitLabel(docUnit.getLabel());
+		dto.setDocUnitPgcnId(docUnit.getPgcnId());
+		dto.setDocUnitType(docUnit.getType());
+		dto.setUrlArk(docUnit.getArkUrl());
 
-        final DocUnit parent = docUnit.getParent();
-        if (parent != null) {
-            dto.setParentIdentifier(parent.getIdentifier());
-            dto.setParentLabel(parent.getLabel());
-            dto.setParentPgcnId(parent.getPgcnId());
-        }
+		switch (docUnitState.getKey()) {
+			case DIFFUSION_DOCUMENT:
+				final InternetArchiveCollection collectionIA = docUnit.getCollectionIA();
+				if (collectionIA != null) {
+					dto.setCollection(collectionIA.getName());
+				}
+				break;
+			case DIFFUSION_DOCUMENT_OMEKA:
+				final OmekaList collectionOmeka = docUnit.getOmekaCollection();
+				if (collectionOmeka != null) {
+					dto.setCollection(collectionOmeka.getName());
+				}
+				break;
+		}
 
-        final Library library = docUnit.getLibrary();
-        if (library != null) {
-            dto.setLibraryIdentifier(library.getIdentifier());
-            dto.setLibraryName(library.getName());
-        }
+		// Date de diffusion
+		if (docUnitState.getEndDate() != null) {
+			dto.setPublicationDate(docUnitState.getEndDate().toLocalDate());
+		}
 
-        final Project project = docUnit.getProject();
-        if (project != null) {
-            dto.setProjectIdentifier(project.getIdentifier());
-            dto.setProjectName(project.getName());
-        }
+		final DocUnit parent = docUnit.getParent();
+		if (parent != null) {
+			dto.setParentIdentifier(parent.getIdentifier());
+			dto.setParentLabel(parent.getLabel());
+			dto.setParentPgcnId(parent.getPgcnId());
+		}
 
-        final Lot lot = docUnit.getLot();
-        if (lot != null) {
-            dto.setLotIdentifier(lot.getIdentifier());
-            dto.setLotLabel(lot.getLabel());
-        }
+		final Library library = docUnit.getLibrary();
+		if (library != null) {
+			dto.setLibraryIdentifier(library.getIdentifier());
+			dto.setLibraryName(library.getName());
+		}
 
-        // Nombre de pages
-        final int nbPages = docUnit.getDigitalDocuments().stream().mapToInt(DigitalDocument::getNbPages).sum();
-        dto.setNbPages(nbPages);
+		final Project project = docUnit.getProject();
+		if (project != null) {
+			dto.setProjectIdentifier(project.getIdentifier());
+			dto.setProjectName(project.getName());
+		}
 
-        return dto;
-    }
+		final Lot lot = docUnit.getLot();
+		if (lot != null) {
+			dto.setLotIdentifier(lot.getIdentifier());
+			dto.setLotLabel(lot.getLabel());
+		}
 
-    /**
-     * Statistique documents rejetés (#376)
-     *
-     * @param libraries
-     * @param projects
-     * @param providers
-     * @param fromDate
-     * @param toDate
-     * @param page
-     * @param size
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Page<StatisticsDocRejectedDTO> getDocRejectedStats(final List<String> libraries,
-                                                              final List<String> projects,
-                                                              final List<String> providers,
-                                                              final LocalDate fromDate,
-                                                              final LocalDate toDate,
-                                                              final Integer page,
-                                                              final Integer size) {
+		// Nombre de pages
+		final int nbPages = docUnit.getDigitalDocuments().stream().mapToInt(DigitalDocument::getNbPages).sum();
+		dto.setNbPages(nbPages);
 
-        return lotRepository.search(new LotSearchBuilder().setLibraries(libraries).setProjects(projects).setProviders(providers).setLastDlvFrom(fromDate).setLastDlvTo(toDate),
-                                    PageRequest.of(page, size)).map(this::initDto);
-    }
+		return dto;
+	}
 
-    private StatisticsDocRejectedDTO initDto(final Lot lot) {
-        final StatisticsDocRejectedDTO dto = new StatisticsDocRejectedDTO();
+	/**
+	 * Statistique documents rejetés (#376)
+	 * @param libraries
+	 * @param projects
+	 * @param providers
+	 * @param fromDate
+	 * @param toDate
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Page<StatisticsDocRejectedDTO> getDocRejectedStats(final List<String> libraries, final List<String> projects,
+			final List<String> providers, final LocalDate fromDate, final LocalDate toDate, final Integer page,
+			final Integer size) {
 
-        dto.setLotIdentifier(lot.getIdentifier());
-        dto.setLotLabel(lot.getLabel());
+		return lotRepository
+			.search(new LotSearchBuilder().setLibraries(libraries)
+				.setProjects(projects)
+				.setProviders(providers)
+				.setLastDlvFrom(fromDate)
+				.setLastDlvTo(toDate), PageRequest.of(page, size))
+			.map(this::initDto);
+	}
 
-        final Project project = lot.getProject();
-        if (project != null) {
-            dto.setProjectIdentifier(project.getIdentifier());
-            dto.setProjectName(project.getName());
+	private StatisticsDocRejectedDTO initDto(final Lot lot) {
+		final StatisticsDocRejectedDTO dto = new StatisticsDocRejectedDTO();
 
-            final Library library = project.getLibrary();
-            if (library != null) {
-                dto.setLibraryIdentifier(library.getIdentifier());
-                dto.setLibraryName(library.getName());
-            }
-        }
+		dto.setLotIdentifier(lot.getIdentifier());
+		dto.setLotLabel(lot.getLabel());
 
-        // Prestataire
-        final User provider = lot.getProvider();
-        if (provider != null) {
-            dto.setProviderIdentifier(provider.getIdentifier());
-            dto.setProviderLogin(provider.getLogin());
-            dto.setProviderFullName(provider.getFullName());
-        }
+		final Project project = lot.getProject();
+		if (project != null) {
+			dto.setProjectIdentifier(project.getIdentifier());
+			dto.setProjectName(project.getName());
 
-        // Documents numérisés
-        final List<DigitalDocument> docs = lot.getDocUnits().stream().flatMap(ud -> ud.getDigitalDocuments().stream()).collect(Collectors.toList());
-        final long nbRejected = docs.stream().filter(doc -> doc.getStatus() == DigitalDocumentStatus.REJECTED).count();
+			final Library library = project.getLibrary();
+			if (library != null) {
+				dto.setLibraryIdentifier(library.getIdentifier());
+				dto.setLibraryName(library.getName());
+			}
+		}
 
-        dto.setNbDocTotal(docs.size());
-        dto.setNbDocRejected(nbRejected);
+		// Prestataire
+		final User provider = lot.getProvider();
+		if (provider != null) {
+			dto.setProviderIdentifier(provider.getIdentifier());
+			dto.setProviderLogin(provider.getLogin());
+			dto.setProviderFullName(provider.getFullName());
+		}
 
-        if (dto.getNbDocTotal() > 0) {
-            dto.setPctDocRejected((double) dto.getNbDocRejected() / (double) dto.getNbDocTotal());
-        }
+		// Documents numérisés
+		final List<DigitalDocument> docs = lot.getDocUnits()
+			.stream()
+			.flatMap(ud -> ud.getDigitalDocuments().stream())
+			.collect(Collectors.toList());
+		final long nbRejected = docs.stream().filter(doc -> doc.getStatus() == DigitalDocumentStatus.REJECTED).count();
 
-        // Date d'import
-        docs.stream()
-            .flatMap(d -> d.getDeliveries().stream())
-            .distinct()
-            .filter(delivered -> delivered.getDeliveryDate() != null)
-            .min(Comparator.nullsLast(Comparator.comparing(DeliveredDocument::getDeliveryDate)))
-            .ifPresent(lastestDelivery -> dto.setImportDate(lastestDelivery.getDeliveryDate()));
+		dto.setNbDocTotal(docs.size());
+		dto.setNbDocRejected(nbRejected);
 
-        return dto;
-    }
+		if (dto.getNbDocTotal() > 0) {
+			dto.setPctDocRejected((double) dto.getNbDocRejected() / (double) dto.getNbDocTotal());
+		}
+
+		// Date d'import
+		docs.stream()
+			.flatMap(d -> d.getDeliveries().stream())
+			.distinct()
+			.filter(delivered -> delivered.getDeliveryDate() != null)
+			.min(Comparator.nullsLast(Comparator.comparing(DeliveredDocument::getDeliveryDate)))
+			.ifPresent(lastestDelivery -> dto.setImportDate(lastestDelivery.getDeliveryDate()));
+
+		return dto;
+	}
+
 }

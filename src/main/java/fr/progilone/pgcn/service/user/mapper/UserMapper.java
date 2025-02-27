@@ -8,15 +8,13 @@ import fr.progilone.pgcn.service.workflow.mapper.SimpleWorkflowMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {AddressMapper.class,
-                RoleMapper.class,
-                SimpleLibraryMapper.class,
-                SimpleWorkflowMapper.class})
+@Mapper(uses = { AddressMapper.class, RoleMapper.class, SimpleLibraryMapper.class, SimpleWorkflowMapper.class })
 public interface UserMapper {
 
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    UserDTO userToUserDTO(User user);
+	UserDTO userToUserDTO(User user);
 
-    SimpleUserDTO userToSimpleUserDTO(User user);
+	SimpleUserDTO userToSimpleUserDTO(User user);
+
 }

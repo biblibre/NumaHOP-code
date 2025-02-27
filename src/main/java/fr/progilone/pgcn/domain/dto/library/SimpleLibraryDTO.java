@@ -8,153 +8,161 @@ import fr.progilone.pgcn.domain.dto.user.RoleDTO;
  */
 public class SimpleLibraryDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String name;
-    private String prefix;
-    private RoleDTO defaultRole;
-    // responsable bibliotheque
-    private String libRespName;
-    private String libRespPhone;
-    private String libRespEmail;
+	private String identifier;
 
-    public SimpleLibraryDTO() {
-    }
+	private String name;
 
-    public SimpleLibraryDTO(final String identifier,
-                            final String name,
-                            final String prefix,
-                            final RoleDTO defaultRole,
-                            final String libRespName,
-                            final String libRespPhone,
-                            final String libRespEmail) {
-        super();
-        this.identifier = identifier;
-        this.name = name;
-        this.prefix = prefix;
-        this.defaultRole = defaultRole;
-        this.libRespName = libRespName;
-        this.libRespPhone = libRespPhone;
-        this.libRespEmail = libRespEmail;
-    }
+	private String prefix;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private RoleDTO defaultRole;
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	// responsable bibliotheque
+	private String libRespName;
 
-    public String getName() {
-        return name;
-    }
+	private String libRespPhone;
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	private String libRespEmail;
 
-    public String getPrefix() {
-        return prefix;
-    }
+	public SimpleLibraryDTO() {
+	}
 
-    public void setPrefix(final String prefix) {
-        this.prefix = prefix;
-    }
+	public SimpleLibraryDTO(final String identifier, final String name, final String prefix, final RoleDTO defaultRole,
+			final String libRespName, final String libRespPhone, final String libRespEmail) {
+		super();
+		this.identifier = identifier;
+		this.name = name;
+		this.prefix = prefix;
+		this.defaultRole = defaultRole;
+		this.libRespName = libRespName;
+		this.libRespPhone = libRespPhone;
+		this.libRespEmail = libRespEmail;
+	}
 
-    public RoleDTO getDefaultRole() {
-        return defaultRole;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setDefaultRole(final RoleDTO defaultRole) {
-        this.defaultRole = defaultRole;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getLibRespName() {
-        return libRespName;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setLibRespName(final String libRespName) {
-        this.libRespName = libRespName;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public String getLibRespPhone() {
-        return libRespPhone;
-    }
+	public String getPrefix() {
+		return prefix;
+	}
 
-    public void setLibRespPhone(final String libRespPhone) {
-        this.libRespPhone = libRespPhone;
-    }
+	public void setPrefix(final String prefix) {
+		this.prefix = prefix;
+	}
 
-    public String getLibRespEmail() {
-        return libRespEmail;
-    }
+	public RoleDTO getDefaultRole() {
+		return defaultRole;
+	}
 
-    public void setLibRespEmail(final String libRespEmail) {
-        this.libRespEmail = libRespEmail;
-    }
+	public void setDefaultRole(final RoleDTO defaultRole) {
+		this.defaultRole = defaultRole;
+	}
 
-    /**
-     * Builder pour la classe LibraryDTO
-     */
-    public static final class Builder {
+	public String getLibRespName() {
+		return libRespName;
+	}
 
-        private String identifier;
-        private String name;
-        private String prefix;
-        private RoleDTO defaultRole;
-        private String libRespName;
-        private String libRespPhone;
-        private String libRespEmail;
+	public void setLibRespName(final String libRespName) {
+		this.libRespName = libRespName;
+	}
 
-        public Builder reinit() {
-            this.identifier = null;
-            this.name = null;
-            this.prefix = null;
-            this.defaultRole = null;
-            this.libRespName = null;
-            this.libRespPhone = null;
-            this.libRespEmail = null;
-            return this;
-        }
+	public String getLibRespPhone() {
+		return libRespPhone;
+	}
 
-        public Builder setIdentifier(final String identifier) {
-            this.identifier = identifier;
-            return this;
-        }
+	public void setLibRespPhone(final String libRespPhone) {
+		this.libRespPhone = libRespPhone;
+	}
 
-        public Builder setName(final String name) {
-            this.name = name;
-            return this;
-        }
+	public String getLibRespEmail() {
+		return libRespEmail;
+	}
 
-        public Builder setPrefix(final String prefix) {
-            this.prefix = prefix;
-            return this;
-        }
+	public void setLibRespEmail(final String libRespEmail) {
+		this.libRespEmail = libRespEmail;
+	}
 
-        public Builder setDefaultRole(final RoleDTO defaultRole) {
-            this.defaultRole = defaultRole;
-            return this;
-        }
+	/**
+	 * Builder pour la classe LibraryDTO
+	 */
+	public static final class Builder {
 
-        public Builder setLibRespName(final String libRespName) {
-            this.libRespName = libRespName;
-            return this;
-        }
+		private String identifier;
 
-        public Builder setLibRespPhone(final String libRespPhone) {
-            this.libRespPhone = libRespPhone;
-            return this;
-        }
+		private String name;
 
-        public Builder setLibRespEmail(final String libRespEmail) {
-            this.libRespEmail = libRespEmail;
-            return this;
-        }
+		private String prefix;
 
-        public SimpleLibraryDTO build() {
-            return new SimpleLibraryDTO(identifier, name, prefix, defaultRole, libRespName, libRespPhone, libRespEmail);
-        }
+		private RoleDTO defaultRole;
 
-    }
+		private String libRespName;
+
+		private String libRespPhone;
+
+		private String libRespEmail;
+
+		public Builder reinit() {
+			this.identifier = null;
+			this.name = null;
+			this.prefix = null;
+			this.defaultRole = null;
+			this.libRespName = null;
+			this.libRespPhone = null;
+			this.libRespEmail = null;
+			return this;
+		}
+
+		public Builder setIdentifier(final String identifier) {
+			this.identifier = identifier;
+			return this;
+		}
+
+		public Builder setName(final String name) {
+			this.name = name;
+			return this;
+		}
+
+		public Builder setPrefix(final String prefix) {
+			this.prefix = prefix;
+			return this;
+		}
+
+		public Builder setDefaultRole(final RoleDTO defaultRole) {
+			this.defaultRole = defaultRole;
+			return this;
+		}
+
+		public Builder setLibRespName(final String libRespName) {
+			this.libRespName = libRespName;
+			return this;
+		}
+
+		public Builder setLibRespPhone(final String libRespPhone) {
+			this.libRespPhone = libRespPhone;
+			return this;
+		}
+
+		public Builder setLibRespEmail(final String libRespEmail) {
+			this.libRespEmail = libRespEmail;
+			return this;
+		}
+
+		public SimpleLibraryDTO build() {
+			return new SimpleLibraryDTO(identifier, name, prefix, defaultRole, libRespName, libRespPhone, libRespEmail);
+		}
+
+	}
+
 }

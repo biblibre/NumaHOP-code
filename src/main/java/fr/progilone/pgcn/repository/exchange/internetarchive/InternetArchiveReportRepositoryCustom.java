@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface InternetArchiveReportRepositoryCustom {
 
-    List<InternetArchiveReport> findAll(List<String> libraries, LocalDate fromDate, boolean failures);
+	List<InternetArchiveReport> findAll(List<String> libraries, LocalDate fromDate, boolean failures);
+
 }

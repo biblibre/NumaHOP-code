@@ -34,7 +34,7 @@ module.exports = function (grunt) {
         },
         yeoman: {
             app: require('./package.json').appPath || 'app',
-            dist: 'src/main/webapp/dist',
+            dist: 'target/classes/static/dist',
             webapp: 'src/main/webapp',
         },
         watch: {
@@ -179,7 +179,7 @@ module.exports = function (grunt) {
                 options: {
                     base: '<%= yeoman.dist %>',
                     middleware: function (connect) {
-                        return [proxySnippet, serveStatic(require('path').resolve('src/main/webapp/dist'))];
+                        return [proxySnippet, serveStatic(require('path').resolve('target/classes/static/dist'))];
                     },
                 },
             },
@@ -471,11 +471,17 @@ module.exports = function (grunt) {
                 dest: '.tmp/libs/',
                 src: ['mirador/**'],
             },
+            static: {
+                expand: true,
+                cwd: 'src/main/webapp',
+                dest: 'target/classes/static',
+                src: ['.htaccess', 'hop_favicon.png', 'robots.txt'],
+            },
         },
         concurrent: {
             server: ['dart-sass:dev', 'copy:styles', 'copy:i18n', 'copy:libs', 'copy:mirador', 'copy:summernote_fonts'],
             test: ['copy:libs', 'copy:mirador', 'copy:mediaelement'],
-            dist: ['dart-sass:dist', 'imagemin', 'copy:styles', 'copy:i18n', 'copy:libs', 'copy:mirador', 'copy:summernote_fonts'],
+            dist: ['dart-sass:dist', 'imagemin', 'copy:styles', 'copy:i18n', 'copy:libs', 'copy:mirador', 'copy:summernote_fonts', 'copy:static'],
         },
         nggettext_extract: {
             pot: {
@@ -588,6 +594,8 @@ module.exports = function (grunt) {
         'htmlmin',
         'replace:date',
     ]);
+
+    grunt.registerTask('test', []);
 
     grunt.registerTask('default', ['clean', 'test', 'buildWithoutClean']);
 

@@ -6,85 +6,91 @@ import java.time.LocalDateTime;
 /**
  * DTO pour un rapport d'archivage sur Internet Archive
  *
- * @author jbrunet
- *         Créé le 3 mars 2017
+ * @author jbrunet Créé le 3 mars 2017
  */
 public class InternetArchiveReportDTO extends AbstractDTO {
 
-    private String identifier;
-    private String status;
-    private LocalDateTime dateSent;
-    private LocalDateTime dateArchived;
-    private String internetArchiveIdentifier;
-    private String message;
-    private String number;
-    private String total;
+	private String identifier;
 
-    public InternetArchiveReportDTO() {
-    }
+	private String status;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private LocalDateTime dateSent;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private LocalDateTime dateArchived;
 
-    public String getStatus() {
-        return status;
-    }
+	private String internetArchiveIdentifier;
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	private String message;
 
-    public LocalDateTime getDateSent() {
-        return dateSent;
-    }
+	private String number;
 
-    public void setDateSent(LocalDateTime dateSent) {
-        this.dateSent = dateSent;
-    }
+	private String total;
 
-    public LocalDateTime getDateArchived() {
-        return dateArchived;
-    }
+	public InternetArchiveReportDTO() {
+	}
 
-    public void setDateArchived(LocalDateTime dateArchived) {
-        this.dateArchived = dateArchived;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public String getInternetArchiveIdentifier() {
-        return internetArchiveIdentifier;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public void setInternetArchiveIdentifier(String internetArchiveIdentifier) {
-        this.internetArchiveIdentifier = internetArchiveIdentifier;
-    }
+	public LocalDateTime getDateSent() {
+		return dateSent;
+	}
 
-    public String getNumber() {
-        return number;
-    }
+	public void setDateSent(LocalDateTime dateSent) {
+		this.dateSent = dateSent;
+	}
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
+	public LocalDateTime getDateArchived() {
+		return dateArchived;
+	}
 
-    public String getTotal() {
-        return total;
-    }
+	public void setDateArchived(LocalDateTime dateArchived) {
+		this.dateArchived = dateArchived;
+	}
 
-    public void setTotal(String total) {
-        this.total = total;
-    }
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getInternetArchiveIdentifier() {
+		return internetArchiveIdentifier;
+	}
+
+	public void setInternetArchiveIdentifier(String internetArchiveIdentifier) {
+		this.internetArchiveIdentifier = internetArchiveIdentifier;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	public String getTotal() {
+		return total;
+	}
+
+	public void setTotal(String total) {
+		this.total = total;
+	}
 
 }

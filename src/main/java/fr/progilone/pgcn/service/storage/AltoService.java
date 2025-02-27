@@ -28,163 +28,167 @@ import org.springframework.stereotype.Service;
 @Service
 public class AltoService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AltoService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AltoService.class);
 
-    public static final String ALTO_XML_FILE = "alto.xml";
-    public static final String OCR_TXT_FILE = "ocr.txt";
+	public static final String ALTO_XML_FILE = "alto.xml";
 
-    @Value("classpath:config/xsl/hocr2alto2.1.xsl")
-    private Resource xslAltoPath;
+	public static final String OCR_TXT_FILE = "ocr.txt";
 
-    @Value("classpath:config/xsl/hocr2text.1.xsl")
-    private Resource xslTextPath;
+	@Value("classpath:config/xsl/hocr2alto2.1.xsl")
+	private Resource xslAltoPath;
 
-    @Value("${instance.libraries}")
-    private String[] instanceLibraries;
+	@Value("classpath:config/xsl/hocr2text.1.xsl")
+	private Resource xslTextPath;
 
-    @Value("${services.archive.alto}")
-    private String outputPath;
+	@Value("${instance.libraries}")
+	private String[] instanceLibraries;
 
-    @Value("${services.archive.text}")
-    private String outputTextPath;
+	@Value("${services.archive.alto}")
+	private String outputPath;
 
-    private final FileStorageManager fm;
+	@Value("${services.archive.text}")
+	private String outputTextPath;
 
-    public AltoService(final FileStorageManager fm) {
-        this.fm = fm;
-    }
+	private final FileStorageManager fm;
 
-    @PostConstruct
-    public void initialize() {
+	public AltoService(final FileStorageManager fm) {
+		this.fm = fm;
+	}
 
-        // 1 disk space per library
-        Arrays.asList(instanceLibraries).forEach(lib -> {
-            try {
-                FileUtils.forceMkdir(new File(outputPath, lib));
-            } catch (final IOException ex) {
-                LOG.error(ex.getMessage(), ex);
-            }
-        });
-    }
+	@PostConstruct
+	public void initialize() {
 
-    /**
-     * Creation du fichier alto.xml par transformation depuis un hocr.
-     *
-     * @param hocr
-     * @param prefix
-     * @param libraryId
-     */
-    public void transformHocrToAlto(final File hocr, final String prefix, final String libraryId) {
+		// 1 disk space per library
+		Arrays.asList(instanceLibraries).forEach(lib -> {
+			try {
+				FileUtils.forceMkdir(new File(outputPath, lib));
+			}
+			catch (final IOException ex) {
+				LOG.error(ex.getMessage(), ex);
+			}
+		});
+	}
 
-        // Utilisation de Saxon car xslt2.0
-        final TransformerFactory fact = TransformerFactoryImpl.newInstance();
+	/**
+	 * Creation du fichier alto.xml par transformation depuis un hocr.
+	 * @param hocr
+	 * @param prefix
+	 * @param libraryId
+	 */
+	public void transformHocrToAlto(final File hocr, final String prefix, final String libraryId) {
 
-        try (final InputStream xslInput = xslAltoPath.getInputStream()) {
+		// Utilisation de Saxon car xslt2.0
+		final TransformerFactory fact = TransformerFactoryImpl.newInstance();
 
-            final Transformer transformer = fact.newTransformer(new StreamSource(xslInput));
+		try (final InputStream xslInput = xslAltoPath.getInputStream()) {
 
-            transformer.setURIResolver(new URIResolver() {
+			final Transformer transformer = fact.newTransformer(new StreamSource(xslInput));
 
-                @Override
-                public Source resolve(final String href, final String base) throws TransformerException {
-                    try {
-                        return new StreamSource(this.getClass().getResource("/config/xsl/" + href).openStream());
-                    } catch (final Exception e) {
-                        LOG.error("Erreur avant la construction du fichier alto", e);
-                        return null;
-                    }
-                }
-            });
+			transformer.setURIResolver(new URIResolver() {
 
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+				@Override
+				public Source resolve(final String href, final String base) throws TransformerException {
+					try {
+						return new StreamSource(this.getClass().getResource("/config/xsl/" + href).openStream());
+					}
+					catch (final Exception e) {
+						LOG.error("Erreur avant la construction du fichier alto", e);
+						return null;
+					}
+				}
+			});
 
-            final File xmlAlto = new File(Paths.get(outputPath, libraryId, prefix).toFile(), ALTO_XML_FILE);
-            if (hocr != null && hocr.isFile()) {
-                final Source hocrInput = new StreamSource(hocr);
-                final StreamResult altoOutput = new StreamResult(xmlAlto);
-                transformer.transform(hocrInput, altoOutput);
-            }
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 
-        } catch (final IOException | TransformerException e) {
-            LOG.error("Erreur lors de la construction du fichier alto", e);
-            return;
-        }
+			final File xmlAlto = new File(Paths.get(outputPath, libraryId, prefix).toFile(), ALTO_XML_FILE);
+			if (hocr != null && hocr.isFile()) {
+				final Source hocrInput = new StreamSource(hocr);
+				final StreamResult altoOutput = new StreamResult(xmlAlto);
+				transformer.transform(hocrInput, altoOutput);
+			}
 
-    }
+		}
+		catch (final IOException | TransformerException e) {
+			LOG.error("Erreur lors de la construction du fichier alto", e);
+			return;
+		}
 
-    /**
-     * Creation du fichier text par transformation depuis un hocr.
-     *
-     * @param hocr
-     * @param prefix
-     * @param libraryId
-     */
-    public void transformHocrToText(final File hocr, final String prefix, final String libraryId) {
+	}
 
-        // Utilisation de Saxon car xslt2.0
-        final TransformerFactory fact = TransformerFactoryImpl.newInstance();
+	/**
+	 * Creation du fichier text par transformation depuis un hocr.
+	 * @param hocr
+	 * @param prefix
+	 * @param libraryId
+	 */
+	public void transformHocrToText(final File hocr, final String prefix, final String libraryId) {
 
-        try (final InputStream xslInput = xslTextPath.getInputStream()) {
+		// Utilisation de Saxon car xslt2.0
+		final TransformerFactory fact = TransformerFactoryImpl.newInstance();
 
-            final Transformer transformer = fact.newTransformer(new StreamSource(xslInput));
+		try (final InputStream xslInput = xslTextPath.getInputStream()) {
 
-            transformer.setURIResolver(new URIResolver() {
+			final Transformer transformer = fact.newTransformer(new StreamSource(xslInput));
 
-                @Override
-                public Source resolve(final String href, final String base) throws TransformerException {
-                    try {
-                        return new StreamSource(this.getClass().getResource("/config/xsl/" + href).openStream());
-                    } catch (final Exception e) {
-                        LOG.error("Erreur avant la construction du fichier text", e);
-                        return null;
-                    }
-                }
-            });
+			transformer.setURIResolver(new URIResolver() {
 
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+				@Override
+				public Source resolve(final String href, final String base) throws TransformerException {
+					try {
+						return new StreamSource(this.getClass().getResource("/config/xsl/" + href).openStream());
+					}
+					catch (final Exception e) {
+						LOG.error("Erreur avant la construction du fichier text", e);
+						return null;
+					}
+				}
+			});
 
-            final File text = new File(Paths.get(outputTextPath, libraryId, prefix).toFile(), OCR_TXT_FILE);
-            if (hocr != null && hocr.isFile()) {
-                final Source hocrInput = new StreamSource(hocr);
-                final StreamResult altoOutput = new StreamResult(text);
-                transformer.transform(hocrInput, altoOutput);
-            }
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 
-        } catch (final IOException | TransformerException e) {
-            LOG.error("Erreur lors de la construction du fichier text", e);
-            return;
-        }
+			final File text = new File(Paths.get(outputTextPath, libraryId, prefix).toFile(), OCR_TXT_FILE);
+			if (hocr != null && hocr.isFile()) {
+				final Source hocrInput = new StreamSource(hocr);
+				final StreamResult altoOutput = new StreamResult(text);
+				transformer.transform(hocrInput, altoOutput);
+			}
 
-    }
+		}
+		catch (final IOException | TransformerException e) {
+			LOG.error("Erreur lors de la construction du fichier text", e);
+			return;
+		}
 
-    /**
-     * Récupération du fichier alto.xml et text stocké
-     * pour un docUnit donné
-     *
-     * @param docUnit
-     * @return
-     */
-    public List<File> retrieveAlto(final String docUnit, final String libraryId, final boolean alto, final boolean text) {
-        final List<File> altoAndTxt = new ArrayList<>();
-        if (docUnit != null) {
-            if (alto) {
-                final Path rootAlto = Paths.get(outputPath, libraryId, docUnit);
-                final File altoFile = fm.retrieveFile(rootAlto.toFile(), ALTO_XML_FILE);
-                if (altoFile != null) {
-                    altoAndTxt.add(altoFile);
-                }
-            }
-            if (text) {
-                final Path rootOcr = Paths.get(outputTextPath, libraryId, docUnit);
-                final File textFile = fm.retrieveFile(rootOcr.toFile(), OCR_TXT_FILE);
-                if (textFile != null) {
-                    altoAndTxt.add(textFile);
-                }
-            }
-            return altoAndTxt;
-        }
-        return null;
-    }
+	}
+
+	/**
+	 * Récupération du fichier alto.xml et text stocké pour un docUnit donné
+	 * @param docUnit
+	 * @return
+	 */
+	public List<File> retrieveAlto(final String docUnit, final String libraryId, final boolean alto,
+			final boolean text) {
+		final List<File> altoAndTxt = new ArrayList<>();
+		if (docUnit != null) {
+			if (alto) {
+				final Path rootAlto = Paths.get(outputPath, libraryId, docUnit);
+				final File altoFile = fm.retrieveFile(rootAlto.toFile(), ALTO_XML_FILE);
+				if (altoFile != null) {
+					altoAndTxt.add(altoFile);
+				}
+			}
+			if (text) {
+				final Path rootOcr = Paths.get(outputTextPath, libraryId, docUnit);
+				final File textFile = fm.retrieveFile(rootOcr.toFile(), OCR_TXT_FILE);
+				if (textFile != null) {
+					altoAndTxt.add(textFile);
+				}
+			}
+			return altoAndTxt;
+		}
+		return null;
+	}
+
 }

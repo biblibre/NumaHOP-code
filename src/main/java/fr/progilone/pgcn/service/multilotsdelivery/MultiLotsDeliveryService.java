@@ -19,85 +19,82 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MultiLotsDeliveryService {
 
-    private final MultiLotsDeliveryRepository multiRepository;
-    private final DeliveryRepository deliveryRepository;
+	private final MultiLotsDeliveryRepository multiRepository;
 
-    @Autowired
-    public MultiLotsDeliveryService(final MultiLotsDeliveryRepository multiRepository, final DeliveryRepository deliveryRepository) {
-        this.multiRepository = multiRepository;
-        this.deliveryRepository = deliveryRepository;
-    }
+	private final DeliveryRepository deliveryRepository;
 
-    @Transactional
-    public MultiLotsDelivery save(final MultiLotsDelivery multi) throws PgcnValidationException, PgcnBusinessException {
-        if (multi.getIdentifier() == null) {
-            multi.setStatus(Delivery.DeliveryStatus.SAVED);
-        }
-        deliveryRepository.saveAll(multi.getDeliveries());
-        return multiRepository.save(multi);
-    }
+	@Autowired
+	public MultiLotsDeliveryService(final MultiLotsDeliveryRepository multiRepository,
+			final DeliveryRepository deliveryRepository) {
+		this.multiRepository = multiRepository;
+		this.deliveryRepository = deliveryRepository;
+	}
 
-    @Transactional(readOnly = true)
-    public MultiLotsDelivery getOne(final String id) {
-        return multiRepository.getOne(id);
-    }
+	@Transactional
+	public MultiLotsDelivery save(final MultiLotsDelivery multi) throws PgcnValidationException, PgcnBusinessException {
+		if (multi.getIdentifier() == null) {
+			multi.setStatus(Delivery.DeliveryStatus.SAVED);
+		}
+		deliveryRepository.saveAll(multi.getDeliveries());
+		return multiRepository.save(multi);
+	}
 
-    @Transactional(readOnly = true)
-    public MultiLotsDelivery findOneByIdWithDeliveries(final String id) {
-        return multiRepository.findOneByIdWithDeliveries(id);
-    }
+	@Transactional(readOnly = true)
+	public MultiLotsDelivery getOne(final String id) {
+		return multiRepository.getOne(id);
+	}
 
-    @Transactional
-    public void delete(final String identifier) {
-        final MultiLotsDelivery multi = multiRepository.findOneByIdWithDeliveries(identifier);
-        multiRepository.delete(multi);
-        // esDeliveryService.deleteAsync(multi);
-    }
+	@Transactional(readOnly = true)
+	public MultiLotsDelivery findOneByIdWithDeliveries(final String id) {
+		return multiRepository.findOneByIdWithDeliveries(id);
+	}
 
-    /**
-     * Lance une recherche paginée
-     *
-     * @param search
-     * @param projects
-     * @param lots
-     * @param status
-     * @param dateFrom
-     * @param dateTo
-     * @param page
-     * @param size
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Page<MultiLotsDelivery> search(final String search,
-                                          final List<String> libraries,
-                                          final List<String> projects,
-                                          final List<String> lots,
-                                          final List<String> providers,
-                                          final List<Delivery.DeliveryStatus> status,
-                                          final LocalDate dateFrom,
-                                          final LocalDate dateTo,
-                                          final Integer page,
-                                          final Integer size) {
+	@Transactional
+	public void delete(final String identifier) {
+		final MultiLotsDelivery multi = multiRepository.findOneByIdWithDeliveries(identifier);
+		multiRepository.delete(multi);
+		// esDeliveryService.deleteAsync(multi);
+	}
 
-        final Pageable pageRequest = PageRequest.of(page, size);
-        return multiRepository.search(search, libraries, projects, lots, null, providers, status, dateFrom, dateTo, null, pageRequest);
-    }
+	/**
+	 * Lance une recherche paginée
+	 * @param search
+	 * @param projects
+	 * @param lots
+	 * @param status
+	 * @param dateFrom
+	 * @param dateTo
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Page<MultiLotsDelivery> search(final String search, final List<String> libraries,
+			final List<String> projects, final List<String> lots, final List<String> providers,
+			final List<Delivery.DeliveryStatus> status, final LocalDate dateFrom, final LocalDate dateTo,
+			final Integer page, final Integer size) {
 
-    @Transactional
-    public List<Lot> findLotsByTrainIdentifier(final String trainId) {
-        return multiRepository.findLotsByTrainIdentifier(trainId);
-    }
+		final Pageable pageRequest = PageRequest.of(page, size);
+		return multiRepository.search(search, libraries, projects, lots, null, providers, status, dateFrom, dateTo,
+				null, pageRequest);
+	}
 
-    @Transactional
-    public void closeMultiLotDelivery(final Delivery delivery) {
-        final MultiLotsDelivery multiLotsDelivery = delivery.getMultiLotsDelivery();
+	@Transactional
+	public List<Lot> findLotsByTrainIdentifier(final String trainId) {
+		return multiRepository.findLotsByTrainIdentifier(trainId);
+	}
 
-        if (multiLotsDelivery != null) {
-            final List<Delivery> deliveries = multiLotsDelivery.getDeliveries();
-            if (deliveries.stream().noneMatch(del -> del.getStatus() != Delivery.DeliveryStatus.CLOSED)) {
-                multiLotsDelivery.setStatus(Delivery.DeliveryStatus.CLOSED);
-                save(multiLotsDelivery);
-            }
-        }
-    }
+	@Transactional
+	public void closeMultiLotDelivery(final Delivery delivery) {
+		final MultiLotsDelivery multiLotsDelivery = delivery.getMultiLotsDelivery();
+
+		if (multiLotsDelivery != null) {
+			final List<Delivery> deliveries = multiLotsDelivery.getDeliveries();
+			if (deliveries.stream().noneMatch(del -> del.getStatus() != Delivery.DeliveryStatus.CLOSED)) {
+				multiLotsDelivery.setStatus(Delivery.DeliveryStatus.CLOSED);
+				save(multiLotsDelivery);
+			}
+		}
+	}
+
 }

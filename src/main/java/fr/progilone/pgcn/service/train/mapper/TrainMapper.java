@@ -7,11 +7,11 @@ import fr.progilone.pgcn.service.project.mapper.SimpleProjectMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {SimpleProjectMapper.class,
-                PhysicalDocumentMapper.class})
+@Mapper(uses = { SimpleProjectMapper.class, PhysicalDocumentMapper.class })
 public interface TrainMapper {
 
-    TrainMapper INSTANCE = Mappers.getMapper(TrainMapper.class);
+	TrainMapper INSTANCE = Mappers.getMapper(TrainMapper.class);
 
-    TrainDTO trainToTrainDTO(Train train);
+	TrainDTO trainToTrainDTO(Train train);
+
 }

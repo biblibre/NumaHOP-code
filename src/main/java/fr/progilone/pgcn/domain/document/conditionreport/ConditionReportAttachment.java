@@ -12,56 +12,60 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = ConditionReportAttachment.TABLE_NAME)
-@JsonSubTypes({@JsonSubTypes.Type(name = "doc_condreport_attachment", value = ConditionReportAttachment.class)})
+@JsonSubTypes({ @JsonSubTypes.Type(name = "doc_condreport_attachment", value = ConditionReportAttachment.class) })
 public class ConditionReportAttachment extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "doc_condreport_attachment";
+	public static final String TABLE_NAME = "doc_condreport_attachment";
 
-    /**
-     * Constat d'état
-     */
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "report")
-    private ConditionReport report;
+	/**
+	 * Constat d'état
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "report")
+	private ConditionReport report;
 
-    /**
-     * Nom du fichier importé
-     */
-    @Column(name = "original_filename", nullable = false)
-    private String originalFilename;
+	/**
+	 * Nom du fichier importé
+	 */
+	@Column(name = "original_filename", nullable = false)
+	private String originalFilename;
 
-    /**
-     * Taille du fichier importé
-     */
-    @Column(name = "file_size")
-    private Long fileSize;
+	/**
+	 * Taille du fichier importé
+	 */
+	@Column(name = "file_size")
+	private Long fileSize;
 
-    public ConditionReport getReport() {
-        return report;
-    }
+	public ConditionReport getReport() {
+		return report;
+	}
 
-    public void setReport(final ConditionReport report) {
-        this.report = report;
-    }
+	public void setReport(final ConditionReport report) {
+		this.report = report;
+	}
 
-    public String getOriginalFilename() {
-        return originalFilename;
-    }
+	public String getOriginalFilename() {
+		return originalFilename;
+	}
 
-    public void setOriginalFilename(final String originalFilename) {
-        this.originalFilename = originalFilename;
-    }
+	public void setOriginalFilename(final String originalFilename) {
+		this.originalFilename = originalFilename;
+	}
 
-    public Long getFileSize() {
-        return fileSize;
-    }
+	public Long getFileSize() {
+		return fileSize;
+	}
 
-    public void setFileSize(final Long fileSize) {
-        this.fileSize = fileSize;
-    }
+	public void setFileSize(final Long fileSize) {
+		this.fileSize = fileSize;
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("originalFilename", originalFilename).add("fileSize", fileSize).toString();
-    }
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+			.add("originalFilename", originalFilename)
+			.add("fileSize", fileSize)
+			.toString();
+	}
+
 }

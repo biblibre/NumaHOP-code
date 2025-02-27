@@ -19,48 +19,52 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AuditProjectRepository extends AbstractAuditRepository<Project> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AuditProjectRepository.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AuditProjectRepository.class);
 
-    @PersistenceContext
-    private EntityManager em;
+	@PersistenceContext
+	private EntityManager em;
 
-    public AuditProjectRepository() {
-        super(Project.class);
-    }
+	public AuditProjectRepository() {
+		super(Project.class);
+	}
 
-    /**
-     * Recherche la liste des dernières révisions depuis une date donnée, pour une liste de statuts donnés
-     *
-     * @param fromDate
-     * @param status
-     * @return
-     */
-    public List<AuditProjectRevisionDTO> getRevisions(final LocalDate fromDate, final List<Project.ProjectStatus> status) {
-        if (CollectionUtils.isNotEmpty(status)) {
-            final AuditCriterion filterStatus = AuditEntity.property("status").in(status);
-            return super.getRevisions(fromDate, em, Collections.singletonList(filterStatus), this::getAuditProjectRevisionDTO);
-        } else {
-            return super.getRevisions(fromDate, em, this::getAuditProjectRevisionDTO);
-        }
-    }
+	/**
+	 * Recherche la liste des dernières révisions depuis une date donnée, pour une liste
+	 * de statuts donnés
+	 * @param fromDate
+	 * @param status
+	 * @return
+	 */
+	public List<AuditProjectRevisionDTO> getRevisions(final LocalDate fromDate,
+			final List<Project.ProjectStatus> status) {
+		if (CollectionUtils.isNotEmpty(status)) {
+			final AuditCriterion filterStatus = AuditEntity.property("status").in(status);
+			return super.getRevisions(fromDate, em, Collections.singletonList(filterStatus),
+					this::getAuditProjectRevisionDTO);
+		}
+		else {
+			return super.getRevisions(fromDate, em, this::getAuditProjectRevisionDTO);
+		}
+	}
 
-    private AuditProjectRevisionDTO getAuditProjectRevisionDTO(final Project project, final AuditRevision rev) {
-        final AuditProjectRevisionDTO dto = new AuditProjectRevisionDTO();
-        dto.setRev(rev.getId());
-        dto.setIdentifier(project.getIdentifier());
+	private AuditProjectRevisionDTO getAuditProjectRevisionDTO(final Project project, final AuditRevision rev) {
+		final AuditProjectRevisionDTO dto = new AuditProjectRevisionDTO();
+		dto.setRev(rev.getId());
+		dto.setIdentifier(project.getIdentifier());
 
-        // Révision
-        dto.setTimestamp(rev.getTimestamp());
-        dto.setUsername(rev.getUsername());
+		// Révision
+		dto.setTimestamp(rev.getTimestamp());
+		dto.setUsername(rev.getUsername());
 
-        // Project
-        try {
-            dto.setStatus(project.getStatus());
+		// Project
+		try {
+			dto.setStatus(project.getStatus());
 
-        } catch (final EntityNotFoundException e) {
-            LOG.warn(e.getMessage());
-        }
-        return dto;
-    }
+		}
+		catch (final EntityNotFoundException e) {
+			LOG.warn(e.getMessage());
+		}
+		return dto;
+	}
 
 }

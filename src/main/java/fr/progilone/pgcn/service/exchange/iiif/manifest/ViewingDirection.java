@@ -12,79 +12,78 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"@id",
-                    "@type"})
+@JsonPropertyOrder({ "@id", "@type" })
 public class ViewingDirection {
 
-    @JsonProperty("@id")
-    private String id;
-    @JsonProperty("@type")
-    private String type;
-    @JsonIgnore
-    @Valid
-    private Map<String, Object> additionalProperties = new HashMap<>();
+	@JsonProperty("@id")
+	private String id;
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public ViewingDirection() {
-    }
+	@JsonProperty("@type")
+	private String type;
 
-    /**
-     *
-     * @param id
-     * @param type
-     */
-    public ViewingDirection(String id, String type) {
-        super();
-        this.id = id;
-        this.type = type;
-    }
+	@JsonIgnore
+	@Valid
+	private Map<String, Object> additionalProperties = new HashMap<>();
 
-    @JsonProperty("@id")
-    public String getId() {
-        return id;
-    }
+	/**
+	 * No args constructor for use in serialization
+	 */
+	public ViewingDirection() {
+	}
 
-    @JsonProperty("@id")
-    public void setId(String id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 * @param type
+	 */
+	public ViewingDirection(String id, String type) {
+		super();
+		this.id = id;
+		this.type = type;
+	}
 
-    public ViewingDirection withId(String id) {
-        this.id = id;
-        return this;
-    }
+	@JsonProperty("@id")
+	public String getId() {
+		return id;
+	}
 
-    @JsonProperty("@type")
-    public String getType() {
-        return type;
-    }
+	@JsonProperty("@id")
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    @JsonProperty("@type")
-    public void setType(String type) {
-        this.type = type;
-    }
+	public ViewingDirection withId(String id) {
+		this.id = id;
+		return this;
+	}
 
-    public ViewingDirection withType(String type) {
-        this.type = type;
-        return this;
-    }
+	@JsonProperty("@type")
+	public String getType() {
+		return type;
+	}
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
+	@JsonProperty("@type")
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
+	public ViewingDirection withType(String type) {
+		this.type = type;
+		return this;
+	}
 
-    public ViewingDirection withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
-    }
+	@JsonAnyGetter
+	public Map<String, Object> getAdditionalProperties() {
+		return this.additionalProperties;
+	}
+
+	@JsonAnySetter
+	public void setAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+	}
+
+	public ViewingDirection withAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+		return this;
+	}
 
 }

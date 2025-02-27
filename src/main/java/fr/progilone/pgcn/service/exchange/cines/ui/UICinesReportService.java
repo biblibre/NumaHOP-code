@@ -20,33 +20,36 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UICinesReportService {
 
-    @Autowired
-    private CinesReportService cinesReportService;
+	@Autowired
+	private CinesReportService cinesReportService;
 
-    /**
-     * Récupère la liste des rapports CINES liés à une unité doc
-     *
-     * @param docUnitId
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public List<CinesReportDTO> findAllByDocUnitIdentifier(String docUnitId) {
-        List<CinesReport> reports = cinesReportService.findByDocUnit(docUnitId);
-        return reports.stream().map(CinesReportMapper.INSTANCE::cinesReportToCinesReportDTO).collect(Collectors.toList());
-    }
+	/**
+	 * Récupère la liste des rapports CINES liés à une unité doc
+	 * @param docUnitId
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public List<CinesReportDTO> findAllByDocUnitIdentifier(String docUnitId) {
+		List<CinesReport> reports = cinesReportService.findByDocUnit(docUnitId);
+		return reports.stream()
+			.map(CinesReportMapper.INSTANCE::cinesReportToCinesReportDTO)
+			.collect(Collectors.toList());
+	}
 
-    @Transactional(readOnly = true)
-    public List<StatisticsProcessedDocUnitDTO> findAll(final List<String> libraries, final LocalDate fromDate, final boolean failures) {
-        return cinesReportService.findAll(libraries, fromDate, failures).stream().map(cinesReport -> {
-            final StatisticsProcessedDocUnitDTO dto = new StatisticsProcessedDocUnitDTO();
-            dto.setStatus(cinesReport.getStatus().name());
-            dto.setDate(cinesReport.getDateSent());
-            dto.setMessage(cinesReport.getMessage());
+	@Transactional(readOnly = true)
+	public List<StatisticsProcessedDocUnitDTO> findAll(final List<String> libraries, final LocalDate fromDate,
+			final boolean failures) {
+		return cinesReportService.findAll(libraries, fromDate, failures).stream().map(cinesReport -> {
+			final StatisticsProcessedDocUnitDTO dto = new StatisticsProcessedDocUnitDTO();
+			dto.setStatus(cinesReport.getStatus().name());
+			dto.setDate(cinesReport.getDateSent());
+			dto.setMessage(cinesReport.getMessage());
 
-            dto.setIdentifier(cinesReport.getDocUnit().getIdentifier());
-            dto.setPgcnId(cinesReport.getDocUnit().getPgcnId());
+			dto.setIdentifier(cinesReport.getDocUnit().getIdentifier());
+			dto.setPgcnId(cinesReport.getDocUnit().getPgcnId());
 
-            return dto;
-        }).collect(Collectors.toList());
-    }
+			return dto;
+		}).collect(Collectors.toList());
+	}
+
 }

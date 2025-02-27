@@ -9,9 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface DocUnitStateRepository extends JpaRepository<DocUnitState, String>, DocUnitStateRepositoryCustom {
 
-    @Query("select distinct d " + "from DocUnitState d "
-           + "left join fetch d.modelState m "
-           + "where d.status in ?1 "
-           + "and m.group = ?2")
-    List<DocUnitState> findAllStateInStatusForGroupIdentifier(List<WorkflowStateStatus> statuses, WorkflowGroup group);
+	@Query("select distinct d " + "from DocUnitState d " + "left join fetch d.modelState m " + "where d.status in ?1 "
+			+ "and m.group = ?2")
+	List<DocUnitState> findAllStateInStatusForGroupIdentifier(List<WorkflowStateStatus> statuses, WorkflowGroup group);
+
 }

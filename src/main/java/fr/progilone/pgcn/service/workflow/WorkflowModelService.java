@@ -25,136 +25,148 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class WorkflowModelService {
 
-    private final DocUnitWorkflowRepository docUnitWorkflowRepository;
-    private final LotRepository lotRepository;
-    private final ProjectRepository projectRepository;
-    private final WorkflowModelRepository repository;
-    private final WorkflowModelStateService workflowModelStateService;
+	private final DocUnitWorkflowRepository docUnitWorkflowRepository;
 
-    @Autowired
-    public WorkflowModelService(final DocUnitWorkflowRepository docUnitWorkflowRepository,
-                                final LotRepository lotRepository,
-                                final ProjectRepository projectRepository,
-                                final WorkflowModelRepository repository,
-                                final WorkflowModelStateService workflowModelStateService) {
-        this.docUnitWorkflowRepository = docUnitWorkflowRepository;
-        this.lotRepository = lotRepository;
-        this.projectRepository = projectRepository;
-        this.repository = repository;
-        this.workflowModelStateService = workflowModelStateService;
-    }
+	private final LotRepository lotRepository;
 
-    /**
-     * Sauvegarde un modele
-     */
-    @Transactional
-    public WorkflowModel save(final WorkflowModel model) throws PgcnValidationException {
-        validate(model);
-        final WorkflowModel savedModel = repository.save(model);
-        model.getModelStates().forEach(workflowModelStateService::save);
-        return savedModel;
-    }
+	private final ProjectRepository projectRepository;
 
-    /**
-     * Retourne un modele
-     */
-    @Transactional(readOnly = true)
-    public WorkflowModel getOne(final String identifier) {
-        return repository.findById(identifier).orElse(null);
-    }
+	private final WorkflowModelRepository repository;
 
-    @Transactional(readOnly = true)
-    public Page<WorkflowModel> search(final String search, final String initiale, final List<String> libraries, final Integer page, final Integer size, final List<String> sorts) {
+	private final WorkflowModelStateService workflowModelStateService;
 
-        final Sort sort = SortUtils.getSort(sorts);
-        final Pageable pageRequest = PageRequest.of(page, size, sort);
+	@Autowired
+	public WorkflowModelService(final DocUnitWorkflowRepository docUnitWorkflowRepository,
+			final LotRepository lotRepository, final ProjectRepository projectRepository,
+			final WorkflowModelRepository repository, final WorkflowModelStateService workflowModelStateService) {
+		this.docUnitWorkflowRepository = docUnitWorkflowRepository;
+		this.lotRepository = lotRepository;
+		this.projectRepository = projectRepository;
+		this.repository = repository;
+		this.workflowModelStateService = workflowModelStateService;
+	}
 
-        if (libraries.isEmpty() && SecurityUtils.getCurrentUser().getLibraryId() != null) {
-            libraries.add(SecurityUtils.getCurrentUser().getLibraryId());
-        }
+	/**
+	 * Sauvegarde un modele
+	 */
+	@Transactional
+	public WorkflowModel save(final WorkflowModel model) throws PgcnValidationException {
+		validate(model);
+		final WorkflowModel savedModel = repository.save(model);
+		model.getModelStates().forEach(workflowModelStateService::save);
+		return savedModel;
+	}
 
-        return repository.search(search, initiale, libraries, pageRequest);
-    }
+	/**
+	 * Retourne un modele
+	 */
+	@Transactional(readOnly = true)
+	public WorkflowModel getOne(final String identifier) {
+		return repository.findById(identifier).orElse(null);
+	}
 
-    /**
-     * Suppression de modele
-     */
-    @Transactional
-    public void delete(final String identifier) {
-        repository.findById(identifier).ifPresent(model -> {
-            validateDelete(model);
-            repository.delete(model);
-        });
-    }
+	@Transactional(readOnly = true)
+	public Page<WorkflowModel> search(final String search, final String initiale, final List<String> libraries,
+			final Integer page, final Integer size, final List<String> sorts) {
 
-    /**
-     * Validation avant sauvegarde
-     *
-     * @param model
-     * @return
-     * @throws PgcnValidationException
-     */
-    @Transactional(readOnly = true)
-    private PgcnList<PgcnError> validate(final WorkflowModel model) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
-        final String name = model.getName();
+		final Sort sort = SortUtils.getSort(sorts);
+		final Pageable pageRequest = PageRequest.of(page, size, sort);
 
-        // le nom est obligatoire
-        if (StringUtils.isBlank(name)) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.WORKFLOW_MODEL_NAME_MANDATORY).setField("name").build());
-        }
-        // nom unique
-        else {
-            final Long countDuplicates = model.getIdentifier() == null ? repository.countByName(name)
-                                                                       : repository.countByNameAndIdentifierNot(name, model.getIdentifier());
-            if (countDuplicates > 0) {
-                errors.add(builder.reinit().setCode(PgcnErrorCode.WORKFLOW_MODEL_DUPLICATE_NAME).setField("name").build());
-            }
-        }
+		if (libraries.isEmpty() && SecurityUtils.getCurrentUser().getLibraryId() != null) {
+			libraries.add(SecurityUtils.getCurrentUser().getLibraryId());
+		}
 
-        /* Retour */
-        if (!errors.isEmpty()) {
-            model.setErrors(errors);
-            throw new PgcnValidationException(model, errors);
-        }
-        return errors;
-    }
+		return repository.search(search, initiale, libraries, pageRequest);
+	}
 
-    /**
-     * Validation avant suppression
-     *
-     * @param model
-     * @throws PgcnValidationException
-     */
-    private void validateDelete(final WorkflowModel model) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
+	/**
+	 * Suppression de modele
+	 */
+	@Transactional
+	public void delete(final String identifier) {
+		repository.findById(identifier).ifPresent(model -> {
+			validateDelete(model);
+			repository.delete(model);
+		});
+	}
 
-        // DocWorkflow
-        final Long docCount = docUnitWorkflowRepository.countByModel(model);
-        if (docCount > 0) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.WORKFLOW_MODEL_DEL_EXITS_DOC).setAdditionalComplement(docCount).build());
-        }
-        // Lot
-        final Long lotCount = lotRepository.countByWorkflowModel(model);
-        if (lotCount > 0) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.WORKFLOW_MODEL_DEL_EXITS_LOT).setAdditionalComplement(lotCount).build());
-        }
-        // Project
-        final Long projCount = projectRepository.countByWorkflowModel(model);
-        if (projCount > 0) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.WORKFLOW_MODEL_DEL_EXITS_PROJ).setAdditionalComplement(projCount).build());
-        }
+	/**
+	 * Validation avant sauvegarde
+	 * @param model
+	 * @return
+	 * @throws PgcnValidationException
+	 */
+	@Transactional(readOnly = true)
+	private PgcnList<PgcnError> validate(final WorkflowModel model) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
+		final String name = model.getName();
 
-        if (!errors.isEmpty()) {
-            model.setErrors(errors);
-            throw new PgcnValidationException(model, errors);
-        }
-    }
+		// le nom est obligatoire
+		if (StringUtils.isBlank(name)) {
+			errors.add(builder.reinit().setCode(PgcnErrorCode.WORKFLOW_MODEL_NAME_MANDATORY).setField("name").build());
+		}
+		// nom unique
+		else {
+			final Long countDuplicates = model.getIdentifier() == null ? repository.countByName(name)
+					: repository.countByNameAndIdentifierNot(name, model.getIdentifier());
+			if (countDuplicates > 0) {
+				errors.add(
+						builder.reinit().setCode(PgcnErrorCode.WORKFLOW_MODEL_DUPLICATE_NAME).setField("name").build());
+			}
+		}
 
-    @Transactional(readOnly = true)
-    public Collection<WorkflowModel> findAllForLibrary(final String identifier) {
-        return repository.findAllByLibraryIdentifierAndActive(identifier, true);
-    }
+		/* Retour */
+		if (!errors.isEmpty()) {
+			model.setErrors(errors);
+			throw new PgcnValidationException(model, errors);
+		}
+		return errors;
+	}
+
+	/**
+	 * Validation avant suppression
+	 * @param model
+	 * @throws PgcnValidationException
+	 */
+	private void validateDelete(final WorkflowModel model) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
+
+		// DocWorkflow
+		final Long docCount = docUnitWorkflowRepository.countByModel(model);
+		if (docCount > 0) {
+			errors.add(builder.reinit()
+				.setCode(PgcnErrorCode.WORKFLOW_MODEL_DEL_EXITS_DOC)
+				.setAdditionalComplement(docCount)
+				.build());
+		}
+		// Lot
+		final Long lotCount = lotRepository.countByWorkflowModel(model);
+		if (lotCount > 0) {
+			errors.add(builder.reinit()
+				.setCode(PgcnErrorCode.WORKFLOW_MODEL_DEL_EXITS_LOT)
+				.setAdditionalComplement(lotCount)
+				.build());
+		}
+		// Project
+		final Long projCount = projectRepository.countByWorkflowModel(model);
+		if (projCount > 0) {
+			errors.add(builder.reinit()
+				.setCode(PgcnErrorCode.WORKFLOW_MODEL_DEL_EXITS_PROJ)
+				.setAdditionalComplement(projCount)
+				.build());
+		}
+
+		if (!errors.isEmpty()) {
+			model.setErrors(errors);
+			throw new PgcnValidationException(model, errors);
+		}
+	}
+
+	@Transactional(readOnly = true)
+	public Collection<WorkflowModel> findAllForLibrary(final String identifier) {
+		return repository.findAllByLibraryIdentifierAndActive(identifier, true);
+	}
+
 }

@@ -9,119 +9,129 @@ import org.apache.commons.collections4.CollectionUtils;
 
 public class DeliverySearchBuilder {
 
-    private String search;
-    private List<String> libraries;
-    private List<String> projects;
-    private List<String> lots;
-    private List<String> deliveries;
-    private List<String> providers;
-    private List<Delivery.DeliveryStatus> status;
-    private LocalDate dateFrom;
-    private LocalDate dateTo;
-    private String docUnitPgcnId;
-    private List<WorkflowStateKey> docUnitStates;
+	private String search;
 
-    public Optional<String> getSearch() {
-        return Optional.ofNullable(search);
-    }
+	private List<String> libraries;
 
-    public Optional<List<String>> getLibraries() {
-        return ofEmptiable(libraries);
-    }
+	private List<String> projects;
 
-    public Optional<List<String>> getProjects() {
-        return ofEmptiable(projects);
-    }
+	private List<String> lots;
 
-    public Optional<List<String>> getLots() {
-        return ofEmptiable(lots);
-    }
+	private List<String> deliveries;
 
-    public Optional<List<String>> getDeliveries() {
-        return ofEmptiable(deliveries);
-    }
+	private List<String> providers;
 
-    public Optional<List<String>> getProviders() {
-        return ofEmptiable(providers);
-    }
+	private List<Delivery.DeliveryStatus> status;
 
-    public Optional<List<Delivery.DeliveryStatus>> getStatus() {
-        return ofEmptiable(status);
-    }
+	private LocalDate dateFrom;
 
-    public Optional<LocalDate> getDateFrom() {
-        return Optional.ofNullable(dateFrom);
-    }
+	private LocalDate dateTo;
 
-    public Optional<LocalDate> getDateTo() {
-        return Optional.ofNullable(dateTo);
-    }
+	private String docUnitPgcnId;
 
-    public Optional<String> getDocUnitPgcnId() {
-        return Optional.ofNullable(docUnitPgcnId);
-    }
+	private List<WorkflowStateKey> docUnitStates;
 
-    public Optional<List<WorkflowStateKey>> getDocUnitStates() {
-        return ofEmptiable(docUnitStates);
-    }
+	public Optional<String> getSearch() {
+		return Optional.ofNullable(search);
+	}
 
-    public DeliverySearchBuilder setSearch(final String search) {
-        this.search = search;
-        return this;
-    }
+	public Optional<List<String>> getLibraries() {
+		return ofEmptiable(libraries);
+	}
 
-    public DeliverySearchBuilder setLibraries(final List<String> libraries) {
-        this.libraries = libraries;
-        return this;
-    }
+	public Optional<List<String>> getProjects() {
+		return ofEmptiable(projects);
+	}
 
-    public DeliverySearchBuilder setProjects(final List<String> projects) {
-        this.projects = projects;
-        return this;
-    }
+	public Optional<List<String>> getLots() {
+		return ofEmptiable(lots);
+	}
 
-    public DeliverySearchBuilder setLots(final List<String> lots) {
-        this.lots = lots;
-        return this;
-    }
+	public Optional<List<String>> getDeliveries() {
+		return ofEmptiable(deliveries);
+	}
 
-    public DeliverySearchBuilder setDeliveries(final List<String> deliveries) {
-        this.deliveries = deliveries;
-        return this;
-    }
+	public Optional<List<String>> getProviders() {
+		return ofEmptiable(providers);
+	}
 
-    public DeliverySearchBuilder setProviders(final List<String> providers) {
-        this.providers = providers;
-        return this;
-    }
+	public Optional<List<Delivery.DeliveryStatus>> getStatus() {
+		return ofEmptiable(status);
+	}
 
-    public DeliverySearchBuilder setStatus(final List<Delivery.DeliveryStatus> status) {
-        this.status = status;
-        return this;
-    }
+	public Optional<LocalDate> getDateFrom() {
+		return Optional.ofNullable(dateFrom);
+	}
 
-    public DeliverySearchBuilder setDateFrom(final LocalDate dateFrom) {
-        this.dateFrom = dateFrom;
-        return this;
-    }
+	public Optional<LocalDate> getDateTo() {
+		return Optional.ofNullable(dateTo);
+	}
 
-    public DeliverySearchBuilder setDateTo(final LocalDate dateTo) {
-        this.dateTo = dateTo;
-        return this;
-    }
+	public Optional<String> getDocUnitPgcnId() {
+		return Optional.ofNullable(docUnitPgcnId);
+	}
 
-    public DeliverySearchBuilder setDocUnitPgcnId(final String docUnitPgcnId) {
-        this.docUnitPgcnId = docUnitPgcnId;
-        return this;
-    }
+	public Optional<List<WorkflowStateKey>> getDocUnitStates() {
+		return ofEmptiable(docUnitStates);
+	}
 
-    public DeliverySearchBuilder setDocUnitStates(final List<WorkflowStateKey> docUnitStates) {
-        this.docUnitStates = docUnitStates;
-        return this;
-    }
+	public DeliverySearchBuilder setSearch(final String search) {
+		this.search = search;
+		return this;
+	}
 
-    private static <T> Optional<List<T>> ofEmptiable(final List<T> list) {
-        return CollectionUtils.isEmpty(list) ? Optional.empty()
-                                             : Optional.of(list);
-    }
+	public DeliverySearchBuilder setLibraries(final List<String> libraries) {
+		this.libraries = libraries;
+		return this;
+	}
+
+	public DeliverySearchBuilder setProjects(final List<String> projects) {
+		this.projects = projects;
+		return this;
+	}
+
+	public DeliverySearchBuilder setLots(final List<String> lots) {
+		this.lots = lots;
+		return this;
+	}
+
+	public DeliverySearchBuilder setDeliveries(final List<String> deliveries) {
+		this.deliveries = deliveries;
+		return this;
+	}
+
+	public DeliverySearchBuilder setProviders(final List<String> providers) {
+		this.providers = providers;
+		return this;
+	}
+
+	public DeliverySearchBuilder setStatus(final List<Delivery.DeliveryStatus> status) {
+		this.status = status;
+		return this;
+	}
+
+	public DeliverySearchBuilder setDateFrom(final LocalDate dateFrom) {
+		this.dateFrom = dateFrom;
+		return this;
+	}
+
+	public DeliverySearchBuilder setDateTo(final LocalDate dateTo) {
+		this.dateTo = dateTo;
+		return this;
+	}
+
+	public DeliverySearchBuilder setDocUnitPgcnId(final String docUnitPgcnId) {
+		this.docUnitPgcnId = docUnitPgcnId;
+		return this;
+	}
+
+	public DeliverySearchBuilder setDocUnitStates(final List<WorkflowStateKey> docUnitStates) {
+		this.docUnitStates = docUnitStates;
+		return this;
+	}
+
+	private static <T> Optional<List<T>> ofEmptiable(final List<T> list) {
+		return CollectionUtils.isEmpty(list) ? Optional.empty() : Optional.of(list);
+	}
+
 }

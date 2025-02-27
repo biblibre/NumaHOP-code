@@ -4,17 +4,18 @@ import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
 
 public class StateIsDoneDTO extends AbstractVersionedDTO {
 
-    private boolean isDone;
+	private boolean isDone;
 
-    public StateIsDoneDTO() {
+	public StateIsDoneDTO() {
 
-    }
+	}
 
-    public boolean isDone() {
-        return isDone;
-    }
+	public boolean isDone() {
+		return isDone;
+	}
 
-    public void setDone(boolean isDone) {
-        this.isDone = isDone;
-    }
+	public void setDone(boolean isDone) {
+		this.isDone = isDone;
+	}
+
 }

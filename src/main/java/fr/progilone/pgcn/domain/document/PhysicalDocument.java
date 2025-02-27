@@ -28,178 +28,179 @@ import java.util.Set;
 @Table(name = PhysicalDocument.TABLE_NAME)
 public class PhysicalDocument extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "doc_physical_document";
-    public static final String TABLE_NAME_PHYSICAL_DIGITAL_DOC = "doc_physical_document_digital";
+	public static final String TABLE_NAME = "doc_physical_document";
 
-    /*
-     * FIXME
-     * Lien constat d'état
-     */
+	public static final String TABLE_NAME_PHYSICAL_DIGITAL_DOC = "doc_physical_document_digital";
 
-    /**
-     * Lien vers l'unité documentaire
-     */
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "doc_unit")
-    private DocUnit docUnit;
+	/*
+	 * FIXME Lien constat d'état
+	 */
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JoinTable(name = TABLE_NAME_PHYSICAL_DIGITAL_DOC,
-               joinColumns = {@JoinColumn(name = "physical_document", referencedColumnName = "identifier")},
-               inverseJoinColumns = {@JoinColumn(name = "digital_document", referencedColumnName = "identifier")})
-    private final Set<DigitalDocument> digitalDocuments = new HashSet<>();
+	/**
+	 * Lien vers l'unité documentaire
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "doc_unit")
+	private DocUnit docUnit;
 
-    /**
-     * statut du document physique
-     */
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private PhysicalDocumentStatus status;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@JoinTable(name = TABLE_NAME_PHYSICAL_DIGITAL_DOC,
+			joinColumns = { @JoinColumn(name = "physical_document", referencedColumnName = "identifier") },
+			inverseJoinColumns = { @JoinColumn(name = "digital_document", referencedColumnName = "identifier") })
+	private final Set<DigitalDocument> digitalDocuments = new HashSet<>();
 
-    @Column(name = "name")
-    private String name;
+	/**
+	 * statut du document physique
+	 */
+	@Column(name = "status")
+	@Enumerated(EnumType.STRING)
+	private PhysicalDocumentStatus status;
 
-    @Column(name = "total_page")
-    private Integer totalPage;
+	@Column(name = "name")
+	private String name;
 
-    @Column(name = "digital_id")
-    private String digitalId;
+	@Column(name = "total_page")
+	private Integer totalPage;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "train")
-    private Train train;
+	@Column(name = "digital_id")
+	private String digitalId;
 
-    /**
-     * Liste des résultats de contrôles automatiques associés
-     */
-    @OneToMany(mappedBy = "physicalDocument", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final Set<AutomaticCheckResult> automaticCheckResults = new HashSet<>();
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "train")
+	private Train train;
 
-    public DocUnit getDocUnit() {
-        return docUnit;
-    }
+	/**
+	 * Liste des résultats de contrôles automatiques associés
+	 */
+	@OneToMany(mappedBy = "physicalDocument", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private final Set<AutomaticCheckResult> automaticCheckResults = new HashSet<>();
 
-    public void setDocUnit(final DocUnit docUnit) {
-        this.docUnit = docUnit;
-    }
+	public DocUnit getDocUnit() {
+		return docUnit;
+	}
 
-    public Set<DigitalDocument> getDigitalDocuments() {
-        return digitalDocuments;
-    }
+	public void setDocUnit(final DocUnit docUnit) {
+		this.docUnit = docUnit;
+	}
 
-    public void setDigitalDocuments(final Set<DigitalDocument> digitalDocuments) {
-        this.digitalDocuments.clear();
-        if (digitalDocuments != null) {
-            digitalDocuments.forEach(this::addDigitalDocument);
-        }
-    }
+	public Set<DigitalDocument> getDigitalDocuments() {
+		return digitalDocuments;
+	}
 
-    public void addDigitalDocument(final DigitalDocument doc) {
-        if (doc != null) {
-            this.digitalDocuments.add(doc);
-            doc.getPhysicalDocuments().add(this);
-        }
-    }
+	public void setDigitalDocuments(final Set<DigitalDocument> digitalDocuments) {
+		this.digitalDocuments.clear();
+		if (digitalDocuments != null) {
+			digitalDocuments.forEach(this::addDigitalDocument);
+		}
+	}
 
-    public PhysicalDocumentStatus getStatus() {
-        return status;
-    }
+	public void addDigitalDocument(final DigitalDocument doc) {
+		if (doc != null) {
+			this.digitalDocuments.add(doc);
+			doc.getPhysicalDocuments().add(this);
+		}
+	}
 
-    public void setStatus(final PhysicalDocumentStatus status) {
-        this.status = status;
-    }
+	public PhysicalDocumentStatus getStatus() {
+		return status;
+	}
 
-    public Integer getTotalPage() {
-        return totalPage;
-    }
+	public void setStatus(final PhysicalDocumentStatus status) {
+		this.status = status;
+	}
 
-    public void setTotalPage(final Integer totalPage) {
-        this.totalPage = totalPage;
-    }
+	public Integer getTotalPage() {
+		return totalPage;
+	}
 
-    public String getDigitalId() {
-        return digitalId;
-    }
+	public void setTotalPage(final Integer totalPage) {
+		this.totalPage = totalPage;
+	}
 
-    public void setDigitalId(final String digitalId) {
-        this.digitalId = digitalId;
-    }
+	public String getDigitalId() {
+		return digitalId;
+	}
 
-    public Train getTrain() {
-        return train;
-    }
+	public void setDigitalId(final String digitalId) {
+		this.digitalId = digitalId;
+	}
 
-    public void setTrain(final Train train) {
-        this.train = train;
-    }
+	public Train getTrain() {
+		return train;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setTrain(final Train train) {
+		this.train = train;
+	}
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Set<AutomaticCheckResult> getAutomaticCheckResults() {
-        return automaticCheckResults;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public void setAutomaticCheckResults(final Set<AutomaticCheckResult> results) {
-        this.automaticCheckResults.clear();
-        if (results != null) {
-            results.forEach(this::addAutomaticCheckResult);
-        }
-    }
+	public Set<AutomaticCheckResult> getAutomaticCheckResults() {
+		return automaticCheckResults;
+	}
 
-    public void addAutomaticCheckResult(final AutomaticCheckResult result) {
-        if (result != null) {
-            this.automaticCheckResults.add(result);
-            result.setPhysicalDocument(this);
-        }
-    }
+	public void setAutomaticCheckResults(final Set<AutomaticCheckResult> results) {
+		this.automaticCheckResults.clear();
+		if (results != null) {
+			results.forEach(this::addAutomaticCheckResult);
+		}
+	}
 
-    /**
-     * FIXME
-     * Format, Degré d'ouverture
-     * liste paramétrable
-     */
+	public void addAutomaticCheckResult(final AutomaticCheckResult result) {
+		if (result != null) {
+			this.automaticCheckResults.add(result);
+			result.setPhysicalDocument(this);
+		}
+	}
 
-    /**
-     * Statuts d'un document physique
-     */
-    public enum PhysicalDocumentStatus {
-        /**
-         * Créé
-         */
-        CREATED,
-        /**
-         * Sélectionné
-         */
-        SELECTED,
-        /**
-         * Prélevé
-         */
-        GATHERED,
-        /**
-         * Constat d'état réalisé
-         */
-        STATE_CHECK_REALISED,
-        /**
-         * En cours de numérisation
-         */
-        IN_DIGITIZATION,
-        /**
-         * A controler (retour)
-         */
-        TO_CHECK,
-        /**
-         * A ranger
-         */
-        TO_SHELVE,
-        /**
-         * Réintégré
-         */
-        REINTEGRATED;
-    }
+	/**
+	 * FIXME Format, Degré d'ouverture liste paramétrable
+	 */
+
+	/**
+	 * Statuts d'un document physique
+	 */
+	public enum PhysicalDocumentStatus {
+
+		/**
+		 * Créé
+		 */
+		CREATED,
+		/**
+		 * Sélectionné
+		 */
+		SELECTED,
+		/**
+		 * Prélevé
+		 */
+		GATHERED,
+		/**
+		 * Constat d'état réalisé
+		 */
+		STATE_CHECK_REALISED,
+		/**
+		 * En cours de numérisation
+		 */
+		IN_DIGITIZATION,
+		/**
+		 * A controler (retour)
+		 */
+		TO_CHECK,
+		/**
+		 * A ranger
+		 */
+		TO_SHELVE,
+		/**
+		 * Réintégré
+		 */
+		REINTEGRATED;
+
+	}
+
 }

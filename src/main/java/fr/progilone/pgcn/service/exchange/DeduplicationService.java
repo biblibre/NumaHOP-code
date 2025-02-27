@@ -21,48 +21,58 @@ import org.springframework.stereotype.Service;
 @Service
 public class DeduplicationService {
 
-    private final DocUnitRepository docUnitRepository;
+	private final DocUnitRepository docUnitRepository;
 
-    @Autowired
-    public DeduplicationService(final DocUnitRepository docUnitRepository) {
-        this.docUnitRepository = docUnitRepository;
-    }
+	@Autowired
+	public DeduplicationService(final DocUnitRepository docUnitRepository) {
+		this.docUnitRepository = docUnitRepository;
+	}
 
-    /**
-     * Recherche de doublon par rapport à l'unité documentaire docUnit
-     *
-     * @param docUnit
-     * @return
-     */
-    public Collection<DocUnit> lookupDuplicates(final DocUnit docUnit) {
-        final Set<DocUnit> duplicates = new HashSet<>();
-        // UD doublons sur le PGCN Id
-        if (docUnit.getPgcnId() != null) {
-            final DocUnit duplPgcnId = docUnitRepository.getOneByPgcnIdAndState(docUnit.getPgcnId(), DocUnit.State.AVAILABLE);
+	/**
+	 * Recherche de doublon par rapport à l'unité documentaire docUnit
+	 * @param docUnit
+	 * @return
+	 */
+	public Collection<DocUnit> lookupDuplicates(final DocUnit docUnit) {
+		final Set<DocUnit> duplicates = new HashSet<>();
+		// UD doublons sur le PGCN Id
+		if (docUnit.getPgcnId() != null) {
 
-            if (duplPgcnId != null) {
-                duplicates.add(duplPgcnId);
-            }
-        }
-        // UD doublon sur l'identifiant de la notice
-        docUnit.getRecords().stream().map(bib -> lookupDuplicates(docUnit, bib)).flatMap(Collection::stream).forEach(duplicates::add);
-        return duplicates;
-    }
+			// Les doublons peuvent être clôturés ! Ne pas restreindre aux unités
+			// documentaires disponibles.
+			final List<DocUnit> duplPgcnId = docUnitRepository.findAllByPgcnId(docUnit.getPgcnId());
+			duplPgcnId.stream().forEach(dupl -> {
+				// L'unité documentaire actuellement checkée se trouve aussi dans la liste
+				// retournée par la bdd
+				if (!dupl.getIdentifier().equals(docUnit.getIdentifier()))
+					duplicates.add(dupl);
+			});
 
-    /**
-     * Recherche des UD doublon en se basant sur le champ DC Identifier des notices
-     *
-     * @param docUnit
-     * @param bib
-     * @return
-     */
-    private List<DocUnit> lookupDuplicates(final DocUnit docUnit, final BibliographicRecord bib) {
-        final List<String> identifiers = bib.getProperties()
-                                            .stream()
-                                            .filter(prop -> StringUtils.equals(prop.getType().getIdentifier(), "identifier"))
-                                            .map(DocProperty::getValue)
-                                            .collect(Collectors.toList());
-        // Recherche des doublons déjà importés
-        return docUnitRepository.searchDuplicates(docUnit, identifiers, DocUnit.State.AVAILABLE);
-    }
+		}
+		// UD doublon sur l'identifiant de la notice
+		docUnit.getRecords()
+			.stream()
+			.map(bib -> lookupDuplicates(docUnit, bib))
+			.flatMap(Collection::stream)
+			.forEach(duplicates::add);
+		return duplicates;
+	}
+
+	/**
+	 * Recherche des UD doublon en se basant sur le champ DC Identifier des notices
+	 * @param docUnit
+	 * @param bib
+	 * @return
+	 */
+	private List<DocUnit> lookupDuplicates(final DocUnit docUnit, final BibliographicRecord bib) {
+		final List<String> identifiers = bib.getProperties()
+			.stream()
+			.filter(prop -> StringUtils.equals(prop.getType().getIdentifier(), "identifier"))
+			.map(DocProperty::getValue)
+			.collect(Collectors.toList());
+		// Les doublons peuvent être clôturés ! Ne pas restreindre aux unités
+		// documentaires disponibles.
+		return docUnitRepository.searchDuplicates(docUnit, identifiers);
+	}
+
 }

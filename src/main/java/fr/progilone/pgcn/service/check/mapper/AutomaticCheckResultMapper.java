@@ -10,9 +10,10 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface AutomaticCheckResultMapper {
 
-    AutomaticCheckResultMapper INSTANCE = Mappers.getMapper(AutomaticCheckResultMapper.class);
+	AutomaticCheckResultMapper INSTANCE = Mappers.getMapper(AutomaticCheckResultMapper.class);
 
-    AutomaticCheckTypeDTO automaticCheckTypeToAutomaticCheckTypeDTO(AutomaticCheckType type);
+	AutomaticCheckTypeDTO automaticCheckTypeToAutomaticCheckTypeDTO(AutomaticCheckType type);
 
-    AutomaticCheckResultDTO automaticCheckResultToAutomaticCheckResultDTO(AutomaticCheckResult result);
+	AutomaticCheckResultDTO automaticCheckResultToAutomaticCheckResultDTO(AutomaticCheckResult result);
+
 }

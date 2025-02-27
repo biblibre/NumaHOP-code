@@ -8,51 +8,56 @@ import java.util.Set;
  */
 public class PreDeliveryDocumentDTO extends AbstractDTO {
 
-    private String digitalId;
-    private Integer pageNumber;
-    private Set<String> pieces;
-    private Set<PreDeliveryDocumentFileDTO> metaDataFiles;
+	private String digitalId;
 
-    public PreDeliveryDocumentDTO(final String digitalId, final Integer pageNumber, final Set<String> pieces, final Set<PreDeliveryDocumentFileDTO> metaDataFiles) {
-        this.digitalId = digitalId;
-        this.pageNumber = pageNumber;
-        this.pieces = pieces;
-        this.metaDataFiles = metaDataFiles;
-    }
+	private Integer pageNumber;
 
-    public PreDeliveryDocumentDTO() {
+	private Set<String> pieces;
 
-    }
+	private Set<PreDeliveryDocumentFileDTO> metaDataFiles;
 
-    public String getDigitalId() {
-        return digitalId;
-    }
+	public PreDeliveryDocumentDTO(final String digitalId, final Integer pageNumber, final Set<String> pieces,
+			final Set<PreDeliveryDocumentFileDTO> metaDataFiles) {
+		this.digitalId = digitalId;
+		this.pageNumber = pageNumber;
+		this.pieces = pieces;
+		this.metaDataFiles = metaDataFiles;
+	}
 
-    public void setDigitalId(final String digitalId) {
-        this.digitalId = digitalId;
-    }
+	public PreDeliveryDocumentDTO() {
 
-    public Integer getPageNumber() {
-        return pageNumber;
-    }
+	}
 
-    public void setPageNumber(final Integer pageNumber) {
-        this.pageNumber = pageNumber;
-    }
+	public String getDigitalId() {
+		return digitalId;
+	}
 
-    public Set<String> getPieces() {
-        return pieces;
-    }
+	public void setDigitalId(final String digitalId) {
+		this.digitalId = digitalId;
+	}
 
-    public void setPieces(final Set<String> pieces) {
-        this.pieces = pieces;
-    }
+	public Integer getPageNumber() {
+		return pageNumber;
+	}
 
-    public Set<PreDeliveryDocumentFileDTO> getMetaDataFiles() {
-        return metaDataFiles;
-    }
+	public void setPageNumber(final Integer pageNumber) {
+		this.pageNumber = pageNumber;
+	}
 
-    public void setMetaDataFiles(final Set<PreDeliveryDocumentFileDTO> metaDataFiles) {
-        this.metaDataFiles = metaDataFiles;
-    }
+	public Set<String> getPieces() {
+		return pieces;
+	}
+
+	public void setPieces(final Set<String> pieces) {
+		this.pieces = pieces;
+	}
+
+	public Set<PreDeliveryDocumentFileDTO> getMetaDataFiles() {
+		return metaDataFiles;
+	}
+
+	public void setMetaDataFiles(final Set<PreDeliveryDocumentFileDTO> metaDataFiles) {
+		this.metaDataFiles = metaDataFiles;
+	}
+
 }

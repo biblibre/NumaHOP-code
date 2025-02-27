@@ -19,82 +19,89 @@ import java.util.Set;
  */
 @Entity
 @Table(name = Role.TABLE_NAME)
-@JsonSubTypes({@JsonSubTypes.Type(name = "role", value = Role.class)})
+@JsonSubTypes({ @JsonSubTypes.Type(name = "role", value = Role.class) })
 public class Role extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "user_role";
-    public static final String TABLE_NAME_ROLE_AUTHORIZATION = "user_role_authorization";
+	public static final String TABLE_NAME = "user_role";
 
-    @Column(name = "code", updatable = false, unique = true)
-    @NotNull
-    private String code;
+	public static final String TABLE_NAME_ROLE_AUTHORIZATION = "user_role_authorization";
 
-    @Column(name = "label", unique = true)
-    private String label;
+	@Column(name = "code", updatable = false, unique = true)
+	@NotNull
+	private String code;
 
-    @Column(name = "description")
-    private String description;
+	@Column(name = "label", unique = true)
+	private String label;
 
-    @Column(name = "superuser")
-    private Boolean superuser;
+	@Column(name = "description")
+	private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = TABLE_NAME_ROLE_AUTHORIZATION,
-               joinColumns = {@JoinColumn(name = "role", referencedColumnName = "identifier")},
-               inverseJoinColumns = {@JoinColumn(name = "user_authorization", referencedColumnName = "identifier")})
-    private final Set<Authorization> authorizations = new HashSet<>();
+	@Column(name = "superuser")
+	private Boolean superuser;
 
-    public String getCode() {
-        return code;
-    }
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = TABLE_NAME_ROLE_AUTHORIZATION,
+			joinColumns = { @JoinColumn(name = "role", referencedColumnName = "identifier") },
+			inverseJoinColumns = { @JoinColumn(name = "user_authorization", referencedColumnName = "identifier") })
+	private final Set<Authorization> authorizations = new HashSet<>();
 
-    public void setCode(final String code) {
-        this.code = code;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public String getLabel() {
-        return label;
-    }
+	public void setCode(final String code) {
+		this.code = code;
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public Set<Authorization> getAuthorizations() {
-        return authorizations;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public void setAuthorizations(final Set<Authorization> authorizations) {
-        this.authorizations.clear();
-        if (authorizations != null) {
-            authorizations.forEach(this::addAuthorization);
-        }
-    }
+	public Set<Authorization> getAuthorizations() {
+		return authorizations;
+	}
 
-    public void addAuthorization(final Authorization authorization) {
-        if (authorization != null) {
-            authorizations.add(authorization);
-        }
-    }
+	public void setAuthorizations(final Set<Authorization> authorizations) {
+		this.authorizations.clear();
+		if (authorizations != null) {
+			authorizations.forEach(this::addAuthorization);
+		}
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).omitNullValues().add("identifier", identifier).add("code", code).add("label", label).toString();
-    }
+	public void addAuthorization(final Authorization authorization) {
+		if (authorization != null) {
+			authorizations.add(authorization);
+		}
+	}
 
-    public Boolean getSuperuser() {
-        return superuser;
-    }
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+			.omitNullValues()
+			.add("identifier", identifier)
+			.add("code", code)
+			.add("label", label)
+			.toString();
+	}
 
-    public void setSuperuser(Boolean superuser) {
-        this.superuser = superuser;
-    }
+	public Boolean getSuperuser() {
+		return superuser;
+	}
+
+	public void setSuperuser(Boolean superuser) {
+		this.superuser = superuser;
+	}
+
 }

@@ -7,21 +7,20 @@ import org.springframework.data.jpa.repository.Modifying;
 
 public interface LockRepository extends JpaRepository<Lock, String> {
 
-    /**
-     * Récupération d'un verrou sur une ressource
-     *
-     * @param entity
-     *            identifiant de la ressource
-     * @return le lock si il existe.
-     */
-    Lock findByIdentifier(final String entity);
+	/**
+	 * Récupération d'un verrou sur une ressource
+	 * @param entity identifiant de la ressource
+	 * @return le lock si il existe.
+	 */
+	Lock findByIdentifier(final String entity);
 
-    @Modifying
-    void deleteByLockedDateBefore(LocalDateTime lockedDate);
+	@Modifying
+	void deleteByLockedDateBefore(LocalDateTime lockedDate);
 
-    @Modifying
-    void deleteByLockedBy(String lockedBy);
+	@Modifying
+	void deleteByLockedBy(String lockedBy);
 
-    @Modifying
-    void deleteByIdentifier(final String entity);
+	@Modifying
+	void deleteByIdentifier(final String entity);
+
 }

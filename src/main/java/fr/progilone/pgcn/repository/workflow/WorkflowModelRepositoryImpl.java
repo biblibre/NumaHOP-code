@@ -19,60 +19,65 @@ import org.springframework.data.domain.Sort;
 
 public class WorkflowModelRepositoryImpl implements WorkflowModelRepositoryCustom {
 
-    private final JPAQueryFactory queryFactory;
+	private final JPAQueryFactory queryFactory;
 
-    public WorkflowModelRepositoryImpl(final JPAQueryFactory queryFactory) {
-        this.queryFactory = queryFactory;
-    }
+	public WorkflowModelRepositoryImpl(final JPAQueryFactory queryFactory) {
+		this.queryFactory = queryFactory;
+	}
 
-    @Override
-    public Page<WorkflowModel> search(final String search, final String initiale, final List<String> libraries, final Pageable pageable) {
+	@Override
+	public Page<WorkflowModel> search(final String search, final String initiale, final List<String> libraries,
+			final Pageable pageable) {
 
-        final QWorkflowModel model = QWorkflowModel.workflowModel;
+		final QWorkflowModel model = QWorkflowModel.workflowModel;
 
-        final BooleanBuilder builder = new BooleanBuilder();
+		final BooleanBuilder builder = new BooleanBuilder();
 
-        if (StringUtils.isNotBlank(search)) {
-            final BooleanExpression nameFilter = model.name.containsIgnoreCase(search);
-            builder.andAnyOf(nameFilter);
-        }
+		if (StringUtils.isNotBlank(search)) {
+			final BooleanExpression nameFilter = model.name.containsIgnoreCase(search);
+			builder.andAnyOf(nameFilter);
+		}
 
-        if (libraries != null && !libraries.isEmpty()) {
-            final BooleanExpression sitesFilter = model.library.identifier.in(libraries);
-            builder.and(sitesFilter);
-        }
+		if (libraries != null && !libraries.isEmpty()) {
+			final BooleanExpression sitesFilter = model.library.identifier.in(libraries);
+			builder.and(sitesFilter);
+		}
 
-        // Filter initiale
-        QueryDSLBuilderUtils.addFilterForInitiale(builder, initiale, model.name);
+		// Filter initiale
+		QueryDSLBuilderUtils.addFilterForInitiale(builder, initiale, model.name);
 
-        final JPAQuery<WorkflowModel> baseQuery = queryFactory.selectDistinct(model).from(model).where(builder).orderBy(model.name.asc());
+		final JPAQuery<WorkflowModel> baseQuery = queryFactory.selectDistinct(model)
+			.from(model)
+			.where(builder)
+			.orderBy(model.name.asc());
 
-        if (pageable != null) {
-            baseQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
-            applySorting(pageable.getSort(), baseQuery, model);
-        }
+		if (pageable != null) {
+			baseQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
+			applySorting(pageable.getSort(), baseQuery, model);
+		}
 
-        final long total = queryFactory.select(model.countDistinct()).from(model).where(builder).fetchOne();
-        return new PageImpl<>(baseQuery.fetch(), pageable, total);
-    }
+		final long total = queryFactory.select(model.countDistinct()).from(model).where(builder).fetchOne();
+		return new PageImpl<>(baseQuery.fetch(), pageable, total);
+	}
 
-    protected JPAQuery<WorkflowModel> applySorting(final Sort sort, final JPAQuery<WorkflowModel> query, final QWorkflowModel model) {
+	protected JPAQuery<WorkflowModel> applySorting(final Sort sort, final JPAQuery<WorkflowModel> query,
+			final QWorkflowModel model) {
 
-        final List<OrderSpecifier<?>> orders = new ArrayList<>();
-        if (sort == null) {
-            return query;
-        }
+		final List<OrderSpecifier<?>> orders = new ArrayList<>();
+		if (sort == null) {
+			return query;
+		}
 
-        for (final Sort.Order order : sort) {
-            final Order qOrder = order.isAscending() ? Order.ASC
-                                                     : Order.DESC;
-            if (order.getProperty().equals("name")) {
-                orders.add(new OrderSpecifier<>(qOrder, model.name));
-            }
-        }
-        OrderSpecifier<?>[] orderArray = new OrderSpecifier[orders.size()];
-        orderArray = orders.toArray(orderArray);
+		for (final Sort.Order order : sort) {
+			final Order qOrder = order.isAscending() ? Order.ASC : Order.DESC;
+			if (order.getProperty().equals("name")) {
+				orders.add(new OrderSpecifier<>(qOrder, model.name));
+			}
+		}
+		OrderSpecifier<?>[] orderArray = new OrderSpecifier[orders.size()];
+		orderArray = orders.toArray(orderArray);
 
-        return query.orderBy(orderArray);
-    }
+		return query.orderBy(orderArray);
+	}
+
 }

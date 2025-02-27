@@ -18,82 +18,66 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 /**
  * <p>
  * Classe Java pour traitementType complex type.
- *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
  *
  * <pre>
  * &lt;complexType name="traitementType"&gt;
- *   &lt;simpleContent&gt;
- *     &lt;extension base="&lt;http://www.cines.fr/pac/sip&gt;traitementEnum"&gt;
- *       &lt;attribute name="language" use="required" type="{urn:un:unece:uncefact:codelist:draft:DAF:languageCode:2011-10-07}LanguageCodeType" fixed="fra" /&gt;
- *     &lt;/extension&gt;
- *   &lt;/simpleContent&gt;
+ * &lt;simpleContent&gt;
+ * &lt;extension base="&lt;http://www.cines.fr/pac/sip&gt;traitementEnum"&gt;
+ * &lt;attribute name="language" use="required"
+ * type="{urn:un:unece:uncefact:codelist:draft:DAF:languageCode:2011-10-07}LanguageCodeType" fixed="fra" /&gt;
+ * &lt;/extension&gt;
+ * &lt;/simpleContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "traitementType", propOrder = {"value"})
+@XmlType(name = "traitementType", propOrder = { "value" })
 public class TraitementType {
 
-    @XmlValue
-    protected TraitementEnum value;
-    @XmlAttribute(name = "language", required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String language;
+	@XmlValue
+	protected TraitementEnum value;
 
-    /**
-     * Obtient la valeur de la propriété value.
-     *
-     * @return
-     *         possible object is
-     *         {@link TraitementEnum }
-     *
-     */
-    public TraitementEnum getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "language", required = true)
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String language;
 
-    /**
-     * Définit la valeur de la propriété value.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link TraitementEnum }
-     *
-     */
-    public void setValue(TraitementEnum value) {
-        this.value = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété value.
+	 * @return possible object is {@link TraitementEnum }
+	 */
+	public TraitementEnum getValue() {
+		return value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété language.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getLanguage() {
-        if (language == null) {
-            return "fra";
-        } else {
-            return language;
-        }
-    }
+	/**
+	 * Définit la valeur de la propriété value.
+	 * @param value allowed object is {@link TraitementEnum }
+	 */
+	public void setValue(TraitementEnum value) {
+		this.value = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété language.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setLanguage(String value) {
-        this.language = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété language.
+	 * @return possible object is {@link String }
+	 */
+	public String getLanguage() {
+		if (language == null) {
+			return "fra";
+		}
+		else {
+			return language;
+		}
+	}
+
+	/**
+	 * Définit la valeur de la propriété language.
+	 * @param value allowed object is {@link String }
+	 */
+	public void setLanguage(String value) {
+		this.language = value;
+	}
 
 }

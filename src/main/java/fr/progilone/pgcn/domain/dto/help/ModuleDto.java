@@ -7,46 +7,48 @@ import java.util.Objects;
 
 public class ModuleDto {
 
-    private final String name;
-    private final HelpPageType type;
-    private final List<HelpPageDto> pages = new ArrayList<>();
+	private final String name;
 
-    public ModuleDto(final String name, final HelpPageType type) {
-        super();
-        this.name = name;
-        this.type = type;
-    }
+	private final HelpPageType type;
 
-    public String getName() {
-        return name;
-    }
+	private final List<HelpPageDto> pages = new ArrayList<>();
 
-    public List<HelpPageDto> getPages() {
-        return pages;
-    }
+	public ModuleDto(final String name, final HelpPageType type) {
+		super();
+		this.name = name;
+		this.type = type;
+	}
 
-    public HelpPageType getType() {
-        return type;
-    }
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(name);
-    }
+	public List<HelpPageDto> getPages() {
+		return pages;
+	}
 
-    @Override
-    public boolean equals(final Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (this.getClass().isInstance(obj)) {
-            final ModuleDto other = (ModuleDto) obj;
-            return Objects.equals(name, other.name) && Objects.equals(type, other.type);
-        }
-        return false;
-    }
+	public HelpPageType getType() {
+		return type;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(name);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj == this) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass().isInstance(obj)) {
+			final ModuleDto other = (ModuleDto) obj;
+			return Objects.equals(name, other.name) && Objects.equals(type, other.type);
+		}
+		return false;
+	}
 
 }

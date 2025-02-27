@@ -8,7 +8,8 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface InternetArchiveReportMapper {
 
-    InternetArchiveReportMapper INSTANCE = Mappers.getMapper(InternetArchiveReportMapper.class);
+	InternetArchiveReportMapper INSTANCE = Mappers.getMapper(InternetArchiveReportMapper.class);
 
-    InternetArchiveReportDTO internetArchiveReportToInternetArchiveReportDTO(InternetArchiveReport report);
+	InternetArchiveReportDTO internetArchiveReportToInternetArchiveReportDTO(InternetArchiveReport report);
+
 }

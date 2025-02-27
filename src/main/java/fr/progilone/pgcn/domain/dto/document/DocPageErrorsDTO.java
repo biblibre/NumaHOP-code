@@ -5,61 +5,63 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
 import java.util.Set;
 
 /**
- * Structure pour renseigner les erreurs sur une page & les notes.
- *
- * Fait également office de 'passe-plat' pour données de table des matieres.
- *
+ * Structure pour renseigner les erreurs sur une page &amp; les notes. Fait également
+ * office de 'passe-plat' pour données de table des matieres.
  */
 public class DocPageErrorsDTO extends AbstractDTO {
 
-    public DocPageErrorsDTO() {
-    }
+	public DocPageErrorsDTO() {
+	}
 
-    private Set<Check.ErrorLabel> failedChecks;
-    private String checkNotes;
+	private Set<Check.ErrorLabel> failedChecks;
 
-    /* Donnees pour TOC */
-    private String typeToc;
-    private String orderToc;
-    private String titleToc;
+	private String checkNotes;
 
-    public Set<Check.ErrorLabel> getFailedChecks() {
-        return failedChecks;
-    }
+	/* Donnees pour TOC */
+	private String typeToc;
 
-    public String getCheckNotes() {
-        return checkNotes;
-    }
+	private String orderToc;
 
-    public void setCheckNotes(final String checkNotes) {
-        this.checkNotes = checkNotes;
-    }
+	private String titleToc;
 
-    public void setFailedChecks(final Set<Check.ErrorLabel> failedChecks) {
-        this.failedChecks = failedChecks;
-    }
+	public Set<Check.ErrorLabel> getFailedChecks() {
+		return failedChecks;
+	}
 
-    public String getTypeToc() {
-        return typeToc;
-    }
+	public String getCheckNotes() {
+		return checkNotes;
+	}
 
-    public void setTypeToc(final String typeToc) {
-        this.typeToc = typeToc;
-    }
+	public void setCheckNotes(final String checkNotes) {
+		this.checkNotes = checkNotes;
+	}
 
-    public String getOrderToc() {
-        return orderToc;
-    }
+	public void setFailedChecks(final Set<Check.ErrorLabel> failedChecks) {
+		this.failedChecks = failedChecks;
+	}
 
-    public void setOrderToc(final String orderToc) {
-        this.orderToc = orderToc;
-    }
+	public String getTypeToc() {
+		return typeToc;
+	}
 
-    public String getTitleToc() {
-        return titleToc;
-    }
+	public void setTypeToc(final String typeToc) {
+		this.typeToc = typeToc;
+	}
 
-    public void setTitleToc(final String titleToc) {
-        this.titleToc = titleToc;
-    }
+	public String getOrderToc() {
+		return orderToc;
+	}
+
+	public void setOrderToc(final String orderToc) {
+		this.orderToc = orderToc;
+	}
+
+	public String getTitleToc() {
+		return titleToc;
+	}
+
+	public void setTitleToc(final String titleToc) {
+		this.titleToc = titleToc;
+	}
+
 }

@@ -11,9 +11,10 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface AutomaticCheckTypeMapper {
 
-    AutomaticCheckTypeMapper INSTANCE = Mappers.getMapper(AutomaticCheckTypeMapper.class);
+	AutomaticCheckTypeMapper INSTANCE = Mappers.getMapper(AutomaticCheckTypeMapper.class);
 
-    AutomaticCheckTypeDTO objToDto(AutomaticCheckType type);
+	AutomaticCheckTypeDTO objToDto(AutomaticCheckType type);
 
-    AutomaticCheckType dtoToObj(AutomaticCheckTypeDTO dto);
+	AutomaticCheckType dtoToObj(AutomaticCheckTypeDTO dto);
+
 }

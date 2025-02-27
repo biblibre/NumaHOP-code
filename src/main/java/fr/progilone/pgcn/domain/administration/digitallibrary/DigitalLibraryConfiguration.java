@@ -11,265 +11,270 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
- * Classe décrivant la configurtation de diffusion sur la bibliothèque numérique (ex: Limb Gallery)
+ * Classe décrivant la configurtation de diffusion sur la bibliothèque numérique (ex: Limb
+ * Gallery)
  */
 @Entity
 @Table(name = DigitalLibraryConfiguration.TABLE_NAME)
 public class DigitalLibraryConfiguration extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "conf_digital_library";
+	public static final String TABLE_NAME = "conf_digital_library";
 
-    /**
-     * Libellé
-     */
-    @Column(name = "label", nullable = false)
-    private String label;
+	/**
+	 * Libellé
+	 */
+	@Column(name = "label", nullable = false)
+	private String label;
 
-    /**
-     * Bibliothèque à laquelle appartient cette configuration
-     */
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "library")
-    private Library library;
+	/**
+	 * Bibliothèque à laquelle appartient cette configuration
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "library")
+	private Library library;
 
-    /**
-     * La configuration est active / inactive
-     */
-    @Column(name = "active", nullable = false)
-    private boolean active = true;
+	/**
+	 * La configuration est active / inactive
+	 */
+	@Column(name = "active", nullable = false)
+	private boolean active = true;
 
-    /**
-     * port pour acces au serveur de stockage
-     */
-    @Column(name = "port")
-    private String port;
+	/**
+	 * port pour acces au serveur de stockage
+	 */
+	@Column(name = "port")
+	private String port;
 
-    /**
-     * Serveur de dépot FTP
-     */
-    @Column(name = "address")
-    private String address;
+	/**
+	 * Serveur de dépot FTP
+	 */
+	@Column(name = "address")
+	private String address;
 
-    /**
-     * Login FTP
-     */
-    @Column(name = "login")
-    private String login;
+	/**
+	 * Login FTP
+	 */
+	@Column(name = "login")
+	private String login;
 
-    /**
-     * Mot de passe, crypté avec {@link fr.progilone.pgcn.service.util.CryptoService}
-     */
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(name = "password")
-    private String password;
+	/**
+	 * Mot de passe, crypté avec {@link fr.progilone.pgcn.service.util.CryptoService}
+	 */
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@Column(name = "password")
+	private String password;
 
-    /**
-     * répertoire de dépot.
-     */
-    @Column(name = "delivery_folder")
-    private String deliveryFolder;
+	/**
+	 * répertoire de dépot.
+	 */
+	@Column(name = "delivery_folder")
+	private String deliveryFolder;
 
-    /**
-     * mail destination du fichier.
-     */
-    @Column(name = "mail")
-    private String mail;
+	/**
+	 * mail destination du fichier.
+	 */
+	@Column(name = "mail")
+	private String mail;
 
-    /**
-     * envoi des fichiers en SFTP
-     */
-    @Column(name = "sftp")
-    private boolean sftp;
+	/**
+	 * envoi des fichiers en SFTP
+	 */
+	@Column(name = "sftp")
+	private boolean sftp;
 
-    /* Types de fichiers à exporter */
-    @Column(name = "export_view")
-    private boolean exportView;
+	/* Types de fichiers à exporter */
+	@Column(name = "export_view")
+	private boolean exportView;
 
-    @Column(name = "export_print")
-    private boolean exportPrint;
+	@Column(name = "export_print")
+	private boolean exportPrint;
 
-    @Column(name = "export_thumb")
-    private boolean exportThumb;
+	@Column(name = "export_thumb")
+	private boolean exportThumb;
 
-    @Column(name = "export_pdf")
-    private boolean exportPdf;
+	@Column(name = "export_pdf")
+	private boolean exportPdf;
 
-    @Column(name = "export_mets")
-    private boolean exportMets;
+	@Column(name = "export_mets")
+	private boolean exportMets;
 
-    @Column(name = "export_aip_sip")
-    private boolean exportAipSip;
+	@Column(name = "export_aip_sip")
+	private boolean exportAipSip;
 
-    @Column(name = "export_alto")
-    private boolean exportAlto;
+	@Column(name = "export_alto")
+	private boolean exportAlto;
 
-    /**
-     * Valeur par défaut des champs vides
-     */
-    @Column(name = "default_value")
-    private String defaultValue;
+	@Column(name = "export_master")
+	private boolean exportMaster;
 
-    public String getLabel() {
-        return label;
-    }
+	/**
+	 * Valeur par défaut des champs vides
+	 */
+	@Column(name = "default_value")
+	private String defaultValue;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public Library getLibrary() {
-        return library;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public void setLibrary(final Library library) {
-        this.library = library;
-    }
+	public Library getLibrary() {
+		return library;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public void setLibrary(final Library library) {
+		this.library = library;
+	}
 
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public String getPort() {
-        return port;
-    }
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
 
-    public void setPort(final String port) {
-        this.port = port;
-    }
+	public String getPort() {
+		return port;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public void setPort(final String port) {
+		this.port = port;
+	}
 
-    public void setAddress(final String address) {
-        this.address = address;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public String getLogin() {
-        return login;
-    }
+	public void setAddress(final String address) {
+		this.address = address;
+	}
 
-    public void setLogin(final String login) {
-        this.login = login;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setLogin(final String login) {
+		this.login = login;
+	}
 
-    public void setPassword(final String password) {
-        this.password = password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public String getDeliveryFolder() {
-        return deliveryFolder;
-    }
+	public void setPassword(final String password) {
+		this.password = password;
+	}
 
-    public void setDeliveryFolder(final String deliveryFolder) {
-        this.deliveryFolder = deliveryFolder;
-    }
+	public String getDeliveryFolder() {
+		return deliveryFolder;
+	}
 
-    public String getMail() {
-        return mail;
-    }
+	public void setDeliveryFolder(final String deliveryFolder) {
+		this.deliveryFolder = deliveryFolder;
+	}
 
-    public void setMail(final String mail) {
-        this.mail = mail;
-    }
+	public String getMail() {
+		return mail;
+	}
 
-    public boolean isExportView() {
-        return exportView;
-    }
+	public void setMail(final String mail) {
+		this.mail = mail;
+	}
 
-    public void setExportView(final boolean exportView) {
-        this.exportView = exportView;
-    }
+	public boolean isExportView() {
+		return exportView;
+	}
 
-    public boolean isExportPrint() {
-        return exportPrint;
-    }
+	public void setExportView(final boolean exportView) {
+		this.exportView = exportView;
+	}
 
-    public void setExportPrint(final boolean exportMaster) {
-        this.exportPrint = exportMaster;
-    }
+	public boolean isExportPrint() {
+		return exportPrint;
+	}
 
-    public boolean isExportThumb() {
-        return exportThumb;
-    }
+	public void setExportPrint(final boolean exportMaster) {
+		this.exportPrint = exportMaster;
+	}
 
-    public void setExportThumb(final boolean exportThumb) {
-        this.exportThumb = exportThumb;
-    }
+	public boolean isExportThumb() {
+		return exportThumb;
+	}
 
-    public boolean isExportPdf() {
-        return exportPdf;
-    }
+	public void setExportThumb(final boolean exportThumb) {
+		this.exportThumb = exportThumb;
+	}
 
-    public void setExportPdf(final boolean exportPdf) {
-        this.exportPdf = exportPdf;
-    }
+	public boolean isExportPdf() {
+		return exportPdf;
+	}
 
-    public boolean isExportMets() {
-        return exportMets;
-    }
+	public void setExportPdf(final boolean exportPdf) {
+		this.exportPdf = exportPdf;
+	}
 
-    public void setExportMets(final boolean exportMets) {
-        this.exportMets = exportMets;
-    }
+	public boolean isExportMets() {
+		return exportMets;
+	}
 
-    public boolean isExportAipSip() {
-        return exportAipSip;
-    }
+	public void setExportMets(final boolean exportMets) {
+		this.exportMets = exportMets;
+	}
 
-    public void setExportAipSip(final boolean exportAipSip) {
-        this.exportAipSip = exportAipSip;
-    }
+	public boolean isExportAipSip() {
+		return exportAipSip;
+	}
 
-    public boolean isExportAlto() {
-        return exportAlto;
-    }
+	public void setExportAipSip(final boolean exportAipSip) {
+		this.exportAipSip = exportAipSip;
+	}
 
-    public void setExportAlto(final boolean exportAlto) {
-        this.exportAlto = exportAlto;
-    }
+	public boolean isExportAlto() {
+		return exportAlto;
+	}
 
-    public String getDefaultValue() {
-        return defaultValue;
-    }
+	public void setExportAlto(final boolean exportAlto) {
+		this.exportAlto = exportAlto;
+	}
 
-    public void setDefaultValue(final String defaultValue) {
-        this.defaultValue = defaultValue;
-    }
+	public boolean isExportMaster() {
+		return exportMaster;
+	}
 
-    public boolean isSftp() {
-        return sftp;
-    }
+	public void setExportMaster(final boolean exportMaster) {
+		this.exportMaster = exportMaster;
+	}
 
-    public void setSftp(final boolean sftp) {
-        this.sftp = sftp;
-    }
+	public String getDefaultValue() {
+		return defaultValue;
+	}
 
-    @Override
-    public String toString() {
-        return "DigitalLibraryConfiguration{" + "label='"
-               + label
-               + '\''
-               + ", Serveur='"
-               + address
-               + '\''
-               + ", active='"
-               + active
-               + '\''
-               + '}';
-    }
+	public void setDefaultValue(final String defaultValue) {
+		this.defaultValue = defaultValue;
+	}
 
-    public enum RecordFormat {
-        MARC,
-        CSV,
-        EAD
-    }
+	public boolean isSftp() {
+		return sftp;
+	}
+
+	public void setSftp(final boolean sftp) {
+		this.sftp = sftp;
+	}
+
+	@Override
+	public String toString() {
+		return "DigitalLibraryConfiguration{" + "label='" + label + '\'' + ", Serveur='" + address + '\'' + ", active='"
+				+ active + '\'' + '}';
+	}
+
+	public enum RecordFormat {
+
+		MARC, CSV, EAD
+
+	}
+
 }

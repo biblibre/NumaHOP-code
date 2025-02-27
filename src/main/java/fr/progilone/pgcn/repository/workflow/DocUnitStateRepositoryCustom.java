@@ -7,12 +7,12 @@ import org.springframework.data.domain.Pageable;
 
 public interface DocUnitStateRepositoryCustom {
 
-    /**
-     * Recherche de DocUnitState
-     *
-     * @param searchBuilder
-     * @param pageable
-     * @return
-     */
-    Page<DocUnitState> findDocUnitStates(DocUnitWorkflowSearchBuilder searchBuilder, Pageable pageable);
+	/**
+	 * Recherche de DocUnitState
+	 * @param searchBuilder
+	 * @param pageable
+	 * @return
+	 */
+	Page<DocUnitState> findDocUnitStates(DocUnitWorkflowSearchBuilder searchBuilder, Pageable pageable);
+
 }

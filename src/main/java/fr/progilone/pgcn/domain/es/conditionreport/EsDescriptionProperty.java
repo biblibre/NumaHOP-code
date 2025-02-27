@@ -10,77 +10,77 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
  */
 public class EsDescriptionProperty {
 
-    @Field(type = FieldType.Keyword)
-    private String identifier;
+	@Field(type = FieldType.Keyword)
+	private String identifier;
 
-    /**
-     * Libellé de la propriété
-     */
-    @Field(type = FieldType.Keyword)
-    private String label;
+	/**
+	 * Libellé de la propriété
+	 */
+	@Field(type = FieldType.Keyword)
+	private String label;
 
-    /**
-     * Code de la propriété
-     */
-    @Field(type = FieldType.Keyword)
-    private String code;
+	/**
+	 * Code de la propriété
+	 */
+	@Field(type = FieldType.Keyword)
+	private String code;
 
-    /**
-     * Type de la propriété
-     */
-    @Field(type = FieldType.Keyword)
-    private Type type;
+	/**
+	 * Type de la propriété
+	 */
+	@Field(type = FieldType.Keyword)
+	private Type type;
 
-    /**
-     * numero d'ordre
-     */
-    @Field(type = FieldType.Integer)
-    private int order;
+	/**
+	 * numero d'ordre
+	 */
+	@Field(type = FieldType.Integer)
+	private int order;
 
-    public static EsDescriptionProperty from(final DescriptionProperty property) {
-        final EsDescriptionProperty esProperty = new EsDescriptionProperty();
-        esProperty.setIdentifier(property.getIdentifier());
-        return esProperty;
-    }
+	public static EsDescriptionProperty from(final DescriptionProperty property) {
+		final EsDescriptionProperty esProperty = new EsDescriptionProperty();
+		esProperty.setIdentifier(property.getIdentifier());
+		return esProperty;
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getLabel() {
-        return label;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setCode(final String code) {
-        this.code = code;
-    }
+	public void setCode(final String code) {
+		this.code = code;
+	}
 
-    public Type getType() {
-        return type;
-    }
+	public Type getType() {
+		return type;
+	}
 
-    public void setType(final Type type) {
-        this.type = type;
-    }
+	public void setType(final Type type) {
+		this.type = type;
+	}
 
-    public int getOrder() {
-        return order;
-    }
+	public int getOrder() {
+		return order;
+	}
 
-    public void setOrder(final int order) {
-        this.order = order;
-    }
+	public void setOrder(final int order) {
+		this.order = order;
+	}
 
 }

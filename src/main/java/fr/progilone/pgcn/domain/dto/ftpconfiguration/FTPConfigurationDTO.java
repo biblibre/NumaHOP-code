@@ -5,144 +5,157 @@ import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
 
 public class FTPConfigurationDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private String label;
-    private SimpleLibraryDTO library;
-    private String address;
-    private String login;
+	private String identifier;
 
-    private String password;
+	private String label;
 
-    private String deliveryFolder;
+	private SimpleLibraryDTO library;
 
-    public FTPConfigurationDTO(String identifier, String label, SimpleLibraryDTO library, String address, String login, String password, String deliveryFolder) {
-        this.identifier = identifier;
-        this.label = label;
-        this.library = library;
-        this.address = address;
-        this.login = login;
-        this.password = password;
-        this.deliveryFolder = deliveryFolder;
-    }
+	private String address;
 
-    public FTPConfigurationDTO() {
+	private String login;
 
-    }
+	private String password;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String deliveryFolder;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public FTPConfigurationDTO(String identifier, String label, SimpleLibraryDTO library, String address, String login,
+			String password, String deliveryFolder) {
+		this.identifier = identifier;
+		this.label = label;
+		this.library = library;
+		this.address = address;
+		this.login = login;
+		this.password = password;
+		this.deliveryFolder = deliveryFolder;
+	}
 
-    public String getLabel() {
-        return label;
-    }
+	public FTPConfigurationDTO() {
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+	}
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setLibrary(SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
-    public String getLogin() {
-        return login;
-    }
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+	public void setLibrary(SimpleLibraryDTO library) {
+		this.library = library;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public String getDeliveryFolder() {
-        return deliveryFolder;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public void setDeliveryFolder(String deliveryFolder) {
-        this.deliveryFolder = deliveryFolder;
-    }
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-    public static final class Builder {
+	public String getPassword() {
+		return password;
+	}
 
-        private String identifier;
-        private String label;
-        private SimpleLibraryDTO library;
-        private String address;
-        private String login;
-        private String password;
-        private String deliveryFolder;
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-        public Builder init() {
-            this.identifier = null;
-            this.label = null;
-            this.library = null;
-            this.address = null;
-            this.login = null;
-            this.password = null;
-            this.deliveryFolder = null;
-            return this;
-        }
+	public String getDeliveryFolder() {
+		return deliveryFolder;
+	}
 
-        public Builder setIdentifier(String identifier) {
-            this.identifier = identifier;
-            return this;
-        }
+	public void setDeliveryFolder(String deliveryFolder) {
+		this.deliveryFolder = deliveryFolder;
+	}
 
-        public Builder setLabel(String label) {
-            this.label = label;
-            return this;
-        }
+	public static final class Builder {
 
-        public Builder setLibrary(SimpleLibraryDTO library) {
-            this.library = library;
-            return this;
-        }
+		private String identifier;
 
-        public Builder setAddress(String address) {
-            this.address = address;
-            return this;
-        }
+		private String label;
 
-        public Builder setLogin(String login) {
-            this.login = login;
-            return this;
-        }
+		private SimpleLibraryDTO library;
 
-        public Builder setPassword(String password) {
-            this.password = password;
-            return this;
-        }
+		private String address;
 
-        public Builder setDeliveryFolder(String deliveryFolder) {
-            this.deliveryFolder = deliveryFolder;
-            return this;
-        }
+		private String login;
 
-        public FTPConfigurationDTO build() {
-            return new FTPConfigurationDTO(identifier, label, library, address, login, password, deliveryFolder);
-        }
-    }
+		private String password;
+
+		private String deliveryFolder;
+
+		public Builder init() {
+			this.identifier = null;
+			this.label = null;
+			this.library = null;
+			this.address = null;
+			this.login = null;
+			this.password = null;
+			this.deliveryFolder = null;
+			return this;
+		}
+
+		public Builder setIdentifier(String identifier) {
+			this.identifier = identifier;
+			return this;
+		}
+
+		public Builder setLabel(String label) {
+			this.label = label;
+			return this;
+		}
+
+		public Builder setLibrary(SimpleLibraryDTO library) {
+			this.library = library;
+			return this;
+		}
+
+		public Builder setAddress(String address) {
+			this.address = address;
+			return this;
+		}
+
+		public Builder setLogin(String login) {
+			this.login = login;
+			return this;
+		}
+
+		public Builder setPassword(String password) {
+			this.password = password;
+			return this;
+		}
+
+		public Builder setDeliveryFolder(String deliveryFolder) {
+			this.deliveryFolder = deliveryFolder;
+			return this;
+		}
+
+		public FTPConfigurationDTO build() {
+			return new FTPConfigurationDTO(identifier, label, library, address, login, password, deliveryFolder);
+		}
+
+	}
+
 }

@@ -17,39 +17,40 @@ import org.springframework.stereotype.Service;
 @Service
 public class UICheckConfigurationMapper {
 
-    @Autowired
-    private LibraryRepository libraryRepository;
+	@Autowired
+	private LibraryRepository libraryRepository;
 
-    private AutomaticCheckRuleMapper ruleMapper = Mappers.getMapper(AutomaticCheckRuleMapper.class);
+	private AutomaticCheckRuleMapper ruleMapper = Mappers.getMapper(AutomaticCheckRuleMapper.class);
 
-    public void mapInto(CheckConfigurationDTO checkConfigurationDTO, CheckConfiguration checkConfiguration) {
+	public void mapInto(CheckConfigurationDTO checkConfigurationDTO, CheckConfiguration checkConfiguration) {
 
-        checkConfiguration.setMajorErrorRate(checkConfigurationDTO.getMajorErrorRate());
-        checkConfiguration.setMinorErrorRate(checkConfigurationDTO.getMinorErrorRate());
-        checkConfiguration.setDefinitionErrorRate(checkConfigurationDTO.getDefinitionErrorRate());
-        checkConfiguration.setSampleRate(checkConfigurationDTO.getSampleRate());
-        checkConfiguration.setSampleMode(checkConfigurationDTO.getSampleMode());
-        checkConfiguration.setLabel(checkConfigurationDTO.getLabel());
-        checkConfiguration.setSeparators(checkConfigurationDTO.getSeparators() == null ? "_"
-                                                                                       : checkConfigurationDTO.getSeparators());
+		checkConfiguration.setMajorErrorRate(checkConfigurationDTO.getMajorErrorRate());
+		checkConfiguration.setMinorErrorRate(checkConfigurationDTO.getMinorErrorRate());
+		checkConfiguration.setDefinitionErrorRate(checkConfigurationDTO.getDefinitionErrorRate());
+		checkConfiguration.setSampleRate(checkConfigurationDTO.getSampleRate());
+		checkConfiguration.setSampleMode(checkConfigurationDTO.getSampleMode());
+		checkConfiguration.setLabel(checkConfigurationDTO.getLabel());
+		checkConfiguration
+			.setSeparators(checkConfigurationDTO.getSeparators() == null ? "_" : checkConfigurationDTO.getSeparators());
 
-        checkConfiguration.setSeparators(checkConfigurationDTO.getSeparators() == null ? "_"
-                                                                                       : checkConfigurationDTO.getSeparators());
+		checkConfiguration
+			.setSeparators(checkConfigurationDTO.getSeparators() == null ? "_" : checkConfigurationDTO.getSeparators());
 
-        if (checkConfigurationDTO.getAutomaticCheckRules() != null) {
-            final List<AutomaticCheckRule> checkRules = new ArrayList<>();
-            checkConfigurationDTO.getAutomaticCheckRules().stream().forEach(ruleDto -> {
-                final AutomaticCheckRule rule = ruleMapper.checkRuleDtoToCheckRule(ruleDto);
-                rule.setCheckConfiguration(checkConfiguration);
-                checkRules.add(rule);
-            });
-            checkConfiguration.setAutomaticCheckRules(checkRules);
-        }
+		if (checkConfigurationDTO.getAutomaticCheckRules() != null) {
+			final List<AutomaticCheckRule> checkRules = new ArrayList<>();
+			checkConfigurationDTO.getAutomaticCheckRules().stream().forEach(ruleDto -> {
+				final AutomaticCheckRule rule = ruleMapper.checkRuleDtoToCheckRule(ruleDto);
+				rule.setCheckConfiguration(checkConfiguration);
+				checkRules.add(rule);
+			});
+			checkConfiguration.setAutomaticCheckRules(checkRules);
+		}
 
-        if (checkConfigurationDTO.getLibrary() != null) {
-            Library library = libraryRepository.getOne(checkConfigurationDTO.getLibrary().getIdentifier());
-            checkConfiguration.setLibrary(library);
-        }
+		if (checkConfigurationDTO.getLibrary() != null) {
+			Library library = libraryRepository.getOne(checkConfigurationDTO.getLibrary().getIdentifier());
+			checkConfiguration.setLibrary(library);
+		}
 
-    }
+	}
+
 }

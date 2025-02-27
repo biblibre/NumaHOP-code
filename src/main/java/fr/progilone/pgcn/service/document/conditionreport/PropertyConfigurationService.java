@@ -16,64 +16,74 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PropertyConfigurationService {
 
-    private final DescriptionPropertyRepository descriptionPropertyRepository;
-    private final PropertyConfigurationRepository propertyConfigurationRepository;
+	private final DescriptionPropertyRepository descriptionPropertyRepository;
 
-    @Autowired
-    public PropertyConfigurationService(final DescriptionPropertyRepository descriptionPropertyRepository, final PropertyConfigurationRepository propertyConfigurationRepository) {
-        this.descriptionPropertyRepository = descriptionPropertyRepository;
-        this.propertyConfigurationRepository = propertyConfigurationRepository;
-    }
+	private final PropertyConfigurationRepository propertyConfigurationRepository;
 
-    @Transactional(readOnly = true)
-    public List<PropertyConfiguration> findByLibrary(final Library library) {
-        return propertyConfigurationRepository.findByLibrary(library);
-    }
+	@Autowired
+	public PropertyConfigurationService(final DescriptionPropertyRepository descriptionPropertyRepository,
+			final PropertyConfigurationRepository propertyConfigurationRepository) {
+		this.descriptionPropertyRepository = descriptionPropertyRepository;
+		this.propertyConfigurationRepository = propertyConfigurationRepository;
+	}
 
-    @Transactional(readOnly = true)
-    public PropertyConfiguration findByDescPropertyAndLibrary(final DescriptionProperty property, final Library library) {
-        final List<PropertyConfiguration> confs = propertyConfigurationRepository.findByDescPropertyAndLibrary(property, library);
+	@Transactional(readOnly = true)
+	public List<PropertyConfiguration> findByLibrary(final Library library) {
+		return propertyConfigurationRepository.findByLibrary(library);
+	}
 
-        final PropertyConfiguration configuration;
-        if (confs.isEmpty()) {
-            final DescriptionProperty dbProperty = descriptionPropertyRepository.findById(property.getIdentifier()).orElseThrow();
-            configuration = new PropertyConfiguration();
-            configuration.setDescProperty(property);
-            configuration.setLibrary(library);
-            configuration.setAllowComment(dbProperty.isAllowComment());
-            configuration.setRequired(false);
-            configuration.setTypes(Arrays.stream(DocUnit.CondReportType.values()).collect(Collectors.toSet()));
-        } else {
-            configuration = confs.get(0);
-        }
-        return configuration;
-    }
+	@Transactional(readOnly = true)
+	public PropertyConfiguration findByDescPropertyAndLibrary(final DescriptionProperty property,
+			final Library library) {
+		final List<PropertyConfiguration> confs = propertyConfigurationRepository.findByDescPropertyAndLibrary(property,
+				library);
 
-    @Transactional(readOnly = true)
-    public PropertyConfiguration findByInternalPropertyAndLibrary(final PropertyConfiguration.InternalProperty property, final Library library) {
-        final List<PropertyConfiguration> confs = propertyConfigurationRepository.findByInternalPropertyAndLibrary(property, library);
+		final PropertyConfiguration configuration;
+		if (confs.isEmpty()) {
+			final DescriptionProperty dbProperty = descriptionPropertyRepository.findById(property.getIdentifier())
+				.orElseThrow();
+			configuration = new PropertyConfiguration();
+			configuration.setDescProperty(property);
+			configuration.setLibrary(library);
+			configuration.setAllowComment(dbProperty.isAllowComment());
+			configuration.setRequired(false);
+			configuration.setTypes(Arrays.stream(DocUnit.CondReportType.values()).collect(Collectors.toSet()));
+		}
+		else {
+			configuration = confs.get(0);
+		}
+		return configuration;
+	}
 
-        final PropertyConfiguration configuration;
-        if (confs.isEmpty()) {
-            configuration = new PropertyConfiguration();
-            configuration.setInternalProperty(property);
-            configuration.setLibrary(library);
-            configuration.setRequired(false);
-            configuration.setTypes(Arrays.stream(DocUnit.CondReportType.values()).collect(Collectors.toSet()));
-        } else {
-            configuration = confs.get(0);
-        }
-        return configuration;
-    }
+	@Transactional(readOnly = true)
+	public PropertyConfiguration findByInternalPropertyAndLibrary(final PropertyConfiguration.InternalProperty property,
+			final Library library) {
+		final List<PropertyConfiguration> confs = propertyConfigurationRepository
+			.findByInternalPropertyAndLibrary(property, library);
 
-    @Transactional
-    public void delete(final String identifier) {
-        propertyConfigurationRepository.deleteById(identifier);
-    }
+		final PropertyConfiguration configuration;
+		if (confs.isEmpty()) {
+			configuration = new PropertyConfiguration();
+			configuration.setInternalProperty(property);
+			configuration.setLibrary(library);
+			configuration.setRequired(false);
+			configuration.setTypes(Arrays.stream(DocUnit.CondReportType.values()).collect(Collectors.toSet()));
+		}
+		else {
+			configuration = confs.get(0);
+		}
+		return configuration;
+	}
 
-    @Transactional
-    public PropertyConfiguration save(final PropertyConfiguration conf) {
-        final PropertyConfiguration savedConf = propertyConfigurationRepository.save(conf);
-        return propertyConfigurationRepository.findWithDependencies(savedConf.getIdentifier());
-    }
+	@Transactional
+	public void delete(final String identifier) {
+		propertyConfigurationRepository.deleteById(identifier);
+	}
+
+	@Transactional
+	public PropertyConfiguration save(final PropertyConfiguration conf) {
+		final PropertyConfiguration savedConf = propertyConfigurationRepository.save(conf);
+		return propertyConfigurationRepository.findWithDependencies(savedConf.getIdentifier());
+	}
+
 }

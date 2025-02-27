@@ -4,42 +4,45 @@ import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
 
 public class ActivatedOcrLanguageDTO extends AbstractVersionedDTO {
 
-    private String identifier;
-    private OcrLangConfigurationDTO ocrLangConfiguration;
-    private OcrLanguageDTO ocrLanguage;
+	private String identifier;
 
-    public ActivatedOcrLanguageDTO(final String identifier, final OcrLangConfigurationDTO ocrLangConfiguration, final OcrLanguageDTO ocrLanguage) {
-        this.identifier = identifier;
-        this.ocrLangConfiguration = ocrLangConfiguration;
-        this.ocrLanguage = ocrLanguage;
-    }
+	private OcrLangConfigurationDTO ocrLangConfiguration;
 
-    public ActivatedOcrLanguageDTO() {
+	private OcrLanguageDTO ocrLanguage;
 
-    }
+	public ActivatedOcrLanguageDTO(final String identifier, final OcrLangConfigurationDTO ocrLangConfiguration,
+			final OcrLanguageDTO ocrLanguage) {
+		this.identifier = identifier;
+		this.ocrLangConfiguration = ocrLangConfiguration;
+		this.ocrLanguage = ocrLanguage;
+	}
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	public ActivatedOcrLanguageDTO() {
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
+	}
 
-    public OcrLangConfigurationDTO getOcrLangConfiguration() {
-        return ocrLangConfiguration;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setOcrLangConfiguration(final OcrLangConfigurationDTO ocrLangConfiguration) {
-        this.ocrLangConfiguration = ocrLangConfiguration;
-    }
+	public void setIdentifier(final String identifier) {
+		this.identifier = identifier;
+	}
 
-    public OcrLanguageDTO getOcrLanguage() {
-        return ocrLanguage;
-    }
+	public OcrLangConfigurationDTO getOcrLangConfiguration() {
+		return ocrLangConfiguration;
+	}
 
-    public void setOcrLanguage(final OcrLanguageDTO ocrLanguage) {
-        this.ocrLanguage = ocrLanguage;
-    }
+	public void setOcrLangConfiguration(final OcrLangConfigurationDTO ocrLangConfiguration) {
+		this.ocrLangConfiguration = ocrLangConfiguration;
+	}
+
+	public OcrLanguageDTO getOcrLanguage() {
+		return ocrLanguage;
+	}
+
+	public void setOcrLanguage(final OcrLanguageDTO ocrLanguage) {
+		this.ocrLanguage = ocrLanguage;
+	}
 
 }

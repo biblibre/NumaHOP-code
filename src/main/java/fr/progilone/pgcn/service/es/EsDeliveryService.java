@@ -19,47 +19,44 @@ import org.springframework.stereotype.Service;
 @Service
 public class EsDeliveryService extends AbstractElasticsearchOperations<Delivery, EsDelivery> {
 
-    private final DeliveryRepository deliveryRepository;
-    private final EsDeliveryRepository esDeliveryRepository;
+	private final DeliveryRepository deliveryRepository;
 
-    @Value("${elasticsearch.bulk_size}")
-    private Integer bulkSize;
+	private final EsDeliveryRepository esDeliveryRepository;
 
-    @Autowired
-    public EsDeliveryService(final DeliveryRepository deliveryRepository,
-                             final EsDeliveryRepository esDeliveryRepository,
-                             final TransactionService transactionService,
-                             final ElasticsearchOperations elasticsearchOperations,
-                             @Value("${elasticsearch.bulk_size}") final Integer bulkSize) {
-        super(transactionService, elasticsearchOperations, bulkSize, EsDelivery.class, deliveryRepository, esDeliveryRepository);
-        this.deliveryRepository = deliveryRepository;
-        this.esDeliveryRepository = esDeliveryRepository;
-    }
+	@Value("${elasticsearch.bulk_size}")
+	private Integer bulkSize;
 
-    /**
-     * Recherche d'unités documentaires
-     */
-    public Page<EsDelivery> search(final String[] rawSearches,
-                                   final String[] rawFilters,
-                                   final List<String> libraries,
-                                   final boolean fuzzy,
-                                   final Integer page,
-                                   final Integer size,
-                                   final String[] rawSorts,
-                                   final boolean facet) {
-        final EsSearchOperation[] searches = EsSearchOperation.fromRawSearches(rawSearches);
-        final EsSearchOperation[] filters = EsSearchOperation.fromRawFilters(rawFilters);
-        final Sort sort = EsSort.fromRawSorts(rawSorts, SearchEntity.DELIVERY);
-        return esDeliveryRepository.search(searches, libraries, fuzzy, filters, PageRequest.of(page, size, sort), facet);
-    }
+	@Autowired
+	public EsDeliveryService(final DeliveryRepository deliveryRepository,
+			final EsDeliveryRepository esDeliveryRepository, final TransactionService transactionService,
+			final ElasticsearchOperations elasticsearchOperations,
+			@Value("${elasticsearch.bulk_size}") final Integer bulkSize) {
+		super(transactionService, elasticsearchOperations, bulkSize, EsDelivery.class, deliveryRepository,
+				esDeliveryRepository);
+		this.deliveryRepository = deliveryRepository;
+		this.esDeliveryRepository = esDeliveryRepository;
+	}
 
-    @Override
-    protected EsDelivery convertToEsObject(final Delivery domainObject) {
-        return EsDelivery.from(domainObject);
-    }
+	/**
+	 * Recherche d'unités documentaires
+	 */
+	public Page<EsDelivery> search(final String[] rawSearches, final String[] rawFilters, final List<String> libraries,
+			final boolean fuzzy, final Integer page, final Integer size, final String[] rawSorts, final boolean facet) {
+		final EsSearchOperation[] searches = EsSearchOperation.fromRawSearches(rawSearches);
+		final EsSearchOperation[] filters = EsSearchOperation.fromRawFilters(rawFilters);
+		final Sort sort = EsSort.fromRawSorts(rawSorts, SearchEntity.DELIVERY);
+		return esDeliveryRepository.search(searches, libraries, fuzzy, filters, PageRequest.of(page, size, sort),
+				facet);
+	}
 
-    @Override
-    protected List<String> findAllIdentifiersToIndex() {
-        return deliveryRepository.findAllIdentifier();
-    }
+	@Override
+	protected EsDelivery convertToEsObject(final Delivery domainObject) {
+		return EsDelivery.from(domainObject);
+	}
+
+	@Override
+	protected List<String> findAllIdentifiersToIndex() {
+		return deliveryRepository.findAllIdentifier();
+	}
+
 }

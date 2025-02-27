@@ -45,313 +45,308 @@ import org.springframework.transaction.TransactionStatus;
 @Service
 public class ImportCSVService extends AbstractImportService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ImportCSVService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ImportCSVService.class);
 
-    private final DocPropertyTypeService docPropertyTypeService;
-    private final ImportDocUnitService importDocUnitService;
-    private final ImageMetadataValuesService imageMetadataValuesService;
-    private final DocUnitService docUnitService;
-    private final ConditionReportService conditionReportService;
-    private final ImportReportService importReportService;
-    private final CSVMappingService mappingService;
-    private final TransactionService transactionService;
-    private final WebsocketService websocketService;
-    private final CSVToDocUnitConvertService csvToDocUnitConvertService;
-    private final ConditionReportDetailService conditionReportDetailService;
+	private final DocPropertyTypeService docPropertyTypeService;
 
-    @Autowired
-    public ImportCSVService(final DeduplicationService deduplicationService,
-                            final DocPropertyTypeService docPropertyTypeService,
-                            final DocUnitService docUnitService,
-                            final EsDocUnitService esDocUnitService,
-                            final ImportDocUnitService importDocUnitService,
-                            final ImportReportService importReportService,
-                            final CSVMappingService mappingService,
-                            final TransactionService transactionService,
-                            final WebsocketService websocketService,
-                            final CSVToDocUnitConvertService csvToDocUnitConvertService,
-                            final ConditionReportService conditionReportService,
-                            final ConditionReportDetailService conditionReportDetailService,
-                            final ImageMetadataValuesService imageMetadataValuesService) {
-        super(deduplicationService, docUnitService, esDocUnitService, importDocUnitService, importReportService, transactionService, websocketService);
-        this.docPropertyTypeService = docPropertyTypeService;
-        this.imageMetadataValuesService = imageMetadataValuesService;
-        this.importDocUnitService = importDocUnitService;
-        this.importReportService = importReportService;
-        this.mappingService = mappingService;
-        this.transactionService = transactionService;
-        this.websocketService = websocketService;
-        this.csvToDocUnitConvertService = csvToDocUnitConvertService;
-        this.docUnitService = docUnitService;
-        this.conditionReportService = conditionReportService;
-        this.conditionReportDetailService = conditionReportDetailService;
-    }
+	private final ImportDocUnitService importDocUnitService;
 
-    /**
-     * Import asynchrone d'un flux de notices au format MARC
-     *
-     * @param importFile
-     *            Fichier de notices à importer
-     * @param fileFormat
-     *            Format du fichier (MARC, MARCJSON, MARCXML)
-     * @param report
-     *            Rapport d'exécution de cet import
-     * @param stepValidation
-     *            Étape de validation par l'utilisateur
-     * @param stepDeduplication
-     *            Étape de dédoublonnage
-     * @param defaultDedupProcess
-     * @param archivable
-     * @param distributable
-     */
-    @Async
-    public void importCSVAsync(final File importFile,
-                               final FileFormat fileFormat,
-                               final String mappingId,
-                               final String parentReportId,
-                               final String parentKeyExpr,
-                               ImportReport report,
-                               final boolean stepValidation,
-                               final boolean stepDeduplication,
-                               final ImportedDocUnit.Process defaultDedupProcess,
-                               final boolean archivable,
-                               final boolean distributable) {
-        try {
-            /* Pré-import */
-            LOG.info("Pré-import du fichier {} {}", fileFormat, importFile.getAbsolutePath());
-            report = importCSVRecords(importFile, report, mappingId, parentKeyExpr, archivable, distributable);
+	private final ImageMetadataValuesService imageMetadataValuesService;
 
-            /* Poursuite du traitement des unités documentaires pré-importées: recherche de doublons, validation utilisateur, import */
-            importDocUnit(report, parentReportId, stepValidation, stepDeduplication, defaultDedupProcess);
-            LOG.info("Le fichier {} {} est traité avec le statut {}", fileFormat, importFile.getAbsolutePath(), report.getStatus());
+	private final DocUnitService docUnitService;
 
-        } catch (final Exception e) {
-            LOG.error(e.getMessage(), e);
-            importReportService.failReport(report, e);
-        }
-    }
+	private final ConditionReportService conditionReportService;
 
-    /**
-     * Import d'un flux de notices à partir d'un fichier
-     *
-     * @param importFile
-     * @param report
-     * @param mappingId
-     * @param parentKeyExpr
-     */
-    private ImportReport importCSVRecords(final File importFile,
-                                          final ImportReport report,
-                                          final String mappingId,
-                                          final String parentKeyExpr,
-                                          final boolean archivable,
-                                          final boolean distributable) throws PgcnTechnicalException {
+	private final ImportReportService importReportService;
 
-        try (final FileReader in = new FileReader(importFile)) {
-            return importRecord(in, report, mappingId, parentKeyExpr, archivable, distributable);
+	private final CSVMappingService mappingService;
 
-        } catch (final Exception e) {
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	private final TransactionService transactionService;
 
-    /**
-     * Import de notices à partir d'un {@link Reader}
-     *
-     * @param in
-     * @param importReport
-     * @param mappingId
-     * @param parentKeyExpr
-     */
-    private ImportReport importRecord(final Reader in,
-                                      final ImportReport importReport,
-                                      final String mappingId,
-                                      final String parentKeyExpr,
-                                      final boolean archivable,
-                                      final boolean distributable) throws PgcnTechnicalException {
-        final TransactionStatus status = transactionService.startTransaction(true);
+	private final WebsocketService websocketService;
 
-        // Chargement du mapping
-        final CSVMapping mapping = mappingService.findOne(mappingId);
-        if (mapping == null) {
-            throw new PgcnTechnicalException("Il n'existe pas de mapping avec l'identifiant " + mappingId);
-        }
+	private final CSVToDocUnitConvertService csvToDocUnitConvertService;
 
-        // Record iterator
-        final CSVParser parser;
-        try {
-            parser = CSVFormat.Builder.create().setIgnoreSurroundingSpaces(true).setTrim(true).build().parse(in);
-        } catch (final IOException e) {
-            throw new PgcnTechnicalException(e);
-        }
-        // Lecture de l'entête
-        final Iterator<CSVRecord> recordIterator = parser.iterator();
-        final CSVRecord header = recordIterator.next();
-        final Map<Integer, String> entetes = new HashMap<>();
-        final Map<String, String> propertyNames = new HashMap<>();
+	private final ConditionReportDetailService conditionReportDetailService;
 
-        for (int i = 0; i < header.size(); i++) {
-            final String key = header.get(i);
-            if (key.startsWith("dc:") || key.startsWith("meta:")
-                || key.startsWith("def:")) {
-                propertyNames.put(key.substring(3), key.substring(3));
-                entetes.put(i, key);
-            } else if (key.equals(parentKeyExpr)) {
-                entetes.put(i, key);
-            } else {
-                // champs custom
-                final String keyRule = mapping.getRules()
-                                              .stream()
-                                              .filter(r -> StringUtils.equals(key, r.getCsvField()))
-                                              .map(CSVMappingRule::getProperty)
-                                              .map(DocPropertyType::getIdentifier)
-                                              .findAny()
-                                              .orElse(null);
-                // .ifPresent(keyRule -> propertyNames.add(keyRule));
-                if (keyRule != null) {
-                    propertyNames.put(keyRule, key);
-                    entetes.put(i, key);
-                }
+	@Autowired
+	public ImportCSVService(final DeduplicationService deduplicationService,
+			final DocPropertyTypeService docPropertyTypeService, final DocUnitService docUnitService,
+			final EsDocUnitService esDocUnitService, final ImportDocUnitService importDocUnitService,
+			final ImportReportService importReportService, final CSVMappingService mappingService,
+			final TransactionService transactionService, final WebsocketService websocketService,
+			final CSVToDocUnitConvertService csvToDocUnitConvertService,
+			final ConditionReportService conditionReportService,
+			final ConditionReportDetailService conditionReportDetailService,
+			final ImageMetadataValuesService imageMetadataValuesService) {
+		super(deduplicationService, docUnitService, esDocUnitService, importDocUnitService, importReportService,
+				transactionService, websocketService);
+		this.docPropertyTypeService = docPropertyTypeService;
+		this.imageMetadataValuesService = imageMetadataValuesService;
+		this.importDocUnitService = importDocUnitService;
+		this.importReportService = importReportService;
+		this.mappingService = mappingService;
+		this.transactionService = transactionService;
+		this.websocketService = websocketService;
+		this.csvToDocUnitConvertService = csvToDocUnitConvertService;
+		this.docUnitService = docUnitService;
+		this.conditionReportService = conditionReportService;
+		this.conditionReportDetailService = conditionReportDetailService;
+	}
 
-            }
-        }
+	/**
+	 * Import asynchrone d'un flux de notices au format MARC
+	 * @param importFile Fichier de notices à importer
+	 * @param fileFormat Format du fichier (MARC, MARCJSON, MARCXML)
+	 * @param report Rapport d'exécution de cet import
+	 * @param stepValidation Étape de validation par l'utilisateur
+	 * @param stepDeduplication Étape de dédoublonnage
+	 * @param defaultDedupProcess
+	 * @param archivable
+	 * @param distributable
+	 */
+	@Async
+	public void importCSVAsync(final File importFile, final FileFormat fileFormat, final String mappingId,
+			final String parentReportId, final String parentKeyExpr, ImportReport report, final boolean stepValidation,
+			final boolean stepDeduplication, final ImportedDocUnit.Process defaultDedupProcess,
+			final boolean archivable, final boolean distributable) {
+		try {
+			/* Pré-import */
+			LOG.info("Pré-import du fichier {} {}", fileFormat, importFile.getAbsolutePath());
+			report = importCSVRecords(importFile, report, mappingId, parentKeyExpr, archivable, distributable);
 
-        // Chargement des types de propriété - Map : valeur définie dans le mapping (colonne) / docPropertyType
-        final Map<String, DocPropertyType> propertyTypes = new HashMap<>();
-        for (final String property : propertyNames.keySet()) {
-            DocPropertyType prop = docPropertyTypeService.findOne(property);
-            if (prop != null) {
-                propertyTypes.put(propertyNames.get(property), prop);
-            }
-        }
+			/*
+			 * Poursuite du traitement des unités documentaires pré-importées: recherche
+			 * de doublons, validation utilisateur, import
+			 */
+			importDocUnit(report, parentReportId, stepValidation, stepDeduplication, defaultDedupProcess);
+			LOG.info("Le fichier {} {} est traité avec le statut {}", fileFormat, importFile.getAbsolutePath(),
+					report.getStatus());
 
-        // Résumé d'exécution
-        importReport.setCsvMapping(mapping);   // lien avec le mapping qui vient d'être chargé
-        final ImportReport runningReport = importReportService.startReport(importReport);
+		}
+		catch (final Exception e) {
+			LOG.error(e.getMessage(), e);
+			importReportService.failReport(report, e);
+		}
+	}
 
-        transactionService.commitTransaction(status);
+	/**
+	 * Import d'un flux de notices à partir d'un fichier
+	 * @param importFile
+	 * @param report
+	 * @param mappingId
+	 * @param parentKeyExpr
+	 */
+	private ImportReport importCSVRecords(final File importFile, final ImportReport report, final String mappingId,
+			final String parentKeyExpr, final boolean archivable, final boolean distributable)
+			throws PgcnTechnicalException {
 
-        // Création des unités documentaires pré-importées à partir des notices
-        new TransactionalJobRunner<>(recordIterator, transactionService)
-                                                                        // Configuration du job
-                                                                        .setCommit(1)
-                                                                        .autoSetMaxThreads()
-                                                                        .setFailOnException(false)
-                                                                        // Traitement principal
-                                                                        .forEach((record) -> {
+		try (final FileReader in = new FileReader(importFile)) {
+			return importRecord(in, report, mappingId, parentKeyExpr, archivable, distributable);
 
-                                                                            // Conversion du record en unité documentaire
-                                                                            final DocUnitWrapper wrapper = csvToDocUnitConvertService.convert(record,
-                                                                                                                                              mapping,
-                                                                                                                                              header,
-                                                                                                                                              parentKeyExpr,
-                                                                                                                                              propertyTypes,
-                                                                                                                                              entetes,
-                                                                                                                                              archivable,
-                                                                                                                                              distributable);
+		}
+		catch (final Exception e) {
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-                                                                            // Sauvegarde
-                                                                            final ImportedDocUnit imp = new ImportedDocUnit();
-                                                                            imp.initDocUnitFields(wrapper.getDocUnit());
-                                                                            imp.setParentKey(wrapper.getParentKey());
-                                                                            imp.setReport(runningReport);
+	/**
+	 * Import de notices à partir d'un {@link Reader}
+	 * @param in
+	 * @param importReport
+	 * @param mappingId
+	 * @param parentKeyExpr
+	 */
+	private ImportReport importRecord(final Reader in, final ImportReport importReport, final String mappingId,
+			final String parentKeyExpr, final boolean archivable, final boolean distributable)
+			throws PgcnTechnicalException {
+		final TransactionStatus status = transactionService.startTransaction(true);
 
-                                                                            // Recopie des infos du parent
-                                                                            @SuppressWarnings("ConstantConditions")
-                                                                            final DocUnit parent = imp.getDocUnit().getParent();
-                                                                            if (parent != null) {
-                                                                                imp.setParentDocUnit(parent.getIdentifier());
-                                                                                imp.setParentDocUnitPgcnId(parent.getPgcnId());
-                                                                                imp.setParentDocUnitLabel(parent.getLabel());
-                                                                            }
+		// Chargement du mapping
+		final CSVMapping mapping = mappingService.findOne(mappingId);
+		if (mapping == null) {
+			throw new PgcnTechnicalException("Il n'existe pas de mapping avec l'identifiant " + mappingId);
+		}
 
-                                                                            ImportedDocUnit impSaved = importDocUnitService.create(imp);
+		// Record iterator
+		final CSVParser parser;
+		try {
+			parser = CSVFormat.Builder.create().setIgnoreSurroundingSpaces(true).setTrim(true).build().parse(in);
+		}
+		catch (final IOException e) {
+			throw new PgcnTechnicalException(e);
+		}
+		// Lecture de l'entête
+		final Iterator<CSVRecord> recordIterator = parser.iterator();
+		final CSVRecord header = recordIterator.next();
+		final Map<Integer, String> entetes = new HashMap<>();
+		final Map<String, String> propertyNames = new HashMap<>();
 
-                                                                            DocUnit docUnitSaved = impSaved.getDocUnit();
-                                                                            if (docUnitSaved != null) {
-                                                                                PgcnList<PgcnError> errors = docUnitSaved.getErrors();
-                                                                                if (errors == null) {
-                                                                                    errors = new PgcnList<>();
-                                                                                }
+		for (int i = 0; i < header.size(); i++) {
+			final String key = header.get(i);
+			if (key.startsWith("dc:") || key.startsWith("meta:") || key.startsWith("def:")) {
+				propertyNames.put(key.substring(3), key.substring(3));
+				entetes.put(i, key);
+			}
+			else if (key.equals(parentKeyExpr)) {
+				entetes.put(i, key);
+			}
+			else {
+				// champs custom
+				final String keyRule = mapping.getRules()
+					.stream()
+					.filter(r -> StringUtils.equals(key, r.getCsvField()))
+					.map(CSVMappingRule::getProperty)
+					.map(DocPropertyType::getIdentifier)
+					.findAny()
+					.orElse(null);
+				// .ifPresent(keyRule -> propertyNames.add(keyRule));
+				if (keyRule != null) {
+					propertyNames.put(keyRule, key);
+					entetes.put(i, key);
+				}
 
-                                                                                // check data for resolution
-                                                                                mapResolution(record, mapping, entetes, errors);
+			}
+		}
 
-                                                                                // Mapping of the condition report
-                                                                                mapCondReport(record, mapping, entetes, errors, docUnitSaved);
+		// Chargement des types de propriété - Map : valeur définie dans le mapping
+		// (colonne) / docPropertyType
+		final Map<String, DocPropertyType> propertyTypes = new HashMap<>();
+		for (final String property : propertyNames.keySet()) {
+			DocPropertyType prop = docPropertyTypeService.findOne(property);
+			if (prop != null) {
+				propertyTypes.put(propertyNames.get(property), prop);
+			}
+		}
 
-                                                                                // Mapping of the metadata
-                                                                                mapMetadata(record, mapping, entetes, errors, docUnitSaved, impSaved);
-                                                                            }
+		// Résumé d'exécution
+		importReport.setCsvMapping(mapping); // lien avec le mapping qui vient d'être
+												// chargé
+		final ImportReport runningReport = importReportService.startReport(importReport);
 
-                                                                            synchronized (runningReport) {
-                                                                                runningReport.incrementNbImp(1);
-                                                                            }
-                                                                            return true;
-                                                                        })
-                                                                        .onProgress((nb) -> {
-                                                                            final Map<String, Object> statusMap = importReportService.getStatus(runningReport);
-                                                                            statusMap.put("processed", nb);
-                                                                            websocketService.sendObject(runningReport.getIdentifier(), statusMap);
+		transactionService.commitTransaction(status);
 
-                                                                        })
-                                                                        .process();
+		// Création des unités documentaires pré-importées à partir des notices
+		new TransactionalJobRunner<>(recordIterator, transactionService)
+			// Configuration du job
+			.setCommit(1)
+			.autoSetMaxThreads()
+			.setFailOnException(false)
+			// Traitement principal
+			.forEach((record) -> {
 
-        return runningReport;
-    }
+				// Conversion du record en unité documentaire
+				final DocUnitWrapper wrapper = csvToDocUnitConvertService.convert(record, mapping, header,
+						parentKeyExpr, propertyTypes, entetes, archivable, distributable);
 
-    private void mapCondReport(final CSVRecord record, final CSVMapping mapping, final Map<Integer, String> entetes, final PgcnList<PgcnError> errors, DocUnit docUnitSaved) {
-        ConditionReport conditionReport = conditionReportService.getNewConditionReport(docUnitSaved);
+				// Sauvegarde
+				final ImportedDocUnit imp = new ImportedDocUnit();
+				imp.initDocUnitFields(wrapper.getDocUnit());
+				imp.setParentKey(wrapper.getParentKey());
+				imp.setReport(runningReport);
 
-        List<?> condReportProperties = csvToDocUnitConvertService.convertCondReport(record, mapping, entetes, errors, conditionReport);
+				// Recopie des infos du parent
+				@SuppressWarnings("ConstantConditions")
+				final DocUnit parent = imp.getDocUnit().getParent();
+				if (parent != null) {
+					imp.setParentDocUnit(parent.getIdentifier());
+					imp.setParentDocUnitPgcnId(parent.getPgcnId());
+					imp.setParentDocUnitLabel(parent.getLabel());
+				}
 
-        if (!condReportProperties.isEmpty() && (docUnitSaved.getErrors() == null || docUnitSaved.getErrors().isEmpty())) {
+				ImportedDocUnit impSaved = importDocUnitService.create(imp);
 
-            // Get the detail
-            ConditionReportDetail conditionReportDetail = conditionReportDetailService.getNewDetailWithoutWriters(ConditionReportDetail.Type.LIBRARY_LEAVING, conditionReport, 0);
+				DocUnit docUnitSaved = impSaved.getDocUnit();
+				if (docUnitSaved != null) {
+					PgcnList<PgcnError> errors = docUnitSaved.getErrors();
+					if (errors == null) {
+						errors = new PgcnList<>();
+					}
 
-            Optional<ConditionReportDetail> condDetail = condReportProperties.stream()
-                                                                             .filter(prop -> prop instanceof ConditionReportDetail)
-                                                                             .map(p -> (ConditionReportDetail) p)
-                                                                             .findFirst();
-            if (condDetail.isPresent()) {
-                conditionReportDetail = condDetail.get();
-            }
+					// check data for resolution
+					mapResolution(record, mapping, entetes, errors);
 
-            // Get the description
-            Set<Description> condDescs = condReportProperties.stream().filter(prop -> prop instanceof Description).map(p -> (Description) p).collect(Collectors.toSet());
-            if (!condDescs.isEmpty()) {
-                conditionReportDetail.setDescriptions(condDescs);
-            }
+					// Mapping of the condition report
+					mapCondReport(record, mapping, entetes, errors, docUnitSaved);
 
-            // everything is ok -> persist report AND details
-            ConditionReport condReportSaved = conditionReportService.save(conditionReport);
-            conditionReportDetail.setReport(condReportSaved);
-            conditionReportDetailService.save(conditionReportDetail, false);
-        }
+					// Mapping of the metadata
+					mapMetadata(record, mapping, entetes, errors, docUnitSaved, impSaved);
+				}
 
-    }
+				synchronized (runningReport) {
+					runningReport.incrementNbImp(1);
+				}
+				return true;
+			})
+			.onProgress((nb) -> {
+				final Map<String, Object> statusMap = importReportService.getStatus(runningReport);
+				statusMap.put("processed", nb);
+				websocketService.sendObject(runningReport.getIdentifier(), statusMap);
 
-    private void mapMetadata(final CSVRecord record,
-                             final CSVMapping mapping,
-                             final Map<Integer, String> entetes,
-                             final PgcnList<PgcnError> errors,
-                             DocUnit docUnit,
-                             ImportedDocUnit impSaved) {
-        List<ImageMetadataValue> metadataValues = csvToDocUnitConvertService.convertMetadata(record, mapping, entetes, errors, docUnit);
+			})
+			.process();
 
-        if (!metadataValues.isEmpty()) {
-            imageMetadataValuesService.saveValuesList(metadataValues);
-        }
+		return runningReport;
+	}
 
-        if (errors != null && !errors.isEmpty()) {
-            importDocUnitService.saveWithError(impSaved, new PgcnValidationException(impSaved, errors));
-        }
-    }
+	private void mapCondReport(final CSVRecord record, final CSVMapping mapping, final Map<Integer, String> entetes,
+			final PgcnList<PgcnError> errors, DocUnit docUnitSaved) {
+		ConditionReport conditionReport = conditionReportService.getNewConditionReport(docUnitSaved);
 
-    private void mapResolution(final CSVRecord record, final CSVMapping mapping, final Map<Integer, String> entetes, final PgcnList<PgcnError> errors) {
+		List<?> condReportProperties = csvToDocUnitConvertService.convertCondReport(record, mapping, entetes, errors,
+				conditionReport);
 
-        csvToDocUnitConvertService.checkResolutionData(record, mapping, entetes, errors);
+		if (!condReportProperties.isEmpty()
+				&& (docUnitSaved.getErrors() == null || docUnitSaved.getErrors().isEmpty())) {
 
-    }
+			// Get the detail
+			ConditionReportDetail conditionReportDetail = conditionReportDetailService
+				.getNewDetailWithoutWriters(ConditionReportDetail.Type.LIBRARY_LEAVING, conditionReport, 0);
+
+			Optional<ConditionReportDetail> condDetail = condReportProperties.stream()
+				.filter(prop -> prop instanceof ConditionReportDetail)
+				.map(p -> (ConditionReportDetail) p)
+				.findFirst();
+			if (condDetail.isPresent()) {
+				conditionReportDetail = condDetail.get();
+			}
+
+			// Get the description
+			Set<Description> condDescs = condReportProperties.stream()
+				.filter(prop -> prop instanceof Description)
+				.map(p -> (Description) p)
+				.collect(Collectors.toSet());
+			if (!condDescs.isEmpty()) {
+				conditionReportDetail.setDescriptions(condDescs);
+			}
+
+			// everything is ok -> persist report AND details
+			ConditionReport condReportSaved = conditionReportService.save(conditionReport);
+			conditionReportDetail.setReport(condReportSaved);
+			conditionReportDetailService.save(conditionReportDetail, false);
+		}
+
+	}
+
+	private void mapMetadata(final CSVRecord record, final CSVMapping mapping, final Map<Integer, String> entetes,
+			final PgcnList<PgcnError> errors, DocUnit docUnit, ImportedDocUnit impSaved) {
+		List<ImageMetadataValue> metadataValues = csvToDocUnitConvertService.convertMetadata(record, mapping, entetes,
+				errors, docUnit);
+
+		if (!metadataValues.isEmpty()) {
+			imageMetadataValuesService.saveValuesList(metadataValues);
+		}
+
+		if (errors != null && !errors.isEmpty()) {
+			importDocUnitService.saveWithError(impSaved, new PgcnValidationException(impSaved, errors));
+		}
+	}
+
+	private void mapResolution(final CSVRecord record, final CSVMapping mapping, final Map<Integer, String> entetes,
+			final PgcnList<PgcnError> errors) {
+
+		csvToDocUnitConvertService.checkResolutionData(record, mapping, entetes, errors);
+
+	}
 
 }

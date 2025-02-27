@@ -19,48 +19,51 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AuditDeliveryRepository extends AbstractAuditRepository<Delivery> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AuditDeliveryRepository.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AuditDeliveryRepository.class);
 
-    @PersistenceContext
-    private EntityManager em;
+	@PersistenceContext
+	private EntityManager em;
 
-    public AuditDeliveryRepository() {
-        super(Delivery.class);
-    }
+	public AuditDeliveryRepository() {
+		super(Delivery.class);
+	}
 
-    /**
-     * Recherche la liste des dernières révisions depuis une date donnée
-     *
-     * @param fromDate
-     * @param status
-     * @return
-     */
-    public List<AuditDeliveryRevisionDTO> getRevisions(final LocalDate fromDate, final List<Delivery.DeliveryStatus> status) {
-        if (CollectionUtils.isNotEmpty(status)) {
-            final AuditCriterion filterStatus = AuditEntity.property("status").in(status);
-            return super.getRevisions(fromDate, em, Collections.singletonList(filterStatus), this::getAuditDeliveryRevisionDTO);
-        } else {
-            return super.getRevisions(fromDate, em, this::getAuditDeliveryRevisionDTO);
-        }
-    }
+	/**
+	 * Recherche la liste des dernières révisions depuis une date donnée
+	 * @param fromDate
+	 * @param status
+	 * @return
+	 */
+	public List<AuditDeliveryRevisionDTO> getRevisions(final LocalDate fromDate,
+			final List<Delivery.DeliveryStatus> status) {
+		if (CollectionUtils.isNotEmpty(status)) {
+			final AuditCriterion filterStatus = AuditEntity.property("status").in(status);
+			return super.getRevisions(fromDate, em, Collections.singletonList(filterStatus),
+					this::getAuditDeliveryRevisionDTO);
+		}
+		else {
+			return super.getRevisions(fromDate, em, this::getAuditDeliveryRevisionDTO);
+		}
+	}
 
-    private AuditDeliveryRevisionDTO getAuditDeliveryRevisionDTO(final Delivery delivery, final AuditRevision rev) {
-        final AuditDeliveryRevisionDTO dto = new AuditDeliveryRevisionDTO();
-        dto.setRev(rev.getId());
-        dto.setIdentifier(delivery.getIdentifier());
+	private AuditDeliveryRevisionDTO getAuditDeliveryRevisionDTO(final Delivery delivery, final AuditRevision rev) {
+		final AuditDeliveryRevisionDTO dto = new AuditDeliveryRevisionDTO();
+		dto.setRev(rev.getId());
+		dto.setIdentifier(delivery.getIdentifier());
 
-        // Révision
-        dto.setTimestamp(rev.getTimestamp());
-        dto.setUsername(rev.getUsername());
+		// Révision
+		dto.setTimestamp(rev.getTimestamp());
+		dto.setUsername(rev.getUsername());
 
-        // Livraison
-        try {
-            dto.setStatus(delivery.getStatus());
+		// Livraison
+		try {
+			dto.setStatus(delivery.getStatus());
 
-        } catch (final EntityNotFoundException e) {
-            LOG.warn(e.getMessage());
-        }
-        return dto;
-    }
+		}
+		catch (final EntityNotFoundException e) {
+			LOG.warn(e.getMessage());
+		}
+		return dto;
+	}
 
 }

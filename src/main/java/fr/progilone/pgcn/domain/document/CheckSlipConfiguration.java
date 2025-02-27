@@ -16,79 +16,84 @@ import jakarta.persistence.Table;
 @Table(name = CheckSlipConfiguration.TABLE_NAME)
 public class CheckSlipConfiguration extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "doc_check_slip_config";
+	public static final String TABLE_NAME = "doc_check_slip_config";
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "library")
-    private Library library;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "library")
+	private Library library;
 
-    @Column(name = "pgcn_id")
-    private boolean pgcnId;
-    @Column(name = "title")
-    private boolean title;
-    @Column(name = "state")
-    private boolean state;
-    @Column(name = "errors")
-    private boolean errs;
-    @Column(name = "nb_pages")
-    private boolean nbPages;
-    @Column(name = "nb_pages_tobill")
-    private boolean nbPagesToBill;
+	@Column(name = "pgcn_id")
+	private boolean pgcnId;
 
-    public Library getLibrary() {
-        return library;
-    }
+	@Column(name = "title")
+	private boolean title;
 
-    public void setLibrary(Library library) {
-        this.library = library;
-    }
+	@Column(name = "state")
+	private boolean state;
 
-    public boolean isPgcnId() {
-        return pgcnId;
-    }
+	@Column(name = "errors")
+	private boolean errs;
 
-    public void setPgcnId(boolean pgcnId) {
-        this.pgcnId = pgcnId;
-    }
+	@Column(name = "nb_pages")
+	private boolean nbPages;
 
-    public boolean isTitle() {
-        return title;
-    }
+	@Column(name = "nb_pages_tobill")
+	private boolean nbPagesToBill;
 
-    public void setTitle(boolean title) {
-        this.title = title;
-    }
+	public Library getLibrary() {
+		return library;
+	}
 
-    public boolean isState() {
-        return state;
-    }
+	public void setLibrary(Library library) {
+		this.library = library;
+	}
 
-    public void setState(boolean state) {
-        this.state = state;
-    }
+	public boolean isPgcnId() {
+		return pgcnId;
+	}
 
-    public boolean isErrs() {
-        return errs;
-    }
+	public void setPgcnId(boolean pgcnId) {
+		this.pgcnId = pgcnId;
+	}
 
-    public void setErrors(boolean errs) {
-        this.errs = errs;
-    }
+	public boolean isTitle() {
+		return title;
+	}
 
-    public boolean isNbPages() {
-        return nbPages;
-    }
+	public void setTitle(boolean title) {
+		this.title = title;
+	}
 
-    public void setNbPages(boolean nbPages) {
-        this.nbPages = nbPages;
-    }
+	public boolean isState() {
+		return state;
+	}
 
-    public boolean isNbPagesToBill() {
-        return nbPagesToBill;
-    }
+	public void setState(boolean state) {
+		this.state = state;
+	}
 
-    public void setNbPagesToBill(boolean nbPagesToBill) {
-        this.nbPagesToBill = nbPagesToBill;
-    }
+	public boolean isErrs() {
+		return errs;
+	}
+
+	public void setErrors(boolean errs) {
+		this.errs = errs;
+	}
+
+	public boolean isNbPages() {
+		return nbPages;
+	}
+
+	public void setNbPages(boolean nbPages) {
+		this.nbPages = nbPages;
+	}
+
+	public boolean isNbPagesToBill() {
+		return nbPagesToBill;
+	}
+
+	public void setNbPagesToBill(boolean nbPagesToBill) {
+		this.nbPagesToBill = nbPagesToBill;
+	}
 
 }

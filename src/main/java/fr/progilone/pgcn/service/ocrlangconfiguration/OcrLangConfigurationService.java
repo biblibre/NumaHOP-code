@@ -17,79 +17,82 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OcrLangConfigurationService {
 
-    private final OcrLangConfigurationRepository ocrLangConfigurationRepository;
-    private final LibraryRepository libraryRepository;
+	private final OcrLangConfigurationRepository ocrLangConfigurationRepository;
 
-    @Autowired
-    public OcrLangConfigurationService(final OcrLangConfigurationRepository ocrLangConfigurationRepository, final LibraryRepository libraryRepository) {
-        this.ocrLangConfigurationRepository = ocrLangConfigurationRepository;
-        this.libraryRepository = libraryRepository;
-    }
+	private final LibraryRepository libraryRepository;
 
-    /**
-     * Suppression d'une conf.
-     *
-     * @param id
-     */
-    @Transactional
-    public void delete(final String id) throws PgcnValidationException {
-        // Validation de la suppression
-        final OcrLangConfiguration conf = ocrLangConfigurationRepository.getOne(id);
-        validateDelete(conf);
+	@Autowired
+	public OcrLangConfigurationService(final OcrLangConfigurationRepository ocrLangConfigurationRepository,
+			final LibraryRepository libraryRepository) {
+		this.ocrLangConfigurationRepository = ocrLangConfigurationRepository;
+		this.libraryRepository = libraryRepository;
+	}
 
-        // Suppression
-        ocrLangConfigurationRepository.deleteById(id);
-    }
+	/**
+	 * Suppression d'une conf.
+	 * @param id
+	 */
+	@Transactional
+	public void delete(final String id) throws PgcnValidationException {
+		// Validation de la suppression
+		final OcrLangConfiguration conf = ocrLangConfigurationRepository.getOne(id);
+		validateDelete(conf);
 
-    private void validateDelete(final OcrLangConfiguration conf) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
-        // Bibliothèque
-        final Long libCount = libraryRepository.countByActiveOcrLangConfiguration(conf);
-        if (libCount > 0) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_CHECK_DEL_EXITS_LIB).setAdditionalComplement(libCount).build());
-        }
-        if (!errors.isEmpty()) {
-            conf.setErrors(errors);
-            throw new PgcnValidationException(conf, errors);
-        }
-    }
+		// Suppression
+		ocrLangConfigurationRepository.deleteById(id);
+	}
 
-    /**
-     * Sauvegarde
-     *
-     * @param OcrLangConfiguration
-     * @return
-     */
-    @Transactional
-    public OcrLangConfiguration save(final OcrLangConfiguration configuration) {
-        return ocrLangConfigurationRepository.save(configuration);
-    }
+	private void validateDelete(final OcrLangConfiguration conf) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
+		// Bibliothèque
+		final Long libCount = libraryRepository.countByActiveOcrLangConfiguration(conf);
+		if (libCount > 0) {
+			errors.add(builder.reinit()
+				.setCode(PgcnErrorCode.CONF_CHECK_DEL_EXITS_LIB)
+				.setAdditionalComplement(libCount)
+				.build());
+		}
+		if (!errors.isEmpty()) {
+			conf.setErrors(errors);
+			throw new PgcnValidationException(conf, errors);
+		}
+	}
 
-    /**
-     * Récupération d'une {@link OcrLangConfiguration}
-     *
-     * @param identifier
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public OcrLangConfiguration findOne(final String identifier) {
-        if (identifier == null) {
-            return null;
-        }
-        return ocrLangConfigurationRepository.findOneWithDependencies(identifier);
-    }
+	/**
+	 * Sauvegarde
+	 * @param OcrLangConfiguration
+	 * @return
+	 */
+	@Transactional
+	public OcrLangConfiguration save(final OcrLangConfiguration configuration) {
+		return ocrLangConfigurationRepository.save(configuration);
+	}
 
-    /**
-     * Recherche paginée paramétrée
-     *
-     * @param search
-     * @param libraries
-     * @param pageRequest
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Page<OcrLangConfiguration> search(final String search, final List<String> libraries, final Pageable pageRequest) {
-        return ocrLangConfigurationRepository.search(search, libraries, pageRequest);
-    }
+	/**
+	 * Récupération d'une {@link OcrLangConfiguration}
+	 * @param identifier
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public OcrLangConfiguration findOne(final String identifier) {
+		if (identifier == null) {
+			return null;
+		}
+		return ocrLangConfigurationRepository.findOneWithDependencies(identifier);
+	}
+
+	/**
+	 * Recherche paginée paramétrée
+	 * @param search
+	 * @param libraries
+	 * @param pageRequest
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Page<OcrLangConfiguration> search(final String search, final List<String> libraries,
+			final Pageable pageRequest) {
+		return ocrLangConfigurationRepository.search(search, libraries, pageRequest);
+	}
+
 }

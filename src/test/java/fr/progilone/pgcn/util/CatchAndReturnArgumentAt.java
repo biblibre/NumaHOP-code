@@ -11,32 +11,33 @@ import org.mockito.invocation.InvocationOnMock;
  */
 public class CatchAndReturnArgumentAt<T extends AbstractDomainObject> extends ReturnsArgumentAt {
 
-    private final String identifier;
-    private T domainObject;
+	private final String identifier;
 
-    /**
-     * Build the identity answer to return the argument at the given position in the argument array.
-     *
-     * @param wantedArgumentPosition
-     *            The position of the argument identity to return in the invocation.
-     *            Using <code>-1</code> indicates the last argument.
-     * @param identifier
-     */
-    public CatchAndReturnArgumentAt(final int wantedArgumentPosition, final String identifier) {
-        super(wantedArgumentPosition);
-        this.identifier = identifier;
-    }
+	private T domainObject;
 
-    @Override
-    public Object answer(final InvocationOnMock invocation) throws Throwable {
-        final T answer = (T) super.answer(invocation);
-        answer.setIdentifier(identifier);
+	/**
+	 * Build the identity answer to return the argument at the given position in the
+	 * argument array.
+	 * @param wantedArgumentPosition The position of the argument identity to return in
+	 * the invocation. Using <code>-1</code> indicates the last argument.
+	 * @param identifier
+	 */
+	public CatchAndReturnArgumentAt(final int wantedArgumentPosition, final String identifier) {
+		super(wantedArgumentPosition);
+		this.identifier = identifier;
+	}
 
-        domainObject = answer;
-        return answer;
-    }
+	@Override
+	public Object answer(final InvocationOnMock invocation) throws Throwable {
+		final T answer = (T) super.answer(invocation);
+		answer.setIdentifier(identifier);
 
-    public T getDomainObject() {
-        return domainObject;
-    }
+		domainObject = answer;
+		return answer;
+	}
+
+	public T getDomainObject() {
+		return domainObject;
+	}
+
 }

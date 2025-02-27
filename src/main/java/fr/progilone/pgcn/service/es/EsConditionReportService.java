@@ -24,73 +24,71 @@ import org.springframework.stereotype.Service;
 @Service
 public class EsConditionReportService extends AbstractElasticsearchOperations<ConditionReport, EsConditionReport> {
 
-    private final ConditionReportRepository conditionReportRepository;
-    private final EsConditionReportRepository esConditionReportRepository;
+	private final ConditionReportRepository conditionReportRepository;
 
-    @Autowired
-    public EsConditionReportService(final ConditionReportRepository conditionReportRepository,
-                                    final EsConditionReportRepository esConditionReportRepository,
-                                    final TransactionService transactionService,
-                                    final ElasticsearchOperations elasticsearchOperations,
-                                    @Value("${elasticsearch.bulk_size}") final Integer bulkSize) {
-        super(transactionService, elasticsearchOperations, bulkSize, EsConditionReport.class, conditionReportRepository, esConditionReportRepository);
-        this.conditionReportRepository = conditionReportRepository;
-        this.esConditionReportRepository = esConditionReportRepository;
-    }
+	private final EsConditionReportRepository esConditionReportRepository;
 
-    /**
-     * Recherche de constats d'état
-     */
-    public Page<ConditionReportSearchDTO> search(final String[] rawSearches,
-                                                 final String[] rawFilters,
-                                                 final List<String> libraries,
-                                                 final boolean fuzzy,
-                                                 final Integer page,
-                                                 final Integer size,
-                                                 final String[] rawSorts,
-                                                 final boolean facet) {
-        // Recherche
-        final EsSearchOperation[] searches = EsSearchOperation.fromRawSearches(rawSearches);
-        final EsSearchOperation[] filters = EsSearchOperation.fromRawFilters(rawFilters);
-        final Sort sort = EsSort.fromRawSorts(rawSorts, SearchEntity.CONDREPORT);
-        final SearchResultPage<EsConditionReport> pageOfResults = esConditionReportRepository.search(searches, libraries, fuzzy, filters, PageRequest.of(page, size, sort), facet);
-        // DTOs
-        return pageOfResults.map(r -> {
-            final ConditionReportSearchDTO dto = new ConditionReportSearchDTO();
-            dto.setDocUnitId(r.getDocUnitId());
-            dto.setDocUnitLabel(r.getDocUnitLabel());
-            dto.setDocUnitPgcnId(r.getDocUnitPgcnId());
-            if (r.getDetails() != null) {
-                dto.setDate(r.getDetails().getDate());
-                dto.setType(r.getDetails().getType().name());
-                dto.setProperties(r.getDetails().getDescriptions().stream().map(d -> {
-                    final ConditionReportValueDTO valueDto = new ConditionReportValueDTO();
-                    valueDto.setComment(d.getComment());
-                    if (d.getProperty() != null) {
-                        valueDto.setPropertyCode(d.getProperty().getCode());
-                        valueDto.setPropertyId(d.getProperty().getIdentifier());
-                        valueDto.setPropertyOrder(d.getProperty().getOrder());
-                        if (d.getProperty().getType() != null) {
-                            valueDto.setPropertyType(d.getProperty().getType().name());
-                        }
-                    }
-                    if (d.getValue() != null) {
-                        valueDto.setValue(d.getValue().getLabel());
-                    }
-                    return valueDto;
-                }).collect(Collectors.toList()));
-            }
-            return dto;
-        });
-    }
+	@Autowired
+	public EsConditionReportService(final ConditionReportRepository conditionReportRepository,
+			final EsConditionReportRepository esConditionReportRepository, final TransactionService transactionService,
+			final ElasticsearchOperations elasticsearchOperations,
+			@Value("${elasticsearch.bulk_size}") final Integer bulkSize) {
+		super(transactionService, elasticsearchOperations, bulkSize, EsConditionReport.class, conditionReportRepository,
+				esConditionReportRepository);
+		this.conditionReportRepository = conditionReportRepository;
+		this.esConditionReportRepository = esConditionReportRepository;
+	}
 
-    @Override
-    protected EsConditionReport convertToEsObject(final ConditionReport domainObject) {
-        return EsConditionReport.from(domainObject);
-    }
+	/**
+	 * Recherche de constats d'état
+	 */
+	public Page<ConditionReportSearchDTO> search(final String[] rawSearches, final String[] rawFilters,
+			final List<String> libraries, final boolean fuzzy, final Integer page, final Integer size,
+			final String[] rawSorts, final boolean facet) {
+		// Recherche
+		final EsSearchOperation[] searches = EsSearchOperation.fromRawSearches(rawSearches);
+		final EsSearchOperation[] filters = EsSearchOperation.fromRawFilters(rawFilters);
+		final Sort sort = EsSort.fromRawSorts(rawSorts, SearchEntity.CONDREPORT);
+		final SearchResultPage<EsConditionReport> pageOfResults = esConditionReportRepository.search(searches,
+				libraries, fuzzy, filters, PageRequest.of(page, size, sort), facet);
+		// DTOs
+		return pageOfResults.map(r -> {
+			final ConditionReportSearchDTO dto = new ConditionReportSearchDTO();
+			dto.setDocUnitId(r.getDocUnitId());
+			dto.setDocUnitLabel(r.getDocUnitLabel());
+			dto.setDocUnitPgcnId(r.getDocUnitPgcnId());
+			if (r.getDetails() != null) {
+				dto.setDate(r.getDetails().getDate());
+				dto.setType(r.getDetails().getType().name());
+				dto.setProperties(r.getDetails().getDescriptions().stream().map(d -> {
+					final ConditionReportValueDTO valueDto = new ConditionReportValueDTO();
+					valueDto.setComment(d.getComment());
+					if (d.getProperty() != null) {
+						valueDto.setPropertyCode(d.getProperty().getCode());
+						valueDto.setPropertyId(d.getProperty().getIdentifier());
+						valueDto.setPropertyOrder(d.getProperty().getOrder());
+						if (d.getProperty().getType() != null) {
+							valueDto.setPropertyType(d.getProperty().getType().name());
+						}
+					}
+					if (d.getValue() != null) {
+						valueDto.setValue(d.getValue().getLabel());
+					}
+					return valueDto;
+				}).collect(Collectors.toList()));
+			}
+			return dto;
+		});
+	}
 
-    @Override
-    protected List<String> findAllIdentifiersToIndex() {
-        return conditionReportRepository.findAllIdentifierByDocUnitState(State.AVAILABLE);
-    }
+	@Override
+	protected EsConditionReport convertToEsObject(final ConditionReport domainObject) {
+		return EsConditionReport.from(domainObject);
+	}
+
+	@Override
+	protected List<String> findAllIdentifiersToIndex() {
+		return conditionReportRepository.findAllIdentifierByDocUnitState(State.AVAILABLE);
+	}
+
 }

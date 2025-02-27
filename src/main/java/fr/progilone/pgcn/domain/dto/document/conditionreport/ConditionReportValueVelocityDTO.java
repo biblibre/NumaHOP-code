@@ -7,92 +7,104 @@ import org.apache.commons.lang3.StringUtils;
 
 public class ConditionReportValueVelocityDTO {
 
-    private String propertyId;
-    private String propertyCode;
-    private String propertyLabel;
-    private String propertyType;
-    private final List<StringValue> values = new ArrayList<>();
+	private String propertyId;
 
-    public String getPropertyId() {
-        return propertyId;
-    }
+	private String propertyCode;
 
-    public void setPropertyId(final String propertyId) {
-        this.propertyId = propertyId;
-    }
+	private String propertyLabel;
 
-    public String getPropertyCode() {
-        return propertyCode;
-    }
+	private String propertyType;
 
-    public void setPropertyCode(final String propertyCode) {
-        this.propertyCode = propertyCode;
-    }
+	private final List<StringValue> values = new ArrayList<>();
 
-    public String getPropertyLabel() {
-        return propertyLabel;
-    }
+	public String getPropertyId() {
+		return propertyId;
+	}
 
-    public void setPropertyLabel(final String propertyLabel) {
-        this.propertyLabel = propertyLabel;
-    }
+	public void setPropertyId(final String propertyId) {
+		this.propertyId = propertyId;
+	}
 
-    public String getPropertyType() {
-        return propertyType;
-    }
+	public String getPropertyCode() {
+		return propertyCode;
+	}
 
-    public void setPropertyType(final String propertyType) {
-        this.propertyType = propertyType;
-    }
+	public void setPropertyCode(final String propertyCode) {
+		this.propertyCode = propertyCode;
+	}
 
-    public List<StringValue> getValues() {
-        return values;
-    }
+	public String getPropertyLabel() {
+		return propertyLabel;
+	}
 
-    public void setValues(final List<StringValue> values) {
-        this.values.clear();
-        this.values.addAll(values);
-    }
+	public void setPropertyLabel(final String propertyLabel) {
+		this.propertyLabel = propertyLabel;
+	}
 
-    public void addValue(final String value, final ValueType type) {
-        this.values.add(new StringValue(value, type));
-    }
+	public String getPropertyType() {
+		return propertyType;
+	}
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("propertyId", propertyId).add("propertyLabel", propertyLabel).add("values", StringUtils.join(values, ", ")).toString();
-    }
+	public void setPropertyType(final String propertyType) {
+		this.propertyType = propertyType;
+	}
 
-    public static final class StringValue {
+	public List<StringValue> getValues() {
+		return values;
+	}
 
-        private final String value;
-        private final ValueType type;
+	public void setValues(final List<StringValue> values) {
+		this.values.clear();
+		this.values.addAll(values);
+	}
 
-        public StringValue(final String value, final ValueType type) {
-            this.value = value;
-            this.type = type;
-        }
+	public void addValue(final String value, final ValueType type) {
+		this.values.add(new StringValue(value, type));
+	}
 
-        public String getValue() {
-            return value;
-        }
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+			.add("propertyId", propertyId)
+			.add("propertyLabel", propertyLabel)
+			.add("values", StringUtils.join(values, ", "))
+			.toString();
+	}
 
-        public ValueType getType() {
-            return type;
-        }
+	public static final class StringValue {
 
-        public boolean isComment() {
-            return type == ValueType.COMMENT;
-        }
+		private final String value;
 
-        @Override
-        public String toString() {
-            return MoreObjects.toStringHelper(this).add("value", value).add("type", type).toString();
-        }
-    }
+		private final ValueType type;
 
-    public enum ValueType {
-        LIST,
-        COMMENT
-    }
+		public StringValue(final String value, final ValueType type) {
+			this.value = value;
+			this.type = type;
+		}
+
+		public String getValue() {
+			return value;
+		}
+
+		public ValueType getType() {
+			return type;
+		}
+
+		public boolean isComment() {
+			return type == ValueType.COMMENT;
+		}
+
+		@Override
+		public String toString() {
+			return MoreObjects.toStringHelper(this).add("value", value).add("type", type).toString();
+		}
+
+	}
+
+	public enum ValueType {
+
+		LIST, COMMENT
+
+	}
+
 }

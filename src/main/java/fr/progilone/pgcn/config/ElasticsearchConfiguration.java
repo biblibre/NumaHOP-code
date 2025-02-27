@@ -12,41 +12,46 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 @Configuration
-@EnableElasticsearchRepositories(basePackages = {"fr.progilone.pgcn.repository.es"})
+@EnableElasticsearchRepositories(basePackages = { "fr.progilone.pgcn.repository.es" })
 @Import(ElasticsearchRestClientAutoConfiguration.class)
 public class ElasticsearchConfiguration {
 
-    private static final int STARTUP_INTERVAL = 1;
-    private static final int STARTUP_TIMEOUT = 1800;
+	private static final int STARTUP_INTERVAL = 1;
 
-    private final ElasticsearchProperties elasticsearchProperties;
+	private static final int STARTUP_TIMEOUT = 1800;
 
-    public ElasticsearchConfiguration(final ElasticsearchProperties elasticsearchProperties) {
-        this.elasticsearchProperties = elasticsearchProperties;
-    }
+	private final ElasticsearchProperties elasticsearchProperties;
 
-    /**
-     * Bean permettant d'attendre que Elasticsearch soit démarré.
-     */
-    @Bean
-    @Profile("!" + Constants.SPRING_PROFILE_TEST)
-    public HttpServiceStartupValidator elasticsearchStartupValidator() {
-        final var dsv = new HttpServiceStartupValidator(elasticsearchProperties.getUris().get(0));
-        dsv.setInterval(STARTUP_INTERVAL);
-        dsv.setTimeout(STARTUP_TIMEOUT);
-        return dsv;
-    }
+	public ElasticsearchConfiguration(final ElasticsearchProperties elasticsearchProperties) {
+		this.elasticsearchProperties = elasticsearchProperties;
+	}
 
-    /**
-     * On fait dépendre le client Elasticsearch de notre bean permettant d'attendre que Elasticsearch soit démarré pour que l'application attende
-     * Elasticsearch avant de continuer à démarrer.
-     */
-    @Bean
-    @Profile("!" + Constants.SPRING_PROFILE_TEST)
-    public static BeanFactoryPostProcessor dependsOnElasticsearchPostProcessor() {
-        return bf -> {
-            final String[] clientRegistrationRepository = bf.getBeanNamesForType(RestClientBuilder.class);
-            Stream.of(clientRegistrationRepository).map(bf::getBeanDefinition).forEach(it -> it.setDependsOn("elasticsearchStartupValidator"));
-        };
-    }
+	/**
+	 * Bean permettant d'attendre que Elasticsearch soit démarré.
+	 */
+	@Bean
+	@Profile("!" + Constants.SPRING_PROFILE_TEST)
+	public HttpServiceStartupValidator elasticsearchStartupValidator() {
+		final var dsv = new HttpServiceStartupValidator(elasticsearchProperties.getUris().get(0));
+		dsv.setInterval(STARTUP_INTERVAL);
+		dsv.setTimeout(STARTUP_TIMEOUT);
+		return dsv;
+	}
+
+	/**
+	 * On fait dépendre le client Elasticsearch de notre bean permettant d'attendre que
+	 * Elasticsearch soit démarré pour que l'application attende Elasticsearch avant de
+	 * continuer à démarrer.
+	 */
+	@Bean
+	@Profile("!" + Constants.SPRING_PROFILE_TEST)
+	public static BeanFactoryPostProcessor dependsOnElasticsearchPostProcessor() {
+		return bf -> {
+			final String[] clientRegistrationRepository = bf.getBeanNamesForType(RestClientBuilder.class);
+			Stream.of(clientRegistrationRepository)
+				.map(bf::getBeanDefinition)
+				.forEach(it -> it.setDependsOn("elasticsearchStartupValidator"));
+		};
+	}
+
 }

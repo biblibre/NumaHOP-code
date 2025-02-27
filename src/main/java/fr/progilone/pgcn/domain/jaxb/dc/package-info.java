@@ -5,7 +5,10 @@
 // Généré le : 2016.12.29 à 11:54:07 AM CET
 //
 
+/**
+ * Dc package.
+ */
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://purl.org/dc/elements/1.1/",
-                                       elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
-                                       xmlns = {@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://purl.org/dc/elements/1.1/", prefix = "")})
+		elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
+		xmlns = { @jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://purl.org/dc/elements/1.1/", prefix = "") })
 package fr.progilone.pgcn.domain.jaxb.dc;

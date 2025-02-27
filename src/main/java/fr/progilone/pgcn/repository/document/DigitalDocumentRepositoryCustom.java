@@ -11,30 +11,12 @@ import org.springframework.data.domain.Pageable;
  */
 public interface DigitalDocumentRepositoryCustom {
 
-    Page<DigitalDocument> search(String search,
-                                 List<DigitalDocument.DigitalDocumentStatus> status,
-                                 List<String> libraries,
-                                 List<String> projects,
-                                 List<String> lots,
-                                 List<String> trains,
-                                 List<String> deliveries,
-                                 LocalDate dateFrom,
-                                 LocalDate dateTo,
-                                 LocalDate dateLimitFrom,
-                                 LocalDate dateLimitTo,
-                                 boolean relivraison,
-                                 String searchPgcnId,
-                                 String searchTitre,
-                                 String searchRadical,
-                                 List<String> searchFileFormats,
-                                 List<String> searchMaxAngles,
-                                 Integer searchPageFrom,
-                                 Integer searchPageTo,
-                                 Long searchPageCheckFrom,
-                                 Long searchPageCheckTo,
-                                 Double searchMinSize,
-                                 Double searchMaxSize,
-                                 boolean validated,
-                                 Pageable pageRequest);
+	Page<DigitalDocument> search(String search, List<DigitalDocument.DigitalDocumentStatus> status,
+			List<String> libraries, List<String> projects, List<String> lots, List<String> trains,
+			List<String> deliveries, LocalDate dateFrom, LocalDate dateTo, LocalDate dateLimitFrom,
+			LocalDate dateLimitTo, boolean relivraison, String searchPgcnId, String searchTitre, String searchRadical,
+			List<String> searchFileFormats, List<String> searchMaxAngles, Integer searchPageFrom, Integer searchPageTo,
+			Long searchPageCheckFrom, Long searchPageCheckTo, Double searchMinSize, Double searchMaxSize,
+			boolean validated, Pageable pageRequest);
 
 }

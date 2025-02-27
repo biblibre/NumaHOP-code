@@ -38,152 +38,166 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/importreport")
 public class ImportReportController extends AbstractRestController {
 
-    private final ImportReportService importReportService;
-    private final LibraryAccesssHelper libraryAccesssHelper;
+	private final ImportReportService importReportService;
 
-    @Autowired
-    public ImportReportController(final ImportReportService importReportService, final LibraryAccesssHelper libraryAccesssHelper) {
-        this.importReportService = importReportService;
-        this.libraryAccesssHelper = libraryAccesssHelper;
-    }
+	private final LibraryAccesssHelper libraryAccesssHelper;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"search"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({EXC_HAB0})
-    public ResponseEntity<Page<ImportReport>> search(final HttpServletRequest request,
-                                                     @RequestParam(value = "search", required = false) final String search,
-                                                     @RequestParam(value = "users", required = false) final List<String> users,
-                                                     @RequestParam(value = "status", required = false) final List<ImportReport.Status> status,
-                                                     @RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
-                                                     @RequestParam(value = "size", required = false, defaultValue = "10") final Integer size) {
-        final List<String> libraries = libraryAccesssHelper.getLibraryFilter(request, null);
-        return new ResponseEntity<>(importReportService.search(search, users, status, libraries, page, size), HttpStatus.OK);
-    }
+	@Autowired
+	public ImportReportController(final ImportReportService importReportService,
+			final LibraryAccesssHelper libraryAccesssHelper) {
+		this.importReportService = importReportService;
+		this.libraryAccesssHelper = libraryAccesssHelper;
+	}
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({EXC_HAB0})
-    public ResponseEntity<Page<ImportReport>> findAll(final HttpServletRequest request,
-                                                      @RequestParam(value = "page", defaultValue = "0") final int page,
-                                                      @RequestParam(value = "size", defaultValue = "10") final int size,
-                                                      @RequestParam(value = "library", required = false) final Library library) {
-        final List<String> libIds = library != null ? Collections.singletonList(library.getIdentifier())
-                                                    : null;
-        final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request, libIds);
+	@RequestMapping(method = RequestMethod.GET, params = { "search" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(EXC_HAB0)
+	public ResponseEntity<Page<ImportReport>> search(final HttpServletRequest request,
+			@RequestParam(value = "search", required = false) final String search,
+			@RequestParam(value = "users", required = false) final List<String> users,
+			@RequestParam(value = "status", required = false) final List<ImportReport.Status> status,
+			@RequestParam(value = "page", required = false, defaultValue = "0") final Integer page,
+			@RequestParam(value = "size", required = false, defaultValue = "10") final Integer size) {
+		final List<String> libraries = libraryAccesssHelper.getLibraryFilter(request, null);
+		return new ResponseEntity<>(importReportService.search(search, users, status, libraries, page, size),
+				HttpStatus.OK);
+	}
 
-        // Chargement de la page de résultat
-        return new ResponseEntity<>(importReportService.findAllByLibraryIn(filteredLibraries, page, size), HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(EXC_HAB0)
+	public ResponseEntity<Page<ImportReport>> findAll(final HttpServletRequest request,
+			@RequestParam(value = "page", defaultValue = "0") final int page,
+			@RequestParam(value = "size", defaultValue = "10") final int size,
+			@RequestParam(value = "library", required = false) final Library library) {
+		final List<String> libIds = library != null ? Collections.singletonList(library.getIdentifier()) : null;
+		final List<String> filteredLibraries = libraryAccesssHelper.getLibraryFilter(request, libIds);
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({EXC_HAB0})
-    public ResponseEntity<ImportReport> findOne(final HttpServletRequest request, @PathVariable("id") final String identifier) {
-        final ImportReport importReport = importReportService.findByIdentifier(identifier);
-        // Non trouvé
-        if (importReport == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur
-        if (!libraryAccesssHelper.checkLibrary(request, importReport, ImportReport::getLibrary)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Réponse
-        return new ResponseEntity<>(importReport, HttpStatus.OK);
-    }
+		// Chargement de la page de résultat
+		return new ResponseEntity<>(importReportService.findAllByLibraryIn(filteredLibraries, page, size),
+				HttpStatus.OK);
+	}
 
-    @RequestMapping(value = "/{id}", params = {"status"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({EXC_HAB0})
-    public ResponseEntity<Map<String, Object>> getStatus(final HttpServletRequest request, @PathVariable("id") final String identifier) {
-        final ImportReport importReport = importReportService.findByIdentifier(identifier);
-        // Non trouvé
-        if (importReport == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur
-        if (!libraryAccesssHelper.checkLibrary(request, importReport, ImportReport::getLibrary)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Réponse
-        final Map<String, Object> response = importReportService.getStatus(importReport);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(EXC_HAB0)
+	public ResponseEntity<ImportReport> findOne(final HttpServletRequest request,
+			@PathVariable("id") final String identifier) {
+		final ImportReport importReport = importReportService.findByIdentifier(identifier);
+		// Non trouvé
+		if (importReport == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// Vérification des droits d'accès par rapport à la bibliothèque de
+		// l'utilisateur
+		if (!libraryAccesssHelper.checkLibrary(request, importReport, ImportReport::getLibrary)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Réponse
+		return new ResponseEntity<>(importReport, HttpStatus.OK);
+	}
 
-    /**
-     * Suppression d'un rapport
-     *
-     * @param id
-     */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @Timed
-    @RolesAllowed({EXC_HAB1})
-    public ResponseEntity<?> delete(final HttpServletRequest request, @PathVariable final String id) {
-        // Chargement
-        final ImportReport importReport = importReportService.findByIdentifier(id);
-        // Non trouvé
-        if (importReport == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur
-        if (!libraryAccesssHelper.checkLibrary(request, importReport, ImportReport::getLibrary)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Suppression
-        importReportService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	@RequestMapping(value = "/{id}", params = { "status" }, method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(EXC_HAB0)
+	public ResponseEntity<Map<String, Object>> getStatus(final HttpServletRequest request,
+			@PathVariable("id") final String identifier) {
+		final ImportReport importReport = importReportService.findByIdentifier(identifier);
+		// Non trouvé
+		if (importReport == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// Vérification des droits d'accès par rapport à la bibliothèque de
+		// l'utilisateur
+		if (!libraryAccesssHelper.checkLibrary(request, importReport, ImportReport::getLibrary)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Réponse
+		final Map<String, Object> response = importReportService.getStatus(importReport);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, params = {"hasfile"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({EXC_HAB0})
-    public ResponseEntity<Map<?, ?>> hasImportFile(final HttpServletRequest request, @PathVariable("id") final String identifier) {
-        final ImportReport importReport = importReportService.findByIdentifier(identifier);
-        // Non trouvé
-        if (importReport == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur
-        if (!libraryAccesssHelper.checkLibrary(request, importReport, ImportReport::getLibrary)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Réponse
-        final Map<String, Boolean> result = importReport.getFiles()
-                                                        .stream()
-                                                        // Regroupement par originalFilename
-                                                        .collect(Collectors.toMap(ImportReport.ImportedFile::getOriginalFilename,
-                                                                                  // Test d'existence du fichier
-                                                                                  f -> {
-                                                                                      final File importFile = importReportService.getImportFile(importReport,
-                                                                                                                                                f.getOriginalFilename());
-                                                                                      return importFile != null && importFile.exists();
-                                                                                  }));
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+	/**
+	 * Suppression d'un rapport
+	 * @param id
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@Timed
+	@RolesAllowed(EXC_HAB1)
+	public ResponseEntity<?> delete(final HttpServletRequest request, @PathVariable final String id) {
+		// Chargement
+		final ImportReport importReport = importReportService.findByIdentifier(id);
+		// Non trouvé
+		if (importReport == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// Vérification des droits d'accès par rapport à la bibliothèque de
+		// l'utilisateur
+		if (!libraryAccesssHelper.checkLibrary(request, importReport, ImportReport::getLibrary)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Suppression
+		importReportService.delete(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, params = {"file"}, produces = MediaType.TEXT_PLAIN_VALUE)
-    @RolesAllowed({EXC_HAB0})
-    public ResponseEntity<?> downloadImportFile(final HttpServletRequest request,
-                                                final HttpServletResponse response,
-                                                @PathVariable("id") final String reportId,
-                                                @RequestParam("file") final String originalFilename) throws PgcnTechnicalException {
-        final ImportReport importReport = importReportService.findByIdentifier(reportId);
-        // Non trouvé
-        if (importReport == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        // Vérification des droits d'accès par rapport à la bibliothèque de l'utilisateur
-        if (!libraryAccesssHelper.checkLibrary(request, importReport, ImportReport::getLibrary)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Réponse
-        final File importFile = importReportService.getImportFile(importReport, originalFilename);
-        // Non trouvé
-        if (importFile == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            writeResponseForDownload(response, importFile, MediaType.TEXT_PLAIN_VALUE, originalFilename);
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, params = { "hasfile" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(EXC_HAB0)
+	public ResponseEntity<Map<?, ?>> hasImportFile(final HttpServletRequest request,
+			@PathVariable("id") final String identifier) {
+		final ImportReport importReport = importReportService.findByIdentifier(identifier);
+		// Non trouvé
+		if (importReport == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// Vérification des droits d'accès par rapport à la bibliothèque de
+		// l'utilisateur
+		if (!libraryAccesssHelper.checkLibrary(request, importReport, ImportReport::getLibrary)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Réponse
+		final Map<String, Boolean> result = importReport.getFiles()
+			.stream()
+			// Regroupement par originalFilename
+			.collect(Collectors.toMap(ImportReport.ImportedFile::getOriginalFilename,
+					// Test d'existence du fichier
+					f -> {
+						final File importFile = importReportService.getImportFile(importReport,
+								f.getOriginalFilename());
+						return importFile != null && importFile.exists();
+					}));
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, params = { "file" },
+			produces = MediaType.TEXT_PLAIN_VALUE)
+	@RolesAllowed(EXC_HAB0)
+	public ResponseEntity<?> downloadImportFile(final HttpServletRequest request, final HttpServletResponse response,
+			@PathVariable("id") final String reportId, @RequestParam("file") final String originalFilename)
+			throws PgcnTechnicalException {
+		final ImportReport importReport = importReportService.findByIdentifier(reportId);
+		// Non trouvé
+		if (importReport == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		// Vérification des droits d'accès par rapport à la bibliothèque de
+		// l'utilisateur
+		if (!libraryAccesssHelper.checkLibrary(request, importReport, ImportReport::getLibrary)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Réponse
+		final File importFile = importReportService.getImportFile(importReport, originalFilename);
+		// Non trouvé
+		if (importFile == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		else {
+			writeResponseForDownload(response, importFile, MediaType.TEXT_PLAIN_VALUE, originalFilename);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
 }

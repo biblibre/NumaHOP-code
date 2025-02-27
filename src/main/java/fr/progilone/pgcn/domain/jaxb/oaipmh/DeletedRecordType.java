@@ -1,5 +1,6 @@
 //
-// Ce fichier a été généré par l'implémentation de référence JavaTM Architecture for XML Binding (JAXB), v2.2.8-b130911.1802
+// Ce fichier a été généré par l'implémentation de référence JavaTM Architecture for XML Binding (JAXB),
+// v2.2.8-b130911.1802
 // Voir <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>
 // Toute modification apportée à ce fichier sera perdue lors de la recompilation du schéma source.
 // Généré le : 2018.08.13 à 01:08:19 PM CEST
@@ -14,50 +15,45 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  * <p>
  * Classe Java pour deletedRecordType.
- *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * <p>
  *
  * <pre>
- * &lt;simpleType name="deletedRecordType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="no"/>
- *     &lt;enumeration value="persistent"/>
- *     &lt;enumeration value="transient"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="deletedRecordType"&gt;
+ * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ * &lt;enumeration value="no"/&gt;
+ * &lt;enumeration value="persistent"/&gt;
+ * &lt;enumeration value="transient"/&gt;
+ * &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
- *
  */
 @XmlType(name = "deletedRecordType")
 @XmlEnum
 public enum DeletedRecordType {
 
-    @XmlEnumValue("no")
-    NO("no"),
-    @XmlEnumValue("persistent")
-    PERSISTENT("persistent"),
-    @XmlEnumValue("transient")
-    TRANSIENT("transient");
+	@XmlEnumValue("no")
+	NO("no"), @XmlEnumValue("persistent")
+	PERSISTENT("persistent"), @XmlEnumValue("transient")
+	TRANSIENT("transient");
 
-    private final String value;
+	private final String value;
 
-    DeletedRecordType(String v) {
-        value = v;
-    }
+	DeletedRecordType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    public static DeletedRecordType fromValue(String v) {
-        for (DeletedRecordType c : DeletedRecordType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
+	public static DeletedRecordType fromValue(String v) {
+		for (DeletedRecordType c : DeletedRecordType.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}
 
 }

@@ -20,71 +20,77 @@ import org.junit.jupiter.api.Test;
  */
 public class DcToDocUnitConvertServiceTest {
 
-    private DcToDocUnitConvertService service;
+	private DcToDocUnitConvertService service;
 
-    @BeforeEach
-    public void setUp() {
-        service = new DcToDocUnitConvertService();
-    }
+	@BeforeEach
+	public void setUp() {
+		service = new DcToDocUnitConvertService();
+	}
 
-    @Test
-    public void testConvert() {
-        final ObjectFactory objectFactory = new ObjectFactory();
-        final ElementContainer dc = objectFactory.createElementContainer();
-        final Library library = new Library();
-        library.setPrefix("PREFIX");
-        final List<DocPropertyType> propertyTypes = getPropertyTypes();
+	@Test
+	public void testConvert() {
+		final ObjectFactory objectFactory = new ObjectFactory();
+		final ElementContainer dc = objectFactory.createElementContainer();
+		final Library library = new Library();
+		library.setPrefix("PREFIX");
+		final List<DocPropertyType> propertyTypes = getPropertyTypes();
 
-        final SimpleLiteral identifier = new SimpleLiteral();
-        identifier.getContent().add("PGCNID-001");
-        dc.getAny().add(objectFactory.createIdentifier(identifier));
+		final SimpleLiteral identifier = new SimpleLiteral();
+		identifier.getContent().add("PGCNID-001");
+		dc.getAny().add(objectFactory.createIdentifier(identifier));
 
-        final SimpleLiteral actor = new SimpleLiteral();
-        actor.getContent().add("Sophie Marceau");
-        dc.getAny().add(objectFactory.createCreator(actor));
+		final SimpleLiteral actor = new SimpleLiteral();
+		actor.getContent().add("Sophie Marceau");
+		dc.getAny().add(objectFactory.createCreator(actor));
 
-        final SimpleLiteral title = new SimpleLiteral();
-        final String titleStr = "« Journal du Voyage de l’Ambassade française en Perse par Mr Tancogne, jeune de langue à la suite . "
-                                + "Route de Constantinople à Théran » Il s’agit d’une copie du journal de J. M. Tancoigne "
-                                + "[au moment de l’expédition de l’ambassadeur Claud-Matthieu de Gardanne vers l’Iran]";
-        title.getContent().add(titleStr);
-        dc.getAny().add(objectFactory.createTitle(title));
+		final SimpleLiteral title = new SimpleLiteral();
+		final String titleStr = "« Journal du Voyage de l’Ambassade française en Perse par Mr Tancogne, jeune de langue à la suite . "
+				+ "Route de Constantinople à Théran » Il s’agit d’une copie du journal de J. M. Tancoigne "
+				+ "[au moment de l’expédition de l’ambassadeur Claud-Matthieu de Gardanne vers l’Iran]";
+		title.getContent().add(titleStr);
+		dc.getAny().add(objectFactory.createTitle(title));
 
-        final DocUnit docUnit = service.convert(dc, library, propertyTypes);
+		final DocUnit docUnit = service.convert(dc, library, propertyTypes);
 
-        assertEquals(1, docUnit.getRecords().size());
+		assertEquals(1, docUnit.getRecords().size());
 
-        final BibliographicRecord record = docUnit.getRecords().iterator().next();
-        assertEquals(3, record.getProperties().size());
-        // creator
-        assertTrue(record.getProperties().stream().anyMatch(p -> "creator".equals(p.getType().getIdentifier()) && "Sophie Marceau".equals(p.getValue())));
-        // title
-        assertTrue(record.getProperties().stream().anyMatch(p -> "title".equals(p.getType().getIdentifier()) && titleStr.equals(p.getValue())));
-        assertEquals(docUnit.getLabel(), StringUtils.abbreviate(titleStr, 255));
-        // identifier
-        assertTrue(record.getProperties().stream().anyMatch(p -> "identifier".equals(p.getType().getIdentifier()) && "PGCNID-001".equals(p.getValue())));
-        assertEquals(docUnit.getPgcnId(), "PREFIX, PGCNID-001");
-    }
+		final BibliographicRecord record = docUnit.getRecords().iterator().next();
+		assertEquals(3, record.getProperties().size());
+		// creator
+		assertTrue(record.getProperties()
+			.stream()
+			.anyMatch(p -> "creator".equals(p.getType().getIdentifier()) && "Sophie Marceau".equals(p.getValue())));
+		// title
+		assertTrue(record.getProperties()
+			.stream()
+			.anyMatch(p -> "title".equals(p.getType().getIdentifier()) && titleStr.equals(p.getValue())));
+		assertEquals(docUnit.getLabel(), StringUtils.abbreviate(titleStr, 255));
+		// identifier
+		assertTrue(record.getProperties()
+			.stream()
+			.anyMatch(p -> "identifier".equals(p.getType().getIdentifier()) && "PGCNID-001".equals(p.getValue())));
+		assertEquals(docUnit.getPgcnId(), "PREFIX, PGCNID-001");
+	}
 
-    private List<DocPropertyType> getPropertyTypes() {
-        final List<DocPropertyType> docPropertyTypes = new ArrayList<>();
+	private List<DocPropertyType> getPropertyTypes() {
+		final List<DocPropertyType> docPropertyTypes = new ArrayList<>();
 
-        DocPropertyType ppty = new DocPropertyType();
-        ppty.setIdentifier("creator");
-        ppty.setSuperType(DocPropertyType.DocPropertySuperType.DC);
-        docPropertyTypes.add(ppty);
+		DocPropertyType ppty = new DocPropertyType();
+		ppty.setIdentifier("creator");
+		ppty.setSuperType(DocPropertyType.DocPropertySuperType.DC);
+		docPropertyTypes.add(ppty);
 
-        ppty = new DocPropertyType();
-        ppty.setIdentifier("title");
-        ppty.setSuperType(DocPropertyType.DocPropertySuperType.DC);
-        docPropertyTypes.add(ppty);
+		ppty = new DocPropertyType();
+		ppty.setIdentifier("title");
+		ppty.setSuperType(DocPropertyType.DocPropertySuperType.DC);
+		docPropertyTypes.add(ppty);
 
-        ppty = new DocPropertyType();
-        ppty.setIdentifier("identifier");
-        ppty.setSuperType(DocPropertyType.DocPropertySuperType.DC);
-        docPropertyTypes.add(ppty);
+		ppty = new DocPropertyType();
+		ppty.setIdentifier("identifier");
+		ppty.setSuperType(DocPropertyType.DocPropertySuperType.DC);
+		docPropertyTypes.add(ppty);
 
-        return docPropertyTypes;
-    }
+		return docPropertyTypes;
+	}
 
 }

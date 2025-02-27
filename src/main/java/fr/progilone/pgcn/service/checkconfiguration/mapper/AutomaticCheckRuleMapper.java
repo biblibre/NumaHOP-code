@@ -13,13 +13,14 @@ import org.mapstruct.factory.Mappers;
 @Mapper(uses = AutomaticCheckTypeMapper.class)
 public interface AutomaticCheckRuleMapper {
 
-    AutomaticCheckRuleMapper INSTANCE = Mappers.getMapper(AutomaticCheckRuleMapper.class);
+	AutomaticCheckRuleMapper INSTANCE = Mappers.getMapper(AutomaticCheckRuleMapper.class);
 
-    AutomaticCheckRuleDTO checkRuleToCheckRuleDTO(AutomaticCheckRule rule);
+	AutomaticCheckRuleDTO checkRuleToCheckRuleDTO(AutomaticCheckRule rule);
 
-    AutomaticCheckRule checkRuleDtoToCheckRule(AutomaticCheckRuleDTO dto);
+	AutomaticCheckRule checkRuleDtoToCheckRule(AutomaticCheckRuleDTO dto);
 
-    List<AutomaticCheckRuleDTO> checkRulesToCheckRulesDTO(List<AutomaticCheckRule> rules);
+	List<AutomaticCheckRuleDTO> checkRulesToCheckRulesDTO(List<AutomaticCheckRule> rules);
 
-    List<AutomaticCheckRule> checkRulesDTOToCheckRules(List<AutomaticCheckRuleDTO> rulesDto);
+	List<AutomaticCheckRule> checkRulesDTOToCheckRules(List<AutomaticCheckRuleDTO> rulesDto);
+
 }

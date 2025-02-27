@@ -6,13 +6,13 @@ import fr.progilone.pgcn.domain.dto.document.SimpleDocPageDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {DigitalDocumentMapper.class})
+@Mapper(uses = { DigitalDocumentMapper.class })
 public interface DocPageMapper {
 
-    DocPageMapper INSTANCE = Mappers.getMapper(DocPageMapper.class);
+	DocPageMapper INSTANCE = Mappers.getMapper(DocPageMapper.class);
 
-    SimpleDocPageDTO docPageToSimpleDocPageDTO(DocPage docPage);
+	SimpleDocPageDTO docPageToSimpleDocPageDTO(DocPage docPage);
 
-    DocPageDTO docPageToDocPageDTO(DocPage docPage);
+	DocPageDTO docPageToDocPageDTO(DocPage docPage);
 
 }

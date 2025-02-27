@@ -12,31 +12,32 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MessageService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MessageService.class);
 
-    private final MessageSource messageSource;
+	private final MessageSource messageSource;
 
-    @Autowired
-    public MessageService(final MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
+	@Autowired
+	public MessageService(final MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
 
-    /**
-     * Traduction du code en message localisé
-     *
-     * @param prefix
-     * @param code
-     * @return
-     */
-    public String getMessage(final String prefix, final String code) {
-        final String fullCode = StringUtils.joinWith(".", prefix, code);
+	/**
+	 * Traduction du code en message localisé
+	 * @param prefix
+	 * @param code
+	 * @return
+	 */
+	public String getMessage(final String prefix, final String code) {
+		final String fullCode = StringUtils.joinWith(".", prefix, code);
 
-        try {
-            return messageSource.getMessage(fullCode, null, SecurityUtils.getCurrentLanguage().getLocale());
+		try {
+			return messageSource.getMessage(fullCode, null, SecurityUtils.getCurrentLanguage().getLocale());
 
-        } catch (NoSuchMessageException e) {
-            LOG.error(e.getMessage(), e);
-            return code;
-        }
-    }
+		}
+		catch (NoSuchMessageException e) {
+			LOG.error(e.getMessage(), e);
+			return code;
+		}
+	}
+
 }

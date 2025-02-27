@@ -12,32 +12,40 @@ import org.apache.commons.lang3.StringUtils;
 
 public class RoleRepositoryImpl implements RoleRepositoryCustom {
 
-    private final JPAQueryFactory queryFactory;
+	private final JPAQueryFactory queryFactory;
 
-    public RoleRepositoryImpl(final JPAQueryFactory queryFactory) {
-        this.queryFactory = queryFactory;
-    }
+	public RoleRepositoryImpl(final JPAQueryFactory queryFactory) {
+		this.queryFactory = queryFactory;
+	}
 
-    @Override
-    public List<Role> search(final String search, final List<String> authorizations) {
+	@Override
+	public List<Role> search(final String search, final List<String> authorizations) {
 
-        final QRole role = QRole.role;
-        final QAuthorization authorization = QAuthorization.authorization;
-        final BooleanBuilder builder = new BooleanBuilder();
+		final QRole role = QRole.role;
+		final QAuthorization authorization = QAuthorization.authorization;
+		final BooleanBuilder builder = new BooleanBuilder();
 
-        if (StringUtils.isNotBlank(search)) {
-            final BooleanExpression nameFilter = role.label.containsIgnoreCase(search).or(role.identifier.containsIgnoreCase(search));
-            builder.andAnyOf(nameFilter);
-        }
+		if (StringUtils.isNotBlank(search)) {
+			final BooleanExpression nameFilter = role.label.containsIgnoreCase(search)
+				.or(role.identifier.containsIgnoreCase(search));
+			builder.andAnyOf(nameFilter);
+		}
 
-        if (CollectionUtils.isNotEmpty(authorizations)) {
-            final BooleanExpression sitesFilter = authorization.identifier.in(authorizations);
-            builder.and(sitesFilter);
-        }
+		if (CollectionUtils.isNotEmpty(authorizations)) {
+			final BooleanExpression sitesFilter = authorization.identifier.in(authorizations);
+			builder.and(sitesFilter);
+		}
 
-        final BooleanExpression excludeSuperRoleFilter = role.identifier.ne("SUPERROLE");
-        builder.and(excludeSuperRoleFilter);
+		final BooleanExpression excludeSuperRoleFilter = role.identifier.ne("SUPERROLE");
+		builder.and(excludeSuperRoleFilter);
 
-        return queryFactory.selectDistinct(role).from(role).leftJoin(role.authorizations, authorization).fetchJoin().where(builder).orderBy(role.label.asc()).fetch();
-    }
+		return queryFactory.selectDistinct(role)
+			.from(role)
+			.leftJoin(role.authorizations, authorization)
+			.fetchJoin()
+			.where(builder)
+			.orderBy(role.label.asc())
+			.fetch();
+	}
+
 }

@@ -24,32 +24,23 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {AddressMapper.class,
-                SimpleDocUnitMapper.class,
-                SimpleProjectMapper.class,
-                ProjectMapper.class,
-                SimpleFTPConfigurationMapper.class,
-                SimpleCheckConfigurationMapper.class,
-                SimpleViewsFormatConfigurationMapper.class,
-                SimpleWorkflowMapper.class,
-                UserMapper.class,
-                InternetArchiveCollectionMapper.class,
-                CinesPACMapper.class,
-                OmekaListMapper.class,
-                OcrLanguageMapper.class,
-                ExportFTPConfigurationMapper.class})
+@Mapper(uses = { AddressMapper.class, SimpleDocUnitMapper.class, SimpleProjectMapper.class, ProjectMapper.class,
+		SimpleFTPConfigurationMapper.class, SimpleCheckConfigurationMapper.class,
+		SimpleViewsFormatConfigurationMapper.class, SimpleWorkflowMapper.class, UserMapper.class,
+		InternetArchiveCollectionMapper.class, CinesPACMapper.class, OmekaListMapper.class, OcrLanguageMapper.class,
+		ExportFTPConfigurationMapper.class })
 public interface LotMapper {
 
-    LotMapper INSTANCE = Mappers.getMapper(LotMapper.class);
+	LotMapper INSTANCE = Mappers.getMapper(LotMapper.class);
 
-    LotDTO lotToLotDTO(Lot lot);
+	LotDTO lotToLotDTO(Lot lot);
 
-    @Mappings({@Mapping(target = "projectIdentifier", source = "project.identifier")})
-    LotListDTO lotToLotListDTO(Lot lot);
+	@Mappings({ @Mapping(target = "projectIdentifier", source = "project.identifier") })
+	LotListDTO lotToLotListDTO(Lot lot);
 
-    @Mappings({@Mapping(target = "providerLogin", source = "provider.login")})
-    SimpleLotDTO lotToSimpleLotDTO(Lot lot);
+	@Mappings({ @Mapping(target = "providerLogin", source = "provider.login") })
+	SimpleLotDTO lotToSimpleLotDTO(Lot lot);
 
-    SimpleLotForDeliveryDTO lotToSimpleLotForDeliveryDTO(Lot lot);
+	SimpleLotForDeliveryDTO lotToSimpleLotForDeliveryDTO(Lot lot);
 
 }

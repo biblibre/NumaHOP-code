@@ -43,151 +43,160 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class SftpConfigurationService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SftpConfigurationService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SftpConfigurationService.class);
 
-    private final SftpConfigurationRepository sftpConfigurationRepository;
-    private final CryptoService cryptoService;
+	private final SftpConfigurationRepository sftpConfigurationRepository;
 
-    @Autowired
-    public SftpConfigurationService(final SftpConfigurationRepository sftpConfigurationRepository, final CryptoService cryptoService) {
-        this.sftpConfigurationRepository = sftpConfigurationRepository;
-        this.cryptoService = cryptoService;
-    }
+	private final CryptoService cryptoService;
 
-    @Transactional(readOnly = true)
-    public Set<SftpConfigurationDTO> findAllDto(final Boolean active) {
-        final Set<SftpConfiguration> confs = Boolean.TRUE.equals(active) ? sftpConfigurationRepository.findByActiveWithDependencies(true)
-                                                                         : sftpConfigurationRepository.findAllWithDependencies();
-        return SftpConfigurationMapper.INSTANCE.configurationSftpToDtos(confs);
-    }
+	@Autowired
+	public SftpConfigurationService(final SftpConfigurationRepository sftpConfigurationRepository,
+			final CryptoService cryptoService) {
+		this.sftpConfigurationRepository = sftpConfigurationRepository;
+		this.cryptoService = cryptoService;
+	}
 
-    @Transactional(readOnly = true)
-    public Set<SftpConfiguration> findByLibrary(final String libraryId) {
-        final Library library = new Library();
-        library.setIdentifier(libraryId);
-        return sftpConfigurationRepository.findByLibrary(library);
-    }
+	@Transactional(readOnly = true)
+	public Set<SftpConfigurationDTO> findAllDto(final Boolean active) {
+		final Set<SftpConfiguration> confs = Boolean.TRUE.equals(active)
+				? sftpConfigurationRepository.findByActiveWithDependencies(true)
+				: sftpConfigurationRepository.findAllWithDependencies();
+		return SftpConfigurationMapper.INSTANCE.configurationSftpToDtos(confs);
+	}
 
-    @Transactional(readOnly = true)
-    public Set<SftpConfiguration> findByLibrary(final Library library, final boolean active) {
-        return Boolean.TRUE.equals(active) ? sftpConfigurationRepository.findByLibraryAndActive(library, true)
-                                           : sftpConfigurationRepository.findByLibrary(library);
+	@Transactional(readOnly = true)
+	public Set<SftpConfiguration> findByLibrary(final String libraryId) {
+		final Library library = new Library();
+		library.setIdentifier(libraryId);
+		return sftpConfigurationRepository.findByLibrary(library);
+	}
 
-    }
+	@Transactional(readOnly = true)
+	public Set<SftpConfiguration> findByLibrary(final Library library, final boolean active) {
+		return Boolean.TRUE.equals(active) ? sftpConfigurationRepository.findByLibraryAndActive(library, true)
+				: sftpConfigurationRepository.findByLibrary(library);
 
-    @Transactional(readOnly = true)
-    public Set<SftpConfigurationDTO> findDtoByLibrary(final Library library, final Boolean active) {
-        final Set<SftpConfiguration> confs = Boolean.TRUE.equals(active) ? sftpConfigurationRepository.findByLibraryAndActive(library, true)
-                                                                         : sftpConfigurationRepository.findByLibrary(library);
-        return SftpConfigurationMapper.INSTANCE.configurationSftpToDtos(confs);
-    }
+	}
 
-    @Transactional(readOnly = true)
-    public SftpConfiguration findOne(final String id) {
-        return sftpConfigurationRepository.findOneWithDependencies(id);
-    }
+	@Transactional(readOnly = true)
+	public Set<SftpConfigurationDTO> findDtoByLibrary(final Library library, final Boolean active) {
+		final Set<SftpConfiguration> confs = Boolean.TRUE.equals(active)
+				? sftpConfigurationRepository.findByLibraryAndActive(library, true)
+				: sftpConfigurationRepository.findByLibrary(library);
+		return SftpConfigurationMapper.INSTANCE.configurationSftpToDtos(confs);
+	}
 
-    /**
-     * Récupération des résultats de recherche
-     *
-     * @param search
-     * @param libraries
-     * @param page
-     * @param size
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public Page<SftpConfigurationDTO> search(String search, List<String> libraries, Integer page, Integer size) {
-        final Pageable pageRequest = PageRequest.of(page, size);
-        Page<SftpConfiguration> configurations = sftpConfigurationRepository.search(search, libraries, pageRequest);
+	@Transactional(readOnly = true)
+	public SftpConfiguration findOne(final String id) {
+		return sftpConfigurationRepository.findOneWithDependencies(id);
+	}
 
-        List<SftpConfigurationDTO> results = configurations.getContent().stream().map(SftpConfigurationMapper.INSTANCE::configurationSftpToDto).collect(Collectors.toList());
-        return new PageImpl<>(results, PageRequest.of(configurations.getNumber(), configurations.getSize(), configurations.getSort()), configurations.getTotalElements());
-    }
+	/**
+	 * Récupération des résultats de recherche
+	 * @param search
+	 * @param libraries
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Page<SftpConfigurationDTO> search(String search, List<String> libraries, Integer page, Integer size) {
+		final Pageable pageRequest = PageRequest.of(page, size);
+		Page<SftpConfiguration> configurations = sftpConfigurationRepository.search(search, libraries, pageRequest);
 
-    @Transactional
-    public void delete(final String id) {
-        sftpConfigurationRepository.deleteById(id);
-    }
+		List<SftpConfigurationDTO> results = configurations.getContent()
+			.stream()
+			.map(SftpConfigurationMapper.INSTANCE::configurationSftpToDto)
+			.collect(Collectors.toList());
+		return new PageImpl<>(results,
+				PageRequest.of(configurations.getNumber(), configurations.getSize(), configurations.getSort()),
+				configurations.getTotalElements());
+	}
 
-    @Transactional
-    public SftpConfiguration save(final SftpConfiguration conf) throws PgcnValidationException, PgcnTechnicalException {
-        setDefaultValues(conf);
-        validate(conf);
-        final SftpConfiguration savedConf = sftpConfigurationRepository.save(conf);
-        return sftpConfigurationRepository.findOneWithDependencies(savedConf.getIdentifier());
-    }
+	@Transactional
+	public void delete(final String id) {
+		sftpConfigurationRepository.deleteById(id);
+	}
 
-    private void setDefaultValues(final SftpConfiguration conf) throws PgcnTechnicalException {
-        // Cryptage du mot de passe
-        if (conf.getPassword() != null) {
-            final String encryptedPassword = cryptoService.encrypt(conf.getPassword());
-            conf.setPassword(encryptedPassword);
-        }
-        // Sinon on reprend le mot de passe existant
-        else if (conf.getIdentifier() != null) {
-            final String currentPassword = sftpConfigurationRepository.findPasswordByIdentifier(conf.getIdentifier());
-            conf.setPassword(currentPassword);
-        }
-    }
+	@Transactional
+	public SftpConfiguration save(final SftpConfiguration conf) throws PgcnValidationException, PgcnTechnicalException {
+		setDefaultValues(conf);
+		validate(conf);
+		final SftpConfiguration savedConf = sftpConfigurationRepository.save(conf);
+		return sftpConfigurationRepository.findOneWithDependencies(savedConf.getIdentifier());
+	}
 
-    private PgcnList<PgcnError> validate(final SftpConfiguration conf) throws PgcnValidationException {
-        final PgcnList<PgcnError> errors = new PgcnList<>();
-        final PgcnError.Builder builder = new PgcnError.Builder();
+	private void setDefaultValues(final SftpConfiguration conf) throws PgcnTechnicalException {
+		// Cryptage du mot de passe
+		if (conf.getPassword() != null) {
+			final String encryptedPassword = cryptoService.encrypt(conf.getPassword());
+			conf.setPassword(encryptedPassword);
+		}
+		// Sinon on reprend le mot de passe existant
+		else if (conf.getIdentifier() != null) {
+			final String currentPassword = sftpConfigurationRepository.findPasswordByIdentifier(conf.getIdentifier());
+			conf.setPassword(currentPassword);
+		}
+	}
 
-        // le libellé est obligatoire
-        if (StringUtils.isEmpty(conf.getLabel())) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_SFTP_LABEL_MANDATORY).setField("label").build());
-        }
-        // la bibliothèque est obligatoire
-        if (conf.getLibrary() == null) {
-            errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_SFTP_LIBRARY_MANDATORY).setField("library").build());
-        }
-        // Retour
-        if (!errors.isEmpty()) {
-            conf.setErrors(errors);
-            throw new PgcnValidationException(conf, errors);
-        }
-        return errors;
-    }
+	private PgcnList<PgcnError> validate(final SftpConfiguration conf) throws PgcnValidationException {
+		final PgcnList<PgcnError> errors = new PgcnList<>();
+		final PgcnError.Builder builder = new PgcnError.Builder();
 
-    public void getPpdiPacs(final SftpConfiguration conf, final MultipartFile file) {
+		// le libellé est obligatoire
+		if (StringUtils.isEmpty(conf.getLabel())) {
+			errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_SFTP_LABEL_MANDATORY).setField("label").build());
+		}
+		// la bibliothèque est obligatoire
+		if (conf.getLibrary() == null) {
+			errors.add(builder.reinit().setCode(PgcnErrorCode.CONF_SFTP_LIBRARY_MANDATORY).setField("library").build());
+		}
+		// Retour
+		if (!errors.isEmpty()) {
+			conf.setErrors(errors);
+			throw new PgcnValidationException(conf, errors);
+		}
+		return errors;
+	}
 
-        final List<CinesPAC> pacs = new ArrayList<>();
-        Optional<PpdiType> opt = Optional.empty();
+	public void getPpdiPacs(final SftpConfiguration conf, final MultipartFile file) {
 
-        if (file != null && !file.isEmpty()) {
-            try {
-                opt = unmarshallPpdiFile(file.getInputStream());
-            } catch (JAXBException | IOException e) {
-                LOG.error(e.getMessage(), e);
-                // pb du fichier ppdi : invalide ? - on fait rien ..
-                return;
-            }
-            if (opt.isPresent()) {
-                final List<FondsType> fonds = opt.get().getContexte().getFonds();
-                fonds.forEach(f -> {
-                    final CinesPAC pac = new CinesPAC();
-                    pac.setConfPac(conf);
-                    pac.setName(f.getIntitule());
+		final List<CinesPAC> pacs = new ArrayList<>();
+		Optional<PpdiType> opt = Optional.empty();
 
-                    if (!conf.getPacs().contains(pac)) {
-                        conf.getPacs().add(pac);
-                    }
-                });
-            }
-        }
-    }
+		if (file != null && !file.isEmpty()) {
+			try {
+				opt = unmarshallPpdiFile(file.getInputStream());
+			}
+			catch (JAXBException | IOException e) {
+				LOG.error(e.getMessage(), e);
+				// pb du fichier ppdi : invalide ? - on fait rien ..
+				return;
+			}
+			if (opt.isPresent()) {
+				final List<FondsType> fonds = opt.get().getContexte().getFonds();
+				fonds.forEach(f -> {
+					final CinesPAC pac = new CinesPAC();
+					pac.setConfPac(conf);
+					pac.setName(f.getIntitule());
 
-    private Optional<PpdiType> unmarshallPpdiFile(final InputStream input) throws JAXBException {
+					if (!conf.getPacs().contains(pac)) {
+						conf.getPacs().add(pac);
+					}
+				});
+			}
+		}
+	}
 
-        final JAXBContext context = JAXBContext.newInstance(fr.progilone.pgcn.domain.jaxb.ppdi.ObjectFactory.class);
-        final Unmarshaller unmarshaller = context.createUnmarshaller();
-        final JAXBElement<PpdiType> el = (JAXBElement<PpdiType>) unmarshaller.unmarshal(input);
-        if (el.getValue() == null) {
-            return Optional.empty();
-        }
-        return Optional.of(el.getValue());
-    }
+	private Optional<PpdiType> unmarshallPpdiFile(final InputStream input) throws JAXBException {
+
+		final JAXBContext context = JAXBContext.newInstance(fr.progilone.pgcn.domain.jaxb.ppdi.ObjectFactory.class);
+		final Unmarshaller unmarshaller = context.createUnmarshaller();
+		final JAXBElement<PpdiType> el = (JAXBElement<PpdiType>) unmarshaller.unmarshal(input);
+		if (el.getValue() == null) {
+			return Optional.empty();
+		}
+		return Optional.of(el.getValue());
+	}
 
 }

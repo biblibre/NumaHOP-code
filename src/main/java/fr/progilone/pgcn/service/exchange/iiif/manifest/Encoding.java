@@ -12,59 +12,58 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"@id"})
+@JsonPropertyOrder({ "@id" })
 public class Encoding {
 
-    @JsonProperty("@id")
-    private String id;
-    @JsonIgnore
-    @Valid
-    private Map<String, Object> additionalProperties = new HashMap<>();
+	@JsonProperty("@id")
+	private String id;
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public Encoding() {
-    }
+	@JsonIgnore
+	@Valid
+	private Map<String, Object> additionalProperties = new HashMap<>();
 
-    /**
-     *
-     * @param id
-     */
-    public Encoding(String id) {
-        super();
-        this.id = id;
-    }
+	/**
+	 * No args constructor for use in serialization
+	 */
+	public Encoding() {
+	}
 
-    @JsonProperty("@id")
-    public String getId() {
-        return id;
-    }
+	/**
+	 * @param id
+	 */
+	public Encoding(String id) {
+		super();
+		this.id = id;
+	}
 
-    @JsonProperty("@id")
-    public void setId(String id) {
-        this.id = id;
-    }
+	@JsonProperty("@id")
+	public String getId() {
+		return id;
+	}
 
-    public Encoding withId(String id) {
-        this.id = id;
-        return this;
-    }
+	@JsonProperty("@id")
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
+	public Encoding withId(String id) {
+		this.id = id;
+		return this;
+	}
 
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
+	@JsonAnyGetter
+	public Map<String, Object> getAdditionalProperties() {
+		return this.additionalProperties;
+	}
 
-    public Encoding withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
-    }
+	@JsonAnySetter
+	public void setAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+	}
+
+	public Encoding withAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+		return this;
+	}
 
 }

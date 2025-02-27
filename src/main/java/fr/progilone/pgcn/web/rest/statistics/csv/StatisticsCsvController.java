@@ -34,114 +34,120 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @PermitAll
 public class StatisticsCsvController extends AbstractRestController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StatisticsWorkflowCsvController.class);
-    private static final String FILENAME = "export.csv";
+	private static final Logger LOG = LoggerFactory.getLogger(StatisticsWorkflowCsvController.class);
 
-    private final ExportCSVService statisticsCsvService;
-    private final StatisticsController delegate;
-    private final AccessHelper accessHelper;
+	private static final String FILENAME = "export.csv";
 
-    @Autowired
-    public StatisticsCsvController(final ExportCSVService statisticsCsvService, final StatisticsController delegate, final AccessHelper accessHelper) {
-        this.statisticsCsvService = statisticsCsvService;
-        this.delegate = delegate;
-        this.accessHelper = accessHelper;
-    }
+	private final ExportCSVService statisticsCsvService;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"provider_train"}, produces = "text/csv")
-    @Timed
-    @ResponseStatus(HttpStatus.OK)
-    public void getProviderTrainStats(final HttpServletRequest request,
-                                      final HttpServletResponse response,
-                                      @RequestParam(value = "library", required = false) final List<String> libraries,
-                                      @RequestParam(value = "project", required = false) final List<String> projects,
-                                      @RequestParam(value = "train", required = false) final List<String> trains,
-                                      @RequestParam(value = "status", required = false) final List<Train.TrainStatus> status,
-                                      @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "returnFrom", required = false) final LocalDate returnFrom,
-                                      @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "returnTo", required = false) final LocalDate returnTo,
-                                      @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "sendFrom", required = false) final LocalDate sendFrom,
-                                      @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "sendTo", required = false) final LocalDate sendTo,
-                                      @RequestParam(name = "insuranceFrom", required = false) final Double insuranceFrom,
-                                      @RequestParam(name = "insuranceTo", required = false) final Double insuranceTo,
-                                      @RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
-                                      @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+	private final StatisticsController delegate;
 
-        if (accessHelper.checkUserIsPresta()) { // no presta
-            return;
-        }
-        final ResponseEntity<List<StatisticsProviderTrainDTO>> result = delegate.getProviderTrainStats(request,
-                                                                                                       libraries,
-                                                                                                       projects,
-                                                                                                       trains,
-                                                                                                       status,
-                                                                                                       returnFrom,
-                                                                                                       returnTo,
-                                                                                                       sendFrom,
-                                                                                                       sendTo,
-                                                                                                       insuranceFrom,
-                                                                                                       insuranceTo);
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
-            statisticsCsvService.exportOrderedBeans(result.getBody(), response.getOutputStream(), encoding, separator);
+	private final AccessHelper accessHelper;
 
-        } catch (final IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	@Autowired
+	public StatisticsCsvController(final ExportCSVService statisticsCsvService, final StatisticsController delegate,
+			final AccessHelper accessHelper) {
+		this.statisticsCsvService = statisticsCsvService;
+		this.delegate = delegate;
+		this.accessHelper = accessHelper;
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = {"lotProgress"}, produces = "text/csv")
-    @Timed
-    public void getLotProgress(final HttpServletRequest request,
-                               final HttpServletResponse response,
-                               @RequestParam(value = "library", required = false) final List<String> libraries,
-                               @RequestParam(value = "project", required = false) final List<String> projects,
-                               @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) final LocalDate fromDate,
-                               @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
-                               @RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
-                               @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
-        if (accessHelper.checkUserIsPresta()) { // no presta
-            return;
-        }
-        final ResponseEntity<Page<StatisticsProgressDTO>> pageOfLots = delegate.getLotProgress(request, libraries, projects, fromDate, toDate, 0, Integer.MAX_VALUE);
-        final ResponseEntity<Page<StatisticsProgressDTO>> pageOfProjects = delegate.getProjectProgress(request, libraries, projects, fromDate, toDate, 0, Integer.MAX_VALUE);
+	@RequestMapping(method = RequestMethod.GET, params = { "provider_train" }, produces = "text/csv")
+	@Timed
+	@ResponseStatus(HttpStatus.OK)
+	public void getProviderTrainStats(final HttpServletRequest request, final HttpServletResponse response,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@RequestParam(value = "train", required = false) final List<String> trains,
+			@RequestParam(value = "status", required = false) final List<Train.TrainStatus> status,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "returnFrom",
+					required = false) final LocalDate returnFrom,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "returnTo",
+					required = false) final LocalDate returnTo,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "sendFrom",
+					required = false) final LocalDate sendFrom,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "sendTo",
+					required = false) final LocalDate sendTo,
+			@RequestParam(name = "insuranceFrom", required = false) final Double insuranceFrom,
+			@RequestParam(name = "insuranceTo", required = false) final Double insuranceTo,
+			@RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
 
-        final List<StatisticsProgressDTO> dtos = new ArrayList<>(pageOfLots.getBody().getContent());
-        dtos.addAll(pageOfProjects.getBody().getContent());
+		if (accessHelper.checkUserIsPresta()) { // no presta
+			return;
+		}
+		final ResponseEntity<List<StatisticsProviderTrainDTO>> result = delegate.getProviderTrainStats(request,
+				libraries, projects, trains, status, returnFrom, returnTo, sendFrom, sendTo, insuranceFrom,
+				insuranceTo);
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
+			statisticsCsvService.exportOrderedBeans(result.getBody(), response.getOutputStream(), encoding, separator);
 
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
-            statisticsCsvService.exportOrderedBeans(dtos, response.getOutputStream(), encoding, separator);
+		}
+		catch (final IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
 
-        } catch (IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "lotProgress" }, produces = "text/csv")
+	@Timed
+	public void getLotProgress(final HttpServletRequest request, final HttpServletResponse response,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from",
+					required = false) final LocalDate fromDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
+			@RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+		if (accessHelper.checkUserIsPresta()) { // no presta
+			return;
+		}
+		final ResponseEntity<Page<StatisticsProgressDTO>> pageOfLots = delegate.getLotProgress(request, libraries,
+				projects, fromDate, toDate, 0, Integer.MAX_VALUE);
+		final ResponseEntity<Page<StatisticsProgressDTO>> pageOfProjects = delegate.getProjectProgress(request,
+				libraries, projects, fromDate, toDate, 0, Integer.MAX_VALUE);
 
-    @RequestMapping(method = RequestMethod.GET, params = {"projectProgress"}, produces = "text/csv")
-    @Timed
-    public void getProjectProgress(final HttpServletRequest request,
-                                   final HttpServletResponse response,
-                                   @RequestParam(value = "library", required = false) final List<String> libraries,
-                                   @RequestParam(value = "project", required = false) final List<String> projects,
-                                   @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from", required = false) final LocalDate fromDate,
-                                   @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
-                                   @RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
-                                   @RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
-        if (accessHelper.checkUserIsPresta()) { // no presta
-            return;
-        }
-        final ResponseEntity<Page<StatisticsProgressDTO>> result = delegate.getProjectProgress(request, libraries, projects, fromDate, toDate, 0, Integer.MAX_VALUE);
-        final List<StatisticsProgressDTO> dtos = new ArrayList<>(result.getBody().getContent());
+		final List<StatisticsProgressDTO> dtos = new ArrayList<>(pageOfLots.getBody().getContent());
+		dtos.addAll(pageOfProjects.getBody().getContent());
 
-        try {
-            writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
-            statisticsCsvService.exportOrderedBeans(dtos, response.getOutputStream(), encoding, separator);
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
+			statisticsCsvService.exportOrderedBeans(dtos, response.getOutputStream(), encoding, separator);
 
-        } catch (IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new PgcnTechnicalException(e);
-        }
-    }
+		}
+		catch (IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
+
+	@RequestMapping(method = RequestMethod.GET, params = { "projectProgress" }, produces = "text/csv")
+	@Timed
+	public void getProjectProgress(final HttpServletRequest request, final HttpServletResponse response,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "project", required = false) final List<String> projects,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from",
+					required = false) final LocalDate fromDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "to", required = false) final LocalDate toDate,
+			@RequestParam(value = "encoding", defaultValue = "ISO-8859-15") final String encoding,
+			@RequestParam(value = "separator", defaultValue = ";") final char separator) throws PgcnTechnicalException {
+		if (accessHelper.checkUserIsPresta()) { // no presta
+			return;
+		}
+		final ResponseEntity<Page<StatisticsProgressDTO>> result = delegate.getProjectProgress(request, libraries,
+				projects, fromDate, toDate, 0, Integer.MAX_VALUE);
+		final List<StatisticsProgressDTO> dtos = new ArrayList<>(result.getBody().getContent());
+
+		try {
+			writeResponseHeaderForDownload(response, "text/csv; charset=" + encoding, null, FILENAME);
+			statisticsCsvService.exportOrderedBeans(dtos, response.getOutputStream(), encoding, separator);
+
+		}
+		catch (IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new PgcnTechnicalException(e);
+		}
+	}
+
 }

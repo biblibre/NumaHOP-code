@@ -2,38 +2,40 @@ package fr.progilone.pgcn.domain.dto.document;
 
 public class DocUnitUpdateErrorDTO {
 
-    private String identifier;
-    private String label;
-    private String message;
+	private String identifier;
 
-    public DocUnitUpdateErrorDTO(String identifier, String label, String message) {
-        this.identifier = identifier;
-        this.label = label;
-        this.message = message;
-    }
+	private String label;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String message;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public DocUnitUpdateErrorDTO(String identifier, String label, String message) {
+		this.identifier = identifier;
+		this.label = label;
+		this.message = message;
+	}
 
-    public String getLabel() {
-        return label;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 }

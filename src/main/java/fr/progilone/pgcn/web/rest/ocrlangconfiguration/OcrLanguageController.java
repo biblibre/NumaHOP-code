@@ -22,29 +22,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/ocrlanguages")
 public class OcrLanguageController extends AbstractRestController {
 
-    private final OcrLanguageService ocrLanguageService;
-    private final LibraryService libraryService;
+	private final OcrLanguageService ocrLanguageService;
 
-    @Autowired
-    public OcrLanguageController(final OcrLanguageService ocrLanguageService, final LibraryService libraryService) {
-        this.ocrLanguageService = ocrLanguageService;
-        this.libraryService = libraryService;
-    }
+	private final LibraryService libraryService;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"languages"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({OCR_LANG_HAB0})
-    public ResponseEntity<List<OcrLanguageDTO>> search() {
+	@Autowired
+	public OcrLanguageController(final OcrLanguageService ocrLanguageService, final LibraryService libraryService) {
+		this.ocrLanguageService = ocrLanguageService;
+		this.libraryService = libraryService;
+	}
 
-        return new ResponseEntity<>(ocrLanguageService.findAll(), HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "languages" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(OCR_LANG_HAB0)
+	public ResponseEntity<List<OcrLanguageDTO>> search() {
 
-    @RequestMapping(method = RequestMethod.GET, params = {"langs"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({OCR_LANG_HAB0})
-    public ResponseEntity<List<OcrLanguageDTO>> getLangs(@RequestParam(name = "library", required = false) final String libraryId) {
+		return new ResponseEntity<>(ocrLanguageService.findAll(), HttpStatus.OK);
+	}
 
-        return new ResponseEntity<>(libraryService.findActifsOcrLanguagesByLibrary(libraryId), HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "langs" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(OCR_LANG_HAB0)
+	public ResponseEntity<List<OcrLanguageDTO>> getLangs(
+			@RequestParam(name = "library", required = false) final String libraryId) {
+
+		return new ResponseEntity<>(libraryService.findActifsOcrLanguagesByLibrary(libraryId), HttpStatus.OK);
+	}
 
 }

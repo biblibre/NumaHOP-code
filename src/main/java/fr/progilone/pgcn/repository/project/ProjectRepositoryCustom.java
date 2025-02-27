@@ -9,14 +9,15 @@ import org.springframework.data.domain.Pageable;
 
 public interface ProjectRepositoryCustom {
 
-    /**
-     * Recherche des projets
-     *
-     * @param searchBuilder
-     * @param pageable
-     * @return
-     */
-    Page<Project> search(ProjectSearchBuilder searchBuilder, Pageable pageable);
+	/**
+	 * Recherche des projets
+	 * @param searchBuilder
+	 * @param pageable
+	 * @return
+	 */
+	Page<Project> search(ProjectSearchBuilder searchBuilder, Pageable pageable);
 
-    List<Project> findProjectsForWidget(LocalDate fromDate, List<String> libraries, List<Project.ProjectStatus> statuses);
+	List<Project> findProjectsForWidget(LocalDate fromDate, List<String> libraries,
+			List<Project.ProjectStatus> statuses);
+
 }

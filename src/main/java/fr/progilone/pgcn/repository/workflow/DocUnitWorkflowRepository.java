@@ -8,14 +8,15 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface DocUnitWorkflowRepository extends JpaRepository<DocUnitWorkflow, String>, DocUnitWorkflowRepositoryCustom {
+public interface DocUnitWorkflowRepository
+		extends JpaRepository<DocUnitWorkflow, String>, DocUnitWorkflowRepositoryCustom {
 
-    List<DocUnitWorkflow> findByDocUnitIdentifierIn(List<String> docUnitIds);
+	List<DocUnitWorkflow> findByDocUnitIdentifierIn(List<String> docUnitIds);
 
-    Long countByModel(WorkflowModel model);
+	Long countByModel(WorkflowModel model);
 
-    @Query("SELECT s from DocUnitState s " + "LEFT JOIN s.workflow w "
-           + "WHERE s.discriminator in ?2 "
-           + "AND w.docUnit.identifier = ?1")
-    List<DocUnitState> findDocUnitStatesByKey(final String docUnit, final WorkflowStateKey... stateKeys);
+	@Query("SELECT s from DocUnitState s " + "LEFT JOIN s.workflow w " + "WHERE s.discriminator in ?2 "
+			+ "AND w.docUnit.identifier = ?1")
+	List<DocUnitState> findDocUnitStatesByKey(final String docUnit, final WorkflowStateKey... stateKeys);
+
 }

@@ -31,140 +31,148 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/condreport_detail")
 public class ConditionReportDetailController extends AbstractRestController {
 
-    private final AccessHelper accessHelper;
-    private final WorkflowAccessHelper workflowAccessHelper;
-    private final ConditionReportService conditionReportService;
-    private final ConditionReportDetailService conditionReportDetailService;
-    private final EsConditionReportService esConditionReportService;
+	private final AccessHelper accessHelper;
 
-    @Autowired
-    public ConditionReportDetailController(final AccessHelper accessHelper,
-                                           final WorkflowAccessHelper workflowAccessHelper,
-                                           final ConditionReportService conditionReportService,
-                                           final ConditionReportDetailService conditionReportDetailService,
-                                           final EsConditionReportService esConditionReportService) {
-        this.accessHelper = accessHelper;
-        this.workflowAccessHelper = workflowAccessHelper;
-        this.conditionReportService = conditionReportService;
-        this.conditionReportDetailService = conditionReportDetailService;
-        this.esConditionReportService = esConditionReportService;
-    }
+	private final WorkflowAccessHelper workflowAccessHelper;
 
-    @RequestMapping(method = RequestMethod.POST,
-                    params = {"type",
-                              "detail"},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB1)
-    public ResponseEntity<ConditionReportDetail> create(@RequestParam(name = "type") final ConditionReportDetail.Type type,
-                                                        @RequestParam(name = "detail") final String fromDetailId) throws PgcnException {
-        // droits d'accès à l'ud
-        final DocUnit docUnit = conditionReportDetailService.findDocUnitByIdentifier(fromDetailId);
-        if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // création
-        final ConditionReportDetail createdDetail = conditionReportDetailService.create(type, fromDetailId);
-        if (createdDetail == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            // Indexation
-            final ConditionReport report = conditionReportDetailService.findParentByIdentifier(createdDetail.getIdentifier());
-            esConditionReportService.indexAsync(report.getIdentifier());
+	private final ConditionReportService conditionReportService;
 
-            return new ResponseEntity<>(createdDetail, HttpStatus.CREATED);
-        }
-    }
+	private final ConditionReportDetailService conditionReportDetailService;
 
-    @RequestMapping(value = "/{identifier}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB3)
-    public void delete(final HttpServletResponse response, @PathVariable final String identifier) {
-        // droits d'accès à l'ud
-        final DocUnit docUnit = conditionReportDetailService.findDocUnitByIdentifier(identifier);
-        if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return;
-        }
-        // Droit par rapport au workflow
-        final ConditionReportDetail detail = conditionReportDetailService.findByIdentifier(identifier);
-        if (!workflowAccessHelper.canConstatDetailBeModified(docUnit.getIdentifier(), detail.getType())) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return;
-        }
-        final ConditionReport report = conditionReportDetailService.findParentByIdentifier(identifier);
-        // Suppression
-        conditionReportDetailService.delete(identifier);
-        // Indexation
-        esConditionReportService.indexAsync(report.getIdentifier());
+	private final EsConditionReportService esConditionReportService;
 
-        response.setStatus(HttpServletResponse.SC_OK);
-    }
+	@Autowired
+	public ConditionReportDetailController(final AccessHelper accessHelper,
+			final WorkflowAccessHelper workflowAccessHelper, final ConditionReportService conditionReportService,
+			final ConditionReportDetailService conditionReportDetailService,
+			final EsConditionReportService esConditionReportService) {
+		this.accessHelper = accessHelper;
+		this.workflowAccessHelper = workflowAccessHelper;
+		this.conditionReportService = conditionReportService;
+		this.conditionReportDetailService = conditionReportDetailService;
+		this.esConditionReportService = esConditionReportService;
+	}
 
-    @RequestMapping(value = "/{identifier}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB0)
-    public ResponseEntity<ConditionReportDetail> findByIdentifier(@PathVariable final String identifier) {
-        // droits d'accès à l'ud
-        final DocUnit docUnit = conditionReportDetailService.findDocUnitByIdentifier(identifier);
-        if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return createResponseEntity(conditionReportDetailService.findByIdentifier(identifier));
-    }
+	@RequestMapping(method = RequestMethod.POST, params = { "type", "detail" },
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB1)
+	public ResponseEntity<ConditionReportDetail> create(
+			@RequestParam(name = "type") final ConditionReportDetail.Type type,
+			@RequestParam(name = "detail") final String fromDetailId) throws PgcnException {
+		// droits d'accès à l'ud
+		final DocUnit docUnit = conditionReportDetailService.findDocUnitByIdentifier(fromDetailId);
+		if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// création
+		final ConditionReportDetail createdDetail = conditionReportDetailService.create(type, fromDetailId);
+		if (createdDetail == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		else {
+			// Indexation
+			final ConditionReport report = conditionReportDetailService
+				.findParentByIdentifier(createdDetail.getIdentifier());
+			esConditionReportService.indexAsync(report.getIdentifier());
 
-    @RequestMapping(method = RequestMethod.GET, params = {"report"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB0)
-    public ResponseEntity<List<ConditionReportDetail>> findByConditionReport(@RequestParam(name = "report") final String reportId) {
-        final DocUnit docUnit = conditionReportService.findDocUnitByIdentifier(reportId);
-        // droits d'accès à l'ud
-        if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return createResponseEntity(conditionReportDetailService.findByConditionReport(reportId));
-    }
+			return new ResponseEntity<>(createdDetail, HttpStatus.CREATED);
+		}
+	}
 
-    @RequestMapping(value = "/{identifier}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB2)
-    public ResponseEntity<ConditionReportDetail> update(@RequestBody final ConditionReportDetail value) throws PgcnException {
-        // droits d'accès à l'ud
-        final DocUnit docUnit = conditionReportDetailService.findDocUnitByIdentifier(value.getIdentifier());
-        if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Droit par rapport au workflow
-        final ConditionReportDetail detail = conditionReportDetailService.findByIdentifier(value.getIdentifier());
-        if (!workflowAccessHelper.canConstatDetailBeModified(docUnit.getIdentifier(), detail.getType())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        // Mise à jour
-        final ConditionReportDetail savedDetail = conditionReportDetailService.save(value);
-        // Indexation
-        final ConditionReport report = conditionReportDetailService.findParentByIdentifier(savedDetail.getIdentifier());
-        esConditionReportService.indexAsync(report.getIdentifier());
+	@RequestMapping(value = "/{identifier}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB3)
+	public void delete(final HttpServletResponse response, @PathVariable final String identifier) {
+		// droits d'accès à l'ud
+		final DocUnit docUnit = conditionReportDetailService.findDocUnitByIdentifier(identifier);
+		if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
+		// Droit par rapport au workflow
+		final ConditionReportDetail detail = conditionReportDetailService.findByIdentifier(identifier);
+		if (!workflowAccessHelper.canConstatDetailBeModified(docUnit.getIdentifier(), detail.getType())) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
+		final ConditionReport report = conditionReportDetailService.findParentByIdentifier(identifier);
+		// Suppression
+		conditionReportDetailService.delete(identifier);
+		// Indexation
+		esConditionReportService.indexAsync(report.getIdentifier());
 
-        return new ResponseEntity<>(savedDetail, HttpStatus.OK);
-    }
+		response.setStatus(HttpServletResponse.SC_OK);
+	}
 
-    @RequestMapping(value = "/{identifier}", params = {"confirmvalid"}, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed(COND_REPORT_HAB2)
-    public ResponseEntity<ConditionReportDetail> confirmInitialValid(@RequestBody final ConditionReportDetail value) throws PgcnException {
-        // droits d'accès à l'ud
-        final DocUnit docUnit = conditionReportDetailService.findDocUnitByIdentifier(value.getIdentifier());
-        if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+	@RequestMapping(value = "/{identifier}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB0)
+	public ResponseEntity<ConditionReportDetail> findByIdentifier(@PathVariable final String identifier) {
+		// droits d'accès à l'ud
+		final DocUnit docUnit = conditionReportDetailService.findDocUnitByIdentifier(identifier);
+		if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		return createResponseEntity(conditionReportDetailService.findByIdentifier(identifier));
+	}
 
-        // Mise à jour
-        final ConditionReportDetail savedDetail = conditionReportDetailService.updateProvWriter(value);
-        // Indexation
-        final ConditionReport report = conditionReportDetailService.findParentByIdentifier(savedDetail.getIdentifier());
-        esConditionReportService.indexAsync(report.getIdentifier());
+	@RequestMapping(method = RequestMethod.GET, params = { "report" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB0)
+	public ResponseEntity<List<ConditionReportDetail>> findByConditionReport(
+			@RequestParam(name = "report") final String reportId) {
+		final DocUnit docUnit = conditionReportService.findDocUnitByIdentifier(reportId);
+		// droits d'accès à l'ud
+		if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		return createResponseEntity(conditionReportDetailService.findByConditionReport(reportId));
+	}
 
-        return new ResponseEntity<>(savedDetail, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/{identifier}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB2)
+	public ResponseEntity<ConditionReportDetail> update(@RequestBody final ConditionReportDetail value)
+			throws PgcnException {
+		// droits d'accès à l'ud
+		final DocUnit docUnit = conditionReportDetailService.findDocUnitByIdentifier(value.getIdentifier());
+		if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Droit par rapport au workflow
+		final ConditionReportDetail detail = conditionReportDetailService.findByIdentifier(value.getIdentifier());
+		if (!workflowAccessHelper.canConstatDetailBeModified(docUnit.getIdentifier(), detail.getType())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		// Mise à jour
+		final ConditionReportDetail savedDetail = conditionReportDetailService.save(value);
+		// Indexation
+		final ConditionReport report = conditionReportDetailService.findParentByIdentifier(savedDetail.getIdentifier());
+		esConditionReportService.indexAsync(report.getIdentifier());
+
+		return new ResponseEntity<>(savedDetail, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{identifier}", params = { "confirmvalid" }, method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(COND_REPORT_HAB2)
+	public ResponseEntity<ConditionReportDetail> confirmInitialValid(@RequestBody final ConditionReportDetail value)
+			throws PgcnException {
+		// droits d'accès à l'ud
+		final DocUnit docUnit = conditionReportDetailService.findDocUnitByIdentifier(value.getIdentifier());
+		if (!accessHelper.checkDocUnit(docUnit.getIdentifier())) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+
+		// Mise à jour
+		final ConditionReportDetail savedDetail = conditionReportDetailService.updateProvWriter(value);
+		// Indexation
+		final ConditionReport report = conditionReportDetailService.findParentByIdentifier(savedDetail.getIdentifier());
+		esConditionReportService.indexAsync(report.getIdentifier());
+
+		return new ResponseEntity<>(savedDetail, HttpStatus.OK);
+	}
 
 }

@@ -10,52 +10,57 @@ import fr.progilone.pgcn.domain.dto.AbstractDTO;
  */
 public class DocPropertyDTO extends AbstractDTO {
 
-    private String identifier;
-    private String value;
-    private Integer rank;
-    private DocPropertyTypeDTO type;
-    private Double weightedRank;
+	private String identifier;
 
-    public DocPropertyDTO() {
-    }
+	private String value;
 
-    public final String getIdentifier() {
-        return identifier;
-    }
+	private Integer rank;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private DocPropertyTypeDTO type;
 
-    public final String getValue() {
-        return value;
-    }
+	private Double weightedRank;
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+	public DocPropertyDTO() {
+	}
 
-    public final Integer getRank() {
-        return rank;
-    }
+	public final String getIdentifier() {
+		return identifier;
+	}
 
-    public void setRank(Integer rank) {
-        this.rank = rank;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public final DocPropertyTypeDTO getType() {
-        return type;
-    }
+	public final String getValue() {
+		return value;
+	}
 
-    public void setType(DocPropertyTypeDTO type) {
-        this.type = type;
-    }
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    public final Double getWeightedRank() {
-        return weightedRank;
-    }
+	public final Integer getRank() {
+		return rank;
+	}
 
-    public void setWeightedRank(Double weightedRank) {
-        this.weightedRank = weightedRank;
-    }
+	public void setRank(Integer rank) {
+		this.rank = rank;
+	}
+
+	public final DocPropertyTypeDTO getType() {
+		return type;
+	}
+
+	public void setType(DocPropertyTypeDTO type) {
+		this.type = type;
+	}
+
+	public final Double getWeightedRank() {
+		return weightedRank;
+	}
+
+	public void setWeightedRank(Double weightedRank) {
+		this.weightedRank = weightedRank;
+	}
+
 }

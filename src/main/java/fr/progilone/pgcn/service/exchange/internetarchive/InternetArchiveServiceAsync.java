@@ -18,49 +18,52 @@ import org.springframework.stereotype.Service;
 @Service
 public class InternetArchiveServiceAsync {
 
-    private static final Logger LOG = LoggerFactory.getLogger(InternetArchiveServiceAsync.class);
+	private static final Logger LOG = LoggerFactory.getLogger(InternetArchiveServiceAsync.class);
 
-    private final EsDocUnitService esDocUnitService;
-    private final InternetArchiveService internetArchiveService;
+	private final EsDocUnitService esDocUnitService;
 
-    @Autowired
-    public InternetArchiveServiceAsync(final EsDocUnitService esDocUnitService, final InternetArchiveService internetArchiveService) {
-        this.esDocUnitService = esDocUnitService;
-        this.internetArchiveService = internetArchiveService;
-    }
+	private final InternetArchiveService internetArchiveService;
 
-    /**
-     * Pas de controle user : A reserver aux traitements automatiques
-     */
-    @Async
-    public void createItem(final String docUnitId, final boolean automaticExport) {
+	@Autowired
+	public InternetArchiveServiceAsync(final EsDocUnitService esDocUnitService,
+			final InternetArchiveService internetArchiveService) {
+		this.esDocUnitService = esDocUnitService;
+		this.internetArchiveService = internetArchiveService;
+	}
 
-        final InternetArchiveReport report = internetArchiveService.createItem(docUnitId, automaticExport);
-        if (report != null) {
-            esDocUnitService.indexAsync(report.getDocUnit().getIdentifier());
-        }
-    }
+	/**
+	 * Pas de controle user : A reserver aux traitements automatiques
+	 */
+	@Async
+	public void createItem(final String docUnitId, final boolean automaticExport) {
 
-    @Async
-    public void createItem(final DocUnit docUnit, final InternetArchiveItemDTO item, final String userId) {
+		final InternetArchiveReport report = internetArchiveService.createItem(docUnitId, automaticExport);
+		if (report != null) {
+			esDocUnitService.indexAsync(report.getDocUnit().getIdentifier());
+		}
+	}
 
-        final InternetArchiveReport report = internetArchiveService.createItem(docUnit, item, false, userId);
-        if (report != null) {
-            esDocUnitService.indexAsync(report.getDocUnit().getIdentifier());
-        }
-    }
+	@Async
+	public void createItem(final DocUnit docUnit, final InternetArchiveItemDTO item, final String userId) {
 
-    /**
-     * Lanceur de l'export automatique vers Archive.
-     */
-    @Scheduled(cron = "${cron.internetArchiveExport}")
-    public void automaticInternetArchiveExport() {
-        LOG.info("Lancement du Job internetArchiveExport...");
-        final List<String> docsToExport = internetArchiveService.findDocUnitsReadyForArchiveExport();
-        docsToExport.forEach(docId -> {
-            LOG.info("Debut export vers ARCHIVE - DocUnit[{}]", docId);
-            createItem(docId, true);
-            LOG.info("Fin export vers ARCHIVE - DocUnit[{}]", docId);
-        });
-    }
+		final InternetArchiveReport report = internetArchiveService.createItem(docUnit, item, false, userId);
+		if (report != null) {
+			esDocUnitService.indexAsync(report.getDocUnit().getIdentifier());
+		}
+	}
+
+	/**
+	 * Lanceur de l'export automatique vers Archive.
+	 */
+	@Scheduled(cron = "${cron.internetArchiveExport}")
+	public void automaticInternetArchiveExport() {
+		LOG.info("Lancement du Job internetArchiveExport...");
+		final List<String> docsToExport = internetArchiveService.findDocUnitsReadyForArchiveExport();
+		docsToExport.forEach(docId -> {
+			LOG.info("Debut export vers ARCHIVE - DocUnit[{}]", docId);
+			createItem(docId, true);
+			LOG.info("Fin export vers ARCHIVE - DocUnit[{}]", docId);
+		});
+	}
+
 }

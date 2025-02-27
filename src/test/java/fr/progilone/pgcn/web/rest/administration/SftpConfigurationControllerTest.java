@@ -41,176 +41,201 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ExtendWith(MockitoExtension.class)
 public class SftpConfigurationControllerTest {
 
-    @Mock
-    private LibraryAccesssHelper libraryAccesssHelper;
-    @Mock
-    private SftpConfigurationService sftpConfigurationService;
-    @Mock
-    private SftpService sftpService;
-    @Mock
-    private CinesPACService cinesPACService;
-    @Mock
-    private AccessHelper accessHelper;
+	@Mock
+	private LibraryAccesssHelper libraryAccesssHelper;
 
-    private MockMvc restMockMvc;
+	@Mock
+	private SftpConfigurationService sftpConfigurationService;
 
-    private final RequestPostProcessor allPermissions = roles(SFTP_HAB0, SFTP_HAB1, SFTP_HAB2);
+	@Mock
+	private SftpService sftpService;
 
-    @BeforeEach
-    public void setUp() throws Exception {
-        final SftpConfigurationController controller = new SftpConfigurationController(sftpConfigurationService, sftpService, libraryAccesssHelper, cinesPACService, accessHelper);
+	@Mock
+	private CinesPACService cinesPACService;
 
-        final FormattingConversionService convService = new DefaultFormattingConversionService();
-        convService.addConverter(String.class, Library.class, TestConverterFactory.getConverter(Library.class));
-        this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).setConversionService(convService).build();
+	@Mock
+	private AccessHelper accessHelper;
 
-    }
+	private MockMvc restMockMvc;
 
-    @Test
-    public void testCreate() throws Exception {
-        final SftpConfiguration configurationSftp = getConfigurationSftp("ABCD-1234");
-        when(sftpConfigurationService.save(any(SftpConfiguration.class))).thenReturn(configurationSftp);
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+	private final RequestPostProcessor allPermissions = roles(SFTP_HAB0, SFTP_HAB1, SFTP_HAB2);
 
-        this.restMockMvc.perform(post("/api/rest/conf_sftp").contentType(MediaType.APPLICATION_JSON)
-                                                            .content(TestUtil.convertObjectToJsonBytes(configurationSftp))
-                                                            .with(allPermissions))
-                        .andExpect(status().isCreated())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("identifier").value(configurationSftp.getIdentifier()))
-                        .andExpect(jsonPath("label").value(configurationSftp.getLabel()))
-                        .andExpect(jsonPath("library.identifier").value(configurationSftp.getLibrary().getIdentifier()));
-    }
+	@BeforeEach
+	public void setUp() throws Exception {
+		final SftpConfigurationController controller = new SftpConfigurationController(sftpConfigurationService,
+				sftpService, libraryAccesssHelper, cinesPACService, accessHelper);
 
-    @Test
-    public void testDelete() throws Exception {
-        final SftpConfiguration configurationSftp = getConfigurationSftp("ABCD-1235");
-        final String identifier = configurationSftp.getIdentifier();
+		final FormattingConversionService convService = new DefaultFormattingConversionService();
+		convService.addConverter(String.class, Library.class, TestConverterFactory.getConverter(Library.class));
+		this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).setConversionService(convService).build();
 
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
-        when(sftpConfigurationService.findOne(configurationSftp.getIdentifier())).thenReturn(configurationSftp);
+	}
 
-        // test delete
-        this.restMockMvc.perform(delete("/api/rest/conf_sftp/{id}", identifier).contentType(MediaType.APPLICATION_JSON).with(allPermissions)).andExpect(status().isOk());
+	@Test
+	public void testCreate() throws Exception {
+		final SftpConfiguration configurationSftp = getConfigurationSftp("ABCD-1234");
+		when(sftpConfigurationService.save(any(SftpConfiguration.class))).thenReturn(configurationSftp);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
 
-        verify(sftpConfigurationService).delete(identifier);
-    }
+		this.restMockMvc
+			.perform(post("/api/rest/conf_sftp").contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(configurationSftp))
+				.with(allPermissions))
+			.andExpect(status().isCreated())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("identifier").value(configurationSftp.getIdentifier()))
+			.andExpect(jsonPath("label").value(configurationSftp.getLabel()))
+			.andExpect(jsonPath("library.identifier").value(configurationSftp.getLibrary().getIdentifier()));
+	}
 
-    @Test
-    public void testFindAll() throws Exception {
-        final Set<SftpConfigurationDTO> configurationSftps = new HashSet<>();
-        configurationSftps.add(getSimpleMappingDto("ABCD-1236"));
+	@Test
+	public void testDelete() throws Exception {
+		final SftpConfiguration configurationSftp = getConfigurationSftp("ABCD-1235");
+		final String identifier = configurationSftp.getIdentifier();
 
-        when(libraryAccesssHelper.filterObjectsByLibrary(any(HttpServletRequest.class), any(), any())).thenAnswer(new ReturnsArgumentAt(1));
-        when(sftpConfigurationService.findAllDto(null)).thenReturn(configurationSftps);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(sftpConfigurationService.findOne(configurationSftp.getIdentifier())).thenReturn(configurationSftp);
 
-        // test findAllActive
-        this.restMockMvc.perform(get("/api/rest/conf_sftp").accept(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("$[0].identifier").value(configurationSftps.iterator().next().getIdentifier()));
-    }
+		// test delete
+		this.restMockMvc
+			.perform(delete("/api/rest/conf_sftp/{id}", identifier).contentType(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isOk());
 
-    @Test
-    public void testFindByLibrary() throws Exception {
-        final Set<SftpConfigurationDTO> stats = new HashSet<>();
-        final SftpConfigurationDTO configurationSftp = getSimpleMappingDto("ABCD-1237");
-        stats.add(configurationSftp);
-        final Library library = new Library();
-        library.setIdentifier(configurationSftp.getLibrary().getIdentifier());
+		verify(sftpConfigurationService).delete(identifier);
+	}
 
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(Library.class))).thenReturn(true);
-        when(sftpConfigurationService.findDtoByLibrary(library, null)).thenReturn(stats);
+	@Test
+	public void testFindAll() throws Exception {
+		final Set<SftpConfigurationDTO> configurationSftps = new HashSet<>();
+		configurationSftps.add(getSimpleMappingDto("ABCD-1236"));
 
-        // test findAllActive
-        this.restMockMvc.perform(get("/api/rest/conf_sftp").param("library", configurationSftp.getLibrary().getIdentifier())
-                                                           .accept(MediaType.APPLICATION_JSON)
-                                                           .with(allPermissions))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("$[0].identifier").value(configurationSftp.getIdentifier()));
-    }
+		when(libraryAccesssHelper.filterObjectsByLibrary(any(HttpServletRequest.class), any(), any()))
+			.thenAnswer(new ReturnsArgumentAt(1));
+		when(sftpConfigurationService.findAllDto(null)).thenReturn(configurationSftps);
 
-    @Test
-    public void getById() throws Exception {
-        final SftpConfiguration configurationSftp = getConfigurationSftp("ABCD-1238");
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
-        when(sftpConfigurationService.findOne(configurationSftp.getIdentifier())).thenReturn(configurationSftp) // ok
-                                                                                 .thenReturn(null);             // ko
+		// test findAllActive
+		this.restMockMvc.perform(get("/api/rest/conf_sftp").accept(MediaType.APPLICATION_JSON).with(allPermissions))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("$[0].identifier").value(configurationSftps.iterator().next().getIdentifier()));
+	}
 
-        // test ok
-        this.restMockMvc.perform(get("/api/rest/conf_sftp/{id}", configurationSftp.getIdentifier()).accept(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("identifier").value(configurationSftp.getIdentifier()));
+	@Test
+	public void testFindByLibrary() throws Exception {
+		final Set<SftpConfigurationDTO> stats = new HashSet<>();
+		final SftpConfigurationDTO configurationSftp = getSimpleMappingDto("ABCD-1237");
+		stats.add(configurationSftp);
+		final Library library = new Library();
+		library.setIdentifier(configurationSftp.getLibrary().getIdentifier());
 
-        // test ko
-        this.restMockMvc.perform(get("/api/rest/conf_sftp/{identifier}", configurationSftp.getIdentifier()).accept(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isNotFound());
-    }
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(Library.class))).thenReturn(true);
+		when(sftpConfigurationService.findDtoByLibrary(library, null)).thenReturn(stats);
 
-    @Test
-    public void testInitConf() throws Exception {
-        final SftpConfiguration configurationSftp = getConfigurationSftp("ABCD-1239");
-        final String message = "connection failed";
+		// test findAllActive
+		this.restMockMvc
+			.perform(get("/api/rest/conf_sftp").param("library", configurationSftp.getLibrary().getIdentifier())
+				.accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("$[0].identifier").value(configurationSftp.getIdentifier()));
+	}
 
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
-        when(sftpConfigurationService.findOne(configurationSftp.getIdentifier())).thenReturn(configurationSftp);
-        when(sftpService.initConnection(configurationSftp)).thenReturn(Optional.empty())        // ok
-                                                           .thenReturn(Optional.of(message));   // ko
+	@Test
+	public void getById() throws Exception {
+		final SftpConfiguration configurationSftp = getConfigurationSftp("ABCD-1238");
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(sftpConfigurationService.findOne(configurationSftp.getIdentifier())).thenReturn(configurationSftp) // ok
+			.thenReturn(null); // ko
 
-        // Test ok
-        this.restMockMvc.perform(get("/api/rest/conf_sftp/{id}", configurationSftp.getIdentifier()).param("init", "true").accept(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isOk());
+		// test ok
+		this.restMockMvc
+			.perform(get("/api/rest/conf_sftp/{id}", configurationSftp.getIdentifier())
+				.accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("identifier").value(configurationSftp.getIdentifier()));
 
-        // Test ko
-        this.restMockMvc.perform(get("/api/rest/conf_sftp/{id}", configurationSftp.getIdentifier()).param("init", "true").accept(MediaType.APPLICATION_JSON).with(allPermissions))
-                        .andExpect(status().isExpectationFailed())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("message").value(message));
-    }
+		// test ko
+		this.restMockMvc
+			.perform(get("/api/rest/conf_sftp/{identifier}", configurationSftp.getIdentifier())
+				.accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isNotFound());
+	}
 
-    @Test
-    public void testUpdate() throws Exception {
-        final SftpConfiguration configurationSftp = getConfigurationSftp("ABCD-1239");
+	@Test
+	public void testInitConf() throws Exception {
+		final SftpConfiguration configurationSftp = getConfigurationSftp("ABCD-1239");
+		final String message = "connection failed";
 
-        // prepare update
-        final String identifier = configurationSftp.getIdentifier();
-        final SftpConfiguration savedStat = getConfigurationSftp("ABCD-1239");
-        savedStat.setLabel("New label");
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(sftpConfigurationService.findOne(configurationSftp.getIdentifier())).thenReturn(configurationSftp);
+		when(sftpService.initConnection(configurationSftp)).thenReturn(Optional.empty()) // ok
+			.thenReturn(Optional.of(message)); // ko
 
-        when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
-        when(sftpConfigurationService.findOne(configurationSftp.getIdentifier())).thenReturn(configurationSftp);
-        when(sftpConfigurationService.save(configurationSftp)).thenReturn(savedStat);
+		// Test ok
+		this.restMockMvc
+			.perform(get("/api/rest/conf_sftp/{id}", configurationSftp.getIdentifier()).param("init", "true")
+				.accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isOk());
 
-        // test update
-        this.restMockMvc.perform(post("/api/rest/conf_sftp/" + identifier).contentType(MediaType.APPLICATION_JSON)
-                                                                          .content(TestUtil.convertObjectToJsonBytes(configurationSftp))
-                                                                          .with(allPermissions))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                        .andExpect(jsonPath("identifier").value(savedStat.getIdentifier()))
-                        .andExpect(jsonPath("label").value(savedStat.getLabel()))
-                        .andExpect(jsonPath("library.identifier").value(savedStat.getLibrary().getIdentifier()));
-    }
+		// Test ko
+		this.restMockMvc
+			.perform(get("/api/rest/conf_sftp/{id}", configurationSftp.getIdentifier()).param("init", "true")
+				.accept(MediaType.APPLICATION_JSON)
+				.with(allPermissions))
+			.andExpect(status().isExpectationFailed())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("message").value(message));
+	}
 
-    private SftpConfiguration getConfigurationSftp(final String identifier) {
-        final Library library = new Library();
-        library.setIdentifier("LIBRARY-001");
+	@Test
+	public void testUpdate() throws Exception {
+		final SftpConfiguration configurationSftp = getConfigurationSftp("ABCD-1239");
 
-        final SftpConfiguration configurationSftp = new SftpConfiguration();
-        configurationSftp.setIdentifier(identifier);
-        configurationSftp.setLabel("Chou-fleur");
-        configurationSftp.setLibrary(library);
-        return configurationSftp;
-    }
+		// prepare update
+		final String identifier = configurationSftp.getIdentifier();
+		final SftpConfiguration savedStat = getConfigurationSftp("ABCD-1239");
+		savedStat.setLabel("New label");
 
-    private SftpConfigurationDTO getSimpleMappingDto(final String identifier) {
-        final SftpConfigurationDTO dto = new SftpConfigurationDTO();
-        dto.setIdentifier(identifier);
-        dto.setLabel("Chou-fleur");
-        final SimpleLibraryDTO lib = new SimpleLibraryDTO.Builder().setIdentifier("LIBRARY-001").build();
-        dto.setLibrary(lib);
-        return dto;
-    }
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(sftpConfigurationService.findOne(configurationSftp.getIdentifier())).thenReturn(configurationSftp);
+		when(sftpConfigurationService.save(configurationSftp)).thenReturn(savedStat);
+
+		// test update
+		this.restMockMvc
+			.perform(post("/api/rest/conf_sftp/" + identifier).contentType(MediaType.APPLICATION_JSON)
+				.content(TestUtil.convertObjectToJsonBytes(configurationSftp))
+				.with(allPermissions))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("identifier").value(savedStat.getIdentifier()))
+			.andExpect(jsonPath("label").value(savedStat.getLabel()))
+			.andExpect(jsonPath("library.identifier").value(savedStat.getLibrary().getIdentifier()));
+	}
+
+	private SftpConfiguration getConfigurationSftp(final String identifier) {
+		final Library library = new Library();
+		library.setIdentifier("LIBRARY-001");
+
+		final SftpConfiguration configurationSftp = new SftpConfiguration();
+		configurationSftp.setIdentifier(identifier);
+		configurationSftp.setLabel("Chou-fleur");
+		configurationSftp.setLibrary(library);
+		return configurationSftp;
+	}
+
+	private SftpConfigurationDTO getSimpleMappingDto(final String identifier) {
+		final SftpConfigurationDTO dto = new SftpConfigurationDTO();
+		dto.setIdentifier(identifier);
+		dto.setLabel("Chou-fleur");
+		final SimpleLibraryDTO lib = new SimpleLibraryDTO.Builder().setIdentifier("LIBRARY-001").build();
+		dto.setLibrary(lib);
+		return dto;
+	}
+
 }

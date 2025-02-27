@@ -8,17 +8,19 @@ import java.io.IOException;
 
 public class MappingSerializer extends StdSerializer<Mapping> {
 
-    public MappingSerializer() {
-        super(Mapping.class);
-    }
+	public MappingSerializer() {
+		super(Mapping.class);
+	}
 
-    @Override
-    public void serialize(final Mapping mapping, final JsonGenerator jgen, final SerializerProvider serializerProvider) throws IOException {
-        jgen.writeStartObject();
-        jgen.writeStringField("label", mapping.getLabel());
-        jgen.writeObjectField("type", mapping.getType());
-        jgen.writeStringField("joinExpression", mapping.getJoinExpression());
-        jgen.writeObjectField("rules", mapping.getRules());
-        jgen.writeEndObject();
-    }
+	@Override
+	public void serialize(final Mapping mapping, final JsonGenerator jgen, final SerializerProvider serializerProvider)
+			throws IOException {
+		jgen.writeStartObject();
+		jgen.writeStringField("label", mapping.getLabel());
+		jgen.writeObjectField("type", mapping.getType());
+		jgen.writeStringField("joinExpression", mapping.getJoinExpression());
+		jgen.writeObjectField("rules", mapping.getRules());
+		jgen.writeEndObject();
+	}
+
 }

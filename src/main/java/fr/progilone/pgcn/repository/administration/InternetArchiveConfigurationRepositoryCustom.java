@@ -7,5 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface InternetArchiveConfigurationRepositoryCustom {
 
-    Page<InternetArchiveConfiguration> search(String search, final List<String> libraries, Pageable pageable);
+	Page<InternetArchiveConfiguration> search(String search, final List<String> libraries, Pageable pageable);
+
 }

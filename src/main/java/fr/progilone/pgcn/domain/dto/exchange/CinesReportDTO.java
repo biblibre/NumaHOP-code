@@ -6,103 +6,111 @@ import java.time.LocalDateTime;
 /**
  * DTO pour un rapport d'archivage au CINES
  *
- * @author jbrunet
- *         Créé le 3 mars 2017
+ * @author jbrunet Créé le 3 mars 2017
  */
 public class CinesReportDTO extends AbstractDTO {
 
-    private String identifier;
-    private String status;
-    private LocalDateTime dateSent;
-    private LocalDateTime dateAr;
-    private LocalDateTime dateRejection;
-    private LocalDateTime dateArchived;
-    private LocalDateTime lastModifiedDate;
-    private String rejectionMotive;
-    private String certificate;
-    private String message;
+	private String identifier;
 
-    public CinesReportDTO() {
-    }
+	private String status;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private LocalDateTime dateSent;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private LocalDateTime dateAr;
 
-    public String getStatus() {
-        return status;
-    }
+	private LocalDateTime dateRejection;
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	private LocalDateTime dateArchived;
 
-    public LocalDateTime getDateSent() {
-        return dateSent;
-    }
+	private LocalDateTime lastModifiedDate;
 
-    public void setDateSent(LocalDateTime dateSent) {
-        this.dateSent = dateSent;
-    }
+	private String rejectionMotive;
 
-    public LocalDateTime getDateAr() {
-        return dateAr;
-    }
+	private String certificate;
 
-    public void setDateAr(LocalDateTime dateAr) {
-        this.dateAr = dateAr;
-    }
+	private String message;
 
-    public LocalDateTime getDateRejection() {
-        return dateRejection;
-    }
+	public CinesReportDTO() {
+	}
 
-    public void setDateRejection(LocalDateTime dateRejection) {
-        this.dateRejection = dateRejection;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public LocalDateTime getDateArchived() {
-        return dateArchived;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setDateArchived(LocalDateTime dateArchived) {
-        this.dateArchived = dateArchived;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public LocalDateTime getLastModifiedDate() {
-        return lastModifiedDate;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public void setLastModifiedDate(final LocalDateTime lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
+	public LocalDateTime getDateSent() {
+		return dateSent;
+	}
 
-    public String getRejectionMotive() {
-        return rejectionMotive;
-    }
+	public void setDateSent(LocalDateTime dateSent) {
+		this.dateSent = dateSent;
+	}
 
-    public void setRejectionMotive(String rejectionMtive) {
-        this.rejectionMotive = rejectionMtive;
-    }
+	public LocalDateTime getDateAr() {
+		return dateAr;
+	}
 
-    public String getCertificate() {
-        return certificate;
-    }
+	public void setDateAr(LocalDateTime dateAr) {
+		this.dateAr = dateAr;
+	}
 
-    public void setCertificate(String certificate) {
-        this.certificate = certificate;
-    }
+	public LocalDateTime getDateRejection() {
+		return dateRejection;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public void setDateRejection(LocalDateTime dateRejection) {
+		this.dateRejection = dateRejection;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public LocalDateTime getDateArchived() {
+		return dateArchived;
+	}
+
+	public void setDateArchived(LocalDateTime dateArchived) {
+		this.dateArchived = dateArchived;
+	}
+
+	public LocalDateTime getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(final LocalDateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public String getRejectionMotive() {
+		return rejectionMotive;
+	}
+
+	public void setRejectionMotive(String rejectionMtive) {
+		this.rejectionMotive = rejectionMtive;
+	}
+
+	public String getCertificate() {
+		return certificate;
+	}
+
+	public void setCertificate(String certificate) {
+		this.certificate = certificate;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 }

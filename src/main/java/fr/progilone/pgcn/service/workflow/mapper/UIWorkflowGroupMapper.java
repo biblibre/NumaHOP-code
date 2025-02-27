@@ -15,38 +15,43 @@ import org.springframework.stereotype.Service;
 @Service
 public class UIWorkflowGroupMapper {
 
-    private final UserService userService;
-    private final LibraryService libraryService;
+	private final UserService userService;
 
-    @Autowired
-    public UIWorkflowGroupMapper(final UserService userService, final LibraryService libraryService) {
-        this.userService = userService;
-        this.libraryService = libraryService;
-    }
+	private final LibraryService libraryService;
 
-    public void mapInto(final WorkflowGroupDTO dto, final WorkflowGroup domainObject) {
-        domainObject.setIdentifier(dto.getIdentifier());
-        domainObject.setName(dto.getName());
-        domainObject.setDescription(dto.getDescription());
+	@Autowired
+	public UIWorkflowGroupMapper(final UserService userService, final LibraryService libraryService) {
+		this.userService = userService;
+		this.libraryService = libraryService;
+	}
 
-        // Users
-        List<SimpleUserDTO> users = dto.getUsers();
-        if (users != null) {
-            domainObject.setUsers(users.stream().map(user -> userService.getOne(user.getIdentifier())).collect(Collectors.toSet()));
-        } else {
-            domainObject.setUsers(null);
-        }
+	public void mapInto(final WorkflowGroupDTO dto, final WorkflowGroup domainObject) {
+		domainObject.setIdentifier(dto.getIdentifier());
+		domainObject.setName(dto.getName());
+		domainObject.setDescription(dto.getDescription());
 
-        // Bibliothèque
-        Library library = null;
-        if (dto.getLibrary() != null) {
-            library = libraryService.findByIdentifier(dto.getLibrary().getIdentifier());
-        } else {
-            if (SecurityUtils.getCurrentUser().getLibraryId() != null) {
-                library = libraryService.findByIdentifier(SecurityUtils.getCurrentUser().getLibraryId());
-            }
-        }
-        domainObject.setLibrary(library);
+		// Users
+		List<SimpleUserDTO> users = dto.getUsers();
+		if (users != null) {
+			domainObject.setUsers(
+					users.stream().map(user -> userService.getOne(user.getIdentifier())).collect(Collectors.toSet()));
+		}
+		else {
+			domainObject.setUsers(null);
+		}
 
-    }
+		// Bibliothèque
+		Library library = null;
+		if (dto.getLibrary() != null) {
+			library = libraryService.findByIdentifier(dto.getLibrary().getIdentifier());
+		}
+		else {
+			if (SecurityUtils.getCurrentUser().getLibraryId() != null) {
+				library = libraryService.findByIdentifier(SecurityUtils.getCurrentUser().getLibraryId());
+			}
+		}
+		domainObject.setLibrary(library);
+
+	}
+
 }

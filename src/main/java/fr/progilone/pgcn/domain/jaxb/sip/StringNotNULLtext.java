@@ -18,79 +18,63 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 /**
  * <p>
  * Classe Java pour stringNotNULLtext complex type.
- *
  * <p>
  * Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
  *
  * <pre>
  * &lt;complexType name="stringNotNULLtext"&gt;
- *   &lt;simpleContent&gt;
- *     &lt;extension base="&lt;http://www.cines.fr/pac/sip&gt;stringNotNULL"&gt;
- *       &lt;attribute name="language" use="required" type="{urn:un:unece:uncefact:codelist:draft:DAF:languageCode:2011-10-07}LanguageCodeType" /&gt;
- *     &lt;/extension&gt;
- *   &lt;/simpleContent&gt;
+ * &lt;simpleContent&gt;
+ * &lt;extension base="&lt;http://www.cines.fr/pac/sip&gt;stringNotNULL"&gt;
+ * &lt;attribute name="language" use="required"
+ * type="{urn:un:unece:uncefact:codelist:draft:DAF:languageCode:2011-10-07}LanguageCodeType" /&gt;
+ * &lt;/extension&gt;
+ * &lt;/simpleContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "stringNotNULLtext", propOrder = {"value"})
+@XmlType(name = "stringNotNULLtext", propOrder = { "value" })
 public class StringNotNULLtext {
 
-    @XmlValue
-    protected String value;
-    @XmlAttribute(name = "language", required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String language;
+	@XmlValue
+	protected String value;
 
-    /**
-     * Chaine de caractères composée d'au moins 1 caractère imprimable ou non exclusivement composé d'espace et/ou de tabulations et/ou de nouvelle
-     * ligne et/ou de retour chariot
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "language", required = true)
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String language;
 
-    /**
-     * Définit la valeur de la propriété value.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	/**
+	 * Chaine de caractères composée d'au moins 1 caractère imprimable ou non
+	 * exclusivement composé d'espace et/ou de tabulations et/ou de nouvelle ligne et/ou
+	 * de retour chariot
+	 * @return possible object is {@link String }
+	 */
+	public String getValue() {
+		return value;
+	}
 
-    /**
-     * Obtient la valeur de la propriété language.
-     *
-     * @return
-     *         possible object is
-     *         {@link String }
-     *
-     */
-    public String getLanguage() {
-        return language;
-    }
+	/**
+	 * Définit la valeur de la propriété value.
+	 * @param value allowed object is {@link String }
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * Définit la valeur de la propriété language.
-     *
-     * @param value
-     *            allowed object is
-     *            {@link String }
-     *
-     */
-    public void setLanguage(String value) {
-        this.language = value;
-    }
+	/**
+	 * Obtient la valeur de la propriété language.
+	 * @return possible object is {@link String }
+	 */
+	public String getLanguage() {
+		return language;
+	}
+
+	/**
+	 * Définit la valeur de la propriété language.
+	 * @param value allowed object is {@link String }
+	 */
+	public void setLanguage(String value) {
+		this.language = value;
+	}
 
 }

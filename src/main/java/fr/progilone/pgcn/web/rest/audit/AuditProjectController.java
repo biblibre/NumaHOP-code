@@ -28,32 +28,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/rest/audit/project")
 public class AuditProjectController {
 
-    private final AccessHelper accessHelper;
-    private final AuditProjectService auditProjectService;
+	private final AccessHelper accessHelper;
 
-    @Autowired
-    public AuditProjectController(final AccessHelper accessHelper, final AuditProjectService auditProjectService) {
-        this.accessHelper = accessHelper;
-        this.auditProjectService = auditProjectService;
-    }
+	private final AuditProjectService auditProjectService;
 
-    @RequestMapping(method = RequestMethod.GET, params = {"from"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @RolesAllowed({PROJ_HAB7})
-    public ResponseEntity<List<AuditProjectRevisionDTO>> getRevisions(@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from") final LocalDate fromDate,
-                                                                      @RequestParam(value = "library", required = false) final List<String> libraries,
-                                                                      @RequestParam(value = "status", required = false) List<Project.ProjectStatus> status) {
+	@Autowired
+	public AuditProjectController(final AccessHelper accessHelper, final AuditProjectService auditProjectService) {
+		this.accessHelper = accessHelper;
+		this.auditProjectService = auditProjectService;
+	}
 
-        // Chargement
-        List<AuditProjectRevisionDTO> revisions = auditProjectService.getRevisions(fromDate, libraries, status);
-        // Droits d'accès
-        revisions = filterDTOs(revisions, AuditProjectRevisionDTO::getIdentifier);
-        // Réponse
-        return new ResponseEntity<>(revisions, HttpStatus.OK);
-    }
+	@RequestMapping(method = RequestMethod.GET, params = { "from" }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	@RolesAllowed(PROJ_HAB7)
+	public ResponseEntity<List<AuditProjectRevisionDTO>> getRevisions(
+			@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam(name = "from") final LocalDate fromDate,
+			@RequestParam(value = "library", required = false) final List<String> libraries,
+			@RequestParam(value = "status", required = false) List<Project.ProjectStatus> status) {
 
-    private <T> List<T> filterDTOs(final Collection<T> dtos, final Function<T, String> getIdentifierFn) {
-        final Collection<Project> okProjects = accessHelper.filterProjects(dtos.stream().map(getIdentifierFn).collect(Collectors.toList()));
-        return dtos.stream().filter(dto -> okProjects.stream().anyMatch(pj -> StringUtils.equals(getIdentifierFn.apply(dto), pj.getIdentifier()))).collect(Collectors.toList());
-    }
+		// Chargement
+		List<AuditProjectRevisionDTO> revisions = auditProjectService.getRevisions(fromDate, libraries, status);
+		// Droits d'accès
+		revisions = filterDTOs(revisions, AuditProjectRevisionDTO::getIdentifier);
+		// Réponse
+		return new ResponseEntity<>(revisions, HttpStatus.OK);
+	}
+
+	private <T> List<T> filterDTOs(final Collection<T> dtos, final Function<T, String> getIdentifierFn) {
+		final Collection<Project> okProjects = accessHelper
+			.filterProjects(dtos.stream().map(getIdentifierFn).collect(Collectors.toList()));
+		return dtos.stream()
+			.filter(dto -> okProjects.stream()
+				.anyMatch(pj -> StringUtils.equals(getIdentifierFn.apply(dto), pj.getIdentifier())))
+			.collect(Collectors.toList());
+	}
+
 }

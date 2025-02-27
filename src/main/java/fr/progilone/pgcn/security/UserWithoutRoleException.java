@@ -7,11 +7,12 @@ import org.springframework.security.core.AuthenticationException;
  */
 public class UserWithoutRoleException extends AuthenticationException {
 
-    public UserWithoutRoleException(String message) {
-        super(message);
-    }
+	public UserWithoutRoleException(String message) {
+		super(message);
+	}
 
-    public UserWithoutRoleException(String message, Throwable t) {
-        super(message, t);
-    }
+	public UserWithoutRoleException(String message, Throwable t) {
+		super(message, t);
+	}
+
 }

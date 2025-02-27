@@ -15,37 +15,38 @@ import org.springframework.transaction.annotation.Transactional;
  * Service dédié à les gestion des vues des contrôles (visuels)
  *
  * @author jbrunet
- *
  */
 @Service
 public class UICheckService {
 
-    private final CheckService checkService;
-    private final UICheckMapper uiCheckMapper;
+	private final CheckService checkService;
 
-    @Autowired
-    public UICheckService(final CheckService checkService, final UICheckMapper uiCheckMapper) {
-        this.checkService = checkService;
-        this.uiCheckMapper = uiCheckMapper;
-    }
+	private final UICheckMapper uiCheckMapper;
 
-    @Transactional
-    public CheckDTO create(final CheckDTO dto) throws PgcnValidationException {
-        final Check check = new Check();
-        uiCheckMapper.mapInto(dto, check);
-        Check saved = checkService.save(check);
-        return CheckMapper.INSTANCE.checkToCheckDTO(saved);
-    }
+	@Autowired
+	public UICheckService(final CheckService checkService, final UICheckMapper uiCheckMapper) {
+		this.checkService = checkService;
+		this.uiCheckMapper = uiCheckMapper;
+	}
 
-    @Transactional
-    public CheckDTO update(CheckDTO dto) {
-        Check check = checkService.findOne(dto.getIdentifier());
+	@Transactional
+	public CheckDTO create(final CheckDTO dto) throws PgcnValidationException {
+		final Check check = new Check();
+		uiCheckMapper.mapInto(dto, check);
+		Check saved = checkService.save(check);
+		return CheckMapper.INSTANCE.checkToCheckDTO(saved);
+	}
 
-        // Contrôle d'accès concurrents
-        VersionValidationService.checkForStateObject(check, dto);
+	@Transactional
+	public CheckDTO update(CheckDTO dto) {
+		Check check = checkService.findOne(dto.getIdentifier());
 
-        uiCheckMapper.mapInto(dto, check);
+		// Contrôle d'accès concurrents
+		VersionValidationService.checkForStateObject(check, dto);
 
-        return CheckMapper.INSTANCE.checkToCheckDTO(checkService.save(check));
-    }
+		uiCheckMapper.mapInto(dto, check);
+
+		return CheckMapper.INSTANCE.checkToCheckDTO(checkService.save(check));
+	}
+
 }

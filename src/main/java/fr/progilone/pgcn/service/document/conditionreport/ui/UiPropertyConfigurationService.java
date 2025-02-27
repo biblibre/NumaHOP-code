@@ -16,50 +16,56 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UiPropertyConfigurationService {
 
-    private static final PropertyConfigurationMapper MAPPER = PropertyConfigurationMapper.INSTANCE;
+	private static final PropertyConfigurationMapper MAPPER = PropertyConfigurationMapper.INSTANCE;
 
-    private final PropertyConfigurationService propertyConfigurationService;
-    private final LibraryRepository libraryRepository;
+	private final PropertyConfigurationService propertyConfigurationService;
 
-    @Autowired
-    public UiPropertyConfigurationService(final PropertyConfigurationService propertyConfigurationService, final LibraryRepository libraryRepository) {
-        this.propertyConfigurationService = propertyConfigurationService;
-        this.libraryRepository = libraryRepository;
-    }
+	private final LibraryRepository libraryRepository;
 
-    @Transactional
-    public PropertyConfigurationDTO save(final PropertyConfigurationDTO value) {
-        final PropertyConfiguration conf = MAPPER.dtoToConf(value);
-        final PropertyConfiguration savedConf = propertyConfigurationService.save(conf);
-        return MAPPER.confToDto(savedConf);
-    }
+	@Autowired
+	public UiPropertyConfigurationService(final PropertyConfigurationService propertyConfigurationService,
+			final LibraryRepository libraryRepository) {
+		this.propertyConfigurationService = propertyConfigurationService;
+		this.libraryRepository = libraryRepository;
+	}
 
-    @Transactional
-    public void delete(final String identifier) {
-        propertyConfigurationService.delete(identifier);
-    }
+	@Transactional
+	public PropertyConfigurationDTO save(final PropertyConfigurationDTO value) {
+		final PropertyConfiguration conf = MAPPER.dtoToConf(value);
+		final PropertyConfiguration savedConf = propertyConfigurationService.save(conf);
+		return MAPPER.confToDto(savedConf);
+	}
 
-    @Transactional(readOnly = true)
-    public List<PropertyConfigurationDTO> findByLibrary(final Library library) {
-        final List<PropertyConfiguration> confs = propertyConfigurationService.findByLibrary(library);
-        return confs.stream().map(MAPPER::confToDto).collect(Collectors.toList());
-    }
+	@Transactional
+	public void delete(final String identifier) {
+		propertyConfigurationService.delete(identifier);
+	}
 
-    @Transactional(readOnly = true)
-    public List<PropertyConfigurationDTO> findByLibraryAndNotShowOnCreation(final String libraryId) {
-        Library library = libraryRepository.findOneWithDependencies(libraryId);
-        return findByLibrary(library).stream().filter(prop -> !prop.isShowOnCreation()).collect(Collectors.toList());
-    }
+	@Transactional(readOnly = true)
+	public List<PropertyConfigurationDTO> findByLibrary(final Library library) {
+		final List<PropertyConfiguration> confs = propertyConfigurationService.findByLibrary(library);
+		return confs.stream().map(MAPPER::confToDto).collect(Collectors.toList());
+	}
 
-    @Transactional(readOnly = true)
-    public PropertyConfigurationDTO findByDescPropertyAndLibrary(final DescriptionProperty property, final Library library) {
-        final PropertyConfiguration conf = propertyConfigurationService.findByDescPropertyAndLibrary(property, library);
-        return MAPPER.confToDto(conf);
-    }
+	@Transactional(readOnly = true)
+	public List<PropertyConfigurationDTO> findByLibraryAndNotShowOnCreation(final String libraryId) {
+		Library library = libraryRepository.findOneWithDependencies(libraryId);
+		return findByLibrary(library).stream().filter(prop -> !prop.isShowOnCreation()).collect(Collectors.toList());
+	}
 
-    @Transactional(readOnly = true)
-    public PropertyConfigurationDTO findByInternalPropertyAndLibrary(final PropertyConfiguration.InternalProperty property, final Library library) {
-        final PropertyConfiguration conf = propertyConfigurationService.findByInternalPropertyAndLibrary(property, library);
-        return MAPPER.confToDto(conf);
-    }
+	@Transactional(readOnly = true)
+	public PropertyConfigurationDTO findByDescPropertyAndLibrary(final DescriptionProperty property,
+			final Library library) {
+		final PropertyConfiguration conf = propertyConfigurationService.findByDescPropertyAndLibrary(property, library);
+		return MAPPER.confToDto(conf);
+	}
+
+	@Transactional(readOnly = true)
+	public PropertyConfigurationDTO findByInternalPropertyAndLibrary(
+			final PropertyConfiguration.InternalProperty property, final Library library) {
+		final PropertyConfiguration conf = propertyConfigurationService.findByInternalPropertyAndLibrary(property,
+				library);
+		return MAPPER.confToDto(conf);
+	}
+
 }

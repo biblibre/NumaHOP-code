@@ -11,33 +11,33 @@ import jakarta.persistence.Table;
 @Table(name = ActivatedOcrLanguage.TABLE_NAME)
 public class ActivatedOcrLanguage extends AbstractDomainObject {
 
-    public static final String TABLE_NAME = "conf_activated_ocr_lang";
+	public static final String TABLE_NAME = "conf_activated_ocr_lang";
 
-    /**
-     * Entités liés
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ocr_lang_configuration")
-    private OcrLangConfiguration ocrLangConfiguration;
+	/**
+	 * Entités liés
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ocr_lang_configuration")
+	private OcrLangConfiguration ocrLangConfiguration;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ocr_language")
-    private OcrLanguage ocrLanguage;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ocr_language")
+	private OcrLanguage ocrLanguage;
 
-    public OcrLangConfiguration getOcrLangConfiguration() {
-        return ocrLangConfiguration;
-    }
+	public OcrLangConfiguration getOcrLangConfiguration() {
+		return ocrLangConfiguration;
+	}
 
-    public void setOcrLangConfiguration(final OcrLangConfiguration ocrLangConfiguration) {
-        this.ocrLangConfiguration = ocrLangConfiguration;
-    }
+	public void setOcrLangConfiguration(final OcrLangConfiguration ocrLangConfiguration) {
+		this.ocrLangConfiguration = ocrLangConfiguration;
+	}
 
-    public OcrLanguage getOcrLanguage() {
-        return ocrLanguage;
-    }
+	public OcrLanguage getOcrLanguage() {
+		return ocrLanguage;
+	}
 
-    public void setOcrLanguage(final OcrLanguage ocrLanguage) {
-        this.ocrLanguage = ocrLanguage;
-    }
+	public void setOcrLanguage(final OcrLanguage ocrLanguage) {
+		this.ocrLanguage = ocrLanguage;
+	}
 
 }

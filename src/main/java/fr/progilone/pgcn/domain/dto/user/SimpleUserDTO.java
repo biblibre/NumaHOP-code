@@ -10,130 +10,143 @@ import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
  */
 public class SimpleUserDTO {
 
-    private String identifier;
-    private String surname;
-    private String firstname;
-    private String fullName;
-    private String login;
-    private SimpleLibraryDTO library;
+	private String identifier;
 
-    public SimpleUserDTO() {
-    }
+	private String surname;
 
-    public SimpleUserDTO(final String identifier, final String firstname, final String surname, final String fullName, final String login, final SimpleLibraryDTO library) {
-        super();
-        this.surname = surname;
-        this.firstname = firstname;
-        this.identifier = identifier;
-        this.fullName = fullName;
-        this.login = login;
-        this.library = library;
-    }
+	private String firstname;
 
-    public final String getFirstname() {
-        return firstname;
-    }
+	private String fullName;
 
-    public final String getSurname() {
-        return surname;
-    }
+	private String login;
 
-    public final String getIdentifier() {
-        return identifier;
-    }
+	private SimpleLibraryDTO library;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	public SimpleUserDTO() {
+	}
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
+	public SimpleUserDTO(final String identifier, final String firstname, final String surname, final String fullName,
+			final String login, final SimpleLibraryDTO library) {
+		super();
+		this.surname = surname;
+		this.firstname = firstname;
+		this.identifier = identifier;
+		this.fullName = fullName;
+		this.login = login;
+		this.library = library;
+	}
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+	public final String getFirstname() {
+		return firstname;
+	}
 
-    public String getFullName() {
-        return fullName;
-    }
+	public final String getSurname() {
+		return surname;
+	}
 
-    public void setFullName(final String fullName) {
-        this.fullName = fullName;
-    }
+	public final String getIdentifier() {
+		return identifier;
+	}
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public void setLibrary(SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
 
-    public String getLogin() {
-        return login;
-    }
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+	public String getFullName() {
+		return fullName;
+	}
 
-    /**
-     * Builder pour la classe SimpleUserDTO
-     *
-     * @author jbrunet
-     */
-    public static final class Builder {
+	public void setFullName(final String fullName) {
+		this.fullName = fullName;
+	}
 
-        private String identifier;
-        private String firstname;
-        private String surname;
-        private String fullname;
-        private String login;
-        private SimpleLibraryDTO library;
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
 
-        public Builder reinit() {
-            this.identifier = null;
-            this.firstname = null;
-            this.surname = null;
-            this.fullname = null;
-            this.login = null;
-            this.library = null;
-            return this;
-        }
+	public void setLibrary(SimpleLibraryDTO library) {
+		this.library = library;
+	}
 
-        public Builder setIdentifier(final String identifier) {
-            this.identifier = identifier;
-            return this;
-        }
+	public String getLogin() {
+		return login;
+	}
 
-        public Builder setFirstname(final String firstname) {
-            this.firstname = firstname;
-            return this;
-        }
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-        public Builder setSurname(final String surname) {
-            this.surname = surname;
-            return this;
-        }
+	/**
+	 * Builder pour la classe SimpleUserDTO
+	 *
+	 * @author jbrunet
+	 */
+	public static final class Builder {
 
-        public Builder setFullname(final String fullname) {
-            this.fullname = fullname;
-            return this;
-        }
+		private String identifier;
 
-        public Builder setLibrary(SimpleLibraryDTO library) {
-            this.library = library;
-            return this;
-        }
+		private String firstname;
 
-        public Builder setLogin(String login) {
-            this.login = login;
-            return this;
-        }
+		private String surname;
 
-        public SimpleUserDTO build() {
-            return new SimpleUserDTO(identifier, firstname, surname, fullname, login, library);
-        }
-    }
+		private String fullname;
+
+		private String login;
+
+		private SimpleLibraryDTO library;
+
+		public Builder reinit() {
+			this.identifier = null;
+			this.firstname = null;
+			this.surname = null;
+			this.fullname = null;
+			this.login = null;
+			this.library = null;
+			return this;
+		}
+
+		public Builder setIdentifier(final String identifier) {
+			this.identifier = identifier;
+			return this;
+		}
+
+		public Builder setFirstname(final String firstname) {
+			this.firstname = firstname;
+			return this;
+		}
+
+		public Builder setSurname(final String surname) {
+			this.surname = surname;
+			return this;
+		}
+
+		public Builder setFullname(final String fullname) {
+			this.fullname = fullname;
+			return this;
+		}
+
+		public Builder setLibrary(SimpleLibraryDTO library) {
+			this.library = library;
+			return this;
+		}
+
+		public Builder setLogin(String login) {
+			this.login = login;
+			return this;
+		}
+
+		public SimpleUserDTO build() {
+			return new SimpleUserDTO(identifier, firstname, surname, fullname, login, library);
+		}
+
+	}
+
 }

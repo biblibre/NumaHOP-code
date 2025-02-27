@@ -9,124 +9,135 @@ import java.util.List;
 /**
  * DTO de statistiques : projet
  *
- * @author jbrunet
- *         Créé le 9 mai 2017
+ * @author jbrunet Créé le 9 mai 2017
  */
 public class StatisticsProjectDTO extends AbstractDTO {
 
-    private String identifier;
-    private SimpleLibraryDTO library;
-    private String name;
-    private String description;
-    private Boolean active;
-    private LocalDate startDate;
-    private LocalDate forecastEndDate;
-    private LocalDate realEndDate;
-    private String status;
-    private int nbDocUnits;
-    private SimpleUserDTO provider;
-    private List<SimpleUserDTO> otherProviders;
+	private String identifier;
 
-    public StatisticsProjectDTO() {
-    }
+	private SimpleLibraryDTO library;
 
-    public String getIdentifier() {
-        return identifier;
-    }
+	private String name;
 
-    public String getName() {
-        return name;
-    }
+	private String description;
 
-    public final String getDescription() {
-        return description;
-    }
+	private Boolean active;
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	private LocalDate startDate;
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
+	private LocalDate forecastEndDate;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	private LocalDate realEndDate;
 
-    public boolean isActive() {
-        return active;
-    }
+	private String status;
 
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+	private int nbDocUnits;
 
-    public SimpleLibraryDTO getLibrary() {
-        return library;
-    }
+	private SimpleUserDTO provider;
 
-    public void setLibrary(SimpleLibraryDTO library) {
-        this.library = library;
-    }
+	private List<SimpleUserDTO> otherProviders;
 
-    public LocalDate getStartDate() {
-        return startDate;
-    }
+	public StatisticsProjectDTO() {
+	}
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
 
-    public LocalDate getForecastEndDate() {
-        return forecastEndDate;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setForecastEndDate(LocalDate forecastEndDate) {
-        this.forecastEndDate = forecastEndDate;
-    }
+	public final String getDescription() {
+		return description;
+	}
 
-    public LocalDate getRealEndDate() {
-        return realEndDate;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setRealEndDate(LocalDate realEndDate) {
-        this.realEndDate = realEndDate;
-    }
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public int getNbDocUnits() {
-        return nbDocUnits;
-    }
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 
-    public void setNbDocUnits(int docUnits) {
-        this.nbDocUnits = docUnits;
-    }
+	public SimpleLibraryDTO getLibrary() {
+		return library;
+	}
 
-    public SimpleUserDTO getProvider() {
-        return provider;
-    }
+	public void setLibrary(SimpleLibraryDTO library) {
+		this.library = library;
+	}
 
-    public void setProvider(SimpleUserDTO provider) {
-        this.provider = provider;
-    }
+	public LocalDate getStartDate() {
+		return startDate;
+	}
 
-    public List<SimpleUserDTO> getOtherProviders() {
-        return otherProviders;
-    }
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
 
-    public void setOtherProviders(List<SimpleUserDTO> otherProviders) {
-        this.otherProviders = otherProviders;
-    }
+	public LocalDate getForecastEndDate() {
+		return forecastEndDate;
+	}
 
-    public void addOtherProvider(SimpleUserDTO provider) {
-        this.otherProviders.add(provider);
-    }
+	public void setForecastEndDate(LocalDate forecastEndDate) {
+		this.forecastEndDate = forecastEndDate;
+	}
+
+	public LocalDate getRealEndDate() {
+		return realEndDate;
+	}
+
+	public void setRealEndDate(LocalDate realEndDate) {
+		this.realEndDate = realEndDate;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public int getNbDocUnits() {
+		return nbDocUnits;
+	}
+
+	public void setNbDocUnits(int docUnits) {
+		this.nbDocUnits = docUnits;
+	}
+
+	public SimpleUserDTO getProvider() {
+		return provider;
+	}
+
+	public void setProvider(SimpleUserDTO provider) {
+		this.provider = provider;
+	}
+
+	public List<SimpleUserDTO> getOtherProviders() {
+		return otherProviders;
+	}
+
+	public void setOtherProviders(List<SimpleUserDTO> otherProviders) {
+		this.otherProviders = otherProviders;
+	}
+
+	public void addOtherProvider(SimpleUserDTO provider) {
+		this.otherProviders.add(provider);
+	}
+
 }

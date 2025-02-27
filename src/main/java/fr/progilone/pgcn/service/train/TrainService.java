@@ -29,146 +29,141 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TrainService {
 
-    private final EsTrainService esTrainService;
-    private final TrainRepository trainRepository;
-    private final ConditionReportService conditionReportService;
+	private final EsTrainService esTrainService;
 
-    @Autowired
-    public TrainService(final EsTrainService esTrainService, final TrainRepository trainRepository, final ConditionReportService conditionReportService) {
-        this.esTrainService = esTrainService;
-        this.trainRepository = trainRepository;
-        this.conditionReportService = conditionReportService;
-    }
+	private final TrainRepository trainRepository;
 
-    /**
-     * Recherche de trains
-     */
-    @Transactional(readOnly = true)
-    public Page<SimpleTrainDTO> search(final String search,
-                                       final List<String> libraries,
-                                       final List<String> projects,
-                                       final boolean active,
-                                       final List<String> trainStatuses,
-                                       final LocalDate providerSendingDateFrom,
-                                       final LocalDate providerSendingDateTo,
-                                       final LocalDate returnDateFrom,
-                                       final LocalDate returnDateTo,
-                                       final Integer docNumber,
-                                       final Integer page,
-                                       final Integer size) {
+	private final ConditionReportService conditionReportService;
 
-        final Pageable pageRequest = PageRequest.of(page, size);
-        List<Train.TrainStatus> statuses = null;
-        if (trainStatuses != null) {
-            statuses = trainStatuses.stream().map(Train.TrainStatus::valueOf).collect(Collectors.toList());
-        }
-        final Page<Train> trains = trainRepository.search(search,
-                                                          libraries,
-                                                          projects,
-                                                          active,
-                                                          statuses,
-                                                          providerSendingDateFrom,
-                                                          providerSendingDateTo,
-                                                          returnDateFrom,
-                                                          returnDateTo,
-                                                          docNumber,
-                                                          pageRequest);
-        final List<SimpleTrainDTO> trainDTOs = trains.getContent().stream().map(this::mapToSimpleTrainDTO).collect(Collectors.toList());
-        return new PageImpl<>(trainDTOs, PageRequest.of(trains.getNumber(), trains.getSize(), trains.getSort()), trains.getTotalElements());
-    }
+	@Autowired
+	public TrainService(final EsTrainService esTrainService, final TrainRepository trainRepository,
+			final ConditionReportService conditionReportService) {
+		this.esTrainService = esTrainService;
+		this.trainRepository = trainRepository;
+		this.conditionReportService = conditionReportService;
+	}
 
-    @Transactional(readOnly = true)
-    public List<Train> findAll(final List<String> libraries,
-                               final List<String> projects,
-                               final List<String> trains,
-                               final List<Train.TrainStatus> status,
-                               final LocalDate sendFrom,
-                               final LocalDate sendTo,
-                               final LocalDate returnFrom,
-                               final LocalDate returnTo,
-                               final Double insuranceFrom,
-                               final Double insuranceTo) {
+	/**
+	 * Recherche de trains
+	 */
+	@Transactional(readOnly = true)
+	public Page<SimpleTrainDTO> search(final String search, final List<String> libraries, final List<String> projects,
+			final boolean active, final List<String> trainStatuses, final LocalDate providerSendingDateFrom,
+			final LocalDate providerSendingDateTo, final LocalDate returnDateFrom, final LocalDate returnDateTo,
+			final Integer docNumber, final Integer page, final Integer size) {
 
-        return trainRepository.findAll(libraries, projects, trains, status, sendFrom, sendTo, returnFrom, returnTo, insuranceFrom, insuranceTo);
-    }
+		final Pageable pageRequest = PageRequest.of(page, size);
+		List<Train.TrainStatus> statuses = null;
+		if (trainStatuses != null) {
+			statuses = trainStatuses.stream().map(Train.TrainStatus::valueOf).collect(Collectors.toList());
+		}
+		final Page<Train> trains = trainRepository.search(search, libraries, projects, active, statuses,
+				providerSendingDateFrom, providerSendingDateTo, returnDateFrom, returnDateTo, docNumber, pageRequest);
+		final List<SimpleTrainDTO> trainDTOs = trains.getContent()
+			.stream()
+			.map(this::mapToSimpleTrainDTO)
+			.collect(Collectors.toList());
+		return new PageImpl<>(trainDTOs, PageRequest.of(trains.getNumber(), trains.getSize(), trains.getSort()),
+				trains.getTotalElements());
+	}
 
-    private SimpleTrainDTO mapToSimpleTrainDTO(final Train train) {
-        return new SimpleTrainDTO(train.getIdentifier(), train.getLabel(), train.getDescription(), train.getStatus(), train.getProviderSendingDate(), train.getReturnDate());
-    }
+	@Transactional(readOnly = true)
+	public List<Train> findAll(final List<String> libraries, final List<String> projects, final List<String> trains,
+			final List<Train.TrainStatus> status, final LocalDate sendFrom, final LocalDate sendTo,
+			final LocalDate returnFrom, final LocalDate returnTo, final Double insuranceFrom,
+			final Double insuranceTo) {
 
-    @Transactional(readOnly = true)
-    public Train getOne(final String identifier) {
-        return trainRepository.findOneWithDependencies(identifier);
-    }
+		return trainRepository.findAll(libraries, projects, trains, status, sendFrom, sendTo, returnFrom, returnTo,
+				insuranceFrom, insuranceTo);
+	}
 
-    @Transactional(readOnly = true)
-    public List<Train> findAllByActive(final boolean active) {
-        return trainRepository.findAllByActive(active);
-    }
+	private SimpleTrainDTO mapToSimpleTrainDTO(final Train train) {
+		return new SimpleTrainDTO(train.getIdentifier(), train.getLabel(), train.getDescription(), train.getStatus(),
+				train.getProviderSendingDate(), train.getReturnDate());
+	}
 
-    @Transactional(readOnly = true)
-    public List<Train> findAll() {
-        return trainRepository.findAll();
-    }
+	@Transactional(readOnly = true)
+	public Train getOne(final String identifier) {
+		return trainRepository.findOneWithDependencies(identifier);
+	}
 
-    @Transactional
-    public Train save(final Train train) {
-        return trainRepository.save(train);
-    }
+	@Transactional(readOnly = true)
+	public List<Train> findAllByActive(final boolean active) {
+		return trainRepository.findAllByActive(active);
+	}
 
-    @Transactional
-    public void delete(final String id) {
-        trainRepository.deleteById(id);
-        esTrainService.deleteAsync(id);
-    }
+	@Transactional(readOnly = true)
+	public List<Train> findAll() {
+		return trainRepository.findAll();
+	}
 
-    @Transactional(readOnly = true)
-    public List<Train> findAllForProject(final String id) {
-        return trainRepository.findAllByProjectIdentifier(id);
-    }
+	@Transactional
+	public Train save(final Train train) {
+		return trainRepository.save(train);
+	}
 
-    @Transactional(readOnly = true)
-    public List<Train> findAll(final Iterable<String> identifiers) {
-        if (IterableUtils.isEmpty(identifiers)) {
-            return Collections.emptyList();
-        }
-        return trainRepository.findAllById(identifiers);
-    }
+	@Transactional
+	public void delete(final String id) {
+		trainRepository.deleteById(id);
+		esTrainService.deleteAsync(id);
+	}
 
-    @Transactional(readOnly = true)
-    public List<SimpleTrainDTO> findAllByProjectIds(final List<String> projectIds) {
-        return trainRepository.findAllIdentifiersInProjectIds(projectIds);
-    }
+	@Transactional(readOnly = true)
+	public List<Train> findAllForProject(final String id) {
+		return trainRepository.findAllByProjectIdentifier(id);
+	}
 
-    /**
-     * Recherche les lots par bibliothèque, groupés par statut
-     *
-     * @return liste de map avec 2 clés: statut et décompte
-     */
-    @Transactional(readOnly = true)
-    public List<Map<String, Object>> getTrainGroupByStatus(final List<String> libraries, final List<String> projects) {
-        final List<Object[]> results = trainRepository.getTrainGroupByStatus(libraries, projects); // status, count
+	@Transactional(readOnly = true)
+	public List<Train> findAll(final Iterable<String> identifiers) {
+		if (IterableUtils.isEmpty(identifiers)) {
+			return Collections.emptyList();
+		}
+		return trainRepository.findAllById(identifiers);
+	}
 
-        return results.stream().map(res -> {
-            final Map<String, Object> resMap = new HashMap<>();
-            resMap.put("status", res[0]);
-            resMap.put("count", res[1]);
-            return resMap;
-        }).collect(Collectors.toList());
-    }
+	@Transactional(readOnly = true)
+	public List<SimpleTrainDTO> findAllByProjectIds(final List<String> projectIds) {
+		return trainRepository.findAllIdentifiersInProjectIds(projectIds);
+	}
 
-    @Transactional(readOnly = true)
-    public void writeCondReportSlipPDF(final ServletOutputStream outputStream, final String id) throws PgcnTechnicalException {
-        final Train train = getOne(id);
-        final Set<DocUnit> docUnits = train.getPhysicalDocuments().stream().map(PhysicalDocument::getDocUnit).collect(Collectors.toSet());
-        final String reportTitle = "Bordereau d'envoi du train ".concat(train.getLabel());
-        conditionReportService.writeSlipDocUnitsPDF(outputStream, docUnits, reportTitle);
-    }
+	/**
+	 * Recherche les lots par bibliothèque, groupés par statut
+	 * @return liste de map avec 2 clés: statut et décompte
+	 */
+	@Transactional(readOnly = true)
+	public List<Map<String, Object>> getTrainGroupByStatus(final List<String> libraries, final List<String> projects) {
+		final List<Object[]> results = trainRepository.getTrainGroupByStatus(libraries, projects); // status,
+																									// count
 
-    @Transactional(readOnly = true)
-    public void writeCondReportSlip(final ServletOutputStream outputStream, final String id, final String encoding, final char separator) throws IOException {
-        final Train train = getOne(id);
-        final Set<DocUnit> docUnits = train.getPhysicalDocuments().stream().map(PhysicalDocument::getDocUnit).collect(Collectors.toSet());
-        conditionReportService.writeSlipDocUnitsCSV(outputStream, docUnits, encoding, separator);
-    }
+		return results.stream().map(res -> {
+			final Map<String, Object> resMap = new HashMap<>();
+			resMap.put("status", res[0]);
+			resMap.put("count", res[1]);
+			return resMap;
+		}).collect(Collectors.toList());
+	}
+
+	@Transactional(readOnly = true)
+	public void writeCondReportSlipPDF(final ServletOutputStream outputStream, final String id)
+			throws PgcnTechnicalException {
+		final Train train = getOne(id);
+		final Set<DocUnit> docUnits = train.getPhysicalDocuments()
+			.stream()
+			.map(PhysicalDocument::getDocUnit)
+			.collect(Collectors.toSet());
+		final String reportTitle = "Bordereau d'envoi du train ".concat(train.getLabel());
+		conditionReportService.writeSlipDocUnitsPDF(outputStream, docUnits, reportTitle);
+	}
+
+	@Transactional(readOnly = true)
+	public void writeCondReportSlip(final ServletOutputStream outputStream, final String id, final String encoding,
+			final char separator) throws IOException {
+		final Train train = getOne(id);
+		final Set<DocUnit> docUnits = train.getPhysicalDocuments()
+			.stream()
+			.map(PhysicalDocument::getDocUnit)
+			.collect(Collectors.toSet());
+		conditionReportService.writeSlipDocUnitsCSV(outputStream, docUnits, encoding, separator);
+	}
+
 }
