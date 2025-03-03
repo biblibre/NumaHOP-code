@@ -979,7 +979,9 @@
         <profile>
             <id>webapp</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>!skip-front-end</name>
+                </property>
             </activation>
             <build>
                 <plugins>

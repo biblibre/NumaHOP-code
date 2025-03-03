@@ -63,28 +63,28 @@ build_targets = $(1)all $(1)docker $(1)app $(1)min: $(1)%:
 # Build the back-end, docker image and front-end
 all = -Pdocker
 # Build the back-end and docker image.
-docker = -Pdocker,!webapp
+docker = -Pdocker -Dskip-front-end
 # Build the back-end and front-end.
 app =
 # Build only the back-end.
-min = -P!webapp
+min = -Dskip-front-end
 
 
 $(call build_targets, build-)
 	$(call mvn_cmd_pattern,compile,$($*))
 
 # Stop docker constainer build java, front-end, docker and javadoc and restart container.
-full-rebuild: -app-down clean build-all build-docs
+full-rebuild: -app-down clean build-all
 
 clean:
-	mvn clean
+	$(call mvn_cmd_pattern,clean,)
 
 fmt:
-	mvn sortpom:sort spring-javaformat:apply ${MVN_EXTRA_ARGS}
+	$(call mvn_cmd_pattern,sortpom:sort spring-javaformat:apply,)
 	npm run format
 
 build-docs:
-	mvn javadoc:javadoc ${MVN_EXTRA_ARGS}
+	$(call mvn_cmd_pattern,javadoc:javadoc,)
 
 setup-docker:
 	docker build -t $(docker_run_img_name) $(docker_base_img_build_dir) --target run
