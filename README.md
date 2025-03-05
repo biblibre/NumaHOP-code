@@ -14,7 +14,14 @@ The offical website (in french) is at this [link](https://www.numahop.fr/).
 
 [NumaHOP](https://www.numahop.fr/) is a software solution to manage the digitalization process of documents from the import of meta-datas and condition report to the diffusion of the documents. It serves as an intermediary between the digitalization provider, the establishments and the export targets. This is achieved mostly in an automated fashion with occasional manual checks.
 
-## Major Project contributors
+## Project Actors
 
--   **TECH'advantage** - https://www.tech-advantage.com/
--   **Persée** : https://www.persee.fr/
+### Original Specification Redactors.
+- Sainte-Geneviève Library
+- Science-Po Library
+- BULAC
+
+### Major Project contributors
+- **TECH'advantage** - https://www.tech-advantage.com/
+- **Persée** : https://www.persee.fr/
+
