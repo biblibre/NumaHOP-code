@@ -918,8 +918,9 @@
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
+                                <phase>validate</phase>
                                 <configuration>
-                                    <arguments>run prettier:check</arguments>
+                                    <arguments>run check</arguments>
                                 </configuration>
                             </execution>
                             <execution>
@@ -977,6 +978,11 @@
         </profile>
         <profile>
             <id>webapp</id>
+            <activation>
+                <property>
+                    <name>!skip-front-end</name>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>

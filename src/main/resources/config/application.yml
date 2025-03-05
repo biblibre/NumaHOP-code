@@ -92,7 +92,7 @@ spring:
         tls: false
         auth: false
         activated: false
-        from: contact-numahop@progilone.fr
+        from: contact-numahop@numahop.fr
 
     jackson:
         serialization:

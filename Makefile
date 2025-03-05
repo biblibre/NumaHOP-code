@@ -40,8 +40,11 @@ dv_cmd_pattern = docker volume rm $(1)
 
 volumes = $(1)db $(1)nh $(1)es : $(1)%:
 
+# Remove the data stored inside the numahop contianer
 nh = numahop_numahop-data
+# Remove the data stored inside the database contianer
 db = numahop_numahop-mariadb
+# Remove the data stored inside the elasticsearch container
 es = numahop_numahop-elasticsearch-8
 
 $(call volumes,reset-)
@@ -50,43 +53,41 @@ $(call volumes,reset-)
 # Reset everything.
 reset-all: reset-db reset-es reset-nh
 
-###################################################
-# ================= Maven Build ================= #
-###################################################
+#####################################################
+# ================= Maven & Build ================= #
+#####################################################
 
-mvn_cmd_pattern = mvn $(1) -P $(2) -Dfast=true ${MVN_EXTRA_ARGS}
-build_targets = $(1)all $(1)docker $(1)webapp $(1)min: $(1)%:
+mvn_cmd_pattern = mvn $(1) $(2) -Dfast=true ${MVN_EXTRA_ARGS}
+build_targets = $(1)all $(1)docker $(1)app $(1)min: $(1)%:
 
-all = docker,webapp
-docker = docker
-webapp = webapp
-min = none
+# Build the back-end, docker image and front-end
+all = -Pdocker
+# Build the back-end and docker image.
+docker = -Pdocker -Dskip-front-end
+# Build the back-end and front-end.
+app =
+# Build only the back-end.
+min = -Dskip-front-end
 
 
 $(call build_targets, build-)
 	$(call mvn_cmd_pattern,compile,$($*))
 
-# Build java, front-end, docker and javadoc
-full-rebuild: -app-down clean build-all build-docs
+# Stop docker constainer build java, front-end, docker and javadoc and restart container.
+full-rebuild: -app-down clean build-all
 
 clean:
-	mvn clean
-
-deep-clean: all-clean clean
+	$(call mvn_cmd_pattern,clean,)
 
 fmt:
-	mvn spring-javaformat:apply ${MVN_EXTRA_ARGS}
+	$(call mvn_cmd_pattern,sortpom:sort spring-javaformat:apply,)
+	npm run format
 
 build-docs:
-	mvn javadoc:javadoc ${MVN_EXTRA_ARGS}
+	$(call mvn_cmd_pattern,javadoc:javadoc,)
 
 setup-docker:
 	docker build -t $(docker_run_img_name) $(docker_base_img_build_dir) --target run
-# 	$(mvn) -P dev jib:dockerBuild ${MVN_EXTRA_ARGS}
-
-local-app: build-app
-	mvn spring-boot:run ${MVN_EXTRA_ARGS}
-
 
 #############################################
 # ================= HACK ================= #

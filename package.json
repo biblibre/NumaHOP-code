@@ -3,12 +3,11 @@
     "version": "0.0.1",
     "private": true,
     "scripts": {
-        "format": "mvnw formatter:format git-code-format:format-code com.github.ekryd.sortpom:sortpom-maven-plugin:sort && npm run prettier:format",
+        "check": "prettier --check \"{,src/**/,webpack/}*.{md,json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
+        "format": "prettier --write \"{,src/**/,webpack/}*.{md,json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
         "lint": "node_modules/.bin/eslint src/main/webapp/scripts",
         "lint-fix": "node_modules/.bin/eslint --fix src/main/webapp/scripts",
         "prepare": "husky install",
-        "prettier:check": "prettier --check \"{,src/**/,webpack/}*.{md,json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
-        "prettier:format": "prettier --write \"{,src/**/,webpack/}*.{md,json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
         "start": "grunt server",
         "test": "grunt test"
     },
