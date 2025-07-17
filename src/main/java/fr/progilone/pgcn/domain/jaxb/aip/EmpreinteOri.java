@@ -11,22 +11,31 @@ package fr.progilone.pgcn.domain.jaxb.aip;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.XmlValue;
-import jakarta.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * <p>Java class for stringNotNULLtext complex type.
+ * empreinte numérique (fonction de hachage) du fichier calculée avec les algorithmes MD5, SHA-1 ou SHA-256 et fournie par le service versant
+ *
+ * <p>Java class for anonymous complex type.
  *
  * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
- * &lt;complexType name="stringNotNULLtext"&gt;
+ * &lt;complexType&gt;
  *   &lt;simpleContent&gt;
  *     &lt;extension base="&lt;http://www.cines.fr/pac/aip&gt;stringNotNULL"&gt;
- *       &lt;attribute name="language" use="required" type="{urn:un:unece:uncefact:codelist:draft:DAF:languageCode:2011-10-07}LanguageCodeType" /&gt;
+ *       &lt;attribute name="type" use="required"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *             &lt;enumeration value="MD5"/&gt;
+ *             &lt;enumeration value="SHA-1"/&gt;
+ *             &lt;enumeration value="SHA-256"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
  *     &lt;/extension&gt;
  *   &lt;/simpleContent&gt;
  * &lt;/complexType&gt;
@@ -35,16 +44,16 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "stringNotNULLtext", propOrder = {
+@XmlType(name = "", propOrder = {
     "value"
 })
-public class StringNotNULLtext {
+@XmlRootElement(name = "empreinteOri")
+public class EmpreinteOri {
 
     @XmlValue
     protected String value;
-    @XmlAttribute(name = "language", required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String language;
+    @XmlAttribute(name = "type", required = true)
+    protected String type;
 
     /**
      * Chaine de caractères composée d'au moins 1 caractère imprimable ou non exclusivement composé d'espace et/ou de tabulations et/ou de nouvelle ligne et/ou de retour chariot
@@ -71,27 +80,27 @@ public class StringNotNULLtext {
     }
 
     /**
-     * Gets the value of the language property.
+     * Gets the value of the type property.
      *
      * @return
      *     possible object is
      *     {@link String }
      *
      */
-    public String getLanguage() {
-        return language;
+    public String getType() {
+        return type;
     }
 
     /**
-     * Sets the value of the language property.
+     * Sets the value of the type property.
      *
      * @param value
      *     allowed object is
      *     {@link String }
      *
      */
-    public void setLanguage(String value) {
-        this.language = value;
+    public void setType(String value) {
+        this.type = value;
     }
 
 }

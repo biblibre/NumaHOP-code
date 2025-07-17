@@ -1,0 +1,16 @@
+Date: Tue, 1 Jul 2025 21:01:20 +0200 (CEST)
+From: pac sys <pac_sys@cines.fr>
+Sender: Serveur PAC Production <vitam-connector@cines.fr>
+To: numahop@test.test, pac_message_test@cines.fr
+Subject: =?UTF-8?Q?=5Barchivage=5D_AVIS=5FPAC_=3A_accuse_r=C3=A9ception?=
+MIME-Version: 1.0
+Content-Type: text/xml; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<pac_avis xmlns="http://www.cines.fr/pac/avis" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.cines.fr/pac/avis http://www.cines.fr/pac/3.0/avis.xsd">
+    <serveur>VERSEMENT</serveur>
+    <id>ACCUSE_RECEPTION_DE_VERSEMENT</id>
+    <id_versement>IDT_TEST</id_versement>
+    <dateDemande>2025-07-01T21:01:20+02:00</dateDemande>
+    <commentaire>Le versement est en status RECEPTION.</commentaire>
+</pac_avis>

@@ -494,6 +494,34 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jvnet.mock-javamail</groupId>
+            <artifactId>mock-javamail</artifactId>
+            <version>2.1</version>
+            <scope>test</scope>
+            <exclusions>
+                <!-- Provided by jakarta-activation-api plugin -->
+                <exclusion>
+                    <groupId>jakarta.activation</groupId>
+                    <artifactId>jakarta.activation-api</artifactId>
+                </exclusion>
+                <!-- Provided by jakarta-mail-api plugin -->
+                <exclusion>
+                    <groupId>jakarta.mail</groupId>
+                    <artifactId>jakarta.mail-api</artifactId>
+                </exclusion>
+                <!-- Provided by jakarta-activation-api plugin -->
+                <exclusion>
+                    <groupId>org.eclipse.angus</groupId>
+                    <artifactId>angus-activation</artifactId>
+                </exclusion>
+                <!-- Provided by jakarta-mail-api plugin -->
+                <exclusion>
+                    <groupId>org.eclipse.angus</groupId>
+                    <artifactId>angus-mail</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -654,6 +682,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <systemPropertyVariables>
+                        <mail.smtp.class>org.jvnet.mock_javamail.MockTransport</mail.smtp.class>
+                        <mail.pop3.class>org.jvnet.mock_javamail.MockStore</mail.pop3.class>
+                        <mail.imap.class>org.jvnet.mock_javamail.MockStore</mail.imap.class>
+                    </systemPropertyVariables>
                     <argLine>${surefireArgLine} -Xmx2048m -Dfile.encoding=UTF-8</argLine>
                     <forkCount>1</forkCount>
                     <reuseForks>true</reuseForks>
@@ -871,6 +904,11 @@
             <!-- Dépôt pour la version custom de itext fournie par jasper report -->
             <id>jaspersoft-third-party</id>
             <url>https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/</url>
+        </repository>
+        <repository>
+            <!-- Depot pour mock-javamail -->
+            <id>jenkins</id>
+            <url>https://repo.jenkins-ci.org/releases/</url>
         </repository>
     </repositories>
     <profiles>
