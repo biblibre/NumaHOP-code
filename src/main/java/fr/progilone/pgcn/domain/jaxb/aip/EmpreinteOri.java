@@ -5,7 +5,6 @@
 // Generated on: 2025.07.16 at 03:45:09 PM CEST
 //
 
-
 package fr.progilone.pgcn.domain.jaxb.aip;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -15,13 +14,16 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.XmlValue;
 
-
 /**
- * empreinte numérique (fonction de hachage) du fichier calculée avec les algorithmes MD5, SHA-1 ou SHA-256 et fournie par le service versant
+ * empreinte numérique (fonction de hachage) du fichier calculée avec les algorithmes MD5,
+ * SHA-1 ou SHA-256 et fournie par le service versant
  *
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this
+ * class.
  *
  * <pre>
  * &lt;complexType&gt;
@@ -44,63 +46,52 @@ import jakarta.xml.bind.annotation.XmlValue;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "value"
-})
+@XmlType(name = "", propOrder = { "value" })
 @XmlRootElement(name = "empreinteOri")
 public class EmpreinteOri {
 
-    @XmlValue
-    protected String value;
-    @XmlAttribute(name = "type", required = true)
-    protected String type;
+	@XmlValue
+	protected String value;
 
-    /**
-     * Chaine de caractères composée d'au moins 1 caractère imprimable ou non exclusivement composé d'espace et/ou de tabulations et/ou de nouvelle ligne et/ou de retour chariot
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "type", required = true)
+	protected String type;
 
-    /**
-     * Sets the value of the value property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	/**
+	 * Chaine de caractères composée d'au moins 1 caractère imprimable ou non
+	 * exclusivement composé d'espace et/ou de tabulations et/ou de nouvelle ligne et/ou
+	 * de retour chariot
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getValue() {
+		return value;
+	}
 
-    /**
-     * Gets the value of the type property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getType() {
-        return type;
-    }
+	/**
+	 * Sets the value of the value property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * Sets the value of the type property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setType(String value) {
-        this.type = value;
-    }
+	/**
+	 * Gets the value of the type property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * Sets the value of the type property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setType(String value) {
+		this.type = value;
+	}
 
 }

@@ -5,7 +5,6 @@
 // Generated on: 2025.07.16 at 03:45:09 PM CEST
 //
 
-
 package fr.progilone.pgcn.domain.jaxb.aip;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -17,11 +16,13 @@ import jakarta.xml.bind.annotation.XmlValue;
 import jakarta.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for codeType complex type.
+ * <p>
+ * Java class for codeType complex type.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this
+ * class.
  *
  * <pre>
  * &lt;complexType name="codeType"&gt;
@@ -36,79 +37,65 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "codeType", propOrder = {
-    "value"
-})
+@XmlType(name = "codeType", propOrder = { "value" })
 public class CodeType {
 
-    @XmlValue
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String value;
-    @XmlAttribute(name = "type", required = true)
-    @XmlSchemaType(name = "anySimpleType")
-    protected String type;
+	@XmlValue
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String value;
 
-    /**
-     *
-     *
-     * <pre>
-     * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;ccts:Name xmlns="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:clmDAFAccessRestrictionCode="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;Table des codes pour la restriction d'accès&lt;/ccts:Name&gt;
-     * </pre>
-     *
-     *
-     * <pre>
-     * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;ccts:Description xmlns="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:clmDAFAccessRestrictionCode="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;Les différentes valeurs de cette table sont tirées de la loi archive.&lt;/ccts:Description&gt;
-     * </pre>
-     *
-     *
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "type", required = true)
+	@XmlSchemaType(name = "anySimpleType")
+	protected String type;
 
-    /**
-     * Sets the value of the value property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	/**
+	 *
+	 *
+	 * <pre>
+	 * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;ccts:Name xmlns="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:clmDAFAccessRestrictionCode="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;Table des codes pour la restriction d'accès&lt;/ccts:Name&gt;
+	 * </pre>
+	 *
+	 *
+	 * <pre>
+	 * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;ccts:Description xmlns="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:clmDAFAccessRestrictionCode="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;Les différentes valeurs de cette table sont tirées de la loi archive.&lt;/ccts:Description&gt;
+	 * </pre>
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getValue() {
+		return value;
+	}
 
-    /**
-     * Gets the value of the type property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getType() {
-        if (type == null) {
-            return "SEDA";
-        } else {
-            return type;
-        }
-    }
+	/**
+	 * Sets the value of the value property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * Sets the value of the type property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setType(String value) {
-        this.type = value;
-    }
+	/**
+	 * Gets the value of the type property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getType() {
+		if (type == null) {
+			return "SEDA";
+		}
+		else {
+			return type;
+		}
+	}
+
+	/**
+	 * Sets the value of the type property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setType(String value) {
+		this.type = value;
+	}
 
 }

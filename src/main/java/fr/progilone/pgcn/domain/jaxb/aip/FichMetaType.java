@@ -5,7 +5,6 @@
 // Generated on: 2025.07.16 at 03:45:09 PM CEST
 //
 
-
 package fr.progilone.pgcn.domain.jaxb.aip;
 
 import java.math.BigInteger;
@@ -17,14 +16,15 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 
-
 /**
- * Métadonnées des
- * 				fichiers composant le document
+ * Métadonnées des fichiers composant le document
  *
- * <p>Java class for FichMetaType complex type.
+ * <p>
+ * Java class for FichMetaType complex type.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this
+ * class.
  *
  * <pre>
  * &lt;complexType name="FichMetaType"&gt;
@@ -53,357 +53,284 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "FichMetaType", propOrder = {
-    "idFichier",
-    "nomFichier",
-    "compression",
-    "encodage",
-    "formatFichier",
-    "noteFichier",
-    "structureFichier",
-    "versionFormatFichier",
-    "empreinte",
-    "empreinteOri",
-    "idDocument",
-    "migration",
-    "tailleEnOctets"
-})
+@XmlType(name = "FichMetaType",
+		propOrder = { "idFichier", "nomFichier", "compression", "encodage", "formatFichier", "noteFichier",
+				"structureFichier", "versionFormatFichier", "empreinte", "empreinteOri", "idDocument", "migration",
+				"tailleEnOctets" })
 public class FichMetaType {
 
-    protected String idFichier;
-    @XmlElement(required = true)
-    protected String nomFichier;
-    protected String compression;
-    protected String encodage;
-    @XmlElement(required = true)
-    protected String formatFichier;
-    protected StringNotNULLtext noteFichier;
-    protected List<StructureFichier> structureFichier;
-    protected String versionFormatFichier;
-    @XmlElement(required = true)
-    protected EmpreinteType empreinte;
-    protected EmpreinteOri empreinteOri;
-    protected String idDocument;
-    protected String migration;
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "nonNegativeInteger")
-    protected BigInteger tailleEnOctets;
+	protected String idFichier;
 
-    /**
-     * Gets the value of the idFichier property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getIdFichier() {
-        return idFichier;
-    }
+	@XmlElement(required = true)
+	protected String nomFichier;
 
-    /**
-     * Sets the value of the idFichier property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setIdFichier(String value) {
-        this.idFichier = value;
-    }
+	protected String compression;
 
-    /**
-     * Gets the value of the nomFichier property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getNomFichier() {
-        return nomFichier;
-    }
+	protected String encodage;
 
-    /**
-     * Sets the value of the nomFichier property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setNomFichier(String value) {
-        this.nomFichier = value;
-    }
+	@XmlElement(required = true)
+	protected String formatFichier;
 
-    /**
-     * Gets the value of the compression property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getCompression() {
-        return compression;
-    }
+	protected StringNotNULLtext noteFichier;
 
-    /**
-     * Sets the value of the compression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setCompression(String value) {
-        this.compression = value;
-    }
+	protected List<StructureFichier> structureFichier;
 
-    /**
-     * Gets the value of the encodage property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getEncodage() {
-        return encodage;
-    }
+	protected String versionFormatFichier;
 
-    /**
-     * Sets the value of the encodage property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setEncodage(String value) {
-        this.encodage = value;
-    }
+	@XmlElement(required = true)
+	protected EmpreinteType empreinte;
 
-    /**
-     * Gets the value of the formatFichier property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getFormatFichier() {
-        return formatFichier;
-    }
+	protected EmpreinteOri empreinteOri;
 
-    /**
-     * Sets the value of the formatFichier property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setFormatFichier(String value) {
-        this.formatFichier = value;
-    }
+	protected String idDocument;
 
-    /**
-     * Gets the value of the noteFichier property.
-     *
-     * @return
-     *     possible object is
-     *     {@link StringNotNULLtext }
-     *
-     */
-    public StringNotNULLtext getNoteFichier() {
-        return noteFichier;
-    }
+	protected String migration;
 
-    /**
-     * Sets the value of the noteFichier property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link StringNotNULLtext }
-     *
-     */
-    public void setNoteFichier(StringNotNULLtext value) {
-        this.noteFichier = value;
-    }
+	@XmlElement(required = true)
+	@XmlSchemaType(name = "nonNegativeInteger")
+	protected BigInteger tailleEnOctets;
 
-    /**
-     * Gets the value of the structureFichier property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the structureFichier property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getStructureFichier().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link StructureFichier }
-     *
-     *
-     */
-    public List<StructureFichier> getStructureFichier() {
-        if (structureFichier == null) {
-            structureFichier = new ArrayList<StructureFichier>();
-        }
-        return this.structureFichier;
-    }
+	/**
+	 * Gets the value of the idFichier property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdFichier() {
+		return idFichier;
+	}
 
-    /**
-     * Gets the value of the versionFormatFichier property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getVersionFormatFichier() {
-        return versionFormatFichier;
-    }
+	/**
+	 * Sets the value of the idFichier property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdFichier(String value) {
+		this.idFichier = value;
+	}
 
-    /**
-     * Sets the value of the versionFormatFichier property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setVersionFormatFichier(String value) {
-        this.versionFormatFichier = value;
-    }
+	/**
+	 * Gets the value of the nomFichier property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getNomFichier() {
+		return nomFichier;
+	}
 
-    /**
-     * Gets the value of the empreinte property.
-     *
-     * @return
-     *     possible object is
-     *     {@link EmpreinteType }
-     *
-     */
-    public EmpreinteType getEmpreinte() {
-        return empreinte;
-    }
+	/**
+	 * Sets the value of the nomFichier property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setNomFichier(String value) {
+		this.nomFichier = value;
+	}
 
-    /**
-     * Sets the value of the empreinte property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link EmpreinteType }
-     *
-     */
-    public void setEmpreinte(EmpreinteType value) {
-        this.empreinte = value;
-    }
+	/**
+	 * Gets the value of the compression property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getCompression() {
+		return compression;
+	}
 
-    /**
-     * Gets the value of the empreinteOri property.
-     *
-     * @return
-     *     possible object is
-     *     {@link EmpreinteOri }
-     *
-     */
-    public EmpreinteOri getEmpreinteOri() {
-        return empreinteOri;
-    }
+	/**
+	 * Sets the value of the compression property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setCompression(String value) {
+		this.compression = value;
+	}
 
-    /**
-     * Sets the value of the empreinteOri property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link EmpreinteOri }
-     *
-     */
-    public void setEmpreinteOri(EmpreinteOri value) {
-        this.empreinteOri = value;
-    }
+	/**
+	 * Gets the value of the encodage property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getEncodage() {
+		return encodage;
+	}
 
-    /**
-     * Gets the value of the idDocument property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getIdDocument() {
-        return idDocument;
-    }
+	/**
+	 * Sets the value of the encodage property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setEncodage(String value) {
+		this.encodage = value;
+	}
 
-    /**
-     * Sets the value of the idDocument property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setIdDocument(String value) {
-        this.idDocument = value;
-    }
+	/**
+	 * Gets the value of the formatFichier property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getFormatFichier() {
+		return formatFichier;
+	}
 
-    /**
-     * Gets the value of the migration property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getMigration() {
-        return migration;
-    }
+	/**
+	 * Sets the value of the formatFichier property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setFormatFichier(String value) {
+		this.formatFichier = value;
+	}
 
-    /**
-     * Sets the value of the migration property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setMigration(String value) {
-        this.migration = value;
-    }
+	/**
+	 * Gets the value of the noteFichier property.
+	 * @return possible object is {@link StringNotNULLtext }
+	 *
+	 */
+	public StringNotNULLtext getNoteFichier() {
+		return noteFichier;
+	}
 
-    /**
-     * Gets the value of the tailleEnOctets property.
-     *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
-     */
-    public BigInteger getTailleEnOctets() {
-        return tailleEnOctets;
-    }
+	/**
+	 * Sets the value of the noteFichier property.
+	 * @param value allowed object is {@link StringNotNULLtext }
+	 *
+	 */
+	public void setNoteFichier(StringNotNULLtext value) {
+		this.noteFichier = value;
+	}
 
-    /**
-     * Sets the value of the tailleEnOctets property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
-     */
-    public void setTailleEnOctets(BigInteger value) {
-        this.tailleEnOctets = value;
-    }
+	/**
+	 * Gets the value of the structureFichier property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the structureFichier property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getStructureFichier().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link StructureFichier }
+	 *
+	 *
+	 */
+	public List<StructureFichier> getStructureFichier() {
+		if (structureFichier == null) {
+			structureFichier = new ArrayList<StructureFichier>();
+		}
+		return this.structureFichier;
+	}
+
+	/**
+	 * Gets the value of the versionFormatFichier property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getVersionFormatFichier() {
+		return versionFormatFichier;
+	}
+
+	/**
+	 * Sets the value of the versionFormatFichier property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setVersionFormatFichier(String value) {
+		this.versionFormatFichier = value;
+	}
+
+	/**
+	 * Gets the value of the empreinte property.
+	 * @return possible object is {@link EmpreinteType }
+	 *
+	 */
+	public EmpreinteType getEmpreinte() {
+		return empreinte;
+	}
+
+	/**
+	 * Sets the value of the empreinte property.
+	 * @param value allowed object is {@link EmpreinteType }
+	 *
+	 */
+	public void setEmpreinte(EmpreinteType value) {
+		this.empreinte = value;
+	}
+
+	/**
+	 * Gets the value of the empreinteOri property.
+	 * @return possible object is {@link EmpreinteOri }
+	 *
+	 */
+	public EmpreinteOri getEmpreinteOri() {
+		return empreinteOri;
+	}
+
+	/**
+	 * Sets the value of the empreinteOri property.
+	 * @param value allowed object is {@link EmpreinteOri }
+	 *
+	 */
+	public void setEmpreinteOri(EmpreinteOri value) {
+		this.empreinteOri = value;
+	}
+
+	/**
+	 * Gets the value of the idDocument property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdDocument() {
+		return idDocument;
+	}
+
+	/**
+	 * Sets the value of the idDocument property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdDocument(String value) {
+		this.idDocument = value;
+	}
+
+	/**
+	 * Gets the value of the migration property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getMigration() {
+		return migration;
+	}
+
+	/**
+	 * Sets the value of the migration property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setMigration(String value) {
+		this.migration = value;
+	}
+
+	/**
+	 * Gets the value of the tailleEnOctets property.
+	 * @return possible object is {@link BigInteger }
+	 *
+	 */
+	public BigInteger getTailleEnOctets() {
+		return tailleEnOctets;
+	}
+
+	/**
+	 * Sets the value of the tailleEnOctets property.
+	 * @param value allowed object is {@link BigInteger }
+	 *
+	 */
+	public void setTailleEnOctets(BigInteger value) {
+		this.tailleEnOctets = value;
+	}
 
 }

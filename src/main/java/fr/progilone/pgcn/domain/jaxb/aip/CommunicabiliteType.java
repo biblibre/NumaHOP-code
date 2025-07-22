@@ -5,7 +5,6 @@
 // Generated on: 2025.07.16 at 03:45:09 PM CEST
 //
 
-
 package fr.progilone.pgcn.domain.jaxb.aip;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -25,9 +24,12 @@ import java.time.LocalDateTime;
  *
  *
  *
- * <p>Java class for communicabiliteType complex type.
+ * <p>
+ * Java class for communicabiliteType complex type.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this
+ * class.
  *
  * <pre>
  * &lt;complexType name="communicabiliteType"&gt;
@@ -45,64 +47,50 @@ import java.time.LocalDateTime;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "communicabiliteType", propOrder = {
-    "code",
-    "dateDebut"
-})
+@XmlType(name = "communicabiliteType", propOrder = { "code", "dateDebut" })
 public class CommunicabiliteType {
 
-    @XmlElement(required = true)
-    protected CodeType code;
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "date")
-    protected LocalDateTime dateDebut;
+	@XmlElement(required = true)
+	protected CodeType code;
 
-    /**
-     * Gets the value of the code property.
-     *
-     * @return
-     *     possible object is
-     *     {@link CodeType }
-     *
-     */
-    public CodeType getCode() {
-        return code;
-    }
+	@XmlElement(required = true)
+	@XmlSchemaType(name = "date")
+	protected LocalDateTime dateDebut;
 
-    /**
-     * Sets the value of the code property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link CodeType }
-     *
-     */
-    public void setCode(CodeType value) {
-        this.code = value;
-    }
+	/**
+	 * Gets the value of the code property.
+	 * @return possible object is {@link CodeType }
+	 *
+	 */
+	public CodeType getCode() {
+		return code;
+	}
 
-    /**
-     * Gets the value of the dateDebut property.
-     *
-     * @return
-     *     possible object is
-     *     {@link LocalDateTime }
-     *
-     */
-    public LocalDateTime getDateDebut() {
-        return dateDebut;
-    }
+	/**
+	 * Sets the value of the code property.
+	 * @param value allowed object is {@link CodeType }
+	 *
+	 */
+	public void setCode(CodeType value) {
+		this.code = value;
+	}
 
-    /**
-     * Sets the value of the dateDebut property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link LocalDateTime }
-     *
-     */
-    public void setDateDebut(LocalDateTime value) {
-        this.dateDebut = value;
-    }
+	/**
+	 * Gets the value of the dateDebut property.
+	 * @return possible object is {@link LocalDateTime }
+	 *
+	 */
+	public LocalDateTime getDateDebut() {
+		return dateDebut;
+	}
+
+	/**
+	 * Sets the value of the dateDebut property.
+	 * @param value allowed object is {@link LocalDateTime }
+	 *
+	 */
+	public void setDateDebut(LocalDateTime value) {
+		this.dateDebut = value;
+	}
 
 }

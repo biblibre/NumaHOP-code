@@ -5,7 +5,6 @@
 // Generated on: 2025.07.16 at 03:45:09 PM CEST
 //
 
-
 package fr.progilone.pgcn.domain.jaxb.avis;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import jakarta.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;
 
-
 /**
- * <p>Java class for pac_avisType complex type.
+ * <p>
+ * Java class for pac_avisType complex type.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this
+ * class.
  *
  * <pre>
  * &lt;complexType name="pac_avisType"&gt;
@@ -53,387 +54,308 @@ import java.time.LocalDateTime;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "pac_avisType", propOrder = {
-    "serveur",
-    "id",
-    "idVersement",
-    "idDemande",
-    "title",
-    "dateArchivage",
-    "dateDemande",
-    "dateCommunication",
-    "identifiantDocPac",
-    "identifiantDocProducteur",
-    "codeErreur",
-    "commentaire",
-    "erreurValidation",
-    "contrles"
-})
+@XmlType(name = "pac_avisType",
+		propOrder = { "serveur", "id", "idVersement", "idDemande", "title", "dateArchivage", "dateDemande",
+				"dateCommunication", "identifiantDocPac", "identifiantDocProducteur", "codeErreur", "commentaire",
+				"erreurValidation", "contrles" })
 public class PacAvisType {
 
-    @XmlElement(required = true)
-    protected String serveur;
-    protected String id;
-    @XmlElement(name = "id_versement")
-    protected String idVersement;
-    @XmlElement(name = "id_demande")
-    protected String idDemande;
-    protected List<String> title;
-    @XmlSchemaType(name = "dateTime")
-    protected LocalDateTime dateArchivage;
-    @XmlSchemaType(name = "dateTime")
-    protected LocalDateTime dateDemande;
-    @XmlSchemaType(name = "dateTime")
-    protected LocalDateTime dateCommunication;
-    protected String identifiantDocPac;
-    protected String identifiantDocProducteur;
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "token")
-    protected String codeErreur;
-    @XmlElement(required = true)
-    protected String commentaire;
-    protected String erreurValidation;
-    protected String contrles;
+	@XmlElement(required = true)
+	protected String serveur;
 
-    /**
-     * Gets the value of the serveur property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getServeur() {
-        return serveur;
-    }
+	protected String id;
 
-    /**
-     * Sets the value of the serveur property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setServeur(String value) {
-        this.serveur = value;
-    }
+	@XmlElement(name = "id_versement")
+	protected String idVersement;
 
-    /**
-     * Gets the value of the id property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getId() {
-        return id;
-    }
+	@XmlElement(name = "id_demande")
+	protected String idDemande;
 
-    /**
-     * Sets the value of the id property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
+	protected List<String> title;
 
-    /**
-     * Gets the value of the idVersement property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getIdVersement() {
-        return idVersement;
-    }
+	@XmlSchemaType(name = "dateTime")
+	protected LocalDateTime dateArchivage;
 
-    /**
-     * Sets the value of the idVersement property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setIdVersement(String value) {
-        this.idVersement = value;
-    }
+	@XmlSchemaType(name = "dateTime")
+	protected LocalDateTime dateDemande;
 
-    /**
-     * Gets the value of the idDemande property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getIdDemande() {
-        return idDemande;
-    }
+	@XmlSchemaType(name = "dateTime")
+	protected LocalDateTime dateCommunication;
 
-    /**
-     * Sets the value of the idDemande property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setIdDemande(String value) {
-        this.idDemande = value;
-    }
+	protected String identifiantDocPac;
 
-    /**
-     * Gets the value of the title property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the title property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getTitle().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getTitle() {
-        if (title == null) {
-            title = new ArrayList<String>();
-        }
-        return this.title;
-    }
+	protected String identifiantDocProducteur;
 
-    /**
-     * Gets the value of the dateArchivage property.
-     *
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *
-     */
-    public LocalDateTime getDateArchivage() {
-        return dateArchivage;
-    }
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlSchemaType(name = "token")
+	protected String codeErreur;
 
-    /**
-     * Sets the value of the dateArchivage property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *
-     */
-    public void setDateArchivage(LocalDateTime value) {
-        this.dateArchivage = value;
-    }
+	@XmlElement(required = true)
+	protected String commentaire;
 
-    /**
-     * Gets the value of the dateDemande property.
-     *
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *
-     */
-    public LocalDateTime getDateDemande() {
-        return dateDemande;
-    }
+	protected String erreurValidation;
 
-    /**
-     * Sets the value of the dateDemande property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *
-     */
-    public void setDateDemande(LocalDateTime value) {
-        this.dateDemande = value;
-    }
+	protected String contrles;
 
-    /**
-     * Gets the value of the dateCommunication property.
-     *
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *
-     */
-    public LocalDateTime getDateCommunication() {
-        return dateCommunication;
-    }
+	/**
+	 * Gets the value of the serveur property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getServeur() {
+		return serveur;
+	}
 
-    /**
-     * Sets the value of the dateCommunication property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *
-     */
-    public void setDateCommunication(LocalDateTime value) {
-        this.dateCommunication = value;
-    }
+	/**
+	 * Sets the value of the serveur property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setServeur(String value) {
+		this.serveur = value;
+	}
 
-    /**
-     * Gets the value of the identifiantDocPac property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getIdentifiantDocPac() {
-        return identifiantDocPac;
-    }
+	/**
+	 * Gets the value of the id property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getId() {
+		return id;
+	}
 
-    /**
-     * Sets the value of the identifiantDocPac property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setIdentifiantDocPac(String value) {
-        this.identifiantDocPac = value;
-    }
+	/**
+	 * Sets the value of the id property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
 
-    /**
-     * Gets the value of the identifiantDocProducteur property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getIdentifiantDocProducteur() {
-        return identifiantDocProducteur;
-    }
+	/**
+	 * Gets the value of the idVersement property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdVersement() {
+		return idVersement;
+	}
 
-    /**
-     * Sets the value of the identifiantDocProducteur property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setIdentifiantDocProducteur(String value) {
-        this.identifiantDocProducteur = value;
-    }
+	/**
+	 * Sets the value of the idVersement property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdVersement(String value) {
+		this.idVersement = value;
+	}
 
-    /**
-     * Gets the value of the codeErreur property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getCodeErreur() {
-        return codeErreur;
-    }
+	/**
+	 * Gets the value of the idDemande property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdDemande() {
+		return idDemande;
+	}
 
-    /**
-     * Sets the value of the codeErreur property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setCodeErreur(String value) {
-        this.codeErreur = value;
-    }
+	/**
+	 * Sets the value of the idDemande property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdDemande(String value) {
+		this.idDemande = value;
+	}
 
-    /**
-     * Gets the value of the commentaire property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getCommentaire() {
-        return commentaire;
-    }
+	/**
+	 * Gets the value of the title property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the title property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getTitle().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getTitle() {
+		if (title == null) {
+			title = new ArrayList<String>();
+		}
+		return this.title;
+	}
 
-    /**
-     * Sets the value of the commentaire property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setCommentaire(String value) {
-        this.commentaire = value;
-    }
+	/**
+	 * Gets the value of the dateArchivage property.
+	 * @return possible object is {@link XMLGregorianCalendar }
+	 *
+	 */
+	public LocalDateTime getDateArchivage() {
+		return dateArchivage;
+	}
 
-    /**
-     * Gets the value of the erreurValidation property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getErreurValidation() {
-        return erreurValidation;
-    }
+	/**
+	 * Sets the value of the dateArchivage property.
+	 * @param value allowed object is {@link XMLGregorianCalendar }
+	 *
+	 */
+	public void setDateArchivage(LocalDateTime value) {
+		this.dateArchivage = value;
+	}
 
-    /**
-     * Sets the value of the erreurValidation property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setErreurValidation(String value) {
-        this.erreurValidation = value;
-    }
+	/**
+	 * Gets the value of the dateDemande property.
+	 * @return possible object is {@link XMLGregorianCalendar }
+	 *
+	 */
+	public LocalDateTime getDateDemande() {
+		return dateDemande;
+	}
 
-    /**
-     * Gets the value of the contrles property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getContrles() {
-        return contrles;
-    }
+	/**
+	 * Sets the value of the dateDemande property.
+	 * @param value allowed object is {@link XMLGregorianCalendar }
+	 *
+	 */
+	public void setDateDemande(LocalDateTime value) {
+		this.dateDemande = value;
+	}
 
-    /**
-     * Sets the value of the contrles property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setContrles(String value) {
-        this.contrles = value;
-    }
+	/**
+	 * Gets the value of the dateCommunication property.
+	 * @return possible object is {@link XMLGregorianCalendar }
+	 *
+	 */
+	public LocalDateTime getDateCommunication() {
+		return dateCommunication;
+	}
+
+	/**
+	 * Sets the value of the dateCommunication property.
+	 * @param value allowed object is {@link XMLGregorianCalendar }
+	 *
+	 */
+	public void setDateCommunication(LocalDateTime value) {
+		this.dateCommunication = value;
+	}
+
+	/**
+	 * Gets the value of the identifiantDocPac property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdentifiantDocPac() {
+		return identifiantDocPac;
+	}
+
+	/**
+	 * Sets the value of the identifiantDocPac property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdentifiantDocPac(String value) {
+		this.identifiantDocPac = value;
+	}
+
+	/**
+	 * Gets the value of the identifiantDocProducteur property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdentifiantDocProducteur() {
+		return identifiantDocProducteur;
+	}
+
+	/**
+	 * Sets the value of the identifiantDocProducteur property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdentifiantDocProducteur(String value) {
+		this.identifiantDocProducteur = value;
+	}
+
+	/**
+	 * Gets the value of the codeErreur property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getCodeErreur() {
+		return codeErreur;
+	}
+
+	/**
+	 * Sets the value of the codeErreur property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setCodeErreur(String value) {
+		this.codeErreur = value;
+	}
+
+	/**
+	 * Gets the value of the commentaire property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getCommentaire() {
+		return commentaire;
+	}
+
+	/**
+	 * Sets the value of the commentaire property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setCommentaire(String value) {
+		this.commentaire = value;
+	}
+
+	/**
+	 * Gets the value of the erreurValidation property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getErreurValidation() {
+		return erreurValidation;
+	}
+
+	/**
+	 * Sets the value of the erreurValidation property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setErreurValidation(String value) {
+		this.erreurValidation = value;
+	}
+
+	/**
+	 * Gets the value of the contrles property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getContrles() {
+		return contrles;
+	}
+
+	/**
+	 * Sets the value of the contrles property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setContrles(String value) {
+		this.contrles = value;
+	}
 
 }

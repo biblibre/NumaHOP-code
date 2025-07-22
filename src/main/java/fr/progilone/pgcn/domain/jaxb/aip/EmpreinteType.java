@@ -5,7 +5,6 @@
 // Generated on: 2025.07.16 at 03:45:09 PM CEST
 //
 
-
 package fr.progilone.pgcn.domain.jaxb.aip;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -14,11 +13,13 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.XmlValue;
 
-
 /**
- * <p>Java class for empreinteType complex type.
+ * <p>
+ * Java class for empreinteType complex type.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this
+ * class.
  *
  * <pre>
  * &lt;complexType name="empreinteType"&gt;
@@ -42,62 +43,51 @@ import jakarta.xml.bind.annotation.XmlValue;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "empreinteType", propOrder = {
-    "value"
-})
+@XmlType(name = "empreinteType", propOrder = { "value" })
 public class EmpreinteType {
 
-    @XmlValue
-    protected String value;
-    @XmlAttribute(name = "type", required = true)
-    protected String type;
+	@XmlValue
+	protected String value;
 
-    /**
-     * Chaine de caractères composée d'au moins 1 caractère imprimable ou non exclusivement composé d'espace et/ou de tabulations et/ou de nouvelle ligne et/ou de retour chariot
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "type", required = true)
+	protected String type;
 
-    /**
-     * Sets the value of the value property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	/**
+	 * Chaine de caractères composée d'au moins 1 caractère imprimable ou non
+	 * exclusivement composé d'espace et/ou de tabulations et/ou de nouvelle ligne et/ou
+	 * de retour chariot
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getValue() {
+		return value;
+	}
 
-    /**
-     * Gets the value of the type property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getType() {
-        return type;
-    }
+	/**
+	 * Sets the value of the value property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * Sets the value of the type property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setType(String value) {
-        this.type = value;
-    }
+	/**
+	 * Gets the value of the type property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * Sets the value of the type property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setType(String value) {
+		this.type = value;
+	}
 
 }

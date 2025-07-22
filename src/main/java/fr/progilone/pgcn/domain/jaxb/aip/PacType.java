@@ -5,7 +5,6 @@
 // Generated on: 2025.07.16 at 03:45:09 PM CEST
 //
 
-
 package fr.progilone.pgcn.domain.jaxb.aip;
 
 import java.util.ArrayList;
@@ -15,11 +14,13 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for pacType complex type.
+ * <p>
+ * Java class for pacType complex type.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this
+ * class.
  *
  * <pre>
  * &lt;complexType name="pacType"&gt;
@@ -38,95 +39,79 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "pacType", propOrder = {
-    "docDC",
-    "docMeta",
-    "fichMeta"
-})
+@XmlType(name = "pacType", propOrder = { "docDC", "docMeta", "fichMeta" })
 public class PacType {
 
-    @XmlElement(name = "DocDC", required = true)
-    protected DocDCType docDC;
-    @XmlElement(name = "DocMeta", required = true)
-    protected DocMetaType docMeta;
-    @XmlElement(name = "FichMeta")
-    protected List<FichMetaType> fichMeta;
+	@XmlElement(name = "DocDC", required = true)
+	protected DocDCType docDC;
 
-    /**
-     * Gets the value of the docDC property.
-     *
-     * @return
-     *     possible object is
-     *     {@link DocDCType }
-     *
-     */
-    public DocDCType getDocDC() {
-        return docDC;
-    }
+	@XmlElement(name = "DocMeta", required = true)
+	protected DocMetaType docMeta;
 
-    /**
-     * Sets the value of the docDC property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link DocDCType }
-     *
-     */
-    public void setDocDC(DocDCType value) {
-        this.docDC = value;
-    }
+	@XmlElement(name = "FichMeta")
+	protected List<FichMetaType> fichMeta;
 
-    /**
-     * Gets the value of the docMeta property.
-     *
-     * @return
-     *     possible object is
-     *     {@link DocMetaType }
-     *
-     */
-    public DocMetaType getDocMeta() {
-        return docMeta;
-    }
+	/**
+	 * Gets the value of the docDC property.
+	 * @return possible object is {@link DocDCType }
+	 *
+	 */
+	public DocDCType getDocDC() {
+		return docDC;
+	}
 
-    /**
-     * Sets the value of the docMeta property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link DocMetaType }
-     *
-     */
-    public void setDocMeta(DocMetaType value) {
-        this.docMeta = value;
-    }
+	/**
+	 * Sets the value of the docDC property.
+	 * @param value allowed object is {@link DocDCType }
+	 *
+	 */
+	public void setDocDC(DocDCType value) {
+		this.docDC = value;
+	}
 
-    /**
-     * Gets the value of the fichMeta property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the fichMeta property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getFichMeta().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link FichMetaType }
-     *
-     *
-     */
-    public List<FichMetaType> getFichMeta() {
-        if (fichMeta == null) {
-            fichMeta = new ArrayList<FichMetaType>();
-        }
-        return this.fichMeta;
-    }
+	/**
+	 * Gets the value of the docMeta property.
+	 * @return possible object is {@link DocMetaType }
+	 *
+	 */
+	public DocMetaType getDocMeta() {
+		return docMeta;
+	}
+
+	/**
+	 * Sets the value of the docMeta property.
+	 * @param value allowed object is {@link DocMetaType }
+	 *
+	 */
+	public void setDocMeta(DocMetaType value) {
+		this.docMeta = value;
+	}
+
+	/**
+	 * Gets the value of the fichMeta property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the fichMeta property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getFichMeta().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link FichMetaType }
+	 *
+	 *
+	 */
+	public List<FichMetaType> getFichMeta() {
+		if (fichMeta == null) {
+			fichMeta = new ArrayList<FichMetaType>();
+		}
+		return this.fichMeta;
+	}
 
 }

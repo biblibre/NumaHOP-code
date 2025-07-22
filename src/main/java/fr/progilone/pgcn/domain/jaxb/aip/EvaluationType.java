@@ -5,7 +5,6 @@
 // Generated on: 2025.07.16 at 03:45:09 PM CEST
 //
 
-
 package fr.progilone.pgcn.domain.jaxb.aip;
 
 import javax.xml.datatype.Duration;
@@ -26,9 +25,12 @@ import java.time.LocalDateTime;
  *
  *
  *
- * <p>Java class for evaluationType complex type.
+ * <p>
+ * Java class for evaluationType complex type.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this
+ * class.
  *
  * <pre>
  * &lt;complexType name="evaluationType"&gt;
@@ -47,91 +49,71 @@ import java.time.LocalDateTime;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "evaluationType", propOrder = {
-    "dua",
-    "traitement",
-    "dateDebut"
-})
+@XmlType(name = "evaluationType", propOrder = { "dua", "traitement", "dateDebut" })
 public class EvaluationType {
 
-    @XmlElement(name = "DUA", required = true)
-    protected Duration dua;
-    @XmlElement(required = true)
-    protected TraitementType traitement;
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "date")
-    protected LocalDateTime dateDebut;
+	@XmlElement(name = "DUA", required = true)
+	protected Duration dua;
 
-    /**
-     * Gets the value of the dua property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Duration }
-     *
-     */
-    public Duration getDUA() {
-        return dua;
-    }
+	@XmlElement(required = true)
+	protected TraitementType traitement;
 
-    /**
-     * Sets the value of the dua property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Duration }
-     *
-     */
-    public void setDUA(Duration value) {
-        this.dua = value;
-    }
+	@XmlElement(required = true)
+	@XmlSchemaType(name = "date")
+	protected LocalDateTime dateDebut;
 
-    /**
-     * Gets the value of the traitement property.
-     *
-     * @return
-     *     possible object is
-     *     {@link TraitementType }
-     *
-     */
-    public TraitementType getTraitement() {
-        return traitement;
-    }
+	/**
+	 * Gets the value of the dua property.
+	 * @return possible object is {@link Duration }
+	 *
+	 */
+	public Duration getDUA() {
+		return dua;
+	}
 
-    /**
-     * Sets the value of the traitement property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link TraitementType }
-     *
-     */
-    public void setTraitement(TraitementType value) {
-        this.traitement = value;
-    }
+	/**
+	 * Sets the value of the dua property.
+	 * @param value allowed object is {@link Duration }
+	 *
+	 */
+	public void setDUA(Duration value) {
+		this.dua = value;
+	}
 
-    /**
-     * Gets the value of the dateDebut property.
-     *
-     * @return
-     *     possible object is
-     *     {@link LocalDateTime }
-     *
-     */
-    public LocalDateTime getDateDebut() {
-        return dateDebut;
-    }
+	/**
+	 * Gets the value of the traitement property.
+	 * @return possible object is {@link TraitementType }
+	 *
+	 */
+	public TraitementType getTraitement() {
+		return traitement;
+	}
 
-    /**
-     * Sets the value of the dateDebut property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link LocalDateTime }
-     *
-     */
-    public void setDateDebut(LocalDateTime value) {
-        this.dateDebut = value;
-    }
+	/**
+	 * Sets the value of the traitement property.
+	 * @param value allowed object is {@link TraitementType }
+	 *
+	 */
+	public void setTraitement(TraitementType value) {
+		this.traitement = value;
+	}
+
+	/**
+	 * Gets the value of the dateDebut property.
+	 * @return possible object is {@link LocalDateTime }
+	 *
+	 */
+	public LocalDateTime getDateDebut() {
+		return dateDebut;
+	}
+
+	/**
+	 * Sets the value of the dateDebut property.
+	 * @param value allowed object is {@link LocalDateTime }
+	 *
+	 */
+	public void setDateDebut(LocalDateTime value) {
+		this.dateDebut = value;
+	}
 
 }

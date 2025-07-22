@@ -5,7 +5,8 @@
 // Generated on: 2025.07.16 at 03:45:09 PM CEST
 //
 
-@jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.cines.fr/pac/aip", elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.cines.fr/pac/aip",
+		elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)
 @XmlJavaTypeAdapter(value = LocalDateTimeXmlAdapter.class, type = LocalDateTime.class)
 package fr.progilone.pgcn.domain.jaxb.aip;
 

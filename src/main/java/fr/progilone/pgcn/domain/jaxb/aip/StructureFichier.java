@@ -5,7 +5,6 @@
 // Generated on: 2025.07.16 at 03:45:09 PM CEST
 //
 
-
 package fr.progilone.pgcn.domain.jaxb.aip;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -15,7 +14,6 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.XmlValue;
-
 
 /**
  *
@@ -31,9 +29,12 @@ import jakarta.xml.bind.annotation.XmlValue;
  *
  *
  *
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this
+ * class.
  *
  * <pre>
  * &lt;complexType&gt;
@@ -57,90 +58,74 @@ import jakarta.xml.bind.annotation.XmlValue;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "value"
-})
+@XmlType(name = "", propOrder = { "value" })
 @XmlRootElement(name = "structureFichier")
 public class StructureFichier {
 
-    @XmlValue
-    protected String value;
-    @XmlAttribute(name = "type")
-    protected String type;
-    @XmlAttribute(name = "hash")
-    @XmlSchemaType(name = "anySimpleType")
-    protected String hash;
+	@XmlValue
+	protected String value;
 
-    /**
-     * Chaine de caractères composée d'au moins 1 caractère imprimable ou non exclusivement composé d'espace et/ou de tabulations et/ou de nouvelle ligne et/ou de retour chariot
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getValue() {
-        return value;
-    }
+	@XmlAttribute(name = "type")
+	protected String type;
 
-    /**
-     * Sets the value of the value property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	@XmlAttribute(name = "hash")
+	@XmlSchemaType(name = "anySimpleType")
+	protected String hash;
 
-    /**
-     * Gets the value of the type property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getType() {
-        return type;
-    }
+	/**
+	 * Chaine de caractères composée d'au moins 1 caractère imprimable ou non
+	 * exclusivement composé d'espace et/ou de tabulations et/ou de nouvelle ligne et/ou
+	 * de retour chariot
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getValue() {
+		return value;
+	}
 
-    /**
-     * Sets the value of the type property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setType(String value) {
-        this.type = value;
-    }
+	/**
+	 * Sets the value of the value property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * Gets the value of the hash property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getHash() {
-        return hash;
-    }
+	/**
+	 * Gets the value of the type property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getType() {
+		return type;
+	}
 
-    /**
-     * Sets the value of the hash property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setHash(String value) {
-        this.hash = value;
-    }
+	/**
+	 * Sets the value of the type property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setType(String value) {
+		this.type = value;
+	}
+
+	/**
+	 * Gets the value of the hash property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getHash() {
+		return hash;
+	}
+
+	/**
+	 * Sets the value of the hash property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setHash(String value) {
+		this.hash = value;
+	}
 
 }

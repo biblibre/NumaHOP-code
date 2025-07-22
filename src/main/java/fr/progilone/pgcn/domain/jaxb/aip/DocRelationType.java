@@ -5,14 +5,12 @@
 // Generated on: 2025.07.16 at 03:45:09 PM CEST
 //
 
-
 package fr.progilone.pgcn.domain.jaxb.aip;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
-
 
 /**
  *
@@ -23,9 +21,12 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  *
  *
- * <p>Java class for docRelationType complex type.
+ * <p>
+ * Java class for docRelationType complex type.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this
+ * class.
  *
  * <pre>
  * &lt;complexType name="docRelationType"&gt;
@@ -44,90 +45,70 @@ import jakarta.xml.bind.annotation.XmlType;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "docRelationType", propOrder = {
-    "typeRelation",
-    "sourceRelation",
-    "identifiantSourceRelation"
-})
+@XmlType(name = "docRelationType", propOrder = { "typeRelation", "sourceRelation", "identifiantSourceRelation" })
 public class DocRelationType {
 
-    @XmlElement(required = true)
-    protected String typeRelation;
-    @XmlElement(required = true)
-    protected String sourceRelation;
-    @XmlElement(required = true)
-    protected String identifiantSourceRelation;
+	@XmlElement(required = true)
+	protected String typeRelation;
 
-    /**
-     * Gets the value of the typeRelation property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getTypeRelation() {
-        return typeRelation;
-    }
+	@XmlElement(required = true)
+	protected String sourceRelation;
 
-    /**
-     * Sets the value of the typeRelation property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setTypeRelation(String value) {
-        this.typeRelation = value;
-    }
+	@XmlElement(required = true)
+	protected String identifiantSourceRelation;
 
-    /**
-     * Gets the value of the sourceRelation property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getSourceRelation() {
-        return sourceRelation;
-    }
+	/**
+	 * Gets the value of the typeRelation property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getTypeRelation() {
+		return typeRelation;
+	}
 
-    /**
-     * Sets the value of the sourceRelation property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setSourceRelation(String value) {
-        this.sourceRelation = value;
-    }
+	/**
+	 * Sets the value of the typeRelation property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setTypeRelation(String value) {
+		this.typeRelation = value;
+	}
 
-    /**
-     * Gets the value of the identifiantSourceRelation property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getIdentifiantSourceRelation() {
-        return identifiantSourceRelation;
-    }
+	/**
+	 * Gets the value of the sourceRelation property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getSourceRelation() {
+		return sourceRelation;
+	}
 
-    /**
-     * Sets the value of the identifiantSourceRelation property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setIdentifiantSourceRelation(String value) {
-        this.identifiantSourceRelation = value;
-    }
+	/**
+	 * Sets the value of the sourceRelation property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setSourceRelation(String value) {
+		this.sourceRelation = value;
+	}
+
+	/**
+	 * Gets the value of the identifiantSourceRelation property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdentifiantSourceRelation() {
+		return identifiantSourceRelation;
+	}
+
+	/**
+	 * Sets the value of the identifiantSourceRelation property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdentifiantSourceRelation(String value) {
+		this.identifiantSourceRelation = value;
+	}
 
 }

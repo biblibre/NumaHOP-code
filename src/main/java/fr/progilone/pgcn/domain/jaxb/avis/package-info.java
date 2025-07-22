@@ -6,7 +6,7 @@
 //
 
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.cines.fr/pac/avis",
-    elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)
+		elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)
 @XmlJavaTypeAdapter(value = LocalDateTimeXmlAdapter.class, type = LocalDateTime.class)
 package fr.progilone.pgcn.domain.jaxb.avis;
 

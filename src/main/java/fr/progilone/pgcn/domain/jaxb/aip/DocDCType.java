@@ -5,7 +5,6 @@
 // Generated on: 2025.07.16 at 03:45:09 PM CEST
 //
 
-
 package fr.progilone.pgcn.domain.jaxb.aip;
 
 import java.util.ArrayList;
@@ -18,11 +17,13 @@ import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for DocDCType complex type.
+ * <p>
+ * Java class for DocDCType complex type.
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within this
+ * class.
  *
  * <pre>
  * &lt;complexType name="DocDCType"&gt;
@@ -53,476 +54,437 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DocDCType", propOrder = {
-    "title",
-    "creator",
-    "subject",
-    "description",
-    "publisher",
-    "contributor",
-    "date",
-    "type",
-    "format",
-    "identifier",
-    "source",
-    "language",
-    "relation",
-    "coverage",
-    "rights"
-})
+@XmlType(name = "DocDCType", propOrder = { "title", "creator", "subject", "description", "publisher", "contributor",
+		"date", "type", "format", "identifier", "source", "language", "relation", "coverage", "rights" })
 public class DocDCType {
 
-    @XmlElement(required = true)
-    protected List<StringNotNULLtext> title;
-    @XmlElement(required = true)
-    protected List<String> creator;
-    @XmlElement(required = true)
-    protected List<StringNotNULLtext> subject;
-    @XmlElement(required = true)
-    protected List<StringNotNULLtext> description;
-    @XmlElement(required = true)
-    protected List<String> publisher;
-    protected List<String> contributor;
-    @XmlElement(required = true)
-    protected String date;
-    @XmlElement(required = true)
-    protected List<StringNotNULLtext> type;
-    @XmlElement(required = true)
-    protected List<StringNotNULLtext> format;
-    protected String identifier;
-    protected List<StringNotNULLtext> source;
-    @XmlElement(required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "token")
-    protected List<String> language;
-    protected List<StringNotNULLtext> relation;
-    protected List<StringNotNULLtext> coverage;
-    @XmlElement(required = true)
-    protected List<StringNotNULLtext> rights;
+	@XmlElement(required = true)
+	protected List<StringNotNULLtext> title;
 
-    /**
-     * Gets the value of the title property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the title property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getTitle().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link StringNotNULLtext }
-     *
-     *
-     */
-    public List<StringNotNULLtext> getTitle() {
-        if (title == null) {
-            title = new ArrayList<StringNotNULLtext>();
-        }
-        return this.title;
-    }
+	@XmlElement(required = true)
+	protected List<String> creator;
 
-    /**
-     * Gets the value of the creator property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the creator property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getCreator().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getCreator() {
-        if (creator == null) {
-            creator = new ArrayList<String>();
-        }
-        return this.creator;
-    }
+	@XmlElement(required = true)
+	protected List<StringNotNULLtext> subject;
 
-    /**
-     * Gets the value of the subject property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the subject property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getSubject().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link StringNotNULLtext }
-     *
-     *
-     */
-    public List<StringNotNULLtext> getSubject() {
-        if (subject == null) {
-            subject = new ArrayList<StringNotNULLtext>();
-        }
-        return this.subject;
-    }
+	@XmlElement(required = true)
+	protected List<StringNotNULLtext> description;
 
-    /**
-     * Gets the value of the description property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the description property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getDescription().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link StringNotNULLtext }
-     *
-     *
-     */
-    public List<StringNotNULLtext> getDescription() {
-        if (description == null) {
-            description = new ArrayList<StringNotNULLtext>();
-        }
-        return this.description;
-    }
+	@XmlElement(required = true)
+	protected List<String> publisher;
 
-    /**
-     * Gets the value of the publisher property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the publisher property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getPublisher().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getPublisher() {
-        if (publisher == null) {
-            publisher = new ArrayList<String>();
-        }
-        return this.publisher;
-    }
+	protected List<String> contributor;
 
-    /**
-     * Gets the value of the contributor property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the contributor property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getContributor().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getContributor() {
-        if (contributor == null) {
-            contributor = new ArrayList<String>();
-        }
-        return this.contributor;
-    }
+	@XmlElement(required = true)
+	protected String date;
 
-    /**
-     * Gets the value of the date property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getDate() {
-        return date;
-    }
+	@XmlElement(required = true)
+	protected List<StringNotNULLtext> type;
 
-    /**
-     * Sets the value of the date property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setDate(String value) {
-        this.date = value;
-    }
+	@XmlElement(required = true)
+	protected List<StringNotNULLtext> format;
 
-    /**
-     * Gets the value of the type property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the type property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getType().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link StringNotNULLtext }
-     *
-     *
-     */
-    public List<StringNotNULLtext> getType() {
-        if (type == null) {
-            type = new ArrayList<StringNotNULLtext>();
-        }
-        return this.type;
-    }
+	protected String identifier;
 
-    /**
-     * Gets the value of the format property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the format property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getFormat().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link StringNotNULLtext }
-     *
-     *
-     */
-    public List<StringNotNULLtext> getFormat() {
-        if (format == null) {
-            format = new ArrayList<StringNotNULLtext>();
-        }
-        return this.format;
-    }
+	protected List<StringNotNULLtext> source;
 
-    /**
-     * Gets the value of the identifier property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getIdentifier() {
-        return identifier;
-    }
+	@XmlElement(required = true)
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlSchemaType(name = "token")
+	protected List<String> language;
 
-    /**
-     * Sets the value of the identifier property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setIdentifier(String value) {
-        this.identifier = value;
-    }
+	protected List<StringNotNULLtext> relation;
 
-    /**
-     * Gets the value of the source property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the source property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getSource().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link StringNotNULLtext }
-     *
-     *
-     */
-    public List<StringNotNULLtext> getSource() {
-        if (source == null) {
-            source = new ArrayList<StringNotNULLtext>();
-        }
-        return this.source;
-    }
+	protected List<StringNotNULLtext> coverage;
 
-    /**
-     * Gets the value of the language property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the language property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getLanguage().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     *
-     *
-     */
-    public List<String> getLanguage() {
-        if (language == null) {
-            language = new ArrayList<String>();
-        }
-        return this.language;
-    }
+	@XmlElement(required = true)
+	protected List<StringNotNULLtext> rights;
 
-    /**
-     * Gets the value of the relation property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the relation property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getRelation().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link StringNotNULLtext }
-     *
-     *
-     */
-    public List<StringNotNULLtext> getRelation() {
-        if (relation == null) {
-            relation = new ArrayList<StringNotNULLtext>();
-        }
-        return this.relation;
-    }
+	/**
+	 * Gets the value of the title property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the title property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getTitle().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link StringNotNULLtext }
+	 *
+	 *
+	 */
+	public List<StringNotNULLtext> getTitle() {
+		if (title == null) {
+			title = new ArrayList<StringNotNULLtext>();
+		}
+		return this.title;
+	}
 
-    /**
-     * Gets the value of the coverage property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the coverage property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getCoverage().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link StringNotNULLtext }
-     *
-     *
-     */
-    public List<StringNotNULLtext> getCoverage() {
-        if (coverage == null) {
-            coverage = new ArrayList<StringNotNULLtext>();
-        }
-        return this.coverage;
-    }
+	/**
+	 * Gets the value of the creator property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the creator property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getCreator().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getCreator() {
+		if (creator == null) {
+			creator = new ArrayList<String>();
+		}
+		return this.creator;
+	}
 
-    /**
-     * Gets the value of the rights property.
-     *
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the Jakarta XML Binding object.
-     * This is why there is not a <CODE>set</CODE> method for the rights property.
-     *
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getRights().add(newItem);
-     * </pre>
-     *
-     *
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link StringNotNULLtext }
-     *
-     *
-     */
-    public List<StringNotNULLtext> getRights() {
-        if (rights == null) {
-            rights = new ArrayList<StringNotNULLtext>();
-        }
-        return this.rights;
-    }
+	/**
+	 * Gets the value of the subject property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the subject property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getSubject().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link StringNotNULLtext }
+	 *
+	 *
+	 */
+	public List<StringNotNULLtext> getSubject() {
+		if (subject == null) {
+			subject = new ArrayList<StringNotNULLtext>();
+		}
+		return this.subject;
+	}
+
+	/**
+	 * Gets the value of the description property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the description property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getDescription().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link StringNotNULLtext }
+	 *
+	 *
+	 */
+	public List<StringNotNULLtext> getDescription() {
+		if (description == null) {
+			description = new ArrayList<StringNotNULLtext>();
+		}
+		return this.description;
+	}
+
+	/**
+	 * Gets the value of the publisher property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the publisher property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getPublisher().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getPublisher() {
+		if (publisher == null) {
+			publisher = new ArrayList<String>();
+		}
+		return this.publisher;
+	}
+
+	/**
+	 * Gets the value of the contributor property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the contributor property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getContributor().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getContributor() {
+		if (contributor == null) {
+			contributor = new ArrayList<String>();
+		}
+		return this.contributor;
+	}
+
+	/**
+	 * Gets the value of the date property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getDate() {
+		return date;
+	}
+
+	/**
+	 * Sets the value of the date property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setDate(String value) {
+		this.date = value;
+	}
+
+	/**
+	 * Gets the value of the type property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the type property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getType().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link StringNotNULLtext }
+	 *
+	 *
+	 */
+	public List<StringNotNULLtext> getType() {
+		if (type == null) {
+			type = new ArrayList<StringNotNULLtext>();
+		}
+		return this.type;
+	}
+
+	/**
+	 * Gets the value of the format property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the format property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getFormat().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link StringNotNULLtext }
+	 *
+	 *
+	 */
+	public List<StringNotNULLtext> getFormat() {
+		if (format == null) {
+			format = new ArrayList<StringNotNULLtext>();
+		}
+		return this.format;
+	}
+
+	/**
+	 * Gets the value of the identifier property.
+	 * @return possible object is {@link String }
+	 *
+	 */
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	/**
+	 * Sets the value of the identifier property.
+	 * @param value allowed object is {@link String }
+	 *
+	 */
+	public void setIdentifier(String value) {
+		this.identifier = value;
+	}
+
+	/**
+	 * Gets the value of the source property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the source property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getSource().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link StringNotNULLtext }
+	 *
+	 *
+	 */
+	public List<StringNotNULLtext> getSource() {
+		if (source == null) {
+			source = new ArrayList<StringNotNULLtext>();
+		}
+		return this.source;
+	}
+
+	/**
+	 * Gets the value of the language property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the language property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getLanguage().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link String }
+	 *
+	 *
+	 */
+	public List<String> getLanguage() {
+		if (language == null) {
+			language = new ArrayList<String>();
+		}
+		return this.language;
+	}
+
+	/**
+	 * Gets the value of the relation property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the relation property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getRelation().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link StringNotNULLtext }
+	 *
+	 *
+	 */
+	public List<StringNotNULLtext> getRelation() {
+		if (relation == null) {
+			relation = new ArrayList<StringNotNULLtext>();
+		}
+		return this.relation;
+	}
+
+	/**
+	 * Gets the value of the coverage property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the coverage property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getCoverage().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link StringNotNULLtext }
+	 *
+	 *
+	 */
+	public List<StringNotNULLtext> getCoverage() {
+		if (coverage == null) {
+			coverage = new ArrayList<StringNotNULLtext>();
+		}
+		return this.coverage;
+	}
+
+	/**
+	 * Gets the value of the rights property.
+	 *
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot.
+	 * Therefore any modification you make to the returned list will be present inside the
+	 * Jakarta XML Binding object. This is why there is not a <CODE>set</CODE> method for
+	 * the rights property.
+	 *
+	 * <p>
+	 * For example, to add a new item, do as follows: <pre>
+	 *    getRights().add(newItem);
+	 * </pre>
+	 *
+	 *
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link StringNotNULLtext }
+	 *
+	 *
+	 */
+	public List<StringNotNULLtext> getRights() {
+		if (rights == null) {
+			rights = new ArrayList<StringNotNULLtext>();
+		}
+		return this.rights;
+	}
 
 }
