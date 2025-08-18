@@ -11,23 +11,12 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.XmlValue;
 
 /**
- *
- *
- * <pre>
- * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;description xmlns:ISO-639-3="urn:un:unece:uncefact:codelist:draft:DAF:languageCode:2011-10-07" xmlns:RA="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;description de la structure du fichier&lt;/description&gt;
- * </pre>
- *
- *
- * <pre>
- * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;exemple xmlns:ISO-639-3="urn:un:unece:uncefact:codelist:draft:DAF:languageCode:2011-10-07" xmlns:RA="urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;nom d’un fichier associé qui en décrit la structure, texte libre, URI du schéma xsd&lt;/exemple&gt;
- * </pre>
- *
- *
+ * empreinte numérique (fonction de hachage) du fichier calculée avec les algorithmes MD5,
+ * SHA-1 ou SHA-256 et fournie par le service versant
  *
  * <p>
  * Java class for anonymous complex type.
@@ -40,16 +29,15 @@ import jakarta.xml.bind.annotation.XmlValue;
  * &lt;complexType&gt;
  *   &lt;simpleContent&gt;
  *     &lt;extension base="&lt;http://www.cines.fr/pac/aip&gt;stringNotNULL"&gt;
- *       &lt;attribute name="type"&gt;
+ *       &lt;attribute name="type" use="required"&gt;
  *         &lt;simpleType&gt;
  *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
- *             &lt;enumeration value="DTD"/&gt;
- *             &lt;enumeration value="XSD"/&gt;
- *             &lt;enumeration value="RNG"/&gt;
+ *             &lt;enumeration value="MD5"/&gt;
+ *             &lt;enumeration value="SHA-1"/&gt;
+ *             &lt;enumeration value="SHA-256"/&gt;
  *           &lt;/restriction&gt;
  *         &lt;/simpleType&gt;
  *       &lt;/attribute&gt;
- *       &lt;attribute name="hash" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" /&gt;
  *     &lt;/extension&gt;
  *   &lt;/simpleContent&gt;
  * &lt;/complexType&gt;
@@ -59,18 +47,14 @@ import jakarta.xml.bind.annotation.XmlValue;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "value" })
-@XmlRootElement(name = "structureFichier")
-public class StructureFichier {
+@XmlRootElement(name = "empreinteOri")
+public class EmpreinteOri {
 
 	@XmlValue
 	protected String value;
 
-	@XmlAttribute(name = "type")
+	@XmlAttribute(name = "type", required = true)
 	protected String type;
-
-	@XmlAttribute(name = "hash")
-	@XmlSchemaType(name = "anySimpleType")
-	protected String hash;
 
 	/**
 	 * Chaine de caractères composée d'au moins 1 caractère imprimable ou non
@@ -108,24 +92,6 @@ public class StructureFichier {
 	 */
 	public void setType(String value) {
 		this.type = value;
-	}
-
-	/**
-	 * Gets the value of the hash property.
-	 * @return possible object is {@link String }
-	 *
-	 */
-	public String getHash() {
-		return hash;
-	}
-
-	/**
-	 * Sets the value of the hash property.
-	 * @param value allowed object is {@link String }
-	 *
-	 */
-	public void setHash(String value) {
-		this.hash = value;
 	}
 
 }

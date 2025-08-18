@@ -1,0 +1,55 @@
+Date: Tue, 1 Jul 2025 14:34:03 +0200 (CEST)
+From: pac sys <pac_sys@cines.fr>
+Sender: Serveur PAC Production <vitam-connector@cines.fr>
+To: pac_message_test@cines.fr, numahop@test.test
+Subject: [ARCHIVAGE CINES BSG] AVIS_PAC : rejet versement
+MIME-Version: 1.0
+Content-Type: text/xml; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<pac_avis xmlns=3D"http://www.cines.fr/pac/avis" xmlns:xsi=3D"http://www.w3=
+.org/2001/XMLSchema-instance" xsi:schemaLocation=3D"http://www.cines.fr/pac=
+/avis http://www.cines.fr/pac/3.0/avis.xsd">
+    <serveur>VERSEMENT</serveur>
+    <id>REJET_VERSEMENT</id>
+    <id_versement>ID_TEST</id_versement>
+    <codeErreur>E0500</codeErreur>
+    <commentaire>Technical error : [E999: Erreur technique : unexpected ele=
+ment (uri:"fr:gouv:culture:archivesdefrance:seda:v2.2", local:"ArchiveTrans=
+ferReply"). Expected elements are &lt;{fr:gouv:culture:archivesdefrance:sed=
+a:v2.1}Acknowledgement&gt;,&lt;{fr:gouv:culture:archivesdefrance:seda:v2.1}=
+AgentAbstract&gt;,&lt;{fr:gouv:culture:archivesdefrance:seda:v2.1}ArchiveDe=
+liveryRequest&gt;,&lt;{fr:gouv:culture:archivesdefrance:seda:v2.1}ArchiveDe=
+liveryRequestReply&gt;,&lt;{fr:gouv:culture:archivesdefrance:seda:v2.1}Arch=
+iveDestructionNotification&gt;,&lt;{fr:gouv:culture:archivesdefrance:seda:v=
+2.1}ArchiveModificationNotification&gt;,&lt;{fr:gouv:culture:archivesdefran=
+ce:seda:v2.1}ArchiveRestitutionRequest&gt;,&lt;{fr:gouv:culture:archivesdef=
+rance:seda:v2.1}ArchiveRestitutionRequestReply&gt;,&lt;{fr:gouv:culture:arc=
+hivesdefrance:seda:v2.1}ArchiveTransfer&gt;,&lt;{fr:gouv:culture:archivesde=
+france:seda:v2.1}ArchiveTransferReply&gt;,&lt;{fr:gouv:culture:archivesdefr=
+ance:seda:v2.1}ArchiveTransferRequest&gt;,&lt;{fr:gouv:culture:archivesdefr=
+ance:seda:v2.1}ArchiveTransferRequestReply&gt;,&lt;{fr:gouv:culture:archive=
+sdefrance:seda:v2.1}ArchiveUnitReferenceAbstract&gt;,&lt;{fr:gouv:culture:a=
+rchivesdefrance:seda:v2.1}AuthorizationControlAuthorityRequest&gt;,&lt;{fr:=
+gouv:culture:archivesdefrance:seda:v2.1}AuthorizationControlAuthorityReques=
+tReply&gt;,&lt;{fr:gouv:culture:archivesdefrance:seda:v2.1}AuthorizationOri=
+ginatingAgencyRequest&gt;,&lt;{fr:gouv:culture:archivesdefrance:seda:v2.1}A=
+uthorizationOriginatingAgencyRequestReply&gt;,&lt;{fr:gouv:culture:archives=
+defrance:seda:v2.1}EventAbstract&gt;,&lt;{fr:gouv:culture:archivesdefrance:=
+seda:v2.1}ObjectGroupExtenstionAbstract&gt;,&lt;{fr:gouv:culture:archivesde=
+france:seda:v2.1}OtherCodeListAbstract&gt;,&lt;{fr:gouv:culture:archivesdef=
+rance:seda:v2.1}OtherCoreTechnicalMetadataAbstract&gt;,&lt;{fr:gouv:culture=
+:archivesdefrance:seda:v2.1}OtherDimensionsAbstract&gt;,&lt;{fr:gouv:cultur=
+e:archivesdefrance:seda:v2.1}OtherManagementAbstract&gt;,&lt;{http://purl.o=
+rg/dc/elements/1.1/}any&gt;,&lt;{http://purl.org/dc/elements/1.1/}contribut=
+or&gt;,&lt;{http://purl.org/dc/elements/1.1/}coverage&gt;,&lt;{http://purl.=
+org/dc/elements/1.1/}creator&gt;,&lt;{http://purl.org/dc/elements/1.1/}date=
+&gt;,&lt;{http://purl.org/dc/elements/1.1/}description&gt;,&lt;{http://purl=
+.org/dc/elements/1.1/}format&gt;,&lt;{http://purl.org/dc/elements/1.1/}iden=
+tifier&gt;,&lt;{http://purl.org/dc/elements/1.1/}language&gt;,&lt;{http://p=
+url.org/dc/elements/1.1/}publisher&gt;,&lt;{http://purl.org/dc/elements/1.1=
+/}relation&gt;,&lt;{http://purl.org/dc/elements/1.1/}rights&gt;,&lt;{http:/=
+/purl.org/dc/elements/1.1/}source&gt;,&lt;{http://purl.org/dc/elements/1.1/=
+}subject&gt;,&lt;{http://purl.org/dc/elements/1.1/}title&gt;,&lt;{http://pu=
+rl.org/dc/elements/1.1/}type&gt;].</commentaire>
+</pac_avis>

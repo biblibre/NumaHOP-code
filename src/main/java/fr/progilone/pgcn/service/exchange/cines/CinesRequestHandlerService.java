@@ -13,47 +13,38 @@ import fr.progilone.pgcn.service.exchange.mail.MailboxService;
 import fr.progilone.pgcn.service.storage.FileStorageManager;
 import fr.progilone.pgcn.service.util.DateUtils;
 import fr.progilone.pgcn.service.util.transaction.TransactionService;
-import jakarta.activation.DataHandler;
-import jakarta.activation.DataSource;
 import jakarta.annotation.PostConstruct;
+import jakarta.mail.BodyPart;
 import jakarta.mail.Flags;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Multipart;
 import jakarta.mail.Part;
-import jakarta.mail.internet.MimeBodyPart;
-import jakarta.mail.internet.MimeMultipart;
-import jakarta.mail.util.ByteArrayDataSource;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.UnmarshalException;
 import jakarta.xml.bind.Unmarshaller;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -75,12 +66,12 @@ public class CinesRequestHandlerService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CinesRequestHandlerService.class);
 
-	// Id des réponses pac_avis
-	private static final String REP_ACCUSE_RECEPTION_DE_VERSEMENT = "ACCUSE_RECEPTION_DE_VERSEMENT";
+	// Id of pac_avis responses.
+	protected static final String REP_ACCUSE_RECEPTION_DE_VERSEMENT = "ACCUSE_RECEPTION_DE_VERSEMENT";
 
-	private static final String REP_CERTIFICAT_ARCHIVAGE = "CERTIFICAT_ARCHIVAGE";
+	protected static final String REP_CERTIFICAT_ARCHIVAGE = "CERTIFICAT_ARCHIVAGE";
 
-	private static final String REP_REJET_VERSEMENT = "REJET_VERSEMENT";
+	protected static final String REP_REJET_VERSEMENT = "REJET_VERSEMENT";
 
 	@Value("${instance.libraries}")
 	private String[] instanceLibraries;
@@ -186,31 +177,27 @@ public class CinesRequestHandlerService {
 					if (messages.length > 0) {
 
 						transactionService.executeInNewTransaction(() -> {
-
 							for (final Message message : messages) {
 
 								try {
 									final String subject = message.getSubject();
-									// On ne traite pas les messages autres genre Ticket
-									// etc..
 									if (subject == null || !subject.contains(CINES_SUBJECT_ARCHIVAGE)) {
+										// Ignore all messages that are not from the
+										// CINES.
 										message.setFlag(Flags.Flag.SEEN, true);
 									}
 									else {
-										// les messages qui nous interessent
-										final CinesResponse response = parseMessage(message);
-										if (updateExport(response, conf.getLibrary())) {
-											message.setFlag(Flags.Flag.SEEN, true);
-										}
-										else {
-											message.setFlag(Flags.Flag.SEEN, false);
-										}
+										final Boolean shouldBeRead = parseCinesMessage(message)
+											.map(resp -> updateExport(resp, conf.getLibrary()))
+											.orElse(false);
+										LOG.debug("Status d'export mis a jour.");
+										message.setFlag(Flags.Flag.SEEN, shouldBeRead);
 									}
 								}
-								catch (final JAXBException | IOException | MessagingException e) {
+								catch (final MessagingException e) {
+									// We log the error and continue to other messages.
 									LOG.warn("Vérification des boite mails CINES - Problem: {}", e.getMessage(), e);
-									// on continue pour laisser leur chance aux msg
-									// suivants....
+									e.printStackTrace();
 								}
 							}
 						});
@@ -235,167 +222,147 @@ public class CinesRequestHandlerService {
 	 * @throws IOException
 	 * @throws JAXBException
 	 */
-	private CinesResponse parseMessage(final Message message) throws MessagingException, IOException, JAXBException {
-
-		final Date sentDate = message.getSentDate();
-		LOG.debug("Lecture du message {} du {}", message.getSubject(), sentDate);
-		final CinesResponse response = new CinesResponse();
-		response.setMsgDate(sentDate != null ? DateUtils.convertToLocalDateTime(sentDate) : LocalDateTime.now());
-
-		final Multipart multipart;
-		if (message.isMimeType(MediaType.TEXT_HTML_VALUE) || message.isMimeType(MediaType.TEXT_XML_VALUE)) {
-			// ert: on reconstitue un pseudo multipart...
-			// correction pour msg 'vides' non multipart avec du texte attaché qui ne
-			// passent pas.
-			final DataSource ds = new ByteArrayDataSource(message.getInputStream(), MediaType.TEXT_PLAIN_VALUE);
-			final MimeBodyPart bodyPart = new MimeBodyPart();
-			bodyPart.setDataHandler(new DataHandler(ds));
-			multipart = new MimeMultipart("multipart/alternative");
-			multipart.addBodyPart(bodyPart);
+	protected Optional<CinesResponse> parseCinesMessage(final Message message) throws MessagingException {
+		CinesResponse resp = new CinesResponse();
+		resp.msgDate = Optional.ofNullable(message.getSentDate())
+			.map(DateUtils::convertToLocalDateTime)
+			.orElse(LocalDateTime.now());
+		String message_desc = message.getSubject().concat(" at ").concat(resp.msgDate.toString());
+		LOG.debug("Reading mail: {}", message_desc);
+		Object content;
+		try {
+			content = message.getContent();
 		}
-		else {
-			multipart = (Multipart) message.getContent();
+		catch (IOException e) {
+			LOG.error("Could not get content of mail: {}.", message_desc);
+			e.printStackTrace();
+			return Optional.empty();
 		}
 
-		// Parcours des différentes parties du mail
-		for (int i = 0, n = multipart.getCount(); i < n; i++) {
-			final Part part = multipart.getBodyPart(i);
-			final String disposition = part.getDisposition();
-			final String fileName = part.getFileName();
+		if (content instanceof Multipart) { // If the content is a multipart the mail is a
+											// certification
+			Multipart multipart = (Multipart) content;
+			for (int i = 0; i < multipart.getCount(); i++) {
+				BodyPart part = multipart.getBodyPart(i);
+				if (isPartAvis(part)) {
 
-			Optional<?> parseResult = Optional.empty();
+					LOG.trace("Found avis part.");
+					InputStream partIs;
+					try {
+						partIs = part.getInputStream();
+					}
+					catch (IOException e) {
+						LOG.error("Could not get avis part content of the mail: {}", message_desc);
+						e.printStackTrace();
+						return Optional.empty();
+					}
 
-			// Corps du mail
-			if (disposition == null) {
-				// Corps du mail au format text/plain
-				if (part.isMimeType(MediaType.TEXT_PLAIN_VALUE)) {
-					parseResult = parsePart(part, fr.progilone.pgcn.domain.jaxb.avis.ObjectFactory.class);
-					parseResult.map(elt -> ((JAXBElement<PacAvisType>) elt).getValue()).ifPresent(response::setAvis);
+					parseXml(partIs, fr.progilone.pgcn.domain.jaxb.avis.ObjectFactory.class).map(elt -> {
+						@SuppressWarnings("unchecked")
+						JAXBElement<PacAvisType> jaxbElement = (JAXBElement<PacAvisType>) elt;
+						return jaxbElement.getValue();
+					})
+						.ifPresentOrElse(avis -> resp.setAvis(avis),
+								() -> resp.setErrorMessage("The avis content of the mail could not be parsed."));
+
 				}
-				// Corps du mail au format multipart/alternative
-				else if (part.isMimeType("multipart/alternative")) {
-					final Multipart subMultipart = (Multipart) part.getContent();
+				else if (isPartAip(part)) {
 
-					// Parcours des sous-parties du corps du mail
-					for (int j = 0, n2 = subMultipart.getCount(); j < n2; j++) {
-						final Part subPart = subMultipart.getBodyPart(i);
+					LOG.trace("Found aip part.");
+					InputStream partIs;
+					try {
+						partIs = part.getInputStream();
+					}
+					catch (IOException e) {
 
-						// Sous-partie au format text/plain
-						if (subPart.isMimeType(MediaType.TEXT_PLAIN_VALUE)) {
+						LOG.error("Could not get the aip part content of the mail: {}", message_desc);
+						e.printStackTrace();
+						return Optional.empty();
 
-							parseResult = parsePart(subPart, fr.progilone.pgcn.domain.jaxb.avis.ObjectFactory.class);
-							parseResult.map(elt -> ((JAXBElement<PacAvisType>) elt).getValue())
-								.ifPresent(response::setAvis);
-							break;
+					}
+
+					parseXml(partIs, fr.progilone.pgcn.domain.jaxb.aip.ObjectFactory.class).map(elt -> {
+						@SuppressWarnings("unchecked")
+						JAXBElement<PacType> jaxbElement = (JAXBElement<PacType>) elt;
+						return jaxbElement.getValue();
+					}).ifPresentOrElse(aip -> {
+						try {
+							handleAip(aip, part.getInputStream());
 						}
-					}
-				}
-				if (!parseResult.isPresent()) {
-					response.setErrorMessage("Réponse ".concat(message.getSubject())
-						.concat(" - ")
-						.concat(response.getMsgDate().toString())
-						.concat(": le contenu de format texte n'a pu être interprété."));
-				}
-
-			}
-			// Pièce jointe xml
-			else if (StringUtils.equals(disposition, Part.ATTACHMENT) && (part.isMimeType(MediaType.TEXT_XML_VALUE)
-					|| part.isMimeType(MediaType.APPLICATION_XML_VALUE))) {
-
-				parseResult = parsePart(part, fr.progilone.pgcn.domain.jaxb.aip.ObjectFactory.class);
-
-				// aip.xml
-				if (StringUtils.equals(fileName, AIP_XML_FILE)) {
-					if (parseResult.isPresent()) {
-						parseResult.map(elt -> ((JAXBElement<PacType>) elt).getValue()).ifPresent(response::setAip);
-					}
-					else {
-						response.setErrorMessage("Réponse ".concat(message.getSubject())
-							.concat(" - ")
-							.concat(response.getMsgDate().toString())
-							.concat(": le fichier AIP n'a pu être interprété."));
-					}
-
-					if (response.getAip() != null) {
-
-						final PacType pac = response.getAip();
-
-						// stocke le fichier aip.xml
-						handleAip(response.getAip(), part);
-
-						// il n'y a plus d'avis dans ce cas => on cree un avis + un
-						// certificat de toutes
-						// pieces...
-						final String certif = "Archivé le " + pac.getDocMeta().getDateArchivage()
-								+ " - Identifiant versement : " + pac.getDocMeta().getIdentifiantVersement()
-								+ " - Identifiant docPac : " + pac.getDocMeta().getIdentifiantDocPac();
-
-						final fr.progilone.pgcn.domain.jaxb.avis.ObjectFactory avisFactory = new fr.progilone.pgcn.domain.jaxb.avis.ObjectFactory();
-						final PacAvisType avis = avisFactory.createPacAvisType();
-
-						final ZonedDateTime resultDtArchiv = ZonedDateTime.parse(pac.getDocMeta().getDateArchivage(),
-								DateTimeFormatter.ISO_DATE_TIME);
-						avis.setDateArchivage(resultDtArchiv.toLocalDateTime());
-						avis.setIdVersement(pac.getDocMeta().getIdentifiantVersement());
-						avis.setIdentifiantDocPac(pac.getDocMeta().getIdentifiantDocPac());
-						avis.setId(REP_CERTIFICAT_ARCHIVAGE);
-						response.setAvis(avis);
-						response.setCertificate(certif.getBytes("UTF-8"));
-					}
-
-					// AVIS .xml
-				}
-				else {
-
-					if (parseResult.isPresent()) {
-						parseResult.map(elt -> ((JAXBElement<PacAvisType>) elt).getValue())
-							.ifPresent(response::setAvis);
-					}
-					else {
-						response.setErrorMessage("Réponse ".concat(message.getSubject())
-							.concat(" - ")
-							.concat(response.getMsgDate().toString())
-							.concat(": le fichier Avis n'a pu être interprété."));
-					}
+						catch (MessagingException | IOException e) {
+							LOG.error("Could not store the aip part content of the mail: {}.", message_desc);
+							e.printStackTrace();
+						}
+						final String certif = "Archivé le " + aip.getDocMeta().getDateArchivage()
+								+ " - Identifiant versement : " + aip.getDocMeta().getIdentifiantVersement()
+								+ " - Identifiant docPac : " + aip.getDocMeta().getIdentifiantDocPac();
+						resp.setCertificate(certif.getBytes());
+						resp.setAip(aip);
+					}, () -> resp.setErrorMessage("The aip file from the mail could not be parsed."));
 
 				}
 			}
 		}
-		return response;
+		else if (content instanceof String) { // If the content is a string its an receipt
+												// or a rejection.
+			LOG.trace("Found avis");
+
+			String avisContent = (String) content;
+			parseXml(new ByteArrayInputStream(avisContent.getBytes()),
+					fr.progilone.pgcn.domain.jaxb.avis.ObjectFactory.class)
+				.map(elt -> {
+					@SuppressWarnings("unchecked")
+					JAXBElement<PacAvisType> jaxbElement = (JAXBElement<PacAvisType>) elt;
+					return jaxbElement.getValue();
+				})
+				.ifPresentOrElse(avis -> resp.setAvis(avis),
+						() -> resp.setErrorMessage("The avis content of the mail could not be parsed."));
+		}
+		return Optional.of(resp);
 	}
 
 	/**
-	 * Parse part à partir des classes jaxb jaxbBoundedClasses
+	 * Detect if the part in a multipart mail is containig the api.xml.
+	 * @param part the actual part to check for.
+	 * @return true if the part contains the aip.xml.
+	 */
+	private boolean isPartAip(BodyPart part) throws MessagingException {
+		return Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())
+				&& StringUtils.equals(part.getFileName(), "aip.xml");
+	}
+
+	/**
+	 * Detect if the part in a multipart mail is containig the avis.xml.
+	 * @param part the actual part to check for.
+	 * @return true if the part contains the avis.xml.
+	 */
+	private boolean isPartAvis(BodyPart part) throws MessagingException {
+		LOG.trace(part.getContentType());
+		LOG.trace(part.getDisposition());
+
+		return part.getDisposition() == null && part.getContentType().contains("xml");
+	}
+
+	/**
+	 * Parse part content from the provided jaxb class generated from a schema.
 	 * @param part
 	 * @param jaxbBoundedClasses
-	 * @return
-	 * @throws JAXBException
-	 * @throws IOException
-	 * @throws MessagingException
+	 * @return Optional of the associated jaxb class if the parsing was successfull empty
+	 * otherwise.
 	 */
-	private Optional<?> parsePart(final Part part, final Class<?>... jaxbBoundedClasses)
-			throws JAXBException, IOException, MessagingException {
-		try (final Reader reader = new InputStreamReader(part.getInputStream(), "UTF-8")) {
-			final JAXBContext context = JAXBContext.newInstance(jaxbBoundedClasses);
+	private Optional<?> parseXml(final InputStream part, final Class<?>... jaxbBoundedClass) {
+		try {
+			final JAXBContext context = JAXBContext.newInstance(jaxbBoundedClass);
 			final Unmarshaller unmarshaller = context.createUnmarshaller();
-
-			return Optional.of(unmarshaller.unmarshal(reader));
-
+			return Optional.of(unmarshaller.unmarshal(part));
 		}
-		catch (final UnmarshalException e) {
-			final String strFile;
-			if (IOUtils.toString(part.getInputStream(), "UTF-8").length() > 500) {
-				strFile = IOUtils.toString(part.getInputStream(), "UTF-8").substring(0, 500);
-			}
-			else {
-				strFile = IOUtils.toString(part.getInputStream(), "UTF-8");
-			}
+		catch (final JAXBException e) {
+			// XmlSchema schema =
+			// jaxbBoundedClasses.getClass().getPackage().getAnnotation(XmlSchema.class);
+			LOG.error("Could not parse xml from part of mail with the current schema : {}.",
+					jaxbBoundedClass.getClass().getName());
+			e.printStackTrace();
 
-			LOG.error("Le message {} n'a pas pu être parsé à l'aide des classes {}", strFile,
-					Arrays.stream(jaxbBoundedClasses)
-						.map(Class::getName)
-						.reduce((a, b) -> a + ", " + b)
-						.orElse("[Aucune classe fournie]"));
 			return Optional.empty();
 		}
 	}
@@ -409,9 +376,6 @@ public class CinesRequestHandlerService {
 
 		boolean treated = false;
 
-		if (response.getAvis() == null) {
-			return treated; // Le message n'a pas pu être parsé
-		}
 		// Recherche de l'export CINES correspondant à l'identifiant de versement
 		// précisé dans la réponse
 		// cet id correspond au pgcnId de la docUnit
@@ -473,31 +437,26 @@ public class CinesRequestHandlerService {
 
 	/**
 	 * Assure le stockage du fichier aip.xml Unique par docUnit
-	 * @param aip
-	 * @param part
+	 * @param aip class with aip data.
+	 * @param partIs input stream of the content of the part containing the aip.xml.
 	 * @throws MessagingException
 	 * @throws IOException
 	 */
-	private void handleAip(final PacType aip, final Part part) throws IOException, MessagingException {
-		if (aip != null) {
-			final String idVersement = aip.getDocMeta() != null ? aip.getDocMeta().getIdentifiantDocProducteur() : null;
-			if (idVersement != null) {
-				final DocUnit availableDoc = docUnitService.findOneByPgcnIdAndState(idVersement,
-						DocUnit.State.AVAILABLE);
-				final DocUnit closedDoc = docUnitService.findOneByPgcnIdAndState(idVersement, DocUnit.State.CLOSED);
-				if (availableDoc != null || closedDoc != null) {
-					final DocUnit foundDoc = availableDoc != null ? availableDoc : closedDoc;
-					final Path root = Paths.get(workingDir,
-							exportCinesService.getDocLibraryId(foundDoc.getIdentifier()), foundDoc.getIdentifier());
-					if (root != null) {
-						fm.copyInputStreamToFile(part.getInputStream(), root.toFile(), AIP_XML_FILE, true, false);
-					}
-				}
-				else {
-					LOG.error("DocUnit non trouve - pgcnID = {}", idVersement);
-				}
-			}
+	private void handleAip(final PacType aip, final InputStream partIs) throws IOException, MessagingException {
+		final String idVersement = aip.getDocMeta() != null ? aip.getDocMeta().getIdentifiantDocProducteur() : null;
+		if (idVersement == null) {
+			return;
 		}
+		Optional.ofNullable(docUnitService.findOneByPgcnIdAndState(idVersement, DocUnit.State.AVAILABLE))
+			.or(() -> Optional.ofNullable(docUnitService.findOneByPgcnIdAndState(idVersement, DocUnit.State.CLOSED)))
+			.ifPresentOrElse(foundDoc -> {
+				final Path root = Paths.get(workingDir, exportCinesService.getDocLibraryId(foundDoc.getIdentifier()),
+						foundDoc.getIdentifier());
+				if (root != null) {
+					fm.copyInputStreamToFile(partIs, root.toFile(), AIP_XML_FILE, true, false);
+				}
+			}, () -> LOG.error("DocUnit non trouve - pgcnID = {}", idVersement));
+
 	}
 
 	/**
@@ -574,7 +533,7 @@ public class CinesRequestHandlerService {
 	/**
 	 * Classe représentant une réponse de la part du CINES
 	 */
-	private static class CinesResponse {
+	protected static class CinesResponse {
 
 		private LocalDateTime msgDate;
 
