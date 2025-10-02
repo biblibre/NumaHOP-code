@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    <logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR"/>
+    <logger name="org.apache.catalina.util.LifecycleBase" level="ERROR"/>
+    <logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN"/>
+    <logger name="org.apache.sshd.common.util.SecurityUtils" level="WARN"/>
+    <logger name="org.apache.tomcat.util.net.NioSelectorPool" level="WARN"/>
+    <logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="ERROR"/>
+    <logger name="org.hibernate.validator.internal.util.Version" level="WARN"/>
+    <logger name="org.springframework.boot.actuate.endpoint.jmx" level="WARN"/>
+    <!-- Console Log Config-->
+    <springProperty scope="local" name="consoleLogMode"     source="logging.console.mode" defaultValue="text"/>
+    <springProperty scope="local" name="consoleLogPattern"     source="logging.console.pattern" defaultValue="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%ex"/>
+
+    <if condition='property("consoleLogMode").equals("text")'>
+        <then>
+            <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder>
+                    <pattern>${consoleLogPattern}</pattern>
+                    <charset>UTF-8</charset>
+                </encoder>
+            </appender>
+        </then>
+    </if>
+    <if condition='property("consoleLogMode").equals("json")'>
+        <then>
+            <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+            </appender>
+        </then>
+    </if>
+
+    <!-- Text File Log Config-->
+    <springProperty scope="local" name="textLogEnabled"                source="logging.file.text.enable" defaultValue="true"/>
+    <springProperty scope="local" name="textLogFileName"               source="logging.file.text.name" defaultValue="/opt/pgcn/logs/text/numaop"/>
+    <springProperty scope="local" name="textLogFilePattern"            source="logging.file.text.pattern" defaultValue="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%ex"/>
+    <springProperty scope="local" name="textLogRollingEnabled"         source="logging.file.text.rolling.enable" defaultValue="true"/>
+    <springProperty scope="local" name="textLogRollingFileNamePattern" source="logging.file.text.rolling.pattern" defaultValue="%d{yyyy-MM-dd}"/>
+    <springProperty scope="local" name="textLogRollingDeleteOlderThan" source="logging.file.text.rolling.delete-older-than" defaultValue="90"/>
+
+    <if condition='property("textLogEnabled").equals("true")'>
+        <then>
+            <if condition='property("textLogRollingEnabled").equals("true")'>
+                <then>
+                    <appender name="TEXT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                        <file>${textLogFileName}.log</file>
+                        <encoder>
+                            <pattern>${textLogFilePattern}</pattern>
+                        </encoder>
+                        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                            <fileNamePattern>${textLogFileName}.${textLogRollingFileNamePattern}.log</fileNamePattern>
+                            <maxHistory>${textLogRollingDeleteOlderThan}</maxHistory>
+                        </rollingPolicy>
+                    </appender>
+                </then>
+                <else>
+                    <appender name="TEXT_FILE" class="ch.qos.logback.core.FileAppender">
+                        <file>${textLogFileName}.log</file>
+                        <encoder>
+                            <pattern>${textLogFilePattern}</pattern>
+                        </encoder>
+                    </appender>
+
+                </else>
+            </if>
+
+
+            <appender name="ASYNC_TEXT_FILE" class="ch.qos.logback.classic.AsyncAppender">
+                <queueSize>512</queueSize>
+                <appender-ref ref="TEXT_FILE"/>
+            </appender>
+        </then>
+    </if>
+
+
+    <!-- Json File Log Config -->
+    <springProperty scope="local" name="jsonLogEnabled"                source="logging.file.json.enable" defaultValue="false"/>
+    <springProperty scope="local" name="jsonLogFileName"               source="logging.file.json.name" defaultValue="/opt/pgcn/logs/json/numahop.json"/>
+    <springProperty scope="local" name="jsonLogRollingEnabled"         source="logging.file.json.rolling.enable" defaultValue="true"/>
+    <springProperty scope="local" name="jsonLogRollingFileNamePattern" source="logging.file.json.rolling.pattern" defaultValue="%d{yyyy-MM-dd}"/>
+    <springProperty scope="local" name="jsonLogRollingDeleteOlderThan" source="logging.file.json.rolling.delete-older-than" defaultValue="90"/>
+
+    <if condition='property("jsonLogEnabled").equals("true")'>
+        <then>
+            <if condition='property("jsonLogRollingEnabled").equals("true")'>
+                <then>
+                    <appender name="JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                        <file>${jsonLogFileName}.json</file>
+                        <charset>UTF-8</charset>
+                        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+
+                        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                            <fileNamePattern>${jsonLogFileName}.${jsonLogRollingFileNamePattern}.json</fileNamePattern>
+                            <maxHistory>${jsonLogRollingDeleteOlderThan}</maxHistory>
+                        </rollingPolicy>
+                    </appender>
+                </then>
+                <else>
+                    <appender name="JSON_FILE" class="ch.qos.logback.core.FileAppender">
+                        <file>${jsonLogFileName}.json</file>
+                        <charset>UTF-8</charset>
+                        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+                    </appender>
+                </else>
+            </if>
+
+            <appender name="ASYNC_JSON_FILE" class="ch.qos.logback.classic.AsyncAppender">
+                <queueSize>512</queueSize>
+                <appender-ref ref="JSON_FILE" />
+            </appender>
+
+        </then>
+    </if>
+
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <if condition='property("textLogEnabled").equals("true")'>
+        <then>
+            <if condition='property("jsonLogEnabled").equals("true")'>
+                <then>
+                    <root level="INFO">
+                        <appender-ref ref="CONSOLE" />
+                        <appender-ref ref="ASYNC_JSON_FILE" />
+                        <appender-ref ref="ASYNC_TEXT_FILE" />
+                    </root>
+                </then>
+                <else>
+                    <root level="INFO">
+                        <appender-ref ref="CONSOLE" />
+                        <appender-ref ref="ASYNC_TEXT_FILE" />
+                    </root>
+                </else>
+            </if>
+        </then>
+        <else>
+            <if condition='property("jsonLogEnabled").equals("true")'>
+                <then>
+                    <root level="INFO">
+                        <appender-ref ref="CONSOLE" />
+                        <appender-ref ref="ASYNC_JSON_FILE" />
+                    </root>
+
+                </then>
+                <else>
+                    <root level="INFO">
+                        <appender-ref ref="CONSOLE" />
+                    </root>
+                </else>
+            </if>
+        </else>
+    </if>
+</configuration>

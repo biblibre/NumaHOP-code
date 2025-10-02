@@ -1,4 +1,5 @@
 debug: false
+
 management:
     endpoints:
         web.exposure.include: '*'
@@ -7,7 +8,7 @@ management:
         health:
             show-details: always
             mail.enabled: false
-        logfile.external-file: ${logging.file.name}.log
+        logfile.external-file: ${logging.file.text.name}.log
     info.env.enabled: true
     server:
         add-application-context-header: true # Add the "X-Application-Context" HTTP header in each response.
@@ -143,10 +144,50 @@ export:
         privateKey: ${base-path}/config/id_rsa
 
 logging:
-    file:
-        name: ${base-path}/logs/numahop
-    pattern.file: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx'
+    level.root: INFO
+    level:
+        fr.progilone.pgcn: DEBUG
+        org.springframework.scheduling.support.TaskUtils.LoggingErrorHandler: OFF
+        org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: WARN
+        org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping: WARN
+        org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: WARN
+        org.ehcache.jsr107.Eh107CacheManager: WARN
+        org.hibernate.engine.internal.StatefulPersistenceContext: ERROR
+        # Pour faire apparaître les requêtes hibernate, mettre à DEBUG
+        org.hibernate.SQL: OFF
+        # Pour faire apparaître les valeurs des paramètres des requêtes, mettre à TRACE
+        org.hibernate.type: OFF
+        # Elasticsearch
+        org.elasticsearch: WARN
+        # Pour faire apparaître le trafic HTTP, mettre à DEBUG
+        org.apache.http.wire: OFF
+        # Pour faire apparaître le trafic HTTP, mettre à DEBUG
+        org.apache.http.impl.client: OFF
     warnDuration: 1500
+    file:
+        text:
+            enable: true
+            name: ${base-path}/logs/numahop
+            pattern: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%ex'
+            rolling:
+                enable: true
+                pattern: '%d{yyyy-MM-dd}'
+                delete-older-than: 90 # In days
+
+        json:
+            enable: false
+            name: ${base-path}/logs/json/numahop
+            rolling:
+                enable: true
+                pattern: '%d{yyyy-MM-dd}'
+                delete-older-than: 90 # In days
+
+    console:
+        mode: text # one of 'text' or 'json'
+        pattern: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%ex'
+
+
+
 
 sshForwarding:
     enabled: false
