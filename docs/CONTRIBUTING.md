@@ -45,6 +45,8 @@ it will receive the `Fixed` label and the issue will be closed.
 - Fork the repository and create a new branch with a descriptive name for the
 patch you plan on submitting.
 - Develop your patch following the coding guidelines.
+- Add a note about your contribution to the changelog in the appropriate
+category. This is not required but appreciated.
 - Open a new pull request with the patch.
 - Ensure the PR description clearly describes your solution to the problem you
 fixed. Include the issue number if applicable.
@@ -66,6 +68,10 @@ itself. This facilitate the reviewing of the merge request a lot.
 In the commit message where the fix is situated please include a test plan for
 the fix. This makes the review process a lot quicker and easier for the
 reviewer.
+
+## Are you releasing a new Version ?
+
+TODO
 
 # Coding guidelines
 

@@ -11,7 +11,7 @@ Here are the latest chages since last release. Once a new realease is made just 
 
 ### Added
 
-- 
+- `justfile` replacing the `Makefile`.
 - `CONTRIBUTING.md` markdown file explaining the contributing guide
 - Configuration option to set the ElasticSearch index name separator separating the prefix from the index name.
 - Configuration option to set the Internet Archive url to use for internet archive repository.
