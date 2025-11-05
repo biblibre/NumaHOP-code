@@ -1,7 +1,5 @@
 # NumaHOP
 
-> This repository is not the official repository for NumaHOP. This is the repository used by BibLibre for their developpements.
-
 ![NumaHOP Logo](./numahop_logo.png)
 
 This project is licenced under AGPLv3, see [LICENSE.md](LICENSE) for details.
