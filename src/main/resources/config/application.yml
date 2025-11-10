@@ -153,16 +153,16 @@ logging:
         org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: WARN
         org.ehcache.jsr107.Eh107CacheManager: WARN
         org.hibernate.engine.internal.StatefulPersistenceContext: ERROR
-        # Pour faire apparaître les requêtes hibernate, mettre à DEBUG
+        # Set to DEBUG to show hibernate sql request
         org.hibernate.SQL: OFF
-        # Pour faire apparaître les valeurs des paramètres des requêtes, mettre à TRACE
+        # To show values in hibernate requests set to DEBUG
         org.hibernate.type: OFF
         # Elasticsearch
         org.elasticsearch: WARN
-        # Pour faire apparaître le trafic HTTP, mettre à DEBUG
+        # To show http trafic set to DEBUG
         org.apache.http.wire: OFF
-        # Pour faire apparaître le trafic HTTP, mettre à DEBUG
         org.apache.http.impl.client: OFF
+
     warnDuration: 1500
     file:
         text:
