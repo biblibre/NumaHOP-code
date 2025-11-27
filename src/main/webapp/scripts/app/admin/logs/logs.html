@@ -5,31 +5,6 @@
                 <h5 translate>Logs</h5>
             </div>
             <div class="panel-body">
-                <form name="admForm">
-                    <div class="text-center" style="margin-bottom: 5px">
-                        <div class="row">
-                            <div class="col-md-8"></div>
-                            <div class="col-md-2" translate>Date du fichier de log (JJ/MM/AAAA)</div>
-                            <div class="col-md-2">
-                                <sem-datepicker ng-model="dt" ng-change="changeDate($data)"></sem-datepicker>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="row">
-                            <div class="col-md-10"></div>
-                            <div class="col-md-2">
-                                <div class="column-bottom-button">
-                                    <!-- Charger le fichier de logs -->
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sem4" ng-click="downloadLogFile()"><span class="glyphicon-regular download"></span> {{::'Charger le fichier de logs' | translate}}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
                 <p translate>There are {{ loggers.length }} loggers.</p>
 
                 <span translate>Filter</span> <input type="text" ng-model="filter" class="form-control" />
