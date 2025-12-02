@@ -10,8 +10,11 @@ public interface WorkflowModelRepository extends JpaRepository<WorkflowModel, St
 
 	Long countByName(String name);
 
-	@Query("select distinct model " + "from WorkflowModel model " + "left join model.library lib "
-			+ "where lib.identifier = ?1 and model.active = ?2")
+	@Query("""
+		select distinct model from WorkflowModel model
+		left join model.library lib
+		where lib.identifier = ?1 and model.active = ?2
+		""")
 	List<WorkflowModel> findAllByLibraryIdentifierAndActive(String identifier, boolean active);
 
 	Long countByNameAndIdentifierNot(String name, String identifier);

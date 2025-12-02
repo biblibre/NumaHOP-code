@@ -10,16 +10,27 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface InternetArchiveCollectionRepository extends JpaRepository<InternetArchiveCollection, String> {
 
-	@Query("select distinct iac " + "from InternetArchiveCollection iac " + "left join iac.confIa conf "
-			+ "left join conf.library lib")
+	@Query("""
+		select distinct iac from InternetArchiveCollection iac
+		left join iac.confIa conf
+		left join conf.library lib
+		""")
 	List<InternetArchiveCollection> findAllWithDependencies();
 
-	@Query("select distinct iac " + "from InternetArchiveCollection iac " + "left join iac.confIa conf "
-			+ "left join conf.library lib " + "where lib.identifier in ?1")
+	@Query("""
+		select distinct iac from InternetArchiveCollection iac
+		left join iac.confIa conf
+		left join conf.library lib
+		where lib.identifier in ?1
+		""")
 	List<InternetArchiveCollection> findAllForLibraries(List<String> libraryIds);
 
-	@Query("select iac " + "from InternetArchiveCollection iac " + "left join iac.confIa conf "
-			+ "left join conf.library lib " + "where iac.name = ?1 " + "and lib.identifier = ?2")
+	@Query("""
+		select iac from InternetArchiveCollection iac
+		left join iac.confIa conf
+		left join conf.library lib
+		where iac.name = ?1 and lib.identifier = ?2
+		""")
 	InternetArchiveCollection findByNameAndLibrary(String name, String library);
 
 }

@@ -15,8 +15,11 @@ public interface DocUnitWorkflowRepository
 
 	Long countByModel(WorkflowModel model);
 
-	@Query("SELECT s from DocUnitState s " + "LEFT JOIN s.workflow w " + "WHERE s.discriminator in ?2 "
-			+ "AND w.docUnit.identifier = ?1")
+	@Query("""
+		SELECT s from DocUnitState s
+		LEFT JOIN s.workflow w
+		WHERE s.discriminator in ?2 AND w.docUnit.identifier = ?1
+		""")
 	List<DocUnitState> findDocUnitStatesByKey(final String docUnit, final WorkflowStateKey... stateKeys);
 
 }

@@ -12,13 +12,22 @@ public interface BinaryRepository extends JpaRepository<StoredFile, String> {
 
 	int countByPageDigest(String pageDigest);
 
-	@Query("select sf from StoredFile sf " + "left join fetch sf.page p " + "where p.identifier in ?1 "
-			+ "and sf.fileFormat = ?2 " + "and p.number != null " + "order by p.number")
+	@Query("""
+		select sf from StoredFile sf
+		left join fetch sf.page p
+		where p.identifier in ?1 and sf.fileFormat = ?2 and p.number != null
+		order by p.number
+		""")
 	List<StoredFile> getAllByPageIdentifiersAndFileFormat(List<String> pageIdentifier,
 			ViewsFormatConfiguration.FileFormat format);
 
-	@Query("select sf from StoredFile sf " + "left join fetch sf.page p " + "left join fetch p.digitalDocument "
-			+ "where p.identifier in ?1 " + "and sf.fileFormat = ?2 " + "and p.number != null " + "order by p.number")
+	@Query("""
+		select sf from StoredFile sf
+		left join fetch sf.page p
+		left join fetch p.digitalDocument
+		where p.identifier in ?1 and sf.fileFormat = ?2 and p.number != null
+		order by p.number
+		""")
 	List<StoredFile> getAllWithDocByPageIdentifiersAndFileFormat(List<String> pageIdentifier,
 			ViewsFormatConfiguration.FileFormat format);
 

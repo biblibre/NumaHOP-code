@@ -13,7 +13,10 @@ public interface PersistentTokenRepository extends JpaRepository<PersistentToken
 
 	List<PersistentToken> findByTokenDateBefore(Date date);
 
-	@Query("select t from PersistentToken t left join fetch t.user")
+	@Query("""
+		select t from PersistentToken t
+		left join fetch t.user
+		""")
 	List<PersistentToken> findByAllWithUser();
 
 }

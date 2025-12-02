@@ -8,8 +8,12 @@ public interface SampleRepository extends JpaRepository<Sample, String> {
 
 	Sample findByDeliveryIdentifier(String deliveryIdId);
 
-	@Query("select s from Sample s " + "left join fetch s.delivery d  " + "left join fetch d.lot  "
-			+ "where s.identifier = ?1 ")
+	@Query("""
+		select s from Sample s
+		left join fetch s.delivery d
+		left join fetch d.lot
+		where s.identifier = ?1
+		""")
 	Sample getSampleWithDep(String identifier);
 
 }

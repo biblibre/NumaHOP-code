@@ -7,7 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface TrainRepository extends JpaRepository<Train, String>, TrainRepositoryCustom {
 
-	@Query("from Train t " + "where t.identifier = ?1")
+	@Query("""
+		select t from Train t
+		where t.identifier = ?1
+		""")
 	Train findOneWithDependencies(String identifier);
 
 	List<Train> findAllByActive(boolean active);
@@ -16,7 +19,9 @@ public interface TrainRepository extends JpaRepository<Train, String>, TrainRepo
 
 	List<Train> findByIdentifierIn(List<String> identifiers);
 
-	@Query("select t.identifier from Train t")
+	@Query("""
+		select t.identifier from Train t
+		""")
 	List<String> findAllIdentifiers();
 
 }
