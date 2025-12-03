@@ -236,11 +236,16 @@ public class LotService {
 		return lotRepository.findOneWithDocsAndWorkflows(lotId);
 	}
 
+	/**
+	 * @param identifier the lot identifier.
+	 * @return A lot with herited properties from the project if not overriden. (The image
+	 * size and check configuration).
+	 */
 	@Transactional(readOnly = true)
 	public Lot getOneWithConfigRules(final String identifier) {
 
 		final Lot lot = lotRepository.findOneWithActiveCheckConfiguration(identifier);
-		// retrouve la conf de controle dans la hierarchie
+		// Find the herited Check configuration in the heritance chain.
 		CheckConfiguration conf = null;
 		if (lot.getActiveCheckConfiguration() == null || lot.getActiveCheckConfiguration().getIdentifier() == null) {
 			conf = lot.getProject().getActiveCheckConfiguration();
@@ -249,7 +254,8 @@ public class LotService {
 			}
 			lot.setActiveCheckConfiguration(conf);
 		}
-		// retrouve la conf de format d'images dans la hierarchie
+
+		// Find the herited Views Format configuration in the heritance chain.
 		ViewsFormatConfiguration formatConf = null;
 		if (lot.getActiveFormatConfiguration() == null || lot.getActiveFormatConfiguration().getIdentifier() == null) {
 			formatConf = lot.getProject().getActiveFormatConfiguration();

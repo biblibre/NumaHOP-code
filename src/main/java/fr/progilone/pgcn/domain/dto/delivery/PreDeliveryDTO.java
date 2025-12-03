@@ -8,16 +8,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Classe qui contient les informations à afficher à l'utilisateur pour l'écran de
- * validation pré-livraison.
+ * Classe containing the informations to display for the delivery validation view.
  */
 public class PreDeliveryDTO extends AbstractDTO {
 
+	// Set of document to be delivered.
 	private Set<PreDeliveryDocumentDTO> documents = new HashSet<>();
 
-	private final Set<DigitalDocumentDTO> lockedDigitalDocuments = new HashSet<>();
-
+	// Set of document that cannot be delivered.
 	private Set<PhysicalDocumentDTO> undeliveredDocuments = new HashSet<>();
+
+	private final Set<DigitalDocumentDTO> lockedDigitalDocuments = new HashSet<>();
 
 	public PreDeliveryDTO(final Set<PreDeliveryDocumentDTO> documents) {
 		this.documents = documents;

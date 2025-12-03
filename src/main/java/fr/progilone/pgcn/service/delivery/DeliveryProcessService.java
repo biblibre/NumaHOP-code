@@ -143,13 +143,11 @@ public class DeliveryProcessService {
 	}
 
 	/**
-	 * Fait l'inventaire des dossiers de livraison.
-	 * @param delivery
-	 * @param createDocs true: création d'ud par rapport aux fichiers trouvés; false:
-	 * livraison des fichiers trouvés par rapport aux UD existantes
-	 * @return Un objet PreDeliveryDTO contenant, pour chaque sous-dossier correspondant à
-	 * un document de la livraison, le nombre de fichiers image et la liste des fichiers
-	 * de métadonnées.
+	 * Make the inventory of the delivery folders.
+	 * @param delivery The delivery object.
+	 * @param createDocs If true create the {@link DocUnit} from the found folders.
+	 * @return A {@link PreDeliveryDTO} containing, for each sub-folder the number of
+	 * files and the list of metadata files found.
 	 */
 	public PreDeliveryDTO predeliver(final Delivery delivery, final boolean createDocs) throws PgcnValidationException {
 		final Map<String, Optional<SplitFilename>> splitNames = new HashMap<>();
@@ -157,27 +155,30 @@ public class DeliveryProcessService {
 		final PreDeliveryDTO preDeliveryDTO = new PreDeliveryDTO();
 		final String format = delivery.getLot().getRequiredFormat();
 
-		// Separateur de sequence et prefixe de bibliotheque
+		// Fetches the lot populated with herited config rules.
 		final Lot lot = lotService.getOneWithConfigRules(delivery.getLot().getIdentifier());
 
-		// La configuration de contrôle n'est pas presente
+		// Checks the configuration is present.
 		if (lot.getActiveCheckConfiguration() == null) {
 			LOG.error("Aucune configuration de contrôle n'est paramétrée sur le lot {} pour la livraison  {}",
 					lot.getLabel(), delivery.getLabel());
 			preDeliveryDTO.addError(buildError(DELIVERY_NO_CHECK_CONFIGURATION_FOUND));
 			return preDeliveryDTO;
 		}
+
+		// Fetch the sequence separator form the check config. And build the prefix for.
 		final String seqSeparator = lot.getActiveCheckConfiguration().getSeparators();
 		final String bibPrefix = lot.getProject().getLibrary().getPrefix();
 		final AutomaticCheckRule bibPrefixRule = getCheckingRulesConfig(lot).get(AutoCheckType.FILE_BIB_PREFIX);
 		final boolean bibPrefixMandatory = bibPrefixRule != null && bibPrefixRule.isActive()
 				&& bibPrefixRule.isBlocking();
 
+		// List the sub directories found in delivery folder.
 		final List<File> subDirectories = getSubDirectories(delivery, preDeliveryDTO);
 		final Map<File, String> prefixes = new HashMap<>();
 
 		if (!createDocs) {
-			// Fichiers associés à un préfixe
+			//
 			final Map<String, PrefixedDocuments> documentsForPrefix = getPrefixedDocuments(delivery, preDeliveryDTO);
 			// Alimente la liste de préfixes, et élimine les sous-répertoires sans préfixe
 			subDirectories.removeIf(directory -> {
@@ -353,17 +354,24 @@ public class DeliveryProcessService {
 		return isAuthorized;
 	}
 
+	/**
+	 * @param delivery
+	 * @param preDeliveryDTO
+	 * @return
+	 */
 	private List<File> getSubDirectories(final Delivery delivery, final PreDeliveryDTO preDeliveryDTO) {
+		// Get the full delivery path
 		final String deliveryPath = getFolderPath(delivery).toString();
 		if (deliveryPath == null) {
 			final PgcnError error = buildError(DELIVERY_WRONG_FOLDER);
 			preDeliveryDTO.addError(error);
 			throw new PgcnValidationException(preDeliveryDTO, error);
 		}
-		LOG.debug("Recherche de fichiers dans le dossier : {}", deliveryPath);
 
+		LOG.debug("Recherche de fichiers dans le dossier : {}", deliveryPath);
 		final File[] subDirectories = new File(deliveryPath).listFiles(File::isDirectory);
 		LOG.debug("sous dossiers : {}", subDirectories);
+
 		if (subDirectories == null) {
 			final PgcnError error = buildError(DELIVERY_WRONG_FOLDER);
 			preDeliveryDTO.addError(error);
@@ -372,12 +380,19 @@ public class DeliveryProcessService {
 		return new ArrayList<>(Arrays.asList(subDirectories));
 	}
 
+	/**
+	 * @param delivery
+	 * @param preDeliveryDTO
+	 * @return
+	 */
 	private Map<String, PrefixedDocuments> getPrefixedDocuments(final Delivery delivery,
 			final PreDeliveryDTO preDeliveryDTO) {
 		final Map<String, PrefixedDocuments> documentsForPrefix = new HashMap<>();
+
 		transactionService.executeInNewTransaction(() -> {
 			final Set<PhysicalDocument> physicalDocuments = physicalDocumentRepository
 				.findAllByLot(delivery.getLot().getIdentifier());
+
 			physicalDocuments.forEach(physicalDoc -> {
 				// Vérification de la possibilité de livrer le document
 				if (workflowAccessHelper.canDocUnitBeDelivered(physicalDoc.getDocUnit().getIdentifier())) {
@@ -780,9 +795,10 @@ public class DeliveryProcessService {
 	}
 
 	/**
-	 * Retourne le chemin complet correspondant à la livraison
+	 * Returns the full path to the delivery folder.
 	 * @param delivery
-	 * @return
+	 * @return the concatenation of the path declared inside the active sftp config and
+	 * the folder specified on the delivery.
 	 */
 	private Path getFolderPath(final Delivery delivery) {
 		final FTPConfiguration activeFTPConfiguration = lotService.getActiveFTPConfiguration(delivery.getLot());

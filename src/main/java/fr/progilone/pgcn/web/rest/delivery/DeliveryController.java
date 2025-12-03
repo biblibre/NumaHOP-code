@@ -194,10 +194,10 @@ public class DeliveryController extends AbstractRestController {
 	}
 
 	/**
-	 * @param id
+	 * @param id Delivery identifier.
 	 * @param createDocs si true, on ne fait pas de rapprochement entre les fichiers et
 	 * les doc physiques du lot de la livraison
-	 * @return
+	 * @return The updated delivery object populated with found
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, params = { "predeliver" })
 	@Timed
