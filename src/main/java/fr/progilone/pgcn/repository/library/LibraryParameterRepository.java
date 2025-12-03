@@ -14,10 +14,10 @@ public interface LibraryParameterRepository extends JpaRepository<LibraryParamet
 	LibraryParameter getOneByTypeAndLibrary(LibraryParameterType type, Library library);
 
 	@Query("""
-		 select lp from LibraryParameter lp
-		join fetch lp.values
-		where lp.type = ?1 and lp.library = ?2
-		""")
+			 select lp from LibraryParameter lp
+			join fetch lp.values
+			where lp.type = ?1 and lp.library = ?2
+			""")
 	LibraryParameter getByTypeAndLibraryWithValues(LibraryParameterType type, Library library);
 
 	@EntityGraph(value = "LibraryParameter.values")

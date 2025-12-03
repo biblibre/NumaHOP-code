@@ -8,16 +8,16 @@ import org.springframework.data.jpa.repository.Query;
 public interface AuthorizationRepository extends JpaRepository<Authorization, String> {
 
 	@Query("""
-		select a from Authorization a
-		left join fetch a.roles
-		where a.identifier = ?1
-		""")
+			select a from Authorization a
+			left join fetch a.roles
+			where a.identifier = ?1
+			""")
 	public Authorization findOneWithRoles(String identifier);
 
 	@Query("""
-		select distinct a from Authorization a
-		left join fetch a.roles
-		""")
+			select distinct a from Authorization a
+			left join fetch a.roles
+			""")
 	public List<Authorization> findAllWithRoles();
 
 }

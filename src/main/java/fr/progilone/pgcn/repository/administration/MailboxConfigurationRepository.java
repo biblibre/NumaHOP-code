@@ -14,43 +14,43 @@ public interface MailboxConfigurationRepository
 		extends JpaRepository<MailboxConfiguration, String>, MailboxConfigurationRepositoryCustom {
 
 	@Query("""
-		select distinct c from MailboxConfiguration c
-		join fetch c.library
-		""")
+			select distinct c from MailboxConfiguration c
+			join fetch c.library
+			""")
 	Set<MailboxConfiguration> findAllWithDependencies();
 
 	@Query("""
-		select distinct c from MailboxConfiguration c
-		join fetch c.library
-		where c.active = ?1
-		""")
+			select distinct c from MailboxConfiguration c
+			join fetch c.library
+			where c.active = ?1
+			""")
 	Set<MailboxConfiguration> findByActiveWithDependencies(boolean active);
 
 	@Query("""
-		select distinct c from MailboxConfiguration c
-		join fetch c.library l
-		where l = ?1
-		""")
+			select distinct c from MailboxConfiguration c
+			join fetch c.library l
+			where l = ?1
+			""")
 	Set<MailboxConfiguration> findByLibrary(Library library);
 
 	@Query("""
-		select distinct c from MailboxConfiguration c
-		join fetch c.library l
-		where l = ?1 and c.active = ?2
-		""")
+			select distinct c from MailboxConfiguration c
+			join fetch c.library l
+			where l = ?1 and c.active = ?2
+			""")
 	Set<MailboxConfiguration> findByLibraryAndActive(Library library, boolean active);
 
 	@Query("""
-		select c from MailboxConfiguration c
-		join fetch c.library
-		where c.identifier = ?1
-		""")
+			select c from MailboxConfiguration c
+			join fetch c.library
+			where c.identifier = ?1
+			""")
 	MailboxConfiguration findOneWithDependencies(String id);
 
 	@Query("""
-		select c.password from MailboxConfiguration c
-		where c.identifier = ?1
-		""")
+			select c.password from MailboxConfiguration c
+			where c.identifier = ?1
+			""")
 	String findPasswordByIdentifier(String identifier);
 
 	@Modifying

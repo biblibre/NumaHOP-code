@@ -12,10 +12,10 @@ import org.springframework.data.jpa.repository.Query;
 public interface AutomaticCheckResultRepository extends JpaRepository<AutomaticCheckResult, String> {
 
 	@Query("""
-		select distinct res from AutomaticCheckResult res
-		left join fetch res.page
-		where res.docUnit.identifier = ?1 and res.digitalDocument.identifier = ?2 and res.check.type = ?3
-		""")
+			select distinct res from AutomaticCheckResult res
+			left join fetch res.page
+			where res.docUnit.identifier = ?1 and res.digitalDocument.identifier = ?2 and res.check.type = ?3
+			""")
 	List<AutomaticCheckResult> findAllByDocUnitAndDigitalDocumentAndCheckType(String docUnit, String digitalDocument,
 			AutoCheckType type);
 

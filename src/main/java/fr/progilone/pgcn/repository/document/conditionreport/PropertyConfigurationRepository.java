@@ -11,11 +11,11 @@ import org.springframework.data.jpa.repository.Query;
 public interface PropertyConfigurationRepository extends JpaRepository<PropertyConfiguration, String> {
 
 	@Query("""
-		select c from PropertyConfiguration c
-		join fetch c.library
-		left join fetch c.descProperty
-		where c.identifier = ?1
-		""")
+			select c from PropertyConfiguration c
+			join fetch c.library
+			left join fetch c.descProperty
+			where c.identifier = ?1
+			""")
 	PropertyConfiguration findWithDependencies(String identifier);
 
 	List<PropertyConfiguration> findByLibrary(Library library);

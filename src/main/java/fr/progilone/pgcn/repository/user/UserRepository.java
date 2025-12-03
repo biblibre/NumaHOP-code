@@ -14,80 +14,80 @@ import org.springframework.data.jpa.repository.Query;
 public interface UserRepository extends JpaRepository<User, String>, UserRepositoryCustom {
 
 	@Query("""
-		select u.identifier from User u
-		""")
+			select u.identifier from User u
+			""")
 	List<String> findAllIdentifiers();
 
 	@Query("""
-		select u.identifier from User u
-		where lower(u.firstname) like %?1% or lower(u.surname) like %?1%
-		""")
+			select u.identifier from User u
+			where lower(u.firstname) like %?1% or lower(u.surname) like %?1%
+			""")
 	Page<String> findAllIdentifiers(String filter, Pageable pageable);
 
 	@Query("""
-		select distinct u from User u
-		left join fetch u.role r
-		left join fetch u.library
-		left join fetch r.authorizations
-		where u.identifier in ?1
-		""")
+			select distinct u from User u
+			left join fetch u.role r
+			left join fetch u.library
+			left join fetch r.authorizations
+			where u.identifier in ?1
+			""")
 	List<User> findByIdentifierIn(Iterable<String> ids, Sort sort);
 
 	@Query("""
-		select u from User u
-		left join fetch u.address
-		where u.identifier = ?1
-		""")
+			select u from User u
+			left join fetch u.address
+			where u.identifier = ?1
+			""")
 	User findOneWithDependenciesForChangeRequest(String identifier);
 
 	@Query("""
-		select u from User u
-		left join fetch u.library
-		where u.identifier = ?1
-		""")
+			select u from User u
+			left join fetch u.library
+			where u.identifier = ?1
+			""")
 	User findOneWithLibrary(String identifier);
 
 	@Query("""
-		select u from User u
-		left join fetch u.address
-		left join fetch u.library
-		left join fetch u.role r
-		left join fetch r.authorizations
-		where u.identifier = ?1
-		""")
+			select u from User u
+			left join fetch u.address
+			left join fetch u.library
+			left join fetch u.role r
+			left join fetch r.authorizations
+			where u.identifier = ?1
+			""")
 	User findOneWithDependencies(String identifier);
 
 	@Query("""
-		select distinct u from User u
-		left join fetch u.address
-		left join fetch u.library
-		left join fetch u.role r
-		left join fetch r.authorizations
-		where u.id in ?1
-		""")
+			select distinct u from User u
+			left join fetch u.address
+			left join fetch u.library
+			left join fetch u.role r
+			left join fetch r.authorizations
+			where u.id in ?1
+			""")
 	List<User> findAllWithDependencies(final Collection<String> ids);
 
 	@Query("""
-		select u from User u
-		where u.login = ?1
-		""")
+			select u from User u
+			where u.login = ?1
+			""")
 	User findByLogin(String login);
 
 	@Query("""
-		select u from User u
-		where u.login in ?1
-		""")
+			select u from User u
+			where u.login in ?1
+			""")
 	List<User> findByLoginIn(List<String> logins);
 
 	@Query("from User u left join fetch u.role r left join fetch r.authorizations "
-	// + "left join fetch u.lang " FIXME
+			// + "left join fetch u.lang " FIXME
 			+ "left join fetch u.dashboard where u.identifier = ?1")
 	User findOneWithRoleAndAuthorizations(String identifier);
 
 	@Query("""
-		select u.password from User u
-		where u.identifier = ?1
-		""")
+			select u.password from User u
+			where u.identifier = ?1
+			""")
 	String findPasswordByIdentifier(String identifier);
 
 	User findOneByIdentifier(String identifier);
@@ -105,14 +105,14 @@ public interface UserRepository extends JpaRepository<User, String>, UserReposit
 	Long countByRole(Role role);
 
 	@Query("""
-		select distinct u from User u
-		left join fetch u.address
-		left join fetch u.library
-		left join fetch u.role r
-		left join fetch r.authorizations
-		left join fetch u.groups
-		where u.id in ?1
-		""")
+			select distinct u from User u
+			left join fetch u.address
+			left join fetch u.library
+			left join fetch u.role r
+			left join fetch r.authorizations
+			left join fetch u.groups
+			where u.id in ?1
+			""")
 	User findOneWithDependenciesAndGroups(String identifier);
 
 }

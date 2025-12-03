@@ -12,49 +12,49 @@ import org.springframework.data.jpa.repository.Query;
 public interface CSVMappingRepository extends JpaRepository<CSVMapping, String> {
 
 	@Query("""
-		select m from CSVMapping m
-		left join fetch m.library
-		left join fetch m.rules r
-		left join fetch r.property
-		where m.identifier = ?1
-		""")
+			select m from CSVMapping m
+			left join fetch m.library
+			left join fetch m.rules r
+			left join fetch r.property
+			where m.identifier = ?1
+			""")
 	CSVMapping findOneWithRules(String identifier);
 
 	@Query("""
-		select distinct m from CSVMapping m
-		left join fetch m.library
-		left join fetch m.rules r
-		left join fetch r.property
-		""")
+			select distinct m from CSVMapping m
+			left join fetch m.library
+			left join fetch m.rules r
+			left join fetch r.property
+			""")
 	Set<CSVMapping> findAllWithRules();
 
 	@Query("""
-		select m from CSVMapping m
-		left join fetch m.library l
-		left join fetch m.rules r
-		left join fetch r.property
-		where r.docUnitField = 'pgcnId'
-		""")
+			select m from CSVMapping m
+			left join fetch m.library l
+			left join fetch m.rules r
+			left join fetch r.property
+			where r.docUnitField = 'pgcnId'
+			""")
 	Set<CSVMapping> findAllUsableWithRules();
 
 	@Query("""
-		select m from CSVMapping m
-		join fetch m.library l
-		left join fetch m.rules r
-		left join fetch r.property
-		where l = ?1
-		""")
+			select m from CSVMapping m
+			join fetch m.library l
+			left join fetch m.rules r
+			left join fetch r.property
+			where l = ?1
+			""")
 	Set<CSVMapping> findByLibraryWithRules(Library library);
 
 	Set<CSVMapping> findByLibrary(Library library);
 
 	@Query("""
-		select m from CSVMapping m
-		join fetch m.library l
-		left join fetch m.rules r
-		left join fetch r.property
-		where l = ?1 and r.docUnitField = 'pgcnId'
-		""")
+			select m from CSVMapping m
+			join fetch m.library l
+			left join fetch m.rules r
+			left join fetch r.property
+			where l = ?1 and r.docUnitField = 'pgcnId'
+			""")
 	Set<CSVMapping> findUsableByLibrary(Library library);
 
 }

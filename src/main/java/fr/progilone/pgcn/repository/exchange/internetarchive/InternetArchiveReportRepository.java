@@ -35,10 +35,10 @@ public interface InternetArchiveReportRepository
 	long countByDocUnitLibraryAndStatusIn(Library library, InternetArchiveReport.Status... status);
 
 	@Query("""
-		select r from InternetArchiveReport r
-		left join fetch r.docUnit doc
-		where r.status = 'ARCHIVED' AND doc.arkUrl is NULL AND r.dateArchived > ?1
-		""")
+			select r from InternetArchiveReport r
+			left join fetch r.docUnit doc
+			where r.status = 'ARCHIVED' AND doc.arkUrl is NULL AND r.dateArchived > ?1
+			""")
 	List<InternetArchiveReport> findAllByStatusArchivedAndEmptyDocUnitArk(final LocalDateTime date);
 
 }

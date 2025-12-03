@@ -8,24 +8,24 @@ import org.springframework.data.jpa.repository.Query;
 public interface RoleRepository extends JpaRepository<Role, String>, RoleRepositoryCustom {
 
 	@Query("""
-		select r from Role r
-		left join fetch r.authorizations
-		where r.identifier = ?1
-		""")
+			select r from Role r
+			left join fetch r.authorizations
+			where r.identifier = ?1
+			""")
 	public Role findOneWithAuthorizations(String identifier);
 
 	@Query("""
-		select distinct r from Role r
-		left join fetch r.authorizations
-		where r.superuser = false
-		""")
+			select distinct r from Role r
+			left join fetch r.authorizations
+			where r.superuser = false
+			""")
 	public List<Role> findAllWithAuthorizations();
 
 	@Override
 	@Query("""
-		select distinct r from Role r
-		where r.superuser = false
-		""")
+			select distinct r from Role r
+			where r.superuser = false
+			""")
 	public List<Role> findAll();
 
 	Role findByCode(String code);

@@ -19,55 +19,55 @@ public interface ImportedDocUnitRepository
 		extends JpaRepository<ImportedDocUnit, String>, ImportedDocUnitRepositoryCustom {
 
 	@Query("""
-		select i.identifier from ImportedDocUnit i
-		where i.report = ?1
-		""")
+			select i.identifier from ImportedDocUnit i
+			where i.report = ?1
+			""")
 	Page<String> findIdentifiersByImportReport(ImportReport report, Pageable pageable);
 
 	@Query("""
-		select d.identifier from ImportedDocUnit i
-		join i.docUnit d
-		where i.report = ?1 and d.state= ?2
-		""")
+			select d.identifier from ImportedDocUnit i
+			join i.docUnit d
+			where i.report = ?1 and d.state= ?2
+			""")
 	Page<String> findDocUnitIdentifiersByImportReport(ImportReport report, DocUnit.State state, Pageable pageable);
 
 	@Query("""
-		select distinct i from ImportedDocUnit i
-		left join fetch i.duplicatedUnits
-		left join fetch i.messages
-		join fetch i.docUnit d
-		left join fetch d.library l
-		left join fetch d.records r
-		left join fetch r.properties p
-		left join fetch p.type
-		where i.identifier = ?1
-		""")
+			select distinct i from ImportedDocUnit i
+			left join fetch i.duplicatedUnits
+			left join fetch i.messages
+			join fetch i.docUnit d
+			left join fetch d.library l
+			left join fetch d.records r
+			left join fetch r.properties p
+			left join fetch p.type
+			where i.identifier = ?1
+			""")
 	ImportedDocUnit findByIdentifier(String identifier);
 
 	@Query("""
-		select distinct i from ImportedDocUnit i
-		left join fetch i.messages
-		left join fetch i.docUnit d
-		left join fetch d.library l
-		left join fetch d.records r
-		left join fetch i.duplicatedUnits dup
-		left join fetch dup.records rdup
-		where i.identifier in ?1
-		""")
+			select distinct i from ImportedDocUnit i
+			left join fetch i.messages
+			left join fetch i.docUnit d
+			left join fetch d.library l
+			left join fetch d.records r
+			left join fetch i.duplicatedUnits dup
+			left join fetch dup.records rdup
+			where i.identifier in ?1
+			""")
 	List<ImportedDocUnit> findByIdentifiersIn(List<String> identifiers, Sort sort);
 
 	@Query("""
-		select distinct i from ImportedDocUnit i
-		join i.duplicatedUnits dup
-		where dup.identifier = ?1
-		""")
+			select distinct i from ImportedDocUnit i
+			join i.duplicatedUnits dup
+			where dup.identifier = ?1
+			""")
 	List<ImportedDocUnit> findByDuplicatedUnits(String identifier);
 
 	@Query("""
-		select distinct i from ImportedDocUnit i
-		join fetch i.docUnit d
-		where i.report.identifier = ?1 and i.parentKey in ?2
-		""")
+			select distinct i from ImportedDocUnit i
+			join fetch i.docUnit d
+			where i.report.identifier = ?1 and i.parentKey in ?2
+			""")
 	List<ImportedDocUnit> findByReportIdentifierAndParentKeyIn(String reportId, Collection<String> parentKeys);
 
 	@Modifying
@@ -91,16 +91,16 @@ public interface ImportedDocUnitRepository
 
 	@Modifying
 	@Query("""
-		update ImportedDocUnit set process = ?2
-		where identifier = ?1
-		""")
+			update ImportedDocUnit set process = ?2
+			where identifier = ?1
+			""")
 	void updateProcess(String identifier, ImportedDocUnit.Process process);
 
 	@Modifying
 	@Query("""
-		update ImportedDocUnit u set u.docUnit = null
-		where u.docUnit.identifier in ?1
-		""")
+			update ImportedDocUnit u set u.docUnit = null
+			where u.docUnit.identifier in ?1
+			""")
 	void setDocUnitNullByDocUnitIdIn(List<String> docUnitIds);
 
 }

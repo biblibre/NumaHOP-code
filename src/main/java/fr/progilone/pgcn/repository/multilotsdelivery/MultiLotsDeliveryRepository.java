@@ -10,21 +10,21 @@ public interface MultiLotsDeliveryRepository
 		extends JpaRepository<MultiLotsDelivery, String>, MultiLotsDeliveryRepositoryCustom {
 
 	@Query("""
-		select distinct multi from MultiLotsDelivery multi
-		left join fetch multi.deliveries d
-		left join fetch d.lot l
-		left join fetch l.project
-		where multi.identifier = ?1
-		""")
+			select distinct multi from MultiLotsDelivery multi
+			left join fetch multi.deliveries d
+			left join fetch d.lot l
+			left join fetch l.project
+			where multi.identifier = ?1
+			""")
 	MultiLotsDelivery findOneByIdWithDeliveries(String id);
 
 	@Query("""
-		select distinct lot from Lot lot
-		left join lot.docUnits du
-		left join du.physicalDocuments pd
-		left join pd.train t
-		where t.identifier = ?1
-		""")
+			select distinct lot from Lot lot
+			left join lot.docUnits du
+			left join du.physicalDocuments pd
+			left join pd.train t
+			where t.identifier = ?1
+			""")
 	List<Lot> findLotsByTrainIdentifier(String id);
 
 }

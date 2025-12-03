@@ -16,10 +16,10 @@ public interface AutomaticCheckTypeRepository extends JpaRepository<AutomaticChe
 	AutomaticCheckType getOneByType(AutoCheckType type);
 
 	@Query("""
-		select distinct type from AutomaticCheckType type
-		where configurable = true
-		order by order asc
-		""")
+			select distinct type from AutomaticCheckType type
+			where configurable = true
+			order by order asc
+			""")
 	List<AutomaticCheckType> findAllConfigurable();
 
 }

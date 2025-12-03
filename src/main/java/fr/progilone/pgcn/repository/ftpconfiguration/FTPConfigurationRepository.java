@@ -10,16 +10,16 @@ public interface FTPConfigurationRepository
 		extends JpaRepository<FTPConfiguration, String>, FTPConfigurationRepositoryCustom {
 
 	@Query("""
-		select c from FTPConfiguration c
-		join fetch c.library
-		where c.identifier = ?1
-		""")
+			select c from FTPConfiguration c
+			join fetch c.library
+			where c.identifier = ?1
+			""")
 	FTPConfiguration findOneWithDependencies(String identifier);
 
 	@Query("""
-		select c.password from FTPConfiguration c
-		where c.identifier = ?1
-		""")
+			select c.password from FTPConfiguration c
+			where c.identifier = ?1
+			""")
 	String findPasswordByIdentifier(String identifier);
 
 }
