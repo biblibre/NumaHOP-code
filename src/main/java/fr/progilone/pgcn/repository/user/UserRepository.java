@@ -79,9 +79,14 @@ public interface UserRepository extends JpaRepository<User, String>, UserReposit
 			""")
 	List<User> findByLoginIn(List<String> logins);
 
-	@Query("from User u left join fetch u.role r left join fetch r.authorizations "
-			// + "left join fetch u.lang " FIXME
-			+ "left join fetch u.dashboard where u.identifier = ?1")
+	// FIXME: left join Lang u
+	@Query("""
+			select u from User u
+			left join fetch u.role r
+			left join fetch r.authorizations
+			left join fetch u.dashboard
+			where u.identifier = ?1
+			""")
 	User findOneWithRoleAndAuthorizations(String identifier);
 
 	@Query("""
