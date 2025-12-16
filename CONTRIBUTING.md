@@ -122,7 +122,68 @@ Each java method in a class should be documented using javadoc comments `\**
 *\` at the exception of the API handlers these should be commented using the
 swagger annotations.
 
-Trivial getters and setters can also be left undocumented.
+Trivial getters and setters can be left undocumented.
+
+### (JAVA 3) `return` statement in `forEach` lambda function should be avoided
+
+The `return` statement in `forEach` lambda function has the same effect as a
+`continue` in a classic for loop. In long lambda functions this can become
+confusing. In this case a classic for loop is preferred. If it make sense the
+lambda can also be extracted to a named function.
+
+Here is an example:
+```java
+iterable_collection.forEach(element -> {
+    if (!isValid(element)) {
+        rapportError();
+        return;
+    }
+
+    if (!canTaskBePerformed(element)) {
+        rapportOtherError();
+        return;
+    }
+    
+    performTask(element)
+});
+
+```
+Instead prefer:
+```java
+for (Element element : iterable_collection) {
+    if (!isValid(element)) {
+        rapportError();
+        continue;
+    }
+
+    if (!canTaskBePerformed(element)) {
+        rapportOtherError();
+        continue;
+    }
+    
+    performTask(element)
+}
+```
+
+Or:
+```java
+private void checkAndPerformTask(Element element) {
+    if (!isValid(element)) {
+        rapportError();
+        return;
+    }
+
+    if (!canTaskBePerformed(element)) {
+        rapportOtherError();
+        return;
+    }
+    
+    performTask(element)
+}
+
+iterable_collection.forEach(checkAndPerformTask);
+```
+
 
 ## Front-End
 ### (Front-End 1) Code Comments
@@ -311,7 +372,7 @@ class UserController {
 
 If the module you want to use has a CRUD interface, the `$ressource` function
 must be used to create a front-end service as it creates default functions for
-a CRUD api usage given a base route. Otherwise create your service using the
+a CRUD API usage given a base route. Otherwise create your service using the
 `$http` angular service. See
 [\$resource](https://docs.angularjs.org/api/ngResource/service/$resource) and
 [\$http](https://docs.angularjs.org/api/ng/service/$http).
