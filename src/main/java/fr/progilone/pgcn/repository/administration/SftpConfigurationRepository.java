@@ -13,23 +13,44 @@ import org.springframework.data.jpa.repository.Query;
 public interface SftpConfigurationRepository
 		extends JpaRepository<SftpConfiguration, String>, SftpConfigurationRepositoryCustom {
 
-	@Query("select distinct c " + "from SftpConfiguration c " + "join fetch c.library ")
+	@Query("""
+			select distinct c from SftpConfiguration c
+			join fetch c.library
+			""")
 	Set<SftpConfiguration> findAllWithDependencies();
 
-	@Query("select distinct c " + "from SftpConfiguration c " + "join fetch c.library " + "where c.active = ?1")
+	@Query("""
+			select distinct c from SftpConfiguration c
+			join fetch c.library
+			where c.active = ?1
+			""")
 	Set<SftpConfiguration> findByActiveWithDependencies(boolean active);
 
-	@Query("select distinct c " + "from SftpConfiguration c " + "join fetch c.library l " + "where l = ?1")
+	@Query("""
+			select distinct c from SftpConfiguration c
+			join fetch c.library l
+			where l = ?1
+			""")
 	Set<SftpConfiguration> findByLibrary(Library library);
 
-	@Query("select distinct c " + "from SftpConfiguration c " + "join fetch c.library l " + "where l = ?1 "
-			+ "and c.active = ?2")
+	@Query("""
+			select distinct c from SftpConfiguration c
+			join fetch c.library l
+			where l = ?1 and c.active = ?2
+			""")
 	Set<SftpConfiguration> findByLibraryAndActive(Library library, boolean active);
 
-	@Query("select c " + "from SftpConfiguration c " + "join fetch c.library " + "where c.identifier = ?1")
+	@Query("""
+			select c from SftpConfiguration c
+			join fetch c.library
+			where c.identifier = ?1
+			""")
 	SftpConfiguration findOneWithDependencies(String id);
 
-	@Query("select c.password from SftpConfiguration c where c.identifier = ?1")
+	@Query("""
+			select c.password from SftpConfiguration c
+			where c.identifier = ?1
+			""")
 	String findPasswordByIdentifier(String identifier);
 
 	@Modifying

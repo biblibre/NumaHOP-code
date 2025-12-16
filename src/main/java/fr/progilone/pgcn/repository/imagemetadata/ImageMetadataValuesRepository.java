@@ -14,13 +14,21 @@ public interface ImageMetadataValuesRepository extends JpaRepository<ImageMetada
 
 	List<ImageMetadataValue> findByDocUnitIdentifierIn(List<String> docUnitId);
 
-	@Query("select v from ImageMetadataValue v join fetch v.metadata where v.docUnit.identifier = ?1")
+	@Query("""
+			select v from ImageMetadataValue v
+			join fetch v.metadata
+			where v.docUnit.identifier = ?1
+			""")
 	List<ImageMetadataValue> findAllByDocUnitIdentifierWithDependencies(String id);
 
 	void deleteByDocUnitIdentifier(String identifier);
 
-	@Query("SELECT values " + "FROM ImageMetadataValue values " + "JOIN FETCH values.docUnit "
-			+ "JOIN FETCH values.metadata " + "where values.identifier = ?1")
+	@Query("""
+			select values from ImageMetadataValue values
+			join fetch values.docUnit
+			join fetch values.metadata
+			where values.identifier = ?1
+			""")
 	ImageMetadataValue findOneWithDependencies(String identifier);
 
 }

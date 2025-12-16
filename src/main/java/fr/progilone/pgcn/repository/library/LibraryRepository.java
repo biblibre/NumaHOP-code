@@ -14,23 +14,41 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface LibraryRepository extends JpaRepository<Library, String>, LibraryRepositoryCustom {
 
-	@Query("from Library l " + "where l.name = ?1")
+	@Query("""
+			select l from Library l
+			where l.name = ?1
+			""")
 	Library findByName(String name);
 
-	@Query("select distinct l " + "from Library l " + "where l.identifier in ?1 ")
+	@Query("""
+			select distinct l from Library l
+			where l.identifier in ?1
+			""")
 	List<Library> findByIdentifierIn(Iterable<String> ids, Sort sort);
 
-	@Query("from Library l " + "left join fetch l.address " + "left join fetch l.platforms "
-			+ "left join fetch l.activeFTPConfiguration " + "left join fetch l.activeOcrLangConfiguration "
-			+ "where l.identifier = ?1")
+	@Query("""
+			select l from Library l
+			left join fetch l.address
+			left join fetch l.platforms
+			left join fetch l.activeFTPConfiguration
+			left join fetch l.activeOcrLangConfiguration
+			where l.identifier = ?1
+			""")
 	Library findOneWithDependencies(String identifier);
 
-	@Query("select distinct l " + "from Library l " + "where l.superuser = false " + "and l.active = ?1")
+	@Query("""
+			select distinct l from Library l
+			where l.superuser = false and l.active = ?1
+			""")
 	List<Library> findAllByActive(boolean active);
 
-	@Query("from Library lib " + "left join fetch lib.activeOcrLangConfiguration conf "
-			+ "left join fetch conf.activatedOcrLanguages langs " + "left join fetch langs.ocrLanguage "
-			+ "where lib.identifier = ?1 ")
+	@Query("""
+			select lib from Library lib
+			left join fetch lib.activeOcrLangConfiguration conf
+			left join fetch conf.activatedOcrLanguages langs
+			left join fetch langs.ocrLanguage
+			where lib.identifier = ?1
+			""")
 	Library findOneWithActifsOcrLanguages(String libraryId);
 
 	Long countByActiveFTPConfiguration(FTPConfiguration conf);

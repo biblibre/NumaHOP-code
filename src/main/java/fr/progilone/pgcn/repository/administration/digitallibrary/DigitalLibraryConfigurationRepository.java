@@ -14,14 +14,23 @@ public interface DigitalLibraryConfigurationRepository
 
 	Set<DigitalLibraryConfiguration> findByLibraryAndActive(Library library, boolean active);
 
-	@Query("SELECT conf FROM DigitalLibraryConfiguration conf where active = ?1")
+	@Query("""
+			select conf from DigitalLibraryConfiguration conf
+			where active = ?1
+			""")
 	List<DigitalLibraryConfiguration> findAll(boolean active);
 
-	@Query("SELECT conf " + "FROM DigitalLibraryConfiguration conf " + "JOIN FETCH conf.library "
-			+ "where conf.identifier = ?1")
+	@Query("""
+			select conf from DigitalLibraryConfiguration conf
+			join fetch conf.library
+			where conf.identifier = ?1
+			""")
 	DigitalLibraryConfiguration findOneWithDependencies(String identifier);
 
-	@Query("SELECT conf.password " + "FROM DigitalLibraryConfiguration conf " + "where conf.identifier = ?1")
+	@Query("""
+			select conf.password from DigitalLibraryConfiguration conf
+			where conf.identifier = ?1
+			""")
 	String findPasswordByIdentifier(String identifier);
 
 }
