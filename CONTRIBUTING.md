@@ -8,16 +8,16 @@
 > do
 
 Before submitting a bug report ensure the bug was not already reported by
-searching the [issues](https://github.com/biblibre/NumaHOP-code/issues). If you
+searching the [issues][issues]. If you
 find an issue that describe the same bug, you can add a comment describing your
 situation and add more context information.
 
 If your unable to find an open issue addressing the problem, [open a new
-one](https://github.com/biblibre/NumaHOP-code/issues/new). Be sure to include a
-clear **title** with as much relevant information as possible. For example
-`Creation of duplicate document units while importing csv notices.` is good
-descriptive title while `Import didn't work as expected` is too vague. The more
-information you provide the greater the likelihood of the bug being fixed is.
+one][new_issue]. Be sure to include a clear **title** with as much relevant
+information as possible. For example `Creation of duplicate document units
+while importing csv notices.` is good descriptive title while `Import didn't
+work as expected` is too vague. The more information you provide the greater
+the likelihood of the bug being fixed is.
 
 The bug report form should ask you the following information:
 - A description of what you wanted to do and/or expected to happen:
@@ -122,7 +122,68 @@ Each java method in a class should be documented using javadoc comments `\**
 *\` at the exception of the API handlers these should be commented using the
 swagger annotations.
 
-Trivial getters and setters can also be left undocumented.
+Trivial getters and setters can be left undocumented.
+
+### (JAVA 3) `return` statement in `forEach` lambda function should be avoided
+
+The `return` statement in `forEach` lambda function has the same effect as a
+`continue` in a classic for loop. In long lambda functions this can become
+confusing. In this case a classic for loop is preferred. If it make sense the
+lambda can also be extracted to a named function.
+
+Here is an example:
+```java
+iterable_collection.forEach(element -> {
+    if (!isValid(element)) {
+        rapportError();
+        return;
+    }
+
+    if (!canTaskBePerformed(element)) {
+        rapportOtherError();
+        return;
+    }
+    
+    performTask(element)
+});
+
+```
+Instead prefer:
+```java
+for (Element element : iterable_collection) {
+    if (!isValid(element)) {
+        rapportError();
+        continue;
+    }
+
+    if (!canTaskBePerformed(element)) {
+        rapportOtherError();
+        continue;
+    }
+    
+    performTask(element)
+}
+```
+
+Or:
+```java
+private void checkAndPerformTask(Element element) {
+    if (!isValid(element)) {
+        rapportError();
+        return;
+    }
+
+    if (!canTaskBePerformed(element)) {
+        rapportOtherError();
+        return;
+    }
+    
+    performTask(element)
+}
+
+iterable_collection.forEach(checkAndPerformTask);
+```
+
 
 ## Front-End
 ### (Front-End 1) Code Comments
@@ -190,7 +251,7 @@ function myFunction(a) {
 
 ### (API 1) Specification
 
-The API of NumaHOP must respect the [Open-Api v3.1 specification](https://spec.openapis.org/oas/v3.1.1.html).
+The API of NumaHOP must respect the [Open-Api v3.1 specification][oas_spec].
 
 ### (API 2) Api design
 
@@ -311,10 +372,10 @@ class UserController {
 
 If the module you want to use has a CRUD interface, the `$ressource` function
 must be used to create a front-end service as it creates default functions for
-a CRUD api usage given a base route. Otherwise create your service using the
+a CRUD API usage given a base route. Otherwise create your service using the
 `$http` angular service. See
-[\$resource](https://docs.angularjs.org/api/ngResource/service/$resource) and
-[\$http](https://docs.angularjs.org/api/ng/service/$http).
+[\$resource][ngdoc_resource] and
+[\$http][ngdoc_http].
 
 Any additional routes to a CRUD endpoint can be added to the `$ressource` call. 
 
@@ -323,3 +384,9 @@ A few examples where `/<object>` also has a CRUD api:
 | ------ | ---------------------- | ---------------------------- |
 | GET    | `/<object>/search?...` | a search with filters        |
 | POST   | `/<object>/task`       | perform a task on the object |
+
+[issues]: https://github.com/biblibre/NumaHOP-code/issues
+[new_issue]: https://github.com/biblibre/NumaHOP-code/issues/new
+[aos_spec]: https://spec.openapis.org/oas/v3.1.1.html
+[ngdoc_resource]: https://docs.angularjs.org/api/ngResource/service/$resource
+[ngdoc_http]: https://docs.angularjs.org/api/ng/service/$http 
