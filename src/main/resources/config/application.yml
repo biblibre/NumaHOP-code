@@ -1,5 +1,169 @@
 debug: false
 
+# ======================================
+# === NumaHOP Specific configuration ===
+# ======================================
+# These are configuration keys defined and used only by NumaHOP itself.
+# See: https://numahop.github.io/Documentation/developper_manual/install/config.html
+# TODO: Create a namespace for all the configuration keys specific to numahop.
+# For example:
+# ```yaml
+# numahop:
+#   security.remembermekey:
+#   services:
+#       ...
+#   base-path: /opt/pgcn
+# ```
+
+# Security configuration.
+# This key should be unique for your application, and kept secret.
+jhipster.security.rememberme.key: $$$$_!!change_me!!_$$$$
+
+report:
+    imagePath: images
+
+admin:
+    login: admin
+    # This key is generated using bcrypt and should be kept secret.
+    # It must be changed for installations.
+    #   default value : password
+    password: $2a$10$xsRQ/2khgr0sblEfy6SjTujCnI3jGxj6q.yNQkKKaz4.ZIsuBT05O
+
+base-path: /opt/pgcn
+
+instance:
+    libraries: library_bibliotheque
+    # library_identifier1, library_identifier2, etc..
+
+uploadPath:
+    condition_report: ${base-path}/upload/condition_report
+    ead: ${base-path}/upload/ead
+    import: ${base-path}/upload/import
+    library: ${base-path}/upload/library
+    user: ${base-path}/upload/user
+    template: ${base-path}/upload/templates
+
+images:
+    format:
+        default:
+            thumbHeight: 150
+            thumbWidth: 150
+            viewHeight: 1417
+            viewWidth: 982
+            printHeight: 2835
+            printWidth: 1964
+
+services:
+    cines:
+        updating:
+            cronenabled: false
+        aip: ${base-path}/cines/aip
+        cache: ${base-path}/cines/cache
+        facile: https://facile.cines.fr/xml
+        xsd:
+            sip: ${base-path}/xsd/sip.xsd
+    archive:
+        s3-url: https://s3.us.archive.org
+        alto: ${base-path}/archive/alto
+        text: ${base-path}/archive/text
+    metaDatas:
+        path: ${base-path}/metadatas
+    deliveryreporting:
+        path: ${base-path}/deliveryReporting
+    omeka:
+        cache: ${base-path}/omeka/cache
+    ftpexport:
+        cache: ${base-path}/ftpexport/cache
+    digitalLibraryDiffusion:
+        cache: ${base-path}/digitalLibraryDiffusion/cache
+
+cron:
+    removeOldTokens: 0 0 0 * * ?
+    cleanLocks: 0 30 0 * * *
+    rebuildIndex: 0 40 0 * * *
+    cleanDeliveryFiles: 0 0 1 * * ?
+    cinesExport: 0 30 1 * * ?
+    localExport: 0 0 4 * * ?
+    cleanTemporaryFiles: 0 0 2 * * ?
+    internetArchiveExport: 0 26 17 * * ?
+    gestDeliveredFiles: 0 00 18 * * SAT
+    cinesUpdateStatus: 0 10 * * * *
+    omekaExport: 0 0 3 * * ?
+    cleanExportCaches: 0 30 6 * * ?
+    docUnitUpdateArk: 0 0 6 * * ?
+    digitalLibraryExport: 0 0 3 * * ?
+
+sshForwarding:
+    enabled: false
+    server:
+    user:
+    password:
+    port: 22
+    knownHosts: ${base-path}/config/known_hosts
+    strictHostKeyChecking: yes
+    database:
+        remoteServer: localhost
+        localPort: 3306
+        remotePort: 3306
+    elasticsearch:
+        remoteServer: localhost
+        localPort: 9300
+        remotePort: 9300
+
+# Information about the build.
+info:
+    app:
+        name: '@project.name@'
+        description: '@project.description@'
+        version: '@git.commit.id.describe@'
+    build:
+        artifact: '@project.artifactId@'
+        name: '@project.name@'
+        description: '@project.description@'
+        version: '@project.version@'
+
+async:
+    corePoolSize: 2
+    maxPoolSize: 10
+    queueCapacity: 10000
+
+elasticsearch:
+    bulk_size: 500
+    index:
+        name: pgcn
+        separator: '-'
+
+messaging:
+    template:
+        path: ${base-path}/Messaging/MessagingTemplate
+
+
+cache: # Cache configuration
+    ehcache: # Ehcache configuration
+        time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
+        max-entries: 1000 # Number of objects in each cache entry
+
+storage:
+    binaries: ${base-path}/dam
+    digest: MD5
+    depth: 3
+
+export:
+    rdf:
+        default_uri: http://numahop.fr/
+    ssh:
+        knownHosts: ${base-path}/config/known_hosts
+        strictHostKeyChecking: 'no'
+    sftp:
+        privateKey: ${base-path}/config/id_rsa
+
+
+# ==========================================
+# === Spring Boot Specific configuration ===
+# ==========================================
+# These are configuration keys defined by spring boot.
+# See: https://docs.spring.io/spring-boot/appendix/application-properties/index.html
+
 management:
     endpoints:
         web.exposure.include: '*'
@@ -19,29 +183,6 @@ server:
     shutdown: graceful
     compression:
         enabled: true
-
-# security configuration (this key should be unique for your application, and kept secret)
-jhipster.security.rememberme.key: $$$$_!!change_me!!_$$$$
-
-instance:
-    libraries: library_bibliotheque
-    # library_identifier1, library_identifier2, etc..
-
-info:
-    app:
-        name: '@project.name@'
-        description: '@project.description@'
-        version: '@git.commit.id.describe@'
-    build:
-        artifact: '@project.artifactId@'
-        name: '@project.name@'
-        description: '@project.description@'
-        version: '@project.version@'
-
-async:
-    corePoolSize: 2
-    maxPoolSize: 10
-    queueCapacity: 10000
 
 spring:
     datasource:
@@ -116,33 +257,9 @@ spring:
         connection-timeout: 120s
         socket-timeout: 120s
 
-base-path: /opt/pgcn
 
-elasticsearch:
-    bulk_size: 500
-    index:
-        name: pgcn
-        separator: '-'
-
-cache: # Cache configuration
-    ehcache: # Ehcache configuration
-        time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
-        max-entries: 1000 # Number of objects in each cache entry
-
-storage:
-    binaries: ${base-path}/dam
-    digest: MD5
-    depth: 3
-
-export:
-    rdf:
-        default_uri: http://numahop.fr/
-    ssh:
-        knownHosts: ${base-path}/config/known_hosts
-        strictHostKeyChecking: 'no'
-    sftp:
-        privateKey: ${base-path}/config/id_rsa
-
+# This is numahop specific but will be replaced when upgrading to spring boot v3.5
+# It was implemented for supporting structured logging (JSON formated logs).
 logging:
     level.root: INFO
     level:
@@ -185,90 +302,3 @@ logging:
     console:
         mode: text # one of 'text' or 'json'
         pattern: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%ex'
-
-sshForwarding:
-    enabled: false
-    server:
-    user:
-    password:
-    port: 22
-    knownHosts: ${base-path}/config/known_hosts
-    strictHostKeyChecking: yes
-    database:
-        remoteServer: localhost
-        localPort: 3306
-        remotePort: 3306
-    elasticsearch:
-        remoteServer: localhost
-        localPort: 9300
-        remotePort: 9300
-
-images:
-    format:
-        default:
-            thumbHeight: 150
-            thumbWidth: 150
-            viewHeight: 1417
-            viewWidth: 982
-            printHeight: 2835
-            printWidth: 1964
-
-report:
-    imagePath: images
-
-uploadPath:
-    condition_report: ${base-path}/upload/condition_report
-    ead: ${base-path}/upload/ead
-    import: ${base-path}/upload/import
-    library: ${base-path}/upload/library
-    user: ${base-path}/upload/user
-    template: ${base-path}/upload/templates
-
-services:
-    cines:
-        updating:
-            cronenabled: false
-        aip: ${base-path}/cines/aip
-        cache: ${base-path}/cines/cache
-        facile: https://facile.cines.fr/xml
-        xsd:
-            sip: ${base-path}/xsd/sip.xsd
-    archive:
-        s3-url: https://s3.us.archive.org
-        alto: ${base-path}/archive/alto
-        text: ${base-path}/archive/text
-    metaDatas:
-        path: ${base-path}/metadatas
-    deliveryreporting:
-        path: ${base-path}/deliveryReporting
-    omeka:
-        cache: ${base-path}/omeka/cache
-    ftpexport:
-        cache: ${base-path}/ftpexport/cache
-    digitalLibraryDiffusion:
-        cache: ${base-path}/digitalLibraryDiffusion/cache
-
-messaging:
-    template:
-        path: ${base-path}/Messaging/MessagingTemplate
-
-cron:
-    removeOldTokens: 0 0 0 * * ?
-    cleanLocks: 0 30 0 * * *
-    rebuildIndex: 0 40 0 * * *
-    cleanDeliveryFiles: 0 0 1 * * ?
-    cinesExport: 0 30 1 * * ?
-    localExport: 0 0 4 * * ?
-    cleanTemporaryFiles: 0 0 2 * * ?
-    internetArchiveExport: 0 26 17 * * ?
-    gestDeliveredFiles: 0 00 18 * * SAT
-    cinesUpdateStatus: 0 10 * * * *
-    omekaExport: 0 0 3 * * ?
-    cleanExportCaches: 0 30 6 * * ?
-    docUnitUpdateArk: 0 0 6 * * ?
-    digitalLibraryExport: 0 0 3 * * ?
-
-admin:
-    login: admin
-    password: $2a$10$xsRQ/2khgr0sblEfy6SjTujCnI3jGxj6q.yNQkKKaz4.ZIsuBT05O
-    # default pwd = password - override on each server conf!!!
