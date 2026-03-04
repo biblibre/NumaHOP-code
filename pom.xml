@@ -576,6 +576,15 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>${jib-maven-plugin.version}</version>
                 <configuration>
+                    <from>
+                        <image>docker://${project.artifactId}-run</image>
+                    </from>
+                    <to>
+                        <image>${project.artifactId}</image>
+                        <tags>
+                            <tag>latest</tag>
+                        </tags>
+                    </to>
                     <container>
                         <jvmFlags>
                             <jvmFlag>-XX:+HeapDumpOnOutOfMemoryError</jvmFlag>
@@ -967,14 +976,6 @@
                     <plugin>
                         <groupId>com.google.cloud.tools</groupId>
                         <artifactId>jib-maven-plugin</artifactId>
-                        <configuration>
-                            <from>
-                                <image>docker://${project.artifactId}-run</image>
-                            </from>
-                            <to>
-                                <image>${project.artifactId}</image>
-                            </to>
-                        </configuration>
                         <executions>
                             <execution>
                                 <goals>
