@@ -1,12 +1,12 @@
 services:
-    numahop-elasticsearch:
+    numahop-es:
         image: elasticsearch:8.6.1
         volumes:
-            - numahop-elasticsearch-8:/usr/share/elasticsearch/data
+            - numahop-es-volume:/usr/share/elasticsearch/data
         networks:
             - numahop
         ports:
-            - "9209:9200"
+            - '9209:9200'
         environment:
             ES_JAVA_OPTS: -Xms1g -Xmx1g
             cluster.name: numahop
@@ -17,4 +17,4 @@ services:
 networks:
     numahop:
 volumes:
-    numahop-elasticsearch-8:
+    numahop-es-volume:

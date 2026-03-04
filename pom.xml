@@ -935,8 +935,7 @@
             <id>checks</id>
             <activation>
                 <property>
-                    <name>fast</name>
-                    <value>!true</value>
+                    <name>!fast</name>
                 </property>
             </activation>
             <build>

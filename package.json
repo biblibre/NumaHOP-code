@@ -1,11 +1,11 @@
 {
     "name": "NumaHOP",
-    "version": "0.0.1",
+    "version": "2.3.1",
     "private": true,
     "scripts": {
-        "check": "prettier --check \"{,src/**/,webpack/}*.{json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
+        "check": "prettier --check \"src/**/*.{json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
         "doc": "jsdoc src/main/webapp/scripts -r -c node_modules/angular-jsdoc/common/conf.json -t node_modules/angular-jsdoc/angular-template -d target/jsdoc --readme src/main/webapp/README.md",
-        "format": "prettier --write \"{,src/**/,webpack/}*.{json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
+        "format": "prettier --write \"src/**/*.{json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
         "lint": "eslint src/main/webapp/scripts",
         "lint-fix": "eslint --fix src/main/webapp/scripts",
         "prepare": "husky install",
