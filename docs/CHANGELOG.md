@@ -4,8 +4,15 @@ All changes to this project should be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to calendar versioning as of 26.03 with bianual releases (yy.03 and yy.09).
+## [Unreleased] 26.09
 
-## [Unreleased] 26.03
+### Added
+### Changed 
+### Removed
+### Fixed
+### Breaking changes
+
+## [26.03]
 
 Here are the latest chages since last release. Once a new realease is made just move these chages in a section with the version number.
 
@@ -39,7 +46,7 @@ Here are the latest chages since last release. Once a new realease is made just 
 - Make the details button on the docunit preview be able to be opened in a new tab.
 - Rework the Mail parsing for the CINES. 
 
-### Breaking changes.
+### Breaking changes
 Build setup changed quite a lot: `mvn package` is now sufisant to get a complete jar for NumaHOP. Optionaly you can add `-Dfast` to skip checks as these should always pass on the master branch.
 
 The CINES mail parsing functionality was reworked to follow changes due to the migration to VITAM the CINES did.
@@ -49,5 +56,6 @@ The CINES mail parsing functionality was reworked to follow changes due to the m
 
 Last version released by TECH'Advantage.
 
-[Unreleased]: https://github.com/numahop/numahop/compare/2.3.1..HEAD
+[Unreleased]: https://github.com/numahop/numahop/compare/26.03..HEAD
+[26.03]: https://github.com/numahop/numahop/tree/26.03
 [2.3.1]: https://github.com/numahop/numahop/tree/2.3.1
