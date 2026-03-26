@@ -1,0 +1,20 @@
+services:
+    numahop-db:
+        image: mariadb:11.1
+        volumes:
+            - numahop-db-volume:/var/lib/mysql
+        networks:
+            - numahop
+        ports:
+            - '3306:3306'
+        environment:
+            MARIADB_RANDOM_ROOT_PASSWORD: yes
+            MARIADB_DATABASE: numahop
+            MARIADB_USER: numahop
+            MARIADB_PASSWORD: numahop
+            MARIADB_AUTO_UPGRADE: true
+
+networks:
+    numahop:
+volumes:
+    numahop-db-volume:

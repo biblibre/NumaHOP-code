@@ -4,12 +4,14 @@
 
 root = true
 
-[*]
+[*.java]
+indent_style = tabs
 
-# Change these settings to your own preference
-indent_style = space
+[*.js]
+indent_style = spaces
 indent_size = 4
 
+[*]
 # We recommend you to keep these unchanged
 end_of_line = lf
 charset = utf-8

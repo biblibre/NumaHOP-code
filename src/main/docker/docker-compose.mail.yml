@@ -1,0 +1,8 @@
+services:
+    numahop-mail:
+        image: namshi/smtp
+        networks:
+            - numahop
+
+networks:
+    numahop:

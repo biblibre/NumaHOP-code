@@ -1,0 +1,20 @@
+services:
+    numahop-es:
+        image: elasticsearch:8.6.1
+        volumes:
+            - numahop-es-volume:/usr/share/elasticsearch/data
+        networks:
+            - numahop
+        ports:
+            - '9209:9200'
+        environment:
+            ES_JAVA_OPTS: -Xms1g -Xmx1g
+            cluster.name: numahop
+            discovery.type: single-node
+            xpack.security.enabled: false
+        mem_limit: 2g
+
+networks:
+    numahop:
+volumes:
+    numahop-es-volume:

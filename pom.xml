@@ -39,7 +39,7 @@
         <metadata-extractor.version>2.18.0</metadata-extractor.version>
         <metrics-spring.version>3.1.3</metrics-spring.version>
         <ninja-squad-dbsetup.version>2.1.0</ninja-squad-dbsetup.version>
-        <node.version>v16.14.0</node.version>
+        <node.version>v24.13.0</node.version>
         <openapi.version>2.6.0</openapi.version>
         <opencsv.version>5.7.1</opencsv.version>
         <poi.version>5.2.3</poi.version>
@@ -576,6 +576,15 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>${jib-maven-plugin.version}</version>
                 <configuration>
+                    <from>
+                        <image>docker://${project.artifactId}-run</image>
+                    </from>
+                    <to>
+                        <image>${project.artifactId}</image>
+                        <tags>
+                            <tag>latest</tag>
+                        </tags>
+                    </to>
                     <container>
                         <jvmFlags>
                             <jvmFlag>-XX:+HeapDumpOnOutOfMemoryError</jvmFlag>
@@ -926,8 +935,7 @@
             <id>checks</id>
             <activation>
                 <property>
-                    <name>fast</name>
-                    <value>!true</value>
+                    <name>!fast</name>
                 </property>
             </activation>
             <build>
@@ -967,14 +975,6 @@
                     <plugin>
                         <groupId>com.google.cloud.tools</groupId>
                         <artifactId>jib-maven-plugin</artifactId>
-                        <configuration>
-                            <from>
-                                <image>docker://${project.artifactId}-run</image>
-                            </from>
-                            <to>
-                                <image>${project.artifactId}</image>
-                            </to>
-                        </configuration>
                         <executions>
                             <execution>
                                 <goals>
@@ -1016,7 +1016,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>ci --cache .npm --prefer-offline --no-audit</arguments>
+                                    <arguments>ci --legacy-peer-deps --cache .npm --prefer-offline --no-audit</arguments>
                                 </configuration>
                             </execution>
                             <execution>
