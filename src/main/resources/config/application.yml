@@ -17,11 +17,6 @@ debug: false
 
 # Security configuration.
 # This key should be unique for your application, and kept secret.
-jhipster.security.rememberme.key: $$$$_!!change_me!!_$$$$
-
-report:
-    imagePath: images
-
 admin:
     login: admin
     # This key is generated using bcrypt and should be kept secret.
@@ -29,29 +24,78 @@ admin:
     #   default value : password
     password: $2a$10$xsRQ/2khgr0sblEfy6SjTujCnI3jGxj6q.yNQkKKaz4.ZIsuBT05O
 
+async:
+    corePoolSize: 2
+    maxPoolSize: 10
+    queueCapacity: 10000
+
 base-path: /opt/pgcn
+
+cron:
+    cinesExport: 0 30 1 * * ?
+    cinesUpdateStatus: 0 10 * * * *
+    cleanExportCaches: 0 30 6 * * ?
+    cleanDeliveryFiles: 0 0 1 * * ?
+    cleanLocks: 0 30 0 * * *
+    cleanTemporaryFiles: 0 0 2 * * ?
+    digitalLibraryExport: 0 0 3 * * ?
+    docUnitUpdateArk: 0 0 6 * * ?
+    gestDeliveredFiles: 0 00 18 * * SAT
+    internetArchiveExport: 0 26 17 * * ?
+    localExport: 0 0 4 * * ?
+    omekaExport: 0 0 3 * * ?
+    rebuildIndex: 0 40 0 * * *
+    removeOldTokens: 0 0 0 * * ?
+
+elasticsearch:
+    bulk_size: 500
+    index:
+        name: pgcn
+        separator: '-'
+
+export:
+    rdf:
+        default_uri: http://numahop.fr/
+    ssh:
+        knownHosts: ${base-path}/config/known_hosts
+        strictHostKeyChecking: 'no'
+    sftp:
+        privateKey: ${base-path}/config/id_rsa
+
+# Information about the build.
+info:
+    app:
+        name: '@project.name@'
+        description: '@project.description@'
+        version: '@git.commit.id.describe@'
+    build:
+        artifact: '@project.artifactId@'
+        name: '@project.name@'
+        description: '@project.description@'
+        version: '@project.version@'
 
 instance:
     libraries: library_bibliotheque
     # library_identifier1, library_identifier2, etc..
 
-uploadPath:
-    condition_report: ${base-path}/upload/condition_report
-    ead: ${base-path}/upload/ead
-    import: ${base-path}/upload/import
-    library: ${base-path}/upload/library
-    user: ${base-path}/upload/user
-    template: ${base-path}/upload/templates
-
 images:
     format:
         default:
-            thumbHeight: 150
             thumbWidth: 150
-            viewHeight: 1417
+            thumbHeight: 150
             viewWidth: 982
-            printHeight: 2835
+            viewHeight: 1417
             printWidth: 1964
+            printHeight: 2835
+
+jhipster.security.rememberme.key: $$$$_!!change_me!!_$$$$
+
+messaging:
+    template:
+        path: ${base-path}/Messaging/MessagingTemplate
+
+report:
+    imagePath: images
 
 services:
     cines:
@@ -77,22 +121,6 @@ services:
     digitalLibraryDiffusion:
         cache: ${base-path}/digitalLibraryDiffusion/cache
 
-cron:
-    removeOldTokens: 0 0 0 * * ?
-    cleanLocks: 0 30 0 * * *
-    rebuildIndex: 0 40 0 * * *
-    cleanDeliveryFiles: 0 0 1 * * ?
-    cinesExport: 0 30 1 * * ?
-    localExport: 0 0 4 * * ?
-    cleanTemporaryFiles: 0 0 2 * * ?
-    internetArchiveExport: 0 26 17 * * ?
-    gestDeliveredFiles: 0 00 18 * * SAT
-    cinesUpdateStatus: 0 10 * * * *
-    omekaExport: 0 0 3 * * ?
-    cleanExportCaches: 0 30 6 * * ?
-    docUnitUpdateArk: 0 0 6 * * ?
-    digitalLibraryExport: 0 0 3 * * ?
-
 sshForwarding:
     enabled: false
     server:
@@ -110,53 +138,18 @@ sshForwarding:
         localPort: 9300
         remotePort: 9300
 
-# Information about the build.
-info:
-    app:
-        name: '@project.name@'
-        description: '@project.description@'
-        version: '@git.commit.id.describe@'
-    build:
-        artifact: '@project.artifactId@'
-        name: '@project.name@'
-        description: '@project.description@'
-        version: '@project.version@'
-
-async:
-    corePoolSize: 2
-    maxPoolSize: 10
-    queueCapacity: 10000
-
-elasticsearch:
-    bulk_size: 500
-    index:
-        name: pgcn
-        separator: '-'
-
-messaging:
-    template:
-        path: ${base-path}/Messaging/MessagingTemplate
-
-
-cache: # Cache configuration
-    ehcache: # Ehcache configuration
-        time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
-        max-entries: 1000 # Number of objects in each cache entry
-
 storage:
     binaries: ${base-path}/dam
     digest: MD5
     depth: 3
 
-export:
-    rdf:
-        default_uri: http://numahop.fr/
-    ssh:
-        knownHosts: ${base-path}/config/known_hosts
-        strictHostKeyChecking: 'no'
-    sftp:
-        privateKey: ${base-path}/config/id_rsa
-
+uploadPath:
+    condition_report: ${base-path}/upload/condition_report
+    ead: ${base-path}/upload/ead
+    import: ${base-path}/upload/import
+    library: ${base-path}/upload/library
+    user: ${base-path}/upload/user
+    template: ${base-path}/upload/templates
 
 # ==========================================
 # === Spring Boot Specific configuration ===
@@ -164,99 +157,10 @@ export:
 # These are configuration keys defined by spring boot.
 # See: https://docs.spring.io/spring-boot/appendix/application-properties/index.html
 
-management:
-    endpoints:
-        web.exposure.include: '*'
-        web.path-mapping.metrics: sb-metrics
-    endpoint:
-        health:
-            show-details: always
-            mail.enabled: false
-        logfile.external-file: ${logging.file.text.name}.log
-    info.env.enabled: true
-    server:
-        add-application-context-header: true # Add the "X-Application-Context" HTTP header in each response.
-
-server:
-    port: 8080
-    servlet.session.timeout: 10800 # 3 heures
-    shutdown: graceful
-    compression:
-        enabled: true
-
-spring:
-    datasource:
-        type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mariadb://localhost:3306/pgcn?cachePrepStmts=true&prepStmtCacheSize=250&prepStmtCacheSqlLimit=2048&useServerPrepStmts=true&characterEncoding=utf8&useUnicode=true
-        username:
-        password:
-        hikari:
-            auto-commit: false
-            minimum-idle: 5
-            maximum-pool-size: 50
-            leak-detection-threshold: 600000
-
-    liquibase.change-log: classpath:/config/liquibase/master.xml
-
-    jpa:
-        database: MYSQL
-        show-sql: false
-        open-in-view: false
-        hibernate:
-            ddl-auto: none
-            naming:
-                physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
-                implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-        properties:
-            hibernate:
-                connection.provider_disables_autocommit: true
-                generate_statistics: false
-                default_batch_fetch_size: 64
-                order_inserts: false
-                order_updates: false
-                query:
-                    in_clause_parameter_padding: true
-                jdbc:
-                    batch_size: 64
-                    fetch_size: 384
-                    batch_versioned_data: true
-                    batch_fetch_style: dynamic
-                cache:
-                    use_second_level_cache: true
-                    use_query_cache: false
-
-    mail:
-        host: localhost
-        port: 25
-        user:
-        password:
-        protocol: smtp
-        tls: false
-        auth: false
-        activated: false
-        from: contact-numahop@numahop.fr
-
-    jackson:
-        serialization:
-            use-equality-for-object-id: true
-            write-dates-as-timestamps: false
-            write-empty-json-arrays: true
-
-    # Gestion des upload (taille max)
-    servlet:
-        multipart:
-            file-size-threshold: 10MB
-            maxFileSize: 100MB
-            maxRequestSize: 200MB
-
-    output.ansi.enabled: always
-
-    elasticsearch:
-        uris:
-            - http://localhost:9200
-        connection-timeout: 120s
-        socket-timeout: 120s
-
+cache: # Cache configuration
+    ehcache: # Ehcache configuration
+        time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
+        max-entries: 1000 # Number of objects in each cache entry
 
 # This is numahop specific but will be replaced when upgrading to spring boot v3.5
 # It was implemented for supporting structured logging (JSON formated logs).
@@ -302,3 +206,96 @@ logging:
     console:
         mode: text # one of 'text' or 'json'
         pattern: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%ex'
+
+management:
+    endpoints:
+        web.exposure.include: '*'
+        web.path-mapping.metrics: sb-metrics
+    endpoint:
+        health:
+            show-details: always
+            mail.enabled: false
+        logfile.external-file: ${logging.file.text.name}.log
+    info.env.enabled: true
+    server:
+        add-application-context-header: true # Add the "X-Application-Context" HTTP header in each response.
+
+server:
+    port: 8080
+    servlet.session.timeout: 10800 # 3 heures
+    shutdown: graceful
+    compression:
+        enabled: true
+
+spring:
+    datasource:
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:mariadb://localhost:3306/pgcn?cachePrepStmts=true&prepStmtCacheSize=250&prepStmtCacheSqlLimit=2048&useServerPrepStmts=true&characterEncoding=utf8&useUnicode=true
+        username:
+        password:
+        hikari:
+            auto-commit: false
+            minimum-idle: 5
+            maximum-pool-size: 50
+            leak-detection-threshold: 600000
+
+    liquibase.change-log: classpath:/config/liquibase/master.xml
+
+    elasticsearch:
+        uris:
+            - http://localhost:9200
+        connection-timeout: 120s
+        socket-timeout: 120s
+
+    jackson:
+        serialization:
+            use-equality-for-object-id: true
+            write-dates-as-timestamps: false
+            write-empty-json-arrays: true
+
+    jpa:
+        database: MYSQL
+        show-sql: false
+        open-in-view: false
+        hibernate:
+            ddl-auto: none
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+                implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        properties:
+            hibernate:
+                connection.provider_disables_autocommit: true
+                generate_statistics: false
+                default_batch_fetch_size: 64
+                order_inserts: false
+                order_updates: false
+                query:
+                    in_clause_parameter_padding: true
+                jdbc:
+                    batch_size: 64
+                    fetch_size: 384
+                    batch_versioned_data: true
+                    batch_fetch_style: dynamic
+                cache:
+                    use_second_level_cache: true
+                    use_query_cache: false
+
+    mail:
+        host: localhost
+        port: 25
+        user:
+        password:
+        protocol: smtp
+        tls: false
+        auth: false
+        activated: false
+        from: contact-numahop@numahop.fr
+
+    output.ansi.enabled: always
+
+    # Gestion des upload (taille max)
+    servlet:
+        multipart:
+            file-size-threshold: 10MB
+            maxFileSize: 100MB
+            maxRequestSize: 200MB
