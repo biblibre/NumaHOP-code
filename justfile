@@ -2,7 +2,7 @@ default: info
 	@just --list
 
 # Get the MVN_ARGS so that maven respect it inside this file.
-export MVN_ARGS := env_var('MVN_ARGS')
+export MVN_ARGS := env('MVN_ARGS', '')
 
 # Print information
 info:
