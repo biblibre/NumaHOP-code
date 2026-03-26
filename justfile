@@ -15,9 +15,9 @@ info:
 	@echo -e "\tMaven extra args: $MVN_ARGS"
 	@echo ""
 
-# Formats the front end and back-end code
 alias f := format
-[arg('target', pattern='all|front|back')]
+# Formats the front end and back-end code
+#[arg('target', pattern='all|front|back')]
 format target='all':
 	@case '{{target}}' in \
 		'all'|'front') npm run format;;& \
@@ -26,7 +26,7 @@ format target='all':
 
 alias cl := clean
 # Cleans the repository
-[arg('target', pattern='all|front|back')]
+# [arg('target', pattern='all|front|back')]
 clean target='all':
 	@case '{{target}}' in \
 		'all'|'front') npm cache clean --force ;;& \
@@ -35,7 +35,7 @@ clean target='all':
 
 alias c := check
 # Runs the checks
-[arg('target', pattern='all|front|back')]
+# [arg('target', pattern='all|front|back')]
 check target='all':
 	@case '{{target}}' in \
 		'all'|'front') npm run check; npm run lint;;& \
@@ -44,7 +44,7 @@ check target='all':
 
 alias t := test
 # Launch tests
-[arg('target', pattern='all|front|back')]
+# [arg('target', pattern='all|front|back')]
 test target='all' testpat='*':
 	@case '{{target}}' in \
 		'all'|'front') npm run test;;& \
@@ -53,7 +53,7 @@ test target='all' testpat='*':
 
 alias doc := document
 # Build the documentation
-[arg('target', pattern='all|front|back')]
+# [arg('target', pattern='all|front|back')]
 document target='all':
 	@case '{{target}}' in \
 		'all'|'front') npm run doc;;& \
@@ -62,7 +62,7 @@ document target='all':
 
 alias b := build
 # Launch the build
-[arg('target', pattern='all|front|back|docker')]
+# [arg('target', pattern='all|front|back|docker')]
 build target='all':
 	@case '{{target}}' in \
 		'all') mvn package -Dfast -Pdocker,webapp;; \
@@ -73,8 +73,8 @@ build target='all':
 
 alias d := docker
 # Short hands to manage the docker composition
-[arg('image', pattern='all|env|nh|db|es|mail', help="env corresponds to db + es + mail and all to env + nh")]
-[arg('action', pattern='ps|top|down|up|clean|stop|logs|shell|reset')]
+# [arg('image', pattern='all|env|nh|db|es|mail', help="env corresponds to db + es + mail and all to env + nh")]
+# [arg('action', pattern='ps|top|down|up|clean|stop|logs|shell|reset')]
 docker action='ps' image='all':
 	@case '{{action}}' in \
 		'ps') docker compose -p numahop ps ;; \
