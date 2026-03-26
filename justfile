@@ -60,7 +60,7 @@ alias doc := document
 # [arg('target', pattern='all|front|back')]
 document target='all':
 	@case '{{target}}' in \
-		'all') npm run doc; mvn javadoc:javadoc -Dskip-front-end -Dfast;;
+		'all') npm run doc; mvn javadoc:javadoc -Dskip-front-end -Dfast;; \
 		'front') npm run doc;; \
 		'back') mvn javadoc:javadoc -Dskip-front-end -Dfast;; \
 	esac \
