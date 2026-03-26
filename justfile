@@ -20,8 +20,9 @@ alias f := format
 #[arg('target', pattern='all|front|back')]
 format target='all':
 	@case '{{target}}' in \
-		'all'|'front') npm run format;;& \
-		'all'|'back') mvn sortpom:sort spring-javaformat:apply;;& \
+		'all') npm run format; mvn sortpom:sort spring-javaformat:apply;; \
+		'front') npm run format;; \
+		'back') mvn sortpom:sort spring-javaformat:apply;; \
 	esac \
 
 alias cl := clean
@@ -29,8 +30,9 @@ alias cl := clean
 # [arg('target', pattern='all|front|back')]
 clean target='all':
 	@case '{{target}}' in \
-		'all'|'front') npm cache clean --force ;;& \
-		'all'|'back') mvn clean ;;& \
+		'all') npm cache clean --force ;mvn clean ;; \
+		'front') npm cache clean --force ;; \
+		'back') mvn clean ;; \
 	esac \
 
 alias c := check
@@ -38,8 +40,9 @@ alias c := check
 # [arg('target', pattern='all|front|back')]
 check target='all':
 	@case '{{target}}' in \
-		'all'|'front') npm run check; npm run lint;;& \
-		'all'|'back') mvn validate;;& \
+		'all') npm run check; npm run lint;; \
+		'front') npm run check; npm run lint;; \
+		'back') mvn validate;; \
 	esac  \
 
 alias t := test
@@ -47,8 +50,9 @@ alias t := test
 # [arg('target', pattern='all|front|back')]
 test target='all' testpat='*':
 	@case '{{target}}' in \
-		'all'|'front') npm run test;;& \
-		'all'|'back') mvn test -Dfast -Dtest="{{testpat}}";; \
+		'all') npm run test; mvn test -Dfast -Dtest="{{testpat}}";; \
+		'front') npm run test;; \
+		'back') mvn test -Dfast -Dtest="{{testpat}}";; \
 	esac \
 
 alias doc := document
@@ -56,8 +60,9 @@ alias doc := document
 # [arg('target', pattern='all|front|back')]
 document target='all':
 	@case '{{target}}' in \
-		'all'|'front') npm run doc;;& \
-		'all'|'back') mvn javadoc:javadoc -Dskip-front-end -Dfast;;& \
+		'all') npm run doc; mvn javadoc:javadoc -Dskip-front-end -Dfast;;
+		'front') npm run doc;; \
+		'back') mvn javadoc:javadoc -Dskip-front-end -Dfast;; \
 	esac \
 
 alias b := build
