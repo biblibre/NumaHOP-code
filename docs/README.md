@@ -2,7 +2,7 @@
 
 ![NumaHOP Logo](./numahop_logo.png)
 
-This project is licenced under AGPLv3, see [LICENSE.md](LICENSE) for details.
+This project is licenced under AGPLv3, see [LICENSE.md](./LICENSE) for details.
 
 The developper documentation is available [here](https://numahop.github.io/Documentation/).
 
