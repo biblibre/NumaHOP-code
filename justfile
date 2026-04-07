@@ -2,7 +2,7 @@ default: info
 	@just --list
 
 # Get the MVN_ARGS so that maven respect it inside this file.
-export MVN_ARGS := env('MVN_ARGS', '')
+export MAVEN_ARGS := env('MAVEN_ARGS', '')
 
 # Print information
 info:
@@ -80,8 +80,9 @@ alias d := docker
 # Short hands to manage the docker composition
 # [arg('image', pattern='all|env|nh|db|es|mail', help="env corresponds to db + es + mail and all to env + nh")]
 # [arg('action', pattern='ps|top|down|up|clean|stop|logs|shell|reset')]
-docker action='ps' image='all':
+docker action='ps' image='all' extra='':
 	@case '{{action}}' in \
+		'setup') docker build -t numahop-run src/main/docker --target run ;; \
 		'ps') docker compose -p numahop ps ;; \
 		'top') docker compose -p numahop top ;; \
 		'down') docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml rm -f -s;; \
@@ -94,4 +95,6 @@ docker action='ps' image='all':
 		'reset') [[ "i-nh i-db i-es" == *"i-{{image}}"* ]] && \
 			docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml rm -f -s -v; \
 			docker volume rm numahop_numahop-{{image}}-volume;; \
+		'exec') [[ "i-nh i-db i-es i-mail" == *"i-{{image}}"* ]] && \
+			docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml exec numahop-{{image}} {{extra}};; \
 	esac\
