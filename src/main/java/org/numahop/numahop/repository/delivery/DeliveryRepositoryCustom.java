@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.repository.delivery;
+package org.numahop.numahop.repository.delivery;
 
-import fr.progilone.pgcn.domain.delivery.Delivery;
-import fr.progilone.pgcn.domain.delivery.Delivery.DeliveryStatus;
-import fr.progilone.pgcn.repository.delivery.helper.DeliverySearchBuilder;
+import org.numahop.numahop.domain.delivery.Delivery;
+import org.numahop.numahop.domain.delivery.Delivery.DeliveryStatus;
+import org.numahop.numahop.repository.delivery.helper.DeliverySearchBuilder;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.Page;

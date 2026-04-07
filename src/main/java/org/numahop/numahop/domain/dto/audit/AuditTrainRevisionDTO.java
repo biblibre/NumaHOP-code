@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.audit;
+package org.numahop.numahop.domain.dto.audit;
 
-import fr.progilone.pgcn.domain.train.Train;
+import org.numahop.numahop.domain.train.Train;
 
 public class AuditTrainRevisionDTO {
 

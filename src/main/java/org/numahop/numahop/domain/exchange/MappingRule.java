@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.exchange;
+package org.numahop.numahop.domain.exchange;
 
 import com.google.common.base.MoreObjects;
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.document.DocPropertyType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,15 +29,15 @@ public class MappingRule extends AbstractDomainObject {
 	public static final String AUDIT_TABLE_NAME = "aud_exc_mapping_rule";
 
 	/**
-	 * Champ de {@link fr.progilone.pgcn.domain.document.DocUnit} concerné par cette règle
-	 * de mapping
+	 * Champ de {@link org.numahop.numahop.domain.document.DocUnit} concerné par cette
+	 * règle de mapping
 	 */
 	@Column(name = "doc_unit_field")
 	private String docUnitField;
 
 	/**
-	 * Champ de {@link fr.progilone.pgcn.domain.document.BibliographicRecord} concerné par
-	 * cette règle de mapping
+	 * Champ de {@link org.numahop.numahop.domain.document.BibliographicRecord} concerné
+	 * par cette règle de mapping
 	 */
 	@Column(name = "bib_record_field")
 	private String bibRecordField;

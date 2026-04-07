@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.dto.checkconfiguration;
+package org.numahop.numahop.domain.dto.checkconfiguration;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
-import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.dto.library.SimpleLibraryDTO;
 import java.util.ArrayList;
 import java.util.List;
 

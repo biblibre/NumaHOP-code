@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.service.document;
+package org.numahop.numahop.service.document;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.exception.message.PgcnList;
-import fr.progilone.pgcn.repository.document.DocUnitRepository;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.exception.message.PgcnList;
+import org.numahop.numahop.repository.document.DocUnitRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

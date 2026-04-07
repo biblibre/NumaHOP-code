@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.service.administration.z3950;
+package org.numahop.numahop.service.administration.z3950;
 
-import fr.progilone.pgcn.domain.administration.exchange.z3950.Z3950Server;
-import fr.progilone.pgcn.domain.dto.administration.z3950.Z3950ServerDTO;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.exception.message.PgcnList;
-import fr.progilone.pgcn.repository.administration.z3950.Z3950ServerRepository;
-import fr.progilone.pgcn.service.administration.mapper.Z3950ServerMapper;
+import org.numahop.numahop.domain.administration.exchange.z3950.Z3950Server;
+import org.numahop.numahop.domain.dto.administration.z3950.Z3950ServerDTO;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.exception.message.PgcnList;
+import org.numahop.numahop.repository.administration.z3950.Z3950ServerRepository;
+import org.numahop.numahop.service.administration.mapper.Z3950ServerMapper;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

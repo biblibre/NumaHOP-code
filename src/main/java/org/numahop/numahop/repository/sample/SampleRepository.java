@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.sample;
+package org.numahop.numahop.repository.sample;
 
-import fr.progilone.pgcn.domain.document.sample.Sample;
+import org.numahop.numahop.domain.document.sample.Sample;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

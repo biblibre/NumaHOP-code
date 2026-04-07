@@ -1,9 +1,9 @@
 /**
  *
  */
-package fr.progilone.pgcn.domain.es.document;
+package org.numahop.numahop.domain.es.document;
 
-import fr.progilone.pgcn.domain.document.PhysicalDocument;
+import org.numahop.numahop.domain.document.PhysicalDocument;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 

@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.ftpconfiguration.mapper;
+package org.numahop.numahop.service.ftpconfiguration.mapper;
 
-import fr.progilone.pgcn.domain.dto.ftpconfiguration.FTPConfigurationDTO;
-import fr.progilone.pgcn.domain.ftpconfiguration.FTPConfiguration;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.repository.library.LibraryRepository;
+import org.numahop.numahop.domain.dto.ftpconfiguration.FTPConfigurationDTO;
+import org.numahop.numahop.domain.ftpconfiguration.FTPConfiguration;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.repository.library.LibraryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

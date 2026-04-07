@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.domain.es.document;
+package org.numahop.numahop.domain.es.document;
 
-import static fr.progilone.pgcn.service.es.EsConstant.*;
+import static org.numahop.numahop.service.es.EsConstant.*;
 
-import fr.progilone.pgcn.domain.delivery.DeliveredDocument;
-import fr.progilone.pgcn.domain.document.DigitalDocument;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.DocUnit.RightsEnum;
-import fr.progilone.pgcn.domain.es.library.EsLibrary;
-import fr.progilone.pgcn.domain.workflow.DocUnitState;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
-import fr.progilone.pgcn.service.es.EsConstant;
+import org.numahop.numahop.domain.delivery.DeliveredDocument;
+import org.numahop.numahop.domain.document.DigitalDocument;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.DocUnit.RightsEnum;
+import org.numahop.numahop.domain.es.library.EsLibrary;
+import org.numahop.numahop.domain.workflow.DocUnitState;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.service.es.EsConstant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

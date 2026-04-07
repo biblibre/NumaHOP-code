@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.domain.dto.user;
+package org.numahop.numahop.domain.dto.user;
 
 /**
  * DTO représentant un Role
  *
  * @author Sebastien
- * @see fr.progilone.pgcn.domain.user.Role
+ * @see org.numahop.numahop.domain.user.Role
  */
 public class RoleDTO {
 

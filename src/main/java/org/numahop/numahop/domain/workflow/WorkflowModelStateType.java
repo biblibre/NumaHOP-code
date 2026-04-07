@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.workflow;
+package org.numahop.numahop.domain.workflow;
 
 /**
  * Indique si l'étape devra être remplie ou passée

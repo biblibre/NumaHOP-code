@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.domain.dto.train;
+package org.numahop.numahop.domain.dto.train;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
-import fr.progilone.pgcn.domain.dto.document.SimplePhysicalDocumentDTO;
-import fr.progilone.pgcn.domain.dto.project.SimpleProjectDTO;
-import fr.progilone.pgcn.domain.train.Train;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.dto.document.SimplePhysicalDocumentDTO;
+import org.numahop.numahop.domain.dto.project.SimpleProjectDTO;
+import org.numahop.numahop.domain.train.Train;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;

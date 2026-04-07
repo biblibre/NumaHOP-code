@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.ocrlangconfiguration;
+package org.numahop.numahop.service.ocrlangconfiguration;
 
-import fr.progilone.pgcn.domain.dto.ocrlangconfiguration.OcrLanguageDTO;
-import fr.progilone.pgcn.domain.ocrlangconfiguration.OcrLanguage;
-import fr.progilone.pgcn.repository.ocrlangconfiguration.OcrLanguageRepository;
-import fr.progilone.pgcn.service.ocrlangconfiguration.mapper.OcrLanguageMapper;
+import org.numahop.numahop.domain.dto.ocrlangconfiguration.OcrLanguageDTO;
+import org.numahop.numahop.domain.ocrlangconfiguration.OcrLanguage;
+import org.numahop.numahop.repository.ocrlangconfiguration.OcrLanguageRepository;
+import org.numahop.numahop.service.ocrlangconfiguration.mapper.OcrLanguageMapper;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

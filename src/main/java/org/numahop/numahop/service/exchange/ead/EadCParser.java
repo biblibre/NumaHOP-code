@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.exchange.ead;
+package org.numahop.numahop.service.exchange.ead;
 
-import fr.progilone.pgcn.domain.jaxb.ead.C;
-import fr.progilone.pgcn.domain.jaxb.ead.Chronitem;
-import fr.progilone.pgcn.domain.jaxb.ead.Did;
-import fr.progilone.pgcn.domain.jaxb.ead.Eadheader;
-import fr.progilone.pgcn.domain.jaxb.ead.Eventgrp;
-import fr.progilone.pgcn.domain.jaxb.ead.Note;
-import fr.progilone.pgcn.domain.jaxb.ead.Publicationstmt;
+import org.numahop.numahop.domain.jaxb.ead.C;
+import org.numahop.numahop.domain.jaxb.ead.Chronitem;
+import org.numahop.numahop.domain.jaxb.ead.Did;
+import org.numahop.numahop.domain.jaxb.ead.Eadheader;
+import org.numahop.numahop.domain.jaxb.ead.Eventgrp;
+import org.numahop.numahop.domain.jaxb.ead.Note;
+import org.numahop.numahop.domain.jaxb.ead.Publicationstmt;
 import jakarta.xml.bind.JAXBElement;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -314,8 +314,8 @@ public class EadCParser {
 			values = ((Eventgrp) o).getEvent();
 		}
 		// List
-		else if (o instanceof fr.progilone.pgcn.domain.jaxb.ead.List) {
-			values = ((fr.progilone.pgcn.domain.jaxb.ead.List) o).getItem();
+		else if (o instanceof org.numahop.numahop.domain.jaxb.ead.List) {
+			values = ((org.numahop.numahop.domain.jaxb.ead.List) o).getItem();
 		}
 		// Note
 		else if (o instanceof Note) {

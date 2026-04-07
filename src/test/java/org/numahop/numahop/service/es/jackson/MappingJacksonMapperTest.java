@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.es.jackson;
+package org.numahop.numahop.service.es.jackson;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.domain.exchange.MappingRule;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.domain.exchange.MappingRule;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

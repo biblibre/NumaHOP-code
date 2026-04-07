@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.domain.delivery;
+package org.numahop.numahop.domain.delivery;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.document.CheckSlip;
-import fr.progilone.pgcn.domain.document.DigitalDocument;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.document.CheckSlip;
+import org.numahop.numahop.domain.document.DigitalDocument;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

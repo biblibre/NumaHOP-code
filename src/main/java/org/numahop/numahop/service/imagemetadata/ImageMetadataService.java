@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.imagemetadata;
+package org.numahop.numahop.service.imagemetadata;
 
-import fr.progilone.pgcn.domain.imagemetadata.ImageMetadataProperty;
-import fr.progilone.pgcn.exception.PgcnBusinessException;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.exception.message.PgcnList;
-import fr.progilone.pgcn.repository.imagemetadata.ImageMetadataRepository;
+import org.numahop.numahop.domain.imagemetadata.ImageMetadataProperty;
+import org.numahop.numahop.exception.PgcnBusinessException;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.exception.message.PgcnList;
+import org.numahop.numahop.repository.imagemetadata.ImageMetadataRepository;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

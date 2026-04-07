@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.domain.dto.document;
+package org.numahop.numahop.domain.dto.document;
 
-import fr.progilone.pgcn.domain.check.AutomaticCheckResult;
-import fr.progilone.pgcn.domain.document.DigitalDocument;
-import fr.progilone.pgcn.domain.document.DocPage;
-import fr.progilone.pgcn.domain.dto.delivery.SimpleDeliveryDTO;
-import fr.progilone.pgcn.domain.storage.StoredFile;
+import org.numahop.numahop.domain.check.AutomaticCheckResult;
+import org.numahop.numahop.domain.document.DigitalDocument;
+import org.numahop.numahop.domain.document.DocPage;
+import org.numahop.numahop.domain.dto.delivery.SimpleDeliveryDTO;
+import org.numahop.numahop.domain.storage.StoredFile;
 import java.time.LocalDate;
 import java.util.Set;
 

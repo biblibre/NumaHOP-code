@@ -17,4 +17,4 @@
 				@jakarta.xml.bind.annotation.XmlNs(
 						namespaceURI = "urn:un:unece:uncefact:codelist:draft:DAF:accessRestrictionCode:2009-08-18",
 						prefix = "RA") })
-package fr.progilone.pgcn.domain.jaxb.sip;
+package org.numahop.numahop.domain.jaxb.sip;

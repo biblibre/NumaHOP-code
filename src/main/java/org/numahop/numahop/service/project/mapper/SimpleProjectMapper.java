@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.project.mapper;
+package org.numahop.numahop.service.project.mapper;
 
-import fr.progilone.pgcn.domain.dto.project.SimpleProjectDTO;
-import fr.progilone.pgcn.domain.project.Project;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.domain.dto.project.SimpleProjectDTO;
+import org.numahop.numahop.domain.project.Project;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

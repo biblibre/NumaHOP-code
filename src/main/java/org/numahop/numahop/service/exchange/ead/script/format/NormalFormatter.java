@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.exchange.ead.script.format;
+package org.numahop.numahop.service.exchange.ead.script.format;
 
-import static fr.progilone.pgcn.service.exchange.ead.EadCParser.*;
+import static org.numahop.numahop.service.exchange.ead.EadCParser.*;
 
-import fr.progilone.pgcn.service.exchange.ead.EadCParser;
-import fr.progilone.pgcn.service.exchange.ead.script.CustomScript;
+import org.numahop.numahop.service.exchange.ead.EadCParser;
+import org.numahop.numahop.service.exchange.ead.script.CustomScript;
 import java.util.List;
 
 /**

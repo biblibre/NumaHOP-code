@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.service.multilotsdelivery.mapper;
+package org.numahop.numahop.service.multilotsdelivery.mapper;
 
-import fr.progilone.pgcn.domain.delivery.Delivery;
-import fr.progilone.pgcn.domain.dto.multilotsdelivery.MultiLotsDeliveryDTO;
-import fr.progilone.pgcn.domain.lot.Lot;
-import fr.progilone.pgcn.domain.multilotsdelivery.MultiLotsDelivery;
-import fr.progilone.pgcn.domain.multilotsdelivery.MultiLotsDelivery.DeliveryMethod;
-import fr.progilone.pgcn.domain.multilotsdelivery.MultiLotsDelivery.DeliveryPayment;
-import fr.progilone.pgcn.service.delivery.DeliveryService;
-import fr.progilone.pgcn.service.lot.LotService;
+import org.numahop.numahop.domain.delivery.Delivery;
+import org.numahop.numahop.domain.dto.multilotsdelivery.MultiLotsDeliveryDTO;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.domain.multilotsdelivery.MultiLotsDelivery;
+import org.numahop.numahop.domain.multilotsdelivery.MultiLotsDelivery.DeliveryMethod;
+import org.numahop.numahop.domain.multilotsdelivery.MultiLotsDelivery.DeliveryPayment;
+import org.numahop.numahop.service.delivery.DeliveryService;
+import org.numahop.numahop.service.lot.LotService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.service.administration.omeka;
+package org.numahop.numahop.service.administration.omeka;
 
-import fr.progilone.pgcn.domain.administration.omeka.OmekaConfiguration;
-import fr.progilone.pgcn.domain.dto.administration.omeka.OmekaConfigurationDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.exception.message.PgcnList;
-import fr.progilone.pgcn.repository.administration.omeka.OmekaConfigurationRepository;
-import fr.progilone.pgcn.service.administration.mapper.OmekaConfigurationMapper;
+import org.numahop.numahop.domain.administration.omeka.OmekaConfiguration;
+import org.numahop.numahop.domain.dto.administration.omeka.OmekaConfigurationDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.exception.message.PgcnList;
+import org.numahop.numahop.repository.administration.omeka.OmekaConfigurationRepository;
+import org.numahop.numahop.service.administration.mapper.OmekaConfigurationMapper;
 import java.util.List;
 import java.util.Set;
 import org.apache.commons.lang3.StringUtils;

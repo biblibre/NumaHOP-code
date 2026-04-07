@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.exportftpconfiguration;
+package org.numahop.numahop.domain.dto.exportftpconfiguration;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
 
 public class ExportFTPConfigurationDeliveryFolderDTO extends AbstractVersionedDTO {
 

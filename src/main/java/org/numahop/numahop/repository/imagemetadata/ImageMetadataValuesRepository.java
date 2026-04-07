@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.repository.imagemetadata;
+package org.numahop.numahop.repository.imagemetadata;
 
-import fr.progilone.pgcn.domain.imagemetadata.ImageMetadataProperty;
-import fr.progilone.pgcn.domain.imagemetadata.ImageMetadataValue;
+import org.numahop.numahop.domain.imagemetadata.ImageMetadataProperty;
+import org.numahop.numahop.domain.imagemetadata.ImageMetadataValue;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

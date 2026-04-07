@@ -1,20 +1,20 @@
-package fr.progilone.pgcn.service.document.conditionreport;
+package org.numahop.numahop.service.document.conditionreport;
 
-import static fr.progilone.pgcn.domain.document.conditionreport.ConditionReportDetail.Type.LIBRARY_LEAVING;
+import static org.numahop.numahop.domain.document.conditionreport.ConditionReportDetail.Type.LIBRARY_LEAVING;
 
 import com.google.common.base.MoreObjects;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReport;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReportDetail;
-import fr.progilone.pgcn.domain.document.conditionreport.Description;
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionProperty;
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionValue;
-import fr.progilone.pgcn.domain.document.conditionreport.PropertyConfiguration;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnList;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.service.exchange.template.MessageService;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReport;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReportDetail;
+import org.numahop.numahop.domain.document.conditionreport.Description;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionProperty;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionValue;
+import org.numahop.numahop.domain.document.conditionreport.PropertyConfiguration;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnList;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.service.exchange.template.MessageService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;

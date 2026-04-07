@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.repository.document;
+package org.numahop.numahop.repository.document;
 
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocProperty;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocProperty;
+import org.numahop.numahop.domain.document.DocPropertyType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

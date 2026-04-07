@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.es;
+package org.numahop.numahop.service.es;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.service.util.transaction.TransactionService;
-import fr.progilone.pgcn.service.util.transaction.TransactionalJobRunner;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.service.util.transaction.TransactionService;
+import org.numahop.numahop.service.util.transaction.TransactionalJobRunner;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;

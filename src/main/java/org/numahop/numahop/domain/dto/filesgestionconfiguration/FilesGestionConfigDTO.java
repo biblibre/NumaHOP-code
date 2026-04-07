@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.domain.dto.filesgestionconfiguration;
+package org.numahop.numahop.domain.dto.filesgestionconfiguration;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
-import fr.progilone.pgcn.domain.dto.exportftpconfiguration.ExportFTPConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.exportftpconfiguration.ExportFTPConfigurationDeliveryFolderDTO;
-import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.dto.exportftpconfiguration.ExportFTPConfigurationDTO;
+import org.numahop.numahop.domain.dto.exportftpconfiguration.ExportFTPConfigurationDeliveryFolderDTO;
+import org.numahop.numahop.domain.dto.library.SimpleLibraryDTO;
 
 public class FilesGestionConfigDTO extends AbstractVersionedDTO {
 

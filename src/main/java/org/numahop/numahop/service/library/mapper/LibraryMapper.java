@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.service.library.mapper;
+package org.numahop.numahop.service.library.mapper;
 
-import fr.progilone.pgcn.domain.dto.library.LibraryDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.service.administration.mapper.SimpleViewsFormatConfigurationMapper;
-import fr.progilone.pgcn.service.checkconfiguration.mapper.SimpleCheckConfigurationMapper;
-import fr.progilone.pgcn.service.ftpconfiguration.mapper.SimpleFTPConfigurationMapper;
-import fr.progilone.pgcn.service.ocrlangconfiguration.mapper.OcrLangConfigurationMapper;
-import fr.progilone.pgcn.service.user.mapper.AddressMapper;
-import fr.progilone.pgcn.service.user.mapper.RoleMapper;
+import org.numahop.numahop.domain.dto.library.LibraryDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.service.administration.mapper.SimpleViewsFormatConfigurationMapper;
+import org.numahop.numahop.service.checkconfiguration.mapper.SimpleCheckConfigurationMapper;
+import org.numahop.numahop.service.ftpconfiguration.mapper.SimpleFTPConfigurationMapper;
+import org.numahop.numahop.service.ocrlangconfiguration.mapper.OcrLangConfigurationMapper;
+import org.numahop.numahop.service.user.mapper.AddressMapper;
+import org.numahop.numahop.service.user.mapper.RoleMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

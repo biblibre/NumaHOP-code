@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.es;
+package org.numahop.numahop.repository.es;
 
-import fr.progilone.pgcn.domain.es.conditionreport.EsConditionReport;
+import org.numahop.numahop.domain.es.conditionreport.EsConditionReport;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 public interface EsConditionReportRepository

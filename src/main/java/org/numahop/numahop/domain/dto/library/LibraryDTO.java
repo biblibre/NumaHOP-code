@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.domain.dto.library;
+package org.numahop.numahop.domain.dto.library;
 
-import fr.progilone.pgcn.domain.dto.administration.viewsFormat.SimpleViewsFormatConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.checkconfiguration.SimpleCheckConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.ftpconfiguration.SimpleFTPConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.ocrlangconfiguration.SimpleOcrLangConfigDTO;
-import fr.progilone.pgcn.domain.dto.user.AddressDTO;
+import org.numahop.numahop.domain.dto.administration.viewsFormat.SimpleViewsFormatConfigurationDTO;
+import org.numahop.numahop.domain.dto.checkconfiguration.SimpleCheckConfigurationDTO;
+import org.numahop.numahop.domain.dto.ftpconfiguration.SimpleFTPConfigurationDTO;
+import org.numahop.numahop.domain.dto.ocrlangconfiguration.SimpleOcrLangConfigDTO;
+import org.numahop.numahop.domain.dto.user.AddressDTO;
 import java.time.LocalDateTime;
 import java.util.Set;
 

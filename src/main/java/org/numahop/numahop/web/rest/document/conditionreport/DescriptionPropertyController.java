@@ -1,14 +1,14 @@
-package fr.progilone.pgcn.web.rest.document.conditionreport;
+package org.numahop.numahop.web.rest.document.conditionreport;
 
-import static fr.progilone.pgcn.web.rest.document.security.AuthorizationConstants.COND_REPORT_HAB0;
-import static fr.progilone.pgcn.web.rest.document.security.AuthorizationConstants.COND_REPORT_HAB6;
+import static org.numahop.numahop.web.rest.document.security.AuthorizationConstants.COND_REPORT_HAB0;
+import static org.numahop.numahop.web.rest.document.security.AuthorizationConstants.COND_REPORT_HAB6;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionProperty;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.service.document.conditionreport.DescriptionPropertyService;
-import fr.progilone.pgcn.service.document.conditionreport.ui.UiPropertyConfigurationService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionProperty;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.service.document.conditionreport.DescriptionPropertyService;
+import org.numahop.numahop.service.document.conditionreport.ui.UiPropertyConfigurationService;
+import org.numahop.numahop.web.rest.AbstractRestController;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;

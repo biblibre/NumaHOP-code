@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.exportftpconfiguration;
+package org.numahop.numahop.repository.exportftpconfiguration;
 
-import fr.progilone.pgcn.domain.exportftpconfiguration.ExportFTPConfiguration;
+import org.numahop.numahop.domain.exportftpconfiguration.ExportFTPConfiguration;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

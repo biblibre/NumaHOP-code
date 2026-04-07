@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.service.checkconfiguration;
+package org.numahop.numahop.service.checkconfiguration;
 
-import fr.progilone.pgcn.domain.check.AutomaticCheckType;
-import fr.progilone.pgcn.domain.check.AutomaticCheckType.AutoCheckType;
-import fr.progilone.pgcn.domain.checkconfiguration.AutomaticCheckRule;
-import fr.progilone.pgcn.domain.checkconfiguration.CheckConfiguration;
-import fr.progilone.pgcn.domain.dto.check.AutomaticCheckTypeDTO;
-import fr.progilone.pgcn.domain.dto.checkconfiguration.AutomaticCheckRuleDTO;
-import fr.progilone.pgcn.repository.checkconfiguration.AutomaticCheckRuleRepository;
-import fr.progilone.pgcn.service.check.AutomaticCheckService;
+import org.numahop.numahop.domain.check.AutomaticCheckType;
+import org.numahop.numahop.domain.check.AutomaticCheckType.AutoCheckType;
+import org.numahop.numahop.domain.checkconfiguration.AutomaticCheckRule;
+import org.numahop.numahop.domain.checkconfiguration.CheckConfiguration;
+import org.numahop.numahop.domain.dto.check.AutomaticCheckTypeDTO;
+import org.numahop.numahop.domain.dto.checkconfiguration.AutomaticCheckRuleDTO;
+import org.numahop.numahop.repository.checkconfiguration.AutomaticCheckRuleRepository;
+import org.numahop.numahop.service.check.AutomaticCheckService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

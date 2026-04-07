@@ -1,17 +1,17 @@
-package fr.progilone.pgcn.service.document;
+package org.numahop.numahop.service.document;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocProperty;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.dto.document.BibliographicRecordDcDTO;
-import fr.progilone.pgcn.domain.dto.document.BibliographicRecordMassUpdateDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.repository.document.BibliographicRecordRepository;
-import fr.progilone.pgcn.service.es.EsDocUnitService;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocProperty;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.dto.document.BibliographicRecordDcDTO;
+import org.numahop.numahop.domain.dto.document.BibliographicRecordMassUpdateDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.repository.document.BibliographicRecordRepository;
+import org.numahop.numahop.service.es.EsDocUnitService;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

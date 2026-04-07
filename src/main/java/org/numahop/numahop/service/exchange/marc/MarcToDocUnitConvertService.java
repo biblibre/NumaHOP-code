@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.service.exchange.marc;
+package org.numahop.numahop.service.exchange.marc;
 
 import com.google.common.collect.Iterables;
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.exchange.MappingRule;
-import fr.progilone.pgcn.service.exchange.AbstractImportConvertService;
-import fr.progilone.pgcn.service.exchange.ExchangeHelper;
-import fr.progilone.pgcn.service.exchange.marc.mapping.CompiledMapping;
-import fr.progilone.pgcn.service.exchange.marc.mapping.CompiledMappingRule;
-import fr.progilone.pgcn.service.exchange.marc.mapping.MarcKey;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.exchange.MappingRule;
+import org.numahop.numahop.service.exchange.AbstractImportConvertService;
+import org.numahop.numahop.service.exchange.ExchangeHelper;
+import org.numahop.numahop.service.exchange.marc.mapping.CompiledMapping;
+import org.numahop.numahop.service.exchange.marc.mapping.CompiledMappingRule;
+import org.numahop.numahop.service.exchange.marc.mapping.MarcKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

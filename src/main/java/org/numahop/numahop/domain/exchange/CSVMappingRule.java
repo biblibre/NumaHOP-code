@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.exchange;
+package org.numahop.numahop.domain.exchange;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.document.DocPropertyType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,8 +27,8 @@ public class CSVMappingRule extends AbstractDomainObject {
 	private String csvField;
 
 	/**
-	 * Champ de {@link fr.progilone.pgcn.domain.document.BibliographicRecord} concerné par
-	 * cette règle de mapping
+	 * Champ de {@link org.numahop.numahop.domain.document.BibliographicRecord} concerné
+	 * par cette règle de mapping
 	 */
 	@Column(name = "bib_record_field")
 	private String bibRecordField;

@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.repository.project;
+package org.numahop.numahop.repository.project;
 
-import fr.progilone.pgcn.domain.project.Project;
-import fr.progilone.pgcn.repository.project.helper.ProjectSearchBuilder;
+import org.numahop.numahop.domain.project.Project;
+import org.numahop.numahop.repository.project.helper.ProjectSearchBuilder;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.Page;

@@ -167,7 +167,7 @@ cache: # Cache configuration
 logging:
     level.root: INFO
     level:
-        fr.progilone.pgcn: DEBUG
+        org.numahop.numahop: DEBUG
         org.springframework.scheduling.support.TaskUtils.LoggingErrorHandler: OFF
         org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: WARN
         org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping: WARN

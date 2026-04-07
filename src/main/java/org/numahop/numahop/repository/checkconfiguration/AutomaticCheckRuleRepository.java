@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.repository.checkconfiguration;
+package org.numahop.numahop.repository.checkconfiguration;
 
-import fr.progilone.pgcn.domain.checkconfiguration.AutomaticCheckRule;
-import fr.progilone.pgcn.domain.checkconfiguration.CheckConfiguration;
+import org.numahop.numahop.domain.checkconfiguration.AutomaticCheckRule;
+import org.numahop.numahop.domain.checkconfiguration.CheckConfiguration;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

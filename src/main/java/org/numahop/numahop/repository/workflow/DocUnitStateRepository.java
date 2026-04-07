@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.repository.workflow;
+package org.numahop.numahop.repository.workflow;
 
-import fr.progilone.pgcn.domain.workflow.DocUnitState;
-import fr.progilone.pgcn.domain.workflow.WorkflowGroup;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateStatus;
+import org.numahop.numahop.domain.workflow.DocUnitState;
+import org.numahop.numahop.domain.workflow.WorkflowGroup;
+import org.numahop.numahop.domain.workflow.WorkflowStateStatus;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.web.rest.audit;
+package org.numahop.numahop.web.rest.audit;
 
-import static fr.progilone.pgcn.web.rest.project.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.project.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.audit.AuditProjectRevisionDTO;
-import fr.progilone.pgcn.domain.project.Project;
-import fr.progilone.pgcn.service.audit.AuditProjectService;
-import fr.progilone.pgcn.web.util.AccessHelper;
+import org.numahop.numahop.domain.dto.audit.AuditProjectRevisionDTO;
+import org.numahop.numahop.domain.project.Project;
+import org.numahop.numahop.service.audit.AuditProjectService;
+import org.numahop.numahop.web.util.AccessHelper;
 import jakarta.annotation.security.RolesAllowed;
 import java.time.LocalDate;
 import java.util.Collection;

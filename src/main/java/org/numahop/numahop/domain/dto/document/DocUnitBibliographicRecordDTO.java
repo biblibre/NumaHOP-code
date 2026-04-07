@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.dto.document;
+package org.numahop.numahop.domain.dto.document;
 
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.dto.AbstractDTO;
 import java.util.List;
 
 /**

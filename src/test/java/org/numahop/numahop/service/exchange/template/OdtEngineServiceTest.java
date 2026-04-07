@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.exchange.template;
+package org.numahop.numahop.service.exchange.template;
 
 import fr.opensagres.xdocreport.document.images.IImageProvider;
-import fr.progilone.pgcn.domain.exchange.template.Name;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
+import org.numahop.numahop.domain.exchange.template.Name;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.exception.PgcnTechnicalException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;

@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.exportftpconfiguration.mapper;
+package org.numahop.numahop.service.exportftpconfiguration.mapper;
 
-import fr.progilone.pgcn.domain.dto.exportftpconfiguration.ExportFTPConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.exportftpconfiguration.SimpleExportFTPConfDTO;
-import fr.progilone.pgcn.domain.exportftpconfiguration.ExportFTPConfiguration;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.domain.dto.exportftpconfiguration.ExportFTPConfigurationDTO;
+import org.numahop.numahop.domain.dto.exportftpconfiguration.SimpleExportFTPConfDTO;
+import org.numahop.numahop.domain.exportftpconfiguration.ExportFTPConfiguration;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

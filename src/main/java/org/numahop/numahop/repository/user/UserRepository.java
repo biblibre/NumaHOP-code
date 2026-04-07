@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.repository.user;
+package org.numahop.numahop.repository.user;
 
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.user.Role;
-import fr.progilone.pgcn.domain.user.User;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.user.Role;
+import org.numahop.numahop.domain.user.User;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.data.domain.Page;

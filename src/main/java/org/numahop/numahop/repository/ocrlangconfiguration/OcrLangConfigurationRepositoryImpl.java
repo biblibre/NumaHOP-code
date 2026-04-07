@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.repository.ocrlangconfiguration;
+package org.numahop.numahop.repository.ocrlangconfiguration;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.ocrlangconfiguration.OcrLangConfiguration;
-import fr.progilone.pgcn.domain.ocrlangconfiguration.QOcrLangConfiguration;
+import org.numahop.numahop.domain.ocrlangconfiguration.OcrLangConfiguration;
+import org.numahop.numahop.domain.ocrlangconfiguration.QOcrLangConfiguration;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;

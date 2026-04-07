@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.web.rest.document;
+package org.numahop.numahop.web.rest.document;
 
-import static fr.progilone.pgcn.web.rest.checkconfiguration.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.checkconfiguration.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.service.document.DigitalDocumentService;
-import fr.progilone.pgcn.service.document.ViewerService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.service.document.DigitalDocumentService;
+import org.numahop.numahop.service.document.ViewerService;
+import org.numahop.numahop.web.rest.AbstractRestController;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.exchange.internetarchive;
+package org.numahop.numahop.service.exchange.internetarchive;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.exchange.internetarchive.InternetArchiveReport;
-import fr.progilone.pgcn.service.es.EsDocUnitService;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.exchange.internetarchive.InternetArchiveReport;
+import org.numahop.numahop.service.es.EsDocUnitService;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

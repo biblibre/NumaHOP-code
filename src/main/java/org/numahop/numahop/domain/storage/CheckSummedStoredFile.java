@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.storage;
+package org.numahop.numahop.domain.storage;
 
-import fr.progilone.pgcn.service.util.FileUtils.CheckSumType;
+import org.numahop.numahop.service.util.FileUtils.CheckSumType;
 
 /**
  * Permet d'optimiser les exports en ne chargeant les dépendances qu'une fois et évite de

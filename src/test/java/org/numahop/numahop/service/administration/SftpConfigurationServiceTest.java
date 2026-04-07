@@ -1,20 +1,20 @@
-package fr.progilone.pgcn.service.administration;
+package org.numahop.numahop.service.administration;
 
-import static fr.progilone.pgcn.exception.message.PgcnErrorCode.*;
+import static org.numahop.numahop.exception.message.PgcnErrorCode.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import fr.progilone.pgcn.domain.administration.SftpConfiguration;
-import fr.progilone.pgcn.domain.dto.administration.SftpConfigurationDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.repository.administration.SftpConfigurationRepository;
-import fr.progilone.pgcn.service.administration.mapper.SftpConfigurationMapper;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
-import fr.progilone.pgcn.service.util.CryptoService;
-import fr.progilone.pgcn.util.TestUtil;
+import org.numahop.numahop.domain.administration.SftpConfiguration;
+import org.numahop.numahop.domain.dto.administration.SftpConfigurationDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.repository.administration.SftpConfigurationRepository;
+import org.numahop.numahop.service.administration.mapper.SftpConfigurationMapper;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.service.util.CryptoService;
+import org.numahop.numahop.util.TestUtil;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;

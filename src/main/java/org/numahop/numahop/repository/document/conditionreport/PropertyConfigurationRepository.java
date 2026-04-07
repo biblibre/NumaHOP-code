@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.repository.document.conditionreport;
+package org.numahop.numahop.repository.document.conditionreport;
 
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionProperty;
-import fr.progilone.pgcn.domain.document.conditionreport.PropertyConfiguration;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionProperty;
+import org.numahop.numahop.domain.document.conditionreport.PropertyConfiguration;
+import org.numahop.numahop.domain.library.Library;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.ocrlangconfiguration;
+package org.numahop.numahop.service.ocrlangconfiguration;
 
-import fr.progilone.pgcn.domain.ocrlangconfiguration.OcrLangConfiguration;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.exception.message.PgcnList;
-import fr.progilone.pgcn.repository.library.LibraryRepository;
-import fr.progilone.pgcn.repository.ocrlangconfiguration.OcrLangConfigurationRepository;
+import org.numahop.numahop.domain.ocrlangconfiguration.OcrLangConfiguration;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.exception.message.PgcnList;
+import org.numahop.numahop.repository.library.LibraryRepository;
+import org.numahop.numahop.repository.ocrlangconfiguration.OcrLangConfigurationRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

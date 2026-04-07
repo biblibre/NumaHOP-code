@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.web.rest.sample;
+package org.numahop.numahop.web.rest.sample;
 
-import static fr.progilone.pgcn.web.rest.delivery.security.AuthorizationConstants.DEL_HAB0;
+import static org.numahop.numahop.web.rest.delivery.security.AuthorizationConstants.DEL_HAB0;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.sample.SampleDTO;
-import fr.progilone.pgcn.service.sample.SampleService;
+import org.numahop.numahop.domain.dto.sample.SampleDTO;
+import org.numahop.numahop.service.sample.SampleService;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

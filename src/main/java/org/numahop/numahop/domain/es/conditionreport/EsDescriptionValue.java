@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.es.conditionreport;
+package org.numahop.numahop.domain.es.conditionreport;
 
-import static fr.progilone.pgcn.service.es.EsConstant.*;
+import static org.numahop.numahop.service.es.EsConstant.*;
 
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionValue;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionValue;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.InnerField;

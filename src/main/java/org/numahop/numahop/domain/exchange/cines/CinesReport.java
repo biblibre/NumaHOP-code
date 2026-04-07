@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.exchange.cines;
+package org.numahop.numahop.domain.exchange.cines;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.document.DocUnit;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.document.DocUnit;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

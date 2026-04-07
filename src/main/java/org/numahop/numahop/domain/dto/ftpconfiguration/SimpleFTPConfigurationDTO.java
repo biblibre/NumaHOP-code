@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.ftpconfiguration;
+package org.numahop.numahop.domain.dto.ftpconfiguration;
 
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.dto.AbstractDTO;
 
 public class SimpleFTPConfigurationDTO extends AbstractDTO {
 

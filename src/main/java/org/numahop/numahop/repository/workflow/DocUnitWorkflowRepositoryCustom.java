@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.repository.workflow;
+package org.numahop.numahop.repository.workflow;
 
-import fr.progilone.pgcn.domain.document.DigitalDocument.DigitalDocumentStatus;
-import fr.progilone.pgcn.domain.workflow.DocUnitWorkflow;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateStatus;
-import fr.progilone.pgcn.repository.workflow.helper.DocUnitWorkflowSearchBuilder;
+import org.numahop.numahop.domain.document.DigitalDocument.DigitalDocumentStatus;
+import org.numahop.numahop.domain.workflow.DocUnitWorkflow;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.domain.workflow.WorkflowStateStatus;
+import org.numahop.numahop.repository.workflow.helper.DocUnitWorkflowSearchBuilder;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.Page;

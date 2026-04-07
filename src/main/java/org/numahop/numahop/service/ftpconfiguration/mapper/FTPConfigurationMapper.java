@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.ftpconfiguration.mapper;
+package org.numahop.numahop.service.ftpconfiguration.mapper;
 
-import fr.progilone.pgcn.domain.dto.ftpconfiguration.FTPConfigurationDTO;
-import fr.progilone.pgcn.domain.ftpconfiguration.FTPConfiguration;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.domain.dto.ftpconfiguration.FTPConfigurationDTO;
+import org.numahop.numahop.domain.ftpconfiguration.FTPConfiguration;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

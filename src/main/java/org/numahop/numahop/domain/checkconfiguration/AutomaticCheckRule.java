@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.checkconfiguration;
+package org.numahop.numahop.domain.checkconfiguration;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.check.AutomaticCheckType;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.check.AutomaticCheckType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.aop.logging;
+package org.numahop.numahop.aop.logging;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -36,8 +36,8 @@ public class LoggingAspect {
 	/**
 	 * Pointcut that matches all Spring beans in the application's main packages.
 	 */
-	@Pointcut("within(fr.progilone.pgcn.repository..*)" + " || within(fr.progilone.pgcn.service..*)"
-			+ " || within(fr.progilone.pgcn.web.rest..*)")
+	@Pointcut("within(org.numahop.numahop.repository..*)" + " || within(org.numahop.numahop.service..*)"
+			+ " || within(org.numahop.numahop.web.rest..*)")
 	public void applicationPackagePointcut() {
 		// Method is empty as this is just a Pointcut, the implementations are in the
 		// advices.

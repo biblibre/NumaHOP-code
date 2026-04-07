@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.document.conditionreport.ui;
+package org.numahop.numahop.service.document.conditionreport.ui;
 
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionProperty;
-import fr.progilone.pgcn.domain.document.conditionreport.PropertyConfiguration;
-import fr.progilone.pgcn.domain.dto.document.conditionreport.PropertyConfigurationDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.repository.library.LibraryRepository;
-import fr.progilone.pgcn.service.document.conditionreport.PropertyConfigurationService;
-import fr.progilone.pgcn.service.document.mapper.PropertyConfigurationMapper;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionProperty;
+import org.numahop.numahop.domain.document.conditionreport.PropertyConfiguration;
+import org.numahop.numahop.domain.dto.document.conditionreport.PropertyConfigurationDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.repository.library.LibraryRepository;
+import org.numahop.numahop.service.document.conditionreport.PropertyConfigurationService;
+import org.numahop.numahop.service.document.mapper.PropertyConfigurationMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;

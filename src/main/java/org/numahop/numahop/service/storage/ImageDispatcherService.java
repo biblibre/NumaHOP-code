@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.storage;
+package org.numahop.numahop.service.storage;
 
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.service.util.ImageUtils;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.service.util.ImageUtils;
 import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

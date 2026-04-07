@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.project.helper;
+package org.numahop.numahop.repository.project.helper;
 
-import fr.progilone.pgcn.domain.project.Project;
+import org.numahop.numahop.domain.project.Project;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;

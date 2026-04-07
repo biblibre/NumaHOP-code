@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.web.rest.document;
+package org.numahop.numahop.web.rest.document;
 
-import static fr.progilone.pgcn.web.rest.delivery.security.AuthorizationConstants.DEL_HAB0;
-import static fr.progilone.pgcn.web.rest.delivery.security.AuthorizationConstants.DEL_HAB2;
+import static org.numahop.numahop.web.rest.delivery.security.AuthorizationConstants.DEL_HAB0;
+import static org.numahop.numahop.web.rest.delivery.security.AuthorizationConstants.DEL_HAB2;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.document.CheckSlipConfiguration;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.service.document.CheckSlipConfigurationService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.AccessHelper;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.document.CheckSlipConfiguration;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.service.document.CheckSlipConfigurationService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.AccessHelper;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Optional;

@@ -1,14 +1,14 @@
-package fr.progilone.pgcn.web.rest.audit;
+package org.numahop.numahop.web.rest.audit;
 
-import static fr.progilone.pgcn.web.rest.document.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.document.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.dto.audit.AuditDocUnitRevisionDTO;
-import fr.progilone.pgcn.service.audit.AuditDocUnitService;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.AccessHelper;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.dto.audit.AuditDocUnitRevisionDTO;
+import org.numahop.numahop.service.audit.AuditDocUnitService;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.AccessHelper;
 import jakarta.annotation.security.RolesAllowed;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.repository.document;
+package org.numahop.numahop.repository.document;
 
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.library.Library;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

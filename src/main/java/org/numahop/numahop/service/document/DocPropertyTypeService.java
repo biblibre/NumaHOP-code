@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.service.document;
+package org.numahop.numahop.service.document;
 
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.DocPropertyType.DocPropertySuperType;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.exception.message.PgcnList;
-import fr.progilone.pgcn.repository.document.DocPropertyTypeRepository;
-import fr.progilone.pgcn.service.exchange.MappingService;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.DocPropertyType.DocPropertySuperType;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.exception.message.PgcnList;
+import org.numahop.numahop.repository.document.DocPropertyTypeRepository;
+import org.numahop.numahop.service.exchange.MappingService;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

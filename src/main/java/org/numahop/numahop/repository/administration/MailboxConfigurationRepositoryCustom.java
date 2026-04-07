@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.administration;
+package org.numahop.numahop.repository.administration;
 
-import fr.progilone.pgcn.domain.administration.MailboxConfiguration;
+import org.numahop.numahop.domain.administration.MailboxConfiguration;
 import java.util.List;
 
 public interface MailboxConfigurationRepositoryCustom {

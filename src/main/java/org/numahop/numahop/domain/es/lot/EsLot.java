@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.domain.es.lot;
+package org.numahop.numahop.domain.es.lot;
 
-import static fr.progilone.pgcn.service.es.EsConstant.*;
+import static org.numahop.numahop.service.es.EsConstant.*;
 
-import fr.progilone.pgcn.domain.es.user.EsUser;
-import fr.progilone.pgcn.domain.lot.Lot;
-import fr.progilone.pgcn.domain.lot.Lot.LotStatus;
-import fr.progilone.pgcn.domain.lot.Lot.Type;
+import org.numahop.numahop.domain.es.user.EsUser;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.domain.lot.Lot.LotStatus;
+import org.numahop.numahop.domain.lot.Lot.Type;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;

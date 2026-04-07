@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.web.rest.document.security;
+package org.numahop.numahop.web.rest.document.security;
 
-import fr.progilone.pgcn.web.util.AuthorizationManager;
+import org.numahop.numahop.web.util.AuthorizationManager;
 
 /**
  * Habilitations du module Document (DOC)

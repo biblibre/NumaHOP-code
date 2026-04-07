@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
-import fr.progilone.pgcn.domain.dto.imagemetadata.ImageMetadataValuesDTO;
-import fr.progilone.pgcn.domain.imagemetadata.ImageMetadataValue;
-import fr.progilone.pgcn.repository.document.DocUnitRepository;
-import fr.progilone.pgcn.repository.imagemetadata.ImageMetadataRepository;
+import org.numahop.numahop.domain.dto.imagemetadata.ImageMetadataValuesDTO;
+import org.numahop.numahop.domain.imagemetadata.ImageMetadataValue;
+import org.numahop.numahop.repository.document.DocUnitRepository;
+import org.numahop.numahop.repository.imagemetadata.ImageMetadataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,21 +1,21 @@
-package fr.progilone.pgcn.web.rest.exchange;
+package org.numahop.numahop.web.rest.exchange;
 
-import static fr.progilone.pgcn.util.SecurityRequestPostProcessors.roles;
-import static fr.progilone.pgcn.web.rest.exchange.security.AuthorizationConstants.*;
+import static org.numahop.numahop.util.SecurityRequestPostProcessors.roles;
+import static org.numahop.numahop.web.rest.exchange.security.AuthorizationConstants.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import fr.progilone.pgcn.domain.dto.exchange.MappingDTO;
-import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.service.exchange.ExchangeMappingService;
-import fr.progilone.pgcn.service.exchange.MappingService;
-import fr.progilone.pgcn.util.TestConverterFactory;
-import fr.progilone.pgcn.util.TestUtil;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.dto.exchange.MappingDTO;
+import org.numahop.numahop.domain.dto.library.SimpleLibraryDTO;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.service.exchange.ExchangeMappingService;
+import org.numahop.numahop.service.exchange.MappingService;
+import org.numahop.numahop.util.TestConverterFactory;
+import org.numahop.numahop.util.TestUtil;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.Set;

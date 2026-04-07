@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.exchange.oaipmh;
+package org.numahop.numahop.service.exchange.oaipmh;
 
-import fr.progilone.pgcn.domain.jaxb.oaipmh.OAIPMHerrorType;
-import fr.progilone.pgcn.domain.jaxb.oaipmh.OAIPMHtype;
-import fr.progilone.pgcn.domain.jaxb.oaipmh.ObjectFactory;
+import org.numahop.numahop.domain.jaxb.oaipmh.OAIPMHerrorType;
+import org.numahop.numahop.domain.jaxb.oaipmh.OAIPMHtype;
+import org.numahop.numahop.domain.jaxb.oaipmh.ObjectFactory;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
@@ -237,7 +237,7 @@ public class OaiPmhService {
 	 */
 	private OAIPMHtype parseResponse(final HttpResponse response) throws JAXBException, IOException {
 		final JAXBContext context = JAXBContext.newInstance(ObjectFactory.class,
-				fr.progilone.pgcn.domain.jaxb.oaidc.ObjectFactory.class);
+				org.numahop.numahop.domain.jaxb.oaidc.ObjectFactory.class);
 		final Unmarshaller unmarshaller = context.createUnmarshaller();
 		final Object content = unmarshaller.unmarshal(response.getEntity().getContent());
 		return ((JAXBElement<OAIPMHtype>) content).getValue();

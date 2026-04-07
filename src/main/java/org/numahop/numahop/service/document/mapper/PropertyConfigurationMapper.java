@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionProperty;
-import fr.progilone.pgcn.domain.document.conditionreport.PropertyConfiguration;
-import fr.progilone.pgcn.domain.dto.document.conditionreport.PropertyConfigurationDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.service.library.mapper.LibraryMapper;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionProperty;
+import org.numahop.numahop.domain.document.conditionreport.PropertyConfiguration;
+import org.numahop.numahop.domain.dto.document.conditionreport.PropertyConfigurationDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.service.library.mapper.LibraryMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;

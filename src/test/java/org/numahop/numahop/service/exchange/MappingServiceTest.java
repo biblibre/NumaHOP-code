@@ -1,23 +1,23 @@
-package fr.progilone.pgcn.service.exchange;
+package org.numahop.numahop.service.exchange;
 
-import static fr.progilone.pgcn.exception.message.PgcnErrorCode.*;
+import static org.numahop.numahop.exception.message.PgcnErrorCode.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.dto.exchange.MappingDTO;
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.domain.exchange.MappingRule;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.repository.exchange.ImportReportRepository;
-import fr.progilone.pgcn.repository.exchange.MappingRepository;
-import fr.progilone.pgcn.repository.exchange.MappingRuleRepository;
-import fr.progilone.pgcn.service.exchange.mapper.MappingMapper;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
-import fr.progilone.pgcn.util.CatchAndReturnArgumentAt;
-import fr.progilone.pgcn.util.TestUtil;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.dto.exchange.MappingDTO;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.domain.exchange.MappingRule;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.repository.exchange.ImportReportRepository;
+import org.numahop.numahop.repository.exchange.MappingRepository;
+import org.numahop.numahop.repository.exchange.MappingRuleRepository;
+import org.numahop.numahop.service.exchange.mapper.MappingMapper;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.util.CatchAndReturnArgumentAt;
+import org.numahop.numahop.util.TestUtil;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;

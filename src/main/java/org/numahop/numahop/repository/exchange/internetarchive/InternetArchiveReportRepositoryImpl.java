@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.repository.exchange.internetarchive;
+package org.numahop.numahop.repository.exchange.internetarchive;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.document.QDocUnit;
-import fr.progilone.pgcn.domain.exchange.internetarchive.InternetArchiveReport;
-import fr.progilone.pgcn.domain.exchange.internetarchive.QInternetArchiveReport;
+import org.numahop.numahop.domain.document.QDocUnit;
+import org.numahop.numahop.domain.exchange.internetarchive.InternetArchiveReport;
+import org.numahop.numahop.domain.exchange.internetarchive.QInternetArchiveReport;
 import java.time.LocalDate;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;

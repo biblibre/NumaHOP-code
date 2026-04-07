@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.service.library.mapper;
+package org.numahop.numahop.service.library.mapper;
 
-import fr.progilone.pgcn.domain.dto.library.LibraryDTO;
-import fr.progilone.pgcn.domain.dto.user.AddressDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.user.Address;
-import fr.progilone.pgcn.repository.administration.viewsformat.ViewsFormatConfigurationRepository;
-import fr.progilone.pgcn.repository.checkconfiguration.CheckConfigurationRepository;
-import fr.progilone.pgcn.repository.ftpconfiguration.FTPConfigurationRepository;
-import fr.progilone.pgcn.repository.ocrlangconfiguration.OcrLangConfigurationRepository;
-import fr.progilone.pgcn.repository.user.AddressRepository;
-import fr.progilone.pgcn.repository.user.RoleRepository;
+import org.numahop.numahop.domain.dto.library.LibraryDTO;
+import org.numahop.numahop.domain.dto.user.AddressDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.user.Address;
+import org.numahop.numahop.repository.administration.viewsformat.ViewsFormatConfigurationRepository;
+import org.numahop.numahop.repository.checkconfiguration.CheckConfigurationRepository;
+import org.numahop.numahop.repository.ftpconfiguration.FTPConfigurationRepository;
+import org.numahop.numahop.repository.ocrlangconfiguration.OcrLangConfigurationRepository;
+import org.numahop.numahop.repository.user.AddressRepository;
+import org.numahop.numahop.repository.user.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

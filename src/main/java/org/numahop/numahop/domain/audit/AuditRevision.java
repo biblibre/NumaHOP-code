@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.audit;
+package org.numahop.numahop.domain.audit;
 
 import com.querydsl.core.annotations.QueryExclude;
 import jakarta.persistence.Entity;

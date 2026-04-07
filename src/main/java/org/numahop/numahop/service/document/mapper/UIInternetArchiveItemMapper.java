@@ -1,14 +1,14 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
-import fr.progilone.pgcn.domain.document.ArchiveCollection;
-import fr.progilone.pgcn.domain.document.ArchiveContributor;
-import fr.progilone.pgcn.domain.document.ArchiveCoverage;
-import fr.progilone.pgcn.domain.document.ArchiveCreator;
-import fr.progilone.pgcn.domain.document.ArchiveHeader;
-import fr.progilone.pgcn.domain.document.ArchiveItem;
-import fr.progilone.pgcn.domain.document.ArchiveLanguage;
-import fr.progilone.pgcn.domain.document.ArchiveSubject;
-import fr.progilone.pgcn.service.exchange.internetarchive.InternetArchiveItemDTO;
+import org.numahop.numahop.domain.document.ArchiveCollection;
+import org.numahop.numahop.domain.document.ArchiveContributor;
+import org.numahop.numahop.domain.document.ArchiveCoverage;
+import org.numahop.numahop.domain.document.ArchiveCreator;
+import org.numahop.numahop.domain.document.ArchiveHeader;
+import org.numahop.numahop.domain.document.ArchiveItem;
+import org.numahop.numahop.domain.document.ArchiveLanguage;
+import org.numahop.numahop.domain.document.ArchiveSubject;
+import org.numahop.numahop.service.exchange.internetarchive.InternetArchiveItemDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

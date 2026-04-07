@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.exchange.ead.mapping;
+package org.numahop.numahop.service.exchange.ead.mapping;
 
 import java.util.Objects;
 

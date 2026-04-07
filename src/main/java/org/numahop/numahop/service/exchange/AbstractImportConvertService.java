@@ -1,17 +1,17 @@
-package fr.progilone.pgcn.service.exchange;
+package org.numahop.numahop.service.exchange;
 
-import static fr.progilone.pgcn.domain.document.DocUnit.RightsEnum.TO_CHECK;
+import static org.numahop.numahop.domain.document.DocUnit.RightsEnum.TO_CHECK;
 
-import fr.progilone.pgcn.domain.administration.CinesPAC;
-import fr.progilone.pgcn.domain.administration.InternetArchiveCollection;
-import fr.progilone.pgcn.domain.administration.omeka.OmekaList;
-import fr.progilone.pgcn.domain.document.*;
-import fr.progilone.pgcn.domain.document.BibliographicRecord.PropertyOrder;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.service.administration.CinesPACService;
-import fr.progilone.pgcn.service.administration.InternetArchiveCollectionService;
-import fr.progilone.pgcn.service.administration.omeka.OmekaListService;
-import fr.progilone.pgcn.service.document.DocUnitService;
+import org.numahop.numahop.domain.administration.CinesPAC;
+import org.numahop.numahop.domain.administration.InternetArchiveCollection;
+import org.numahop.numahop.domain.administration.omeka.OmekaList;
+import org.numahop.numahop.domain.document.*;
+import org.numahop.numahop.domain.document.BibliographicRecord.PropertyOrder;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.service.administration.CinesPACService;
+import org.numahop.numahop.service.administration.InternetArchiveCollectionService;
+import org.numahop.numahop.service.administration.omeka.OmekaListService;
+import org.numahop.numahop.service.document.DocUnitService;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;

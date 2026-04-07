@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.repository.exchange.internetarchive;
+package org.numahop.numahop.repository.exchange.internetarchive;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.exchange.internetarchive.InternetArchiveReport;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.exchange.internetarchive.InternetArchiveReport;
+import org.numahop.numahop.domain.library.Library;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.domain.Page;

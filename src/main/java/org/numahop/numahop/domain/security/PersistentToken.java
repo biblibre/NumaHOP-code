@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.security;
+package org.numahop.numahop.domain.security;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fr.progilone.pgcn.domain.user.User;
+import org.numahop.numahop.domain.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,7 +20,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 /**
  * Persistent tokens are used by Spring Security to automatically log in users.
  *
- * @see fr.progilone.pgcn.security.CustomPersistentRememberMeServices
+ * @see org.numahop.numahop.security.CustomPersistentRememberMeServices
  */
 @Entity
 @Table(name = PersistentToken.TABLE_NAME)

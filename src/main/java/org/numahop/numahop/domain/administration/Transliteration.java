@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.administration;
+package org.numahop.numahop.domain.administration;
 
 import com.google.common.base.MoreObjects;
 import jakarta.persistence.Column;

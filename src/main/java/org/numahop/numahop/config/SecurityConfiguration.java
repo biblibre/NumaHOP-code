@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.config;
+package org.numahop.numahop.config;
 
-import fr.progilone.pgcn.security.AjaxAuthenticationFailureHandler;
-import fr.progilone.pgcn.security.AjaxAuthenticationSuccessHandler;
-import fr.progilone.pgcn.security.AjaxLogoutSuccessHandler;
-import fr.progilone.pgcn.security.Http401UnauthorizedEntryPoint;
-import fr.progilone.pgcn.web.filter.CsrfCookieGeneratorFilter;
-import fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants;
+import org.numahop.numahop.security.AjaxAuthenticationFailureHandler;
+import org.numahop.numahop.security.AjaxAuthenticationSuccessHandler;
+import org.numahop.numahop.security.AjaxLogoutSuccessHandler;
+import org.numahop.numahop.security.Http401UnauthorizedEntryPoint;
+import org.numahop.numahop.web.filter.CsrfCookieGeneratorFilter;
+import org.numahop.numahop.web.rest.administration.security.AuthorizationConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;

@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.administration.omeka;
+package org.numahop.numahop.domain.dto.administration.omeka;
 
-import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
+import org.numahop.numahop.domain.dto.library.SimpleLibraryDTO;
 import java.util.List;
 import java.util.Objects;
 

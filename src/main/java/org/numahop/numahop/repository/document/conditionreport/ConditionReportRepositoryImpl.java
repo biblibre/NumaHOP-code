@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.repository.document.conditionreport;
+package org.numahop.numahop.repository.document.conditionreport;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Order;
@@ -7,14 +7,14 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.document.QDocUnit;
-import fr.progilone.pgcn.domain.document.conditionreport.QConditionReport;
-import fr.progilone.pgcn.domain.document.conditionreport.QConditionReportDetail;
-import fr.progilone.pgcn.domain.document.conditionreport.QDescription;
-import fr.progilone.pgcn.domain.workflow.QDocUnitState;
-import fr.progilone.pgcn.domain.workflow.QDocUnitWorkflow;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateStatus;
+import org.numahop.numahop.domain.document.QDocUnit;
+import org.numahop.numahop.domain.document.conditionreport.QConditionReport;
+import org.numahop.numahop.domain.document.conditionreport.QConditionReportDetail;
+import org.numahop.numahop.domain.document.conditionreport.QDescription;
+import org.numahop.numahop.domain.workflow.QDocUnitState;
+import org.numahop.numahop.domain.workflow.QDocUnitWorkflow;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.domain.workflow.WorkflowStateStatus;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;

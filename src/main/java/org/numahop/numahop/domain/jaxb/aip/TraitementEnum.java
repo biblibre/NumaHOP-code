@@ -5,7 +5,7 @@
 // Generated on: 2025.07.16 at 03:45:09 PM CEST
 //
 
-package fr.progilone.pgcn.domain.jaxb.aip;
+package org.numahop.numahop.domain.jaxb.aip;
 
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;

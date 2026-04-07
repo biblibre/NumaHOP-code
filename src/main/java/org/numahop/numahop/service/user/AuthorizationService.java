@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.user;
+package org.numahop.numahop.service.user;
 
-import fr.progilone.pgcn.domain.dto.user.AuthorizationDTO;
-import fr.progilone.pgcn.domain.user.Authorization;
-import fr.progilone.pgcn.repository.user.AuthorizationRepository;
-import fr.progilone.pgcn.web.util.AuthorizationManager;
+import org.numahop.numahop.domain.dto.user.AuthorizationDTO;
+import org.numahop.numahop.domain.user.Authorization;
+import org.numahop.numahop.repository.user.AuthorizationRepository;
+import org.numahop.numahop.web.util.AuthorizationManager;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;

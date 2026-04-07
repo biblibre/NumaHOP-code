@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReportDetail;
-import fr.progilone.pgcn.domain.document.conditionreport.Description;
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionProperty;
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionValue;
-import fr.progilone.pgcn.domain.dto.document.conditionreport.ConditionReportDetailDTO;
-import fr.progilone.pgcn.domain.dto.document.conditionreport.ConditionReportValueDTO;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReportDetail;
+import org.numahop.numahop.domain.document.conditionreport.Description;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionProperty;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionValue;
+import org.numahop.numahop.domain.dto.document.conditionreport.ConditionReportDetailDTO;
+import org.numahop.numahop.domain.dto.document.conditionreport.ConditionReportValueDTO;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;

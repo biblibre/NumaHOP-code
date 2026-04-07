@@ -1,17 +1,17 @@
-package fr.progilone.pgcn.service.exchange.dc;
+package org.numahop.numahop.service.exchange.dc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.BibliographicRecord.PropertyOrder;
-import fr.progilone.pgcn.domain.document.DocProperty;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.PhysicalDocument;
-import fr.progilone.pgcn.service.document.DocPropertyTypeService;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.service.lot.LotService;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.BibliographicRecord.PropertyOrder;
+import org.numahop.numahop.domain.document.DocProperty;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.PhysicalDocument;
+import org.numahop.numahop.service.document.DocPropertyTypeService;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.service.lot.LotService;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

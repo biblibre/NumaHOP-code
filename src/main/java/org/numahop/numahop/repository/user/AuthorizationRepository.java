@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.user;
+package org.numahop.numahop.repository.user;
 
-import fr.progilone.pgcn.domain.user.Authorization;
+import org.numahop.numahop.domain.user.Authorization;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

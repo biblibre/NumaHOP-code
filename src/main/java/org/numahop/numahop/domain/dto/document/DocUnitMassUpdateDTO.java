@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.dto.document;
+package org.numahop.numahop.domain.dto.document;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.service.util;
+package org.numahop.numahop.service.util;
 
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration.FileFormat;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration.FileFormat;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

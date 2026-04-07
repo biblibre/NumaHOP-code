@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.workflow.helper;
+package org.numahop.numahop.repository.workflow.helper;
 
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.checkconfiguration;
+package org.numahop.numahop.domain.dto.checkconfiguration;
 
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.dto.AbstractDTO;
 
 public class SimpleCheckConfigurationDTO extends AbstractDTO {
 

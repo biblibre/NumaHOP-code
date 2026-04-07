@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.exchange.cines.mapper;
+package org.numahop.numahop.service.exchange.cines.mapper;
 
-import fr.progilone.pgcn.domain.dto.exchange.CinesReportDTO;
-import fr.progilone.pgcn.domain.exchange.cines.CinesReport;
+import org.numahop.numahop.domain.dto.exchange.CinesReportDTO;
+import org.numahop.numahop.domain.exchange.cines.CinesReport;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.administration.mapper;
+package org.numahop.numahop.service.administration.mapper;
 
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration;
-import fr.progilone.pgcn.domain.dto.administration.viewsFormat.SimpleViewsFormatConfigurationDTO;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration;
+import org.numahop.numahop.domain.dto.administration.viewsFormat.SimpleViewsFormatConfigurationDTO;
 import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

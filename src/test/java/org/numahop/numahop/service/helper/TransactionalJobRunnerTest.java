@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.service.helper;
+package org.numahop.numahop.service.helper;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-import fr.progilone.pgcn.service.util.transaction.TransactionService;
-import fr.progilone.pgcn.service.util.transaction.TransactionalJobRunner;
+import org.numahop.numahop.service.util.transaction.TransactionService;
+import org.numahop.numahop.service.util.transaction.TransactionalJobRunner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

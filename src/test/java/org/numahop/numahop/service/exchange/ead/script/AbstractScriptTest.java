@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.exchange.ead.script;
+package org.numahop.numahop.service.exchange.ead.script;
 
-import static fr.progilone.pgcn.service.exchange.ead.EadMappingEvaluationService.*;
+import static org.numahop.numahop.service.exchange.ead.EadMappingEvaluationService.*;
 
-import fr.progilone.pgcn.config.ScriptEngineConfiguration;
+import org.numahop.numahop.config.ScriptEngineConfiguration;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

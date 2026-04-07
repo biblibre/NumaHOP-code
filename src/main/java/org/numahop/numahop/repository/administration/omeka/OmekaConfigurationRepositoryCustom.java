@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.administration.omeka;
+package org.numahop.numahop.repository.administration.omeka;
 
-import fr.progilone.pgcn.domain.administration.omeka.OmekaConfiguration;
+import org.numahop.numahop.domain.administration.omeka.OmekaConfiguration;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

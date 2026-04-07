@@ -1,20 +1,20 @@
-package fr.progilone.pgcn.web.rest.exportftpconfiguration;
+package org.numahop.numahop.web.rest.exportftpconfiguration;
 
-import static fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants.EXP_FTP_HAB0;
-import static fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants.EXP_FTP_HAB1;
-import static fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants.EXP_FTP_HAB2;
+import static org.numahop.numahop.web.rest.administration.security.AuthorizationConstants.EXP_FTP_HAB0;
+import static org.numahop.numahop.web.rest.administration.security.AuthorizationConstants.EXP_FTP_HAB1;
+import static org.numahop.numahop.web.rest.administration.security.AuthorizationConstants.EXP_FTP_HAB2;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
-import fr.progilone.pgcn.domain.dto.exportftpconfiguration.ExportFTPConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.exportftpconfiguration.SimpleExportFTPConfDTO;
-import fr.progilone.pgcn.domain.exportftpconfiguration.ExportFTPConfiguration;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.service.exportftpconfiguration.ExportFTPConfigurationService;
-import fr.progilone.pgcn.service.exportftpconfiguration.UIExportFTPConfigurationService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.dto.exportftpconfiguration.ExportFTPConfigurationDTO;
+import org.numahop.numahop.domain.dto.exportftpconfiguration.SimpleExportFTPConfDTO;
+import org.numahop.numahop.domain.exportftpconfiguration.ExportFTPConfiguration;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.service.exportftpconfiguration.ExportFTPConfigurationService;
+import org.numahop.numahop.service.exportftpconfiguration.UIExportFTPConfigurationService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;

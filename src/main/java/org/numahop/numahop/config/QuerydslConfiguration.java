@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.config;
+package org.numahop.numahop.config;
 
 import com.querydsl.core.types.dsl.PathBuilderFactory;
 import com.querydsl.jpa.impl.JPAQueryFactory;

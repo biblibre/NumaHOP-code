@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.service.exchange.marc;
+package org.numahop.numahop.service.exchange.marc;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.DocUnit;
 import java.util.Objects;
 
 public class DocUnitWrapper {

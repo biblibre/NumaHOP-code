@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.user;
+package org.numahop.numahop.domain.user;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.AbstractDomainObject;
 import jakarta.persistence.*;
 
 /**

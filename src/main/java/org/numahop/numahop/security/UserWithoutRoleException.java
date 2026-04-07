@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.security;
+package org.numahop.numahop.security;
 
 import org.springframework.security.core.AuthenticationException;
 

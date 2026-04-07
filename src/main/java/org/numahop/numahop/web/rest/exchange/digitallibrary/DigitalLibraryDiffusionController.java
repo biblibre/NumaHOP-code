@@ -1,16 +1,16 @@
-package fr.progilone.pgcn.web.rest.exchange.digitallibrary;
+package org.numahop.numahop.web.rest.exchange.digitallibrary;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.administration.digitallibrary.DigitalLibraryConfiguration;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.security.SecurityUtils;
-import fr.progilone.pgcn.service.administration.digitallibrary.DigitalLibraryConfigurationService;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.service.exchange.digitallibrary.DigitalLibraryDiffusionRequestHandlerService;
-import fr.progilone.pgcn.web.rest.exchange.security.AuthorizationConstants;
-import fr.progilone.pgcn.web.util.AccessHelper;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.administration.digitallibrary.DigitalLibraryConfiguration;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.security.SecurityUtils;
+import org.numahop.numahop.service.administration.digitallibrary.DigitalLibraryConfigurationService;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.service.exchange.digitallibrary.DigitalLibraryDiffusionRequestHandlerService;
+import org.numahop.numahop.web.rest.exchange.security.AuthorizationConstants;
+import org.numahop.numahop.web.util.AccessHelper;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collection;

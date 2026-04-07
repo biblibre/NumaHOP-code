@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.repository.exchange.cines;
+package org.numahop.numahop.repository.exchange.cines;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.document.QDocUnit;
-import fr.progilone.pgcn.domain.exchange.cines.CinesReport;
-import fr.progilone.pgcn.domain.exchange.cines.QCinesReport;
+import org.numahop.numahop.domain.document.QDocUnit;
+import org.numahop.numahop.domain.exchange.cines.CinesReport;
+import org.numahop.numahop.domain.exchange.cines.QCinesReport;
 import java.time.LocalDate;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;

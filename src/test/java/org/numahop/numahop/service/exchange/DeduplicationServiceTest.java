@@ -1,14 +1,14 @@
-package fr.progilone.pgcn.service.exchange;
+package org.numahop.numahop.service.exchange;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocProperty;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.repository.document.DocUnitRepository;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocProperty;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.repository.document.DocUnitRepository;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

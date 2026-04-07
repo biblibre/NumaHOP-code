@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.web.rest;
+package org.numahop.numahop.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.user.SimpleUserAccountDTO;
-import fr.progilone.pgcn.service.user.UserService;
-import fr.progilone.pgcn.service.user.ui.UIUserService;
+import org.numahop.numahop.domain.dto.user.SimpleUserAccountDTO;
+import org.numahop.numahop.service.user.UserService;
+import org.numahop.numahop.service.user.ui.UIUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import org.slf4j.Logger;

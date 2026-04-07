@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.util;
+package org.numahop.numahop.service.util;
 
-import fr.progilone.pgcn.domain.check.AutomaticCheckResult;
-import fr.progilone.pgcn.domain.check.AutomaticCheckResult.AutoCheckResult;
-import fr.progilone.pgcn.domain.jaxb.facile.ValidatorType;
+import org.numahop.numahop.domain.check.AutomaticCheckResult;
+import org.numahop.numahop.domain.check.AutomaticCheckResult.AutoCheckResult;
+import org.numahop.numahop.domain.jaxb.facile.ValidatorType;
 
 /**
  * Converti une réponse de contrôle automatique en une réponse au bon format

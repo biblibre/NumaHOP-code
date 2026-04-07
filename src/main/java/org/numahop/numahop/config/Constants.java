@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.config;
+package org.numahop.numahop.config;
 
 /**
  * Application constants.

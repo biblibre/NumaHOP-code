@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReport;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReportDetail;
-import fr.progilone.pgcn.domain.dto.document.conditionreport.ConditionReportDTO;
-import fr.progilone.pgcn.domain.dto.document.conditionreport.ConditionReportSearchDTO;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReport;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReportDetail;
+import org.numahop.numahop.domain.dto.document.conditionreport.ConditionReportDTO;
+import org.numahop.numahop.domain.dto.document.conditionreport.ConditionReportSearchDTO;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 import org.mapstruct.AfterMapping;

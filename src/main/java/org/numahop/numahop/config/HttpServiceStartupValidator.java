@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.config;
+package org.numahop.numahop.config;
 
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;

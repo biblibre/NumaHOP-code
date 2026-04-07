@@ -15,8 +15,8 @@
 				@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.w3.org/1999/xlink", prefix = "xlink"),
 				@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "urn:isbn:1-931666-22-9", prefix = "ead") })
 @XmlJavaTypeAdapter(value = LocalDateTimeXmlAdapter.class, type = LocalDateTime.class)
-package fr.progilone.pgcn.domain.jaxb.mets;
+package org.numahop.numahop.domain.jaxb.mets;
 
-import fr.progilone.pgcn.domain.jaxb.adapters.LocalDateTimeXmlAdapter;
+import org.numahop.numahop.domain.jaxb.adapters.LocalDateTimeXmlAdapter;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;

@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.domain.ftpconfiguration;
+package org.numahop.numahop.domain.ftpconfiguration;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.google.common.base.MoreObjects;
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.library.Library;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

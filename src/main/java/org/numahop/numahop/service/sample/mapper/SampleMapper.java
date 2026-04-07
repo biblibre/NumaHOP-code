@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.sample.mapper;
+package org.numahop.numahop.service.sample.mapper;
 
-import fr.progilone.pgcn.domain.document.sample.Sample;
-import fr.progilone.pgcn.domain.dto.sample.SampleDTO;
-import fr.progilone.pgcn.service.delivery.mapper.DeliveryMapper;
-import fr.progilone.pgcn.service.document.mapper.DocPageMapper;
+import org.numahop.numahop.domain.document.sample.Sample;
+import org.numahop.numahop.domain.dto.sample.SampleDTO;
+import org.numahop.numahop.service.delivery.mapper.DeliveryMapper;
+import org.numahop.numahop.service.document.mapper.DocPageMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

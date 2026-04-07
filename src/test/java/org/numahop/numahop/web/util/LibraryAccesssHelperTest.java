@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.web.util;
+package org.numahop.numahop.web.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-import fr.progilone.pgcn.domain.user.Lang;
-import fr.progilone.pgcn.domain.user.User;
-import fr.progilone.pgcn.domain.util.CustomUserDetails;
+import org.numahop.numahop.domain.user.Lang;
+import org.numahop.numahop.domain.user.User;
+import org.numahop.numahop.domain.util.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.Optional;

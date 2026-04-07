@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.repository.administration.digitallibrary;
+package org.numahop.numahop.repository.administration.digitallibrary;
 
-import fr.progilone.pgcn.domain.administration.digitallibrary.DigitalLibraryConfiguration;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.administration.digitallibrary.DigitalLibraryConfiguration;
+import org.numahop.numahop.domain.library.Library;
 import java.util.List;
 import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.ftpconfiguration;
+package org.numahop.numahop.repository.ftpconfiguration;
 
-import fr.progilone.pgcn.domain.ftpconfiguration.FTPConfiguration;
+import org.numahop.numahop.domain.ftpconfiguration.FTPConfiguration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;

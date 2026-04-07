@@ -1,19 +1,19 @@
-package fr.progilone.pgcn.service.exchange.template;
+package org.numahop.numahop.service.exchange.template;
 
-import static fr.progilone.pgcn.exception.message.PgcnErrorCode.*;
+import static org.numahop.numahop.exception.message.PgcnErrorCode.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.exchange.template.Engine;
-import fr.progilone.pgcn.domain.exchange.template.Name;
-import fr.progilone.pgcn.domain.exchange.template.Template;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.repository.exchange.template.TemplateRepository;
-import fr.progilone.pgcn.service.storage.FileStorageManager;
-import fr.progilone.pgcn.util.TestUtil;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.exchange.template.Engine;
+import org.numahop.numahop.domain.exchange.template.Name;
+import org.numahop.numahop.domain.exchange.template.Template;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.repository.exchange.template.TemplateRepository;
+import org.numahop.numahop.service.storage.FileStorageManager;
+import org.numahop.numahop.util.TestUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;

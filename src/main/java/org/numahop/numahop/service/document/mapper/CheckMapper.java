@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
-import fr.progilone.pgcn.domain.document.Check;
-import fr.progilone.pgcn.domain.dto.document.CheckDTO;
+import org.numahop.numahop.domain.document.Check;
+import org.numahop.numahop.domain.dto.document.CheckDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

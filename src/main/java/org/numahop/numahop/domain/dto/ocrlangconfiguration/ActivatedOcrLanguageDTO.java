@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.ocrlangconfiguration;
+package org.numahop.numahop.domain.dto.ocrlangconfiguration;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
 
 public class ActivatedOcrLanguageDTO extends AbstractVersionedDTO {
 

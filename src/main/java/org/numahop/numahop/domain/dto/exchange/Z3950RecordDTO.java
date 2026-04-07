@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.exchange;
+package org.numahop.numahop.domain.dto.exchange;
 
-import fr.progilone.pgcn.domain.dto.administration.z3950.Z3950ServerDTO;
+import org.numahop.numahop.domain.dto.administration.z3950.Z3950ServerDTO;
 
 public class Z3950RecordDTO {
 

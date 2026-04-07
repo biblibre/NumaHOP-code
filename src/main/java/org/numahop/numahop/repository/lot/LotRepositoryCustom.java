@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.repository.lot;
+package org.numahop.numahop.repository.lot;
 
-import fr.progilone.pgcn.domain.dto.lot.SimpleLotDTO;
-import fr.progilone.pgcn.domain.lot.Lot;
-import fr.progilone.pgcn.repository.lot.helper.LotSearchBuilder;
+import org.numahop.numahop.domain.dto.lot.SimpleLotDTO;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.repository.lot.helper.LotSearchBuilder;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;

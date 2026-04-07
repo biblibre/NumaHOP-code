@@ -8,8 +8,8 @@
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.cines.fr/pac/aip",
 		elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)
 @XmlJavaTypeAdapter(value = LocalDateTimeXmlAdapter.class, type = LocalDateTime.class)
-package fr.progilone.pgcn.domain.jaxb.aip;
+package org.numahop.numahop.domain.jaxb.aip;
 
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import fr.progilone.pgcn.domain.jaxb.adapters.LocalDateTimeXmlAdapter;
+import org.numahop.numahop.domain.jaxb.adapters.LocalDateTimeXmlAdapter;
 import java.time.LocalDateTime;

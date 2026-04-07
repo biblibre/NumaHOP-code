@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.dto.statistics;
+package org.numahop.numahop.domain.dto.statistics;
 
 import com.google.common.collect.Ordering;
 import com.opencsv.bean.CsvBindByName;
-import fr.progilone.pgcn.domain.train.Train;
+import org.numahop.numahop.domain.train.Train;
 import jakarta.annotation.Nullable;
 import java.time.LocalDate;
 

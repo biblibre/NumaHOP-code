@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.administration.z3950;
+package org.numahop.numahop.repository.administration.z3950;
 
-import fr.progilone.pgcn.domain.administration.exchange.z3950.Z3950Server;
+import org.numahop.numahop.domain.administration.exchange.z3950.Z3950Server;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

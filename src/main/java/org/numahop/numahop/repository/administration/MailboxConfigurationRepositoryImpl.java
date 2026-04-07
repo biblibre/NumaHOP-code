@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.repository.administration;
+package org.numahop.numahop.repository.administration;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.administration.MailboxConfiguration;
-import fr.progilone.pgcn.domain.administration.QMailboxConfiguration;
+import org.numahop.numahop.domain.administration.MailboxConfiguration;
+import org.numahop.numahop.domain.administration.QMailboxConfiguration;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

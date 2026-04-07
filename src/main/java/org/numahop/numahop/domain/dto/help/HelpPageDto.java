@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.dto.help;
+package org.numahop.numahop.domain.dto.help;
 
 import com.querydsl.core.annotations.QueryProjection;
-import fr.progilone.pgcn.domain.help.HelpPageType;
+import org.numahop.numahop.domain.help.HelpPageType;
 import java.util.ArrayList;
 import java.util.List;
 

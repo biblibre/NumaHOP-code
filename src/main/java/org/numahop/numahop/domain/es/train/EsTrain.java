@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.domain.es.train;
+package org.numahop.numahop.domain.es.train;
 
-import static fr.progilone.pgcn.service.es.EsConstant.*;
+import static org.numahop.numahop.service.es.EsConstant.*;
 
 import com.google.common.base.MoreObjects;
-import fr.progilone.pgcn.domain.train.Train;
-import fr.progilone.pgcn.domain.train.Train.TrainStatus;
+import org.numahop.numahop.domain.train.Train;
+import org.numahop.numahop.domain.train.Train.TrainStatus;
 import java.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;

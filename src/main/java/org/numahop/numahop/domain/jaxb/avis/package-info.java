@@ -8,8 +8,8 @@
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.cines.fr/pac/avis",
 		elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)
 @XmlJavaTypeAdapter(value = LocalDateTimeXmlAdapter.class, type = LocalDateTime.class)
-package fr.progilone.pgcn.domain.jaxb.avis;
+package org.numahop.numahop.domain.jaxb.avis;
 
-import fr.progilone.pgcn.domain.jaxb.adapters.LocalDateTimeXmlAdapter;
+import org.numahop.numahop.domain.jaxb.adapters.LocalDateTimeXmlAdapter;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;

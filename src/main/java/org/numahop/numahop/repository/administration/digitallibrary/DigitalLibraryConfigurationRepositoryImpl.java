@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.repository.administration.digitallibrary;
+package org.numahop.numahop.repository.administration.digitallibrary;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.administration.digitallibrary.DigitalLibraryConfiguration;
-import fr.progilone.pgcn.domain.administration.digitallibrary.QDigitalLibraryConfiguration;
+import org.numahop.numahop.domain.administration.digitallibrary.DigitalLibraryConfiguration;
+import org.numahop.numahop.domain.administration.digitallibrary.QDigitalLibraryConfiguration;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;

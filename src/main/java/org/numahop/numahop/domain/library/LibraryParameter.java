@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.library;
+package org.numahop.numahop.domain.library;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.AbstractDomainObject;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

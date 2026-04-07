@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.multilotsdelivery;
+package org.numahop.numahop.service.multilotsdelivery;
 
-import fr.progilone.pgcn.domain.delivery.Delivery;
-import fr.progilone.pgcn.domain.lot.Lot;
-import fr.progilone.pgcn.domain.multilotsdelivery.MultiLotsDelivery;
-import fr.progilone.pgcn.exception.PgcnBusinessException;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.repository.delivery.DeliveryRepository;
-import fr.progilone.pgcn.repository.multilotsdelivery.MultiLotsDeliveryRepository;
+import org.numahop.numahop.domain.delivery.Delivery;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.domain.multilotsdelivery.MultiLotsDelivery;
+import org.numahop.numahop.exception.PgcnBusinessException;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.repository.delivery.DeliveryRepository;
+import org.numahop.numahop.repository.multilotsdelivery.MultiLotsDeliveryRepository;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.exchange.mail;
+package org.numahop.numahop.service.exchange.mail;
 
-import fr.progilone.pgcn.domain.administration.MailboxConfiguration;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.service.util.CryptoService;
+import org.numahop.numahop.domain.administration.MailboxConfiguration;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.service.util.CryptoService;
 import jakarta.mail.*;
 import jakarta.mail.search.FlagTerm;
 import java.util.Properties;

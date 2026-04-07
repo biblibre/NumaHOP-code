@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.document;
+package org.numahop.numahop.domain.dto.document;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
 
 /**
  * Created by lebouchp on 10/02/2017.

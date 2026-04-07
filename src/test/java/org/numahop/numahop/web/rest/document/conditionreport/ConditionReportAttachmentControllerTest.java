@@ -1,17 +1,17 @@
-package fr.progilone.pgcn.web.rest.document.conditionreport;
+package org.numahop.numahop.web.rest.document.conditionreport;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReport;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReportAttachment;
-import fr.progilone.pgcn.service.document.conditionreport.ConditionReportAttachmentService;
-import fr.progilone.pgcn.service.document.conditionreport.ConditionReportService;
-import fr.progilone.pgcn.util.TestConverterFactory;
-import fr.progilone.pgcn.web.util.AccessHelper;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReport;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReportAttachment;
+import org.numahop.numahop.service.document.conditionreport.ConditionReportAttachmentService;
+import org.numahop.numahop.service.document.conditionreport.ConditionReportService;
+import org.numahop.numahop.util.TestConverterFactory;
+import org.numahop.numahop.web.util.AccessHelper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

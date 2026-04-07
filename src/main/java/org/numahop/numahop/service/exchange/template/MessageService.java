@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.service.exchange.template;
+package org.numahop.numahop.service.exchange.template;
 
-import fr.progilone.pgcn.security.SecurityUtils;
+import org.numahop.numahop.security.SecurityUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

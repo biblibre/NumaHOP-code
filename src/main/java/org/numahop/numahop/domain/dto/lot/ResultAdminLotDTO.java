@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.dto.lot;
+package org.numahop.numahop.domain.dto.lot;
 
 /**
  * DTO minimaliste pour retour outils admin.

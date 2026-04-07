@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.web.rest.user;
+package org.numahop.numahop.web.rest.user;
 
-import static fr.progilone.pgcn.web.rest.user.security.AuthorizationConstants.ROLE_HAB0;
+import static org.numahop.numahop.web.rest.user.security.AuthorizationConstants.ROLE_HAB0;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.user.AuthorizationDTO;
-import fr.progilone.pgcn.domain.user.Authorization;
-import fr.progilone.pgcn.service.user.AuthorizationService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
+import org.numahop.numahop.domain.dto.user.AuthorizationDTO;
+import org.numahop.numahop.domain.user.Authorization;
+import org.numahop.numahop.service.user.AuthorizationService;
+import org.numahop.numahop.web.rest.AbstractRestController;
 import jakarta.annotation.security.RolesAllowed;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.dto.workflow;
+package org.numahop.numahop.domain.dto.workflow;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
-import fr.progilone.pgcn.domain.workflow.WorkflowModelStateType;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.workflow.WorkflowModelStateType;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
 import java.time.Duration;
 
 public class WorkflowModelStateDTO extends AbstractVersionedDTO {

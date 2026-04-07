@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.repository.exportftpconfiguration;
+package org.numahop.numahop.repository.exportftpconfiguration;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.exportftpconfiguration.ExportFTPConfiguration;
-import fr.progilone.pgcn.domain.exportftpconfiguration.QExportFTPConfiguration;
+import org.numahop.numahop.domain.exportftpconfiguration.ExportFTPConfiguration;
+import org.numahop.numahop.domain.exportftpconfiguration.QExportFTPConfiguration;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;

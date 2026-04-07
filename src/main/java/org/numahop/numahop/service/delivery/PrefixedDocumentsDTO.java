@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.delivery;
+package org.numahop.numahop.service.delivery;
 
 import java.io.File;
 import java.util.ArrayList;

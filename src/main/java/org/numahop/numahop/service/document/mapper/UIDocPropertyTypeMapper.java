@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
 import org.springframework.stereotype.Service;
 

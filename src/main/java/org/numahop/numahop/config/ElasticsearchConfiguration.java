@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.config;
+package org.numahop.numahop.config;
 
 import java.util.stream.Stream;
 import org.elasticsearch.client.RestClientBuilder;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 @Configuration
-@EnableElasticsearchRepositories(basePackages = { "fr.progilone.pgcn.repository.es" })
+@EnableElasticsearchRepositories(basePackages = { "org.numahop.numahop.repository.es" })
 @Import(ElasticsearchRestClientAutoConfiguration.class)
 public class ElasticsearchConfiguration {
 

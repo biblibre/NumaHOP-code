@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.delivery.mapper;
+package org.numahop.numahop.service.delivery.mapper;
 
-import fr.progilone.pgcn.domain.delivery.Delivery;
-import fr.progilone.pgcn.domain.dto.delivery.ManualDeliveryDTO;
-import fr.progilone.pgcn.domain.dto.lot.SimpleLotDTO;
-import fr.progilone.pgcn.domain.lot.Lot;
-import fr.progilone.pgcn.service.lot.LotService;
+import org.numahop.numahop.domain.delivery.Delivery;
+import org.numahop.numahop.domain.dto.delivery.ManualDeliveryDTO;
+import org.numahop.numahop.domain.dto.lot.SimpleLotDTO;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.service.lot.LotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

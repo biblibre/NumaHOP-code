@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
-import fr.progilone.pgcn.domain.document.Check;
-import fr.progilone.pgcn.domain.dto.document.CheckDTO;
-import fr.progilone.pgcn.service.document.DocPageService;
+import org.numahop.numahop.domain.document.Check;
+import org.numahop.numahop.domain.dto.document.CheckDTO;
+import org.numahop.numahop.service.document.DocPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

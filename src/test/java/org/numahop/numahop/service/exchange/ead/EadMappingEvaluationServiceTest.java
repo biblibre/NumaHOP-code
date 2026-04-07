@@ -1,14 +1,14 @@
-package fr.progilone.pgcn.service.exchange.ead;
+package org.numahop.numahop.service.exchange.ead;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-import fr.progilone.pgcn.config.ScriptEngineConfiguration;
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.domain.exchange.MappingRule;
-import fr.progilone.pgcn.domain.jaxb.ead.Unitid;
-import fr.progilone.pgcn.service.administration.TransliterationService;
-import fr.progilone.pgcn.service.exchange.ead.mapping.CompiledMapping;
+import org.numahop.numahop.config.ScriptEngineConfiguration;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.domain.exchange.MappingRule;
+import org.numahop.numahop.domain.jaxb.ead.Unitid;
+import org.numahop.numahop.service.administration.TransliterationService;
+import org.numahop.numahop.service.exchange.ead.mapping.CompiledMapping;
 import java.util.HashMap;
 import java.util.Map;
 import javax.script.ScriptEngine;

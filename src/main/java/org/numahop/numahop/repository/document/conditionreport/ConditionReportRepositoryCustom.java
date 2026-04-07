@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.repository.document.conditionreport;
+package org.numahop.numahop.repository.document.conditionreport;
 
 import java.time.LocalDate;
 import java.util.List;

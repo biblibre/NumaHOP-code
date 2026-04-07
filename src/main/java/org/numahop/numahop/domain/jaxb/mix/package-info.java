@@ -12,4 +12,4 @@
 @jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.loc.gov/mix/v20",
 		elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
 		xmlns = { @jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.loc.gov/mix/v20", prefix = "") })
-package fr.progilone.pgcn.domain.jaxb.mix;
+package org.numahop.numahop.domain.jaxb.mix;

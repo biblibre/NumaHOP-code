@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.exchange.template;
+package org.numahop.numahop.domain.exchange.template;
 
 public enum Name {
 

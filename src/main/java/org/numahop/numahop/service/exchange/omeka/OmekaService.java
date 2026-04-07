@@ -1,34 +1,34 @@
-package fr.progilone.pgcn.service.exchange.omeka;
+package org.numahop.numahop.service.exchange.omeka;
 
-import fr.progilone.pgcn.domain.administration.SftpConfiguration;
-import fr.progilone.pgcn.domain.administration.omeka.OmekaConfiguration;
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration;
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.DocUnit.ExportStatus;
-import fr.progilone.pgcn.domain.dto.document.BibliographicRecordDcDTO;
-import fr.progilone.pgcn.domain.dto.document.DocPropertyDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.storage.CheckSummedStoredFile;
-import fr.progilone.pgcn.domain.storage.StoredFile;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.exception.PgcnUncheckedException;
-import fr.progilone.pgcn.service.MailService;
-import fr.progilone.pgcn.service.administration.omeka.OmekaConfigurationService;
-import fr.progilone.pgcn.service.document.DocPropertyTypeService;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.service.document.ui.UIBibliographicRecordService;
-import fr.progilone.pgcn.service.exchange.ssh.FTPClientService;
-import fr.progilone.pgcn.service.exchange.ssh.SftpService;
-import fr.progilone.pgcn.service.library.LibraryService;
-import fr.progilone.pgcn.service.storage.BinaryStorageManager;
-import fr.progilone.pgcn.service.storage.FileCleaningManager;
-import fr.progilone.pgcn.service.util.CryptoService;
-import fr.progilone.pgcn.service.util.ImageUtils;
-import fr.progilone.pgcn.service.util.transaction.TransactionService;
-import fr.progilone.pgcn.service.util.transaction.TransactionalJobRunner;
+import org.numahop.numahop.domain.administration.SftpConfiguration;
+import org.numahop.numahop.domain.administration.omeka.OmekaConfiguration;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.DocUnit.ExportStatus;
+import org.numahop.numahop.domain.dto.document.BibliographicRecordDcDTO;
+import org.numahop.numahop.domain.dto.document.DocPropertyDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.storage.CheckSummedStoredFile;
+import org.numahop.numahop.domain.storage.StoredFile;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.exception.PgcnUncheckedException;
+import org.numahop.numahop.service.MailService;
+import org.numahop.numahop.service.administration.omeka.OmekaConfigurationService;
+import org.numahop.numahop.service.document.DocPropertyTypeService;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.service.document.ui.UIBibliographicRecordService;
+import org.numahop.numahop.service.exchange.ssh.FTPClientService;
+import org.numahop.numahop.service.exchange.ssh.SftpService;
+import org.numahop.numahop.service.library.LibraryService;
+import org.numahop.numahop.service.storage.BinaryStorageManager;
+import org.numahop.numahop.service.storage.FileCleaningManager;
+import org.numahop.numahop.service.util.CryptoService;
+import org.numahop.numahop.service.util.ImageUtils;
+import org.numahop.numahop.service.util.transaction.TransactionService;
+import org.numahop.numahop.service.util.transaction.TransactionalJobRunner;
 import jakarta.annotation.PostConstruct;
 import jakarta.xml.bind.JAXBException;
 import java.io.*;
@@ -753,10 +753,10 @@ public class OmekaService {
 			throws IOException {
 		final CheckSummedStoredFile checkSummed = new CheckSummedStoredFile();
 		checkSummed.setStoredFile(storedFile);
-		checkSummed.setCheckSumType(fr.progilone.pgcn.service.util.FileUtils.CheckSumType.MD5);
+		checkSummed.setCheckSumType(org.numahop.numahop.service.util.FileUtils.CheckSumType.MD5);
 		try {
-			checkSummed.setCheckSum(fr.progilone.pgcn.service.util.FileUtils.checkSum(sourceFile,
-					fr.progilone.pgcn.service.util.FileUtils.CheckSumType.MD5));
+			checkSummed.setCheckSum(org.numahop.numahop.service.util.FileUtils.checkSum(sourceFile,
+					org.numahop.numahop.service.util.FileUtils.CheckSumType.MD5));
 		}
 		catch (final NoSuchAlgorithmException e) {
 			LOG.error(e.getMessage(), e);

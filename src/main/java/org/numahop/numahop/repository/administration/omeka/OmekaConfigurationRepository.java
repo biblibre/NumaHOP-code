@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.repository.administration.omeka;
+package org.numahop.numahop.repository.administration.omeka;
 
-import fr.progilone.pgcn.domain.administration.omeka.OmekaConfiguration;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.administration.omeka.OmekaConfiguration;
+import org.numahop.numahop.domain.library.Library;
 import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.util;
+package org.numahop.numahop.service.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
+import org.numahop.numahop.exception.PgcnTechnicalException;
 import org.junit.jupiter.api.Test;
 
 /**

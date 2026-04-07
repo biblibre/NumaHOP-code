@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
-import fr.progilone.pgcn.domain.delivery.DeliveredDocument;
-import fr.progilone.pgcn.domain.dto.document.DeliveredDigitalDocumentDTO;
-import fr.progilone.pgcn.domain.dto.document.LightDeliveredDigitalDocDTO;
-import fr.progilone.pgcn.domain.dto.document.SimpleDeliveredDigitalDocDTO;
-import fr.progilone.pgcn.domain.dto.document.ValidatedDeliveredDocumentDTO;
-import fr.progilone.pgcn.service.delivery.mapper.DeliveryMapper;
-import fr.progilone.pgcn.service.ftpconfiguration.mapper.SimpleFTPConfigurationMapper;
-import fr.progilone.pgcn.service.lot.mapper.LotMapper;
+import org.numahop.numahop.domain.delivery.DeliveredDocument;
+import org.numahop.numahop.domain.dto.document.DeliveredDigitalDocumentDTO;
+import org.numahop.numahop.domain.dto.document.LightDeliveredDigitalDocDTO;
+import org.numahop.numahop.domain.dto.document.SimpleDeliveredDigitalDocDTO;
+import org.numahop.numahop.domain.dto.document.ValidatedDeliveredDocumentDTO;
+import org.numahop.numahop.service.delivery.mapper.DeliveryMapper;
+import org.numahop.numahop.service.ftpconfiguration.mapper.SimpleFTPConfigurationMapper;
+import org.numahop.numahop.service.lot.mapper.LotMapper;
 import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.service.exchange.ead.mapping;
+package org.numahop.numahop.service.exchange.ead.mapping;
 
-import fr.progilone.pgcn.service.exchange.ead.script.CustomScript;
+import org.numahop.numahop.service.exchange.ead.script.CustomScript;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.library;
+package org.numahop.numahop.service.library;
 
-import fr.progilone.pgcn.domain.library.AbstractLibraryParameterValue;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.library.LibraryParameter;
-import fr.progilone.pgcn.domain.library.LibraryParameter.LibraryParameterType;
-import fr.progilone.pgcn.domain.library.LibraryParameterValueCines;
-import fr.progilone.pgcn.repository.library.LibraryParameterCinesRepository;
-import fr.progilone.pgcn.repository.library.LibraryParameterRepository;
+import org.numahop.numahop.domain.library.AbstractLibraryParameterValue;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.library.LibraryParameter;
+import org.numahop.numahop.domain.library.LibraryParameter.LibraryParameterType;
+import org.numahop.numahop.domain.library.LibraryParameterValueCines;
+import org.numahop.numahop.repository.library.LibraryParameterCinesRepository;
+import org.numahop.numahop.repository.library.LibraryParameterRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

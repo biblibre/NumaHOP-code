@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.repository.es;
+package org.numahop.numahop.repository.es;
 
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
 import co.elastic.clients.json.JsonData;
-import fr.progilone.pgcn.repository.es.helper.EsBoolOperator;
-import fr.progilone.pgcn.repository.es.helper.EsQueryBuilder;
-import fr.progilone.pgcn.repository.es.helper.EsQueryHelper;
-import fr.progilone.pgcn.repository.es.helper.EsSearchOperation;
-import fr.progilone.pgcn.repository.es.helper.SearchResultPage;
-import fr.progilone.pgcn.service.util.DateUtils;
+import org.numahop.numahop.repository.es.helper.EsBoolOperator;
+import org.numahop.numahop.repository.es.helper.EsQueryBuilder;
+import org.numahop.numahop.repository.es.helper.EsQueryHelper;
+import org.numahop.numahop.repository.es.helper.EsSearchOperation;
+import org.numahop.numahop.repository.es.helper.SearchResultPage;
+import org.numahop.numahop.service.util.DateUtils;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;

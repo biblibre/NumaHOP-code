@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.util;
+package org.numahop.numahop.domain.util;
 
-import fr.progilone.pgcn.domain.user.Lang;
-import fr.progilone.pgcn.domain.user.User;
+import org.numahop.numahop.domain.user.Lang;
+import org.numahop.numahop.domain.user.User;
 import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

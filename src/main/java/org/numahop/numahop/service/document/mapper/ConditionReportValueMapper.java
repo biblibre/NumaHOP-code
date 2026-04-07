@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
-import fr.progilone.pgcn.domain.document.conditionreport.Description;
-import fr.progilone.pgcn.domain.dto.document.conditionreport.ConditionReportValueDTO;
+import org.numahop.numahop.domain.document.conditionreport.Description;
+import org.numahop.numahop.domain.dto.document.conditionreport.ConditionReportValueDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

@@ -1,16 +1,16 @@
-package fr.progilone.pgcn.web.rest.imagemetadata;
+package org.numahop.numahop.web.rest.imagemetadata;
 
-import static fr.progilone.pgcn.web.rest.document.security.AuthorizationConstants.DOC_UNIT_HAB5;
+import static org.numahop.numahop.web.rest.document.security.AuthorizationConstants.DOC_UNIT_HAB5;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.imagemetadata.ImageMetadataValuesDTO;
-import fr.progilone.pgcn.domain.imagemetadata.ImageMetadataProperty;
-import fr.progilone.pgcn.domain.imagemetadata.ImageMetadataValue;
-import fr.progilone.pgcn.exception.PgcnBusinessException;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.service.imagemetadata.ImageMetadataService;
-import fr.progilone.pgcn.service.imagemetadata.ImageMetadataValuesService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
+import org.numahop.numahop.domain.dto.imagemetadata.ImageMetadataValuesDTO;
+import org.numahop.numahop.domain.imagemetadata.ImageMetadataProperty;
+import org.numahop.numahop.domain.imagemetadata.ImageMetadataValue;
+import org.numahop.numahop.exception.PgcnBusinessException;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.service.imagemetadata.ImageMetadataService;
+import org.numahop.numahop.service.imagemetadata.ImageMetadataValuesService;
+import org.numahop.numahop.web.rest.AbstractRestController;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;

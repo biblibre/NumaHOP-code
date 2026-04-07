@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.document;
+package org.numahop.numahop.service.document;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.document.DocPage;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.repository.document.DocPageRepository;
-import fr.progilone.pgcn.service.storage.BinaryStorageManager;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.document.DocPage;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.repository.document.DocPageRepository;
+import org.numahop.numahop.service.storage.BinaryStorageManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;

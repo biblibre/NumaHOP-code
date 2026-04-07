@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.web.rest.workflow.security;
+package org.numahop.numahop.web.rest.workflow.security;
 
-import fr.progilone.pgcn.web.util.AuthorizationManager;
+import org.numahop.numahop.web.util.AuthorizationManager;
 
 /**
  * Habilitations pour les workflows

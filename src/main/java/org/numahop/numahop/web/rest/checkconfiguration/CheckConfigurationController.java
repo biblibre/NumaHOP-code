@@ -1,18 +1,18 @@
-package fr.progilone.pgcn.web.rest.checkconfiguration;
+package org.numahop.numahop.web.rest.checkconfiguration;
 
-import static fr.progilone.pgcn.web.rest.checkconfiguration.security.AuthorizationConstants.*;
-import static fr.progilone.pgcn.web.rest.user.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.checkconfiguration.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.user.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.checkconfiguration.AutomaticCheckRuleDTO;
-import fr.progilone.pgcn.domain.dto.checkconfiguration.CheckConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.checkconfiguration.SimpleCheckConfigurationDTO;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.service.checkconfiguration.AutomaticCheckRuleService;
-import fr.progilone.pgcn.service.checkconfiguration.CheckConfigurationService;
-import fr.progilone.pgcn.service.checkconfiguration.ui.UICheckConfigurationService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.dto.checkconfiguration.AutomaticCheckRuleDTO;
+import org.numahop.numahop.domain.dto.checkconfiguration.CheckConfigurationDTO;
+import org.numahop.numahop.domain.dto.checkconfiguration.SimpleCheckConfigurationDTO;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.service.checkconfiguration.AutomaticCheckRuleService;
+import org.numahop.numahop.service.checkconfiguration.CheckConfigurationService;
+import org.numahop.numahop.service.checkconfiguration.ui.UICheckConfigurationService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;

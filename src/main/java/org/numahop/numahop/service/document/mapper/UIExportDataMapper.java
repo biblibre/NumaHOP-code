@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.ExportData;
-import fr.progilone.pgcn.domain.document.ExportProperty;
-import fr.progilone.pgcn.domain.dto.document.BibliographicRecordDcDTO;
-import fr.progilone.pgcn.repository.document.DocPropertyTypeRepository;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.ExportData;
+import org.numahop.numahop.domain.document.ExportProperty;
+import org.numahop.numahop.domain.dto.document.BibliographicRecordDcDTO;
+import org.numahop.numahop.repository.document.DocPropertyTypeRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

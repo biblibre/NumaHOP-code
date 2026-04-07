@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.web.rest.document;
+package org.numahop.numahop.web.rest.document;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.dto.document.DocPropertyTypeDTO;
-import fr.progilone.pgcn.service.document.DocPropertyTypeService;
-import fr.progilone.pgcn.service.document.ui.UIDocPropertyTypeService;
-import fr.progilone.pgcn.util.TestUtil;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.dto.document.DocPropertyTypeDTO;
+import org.numahop.numahop.service.document.DocPropertyTypeService;
+import org.numahop.numahop.service.document.ui.UIDocPropertyTypeService;
+import org.numahop.numahop.util.TestUtil;
 import java.util.Collections;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

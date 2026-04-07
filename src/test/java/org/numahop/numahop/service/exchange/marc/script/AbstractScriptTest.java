@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.exchange.marc.script;
+package org.numahop.numahop.service.exchange.marc.script;
 
-import static fr.progilone.pgcn.service.exchange.marc.MarcMappingEvaluationService.*;
+import static org.numahop.numahop.service.exchange.marc.MarcMappingEvaluationService.*;
 
-import fr.progilone.pgcn.config.ScriptEngineConfiguration;
+import org.numahop.numahop.config.ScriptEngineConfiguration;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

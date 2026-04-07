@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.ocrlangconfiguration;
+package org.numahop.numahop.repository.ocrlangconfiguration;
 
-import fr.progilone.pgcn.domain.ocrlangconfiguration.OcrLangConfiguration;
+import org.numahop.numahop.domain.ocrlangconfiguration.OcrLangConfiguration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

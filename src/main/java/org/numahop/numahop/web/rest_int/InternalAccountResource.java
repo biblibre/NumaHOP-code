@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.web.rest_int;
+package org.numahop.numahop.web.rest_int;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.security.PersistentToken;
-import fr.progilone.pgcn.repository.security.PersistentTokenRepository;
-import fr.progilone.pgcn.security.SecurityUtils;
-import fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants;
-import fr.progilone.pgcn.web.rest_int.dto.UserAccountDTO;
+import org.numahop.numahop.domain.security.PersistentToken;
+import org.numahop.numahop.repository.security.PersistentTokenRepository;
+import org.numahop.numahop.security.SecurityUtils;
+import org.numahop.numahop.web.rest.administration.security.AuthorizationConstants;
+import org.numahop.numahop.web.rest_int.dto.UserAccountDTO;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;

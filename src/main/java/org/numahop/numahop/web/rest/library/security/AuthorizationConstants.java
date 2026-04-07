@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.web.rest.library.security;
+package org.numahop.numahop.web.rest.library.security;
 
-import fr.progilone.pgcn.web.util.AuthorizationManager;
+import org.numahop.numahop.web.util.AuthorizationManager;
 
 /**
  * Habilitations du module Bibliothèque (LIB)

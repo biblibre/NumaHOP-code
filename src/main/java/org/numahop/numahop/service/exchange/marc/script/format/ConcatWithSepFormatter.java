@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.service.exchange.marc.script.format;
+package org.numahop.numahop.service.exchange.marc.script.format;
 
-import fr.progilone.pgcn.service.exchange.marc.script.CustomScript;
+import org.numahop.numahop.service.exchange.marc.script.CustomScript;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.ArrayUtils;

@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.user;
+package org.numahop.numahop.repository.user;
 
-import fr.progilone.pgcn.domain.user.Address;
+import org.numahop.numahop.domain.user.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AddressRepository extends JpaRepository<Address, String> {

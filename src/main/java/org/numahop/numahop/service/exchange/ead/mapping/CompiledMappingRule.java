@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.service.exchange.ead.mapping;
+package org.numahop.numahop.service.exchange.ead.mapping;
 
-import fr.progilone.pgcn.domain.exchange.MappingRule;
+import org.numahop.numahop.domain.exchange.MappingRule;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;

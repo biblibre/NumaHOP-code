@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.web.rest.administration.z3950;
+package org.numahop.numahop.web.rest.administration.z3950;
 
-import static fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.administration.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.administration.exchange.z3950.Z3950Server;
-import fr.progilone.pgcn.domain.dto.administration.z3950.Z3950ServerDTO;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.service.administration.z3950.Z3950ServerService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
+import org.numahop.numahop.domain.administration.exchange.z3950.Z3950Server;
+import org.numahop.numahop.domain.dto.administration.z3950.Z3950ServerDTO;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.service.administration.z3950.Z3950ServerService;
+import org.numahop.numahop.web.rest.AbstractRestController;
 import jakarta.annotation.security.RolesAllowed;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

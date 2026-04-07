@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.workflow;
+package org.numahop.numahop.domain.dto.workflow;
 
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.dto.AbstractDTO;
 
 public class SimpleWorkflowModelStateDTO extends AbstractDTO {
 

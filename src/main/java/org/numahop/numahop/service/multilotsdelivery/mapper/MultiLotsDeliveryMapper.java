@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.multilotsdelivery.mapper;
+package org.numahop.numahop.service.multilotsdelivery.mapper;
 
-import fr.progilone.pgcn.domain.delivery.Delivery;
-import fr.progilone.pgcn.domain.delivery.Delivery.DeliveryStatus;
-import fr.progilone.pgcn.domain.dto.lot.SimpleLotForDeliveryDTO;
-import fr.progilone.pgcn.domain.dto.multilotsdelivery.MultiLotsDeliveryDTO;
-import fr.progilone.pgcn.domain.multilotsdelivery.MultiLotsDelivery;
-import fr.progilone.pgcn.service.delivery.mapper.DeliveryMapper;
-import fr.progilone.pgcn.service.lot.mapper.LotMapper;
+import org.numahop.numahop.domain.delivery.Delivery;
+import org.numahop.numahop.domain.delivery.Delivery.DeliveryStatus;
+import org.numahop.numahop.domain.dto.lot.SimpleLotForDeliveryDTO;
+import org.numahop.numahop.domain.dto.multilotsdelivery.MultiLotsDeliveryDTO;
+import org.numahop.numahop.domain.multilotsdelivery.MultiLotsDelivery;
+import org.numahop.numahop.service.delivery.mapper.DeliveryMapper;
+import org.numahop.numahop.service.lot.mapper.LotMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.mapstruct.AfterMapping;

@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.storage;
+package org.numahop.numahop.service.storage;
 
-import static fr.progilone.pgcn.service.storage.BinaryStorageManager.Metadatas;
+import static org.numahop.numahop.service.storage.BinaryStorageManager.Metadatas;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.lowagie.text.pdf.PdfReader;
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.service.util.ImageUtils;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.service.util.ImageUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

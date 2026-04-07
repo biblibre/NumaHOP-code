@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.user.mapper;
+package org.numahop.numahop.service.user.mapper;
 
-import fr.progilone.pgcn.domain.dto.user.RoleDTO;
-import fr.progilone.pgcn.domain.user.Role;
+import org.numahop.numahop.domain.dto.user.RoleDTO;
+import org.numahop.numahop.domain.user.Role;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

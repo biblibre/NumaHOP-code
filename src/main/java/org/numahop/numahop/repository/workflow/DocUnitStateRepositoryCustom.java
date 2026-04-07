@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.repository.workflow;
+package org.numahop.numahop.repository.workflow;
 
-import fr.progilone.pgcn.domain.workflow.DocUnitState;
-import fr.progilone.pgcn.repository.workflow.helper.DocUnitWorkflowSearchBuilder;
+import org.numahop.numahop.domain.workflow.DocUnitState;
+import org.numahop.numahop.repository.workflow.helper.DocUnitWorkflowSearchBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

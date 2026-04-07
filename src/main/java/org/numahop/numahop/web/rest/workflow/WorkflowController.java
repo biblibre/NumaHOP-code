@@ -1,17 +1,17 @@
-package fr.progilone.pgcn.web.rest.workflow;
+package org.numahop.numahop.web.rest.workflow;
 
-import static fr.progilone.pgcn.web.rest.document.security.AuthorizationConstants.COND_REPORT_HAB2;
-import static fr.progilone.pgcn.web.rest.document.security.AuthorizationConstants.DOC_UNIT_HAB3;
+import static org.numahop.numahop.web.rest.document.security.AuthorizationConstants.COND_REPORT_HAB2;
+import static org.numahop.numahop.web.rest.document.security.AuthorizationConstants.DOC_UNIT_HAB3;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.workflow.BooleanValueDTO;
-import fr.progilone.pgcn.domain.dto.workflow.DocUnitWorkflowDTO;
-import fr.progilone.pgcn.domain.dto.workflow.StateIsDoneDTO;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
-import fr.progilone.pgcn.service.workflow.ui.UIWorkflowService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants;
-import fr.progilone.pgcn.web.util.AccessHelper;
+import org.numahop.numahop.domain.dto.workflow.BooleanValueDTO;
+import org.numahop.numahop.domain.dto.workflow.DocUnitWorkflowDTO;
+import org.numahop.numahop.domain.dto.workflow.StateIsDoneDTO;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.service.workflow.ui.UIWorkflowService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.rest.administration.security.AuthorizationConstants;
+import org.numahop.numahop.web.util.AccessHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;

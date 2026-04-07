@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.help;
+package org.numahop.numahop.domain.help;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.AbstractDomainObject;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

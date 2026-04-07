@@ -13,4 +13,4 @@
 		elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
 		xmlns = { @jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.openarchives.org/OAI/2.0/",
 				prefix = "") })
-package fr.progilone.pgcn.domain.jaxb.oaipmh;
+package org.numahop.numahop.domain.jaxb.oaipmh;

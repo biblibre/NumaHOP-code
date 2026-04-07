@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.web.rest.statistics;
+package org.numahop.numahop.web.rest.statistics;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.statistics.StatisticsProviderDeliveryDTO;
-import fr.progilone.pgcn.service.delivery.ui.UIDeliveryService;
-import fr.progilone.pgcn.web.util.AccessHelper;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.dto.statistics.StatisticsProviderDeliveryDTO;
+import org.numahop.numahop.service.delivery.ui.UIDeliveryService;
+import org.numahop.numahop.web.util.AccessHelper;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.PermitAll;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDate;

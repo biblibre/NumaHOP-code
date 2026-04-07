@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.check;
+package org.numahop.numahop.domain.dto.check;
 
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.dto.AbstractDTO;
 import java.time.LocalDateTime;
 
 /**

@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.security;
+package org.numahop.numahop.security;
 
-import fr.progilone.pgcn.domain.user.Lang;
-import fr.progilone.pgcn.domain.user.Role;
-import fr.progilone.pgcn.domain.user.User;
-import fr.progilone.pgcn.domain.util.CustomUserDetails;
-import fr.progilone.pgcn.repository.user.AuthorizationRepository;
-import fr.progilone.pgcn.repository.user.UserRepository;
-import fr.progilone.pgcn.service.user.UserService;
-import fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants;
+import org.numahop.numahop.domain.user.Lang;
+import org.numahop.numahop.domain.user.Role;
+import org.numahop.numahop.domain.user.User;
+import org.numahop.numahop.domain.util.CustomUserDetails;
+import org.numahop.numahop.repository.user.AuthorizationRepository;
+import org.numahop.numahop.repository.user.UserRepository;
+import org.numahop.numahop.service.user.UserService;
+import org.numahop.numahop.web.rest.administration.security.AuthorizationConstants;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;

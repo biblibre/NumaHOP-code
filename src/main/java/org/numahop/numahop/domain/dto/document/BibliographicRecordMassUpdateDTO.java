@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.dto.document;
+package org.numahop.numahop.domain.dto.document;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;

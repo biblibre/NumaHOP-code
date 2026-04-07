@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.security;
+package org.numahop.numahop.security;
 
-import fr.progilone.pgcn.config.Constants;
+import org.numahop.numahop.config.Constants;
 import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;

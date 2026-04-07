@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.dto.statistics;
+package org.numahop.numahop.domain.dto.statistics;
 
 public class StatisticsDocUnitCheckDelayDTO {
 

@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.exchange.ead;
+package org.numahop.numahop.service.exchange.ead;
 
-import fr.progilone.pgcn.domain.jaxb.ead.C;
-import fr.progilone.pgcn.domain.jaxb.ead.Eadheader;
-import fr.progilone.pgcn.domain.jaxb.ead.ObjectFactory;
+import org.numahop.numahop.domain.jaxb.ead.C;
+import org.numahop.numahop.domain.jaxb.ead.Eadheader;
+import org.numahop.numahop.domain.jaxb.ead.ObjectFactory;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;

@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.administration.mapper;
+package org.numahop.numahop.service.administration.mapper;
 
-import fr.progilone.pgcn.domain.administration.InternetArchiveConfiguration;
-import fr.progilone.pgcn.domain.dto.administration.InternetArchiveConfigurationDTO;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.domain.administration.InternetArchiveConfiguration;
+import org.numahop.numahop.domain.dto.administration.InternetArchiveConfigurationDTO;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
 import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

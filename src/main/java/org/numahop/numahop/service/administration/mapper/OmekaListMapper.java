@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.administration.mapper;
+package org.numahop.numahop.service.administration.mapper;
 
-import fr.progilone.pgcn.domain.administration.omeka.OmekaList;
-import fr.progilone.pgcn.domain.dto.administration.omeka.OmekaListDTO;
+import org.numahop.numahop.domain.administration.omeka.OmekaList;
+import org.numahop.numahop.domain.dto.administration.omeka.OmekaListDTO;
 import java.util.List;
 import java.util.Set;
 import org.mapstruct.Mapper;

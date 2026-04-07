@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.administration.omeka;
+package org.numahop.numahop.domain.dto.administration.omeka;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
 
 public class OmekaListDTO extends AbstractVersionedDTO {
 

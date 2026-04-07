@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.es.jackson;
+package org.numahop.numahop.service.es.jackson;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ValueNode;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.exchange.MappingRule;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.exchange.MappingRule;
 import java.io.IOException;
 import java.util.function.Consumer;
 

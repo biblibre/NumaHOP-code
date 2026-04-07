@@ -1,14 +1,14 @@
-package fr.progilone.pgcn.service.exchange.marc.script;
+package org.numahop.numahop.service.exchange.marc.script;
 
-import fr.progilone.pgcn.service.exchange.marc.MarcUtils;
-import fr.progilone.pgcn.service.exchange.marc.script.format.CollectionFieldFormatter;
-import fr.progilone.pgcn.service.exchange.marc.script.format.ConcatWithSepFormatter;
-import fr.progilone.pgcn.service.exchange.marc.script.format.CorporateFieldFormatter;
-import fr.progilone.pgcn.service.exchange.marc.script.format.DatePublicationFormatter;
-import fr.progilone.pgcn.service.exchange.marc.script.format.PersonFieldFormatter;
-import fr.progilone.pgcn.service.exchange.marc.script.format.SubfieldsFormatter;
-import fr.progilone.pgcn.service.exchange.marc.script.format.TitleFieldFormatter;
-import fr.progilone.pgcn.service.exchange.marc.script.test.ExistsCondition;
+import org.numahop.numahop.service.exchange.marc.MarcUtils;
+import org.numahop.numahop.service.exchange.marc.script.format.CollectionFieldFormatter;
+import org.numahop.numahop.service.exchange.marc.script.format.ConcatWithSepFormatter;
+import org.numahop.numahop.service.exchange.marc.script.format.CorporateFieldFormatter;
+import org.numahop.numahop.service.exchange.marc.script.format.DatePublicationFormatter;
+import org.numahop.numahop.service.exchange.marc.script.format.PersonFieldFormatter;
+import org.numahop.numahop.service.exchange.marc.script.format.SubfieldsFormatter;
+import org.numahop.numahop.service.exchange.marc.script.format.TitleFieldFormatter;
+import org.numahop.numahop.service.exchange.marc.script.test.ExistsCondition;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,7 +66,7 @@ public abstract class CustomScript {
 	 */
 	public String[] getScriptImport() {
 		// return new String[]{"import org.marc4j.marc.*", "import
-		// fr.progilone.pgcn.service.exchange.marc.formatter.*"};
+		// org.numahop.numahop.service.exchange.marc.formatter.*"};
 		return new String[] {};
 	}
 

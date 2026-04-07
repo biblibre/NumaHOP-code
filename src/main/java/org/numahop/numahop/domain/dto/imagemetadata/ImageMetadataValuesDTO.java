@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.dto.imagemetadata;
+package org.numahop.numahop.domain.dto.imagemetadata;
 
 public class ImageMetadataValuesDTO {
 

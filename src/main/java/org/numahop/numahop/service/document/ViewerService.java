@@ -1,33 +1,33 @@
-package fr.progilone.pgcn.service.document;
+package org.numahop.numahop.service.document;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration;
-import fr.progilone.pgcn.domain.delivery.DeliveredDocument;
-import fr.progilone.pgcn.domain.document.DigitalDocument;
-import fr.progilone.pgcn.domain.document.DocPage;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.sample.Sample;
-import fr.progilone.pgcn.domain.dto.sample.SampleDTO;
-import fr.progilone.pgcn.domain.jaxb.mets.Mets;
-import fr.progilone.pgcn.domain.storage.StoredFile;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.repository.document.DigitalDocumentRepository;
-import fr.progilone.pgcn.repository.document.DocPageRepository;
-import fr.progilone.pgcn.repository.storage.BinaryRepository;
-import fr.progilone.pgcn.service.administration.viewsformat.ViewsFormatConfigurationService;
-import fr.progilone.pgcn.service.check.MetaDatasCheckService;
-import fr.progilone.pgcn.service.delivery.DeliveryService;
-import fr.progilone.pgcn.service.exchange.iiif.manifest.Canvases;
-import fr.progilone.pgcn.service.exchange.iiif.manifest.Images;
-import fr.progilone.pgcn.service.exchange.iiif.manifest.Manifest;
-import fr.progilone.pgcn.service.exchange.iiif.manifest.Metadata;
-import fr.progilone.pgcn.service.exchange.iiif.manifest.Resource;
-import fr.progilone.pgcn.service.exchange.iiif.manifest.Sequences;
-import fr.progilone.pgcn.service.exchange.iiif.manifest.Structures;
-import fr.progilone.pgcn.service.exchange.iiif.manifest.Thumbnail;
-import fr.progilone.pgcn.service.sample.SampleService;
-import fr.progilone.pgcn.service.storage.BinaryStorageManager;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration;
+import org.numahop.numahop.domain.delivery.DeliveredDocument;
+import org.numahop.numahop.domain.document.DigitalDocument;
+import org.numahop.numahop.domain.document.DocPage;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.sample.Sample;
+import org.numahop.numahop.domain.dto.sample.SampleDTO;
+import org.numahop.numahop.domain.jaxb.mets.Mets;
+import org.numahop.numahop.domain.storage.StoredFile;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.repository.document.DigitalDocumentRepository;
+import org.numahop.numahop.repository.document.DocPageRepository;
+import org.numahop.numahop.repository.storage.BinaryRepository;
+import org.numahop.numahop.service.administration.viewsformat.ViewsFormatConfigurationService;
+import org.numahop.numahop.service.check.MetaDatasCheckService;
+import org.numahop.numahop.service.delivery.DeliveryService;
+import org.numahop.numahop.service.exchange.iiif.manifest.Canvases;
+import org.numahop.numahop.service.exchange.iiif.manifest.Images;
+import org.numahop.numahop.service.exchange.iiif.manifest.Manifest;
+import org.numahop.numahop.service.exchange.iiif.manifest.Metadata;
+import org.numahop.numahop.service.exchange.iiif.manifest.Resource;
+import org.numahop.numahop.service.exchange.iiif.manifest.Sequences;
+import org.numahop.numahop.service.exchange.iiif.manifest.Structures;
+import org.numahop.numahop.service.exchange.iiif.manifest.Thumbnail;
+import org.numahop.numahop.service.sample.SampleService;
+import org.numahop.numahop.service.storage.BinaryStorageManager;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -614,10 +614,10 @@ public class ViewerService {
 	 * @param cpt
 	 * @return
 	 */
-	private fr.progilone.pgcn.service.exchange.iiif.manifest.Service getService(final String identifier,
+	private org.numahop.numahop.service.exchange.iiif.manifest.Service getService(final String identifier,
 			final int pageNumber) {
 
-		final fr.progilone.pgcn.service.exchange.iiif.manifest.Service service = new fr.progilone.pgcn.service.exchange.iiif.manifest.Service();
+		final org.numahop.numahop.service.exchange.iiif.manifest.Service service = new org.numahop.numahop.service.exchange.iiif.manifest.Service();
 		service.setId(URI_WS_VIEWER.concat(identifier) + "/" + pageNumber);
 		service.setAdditionalProperty("@context", URI_IMG_CONTEXT_IIIF);
 		service.setAdditionalProperty("profile", URI_PROFILE_IIIF);

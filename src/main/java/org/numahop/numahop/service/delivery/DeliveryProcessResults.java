@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.delivery;
+package org.numahop.numahop.service.delivery;
 
-import fr.progilone.pgcn.domain.check.AutomaticCheckType.AutoCheckType;
-import fr.progilone.pgcn.domain.checkconfiguration.AutomaticCheckRule;
-import fr.progilone.pgcn.domain.dto.check.SplitFilename;
-import fr.progilone.pgcn.domain.dto.document.PreDeliveryDocumentFileDTO;
+import org.numahop.numahop.domain.check.AutomaticCheckType.AutoCheckType;
+import org.numahop.numahop.domain.checkconfiguration.AutomaticCheckRule;
+import org.numahop.numahop.domain.dto.check.SplitFilename;
+import org.numahop.numahop.domain.dto.document.PreDeliveryDocumentFileDTO;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

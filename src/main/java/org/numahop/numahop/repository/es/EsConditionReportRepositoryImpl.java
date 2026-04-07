@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.es;
+package org.numahop.numahop.repository.es;
 
-import static fr.progilone.pgcn.repository.es.helper.EsQueryHelper.*;
+import static org.numahop.numahop.repository.es.helper.EsQueryHelper.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
@@ -10,14 +10,14 @@ import co.elastic.clients.elasticsearch._types.query_dsl.ChildScoreMode;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
 import co.elastic.clients.util.NamedValue;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReportDetail_;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReport_;
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionProperty_;
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionValue_;
-import fr.progilone.pgcn.domain.document.conditionreport.Description_;
-import fr.progilone.pgcn.domain.es.conditionreport.EsConditionReport;
-import fr.progilone.pgcn.repository.es.helper.EsSearchOperation;
-import fr.progilone.pgcn.service.es.EsConstant;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReportDetail_;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReport_;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionProperty_;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionValue_;
+import org.numahop.numahop.domain.document.conditionreport.Description_;
+import org.numahop.numahop.domain.es.conditionreport.EsConditionReport;
+import org.numahop.numahop.repository.es.helper.EsSearchOperation;
+import org.numahop.numahop.service.es.EsConstant;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

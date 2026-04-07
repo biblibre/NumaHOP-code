@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.config;
+package org.numahop.numahop.config;
 
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;

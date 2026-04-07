@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.administration;
+package org.numahop.numahop.service.administration;
 
-import fr.progilone.pgcn.domain.administration.InternetArchiveCollection;
-import fr.progilone.pgcn.domain.administration.InternetArchiveConfiguration;
-import fr.progilone.pgcn.repository.administration.InternetArchiveCollectionRepository;
-import fr.progilone.pgcn.security.SecurityUtils;
+import org.numahop.numahop.domain.administration.InternetArchiveCollection;
+import org.numahop.numahop.domain.administration.InternetArchiveConfiguration;
+import org.numahop.numahop.repository.administration.InternetArchiveCollectionRepository;
+import org.numahop.numahop.security.SecurityUtils;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;

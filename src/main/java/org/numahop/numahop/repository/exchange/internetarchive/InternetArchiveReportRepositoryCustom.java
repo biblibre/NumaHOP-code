@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.exchange.internetarchive;
+package org.numahop.numahop.repository.exchange.internetarchive;
 
-import fr.progilone.pgcn.domain.exchange.internetarchive.InternetArchiveReport;
+import org.numahop.numahop.domain.exchange.internetarchive.InternetArchiveReport;
 import java.time.LocalDate;
 import java.util.List;
 

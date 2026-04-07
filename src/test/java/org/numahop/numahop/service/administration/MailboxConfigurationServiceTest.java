@@ -1,20 +1,20 @@
-package fr.progilone.pgcn.service.administration;
+package org.numahop.numahop.service.administration;
 
-import static fr.progilone.pgcn.exception.message.PgcnErrorCode.*;
+import static org.numahop.numahop.exception.message.PgcnErrorCode.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import fr.progilone.pgcn.domain.administration.MailboxConfiguration;
-import fr.progilone.pgcn.domain.dto.administration.MailboxConfigurationDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.repository.administration.MailboxConfigurationRepository;
-import fr.progilone.pgcn.service.administration.mapper.MailboxConfigurationMapper;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
-import fr.progilone.pgcn.service.util.CryptoService;
-import fr.progilone.pgcn.util.TestUtil;
+import org.numahop.numahop.domain.administration.MailboxConfiguration;
+import org.numahop.numahop.domain.dto.administration.MailboxConfigurationDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.repository.administration.MailboxConfigurationRepository;
+import org.numahop.numahop.service.administration.mapper.MailboxConfigurationMapper;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.service.util.CryptoService;
+import org.numahop.numahop.util.TestUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;

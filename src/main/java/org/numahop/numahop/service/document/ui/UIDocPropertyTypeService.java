@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.document.ui;
+package org.numahop.numahop.service.document.ui;
 
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.dto.document.DocPropertyTypeDTO;
-import fr.progilone.pgcn.service.document.DocPropertyTypeService;
-import fr.progilone.pgcn.service.document.mapper.DocPropertyTypeMapper;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.dto.document.DocPropertyTypeDTO;
+import org.numahop.numahop.service.document.DocPropertyTypeService;
+import org.numahop.numahop.service.document.mapper.DocPropertyTypeMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.train.mapper;
+package org.numahop.numahop.service.train.mapper;
 
-import fr.progilone.pgcn.domain.dto.train.TrainDTO;
-import fr.progilone.pgcn.domain.train.Train;
-import fr.progilone.pgcn.repository.document.PhysicalDocumentRepository;
-import fr.progilone.pgcn.repository.project.ProjectRepository;
+import org.numahop.numahop.domain.dto.train.TrainDTO;
+import org.numahop.numahop.domain.train.Train;
+import org.numahop.numahop.repository.document.PhysicalDocumentRepository;
+import org.numahop.numahop.repository.project.ProjectRepository;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

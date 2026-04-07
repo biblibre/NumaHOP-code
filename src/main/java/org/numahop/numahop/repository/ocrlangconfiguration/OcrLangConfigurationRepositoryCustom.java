@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.ocrlangconfiguration;
+package org.numahop.numahop.repository.ocrlangconfiguration;
 
-import fr.progilone.pgcn.domain.ocrlangconfiguration.OcrLangConfiguration;
+import org.numahop.numahop.domain.ocrlangconfiguration.OcrLangConfiguration;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

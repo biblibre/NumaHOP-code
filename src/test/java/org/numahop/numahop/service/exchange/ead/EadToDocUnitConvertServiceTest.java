@@ -1,20 +1,20 @@
-package fr.progilone.pgcn.service.exchange.ead;
+package org.numahop.numahop.service.exchange.ead;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import fr.progilone.pgcn.config.ScriptEngineConfiguration;
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocProperty;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.domain.exchange.MappingRule;
-import fr.progilone.pgcn.domain.jaxb.ead.C;
-import fr.progilone.pgcn.domain.jaxb.ead.Eadheader;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.service.administration.TransliterationService;
-import fr.progilone.pgcn.service.exchange.ead.mapping.CompiledMapping;
-import fr.progilone.pgcn.util.TestUtil;
+import org.numahop.numahop.config.ScriptEngineConfiguration;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocProperty;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.domain.exchange.MappingRule;
+import org.numahop.numahop.domain.jaxb.ead.C;
+import org.numahop.numahop.domain.jaxb.ead.Eadheader;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.service.administration.TransliterationService;
+import org.numahop.numahop.service.exchange.ead.mapping.CompiledMapping;
+import org.numahop.numahop.util.TestUtil;
 import jakarta.xml.bind.JAXBException;
 import java.io.IOException;
 import java.util.Arrays;

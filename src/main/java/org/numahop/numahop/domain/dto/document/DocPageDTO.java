@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.document;
+package org.numahop.numahop.domain.dto.document;
 
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.dto.AbstractDTO;
 import org.apache.commons.lang3.StringUtils;
 
 public class DocPageDTO extends AbstractDTO implements Comparable<DocPageDTO> {

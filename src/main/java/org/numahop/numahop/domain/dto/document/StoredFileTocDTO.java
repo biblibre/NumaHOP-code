@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.dto.document;
+package org.numahop.numahop.domain.dto.document;
 
 /**
  * Structure simple pour echanges de donnees de la table des matieres.

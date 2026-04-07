@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.service.delivery;
+package org.numahop.numahop.service.delivery;
 
-import fr.progilone.pgcn.domain.check.AutomaticCheckResult;
-import fr.progilone.pgcn.domain.check.AutomaticCheckResult.AutoCheckResult;
-import fr.progilone.pgcn.domain.check.AutomaticCheckType.AutoCheckType;
-import fr.progilone.pgcn.domain.checkconfiguration.AutomaticCheckRule;
-import fr.progilone.pgcn.domain.delivery.DeliveredDocument;
-import fr.progilone.pgcn.domain.delivery.Delivery;
-import fr.progilone.pgcn.domain.document.DigitalDocument;
-import fr.progilone.pgcn.domain.project.Project;
-import fr.progilone.pgcn.service.MailService;
-import fr.progilone.pgcn.service.storage.FileStorageManager;
+import org.numahop.numahop.domain.check.AutomaticCheckResult;
+import org.numahop.numahop.domain.check.AutomaticCheckResult.AutoCheckResult;
+import org.numahop.numahop.domain.check.AutomaticCheckType.AutoCheckType;
+import org.numahop.numahop.domain.checkconfiguration.AutomaticCheckRule;
+import org.numahop.numahop.domain.delivery.DeliveredDocument;
+import org.numahop.numahop.domain.delivery.Delivery;
+import org.numahop.numahop.domain.document.DigitalDocument;
+import org.numahop.numahop.domain.project.Project;
+import org.numahop.numahop.service.MailService;
+import org.numahop.numahop.service.storage.FileStorageManager;
 import jakarta.annotation.PostConstruct;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;

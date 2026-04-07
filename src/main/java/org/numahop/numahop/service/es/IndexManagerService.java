@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.es;
+package org.numahop.numahop.service.es;
 
 import java.time.Duration;
 import java.time.LocalTime;

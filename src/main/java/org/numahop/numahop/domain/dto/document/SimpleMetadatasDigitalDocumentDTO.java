@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.domain.dto.document;
+package org.numahop.numahop.domain.dto.document;
 
-import fr.progilone.pgcn.domain.document.DigitalDocument;
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
-import fr.progilone.pgcn.domain.dto.lot.SimpleLotDTO;
-import fr.progilone.pgcn.domain.dto.project.SimpleProjectDTO;
+import org.numahop.numahop.domain.document.DigitalDocument;
+import org.numahop.numahop.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.dto.lot.SimpleLotDTO;
+import org.numahop.numahop.domain.dto.project.SimpleProjectDTO;
 import java.time.LocalDate;
 
 /**

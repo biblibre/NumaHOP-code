@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.workflow.mapper;
+package org.numahop.numahop.service.workflow.mapper;
 
-import fr.progilone.pgcn.domain.dto.user.SimpleUserDTO;
-import fr.progilone.pgcn.domain.dto.workflow.WorkflowGroupDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.workflow.WorkflowGroup;
-import fr.progilone.pgcn.security.SecurityUtils;
-import fr.progilone.pgcn.service.library.LibraryService;
-import fr.progilone.pgcn.service.user.UserService;
+import org.numahop.numahop.domain.dto.user.SimpleUserDTO;
+import org.numahop.numahop.domain.dto.workflow.WorkflowGroupDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.workflow.WorkflowGroup;
+import org.numahop.numahop.security.SecurityUtils;
+import org.numahop.numahop.service.library.LibraryService;
+import org.numahop.numahop.service.user.UserService;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;

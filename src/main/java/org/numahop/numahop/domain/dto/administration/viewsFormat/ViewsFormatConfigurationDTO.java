@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.dto.administration.viewsFormat;
+package org.numahop.numahop.domain.dto.administration.viewsFormat;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
-import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.dto.library.SimpleLibraryDTO;
 
 public class ViewsFormatConfigurationDTO extends AbstractVersionedDTO {
 

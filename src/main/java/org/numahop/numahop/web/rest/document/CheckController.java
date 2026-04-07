@@ -1,20 +1,20 @@
-package fr.progilone.pgcn.web.rest.document;
+package org.numahop.numahop.web.rest.document;
 
-import static fr.progilone.pgcn.web.rest.checkconfiguration.security.AuthorizationConstants.CHECK_HAB3;
-import static fr.progilone.pgcn.web.rest.checkconfiguration.security.AuthorizationConstants.CHECK_HAB4;
-import static fr.progilone.pgcn.web.rest.lot.security.AuthorizationConstants.LOT_HAB0;
+import static org.numahop.numahop.web.rest.checkconfiguration.security.AuthorizationConstants.CHECK_HAB3;
+import static org.numahop.numahop.web.rest.checkconfiguration.security.AuthorizationConstants.CHECK_HAB4;
+import static org.numahop.numahop.web.rest.lot.security.AuthorizationConstants.LOT_HAB0;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.document.Check;
-import fr.progilone.pgcn.domain.dto.document.CheckDTO;
-import fr.progilone.pgcn.domain.dto.document.DocPageErrorsDTO;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.service.document.CheckService;
-import fr.progilone.pgcn.service.document.CheckService.DocErrorReport;
-import fr.progilone.pgcn.service.document.SlipService;
-import fr.progilone.pgcn.service.document.ui.UICheckService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.AccessHelper;
+import org.numahop.numahop.domain.document.Check;
+import org.numahop.numahop.domain.dto.document.CheckDTO;
+import org.numahop.numahop.domain.dto.document.DocPageErrorsDTO;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.service.document.CheckService;
+import org.numahop.numahop.service.document.CheckService.DocErrorReport;
+import org.numahop.numahop.service.document.SlipService;
+import org.numahop.numahop.service.document.ui.UICheckService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.AccessHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

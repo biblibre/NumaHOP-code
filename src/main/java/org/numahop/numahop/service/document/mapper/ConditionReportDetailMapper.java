@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
-import static fr.progilone.pgcn.domain.dto.document.conditionreport.ConditionReportValueVelocityDTO.ValueType.*;
+import static org.numahop.numahop.domain.dto.document.conditionreport.ConditionReportValueVelocityDTO.ValueType.*;
 
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReportDetail;
-import fr.progilone.pgcn.domain.document.conditionreport.Description;
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionProperty;
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionValue;
-import fr.progilone.pgcn.domain.dto.document.conditionreport.ConditionReportDetailDTO;
-import fr.progilone.pgcn.domain.dto.document.conditionreport.ConditionReportDetailVelocityDTO;
-import fr.progilone.pgcn.domain.dto.document.conditionreport.ConditionReportValueDTO;
-import fr.progilone.pgcn.domain.dto.document.conditionreport.ConditionReportValueVelocityDTO;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReportDetail;
+import org.numahop.numahop.domain.document.conditionreport.Description;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionProperty;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionValue;
+import org.numahop.numahop.domain.dto.document.conditionreport.ConditionReportDetailDTO;
+import org.numahop.numahop.domain.dto.document.conditionreport.ConditionReportDetailVelocityDTO;
+import org.numahop.numahop.domain.dto.document.conditionreport.ConditionReportValueDTO;
+import org.numahop.numahop.domain.dto.document.conditionreport.ConditionReportValueVelocityDTO;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

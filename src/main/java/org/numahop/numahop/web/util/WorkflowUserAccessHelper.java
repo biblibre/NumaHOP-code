@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.web.util;
+package org.numahop.numahop.web.util;
 
-import fr.progilone.pgcn.domain.util.CustomUserDetails;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
-import fr.progilone.pgcn.exception.PgcnBusinessException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.security.SecurityUtils;
-import fr.progilone.pgcn.service.workflow.WorkflowService;
+import org.numahop.numahop.domain.util.CustomUserDetails;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.exception.PgcnBusinessException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.security.SecurityUtils;
+import org.numahop.numahop.service.workflow.WorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

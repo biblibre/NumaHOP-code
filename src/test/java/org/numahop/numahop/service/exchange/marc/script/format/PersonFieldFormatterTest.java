@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.exchange.marc.script.format;
+package org.numahop.numahop.service.exchange.marc.script.format;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import fr.progilone.pgcn.service.exchange.marc.MarcMappingEvaluationService;
-import fr.progilone.pgcn.service.exchange.marc.script.AbstractScriptTest;
+import org.numahop.numahop.service.exchange.marc.MarcMappingEvaluationService;
+import org.numahop.numahop.service.exchange.marc.script.AbstractScriptTest;
 import java.util.HashMap;
 import java.util.Map;
 import javax.script.ScriptException;

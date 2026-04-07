@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.administration;
+package org.numahop.numahop.domain.administration;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.exportftpconfiguration.ExportFTPConfiguration;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.exportftpconfiguration.ExportFTPConfiguration;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

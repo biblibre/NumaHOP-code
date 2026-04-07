@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.dto.workflow;
+package org.numahop.numahop.domain.dto.workflow;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateStatus;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.workflow.WorkflowStateStatus;
 import java.time.LocalDateTime;
 
 public class DocUnitStateDTO extends AbstractVersionedDTO {

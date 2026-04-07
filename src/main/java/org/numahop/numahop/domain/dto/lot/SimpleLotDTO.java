@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.domain.dto.lot;
+package org.numahop.numahop.domain.dto.lot;
 
 import com.querydsl.core.annotations.QueryProjection;
-import fr.progilone.pgcn.domain.dto.ocrlangconfiguration.OcrLanguageDTO;
-import fr.progilone.pgcn.domain.dto.project.SimpleProjectDTO;
-import fr.progilone.pgcn.domain.lot.Lot;
+import org.numahop.numahop.domain.dto.ocrlangconfiguration.OcrLanguageDTO;
+import org.numahop.numahop.domain.dto.project.SimpleProjectDTO;
+import org.numahop.numahop.domain.lot.Lot;
 
 /**
  * DTO représentant un lot allégé

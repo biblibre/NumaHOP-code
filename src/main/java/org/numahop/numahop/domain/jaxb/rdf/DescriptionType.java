@@ -6,9 +6,9 @@
 // Généré le : 2017.01.02 à 04:49:01 PM CET
 //
 
-package fr.progilone.pgcn.domain.jaxb.rdf;
+package org.numahop.numahop.domain.jaxb.rdf;
 
-import fr.progilone.pgcn.domain.jaxb.dc.ElementContainer;
+import org.numahop.numahop.domain.jaxb.dc.ElementContainer;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;

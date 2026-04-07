@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.exchange.cines;
+package org.numahop.numahop.service.exchange.cines;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -7,12 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import jakarta.mail.Message;
 import jakarta.mail.Session;
 import jakarta.mail.internet.MimeMessage;
-import fr.progilone.pgcn.service.administration.MailboxConfigurationService;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.service.exchange.cines.CinesRequestHandlerService.CinesResponse;
-import fr.progilone.pgcn.service.exchange.mail.MailboxService;
-import fr.progilone.pgcn.service.storage.FileStorageManager;
-import fr.progilone.pgcn.service.util.transaction.TransactionService;
+import org.numahop.numahop.service.administration.MailboxConfigurationService;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.service.exchange.cines.CinesRequestHandlerService.CinesResponse;
+import org.numahop.numahop.service.exchange.mail.MailboxService;
+import org.numahop.numahop.service.storage.FileStorageManager;
+import org.numahop.numahop.service.util.transaction.TransactionService;
 import java.io.InputStream;
 import java.util.Properties;
 

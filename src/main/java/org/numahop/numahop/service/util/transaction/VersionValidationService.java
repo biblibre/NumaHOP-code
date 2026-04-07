@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.util.transaction;
+package org.numahop.numahop.service.util.transaction;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 
 /**

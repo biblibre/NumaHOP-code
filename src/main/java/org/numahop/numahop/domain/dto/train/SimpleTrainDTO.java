@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.dto.train;
+package org.numahop.numahop.domain.dto.train;
 
 import com.querydsl.core.annotations.QueryProjection;
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
-import fr.progilone.pgcn.domain.train.Train;
+import org.numahop.numahop.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.train.Train;
 import java.time.LocalDate;
 
 public class SimpleTrainDTO extends AbstractDTO {

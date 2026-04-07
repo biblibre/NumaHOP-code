@@ -1,20 +1,20 @@
-package fr.progilone.pgcn.service.exchange;
+package org.numahop.numahop.service.exchange;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.exchange.ImportReport;
-import fr.progilone.pgcn.domain.exchange.ImportedDocUnit;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.repository.exchange.ImportedDocUnitRepository;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.service.document.DocUnitValidationService;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.exchange.ImportReport;
+import org.numahop.numahop.domain.exchange.ImportedDocUnit;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.repository.exchange.ImportedDocUnitRepository;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.service.document.DocUnitValidationService;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

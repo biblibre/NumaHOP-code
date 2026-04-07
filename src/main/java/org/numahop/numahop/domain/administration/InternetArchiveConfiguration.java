@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.domain.administration;
+package org.numahop.numahop.domain.administration;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.library.Library;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class InternetArchiveConfiguration extends AbstractDomainObject {
 	private String accessKey;
 
 	/**
-	 * S3 secret key, crypté avec {@link fr.progilone.pgcn.service.util.CryptoService}
+	 * S3 secret key, crypté avec {@link org.numahop.numahop.service.util.CryptoService}
 	 */
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@Column(name = "secret_key")

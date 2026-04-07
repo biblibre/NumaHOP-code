@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.web.util;
+package org.numahop.numahop.web.util;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -25,7 +25,7 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
  */
 public class AuthorizationManager {
 
-	private static final String BASE_PACKAGE = "fr.progilone.pgcn.web.rest";
+	private static final String BASE_PACKAGE = "org.numahop.numahop.web.rest";
 
 	private static final Logger LOG = LoggerFactory.getLogger(AuthorizationManager.class);
 

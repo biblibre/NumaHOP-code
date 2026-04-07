@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.exchange.cines;
+package org.numahop.numahop.service.exchange.cines;
 
-import fr.progilone.pgcn.domain.exchange.cines.CinesLanguageCode;
-import fr.progilone.pgcn.repository.exchange.cines.CinesLanguageCodeRepository;
+import org.numahop.numahop.domain.exchange.cines.CinesLanguageCode;
+import org.numahop.numahop.repository.exchange.cines.CinesLanguageCodeRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

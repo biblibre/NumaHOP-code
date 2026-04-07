@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.service.document;
+package org.numahop.numahop.service.document;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.repository.document.DocPropertyTypeRepository;
-import fr.progilone.pgcn.service.exchange.MappingService;
-import fr.progilone.pgcn.util.TestUtil;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.repository.document.DocPropertyTypeRepository;
+import org.numahop.numahop.service.exchange.MappingService;
+import org.numahop.numahop.util.TestUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

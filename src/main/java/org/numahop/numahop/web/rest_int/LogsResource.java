@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.web.rest_int;
+package org.numahop.numahop.web.rest_int;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants;
-import fr.progilone.pgcn.web.rest.dto.LoggerDTO;
+import org.numahop.numahop.web.rest.administration.security.AuthorizationConstants;
+import org.numahop.numahop.web.rest.dto.LoggerDTO;
 import jakarta.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.stream.Collectors;

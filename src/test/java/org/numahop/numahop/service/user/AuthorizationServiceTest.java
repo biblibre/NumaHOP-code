@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.service.user;
+package org.numahop.numahop.service.user;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-import fr.progilone.pgcn.domain.administration.Module;
-import fr.progilone.pgcn.domain.dto.user.AuthorizationDTO;
-import fr.progilone.pgcn.domain.user.Authorization;
-import fr.progilone.pgcn.repository.user.AuthorizationRepository;
-import fr.progilone.pgcn.web.util.AuthorizationManager;
+import org.numahop.numahop.domain.administration.Module;
+import org.numahop.numahop.domain.dto.user.AuthorizationDTO;
+import org.numahop.numahop.domain.user.Authorization;
+import org.numahop.numahop.repository.user.AuthorizationRepository;
+import org.numahop.numahop.web.util.AuthorizationManager;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

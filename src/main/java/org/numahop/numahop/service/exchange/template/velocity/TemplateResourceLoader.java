@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.exchange.template.velocity;
+package org.numahop.numahop.service.exchange.template.velocity;
 
-import fr.progilone.pgcn.domain.exchange.template.Template;
-import fr.progilone.pgcn.service.exchange.template.loader.ResourceName;
+import org.numahop.numahop.domain.exchange.template.Template;
+import org.numahop.numahop.service.exchange.template.loader.ResourceName;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.Timestamp;
@@ -21,20 +21,20 @@ import org.apache.velocity.util.ExtProperties;
  * Exemple de configuration: <code>
  * Velocity.setProperty(Velocity.RESOURCE_LOADER, "ds");
  * Velocity.setProperty("ds.resource.loader.class",
- * "fr.progilone.pgcn.service.exchange.template.velocity.TemplateResourceLoader");
+ * "org.numahop.numahop.service.exchange.template.velocity.TemplateResourceLoader");
  * Velocity.setProperty("ds.resource.loader.service", templateService);
  * </code>
  *
- * @see fr.progilone.pgcn.service.exchange.template.loader.TemplateResourceLoader
+ * @see org.numahop.numahop.service.exchange.template.loader.TemplateResourceLoader
  */
 public class TemplateResourceLoader extends ResourceLoader {
 
-	private fr.progilone.pgcn.service.exchange.template.loader.TemplateResourceLoader delegate;
+	private org.numahop.numahop.service.exchange.template.loader.TemplateResourceLoader delegate;
 
 	@Override
 	public void init(final ExtProperties configuration) {
 		final Object service = configuration.get("service");
-		delegate = new fr.progilone.pgcn.service.exchange.template.loader.TemplateResourceLoader(service);
+		delegate = new org.numahop.numahop.service.exchange.template.loader.TemplateResourceLoader(service);
 	}
 
 	@Override

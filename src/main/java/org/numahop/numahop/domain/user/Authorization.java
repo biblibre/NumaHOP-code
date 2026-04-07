@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.domain.user;
+package org.numahop.numahop.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.google.common.base.MoreObjects;
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.administration.Module;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.administration.Module;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

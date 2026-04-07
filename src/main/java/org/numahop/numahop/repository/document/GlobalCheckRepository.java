@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.document;
+package org.numahop.numahop.repository.document;
 
-import fr.progilone.pgcn.domain.document.GlobalCheck;
+import org.numahop.numahop.domain.document.GlobalCheck;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

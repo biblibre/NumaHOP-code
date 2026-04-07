@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.exchange.internetarchive;
+package org.numahop.numahop.service.exchange.internetarchive;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.exchange.internetarchive.InternetArchiveReport;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.repository.exchange.internetarchive.InternetArchiveReportRepository;
-import fr.progilone.pgcn.web.websocket.WebsocketService;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.exchange.internetarchive.InternetArchiveReport;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.repository.exchange.internetarchive.InternetArchiveReportRepository;
+import org.numahop.numahop.web.websocket.WebsocketService;
 import jakarta.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

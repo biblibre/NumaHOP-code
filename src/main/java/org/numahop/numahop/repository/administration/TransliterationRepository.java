@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.administration;
+package org.numahop.numahop.repository.administration;
 
-import fr.progilone.pgcn.domain.administration.Transliteration;
+import org.numahop.numahop.domain.administration.Transliteration;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

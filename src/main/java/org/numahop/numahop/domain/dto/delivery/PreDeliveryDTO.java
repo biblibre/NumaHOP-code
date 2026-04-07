@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.domain.dto.delivery;
+package org.numahop.numahop.domain.dto.delivery;
 
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
-import fr.progilone.pgcn.domain.dto.document.DigitalDocumentDTO;
-import fr.progilone.pgcn.domain.dto.document.PhysicalDocumentDTO;
-import fr.progilone.pgcn.domain.dto.document.PreDeliveryDocumentDTO;
+import org.numahop.numahop.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.dto.document.DigitalDocumentDTO;
+import org.numahop.numahop.domain.dto.document.PhysicalDocumentDTO;
+import org.numahop.numahop.domain.dto.document.PreDeliveryDocumentDTO;
 import java.util.HashSet;
 import java.util.Set;
 

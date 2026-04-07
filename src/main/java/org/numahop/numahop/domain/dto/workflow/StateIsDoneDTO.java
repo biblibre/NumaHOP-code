@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.workflow;
+package org.numahop.numahop.domain.dto.workflow;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
 
 public class StateIsDoneDTO extends AbstractVersionedDTO {
 

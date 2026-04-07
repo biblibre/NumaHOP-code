@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.help;
+package org.numahop.numahop.domain.help;
 
 public enum HelpPageType {
 

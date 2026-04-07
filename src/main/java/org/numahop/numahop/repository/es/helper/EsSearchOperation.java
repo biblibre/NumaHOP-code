@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.es.helper;
+package org.numahop.numahop.repository.es.helper;
 
-import static fr.progilone.pgcn.repository.es.helper.EsBoolOperator.*;
+import static org.numahop.numahop.repository.es.helper.EsBoolOperator.*;
 
 import com.google.common.base.MoreObjects;
 import java.util.Arrays;

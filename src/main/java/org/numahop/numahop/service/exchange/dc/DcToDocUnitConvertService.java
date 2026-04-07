@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.exchange.dc;
+package org.numahop.numahop.service.exchange.dc;
 
 import com.google.common.collect.Iterables;
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.jaxb.dc.ElementContainer;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.service.exchange.AbstractImportConvertService;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.jaxb.dc.ElementContainer;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.service.exchange.AbstractImportConvertService;
 import jakarta.xml.bind.JAXBElement;
 import java.util.List;
 import java.util.Optional;

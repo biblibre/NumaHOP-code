@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.exchange.cines;
+package org.numahop.numahop.service.exchange.cines;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import fr.progilone.pgcn.domain.jaxb.facile.FacileResponse;
-import fr.progilone.pgcn.domain.jaxb.facile.ValidatorType;
-import fr.progilone.pgcn.service.check.FacileCinesService;
+import org.numahop.numahop.domain.jaxb.facile.FacileResponse;
+import org.numahop.numahop.domain.jaxb.facile.ValidatorType;
+import org.numahop.numahop.service.check.FacileCinesService;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
@@ -65,8 +65,8 @@ public class FacileCinesServiceTest {
 		final StringWriter writer = new StringWriter();
 		try {
 			final JAXBContext context = JAXBContext.newInstance(
-					fr.progilone.pgcn.domain.jaxb.facile.FacileResponse.class,
-					fr.progilone.pgcn.domain.jaxb.facile.ObjectFactory.class);
+					org.numahop.numahop.domain.jaxb.facile.FacileResponse.class,
+					org.numahop.numahop.domain.jaxb.facile.ObjectFactory.class);
 			final Marshaller marshaller = context.createMarshaller();
 			marshaller.marshal(test, writer);
 			final String result = writer.toString();

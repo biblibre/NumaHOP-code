@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.PhysicalDocument;
-import fr.progilone.pgcn.domain.dto.document.MinimalListDocUnitDTO;
-import fr.progilone.pgcn.domain.dto.document.SimpleDocUnitDTO;
-import fr.progilone.pgcn.domain.dto.document.SimpleListDocUnitDTO;
-import fr.progilone.pgcn.domain.dto.train.SimpleTrainDTO;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
-import fr.progilone.pgcn.service.lot.mapper.SimpleLotMapper;
-import fr.progilone.pgcn.service.project.mapper.SimpleProjectMapper;
-import fr.progilone.pgcn.service.train.mapper.SimpleTrainMapper;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.PhysicalDocument;
+import org.numahop.numahop.domain.dto.document.MinimalListDocUnitDTO;
+import org.numahop.numahop.domain.dto.document.SimpleDocUnitDTO;
+import org.numahop.numahop.domain.dto.document.SimpleListDocUnitDTO;
+import org.numahop.numahop.domain.dto.train.SimpleTrainDTO;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.service.lot.mapper.SimpleLotMapper;
+import org.numahop.numahop.service.project.mapper.SimpleProjectMapper;
+import org.numahop.numahop.service.train.mapper.SimpleTrainMapper;
 import java.util.Set;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;

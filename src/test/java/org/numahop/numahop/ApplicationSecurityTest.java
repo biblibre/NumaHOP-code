@@ -1,10 +1,10 @@
-package fr.progilone.pgcn;
+package org.numahop.numahop;
 
-import fr.progilone.pgcn.security.AjaxAuthenticationFailureHandler;
-import fr.progilone.pgcn.security.AjaxAuthenticationSuccessHandler;
-import fr.progilone.pgcn.security.AjaxLogoutSuccessHandler;
-import fr.progilone.pgcn.security.Http401UnauthorizedEntryPoint;
-import fr.progilone.pgcn.service.LockService;
+import org.numahop.numahop.security.AjaxAuthenticationFailureHandler;
+import org.numahop.numahop.security.AjaxAuthenticationSuccessHandler;
+import org.numahop.numahop.security.AjaxLogoutSuccessHandler;
+import org.numahop.numahop.security.Http401UnauthorizedEntryPoint;
+import org.numahop.numahop.service.LockService;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;

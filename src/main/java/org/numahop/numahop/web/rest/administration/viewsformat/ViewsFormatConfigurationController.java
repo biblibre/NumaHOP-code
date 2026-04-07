@@ -1,17 +1,17 @@
-package fr.progilone.pgcn.web.rest.administration.viewsformat;
+package org.numahop.numahop.web.rest.administration.viewsformat;
 
-import static fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants.IMG_FORMAT_HAB0;
-import static fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants.IMG_FORMAT_HAB1;
-import static fr.progilone.pgcn.web.rest.checkconfiguration.security.AuthorizationConstants.CHECK_HAB1;
+import static org.numahop.numahop.web.rest.administration.security.AuthorizationConstants.IMG_FORMAT_HAB0;
+import static org.numahop.numahop.web.rest.administration.security.AuthorizationConstants.IMG_FORMAT_HAB1;
+import static org.numahop.numahop.web.rest.checkconfiguration.security.AuthorizationConstants.CHECK_HAB1;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.administration.viewsFormat.SimpleViewsFormatConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.administration.viewsFormat.ViewsFormatConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.checkconfiguration.CheckConfigurationDTO;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.service.administration.viewsformat.UIViewsFormatConfigurationService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.dto.administration.viewsFormat.SimpleViewsFormatConfigurationDTO;
+import org.numahop.numahop.domain.dto.administration.viewsFormat.ViewsFormatConfigurationDTO;
+import org.numahop.numahop.domain.dto.checkconfiguration.CheckConfigurationDTO;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.service.administration.viewsformat.UIViewsFormatConfigurationService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;

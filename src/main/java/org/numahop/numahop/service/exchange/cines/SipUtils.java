@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.exchange.cines;
+package org.numahop.numahop.service.exchange.cines;
 
 public final class SipUtils {
 

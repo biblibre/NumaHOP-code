@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.exchange.internetarchive.ui;
+package org.numahop.numahop.service.exchange.internetarchive.ui;
 
-import fr.progilone.pgcn.domain.dto.exchange.InternetArchiveReportDTO;
-import fr.progilone.pgcn.domain.dto.statistics.StatisticsProcessedDocUnitDTO;
-import fr.progilone.pgcn.domain.exchange.internetarchive.InternetArchiveReport;
-import fr.progilone.pgcn.service.exchange.internetarchive.InternetArchiveReportService;
-import fr.progilone.pgcn.service.exchange.internetarchive.mapper.InternetArchiveReportMapper;
+import org.numahop.numahop.domain.dto.exchange.InternetArchiveReportDTO;
+import org.numahop.numahop.domain.dto.statistics.StatisticsProcessedDocUnitDTO;
+import org.numahop.numahop.domain.exchange.internetarchive.InternetArchiveReport;
+import org.numahop.numahop.service.exchange.internetarchive.InternetArchiveReportService;
+import org.numahop.numahop.service.exchange.internetarchive.mapper.InternetArchiveReportMapper;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;

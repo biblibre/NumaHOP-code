@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.project;
+package org.numahop.numahop.domain.dto.project;
 
-import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
+import org.numahop.numahop.domain.dto.library.SimpleLibraryDTO;
 
 /**
  * DTO représentant un project allégé

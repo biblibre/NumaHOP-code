@@ -5,7 +5,7 @@
 // Generated on: 2025.07.16 at 03:45:09 PM CEST
 //
 
-package fr.progilone.pgcn.domain.jaxb.avis;
+package org.numahop.numahop.domain.jaxb.avis;
 
 import java.util.ArrayList;
 import java.util.List;

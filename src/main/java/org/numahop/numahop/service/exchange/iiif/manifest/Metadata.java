@@ -1,5 +1,5 @@
 
-package fr.progilone.pgcn.service.exchange.iiif.manifest;
+package org.numahop.numahop.service.exchange.iiif.manifest;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;

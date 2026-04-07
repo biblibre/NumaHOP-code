@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.exception;
+package org.numahop.numahop.exception;
 
-import fr.progilone.pgcn.domain.Lock;
+import org.numahop.numahop.domain.Lock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;

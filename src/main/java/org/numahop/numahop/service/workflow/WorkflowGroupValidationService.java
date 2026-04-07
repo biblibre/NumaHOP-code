@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.service.workflow;
+package org.numahop.numahop.service.workflow;
 
-import fr.progilone.pgcn.domain.workflow.WorkflowGroup;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.exception.message.PgcnList;
-import fr.progilone.pgcn.repository.workflow.WorkflowGroupRepository;
+import org.numahop.numahop.domain.workflow.WorkflowGroup;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.exception.message.PgcnList;
+import org.numahop.numahop.repository.workflow.WorkflowGroupRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -6,7 +6,7 @@
 // Généré le : 2017.01.02 à 04:49:01 PM CET
 //
 
-package fr.progilone.pgcn.domain.jaxb.rdf;
+package org.numahop.numahop.domain.jaxb.rdf;
 
 import jakarta.xml.bind.annotation.*;
 import java.util.ArrayList;

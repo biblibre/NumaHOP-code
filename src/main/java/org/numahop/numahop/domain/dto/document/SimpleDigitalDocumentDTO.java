@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.dto.document;
+package org.numahop.numahop.domain.dto.document;
 
-import fr.progilone.pgcn.domain.document.DigitalDocument;
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
-import fr.progilone.pgcn.domain.dto.check.AutomaticCheckResultDTO;
+import org.numahop.numahop.domain.document.DigitalDocument;
+import org.numahop.numahop.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.dto.check.AutomaticCheckResultDTO;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;

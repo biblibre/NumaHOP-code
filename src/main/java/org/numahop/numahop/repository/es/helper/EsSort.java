@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.es.helper;
+package org.numahop.numahop.repository.es.helper;
 
-import fr.progilone.pgcn.service.es.AbstractElasticsearchOperations.SearchEntity;
+import org.numahop.numahop.service.es.AbstractElasticsearchOperations.SearchEntity;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

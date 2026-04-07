@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.web.rest.document;
+package org.numahop.numahop.web.rest.document;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.document.ListPhysicalDocumentDTO;
-import fr.progilone.pgcn.domain.dto.document.PhysicalDocumentDTO;
-import fr.progilone.pgcn.service.document.ui.UIPhysicalDocumentService;
-import fr.progilone.pgcn.service.es.EsDocUnitService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
+import org.numahop.numahop.domain.dto.document.ListPhysicalDocumentDTO;
+import org.numahop.numahop.domain.dto.document.PhysicalDocumentDTO;
+import org.numahop.numahop.service.document.ui.UIPhysicalDocumentService;
+import org.numahop.numahop.service.es.EsDocUnitService;
+import org.numahop.numahop.web.rest.AbstractRestController;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.service.storage;
+package org.numahop.numahop.service.storage;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration;
-import fr.progilone.pgcn.domain.exchange.template.Template;
-import fr.progilone.pgcn.domain.user.User;
-import fr.progilone.pgcn.repository.user.UserRepository;
-import fr.progilone.pgcn.security.SecurityUtils;
-import fr.progilone.pgcn.service.util.DefaultFileFormats;
-import fr.progilone.pgcn.service.util.ImageUtils;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration;
+import org.numahop.numahop.domain.exchange.template.Template;
+import org.numahop.numahop.domain.user.User;
+import org.numahop.numahop.repository.user.UserRepository;
+import org.numahop.numahop.security.SecurityUtils;
+import org.numahop.numahop.service.util.DefaultFileFormats;
+import org.numahop.numahop.service.util.ImageUtils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;

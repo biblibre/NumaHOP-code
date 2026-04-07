@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.domain.dto.user;
+package org.numahop.numahop.domain.dto.user;
 
-import fr.progilone.pgcn.domain.administration.Module;
+import org.numahop.numahop.domain.administration.Module;
 import java.util.List;
 
 /**
  * DTO représentant une habilitation
  *
  * @author Sebastien
- * @see fr.progilone.pgcn.domain.user.Authorization
+ * @see org.numahop.numahop.domain.user.Authorization
  */
 public class AuthorizationDTO {
 

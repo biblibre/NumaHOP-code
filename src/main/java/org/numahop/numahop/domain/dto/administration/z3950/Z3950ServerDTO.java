@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.dto.administration.z3950;
+package org.numahop.numahop.domain.dto.administration.z3950;
 
 /**
  * Created by Sébastien on 21/12/2016.

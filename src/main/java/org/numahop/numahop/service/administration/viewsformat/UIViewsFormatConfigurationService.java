@@ -1,14 +1,14 @@
-package fr.progilone.pgcn.service.administration.viewsformat;
+package org.numahop.numahop.service.administration.viewsformat;
 
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration;
-import fr.progilone.pgcn.domain.dto.administration.viewsFormat.SimpleViewsFormatConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.administration.viewsFormat.ViewsFormatConfigurationDTO;
-import fr.progilone.pgcn.domain.project.Project;
-import fr.progilone.pgcn.service.administration.mapper.SimpleViewsFormatConfigurationMapper;
-import fr.progilone.pgcn.service.administration.mapper.ViewsFormatConfigurationMapper;
-import fr.progilone.pgcn.service.project.ProjectService;
-import fr.progilone.pgcn.service.util.DefaultFileFormats;
-import fr.progilone.pgcn.service.util.transaction.VersionValidationService;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration;
+import org.numahop.numahop.domain.dto.administration.viewsFormat.SimpleViewsFormatConfigurationDTO;
+import org.numahop.numahop.domain.dto.administration.viewsFormat.ViewsFormatConfigurationDTO;
+import org.numahop.numahop.domain.project.Project;
+import org.numahop.numahop.service.administration.mapper.SimpleViewsFormatConfigurationMapper;
+import org.numahop.numahop.service.administration.mapper.ViewsFormatConfigurationMapper;
+import org.numahop.numahop.service.project.ProjectService;
+import org.numahop.numahop.service.util.DefaultFileFormats;
+import org.numahop.numahop.service.util.transaction.VersionValidationService;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;

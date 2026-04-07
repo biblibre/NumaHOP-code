@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.repository.document;
+package org.numahop.numahop.repository.document;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.document.DocCheckHistory;
-import fr.progilone.pgcn.domain.document.QDocCheckHistory;
+import org.numahop.numahop.domain.document.DocCheckHistory;
+import org.numahop.numahop.domain.document.QDocCheckHistory;
 import java.time.LocalDate;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;

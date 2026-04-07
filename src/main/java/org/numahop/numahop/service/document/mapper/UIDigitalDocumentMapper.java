@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
-import fr.progilone.pgcn.domain.document.DigitalDocument;
-import fr.progilone.pgcn.domain.dto.document.DigitalDocumentDTO;
+import org.numahop.numahop.domain.document.DigitalDocument;
+import org.numahop.numahop.domain.dto.document.DigitalDocumentDTO;
 import org.springframework.stereotype.Service;
 
 @Service

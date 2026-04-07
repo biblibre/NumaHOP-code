@@ -1,16 +1,16 @@
-package fr.progilone.pgcn.service.exchange.cines;
+package org.numahop.numahop.service.exchange.cines;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.exchange.cines.CinesReport;
-import fr.progilone.pgcn.domain.exchange.cines.CinesReport.Status;
-import fr.progilone.pgcn.repository.exchange.cines.CinesReportRepository;
-import fr.progilone.pgcn.service.workflow.WorkflowService;
-import fr.progilone.pgcn.util.SetIdAndReturnsArgumentAt;
-import fr.progilone.pgcn.web.websocket.WebsocketService;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.exchange.cines.CinesReport;
+import org.numahop.numahop.domain.exchange.cines.CinesReport.Status;
+import org.numahop.numahop.repository.exchange.cines.CinesReportRepository;
+import org.numahop.numahop.service.workflow.WorkflowService;
+import org.numahop.numahop.util.SetIdAndReturnsArgumentAt;
+import org.numahop.numahop.web.websocket.WebsocketService;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

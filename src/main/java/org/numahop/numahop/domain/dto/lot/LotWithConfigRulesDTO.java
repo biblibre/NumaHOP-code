@@ -1,19 +1,19 @@
-package fr.progilone.pgcn.domain.dto.lot;
+package org.numahop.numahop.domain.dto.lot;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
-import fr.progilone.pgcn.domain.dto.administration.CinesPACDTO;
-import fr.progilone.pgcn.domain.dto.administration.InternetArchiveCollectionDTO;
-import fr.progilone.pgcn.domain.dto.administration.omeka.OmekaConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.administration.omeka.OmekaListDTO;
-import fr.progilone.pgcn.domain.dto.administration.viewsFormat.SimpleViewsFormatConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.checkconfiguration.CheckConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.ftpconfiguration.SimpleFTPConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.ocrlangconfiguration.OcrLanguageDTO;
-import fr.progilone.pgcn.domain.dto.project.SimpleProjectDTO;
-import fr.progilone.pgcn.domain.dto.user.SimpleUserDTO;
-import fr.progilone.pgcn.domain.dto.workflow.SimpleWorkflowModelDTO;
-import fr.progilone.pgcn.domain.lot.Lot;
-import fr.progilone.pgcn.domain.user.User;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.dto.administration.CinesPACDTO;
+import org.numahop.numahop.domain.dto.administration.InternetArchiveCollectionDTO;
+import org.numahop.numahop.domain.dto.administration.omeka.OmekaConfigurationDTO;
+import org.numahop.numahop.domain.dto.administration.omeka.OmekaListDTO;
+import org.numahop.numahop.domain.dto.administration.viewsFormat.SimpleViewsFormatConfigurationDTO;
+import org.numahop.numahop.domain.dto.checkconfiguration.CheckConfigurationDTO;
+import org.numahop.numahop.domain.dto.ftpconfiguration.SimpleFTPConfigurationDTO;
+import org.numahop.numahop.domain.dto.ocrlangconfiguration.OcrLanguageDTO;
+import org.numahop.numahop.domain.dto.project.SimpleProjectDTO;
+import org.numahop.numahop.domain.dto.user.SimpleUserDTO;
+import org.numahop.numahop.domain.dto.workflow.SimpleWorkflowModelDTO;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.domain.user.User;
 import java.time.LocalDateTime;
 import java.util.Date;
 

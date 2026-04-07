@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.util;
+package org.numahop.numahop.service.util;
 
-import fr.progilone.pgcn.domain.delivery.Delivery;
-import fr.progilone.pgcn.web.websocket.WebsocketService;
+import org.numahop.numahop.domain.delivery.Delivery;
+import org.numahop.numahop.web.websocket.WebsocketService;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

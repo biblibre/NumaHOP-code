@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.exchange.template.loader;
+package org.numahop.numahop.service.exchange.template.loader;
 
 import com.google.common.base.MoreObjects;
-import fr.progilone.pgcn.domain.exchange.template.Name;
+import org.numahop.numahop.domain.exchange.template.Name;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.jaxb.adapters;
+package org.numahop.numahop.domain.jaxb.adapters;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.LocalDateTime;

@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.repository.administration;
+package org.numahop.numahop.repository.administration;
 
-import fr.progilone.pgcn.domain.administration.MailboxConfiguration;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.administration.MailboxConfiguration;
+import org.numahop.numahop.domain.library.Library;
 import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

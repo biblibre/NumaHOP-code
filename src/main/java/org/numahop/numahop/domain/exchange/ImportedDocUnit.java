@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.exchange;
+package org.numahop.numahop.domain.exchange;
 
 import com.google.common.base.MoreObjects;
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.document.DocUnit;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.document.DocUnit;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;

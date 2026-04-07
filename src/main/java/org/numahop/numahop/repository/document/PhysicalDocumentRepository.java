@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.document;
+package org.numahop.numahop.repository.document;
 
-import fr.progilone.pgcn.domain.document.PhysicalDocument;
+import org.numahop.numahop.domain.document.PhysicalDocument;
 import java.util.List;
 import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;

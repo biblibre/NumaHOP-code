@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.security;
+package org.numahop.numahop.security;
 
-import fr.progilone.pgcn.domain.util.CustomUserDetails;
-import fr.progilone.pgcn.service.LockService;
+import org.numahop.numahop.domain.util.CustomUserDetails;
+import org.numahop.numahop.service.LockService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

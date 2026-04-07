@@ -1,14 +1,14 @@
-package fr.progilone.pgcn.web.rest.exchange.template;
+package org.numahop.numahop.web.rest.exchange.template;
 
-import static fr.progilone.pgcn.web.rest.exchange.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.exchange.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.exchange.template.Template;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.service.exchange.template.TemplateService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.exchange.template.Template;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.service.exchange.template.TemplateService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

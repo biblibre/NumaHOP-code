@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.ocrlangconfiguration.mapper;
+package org.numahop.numahop.service.ocrlangconfiguration.mapper;
 
-import fr.progilone.pgcn.domain.dto.ocrlangconfiguration.SimpleOcrLangConfigDTO;
-import fr.progilone.pgcn.domain.ocrlangconfiguration.OcrLangConfiguration;
-import fr.progilone.pgcn.service.library.mapper.LibraryMapper;
+import org.numahop.numahop.domain.dto.ocrlangconfiguration.SimpleOcrLangConfigDTO;
+import org.numahop.numahop.domain.ocrlangconfiguration.OcrLangConfiguration;
+import org.numahop.numahop.service.library.mapper.LibraryMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

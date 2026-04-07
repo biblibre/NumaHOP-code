@@ -1,32 +1,32 @@
-package fr.progilone.pgcn.service.exchange.cines;
+package org.numahop.numahop.service.exchange.cines;
 
-import fr.progilone.pgcn.domain.document.DigitalDocument;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.dto.document.BibliographicRecordDcDTO;
-import fr.progilone.pgcn.domain.jaxb.dc.ObjectFactory;
-import fr.progilone.pgcn.domain.jaxb.dc.SimpleLiteral;
-import fr.progilone.pgcn.domain.jaxb.ead.Ead;
-import fr.progilone.pgcn.domain.jaxb.mets.AmdSecType;
-import fr.progilone.pgcn.domain.jaxb.mets.DivType;
-import fr.progilone.pgcn.domain.jaxb.mets.DivType.Fptr;
-import fr.progilone.pgcn.domain.jaxb.mets.FileType;
-import fr.progilone.pgcn.domain.jaxb.mets.FileType.FLocat;
-import fr.progilone.pgcn.domain.jaxb.mets.MdSecType;
-import fr.progilone.pgcn.domain.jaxb.mets.Mets;
-import fr.progilone.pgcn.domain.jaxb.mets.MetsType;
-import fr.progilone.pgcn.domain.jaxb.mets.MetsType.FileSec;
-import fr.progilone.pgcn.domain.jaxb.mets.MetsType.FileSec.FileGrp;
-import fr.progilone.pgcn.domain.jaxb.mets.MetsType.MetsHdr.AltRecordID;
-import fr.progilone.pgcn.domain.jaxb.mets.StructMapType;
-import fr.progilone.pgcn.domain.jaxb.mix.Mix;
-import fr.progilone.pgcn.domain.storage.CheckSummedStoredFile;
-import fr.progilone.pgcn.domain.storage.StoredFile;
-import fr.progilone.pgcn.exception.PgcnUncheckedException;
-import fr.progilone.pgcn.service.check.MetaDatasCheckService;
-import fr.progilone.pgcn.service.document.TableOfContentsService;
-import fr.progilone.pgcn.service.exchange.ead.ExportEadService;
-import fr.progilone.pgcn.service.exchange.iiif.manifest.Structures;
-import fr.progilone.pgcn.service.util.FileUtils;
+import org.numahop.numahop.domain.document.DigitalDocument;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.dto.document.BibliographicRecordDcDTO;
+import org.numahop.numahop.domain.jaxb.dc.ObjectFactory;
+import org.numahop.numahop.domain.jaxb.dc.SimpleLiteral;
+import org.numahop.numahop.domain.jaxb.ead.Ead;
+import org.numahop.numahop.domain.jaxb.mets.AmdSecType;
+import org.numahop.numahop.domain.jaxb.mets.DivType;
+import org.numahop.numahop.domain.jaxb.mets.DivType.Fptr;
+import org.numahop.numahop.domain.jaxb.mets.FileType;
+import org.numahop.numahop.domain.jaxb.mets.FileType.FLocat;
+import org.numahop.numahop.domain.jaxb.mets.MdSecType;
+import org.numahop.numahop.domain.jaxb.mets.Mets;
+import org.numahop.numahop.domain.jaxb.mets.MetsType;
+import org.numahop.numahop.domain.jaxb.mets.MetsType.FileSec;
+import org.numahop.numahop.domain.jaxb.mets.MetsType.FileSec.FileGrp;
+import org.numahop.numahop.domain.jaxb.mets.MetsType.MetsHdr.AltRecordID;
+import org.numahop.numahop.domain.jaxb.mets.StructMapType;
+import org.numahop.numahop.domain.jaxb.mix.Mix;
+import org.numahop.numahop.domain.storage.CheckSummedStoredFile;
+import org.numahop.numahop.domain.storage.StoredFile;
+import org.numahop.numahop.exception.PgcnUncheckedException;
+import org.numahop.numahop.service.check.MetaDatasCheckService;
+import org.numahop.numahop.service.document.TableOfContentsService;
+import org.numahop.numahop.service.exchange.ead.ExportEadService;
+import org.numahop.numahop.service.exchange.iiif.manifest.Structures;
+import org.numahop.numahop.service.util.FileUtils;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
@@ -79,7 +79,7 @@ public class ExportMetsService {
 
 	private static final ObjectFactory DC_FACTORY = new ObjectFactory();
 
-	private static final fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory METS_FACTORY = new fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory();
+	private static final org.numahop.numahop.domain.jaxb.mets.ObjectFactory METS_FACTORY = new org.numahop.numahop.domain.jaxb.mets.ObjectFactory();
 
 	private static final String METS_SCHEMA_VALIDATION = "https://www.loc.gov/standards/mets/mets.xsd";
 
@@ -155,12 +155,12 @@ public class ExportMetsService {
 				mdSec -> mets.getStructMap().add(getStructMap(mdSec, docUnit, listStoredFiles, mets.getFileSec())));
 
 		// Écriture du XML dans le flux de sortie
-		final JAXBContext context = JAXBContext.newInstance(fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory.class,
-				SimpleLiteral.class, Mix.class, fr.progilone.pgcn.domain.jaxb.ead.ObjectFactory.class); // METS
-																										// +
-																										// DC
-																										// +
-																										// EAD
+		final JAXBContext context = JAXBContext.newInstance(org.numahop.numahop.domain.jaxb.mets.ObjectFactory.class,
+				SimpleLiteral.class, Mix.class, org.numahop.numahop.domain.jaxb.ead.ObjectFactory.class); // METS
+																											// +
+																											// DC
+																											// +
+																											// EAD
 		final Marshaller m = context.createMarshaller();
 		// Validation
 		final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -294,7 +294,8 @@ public class ExportMetsService {
 		mdWrap.setXmlData(xmlData);
 
 		try {
-			final JAXBContext context = JAXBContext.newInstance(fr.progilone.pgcn.domain.jaxb.ead.ObjectFactory.class);
+			final JAXBContext context = JAXBContext
+				.newInstance(org.numahop.numahop.domain.jaxb.ead.ObjectFactory.class);
 			final Unmarshaller unmarshaller = context.createUnmarshaller();
 			final Ead ead = (Ead) unmarshaller.unmarshal(eadFile);
 			xmlData.getAny().add(ead);
@@ -359,8 +360,8 @@ public class ExportMetsService {
 		checkSummed.setStoredFile(storedFile);
 		checkSummed.setCheckSumType(FileUtils.CheckSumType.MD5);
 		try {
-			checkSummed
-				.setCheckSum(fr.progilone.pgcn.service.util.FileUtils.checkSum(sourceFile, FileUtils.CheckSumType.MD5));
+			checkSummed.setCheckSum(
+					org.numahop.numahop.service.util.FileUtils.checkSum(sourceFile, FileUtils.CheckSumType.MD5));
 		}
 		catch (final NoSuchAlgorithmException e) {
 			LOG.error(e.getMessage(), e);

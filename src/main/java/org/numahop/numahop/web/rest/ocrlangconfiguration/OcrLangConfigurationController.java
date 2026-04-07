@@ -1,16 +1,16 @@
-package fr.progilone.pgcn.web.rest.ocrlangconfiguration;
+package org.numahop.numahop.web.rest.ocrlangconfiguration;
 
-import static fr.progilone.pgcn.web.rest.ocrlangconfiguration.security.AuthorizationConstants.OCR_LANG_HAB0;
-import static fr.progilone.pgcn.web.rest.ocrlangconfiguration.security.AuthorizationConstants.OCR_LANG_HAB1;
-import static fr.progilone.pgcn.web.rest.ocrlangconfiguration.security.AuthorizationConstants.OCR_LANG_HAB2;
+import static org.numahop.numahop.web.rest.ocrlangconfiguration.security.AuthorizationConstants.OCR_LANG_HAB0;
+import static org.numahop.numahop.web.rest.ocrlangconfiguration.security.AuthorizationConstants.OCR_LANG_HAB1;
+import static org.numahop.numahop.web.rest.ocrlangconfiguration.security.AuthorizationConstants.OCR_LANG_HAB2;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.ocrlangconfiguration.OcrLangConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.ocrlangconfiguration.SimpleOcrLangConfigDTO;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.service.ocrlangconfiguration.ui.UIOcrLangConfigurationService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.dto.ocrlangconfiguration.OcrLangConfigurationDTO;
+import org.numahop.numahop.domain.dto.ocrlangconfiguration.SimpleOcrLangConfigDTO;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.service.ocrlangconfiguration.ui.UIOcrLangConfigurationService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;

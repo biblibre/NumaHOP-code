@@ -6,7 +6,7 @@
 // Généré le : 2017.05.16 à 10:56:55 AM CEST
 //
 
-package fr.progilone.pgcn.domain.jaxb.ead;
+package org.numahop.numahop.domain.jaxb.ead;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -49,7 +49,7 @@ public class Div {
 
 	@XmlElements({ @XmlElement(name = "address", type = Address.class),
 			@XmlElement(name = "chronlist", type = Chronlist.class),
-			@XmlElement(name = "list", type = fr.progilone.pgcn.domain.jaxb.ead.List.class),
+			@XmlElement(name = "list", type = org.numahop.numahop.domain.jaxb.ead.List.class),
 			@XmlElement(name = "note", type = Note.class), @XmlElement(name = "table", type = Table.class),
 			@XmlElement(name = "blockquote", type = Blockquote.class), @XmlElement(name = "p", type = P.class) })
 	protected java.util.List<Object> mBlocks;
@@ -101,7 +101,7 @@ public class Div {
 	 * </pre>
 	 * <p>
 	 * Objects of the following type(s) are allowed in the list {@link Address }
-	 * {@link Chronlist } {@link fr.progilone.pgcn.domain.jaxb.ead.List } {@link Note }
+	 * {@link Chronlist } {@link org.numahop.numahop.domain.jaxb.ead.List } {@link Note }
 	 * {@link Table } {@link Blockquote } {@link P }
 	 */
 	public java.util.List<Object> getMBlocks() {

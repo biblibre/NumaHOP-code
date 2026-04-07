@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.help;
+package org.numahop.numahop.domain.dto.help;
 
-import fr.progilone.pgcn.domain.help.HelpPageType;
+import org.numahop.numahop.domain.help.HelpPageType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

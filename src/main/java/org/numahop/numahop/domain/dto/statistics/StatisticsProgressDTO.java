@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.domain.dto.statistics;
+package org.numahop.numahop.domain.dto.statistics;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Ordering;
 import com.opencsv.bean.CsvBindByName;
-import fr.progilone.pgcn.domain.project.Project;
+import org.numahop.numahop.domain.project.Project;
 
 public class StatisticsProgressDTO implements Comparable<StatisticsProgressDTO> {
 

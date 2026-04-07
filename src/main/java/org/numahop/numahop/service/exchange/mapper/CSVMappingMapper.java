@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.exchange.mapper;
+package org.numahop.numahop.service.exchange.mapper;
 
-import fr.progilone.pgcn.domain.dto.exchange.CSVMappingDTO;
-import fr.progilone.pgcn.domain.exchange.CSVMapping;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.domain.dto.exchange.CSVMappingDTO;
+import org.numahop.numahop.domain.exchange.CSVMapping;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
 import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

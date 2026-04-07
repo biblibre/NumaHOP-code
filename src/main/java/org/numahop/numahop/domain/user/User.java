@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.domain.user;
+package org.numahop.numahop.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.google.common.base.MoreObjects;
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.project.Project;
-import fr.progilone.pgcn.domain.security.PersistentToken;
-import fr.progilone.pgcn.domain.workflow.WorkflowGroup;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.project.Project;
+import org.numahop.numahop.domain.security.PersistentToken;
+import org.numahop.numahop.domain.workflow.WorkflowGroup;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

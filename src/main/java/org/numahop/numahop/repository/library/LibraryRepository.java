@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.repository.library;
+package org.numahop.numahop.repository.library;
 
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration;
-import fr.progilone.pgcn.domain.checkconfiguration.CheckConfiguration;
-import fr.progilone.pgcn.domain.exportftpconfiguration.ExportFTPConfiguration;
-import fr.progilone.pgcn.domain.ftpconfiguration.FTPConfiguration;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.ocrlangconfiguration.OcrLangConfiguration;
-import fr.progilone.pgcn.domain.user.Role;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration;
+import org.numahop.numahop.domain.checkconfiguration.CheckConfiguration;
+import org.numahop.numahop.domain.exportftpconfiguration.ExportFTPConfiguration;
+import org.numahop.numahop.domain.ftpconfiguration.FTPConfiguration;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.ocrlangconfiguration.OcrLangConfiguration;
+import org.numahop.numahop.domain.user.Role;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;

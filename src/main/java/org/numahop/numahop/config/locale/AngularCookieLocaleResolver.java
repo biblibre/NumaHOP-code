@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.config.locale;
+package org.numahop.numahop.config.locale;
 
-import fr.progilone.pgcn.config.AsyncConfiguration;
+import org.numahop.numahop.config.AsyncConfiguration;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Locale;

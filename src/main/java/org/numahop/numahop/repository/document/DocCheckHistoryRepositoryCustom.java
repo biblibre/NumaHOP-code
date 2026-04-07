@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.document;
+package org.numahop.numahop.repository.document;
 
-import fr.progilone.pgcn.domain.document.DocCheckHistory;
+import org.numahop.numahop.domain.document.DocCheckHistory;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Repository;

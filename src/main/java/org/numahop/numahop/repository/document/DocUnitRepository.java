@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.repository.document;
+package org.numahop.numahop.repository.document;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.dto.document.SummaryDocUnitDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.lot.Lot;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.dto.document.SummaryDocUnitDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.lot.Lot;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -185,7 +185,7 @@ public interface DocUnitRepository extends JpaRepository<DocUnit, String>, DocUn
 	List<DocUnit> findAllByLotIdentifier(String identifier);
 
 	@Query("""
-			select new fr.progilone.pgcn.domain.dto.document.SummaryDocUnitDTO(du.identifier, du.pgcnId, du.label, du.type, du.archivable, du.distributable) from DocUnit du
+			select new org.numahop.numahop.domain.dto.document.SummaryDocUnitDTO(du.identifier, du.pgcnId, du.label, du.type, du.archivable, du.distributable) from DocUnit du
 			where du.lot.identifier = ?1
 			""")
 	List<SummaryDocUnitDTO> findAllSummaryByLotId(String identifier);

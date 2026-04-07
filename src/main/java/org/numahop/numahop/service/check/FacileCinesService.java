@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.check;
+package org.numahop.numahop.service.check;
 
-import fr.progilone.pgcn.domain.jaxb.facile.ValidatorType;
-import fr.progilone.pgcn.service.util.FileUtils;
-import fr.progilone.pgcn.service.util.FileUtils.CheckSumType;
+import org.numahop.numahop.domain.jaxb.facile.ValidatorType;
+import org.numahop.numahop.service.util.FileUtils;
+import org.numahop.numahop.service.util.FileUtils.CheckSumType;
 import jakarta.mail.MessagingException;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
@@ -130,7 +130,7 @@ public class FacileCinesService {
 	@SuppressWarnings("unchecked")
 	private JAXBElement<ValidatorType> parseXmlResponse(final String xmlResponse)
 			throws JAXBException, IOException, MessagingException {
-		final JAXBContext context = JAXBContext.newInstance(fr.progilone.pgcn.domain.jaxb.facile.ObjectFactory.class);
+		final JAXBContext context = JAXBContext.newInstance(org.numahop.numahop.domain.jaxb.facile.ObjectFactory.class);
 		final Unmarshaller unmarshaller = context.createUnmarshaller();
 		final StringReader reader = new StringReader(xmlResponse);
 		return (JAXBElement<ValidatorType>) unmarshaller.unmarshal(reader);

@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.exchange.ssh;
+package org.numahop.numahop.service.exchange.ssh;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
+import org.numahop.numahop.exception.PgcnTechnicalException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;

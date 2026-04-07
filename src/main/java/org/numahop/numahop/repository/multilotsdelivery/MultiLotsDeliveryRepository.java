@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.repository.multilotsdelivery;
+package org.numahop.numahop.repository.multilotsdelivery;
 
-import fr.progilone.pgcn.domain.lot.Lot;
-import fr.progilone.pgcn.domain.multilotsdelivery.MultiLotsDelivery;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.domain.multilotsdelivery.MultiLotsDelivery;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

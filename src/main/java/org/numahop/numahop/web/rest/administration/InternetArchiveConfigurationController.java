@@ -1,19 +1,19 @@
-package fr.progilone.pgcn.web.rest.administration;
+package org.numahop.numahop.web.rest.administration;
 
-import static fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants.*;
-import static fr.progilone.pgcn.web.rest.document.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.administration.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.document.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.administration.InternetArchiveCollection;
-import fr.progilone.pgcn.domain.administration.InternetArchiveConfiguration;
-import fr.progilone.pgcn.domain.dto.administration.InternetArchiveConfigurationDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.service.administration.InternetArchiveCollectionService;
-import fr.progilone.pgcn.service.administration.InternetArchiveConfigurationService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.AccessHelper;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.administration.InternetArchiveCollection;
+import org.numahop.numahop.domain.administration.InternetArchiveConfiguration;
+import org.numahop.numahop.domain.dto.administration.InternetArchiveConfigurationDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.service.administration.InternetArchiveCollectionService;
+import org.numahop.numahop.service.administration.InternetArchiveConfigurationService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.AccessHelper;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collection;

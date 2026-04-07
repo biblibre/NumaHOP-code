@@ -1,14 +1,14 @@
-package fr.progilone.pgcn.service.exchange.dc;
+package org.numahop.numahop.service.exchange.dc;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.jaxb.dc.ElementContainer;
-import fr.progilone.pgcn.domain.jaxb.dc.ObjectFactory;
-import fr.progilone.pgcn.domain.jaxb.dc.SimpleLiteral;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.jaxb.dc.ElementContainer;
+import org.numahop.numahop.domain.jaxb.dc.ObjectFactory;
+import org.numahop.numahop.domain.jaxb.dc.SimpleLiteral;
+import org.numahop.numahop.domain.library.Library;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;

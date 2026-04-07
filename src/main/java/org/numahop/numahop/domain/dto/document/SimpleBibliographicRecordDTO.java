@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.document;
+package org.numahop.numahop.domain.dto.document;
 
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.BibliographicRecord;
 
 /**
  * BibliographicRecord DTO

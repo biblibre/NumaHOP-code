@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.dto.user;
+package org.numahop.numahop.domain.dto.user;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import java.util.List;
  * DTO représentant un usager allégé
  *
  * @author jbrunet
- * @see fr.progilone.pgcn.domain.user.User
+ * @see org.numahop.numahop.domain.user.User
  */
 public class SimpleUserAccountDTO {
 

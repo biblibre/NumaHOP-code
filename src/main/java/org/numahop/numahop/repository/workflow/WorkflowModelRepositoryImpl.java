@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.repository.workflow;
+package org.numahop.numahop.repository.workflow;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Order;
@@ -6,9 +6,9 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.workflow.QWorkflowModel;
-import fr.progilone.pgcn.domain.workflow.WorkflowModel;
-import fr.progilone.pgcn.repository.util.QueryDSLBuilderUtils;
+import org.numahop.numahop.domain.workflow.QWorkflowModel;
+import org.numahop.numahop.domain.workflow.WorkflowModel;
+import org.numahop.numahop.repository.util.QueryDSLBuilderUtils;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;

@@ -1,22 +1,22 @@
-package fr.progilone.pgcn.service.exchange.mail;
+package org.numahop.numahop.service.exchange.mail;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-import fr.progilone.pgcn.domain.administration.MailboxConfiguration;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.repository.exchange.cines.CinesReportRepository;
-import fr.progilone.pgcn.service.administration.MailboxConfigurationService;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.service.exchange.cines.CinesReportService;
-import fr.progilone.pgcn.service.exchange.cines.CinesRequestHandlerService;
-import fr.progilone.pgcn.service.exchange.cines.ExportCinesService;
-import fr.progilone.pgcn.service.storage.FileStorageManager;
-import fr.progilone.pgcn.service.util.CryptoService;
-import fr.progilone.pgcn.service.util.transaction.TransactionService;
-import fr.progilone.pgcn.service.workflow.WorkflowService;
-import fr.progilone.pgcn.web.websocket.WebsocketService;
+import org.numahop.numahop.domain.administration.MailboxConfiguration;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.repository.exchange.cines.CinesReportRepository;
+import org.numahop.numahop.service.administration.MailboxConfigurationService;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.service.exchange.cines.CinesReportService;
+import org.numahop.numahop.service.exchange.cines.CinesRequestHandlerService;
+import org.numahop.numahop.service.exchange.cines.ExportCinesService;
+import org.numahop.numahop.service.storage.FileStorageManager;
+import org.numahop.numahop.service.util.CryptoService;
+import org.numahop.numahop.service.util.transaction.TransactionService;
+import org.numahop.numahop.service.workflow.WorkflowService;
+import org.numahop.numahop.web.websocket.WebsocketService;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import java.util.ArrayList;

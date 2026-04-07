@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.administration.viewsFormat;
+package org.numahop.numahop.domain.dto.administration.viewsFormat;
 
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.dto.AbstractDTO;
 
 public class SimpleViewsFormatConfigurationDTO extends AbstractDTO {
 

@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.service.ftpconfiguration;
+package org.numahop.numahop.service.ftpconfiguration;
 
-import fr.progilone.pgcn.domain.ftpconfiguration.FTPConfiguration;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.exception.message.PgcnList;
-import fr.progilone.pgcn.repository.ftpconfiguration.FTPConfigurationRepository;
-import fr.progilone.pgcn.repository.library.LibraryRepository;
-import fr.progilone.pgcn.repository.lot.LotRepository;
-import fr.progilone.pgcn.repository.project.ProjectRepository;
+import org.numahop.numahop.domain.ftpconfiguration.FTPConfiguration;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.exception.message.PgcnList;
+import org.numahop.numahop.repository.ftpconfiguration.FTPConfigurationRepository;
+import org.numahop.numahop.repository.library.LibraryRepository;
+import org.numahop.numahop.repository.lot.LotRepository;
+import org.numahop.numahop.repository.project.ProjectRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

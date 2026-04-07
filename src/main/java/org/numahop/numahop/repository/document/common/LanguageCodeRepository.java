@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.document.common;
+package org.numahop.numahop.repository.document.common;
 
-import fr.progilone.pgcn.domain.document.common.LanguageCode;
+import org.numahop.numahop.domain.document.common.LanguageCode;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

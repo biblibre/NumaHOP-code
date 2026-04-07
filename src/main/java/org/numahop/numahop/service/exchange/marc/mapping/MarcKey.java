@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.exchange.marc.mapping;
+package org.numahop.numahop.service.exchange.marc.mapping;
 
 import java.util.Objects;
 

@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service;
+package org.numahop.numahop.service;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.Lock;
-import fr.progilone.pgcn.exception.PgcnLockException;
-import fr.progilone.pgcn.repository.LockRepository;
-import fr.progilone.pgcn.security.SecurityUtils;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.Lock;
+import org.numahop.numahop.exception.PgcnLockException;
+import org.numahop.numahop.repository.LockRepository;
+import org.numahop.numahop.security.SecurityUtils;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;

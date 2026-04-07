@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.statistics;
+package org.numahop.numahop.domain.dto.statistics;
 
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

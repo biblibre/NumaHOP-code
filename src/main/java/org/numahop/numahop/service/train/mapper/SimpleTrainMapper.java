@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.train.mapper;
+package org.numahop.numahop.service.train.mapper;
 
-import fr.progilone.pgcn.domain.dto.train.SimpleTrainDTO;
-import fr.progilone.pgcn.domain.train.Train;
+import org.numahop.numahop.domain.dto.train.SimpleTrainDTO;
+import org.numahop.numahop.domain.train.Train;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

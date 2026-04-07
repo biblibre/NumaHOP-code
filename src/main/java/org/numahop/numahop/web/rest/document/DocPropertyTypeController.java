@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.web.rest.document;
+package org.numahop.numahop.web.rest.document;
 
-import static fr.progilone.pgcn.web.rest.document.security.AuthorizationConstants.DOC_UNIT_HAB0;
-import static fr.progilone.pgcn.web.rest.document.security.AuthorizationConstants.DOC_UNIT_HAB5;
+import static org.numahop.numahop.web.rest.document.security.AuthorizationConstants.DOC_UNIT_HAB0;
+import static org.numahop.numahop.web.rest.document.security.AuthorizationConstants.DOC_UNIT_HAB5;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.dto.document.DocPropertyTypeDTO;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.service.document.DocPropertyTypeService;
-import fr.progilone.pgcn.service.document.ui.UIDocPropertyTypeService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.dto.document.DocPropertyTypeDTO;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.service.document.DocPropertyTypeService;
+import org.numahop.numahop.service.document.ui.UIDocPropertyTypeService;
+import org.numahop.numahop.web.rest.AbstractRestController;
 import jakarta.annotation.security.RolesAllowed;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

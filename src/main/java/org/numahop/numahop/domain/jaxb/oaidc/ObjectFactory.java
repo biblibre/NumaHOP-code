@@ -5,13 +5,13 @@
 // Généré le : 2017.06.16 à 03:03:54 PM CEST
 //
 
-package fr.progilone.pgcn.domain.jaxb.oaidc;
+package org.numahop.numahop.domain.jaxb.oaidc;
 
 import jakarta.xml.bind.annotation.XmlRegistry;
 
 /**
  * This object contains factory methods for each Java content interface and Java element
- * interface generated in the fr.progilone.pgcn.domain.jaxb.oaidc package.
+ * interface generated in the org.numahop.numahop.domain.jaxb.oaidc package.
  * <p>
  * An ObjectFactory allows you to programatically construct new instances of the Java
  * representation for XML content. The Java representation of XML content can consist of
@@ -24,7 +24,7 @@ public class ObjectFactory {
 
 	/**
 	 * Create a new ObjectFactory that can be used to create new instances of schema
-	 * derived classes for package: fr.progilone.pgcn.domain.jaxb.oaidc
+	 * derived classes for package: org.numahop.numahop.domain.jaxb.oaidc
 	 */
 	public ObjectFactory() {
 	}

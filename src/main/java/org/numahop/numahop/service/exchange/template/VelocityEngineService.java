@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.exchange.template;
+package org.numahop.numahop.service.exchange.template;
 
-import fr.progilone.pgcn.domain.exchange.template.Name;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.service.exchange.template.loader.ResourceName;
+import org.numahop.numahop.domain.exchange.template.Name;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.service.exchange.template.loader.ResourceName;
 import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -48,10 +48,10 @@ public class VelocityEngineService {
 		 */
 		Velocity.setProperty(Velocity.RESOURCE_LOADERS, StringUtils.joinWith(",", PGCN_RSC_LOADER, DEFAULT_RSC_LOADER));
 		Velocity.setProperty("resource.loader." + PGCN_RSC_LOADER + ".class",
-				"fr.progilone.pgcn.service.exchange.template.velocity.TemplateResourceLoader");
+				"org.numahop.numahop.service.exchange.template.velocity.TemplateResourceLoader");
 		Velocity.setProperty("resource.loader." + PGCN_RSC_LOADER + ".service", templateService);
 		Velocity.setProperty("resource.loader." + DEFAULT_RSC_LOADER + ".class",
-				"fr.progilone.pgcn.service.exchange.template.velocity.DefaultResourceLoader");
+				"org.numahop.numahop.service.exchange.template.velocity.DefaultResourceLoader");
 		Velocity.setProperty("resource.loader." + DEFAULT_RSC_LOADER + ".basepath", "/templates/");
 		Velocity.init(); // Singleton model
 	}

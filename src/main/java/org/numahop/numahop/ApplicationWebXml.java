@@ -1,6 +1,6 @@
-package fr.progilone.pgcn;
+package org.numahop.numahop;
 
-import fr.progilone.pgcn.config.Constants;
+import org.numahop.numahop.config.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.builder.SpringApplicationBuilder;

@@ -1,18 +1,18 @@
-package fr.progilone.pgcn.service.exchange.marc;
+package org.numahop.numahop.service.exchange.marc;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import fr.progilone.pgcn.config.ScriptEngineConfiguration;
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocProperty;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.domain.exchange.MappingRule;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.service.administration.TransliterationService;
-import fr.progilone.pgcn.service.exchange.marc.mapping.CompiledMapping;
-import fr.progilone.pgcn.service.exchange.marc.mapping.CompiledMappingRule;
+import org.numahop.numahop.config.ScriptEngineConfiguration;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocProperty;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.domain.exchange.MappingRule;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.service.administration.TransliterationService;
+import org.numahop.numahop.service.exchange.marc.mapping.CompiledMapping;
+import org.numahop.numahop.service.exchange.marc.mapping.CompiledMappingRule;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;

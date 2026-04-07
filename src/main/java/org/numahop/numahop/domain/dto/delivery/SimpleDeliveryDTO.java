@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.delivery;
+package org.numahop.numahop.domain.dto.delivery;
 
-import fr.progilone.pgcn.domain.delivery.Delivery;
+import org.numahop.numahop.domain.delivery.Delivery;
 
 /**
  * DTO représentant les attributs d'une livraison à afficher parmi les résultats de

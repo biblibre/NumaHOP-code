@@ -1,16 +1,16 @@
-package fr.progilone.pgcn.service;
+package org.numahop.numahop.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import fr.progilone.pgcn.domain.Lock;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.user.Lang;
-import fr.progilone.pgcn.domain.user.User;
-import fr.progilone.pgcn.domain.util.CustomUserDetails;
-import fr.progilone.pgcn.exception.PgcnLockException;
-import fr.progilone.pgcn.repository.LockRepository;
+import org.numahop.numahop.domain.Lock;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.user.Lang;
+import org.numahop.numahop.domain.user.User;
+import org.numahop.numahop.domain.util.CustomUserDetails;
+import org.numahop.numahop.exception.PgcnLockException;
+import org.numahop.numahop.repository.LockRepository;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import org.junit.jupiter.api.BeforeEach;

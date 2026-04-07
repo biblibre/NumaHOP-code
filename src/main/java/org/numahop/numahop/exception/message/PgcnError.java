@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.exception.message;
+package org.numahop.numahop.exception.message;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;

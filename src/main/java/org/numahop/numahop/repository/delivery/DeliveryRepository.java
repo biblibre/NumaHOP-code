@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.repository.delivery;
+package org.numahop.numahop.repository.delivery;
 
-import fr.progilone.pgcn.domain.delivery.DeliveredDocument;
-import fr.progilone.pgcn.domain.delivery.Delivery;
-import fr.progilone.pgcn.domain.lot.Lot;
+import org.numahop.numahop.domain.delivery.DeliveredDocument;
+import org.numahop.numahop.domain.delivery.Delivery;
+import org.numahop.numahop.domain.lot.Lot;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;

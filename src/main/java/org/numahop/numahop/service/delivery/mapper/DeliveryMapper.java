@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.delivery.mapper;
+package org.numahop.numahop.service.delivery.mapper;
 
-import fr.progilone.pgcn.domain.delivery.Delivery;
-import fr.progilone.pgcn.domain.dto.delivery.DeliveryDTO;
-import fr.progilone.pgcn.domain.dto.delivery.SimpleDeliveryDTO;
-import fr.progilone.pgcn.domain.dto.delivery.SimpleDeliveryForViewerDTO;
-import fr.progilone.pgcn.domain.dto.delivery.SimpleDeliveryLotDTO;
-import fr.progilone.pgcn.service.check.mapper.AutomaticCheckResultMapper;
-import fr.progilone.pgcn.service.lot.mapper.LotMapper;
+import org.numahop.numahop.domain.delivery.Delivery;
+import org.numahop.numahop.domain.dto.delivery.DeliveryDTO;
+import org.numahop.numahop.domain.dto.delivery.SimpleDeliveryDTO;
+import org.numahop.numahop.domain.dto.delivery.SimpleDeliveryForViewerDTO;
+import org.numahop.numahop.domain.dto.delivery.SimpleDeliveryLotDTO;
+import org.numahop.numahop.service.check.mapper.AutomaticCheckResultMapper;
+import org.numahop.numahop.service.lot.mapper.LotMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

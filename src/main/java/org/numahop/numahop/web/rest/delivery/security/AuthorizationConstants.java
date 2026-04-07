@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.web.rest.delivery.security;
+package org.numahop.numahop.web.rest.delivery.security;
 
-import fr.progilone.pgcn.web.util.AuthorizationManager;
+import org.numahop.numahop.web.util.AuthorizationManager;
 
 /**
  * Habilitations du module Livraison (DEL)

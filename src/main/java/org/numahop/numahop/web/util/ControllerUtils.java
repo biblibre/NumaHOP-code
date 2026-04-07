@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.web.util;
+package org.numahop.numahop.web.util;
 
 import java.util.Arrays;
 import java.util.Collection;

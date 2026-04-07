@@ -1,23 +1,23 @@
-package fr.progilone.pgcn.web.rest.administration;
+package org.numahop.numahop.web.rest.administration;
 
-import static fr.progilone.pgcn.util.SecurityRequestPostProcessors.roles;
-import static fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants.*;
+import static org.numahop.numahop.util.SecurityRequestPostProcessors.roles;
+import static org.numahop.numahop.web.rest.administration.security.AuthorizationConstants.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import fr.progilone.pgcn.domain.administration.SftpConfiguration;
-import fr.progilone.pgcn.domain.dto.administration.SftpConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.service.administration.CinesPACService;
-import fr.progilone.pgcn.service.administration.SftpConfigurationService;
-import fr.progilone.pgcn.service.exchange.ssh.SftpService;
-import fr.progilone.pgcn.util.TestConverterFactory;
-import fr.progilone.pgcn.util.TestUtil;
-import fr.progilone.pgcn.web.util.AccessHelper;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.administration.SftpConfiguration;
+import org.numahop.numahop.domain.dto.administration.SftpConfigurationDTO;
+import org.numahop.numahop.domain.dto.library.SimpleLibraryDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.service.administration.CinesPACService;
+import org.numahop.numahop.service.administration.SftpConfigurationService;
+import org.numahop.numahop.service.exchange.ssh.SftpService;
+import org.numahop.numahop.util.TestConverterFactory;
+import org.numahop.numahop.util.TestUtil;
+import org.numahop.numahop.web.util.AccessHelper;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.administration.exchange.z3950;
+package org.numahop.numahop.domain.administration.exchange.z3950;
 
 /**
  * http://www.bnf.fr/fr/professionnels/recuperation_donnees_bnf_boite_outils/a.profil_z3950_bnf.html

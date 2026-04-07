@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.delivery;
+package org.numahop.numahop.domain.dto.delivery;
 
-import fr.progilone.pgcn.domain.dto.lot.SimpleLotDTO;
+import org.numahop.numahop.domain.dto.lot.SimpleLotDTO;
 
 public class SimpleDeliveryForViewerDTO {
 

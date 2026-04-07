@@ -1,17 +1,17 @@
-package fr.progilone.pgcn.service.user;
+package org.numahop.numahop.service.user;
 
-import static fr.progilone.pgcn.exception.message.PgcnErrorCode.*;
+import static org.numahop.numahop.exception.message.PgcnErrorCode.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import fr.progilone.pgcn.domain.dto.user.RoleDTO;
-import fr.progilone.pgcn.domain.user.Role;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.repository.library.LibraryRepository;
-import fr.progilone.pgcn.repository.user.RoleRepository;
-import fr.progilone.pgcn.repository.user.UserRepository;
-import fr.progilone.pgcn.util.TestUtil;
+import org.numahop.numahop.domain.dto.user.RoleDTO;
+import org.numahop.numahop.domain.user.Role;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.repository.library.LibraryRepository;
+import org.numahop.numahop.repository.user.RoleRepository;
+import org.numahop.numahop.repository.user.UserRepository;
+import org.numahop.numahop.util.TestUtil;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

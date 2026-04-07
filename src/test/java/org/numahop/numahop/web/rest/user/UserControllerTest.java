@@ -1,22 +1,22 @@
-package fr.progilone.pgcn.web.rest.user;
+package org.numahop.numahop.web.rest.user;
 
-import static fr.progilone.pgcn.util.SecurityRequestPostProcessors.roles;
-import static fr.progilone.pgcn.web.rest.user.security.AuthorizationConstants.*;
+import static org.numahop.numahop.util.SecurityRequestPostProcessors.roles;
+import static org.numahop.numahop.web.rest.user.security.AuthorizationConstants.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import fr.progilone.pgcn.domain.dto.user.RoleDTO;
-import fr.progilone.pgcn.domain.dto.user.UserDTO;
-import fr.progilone.pgcn.domain.user.Role;
-import fr.progilone.pgcn.domain.user.User;
-import fr.progilone.pgcn.domain.util.CustomUserDetails;
-import fr.progilone.pgcn.service.user.UserService;
-import fr.progilone.pgcn.service.user.ui.UIUserService;
-import fr.progilone.pgcn.util.TestUtil;
-import fr.progilone.pgcn.web.util.AccessHelper;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.dto.user.RoleDTO;
+import org.numahop.numahop.domain.dto.user.UserDTO;
+import org.numahop.numahop.domain.user.Role;
+import org.numahop.numahop.domain.user.User;
+import org.numahop.numahop.domain.util.CustomUserDetails;
+import org.numahop.numahop.service.user.UserService;
+import org.numahop.numahop.service.user.ui.UIUserService;
+import org.numahop.numahop.util.TestUtil;
+import org.numahop.numahop.web.util.AccessHelper;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

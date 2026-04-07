@@ -1,21 +1,21 @@
-package fr.progilone.pgcn.web.rest.project;
+package org.numahop.numahop.web.rest.project;
 
-import static fr.progilone.pgcn.domain.project.Project.ProjectStatus.*;
-import static fr.progilone.pgcn.web.rest.project.security.AuthorizationConstants.*;
+import static org.numahop.numahop.domain.project.Project.ProjectStatus.*;
+import static org.numahop.numahop.web.rest.project.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.audit.AuditProjectRevisionDTO;
-import fr.progilone.pgcn.domain.dto.project.ProjectDTO;
-import fr.progilone.pgcn.domain.dto.project.SimpleProjectDTO;
-import fr.progilone.pgcn.domain.project.Project;
-import fr.progilone.pgcn.domain.project.Project.ProjectStatus;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.service.es.EsProjectService;
-import fr.progilone.pgcn.service.project.ProjectService;
-import fr.progilone.pgcn.service.project.ui.UIProjectService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.AccessHelper;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.dto.audit.AuditProjectRevisionDTO;
+import org.numahop.numahop.domain.dto.project.ProjectDTO;
+import org.numahop.numahop.domain.dto.project.SimpleProjectDTO;
+import org.numahop.numahop.domain.project.Project;
+import org.numahop.numahop.domain.project.Project.ProjectStatus;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.service.es.EsProjectService;
+import org.numahop.numahop.service.project.ProjectService;
+import org.numahop.numahop.service.project.ui.UIProjectService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.AccessHelper;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.exception;
+package org.numahop.numahop.exception;
 
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnList;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

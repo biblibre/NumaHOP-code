@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.library;
+package org.numahop.numahop.domain.library;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import fr.progilone.pgcn.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.AbstractDomainObject;
 import jakarta.persistence.*;
 
 /**

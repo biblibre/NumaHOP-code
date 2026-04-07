@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.document;
+package org.numahop.numahop.service.document;
 
-import fr.progilone.pgcn.domain.document.PhysicalDocument;
-import fr.progilone.pgcn.domain.document.PhysicalDocument.PhysicalDocumentStatus;
-import fr.progilone.pgcn.repository.document.PhysicalDocumentRepository;
+import org.numahop.numahop.domain.document.PhysicalDocument;
+import org.numahop.numahop.domain.document.PhysicalDocument.PhysicalDocumentStatus;
+import org.numahop.numahop.repository.document.PhysicalDocumentRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

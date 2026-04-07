@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.document.common;
+package org.numahop.numahop.service.document.common;
 
-import fr.progilone.pgcn.domain.document.common.LanguageCode;
-import fr.progilone.pgcn.repository.document.common.LanguageCodeRepository;
+import org.numahop.numahop.domain.document.common.LanguageCode;
+import org.numahop.numahop.repository.document.common.LanguageCodeRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

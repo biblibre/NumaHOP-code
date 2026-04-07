@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.administration.exchange.z3950;
+package org.numahop.numahop.domain.administration.exchange.z3950;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.exchange.DataEncoding;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.exchange.DataEncoding;
 import jakarta.persistence.*;
 
 @Entity

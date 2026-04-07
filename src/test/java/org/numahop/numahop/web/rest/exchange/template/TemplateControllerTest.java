@@ -1,16 +1,16 @@
-package fr.progilone.pgcn.web.rest.exchange.template;
+package org.numahop.numahop.web.rest.exchange.template;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import fr.progilone.pgcn.domain.exchange.template.Template;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.service.exchange.template.TemplateService;
-import fr.progilone.pgcn.util.TestConverterFactory;
-import fr.progilone.pgcn.util.TestUtil;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.exchange.template.Template;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.service.exchange.template.TemplateService;
+import org.numahop.numahop.util.TestConverterFactory;
+import org.numahop.numahop.util.TestUtil;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;

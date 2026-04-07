@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.repository.es;
+package org.numahop.numahop.repository.es;
 
-import fr.progilone.pgcn.domain.es.lot.EsLot;
-import fr.progilone.pgcn.repository.es.helper.EsSearchOperation;
-import fr.progilone.pgcn.repository.es.helper.SearchResultPage;
+import org.numahop.numahop.domain.es.lot.EsLot;
+import org.numahop.numahop.repository.es.helper.EsSearchOperation;
+import org.numahop.numahop.repository.es.helper.SearchResultPage;
 import java.util.List;
 import org.springframework.data.domain.PageRequest;
 

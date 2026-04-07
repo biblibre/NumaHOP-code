@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.dto.administration;
+package org.numahop.numahop.domain.dto.administration;
 
 /**
  * @author jbrunet Créé le 19 avr. 2017

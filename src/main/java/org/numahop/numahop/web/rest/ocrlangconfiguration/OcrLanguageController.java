@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.web.rest.ocrlangconfiguration;
+package org.numahop.numahop.web.rest.ocrlangconfiguration;
 
-import static fr.progilone.pgcn.web.rest.ocrlangconfiguration.security.AuthorizationConstants.OCR_LANG_HAB0;
+import static org.numahop.numahop.web.rest.ocrlangconfiguration.security.AuthorizationConstants.OCR_LANG_HAB0;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.ocrlangconfiguration.OcrLanguageDTO;
-import fr.progilone.pgcn.service.library.LibraryService;
-import fr.progilone.pgcn.service.ocrlangconfiguration.OcrLanguageService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
+import org.numahop.numahop.domain.dto.ocrlangconfiguration.OcrLanguageDTO;
+import org.numahop.numahop.service.library.LibraryService;
+import org.numahop.numahop.service.ocrlangconfiguration.OcrLanguageService;
+import org.numahop.numahop.web.rest.AbstractRestController;
 import jakarta.annotation.security.RolesAllowed;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

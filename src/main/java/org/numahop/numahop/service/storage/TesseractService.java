@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.service.storage;
+package org.numahop.numahop.service.storage;
 
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
+import org.numahop.numahop.exception.PgcnTechnicalException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;

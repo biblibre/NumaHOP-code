@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.audit;
+package org.numahop.numahop.service.audit;
 
-import fr.progilone.pgcn.domain.dto.audit.AuditProjectRevisionDTO;
-import fr.progilone.pgcn.domain.project.Project;
-import fr.progilone.pgcn.repository.audit.AuditProjectRepository;
-import fr.progilone.pgcn.repository.project.ProjectRepository;
+import org.numahop.numahop.domain.dto.audit.AuditProjectRevisionDTO;
+import org.numahop.numahop.domain.project.Project;
+import org.numahop.numahop.repository.audit.AuditProjectRepository;
+import org.numahop.numahop.repository.project.ProjectRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

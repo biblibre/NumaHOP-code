@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.service.ocrlangconfiguration.ui;
+package org.numahop.numahop.service.ocrlangconfiguration.ui;
 
-import fr.progilone.pgcn.domain.dto.ocrlangconfiguration.OcrLangConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.ocrlangconfiguration.SimpleOcrLangConfigDTO;
-import fr.progilone.pgcn.domain.ocrlangconfiguration.OcrLangConfiguration;
-import fr.progilone.pgcn.service.ocrlangconfiguration.OcrLangConfigurationService;
-import fr.progilone.pgcn.service.ocrlangconfiguration.mapper.OcrLangConfigurationMapper;
-import fr.progilone.pgcn.service.util.transaction.VersionValidationService;
+import org.numahop.numahop.domain.dto.ocrlangconfiguration.OcrLangConfigurationDTO;
+import org.numahop.numahop.domain.dto.ocrlangconfiguration.SimpleOcrLangConfigDTO;
+import org.numahop.numahop.domain.ocrlangconfiguration.OcrLangConfiguration;
+import org.numahop.numahop.service.ocrlangconfiguration.OcrLangConfigurationService;
+import org.numahop.numahop.service.ocrlangconfiguration.mapper.OcrLangConfigurationMapper;
+import org.numahop.numahop.service.util.transaction.VersionValidationService;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

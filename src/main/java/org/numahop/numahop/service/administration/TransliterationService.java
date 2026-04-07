@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.administration;
+package org.numahop.numahop.service.administration;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import fr.progilone.pgcn.domain.administration.Transliteration;
-import fr.progilone.pgcn.repository.administration.TransliterationRepository;
+import org.numahop.numahop.domain.administration.Transliteration;
+import org.numahop.numahop.repository.administration.TransliterationRepository;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

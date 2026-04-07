@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.service.ocrlangconfiguration.ui;
+package org.numahop.numahop.service.ocrlangconfiguration.ui;
 
-import fr.progilone.pgcn.domain.dto.ocrlangconfiguration.OcrLangConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.ocrlangconfiguration.OcrLanguageDTO;
-import fr.progilone.pgcn.domain.ocrlangconfiguration.ActivatedOcrLanguage;
-import fr.progilone.pgcn.domain.ocrlangconfiguration.OcrLangConfiguration;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
-import fr.progilone.pgcn.service.ocrlangconfiguration.mapper.OcrLanguageMapper;
+import org.numahop.numahop.domain.dto.ocrlangconfiguration.OcrLangConfigurationDTO;
+import org.numahop.numahop.domain.dto.ocrlangconfiguration.OcrLanguageDTO;
+import org.numahop.numahop.domain.ocrlangconfiguration.ActivatedOcrLanguage;
+import org.numahop.numahop.domain.ocrlangconfiguration.OcrLangConfiguration;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.service.ocrlangconfiguration.mapper.OcrLanguageMapper;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

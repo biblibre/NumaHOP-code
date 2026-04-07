@@ -1,19 +1,19 @@
-package fr.progilone.pgcn.web.rest.exchange.z3950;
+package org.numahop.numahop.web.rest.exchange.z3950;
 
-import static fr.progilone.pgcn.web.rest.exchange.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.exchange.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.exchange.Z3950RecordDTO;
-import fr.progilone.pgcn.domain.exchange.DataEncoding;
-import fr.progilone.pgcn.domain.exchange.FileFormat;
-import fr.progilone.pgcn.domain.exchange.ImportReport;
-import fr.progilone.pgcn.domain.exchange.ImportedDocUnit;
-import fr.progilone.pgcn.exception.PgcnBusinessException;
-import fr.progilone.pgcn.service.exchange.ImportReportService;
-import fr.progilone.pgcn.service.exchange.marc.ImportMarcService;
-import fr.progilone.pgcn.service.exchange.z3950.Z3950Service;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.dto.exchange.Z3950RecordDTO;
+import org.numahop.numahop.domain.exchange.DataEncoding;
+import org.numahop.numahop.domain.exchange.FileFormat;
+import org.numahop.numahop.domain.exchange.ImportReport;
+import org.numahop.numahop.domain.exchange.ImportedDocUnit;
+import org.numahop.numahop.exception.PgcnBusinessException;
+import org.numahop.numahop.service.exchange.ImportReportService;
+import org.numahop.numahop.service.exchange.marc.ImportMarcService;
+import org.numahop.numahop.service.exchange.z3950.Z3950Service;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
@@ -67,7 +67,7 @@ public class Z3950Controller extends AbstractRestController {
 	 * @param fields Champs pour la recherche
 	 * @param servers Cibles de recherches
 	 * @return
-	 * @throws fr.progilone.pgcn.exception.PgcnBusinessException
+	 * @throws org.numahop.numahop.exception.PgcnBusinessException
 	 */
 	@RequestMapping(method = RequestMethod.POST, params = { "server" }, produces = MediaType.APPLICATION_JSON_VALUE)
 	@Timed

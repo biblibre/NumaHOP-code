@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.exchange.marc;
+package org.numahop.numahop.service.exchange.marc;
 
-import fr.progilone.pgcn.domain.exchange.DataEncoding;
-import fr.progilone.pgcn.service.exchange.ExchangeHelper;
-import fr.progilone.pgcn.service.exchange.marc.mapping.MarcKey;
+import org.numahop.numahop.domain.exchange.DataEncoding;
+import org.numahop.numahop.service.exchange.ExchangeHelper;
+import org.numahop.numahop.service.exchange.marc.mapping.MarcKey;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

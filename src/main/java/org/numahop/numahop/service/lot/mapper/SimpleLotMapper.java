@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.lot.mapper;
+package org.numahop.numahop.service.lot.mapper;
 
-import fr.progilone.pgcn.domain.dto.lot.SimpleLotDTO;
-import fr.progilone.pgcn.domain.lot.Lot;
-import fr.progilone.pgcn.service.ocrlangconfiguration.mapper.OcrLanguageMapper;
-import fr.progilone.pgcn.service.project.mapper.SimpleProjectMapper;
+import org.numahop.numahop.domain.dto.lot.SimpleLotDTO;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.service.ocrlangconfiguration.mapper.OcrLanguageMapper;
+import org.numahop.numahop.service.project.mapper.SimpleProjectMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

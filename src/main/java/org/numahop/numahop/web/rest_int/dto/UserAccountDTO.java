@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.web.rest_int.dto;
+package org.numahop.numahop.web.rest_int.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.web.rest.filesgestionconfiguration;
+package org.numahop.numahop.web.rest.filesgestionconfiguration;
 
-import static fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants.FILES_GEST_HAB0;
+import static org.numahop.numahop.web.rest.administration.security.AuthorizationConstants.FILES_GEST_HAB0;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.filesgestionconfiguration.FilesGestionConfigDTO;
-import fr.progilone.pgcn.service.filesgestionconfiguration.FilesGestionConfigMapper;
-import fr.progilone.pgcn.service.filesgestionconfiguration.FilesGestionConfigService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
+import org.numahop.numahop.domain.dto.filesgestionconfiguration.FilesGestionConfigDTO;
+import org.numahop.numahop.service.filesgestionconfiguration.FilesGestionConfigMapper;
+import org.numahop.numahop.service.filesgestionconfiguration.FilesGestionConfigService;
+import org.numahop.numahop.web.rest.AbstractRestController;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

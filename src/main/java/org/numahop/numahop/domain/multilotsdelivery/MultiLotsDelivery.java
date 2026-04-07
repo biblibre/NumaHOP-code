@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.multilotsdelivery;
+package org.numahop.numahop.domain.multilotsdelivery;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.delivery.Delivery;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.delivery.Delivery;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

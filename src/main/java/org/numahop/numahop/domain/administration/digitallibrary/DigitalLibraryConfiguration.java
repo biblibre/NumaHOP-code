@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.administration.digitallibrary;
+package org.numahop.numahop.domain.administration.digitallibrary;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.library.Library;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -58,7 +58,7 @@ public class DigitalLibraryConfiguration extends AbstractDomainObject {
 	private String login;
 
 	/**
-	 * Mot de passe, crypté avec {@link fr.progilone.pgcn.service.util.CryptoService}
+	 * Mot de passe, crypté avec {@link org.numahop.numahop.service.util.CryptoService}
 	 */
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@Column(name = "password")

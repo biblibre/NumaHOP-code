@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.repository.checkconfiguration;
+package org.numahop.numahop.repository.checkconfiguration;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.checkconfiguration.CheckConfiguration;
-import fr.progilone.pgcn.domain.checkconfiguration.QCheckConfiguration;
+import org.numahop.numahop.domain.checkconfiguration.CheckConfiguration;
+import org.numahop.numahop.domain.checkconfiguration.QCheckConfiguration;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;

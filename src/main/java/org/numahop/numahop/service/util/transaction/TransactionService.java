@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.util.transaction;
+package org.numahop.numahop.service.util.transaction;
 
 import jakarta.persistence.EntityManager;
 import org.hibernate.SessionFactory;

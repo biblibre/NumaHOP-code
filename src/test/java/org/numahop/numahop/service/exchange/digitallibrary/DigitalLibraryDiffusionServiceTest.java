@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.exchange.digitallibrary;
+package org.numahop.numahop.service.exchange.digitallibrary;
 
 public class DigitalLibraryDiffusionServiceTest {
 

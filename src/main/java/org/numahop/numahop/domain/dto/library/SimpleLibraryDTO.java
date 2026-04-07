@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.dto.library;
+package org.numahop.numahop.domain.dto.library;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
-import fr.progilone.pgcn.domain.dto.user.RoleDTO;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.dto.user.RoleDTO;
 
 /**
  * DTO représentant une library

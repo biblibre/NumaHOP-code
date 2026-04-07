@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.exchange.template.loader;
+package org.numahop.numahop.service.exchange.template.loader;
 
-import fr.progilone.pgcn.domain.exchange.template.Template;
-import fr.progilone.pgcn.service.exchange.template.TemplateService;
+import org.numahop.numahop.domain.exchange.template.Template;
+import org.numahop.numahop.service.exchange.template.TemplateService;
 import java.io.InputStream;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
@@ -25,7 +25,7 @@ public class TemplateResourceLoader implements ResourceLoader {
 			message = "TemplateResourceLoader n'est pas initialisé correctement; aucun service n'est configuré.";
 		}
 		else if (!(service instanceof TemplateService)) {
-			message = "TemplateResourceLoader n'est pas initialisé correctement; le service configuré n'est pas de type fr.progilone.pgcn.service.exchange.template.TemplateService";
+			message = "TemplateResourceLoader n'est pas initialisé correctement; le service configuré n'est pas de type org.numahop.numahop.service.exchange.template.TemplateService";
 		}
 
 		if (message != null) {

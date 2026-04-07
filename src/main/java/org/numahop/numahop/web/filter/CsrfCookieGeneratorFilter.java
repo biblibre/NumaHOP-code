@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.web.filter;
+package org.numahop.numahop.web.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

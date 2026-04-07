@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.config;
+package org.numahop.numahop.config;
 
 import java.util.stream.Stream;
 import javax.sql.DataSource;
@@ -15,8 +15,8 @@ import org.springframework.jdbc.support.DatabaseStartupValidator;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories(basePackages = { "fr.progilone.pgcn.repository" },
-		excludeFilters = @Filter(type = FilterType.ASPECTJ, pattern = "fr.progilone.pgcn.repository.es.*"))
+@EnableJpaRepositories(basePackages = { "org.numahop.numahop.repository" },
+		excludeFilters = @Filter(type = FilterType.ASPECTJ, pattern = "org.numahop.numahop.repository.es.*"))
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 public class DatabaseConfiguration {

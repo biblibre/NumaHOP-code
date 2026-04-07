@@ -1,19 +1,19 @@
-package fr.progilone.pgcn.web.rest.exchange;
+package org.numahop.numahop.web.rest.exchange;
 
-import static fr.progilone.pgcn.web.rest.exchange.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.exchange.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.exchange.DataEncoding;
-import fr.progilone.pgcn.domain.exchange.FileFormat;
-import fr.progilone.pgcn.domain.exchange.ImportReport;
-import fr.progilone.pgcn.domain.exchange.ImportedDocUnit;
-import fr.progilone.pgcn.service.exchange.ImportReportService;
-import fr.progilone.pgcn.service.exchange.csv.ImportCSVService;
-import fr.progilone.pgcn.service.exchange.dc.ImportDcService;
-import fr.progilone.pgcn.service.exchange.ead.ImportEadService;
-import fr.progilone.pgcn.service.exchange.marc.ImportMarcService;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.exchange.DataEncoding;
+import org.numahop.numahop.domain.exchange.FileFormat;
+import org.numahop.numahop.domain.exchange.ImportReport;
+import org.numahop.numahop.domain.exchange.ImportedDocUnit;
+import org.numahop.numahop.service.exchange.ImportReportService;
+import org.numahop.numahop.service.exchange.csv.ImportCSVService;
+import org.numahop.numahop.service.exchange.dc.ImportDcService;
+import org.numahop.numahop.service.exchange.ead.ImportEadService;
+import org.numahop.numahop.service.exchange.marc.ImportMarcService;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.File;

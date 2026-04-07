@@ -1,18 +1,18 @@
-package fr.progilone.pgcn.service.exchange.cines;
+package org.numahop.numahop.service.exchange.cines;
 
-import fr.progilone.pgcn.domain.administration.MailboxConfiguration;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.exchange.cines.CinesReport;
-import fr.progilone.pgcn.domain.jaxb.aip.PacType;
-import fr.progilone.pgcn.domain.jaxb.avis.PacAvisType;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.service.administration.MailboxConfigurationService;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.service.exchange.mail.MailboxService;
-import fr.progilone.pgcn.service.storage.FileStorageManager;
-import fr.progilone.pgcn.service.util.DateUtils;
-import fr.progilone.pgcn.service.util.transaction.TransactionService;
+import org.numahop.numahop.domain.administration.MailboxConfiguration;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.exchange.cines.CinesReport;
+import org.numahop.numahop.domain.jaxb.aip.PacType;
+import org.numahop.numahop.domain.jaxb.avis.PacAvisType;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.service.administration.MailboxConfigurationService;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.service.exchange.mail.MailboxService;
+import org.numahop.numahop.service.storage.FileStorageManager;
+import org.numahop.numahop.service.util.DateUtils;
+import org.numahop.numahop.service.util.transaction.TransactionService;
 import jakarta.annotation.PostConstruct;
 import jakarta.mail.BodyPart;
 import jakarta.mail.Flags;
@@ -257,7 +257,7 @@ public class CinesRequestHandlerService {
 						return Optional.empty();
 					}
 
-					parseXml(partIs, fr.progilone.pgcn.domain.jaxb.avis.ObjectFactory.class).map(elt -> {
+					parseXml(partIs, org.numahop.numahop.domain.jaxb.avis.ObjectFactory.class).map(elt -> {
 						@SuppressWarnings("unchecked")
 						JAXBElement<PacAvisType> jaxbElement = (JAXBElement<PacAvisType>) elt;
 						return jaxbElement.getValue();
@@ -281,7 +281,7 @@ public class CinesRequestHandlerService {
 
 					}
 
-					parseXml(partIs, fr.progilone.pgcn.domain.jaxb.aip.ObjectFactory.class).map(elt -> {
+					parseXml(partIs, org.numahop.numahop.domain.jaxb.aip.ObjectFactory.class).map(elt -> {
 						@SuppressWarnings("unchecked")
 						JAXBElement<PacType> jaxbElement = (JAXBElement<PacType>) elt;
 						return jaxbElement.getValue();
@@ -309,7 +309,7 @@ public class CinesRequestHandlerService {
 
 			String avisContent = (String) content;
 			parseXml(new ByteArrayInputStream(avisContent.getBytes()),
-					fr.progilone.pgcn.domain.jaxb.avis.ObjectFactory.class)
+					org.numahop.numahop.domain.jaxb.avis.ObjectFactory.class)
 				.map(elt -> {
 					@SuppressWarnings("unchecked")
 					JAXBElement<PacAvisType> jaxbElement = (JAXBElement<PacAvisType>) elt;

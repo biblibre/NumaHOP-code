@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.checkconfiguration;
+package org.numahop.numahop.repository.checkconfiguration;
 
-import fr.progilone.pgcn.domain.checkconfiguration.CheckConfiguration;
+import org.numahop.numahop.domain.checkconfiguration.CheckConfiguration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;

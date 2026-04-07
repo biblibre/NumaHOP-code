@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.util;
+package org.numahop.numahop.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.exception.message.PgcnList;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.exception.message.PgcnList;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Objects;

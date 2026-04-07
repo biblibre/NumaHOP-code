@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.check;
+package org.numahop.numahop.domain.check;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.AbstractDomainObject;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

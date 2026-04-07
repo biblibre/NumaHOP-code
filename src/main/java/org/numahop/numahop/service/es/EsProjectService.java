@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.es;
+package org.numahop.numahop.service.es;
 
-import fr.progilone.pgcn.domain.es.project.EsProject;
-import fr.progilone.pgcn.domain.project.Project;
-import fr.progilone.pgcn.repository.es.EsProjectRepository;
-import fr.progilone.pgcn.repository.es.helper.EsSearchOperation;
-import fr.progilone.pgcn.repository.es.helper.EsSort;
-import fr.progilone.pgcn.repository.project.ProjectRepository;
-import fr.progilone.pgcn.service.util.transaction.TransactionService;
+import org.numahop.numahop.domain.es.project.EsProject;
+import org.numahop.numahop.domain.project.Project;
+import org.numahop.numahop.repository.es.EsProjectRepository;
+import org.numahop.numahop.repository.es.helper.EsSearchOperation;
+import org.numahop.numahop.repository.es.helper.EsSort;
+import org.numahop.numahop.repository.project.ProjectRepository;
+import org.numahop.numahop.service.util.transaction.TransactionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

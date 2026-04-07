@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.administration;
+package org.numahop.numahop.service.administration;
 
-import fr.progilone.pgcn.domain.administration.CinesPAC;
-import fr.progilone.pgcn.repository.administration.CinesPACRepository;
-import fr.progilone.pgcn.security.SecurityUtils;
+import org.numahop.numahop.domain.administration.CinesPAC;
+import org.numahop.numahop.repository.administration.CinesPACRepository;
+import org.numahop.numahop.security.SecurityUtils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

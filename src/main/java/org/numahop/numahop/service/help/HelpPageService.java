@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.help;
+package org.numahop.numahop.service.help;
 
-import fr.progilone.pgcn.domain.dto.help.HelpPageDto;
-import fr.progilone.pgcn.domain.dto.help.ModuleDto;
-import fr.progilone.pgcn.domain.help.HelpPage;
-import fr.progilone.pgcn.domain.help.HelpPageType;
-import fr.progilone.pgcn.repository.help.HelpPageRepository;
+import org.numahop.numahop.domain.dto.help.HelpPageDto;
+import org.numahop.numahop.domain.dto.help.ModuleDto;
+import org.numahop.numahop.domain.help.HelpPage;
+import org.numahop.numahop.domain.help.HelpPageType;
+import org.numahop.numahop.repository.help.HelpPageRepository;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;

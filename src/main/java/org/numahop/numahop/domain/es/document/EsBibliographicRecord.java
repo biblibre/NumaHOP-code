@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.domain.es.document;
+package org.numahop.numahop.domain.es.document;
 
-import static fr.progilone.pgcn.service.es.EsConstant.*;
+import static org.numahop.numahop.service.es.EsConstant.*;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.es.library.EsLibrary;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.es.library.EsLibrary;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;

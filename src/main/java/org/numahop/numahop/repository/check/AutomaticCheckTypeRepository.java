@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.repository.check;
+package org.numahop.numahop.repository.check;
 
-import fr.progilone.pgcn.domain.check.AutomaticCheckType;
-import fr.progilone.pgcn.domain.check.AutomaticCheckType.AutoCheckType;
+import org.numahop.numahop.domain.check.AutomaticCheckType;
+import org.numahop.numahop.domain.check.AutomaticCheckType.AutoCheckType;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

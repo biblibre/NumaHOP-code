@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.service.workflow.mapper;
+package org.numahop.numahop.service.workflow.mapper;
 
-import fr.progilone.pgcn.domain.dto.workflow.SimpleWorkflowGroupDTO;
-import fr.progilone.pgcn.domain.dto.workflow.SimpleWorkflowModelDTO;
-import fr.progilone.pgcn.domain.dto.workflow.SimpleWorkflowModelStateDTO;
-import fr.progilone.pgcn.domain.workflow.WorkflowGroup;
-import fr.progilone.pgcn.domain.workflow.WorkflowModel;
-import fr.progilone.pgcn.domain.workflow.WorkflowModelState;
+import org.numahop.numahop.domain.dto.workflow.SimpleWorkflowGroupDTO;
+import org.numahop.numahop.domain.dto.workflow.SimpleWorkflowModelDTO;
+import org.numahop.numahop.domain.dto.workflow.SimpleWorkflowModelStateDTO;
+import org.numahop.numahop.domain.workflow.WorkflowGroup;
+import org.numahop.numahop.domain.workflow.WorkflowModel;
+import org.numahop.numahop.domain.workflow.WorkflowModelState;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

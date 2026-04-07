@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.service.exchange.omeka;
+package org.numahop.numahop.service.exchange.omeka;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.DocUnit.ExportStatus;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
-import fr.progilone.pgcn.repository.document.DocUnitRepository;
-import fr.progilone.pgcn.service.administration.omeka.OmekaConfigurationService;
-import fr.progilone.pgcn.service.library.LibraryService;
-import fr.progilone.pgcn.service.util.transaction.TransactionService;
-import fr.progilone.pgcn.service.util.transaction.TransactionalJobRunner;
-import fr.progilone.pgcn.service.workflow.WorkflowService;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.DocUnit.ExportStatus;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.repository.document.DocUnitRepository;
+import org.numahop.numahop.service.administration.omeka.OmekaConfigurationService;
+import org.numahop.numahop.service.library.LibraryService;
+import org.numahop.numahop.service.util.transaction.TransactionService;
+import org.numahop.numahop.service.util.transaction.TransactionalJobRunner;
+import org.numahop.numahop.service.workflow.WorkflowService;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.collections.CollectionUtils;

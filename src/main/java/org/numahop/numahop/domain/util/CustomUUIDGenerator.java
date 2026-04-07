@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.util;
+package org.numahop.numahop.domain.util;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.AbstractDomainObject;
 import java.lang.reflect.Member;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;

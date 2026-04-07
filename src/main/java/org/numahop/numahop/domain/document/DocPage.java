@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.domain.document;
+package org.numahop.numahop.domain.document;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration;
-import fr.progilone.pgcn.domain.check.AutomaticCheckResult;
-import fr.progilone.pgcn.domain.document.sample.Sample;
-import fr.progilone.pgcn.domain.storage.StoredFile;
-import fr.progilone.pgcn.domain.storage.StoredFile.StoredFileType;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration;
+import org.numahop.numahop.domain.check.AutomaticCheckResult;
+import org.numahop.numahop.domain.document.sample.Sample;
+import org.numahop.numahop.domain.storage.StoredFile;
+import org.numahop.numahop.domain.storage.StoredFile.StoredFileType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

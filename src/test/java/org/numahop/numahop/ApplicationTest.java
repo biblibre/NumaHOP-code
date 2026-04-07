@@ -1,4 +1,4 @@
-package fr.progilone.pgcn;
+package org.numahop.numahop;
 
 import java.util.stream.Stream;
 import javax.sql.DataSource;
@@ -25,7 +25,7 @@ public class ApplicationTest implements EnvironmentAware {
 		final LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
 		bean.setDataSource(datasource);
 		bean.setJpaVendorAdapter(jpaVendorAdapter);
-		bean.setPackagesToScan("fr.progilone.pgcn.domain");
+		bean.setPackagesToScan("org.numahop.numahop.domain");
 
 		Stream
 			.of("spring.jpa.properties.hibernate.cache.use_second_level_cache",

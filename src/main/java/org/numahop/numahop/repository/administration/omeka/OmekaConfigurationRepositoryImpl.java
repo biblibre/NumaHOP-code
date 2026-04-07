@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.repository.administration.omeka;
+package org.numahop.numahop.repository.administration.omeka;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.administration.omeka.OmekaConfiguration;
-import fr.progilone.pgcn.domain.administration.omeka.QOmekaConfiguration;
+import org.numahop.numahop.domain.administration.omeka.OmekaConfiguration;
+import org.numahop.numahop.domain.administration.omeka.QOmekaConfiguration;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;

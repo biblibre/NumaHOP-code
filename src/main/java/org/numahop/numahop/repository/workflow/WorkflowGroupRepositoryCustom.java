@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.workflow;
+package org.numahop.numahop.repository.workflow;
 
-import fr.progilone.pgcn.domain.workflow.WorkflowGroup;
+import org.numahop.numahop.domain.workflow.WorkflowGroup;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

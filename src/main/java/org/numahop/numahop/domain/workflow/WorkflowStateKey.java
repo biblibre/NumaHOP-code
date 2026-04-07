@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.workflow;
+package org.numahop.numahop.domain.workflow;
 
 public enum WorkflowStateKey {
 

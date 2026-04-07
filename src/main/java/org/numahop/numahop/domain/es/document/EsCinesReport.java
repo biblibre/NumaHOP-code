@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.es.document;
+package org.numahop.numahop.domain.es.document;
 
-import fr.progilone.pgcn.domain.exchange.cines.CinesReport;
-import fr.progilone.pgcn.domain.exchange.cines.CinesReport.Status;
+import org.numahop.numahop.domain.exchange.cines.CinesReport;
+import org.numahop.numahop.domain.exchange.cines.CinesReport.Status;
 import java.time.LocalDate;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;

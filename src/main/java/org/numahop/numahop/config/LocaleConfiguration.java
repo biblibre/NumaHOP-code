@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.config;
+package org.numahop.numahop.config;
 
-import fr.progilone.pgcn.config.locale.AngularCookieLocaleResolver;
+import org.numahop.numahop.config.locale.AngularCookieLocaleResolver;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.MessageSource;

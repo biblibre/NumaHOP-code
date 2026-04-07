@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.user;
+package org.numahop.numahop.domain.dto.user;
 
-import fr.progilone.pgcn.domain.user.Address;
+import org.numahop.numahop.domain.user.Address;
 
 /**
  * Adresse DTO

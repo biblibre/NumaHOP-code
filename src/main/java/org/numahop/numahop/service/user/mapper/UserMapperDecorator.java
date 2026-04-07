@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.user.mapper;
+package org.numahop.numahop.service.user.mapper;
 
-import fr.progilone.pgcn.domain.dto.user.UserDTO;
-import fr.progilone.pgcn.domain.user.User;
+import org.numahop.numahop.domain.dto.user.UserDTO;
+import org.numahop.numahop.domain.user.User;
 
 public abstract class UserMapperDecorator implements UserMapper {
 

@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.dto.library;
+package org.numahop.numahop.domain.dto.library;
 
 /**
  * DTO représentant une valeur de paramétrage du cines

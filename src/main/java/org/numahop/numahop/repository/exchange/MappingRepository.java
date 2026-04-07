@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.repository.exchange;
+package org.numahop.numahop.repository.exchange;
 
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.domain.library.Library;
 import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

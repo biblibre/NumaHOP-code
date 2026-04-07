@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.service.document;
+package org.numahop.numahop.service.document;
 
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocProperty;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.dto.document.BibliographicRecordDcDTO;
-import fr.progilone.pgcn.domain.dto.document.BibliographicRecordMassUpdateDTO;
-import fr.progilone.pgcn.repository.document.BibliographicRecordRepository;
-import fr.progilone.pgcn.service.document.mapper.DocPropertyMapper;
-import fr.progilone.pgcn.service.es.EsDocUnitService;
-import fr.progilone.pgcn.service.util.SortUtils;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocProperty;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.dto.document.BibliographicRecordDcDTO;
+import org.numahop.numahop.domain.dto.document.BibliographicRecordMassUpdateDTO;
+import org.numahop.numahop.repository.document.BibliographicRecordRepository;
+import org.numahop.numahop.service.document.mapper.DocPropertyMapper;
+import org.numahop.numahop.service.es.EsDocUnitService;
+import org.numahop.numahop.service.util.SortUtils;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.ArrayList;

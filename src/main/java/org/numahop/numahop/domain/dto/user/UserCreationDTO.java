@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.dto.user;
+package org.numahop.numahop.domain.dto.user;
 
-import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
-import fr.progilone.pgcn.domain.user.Lang;
-import fr.progilone.pgcn.domain.user.User;
+import org.numahop.numahop.domain.dto.library.SimpleLibraryDTO;
+import org.numahop.numahop.domain.user.Lang;
+import org.numahop.numahop.domain.user.User;
 import java.time.LocalDateTime;
 
 /**

@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.statistics.mapper;
+package org.numahop.numahop.service.statistics.mapper;
 
-import fr.progilone.pgcn.domain.dto.statistics.WorkflowDeliveryProgressDTO;
-import fr.progilone.pgcn.domain.dto.statistics.WorkflowDocUnitProgressDTO;
-import fr.progilone.pgcn.domain.dto.statistics.csv.WorkflowDeliveryProgressCsvDTO;
-import fr.progilone.pgcn.domain.dto.statistics.csv.WorkflowDocUnitProgressCsvDTO;
+import org.numahop.numahop.domain.dto.statistics.WorkflowDeliveryProgressDTO;
+import org.numahop.numahop.domain.dto.statistics.WorkflowDocUnitProgressDTO;
+import org.numahop.numahop.domain.dto.statistics.csv.WorkflowDeliveryProgressCsvDTO;
+import org.numahop.numahop.domain.dto.statistics.csv.WorkflowDocUnitProgressCsvDTO;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;

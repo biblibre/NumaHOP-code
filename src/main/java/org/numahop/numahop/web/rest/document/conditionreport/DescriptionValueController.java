@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.web.rest.document.conditionreport;
+package org.numahop.numahop.web.rest.document.conditionreport;
 
-import static fr.progilone.pgcn.web.rest.document.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.document.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionValue;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.service.document.conditionreport.DescriptionValueService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionValue;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.service.document.conditionreport.DescriptionValueService;
+import org.numahop.numahop.web.rest.AbstractRestController;
 import jakarta.annotation.security.RolesAllowed;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

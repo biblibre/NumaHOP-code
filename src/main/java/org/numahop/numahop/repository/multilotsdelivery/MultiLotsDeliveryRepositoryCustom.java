@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.repository.multilotsdelivery;
+package org.numahop.numahop.repository.multilotsdelivery;
 
-import fr.progilone.pgcn.domain.delivery.Delivery;
-import fr.progilone.pgcn.domain.multilotsdelivery.MultiLotsDelivery;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.domain.delivery.Delivery;
+import org.numahop.numahop.domain.multilotsdelivery.MultiLotsDelivery;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.Page;

@@ -1,18 +1,18 @@
-package fr.progilone.pgcn.web.rest.document.conditionreport;
+package org.numahop.numahop.web.rest.document.conditionreport;
 
-import static fr.progilone.pgcn.web.rest.document.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.document.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionProperty;
-import fr.progilone.pgcn.domain.document.conditionreport.PropertyConfiguration;
-import fr.progilone.pgcn.domain.dto.document.conditionreport.PropertyConfigurationDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.project.Project;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.service.document.conditionreport.ui.UiPropertyConfigurationService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.AccessHelper;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionProperty;
+import org.numahop.numahop.domain.document.conditionreport.PropertyConfiguration;
+import org.numahop.numahop.domain.dto.document.conditionreport.PropertyConfigurationDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.project.Project;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.service.document.conditionreport.ui.UiPropertyConfigurationService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.AccessHelper;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;

@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.exchange.marc;
+package org.numahop.numahop.service.exchange.marc;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import fr.progilone.pgcn.domain.exchange.DataEncoding;
-import fr.progilone.pgcn.service.exchange.marc.mapping.MarcKey;
+import org.numahop.numahop.domain.exchange.DataEncoding;
+import org.numahop.numahop.service.exchange.marc.mapping.MarcKey;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;

@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.jaxb.urn;
+package org.numahop.numahop.domain.jaxb.urn;
 
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.annotation.XmlElementDecl;

@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.config;
+package org.numahop.numahop.config;
 
-import fr.progilone.pgcn.service.storage.BinaryStorageManager;
+import org.numahop.numahop.service.storage.BinaryStorageManager;
 import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import org.slf4j.Logger;

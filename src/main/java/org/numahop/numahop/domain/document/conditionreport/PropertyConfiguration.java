@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.domain.document.conditionreport;
+package org.numahop.numahop.domain.document.conditionreport;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.library.Library;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;

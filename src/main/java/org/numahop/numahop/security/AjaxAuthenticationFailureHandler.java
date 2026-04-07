@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.security;
+package org.numahop.numahop.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.dto.document;
+package org.numahop.numahop.domain.dto.document;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.dto.AbstractDTO;
 
 /**
  * DTO représentant un type de propriété de doc

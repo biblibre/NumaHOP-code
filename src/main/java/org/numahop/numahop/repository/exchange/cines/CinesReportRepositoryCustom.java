@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.exchange.cines;
+package org.numahop.numahop.repository.exchange.cines;
 
-import fr.progilone.pgcn.domain.exchange.cines.CinesReport;
+import org.numahop.numahop.domain.exchange.cines.CinesReport;
 import java.time.LocalDate;
 import java.util.List;
 

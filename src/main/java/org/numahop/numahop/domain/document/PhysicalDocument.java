@@ -1,11 +1,11 @@
 /**
  *
  */
-package fr.progilone.pgcn.domain.document;
+package org.numahop.numahop.domain.document;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.check.AutomaticCheckResult;
-import fr.progilone.pgcn.domain.train.Train;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.check.AutomaticCheckResult;
+import org.numahop.numahop.domain.train.Train;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

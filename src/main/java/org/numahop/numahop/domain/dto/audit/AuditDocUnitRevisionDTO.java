@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.dto.audit;
+package org.numahop.numahop.domain.dto.audit;
 
 public class AuditDocUnitRevisionDTO {
 

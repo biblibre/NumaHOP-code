@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service;
+package org.numahop.numahop.service;
 
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;

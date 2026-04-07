@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.dto.statistics.csv;
+package org.numahop.numahop.domain.dto.statistics.csv;
 
 import com.google.common.collect.Ordering;
 import com.opencsv.bean.CsvBindByName;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
 import jakarta.annotation.Nullable;
 
 public class WorkflowDeliveryProgressCsvDTO implements Comparable<WorkflowDeliveryProgressCsvDTO> {

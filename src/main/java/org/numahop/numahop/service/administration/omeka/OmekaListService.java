@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.administration.omeka;
+package org.numahop.numahop.service.administration.omeka;
 
-import fr.progilone.pgcn.domain.administration.InternetArchiveConfiguration;
-import fr.progilone.pgcn.domain.administration.omeka.OmekaList;
-import fr.progilone.pgcn.repository.administration.omeka.OmekaListRepository;
-import fr.progilone.pgcn.security.SecurityUtils;
+import org.numahop.numahop.domain.administration.InternetArchiveConfiguration;
+import org.numahop.numahop.domain.administration.omeka.OmekaList;
+import org.numahop.numahop.repository.administration.omeka.OmekaListRepository;
+import org.numahop.numahop.security.SecurityUtils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.repository.exchange;
+package org.numahop.numahop.repository.exchange;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.QDocUnit;
-import fr.progilone.pgcn.domain.exchange.ImportReport;
-import fr.progilone.pgcn.domain.exchange.QImportedDocUnit;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.QDocUnit;
+import org.numahop.numahop.domain.exchange.ImportReport;
+import org.numahop.numahop.domain.exchange.QImportedDocUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

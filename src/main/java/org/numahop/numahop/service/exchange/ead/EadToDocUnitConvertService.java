@@ -1,16 +1,16 @@
-package fr.progilone.pgcn.service.exchange.ead;
+package org.numahop.numahop.service.exchange.ead;
 
 import com.google.common.collect.Iterables;
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.exchange.MappingRule;
-import fr.progilone.pgcn.domain.jaxb.ead.C;
-import fr.progilone.pgcn.service.exchange.AbstractImportConvertService;
-import fr.progilone.pgcn.service.exchange.ExchangeHelper;
-import fr.progilone.pgcn.service.exchange.ead.mapping.CompiledMapping;
-import fr.progilone.pgcn.service.exchange.ead.mapping.CompiledMappingRule;
-import fr.progilone.pgcn.service.exchange.ead.mapping.RuleKey;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.exchange.MappingRule;
+import org.numahop.numahop.domain.jaxb.ead.C;
+import org.numahop.numahop.service.exchange.AbstractImportConvertService;
+import org.numahop.numahop.service.exchange.ExchangeHelper;
+import org.numahop.numahop.service.exchange.ead.mapping.CompiledMapping;
+import org.numahop.numahop.service.exchange.ead.mapping.CompiledMappingRule;
+import org.numahop.numahop.service.exchange.ead.mapping.RuleKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

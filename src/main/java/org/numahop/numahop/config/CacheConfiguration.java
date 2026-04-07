@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.config;
+package org.numahop.numahop.config;
 
 import java.time.Duration;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
@@ -41,15 +41,15 @@ public class CacheConfiguration {
 	@Bean
 	public JCacheManagerCustomizer cacheManagerCustomizer() {
 		return cm -> {
-			createCache(cm, fr.progilone.pgcn.domain.user.Authorization.class.getName());
-			createCache(cm, fr.progilone.pgcn.domain.user.User.class.getName());
-			createCache(cm, fr.progilone.pgcn.domain.security.PersistentToken.class.getName());
-			createCache(cm, fr.progilone.pgcn.domain.user.User.class.getName() + ".persistentTokens");
-			createCache(cm, fr.progilone.pgcn.domain.library.Library.class.getName());
-			createCache(cm, fr.progilone.pgcn.domain.user.Address.class.getName());
-			createCache(cm, fr.progilone.pgcn.domain.document.DocPropertyType.class.getName());
-			createCache(cm, fr.progilone.pgcn.domain.ocrlangconfiguration.OcrLanguage.class.getName());
-			createCache(cm, fr.progilone.pgcn.domain.check.AutomaticCheckType.class.getName());
+			createCache(cm, org.numahop.numahop.domain.user.Authorization.class.getName());
+			createCache(cm, org.numahop.numahop.domain.user.User.class.getName());
+			createCache(cm, org.numahop.numahop.domain.security.PersistentToken.class.getName());
+			createCache(cm, org.numahop.numahop.domain.user.User.class.getName() + ".persistentTokens");
+			createCache(cm, org.numahop.numahop.domain.library.Library.class.getName());
+			createCache(cm, org.numahop.numahop.domain.user.Address.class.getName());
+			createCache(cm, org.numahop.numahop.domain.document.DocPropertyType.class.getName());
+			createCache(cm, org.numahop.numahop.domain.ocrlangconfiguration.OcrLanguage.class.getName());
+			createCache(cm, org.numahop.numahop.domain.check.AutomaticCheckType.class.getName());
 		};
 	}
 

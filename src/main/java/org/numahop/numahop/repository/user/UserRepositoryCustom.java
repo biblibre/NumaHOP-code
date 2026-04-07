@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.repository.user;
+package org.numahop.numahop.repository.user;
 
-import fr.progilone.pgcn.domain.user.User;
-import fr.progilone.pgcn.domain.user.User.Category;
+import org.numahop.numahop.domain.user.User;
+import org.numahop.numahop.domain.user.User.Category;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

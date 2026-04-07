@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.administration.viewsformat;
+package org.numahop.numahop.repository.administration.viewsformat;
 
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

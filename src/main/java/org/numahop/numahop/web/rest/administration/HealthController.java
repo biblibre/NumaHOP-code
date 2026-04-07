@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.web.rest.administration;
+package org.numahop.numahop.web.rest.administration;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;

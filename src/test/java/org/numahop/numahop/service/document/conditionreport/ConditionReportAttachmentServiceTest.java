@@ -1,16 +1,16 @@
-package fr.progilone.pgcn.service.document.conditionreport;
+package org.numahop.numahop.service.document.conditionreport;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReport;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReportAttachment;
-import fr.progilone.pgcn.repository.document.conditionreport.ConditionReportAttachmentRepository;
-import fr.progilone.pgcn.repository.document.conditionreport.ConditionReportRepository;
-import fr.progilone.pgcn.service.storage.FileStorageManager;
-import fr.progilone.pgcn.util.SetIdAndReturnsArgumentAt;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReport;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReportAttachment;
+import org.numahop.numahop.repository.document.conditionreport.ConditionReportAttachmentRepository;
+import org.numahop.numahop.repository.document.conditionreport.ConditionReportRepository;
+import org.numahop.numahop.service.storage.FileStorageManager;
+import org.numahop.numahop.util.SetIdAndReturnsArgumentAt;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;

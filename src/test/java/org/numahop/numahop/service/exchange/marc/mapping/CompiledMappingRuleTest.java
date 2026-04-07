@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.exchange.marc.mapping;
+package org.numahop.numahop.service.exchange.marc.mapping;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import fr.progilone.pgcn.domain.exchange.MappingRule;
-import fr.progilone.pgcn.util.TestUtil;
+import org.numahop.numahop.domain.exchange.MappingRule;
+import org.numahop.numahop.util.TestUtil;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 

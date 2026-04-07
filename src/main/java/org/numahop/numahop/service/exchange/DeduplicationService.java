@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.exchange;
+package org.numahop.numahop.service.exchange;
 
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocProperty;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.repository.document.DocUnitRepository;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocProperty;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.repository.document.DocUnitRepository;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;

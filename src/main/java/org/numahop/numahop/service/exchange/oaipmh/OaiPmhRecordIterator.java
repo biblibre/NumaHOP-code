@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.exchange.oaipmh;
+package org.numahop.numahop.service.exchange.oaipmh;
 
-import fr.progilone.pgcn.domain.jaxb.oaidc.OaiDcType;
-import fr.progilone.pgcn.domain.jaxb.oaipmh.OAIPMHtype;
-import fr.progilone.pgcn.domain.jaxb.oaipmh.ResumptionTokenType;
+import org.numahop.numahop.domain.jaxb.oaidc.OaiDcType;
+import org.numahop.numahop.domain.jaxb.oaipmh.OAIPMHtype;
+import org.numahop.numahop.domain.jaxb.oaipmh.ResumptionTokenType;
 import java.util.Iterator;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;

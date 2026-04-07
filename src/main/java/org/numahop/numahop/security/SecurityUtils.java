@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.security;
+package org.numahop.numahop.security;
 
-import fr.progilone.pgcn.domain.user.Lang;
-import fr.progilone.pgcn.domain.util.CustomUserDetails;
+import org.numahop.numahop.domain.user.Lang;
+import org.numahop.numahop.domain.util.CustomUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;

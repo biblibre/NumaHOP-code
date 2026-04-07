@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.dto.project;
+package org.numahop.numahop.domain.dto.project;
 
 /**
  * DTO représentant un Projet

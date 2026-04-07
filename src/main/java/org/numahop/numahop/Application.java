@@ -1,6 +1,6 @@
-package fr.progilone.pgcn;
+package org.numahop.numahop;
 
-import fr.progilone.pgcn.config.Constants;
+import org.numahop.numahop.config.Constants;
 import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.Arrays;

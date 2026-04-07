@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.service.exchange.ssh;
+package org.numahop.numahop.service.exchange.ssh;
 
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
+import org.numahop.numahop.exception.PgcnTechnicalException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

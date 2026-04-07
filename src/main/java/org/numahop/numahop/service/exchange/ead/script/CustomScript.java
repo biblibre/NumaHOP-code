@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.exchange.ead.script;
+package org.numahop.numahop.service.exchange.ead.script;
 
-import fr.progilone.pgcn.service.exchange.ead.script.format.NormalFormatter;
-import fr.progilone.pgcn.service.exchange.ead.script.format.TextFormatter;
+import org.numahop.numahop.service.exchange.ead.script.format.NormalFormatter;
+import org.numahop.numahop.service.exchange.ead.script.format.TextFormatter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,7 @@ public abstract class CustomScript {
 	 */
 	public String[] getScriptImport() {
 		// return new String[]{"import org.marc4j.marc.*", "import
-		// fr.progilone.pgcn.service.exchange.marc.formatter.*"};
+		// org.numahop.numahop.service.exchange.marc.formatter.*"};
 		return new String[] {};
 	}
 

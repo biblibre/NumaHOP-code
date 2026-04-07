@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.delivery;
+package org.numahop.numahop.service.delivery;
 
-import fr.progilone.pgcn.domain.document.DigitalDocument;
-import fr.progilone.pgcn.domain.document.PhysicalDocument;
+import org.numahop.numahop.domain.document.DigitalDocument;
+import org.numahop.numahop.domain.document.PhysicalDocument;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.exception.message;
+package org.numahop.numahop.exception.message;
 
 /**
  * Enum des types d'erreurs métier

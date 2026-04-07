@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.workflow;
+package org.numahop.numahop.service.workflow;
 
-import fr.progilone.pgcn.domain.user.User;
-import fr.progilone.pgcn.domain.workflow.WorkflowGroup;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.repository.workflow.WorkflowGroupRepository;
-import fr.progilone.pgcn.service.util.SortUtils;
+import org.numahop.numahop.domain.user.User;
+import org.numahop.numahop.domain.workflow.WorkflowGroup;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.repository.workflow.WorkflowGroupRepository;
+import org.numahop.numahop.service.util.SortUtils;
 import java.util.Collection;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;

@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.workflow.state;
+package org.numahop.numahop.domain.workflow.state;
 
-import fr.progilone.pgcn.domain.user.User;
-import fr.progilone.pgcn.domain.workflow.DocUnitState;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.domain.user.User;
+import org.numahop.numahop.domain.workflow.DocUnitState;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import java.util.ArrayList;

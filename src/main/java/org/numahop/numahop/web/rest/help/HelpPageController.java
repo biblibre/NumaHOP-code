@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.web.rest.help;
+package org.numahop.numahop.web.rest.help;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.help.HelpPageDto;
-import fr.progilone.pgcn.domain.dto.help.ModuleDto;
-import fr.progilone.pgcn.domain.help.HelpPage;
-import fr.progilone.pgcn.domain.help.HelpPageType;
-import fr.progilone.pgcn.service.help.HelpPageService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
+import org.numahop.numahop.domain.dto.help.HelpPageDto;
+import org.numahop.numahop.domain.dto.help.ModuleDto;
+import org.numahop.numahop.domain.help.HelpPage;
+import org.numahop.numahop.domain.help.HelpPageType;
+import org.numahop.numahop.service.help.HelpPageService;
+import org.numahop.numahop.web.rest.AbstractRestController;
 import jakarta.annotation.security.PermitAll;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.filesgestionconfiguration;
+package org.numahop.numahop.service.filesgestionconfiguration;
 
-import fr.progilone.pgcn.domain.dto.filesgestionconfiguration.FilesGestionConfigDTO;
-import fr.progilone.pgcn.domain.filesgestionconfiguration.FilesGestionConfig;
-import fr.progilone.pgcn.service.exportftpconfiguration.mapper.ExportFTPConfigurationMapper;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.domain.dto.filesgestionconfiguration.FilesGestionConfigDTO;
+import org.numahop.numahop.domain.filesgestionconfiguration.FilesGestionConfig;
+import org.numahop.numahop.service.exportftpconfiguration.mapper.ExportFTPConfigurationMapper;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

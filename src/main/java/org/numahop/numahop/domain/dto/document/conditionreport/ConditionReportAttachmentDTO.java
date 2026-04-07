@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.dto.document.conditionreport;
+package org.numahop.numahop.domain.dto.document.conditionreport;
 
 import com.google.common.base.MoreObjects;
 

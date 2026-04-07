@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.administration.digitallibrary;
+package org.numahop.numahop.domain.dto.administration.digitallibrary;
 
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.library.Library;
 
 public class DigitalLibraryConfigurationDTO {
 

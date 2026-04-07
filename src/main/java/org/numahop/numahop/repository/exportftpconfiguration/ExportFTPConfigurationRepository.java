@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.repository.exportftpconfiguration;
+package org.numahop.numahop.repository.exportftpconfiguration;
 
-import fr.progilone.pgcn.domain.exportftpconfiguration.ExportFTPConfiguration;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.exportftpconfiguration.ExportFTPConfiguration;
+import org.numahop.numahop.domain.library.Library;
 import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

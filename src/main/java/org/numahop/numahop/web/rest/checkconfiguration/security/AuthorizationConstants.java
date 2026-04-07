@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.web.rest.checkconfiguration.security;
+package org.numahop.numahop.web.rest.checkconfiguration.security;
 
-import fr.progilone.pgcn.web.util.AuthorizationManager;
+import org.numahop.numahop.web.util.AuthorizationManager;
 
 @AuthorizationManager.Init
 public final class AuthorizationConstants {

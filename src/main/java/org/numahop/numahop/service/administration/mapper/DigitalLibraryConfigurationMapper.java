@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.administration.mapper;
+package org.numahop.numahop.service.administration.mapper;
 
-import fr.progilone.pgcn.domain.administration.digitallibrary.DigitalLibraryConfiguration;
-import fr.progilone.pgcn.domain.dto.administration.digitallibrary.DigitalLibraryConfigurationDTO;
+import org.numahop.numahop.domain.administration.digitallibrary.DigitalLibraryConfiguration;
+import org.numahop.numahop.domain.dto.administration.digitallibrary.DigitalLibraryConfigurationDTO;
 import java.util.Collection;
 import org.mapstruct.Mapper;
 

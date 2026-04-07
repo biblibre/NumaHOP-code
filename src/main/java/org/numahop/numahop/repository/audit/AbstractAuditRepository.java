@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.repository.audit;
+package org.numahop.numahop.repository.audit;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.audit.AuditRevision;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.audit.AuditRevision;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;

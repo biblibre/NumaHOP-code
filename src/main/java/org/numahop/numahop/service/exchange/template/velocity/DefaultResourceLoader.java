@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.service.exchange.template.velocity;
+package org.numahop.numahop.service.exchange.template.velocity;
 
-import fr.progilone.pgcn.service.exchange.template.loader.ResourceName;
+import org.numahop.numahop.service.exchange.template.loader.ResourceName;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import org.apache.velocity.runtime.resource.Resource;
@@ -15,20 +15,20 @@ import org.apache.velocity.util.ExtProperties;
  * Exemple de configuration: <code>
  * Velocity.setProperty(Velocity.RESOURCE_LOADER, "ds");
  * Velocity.setProperty("ds.resource.loader.class",
- * "fr.progilone.pgcn.service.exchange.template.velocity.DefaultResourceLoader");
+ * "org.numahop.numahop.service.exchange.template.velocity.DefaultResourceLoader");
  * Velocity.setProperty("ds.resource.loader.basepath", "/templates/");
  * </code>
  *
- * @see fr.progilone.pgcn.service.exchange.template.loader.DefaultResourceLoader
+ * @see org.numahop.numahop.service.exchange.template.loader.DefaultResourceLoader
  */
 public class DefaultResourceLoader extends ClasspathResourceLoader {
 
-	private fr.progilone.pgcn.service.exchange.template.loader.DefaultResourceLoader delegate;
+	private org.numahop.numahop.service.exchange.template.loader.DefaultResourceLoader delegate;
 
 	@Override
 	public void init(final ExtProperties configuration) {
 		final String basePath = configuration.getString("basepath", "");
-		delegate = new fr.progilone.pgcn.service.exchange.template.loader.DefaultResourceLoader(basePath);
+		delegate = new org.numahop.numahop.service.exchange.template.loader.DefaultResourceLoader(basePath);
 		super.init(configuration);
 	}
 

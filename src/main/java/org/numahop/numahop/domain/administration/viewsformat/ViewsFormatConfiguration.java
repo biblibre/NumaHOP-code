@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.administration.viewsformat;
+package org.numahop.numahop.domain.administration.viewsformat;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.service.util.DefaultFileFormats;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.service.util.DefaultFileFormats;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

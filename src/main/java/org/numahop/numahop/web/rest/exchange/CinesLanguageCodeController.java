@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.web.rest.exchange;
+package org.numahop.numahop.web.rest.exchange;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.exchange.cines.CinesLanguageCode;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.service.exchange.cines.CinesLanguageCodeService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
+import org.numahop.numahop.domain.exchange.cines.CinesLanguageCode;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.service.exchange.cines.CinesLanguageCodeService;
+import org.numahop.numahop.web.rest.AbstractRestController;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

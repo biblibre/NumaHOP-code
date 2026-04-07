@@ -1,21 +1,21 @@
-package fr.progilone.pgcn.web.rest.administration.omeka;
+package org.numahop.numahop.web.rest.administration.omeka;
 
-import static fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants.*;
-import static fr.progilone.pgcn.web.rest.document.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.administration.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.document.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.administration.omeka.OmekaConfiguration;
-import fr.progilone.pgcn.domain.administration.omeka.OmekaList;
-import fr.progilone.pgcn.domain.dto.administration.omeka.OmekaConfigurationDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.project.Project;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.service.administration.omeka.OmekaConfigurationService;
-import fr.progilone.pgcn.service.administration.omeka.OmekaListService;
-import fr.progilone.pgcn.service.administration.omeka.UIOmekaConfigurationService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.AccessHelper;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.administration.omeka.OmekaConfiguration;
+import org.numahop.numahop.domain.administration.omeka.OmekaList;
+import org.numahop.numahop.domain.dto.administration.omeka.OmekaConfigurationDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.project.Project;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.service.administration.omeka.OmekaConfigurationService;
+import org.numahop.numahop.service.administration.omeka.OmekaListService;
+import org.numahop.numahop.service.administration.omeka.UIOmekaConfigurationService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.AccessHelper;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collection;

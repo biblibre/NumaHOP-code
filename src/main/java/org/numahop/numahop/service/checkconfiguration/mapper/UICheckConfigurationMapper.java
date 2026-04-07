@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.checkconfiguration.mapper;
+package org.numahop.numahop.service.checkconfiguration.mapper;
 
-import fr.progilone.pgcn.domain.checkconfiguration.AutomaticCheckRule;
-import fr.progilone.pgcn.domain.checkconfiguration.CheckConfiguration;
-import fr.progilone.pgcn.domain.dto.checkconfiguration.CheckConfigurationDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.repository.library.LibraryRepository;
+import org.numahop.numahop.domain.checkconfiguration.AutomaticCheckRule;
+import org.numahop.numahop.domain.checkconfiguration.CheckConfiguration;
+import org.numahop.numahop.domain.dto.checkconfiguration.CheckConfigurationDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.repository.library.LibraryRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.mapstruct.factory.Mappers;

@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.web.filter.gzip;
+package org.numahop.numahop.web.filter.gzip;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

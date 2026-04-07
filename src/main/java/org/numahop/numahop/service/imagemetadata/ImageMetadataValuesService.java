@@ -1,14 +1,14 @@
-package fr.progilone.pgcn.service.imagemetadata;
+package org.numahop.numahop.service.imagemetadata;
 
-import fr.progilone.pgcn.domain.dto.imagemetadata.ImageMetadataValuesDTO;
-import fr.progilone.pgcn.domain.imagemetadata.ImageMetadataProperty;
-import fr.progilone.pgcn.domain.imagemetadata.ImageMetadataValue;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.exception.message.PgcnList;
-import fr.progilone.pgcn.repository.imagemetadata.ImageMetadataValuesRepository;
-import fr.progilone.pgcn.service.document.mapper.ImageMetadataValuesMapper;
+import org.numahop.numahop.domain.dto.imagemetadata.ImageMetadataValuesDTO;
+import org.numahop.numahop.domain.imagemetadata.ImageMetadataProperty;
+import org.numahop.numahop.domain.imagemetadata.ImageMetadataValue;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.exception.message.PgcnList;
+import org.numahop.numahop.repository.imagemetadata.ImageMetadataValuesRepository;
+import org.numahop.numahop.service.document.mapper.ImageMetadataValuesMapper;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.config;
+package org.numahop.numahop.config;
 
 import com.ryantenney.metrics.spring.config.annotation.EnableMetrics;
-import fr.progilone.pgcn.service.storage.ImageMagickService;
+import org.numahop.numahop.service.storage.ImageMagickService;
 import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import org.slf4j.Logger;

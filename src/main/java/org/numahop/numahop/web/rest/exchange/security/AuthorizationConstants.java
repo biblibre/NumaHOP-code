@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.web.rest.exchange.security;
+package org.numahop.numahop.web.rest.exchange.security;
 
-import fr.progilone.pgcn.web.util.AuthorizationManager;
+import org.numahop.numahop.web.util.AuthorizationManager;
 
 /**
  * Habilitations du module Import/Export (EXC)

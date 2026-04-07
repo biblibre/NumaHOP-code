@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.exchange.dc;
+package org.numahop.numahop.service.exchange.dc;
 
-import fr.progilone.pgcn.domain.jaxb.oaidc.OaiDcType;
-import fr.progilone.pgcn.domain.jaxb.oaidc.ObjectFactory;
+import org.numahop.numahop.domain.jaxb.oaidc.OaiDcType;
+import org.numahop.numahop.domain.jaxb.oaidc.ObjectFactory;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;

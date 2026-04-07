@@ -1,17 +1,17 @@
-package fr.progilone.pgcn.web.rest.ftpconfiguration;
+package org.numahop.numahop.web.rest.ftpconfiguration;
 
-import static fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.administration.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.ftpconfiguration.FTPConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.ftpconfiguration.SimpleFTPConfigurationDTO;
-import fr.progilone.pgcn.domain.ftpconfiguration.FTPConfiguration;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.service.ftpconfiguration.FTPConfigurationService;
-import fr.progilone.pgcn.service.ftpconfiguration.ui.UIFTPConfigurationService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.dto.ftpconfiguration.FTPConfigurationDTO;
+import org.numahop.numahop.domain.dto.ftpconfiguration.SimpleFTPConfigurationDTO;
+import org.numahop.numahop.domain.ftpconfiguration.FTPConfiguration;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.service.ftpconfiguration.FTPConfigurationService;
+import org.numahop.numahop.service.ftpconfiguration.ui.UIFTPConfigurationService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;

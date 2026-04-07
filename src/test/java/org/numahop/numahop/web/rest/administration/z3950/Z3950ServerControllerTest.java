@@ -1,14 +1,14 @@
-package fr.progilone.pgcn.web.rest.administration.z3950;
+package org.numahop.numahop.web.rest.administration.z3950;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import fr.progilone.pgcn.domain.administration.exchange.z3950.Z3950Server;
-import fr.progilone.pgcn.domain.dto.administration.z3950.Z3950ServerDTO;
-import fr.progilone.pgcn.service.administration.z3950.Z3950ServerService;
-import fr.progilone.pgcn.util.TestUtil;
+import org.numahop.numahop.domain.administration.exchange.z3950.Z3950Server;
+import org.numahop.numahop.domain.dto.administration.z3950.Z3950ServerDTO;
+import org.numahop.numahop.service.administration.z3950.Z3950ServerService;
+import org.numahop.numahop.util.TestUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

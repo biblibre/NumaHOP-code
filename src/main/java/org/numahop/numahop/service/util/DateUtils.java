@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.util;
+package org.numahop.numahop.service.util;
 
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import java.text.ParseException;

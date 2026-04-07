@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.exchange.cines;
+package org.numahop.numahop.repository.exchange.cines;
 
-import fr.progilone.pgcn.domain.exchange.cines.CinesLanguageCode;
+import org.numahop.numahop.domain.exchange.cines.CinesLanguageCode;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.exchange.internetarchive.mapper;
+package org.numahop.numahop.service.exchange.internetarchive.mapper;
 
-import fr.progilone.pgcn.domain.dto.exchange.InternetArchiveReportDTO;
-import fr.progilone.pgcn.domain.exchange.internetarchive.InternetArchiveReport;
+import org.numahop.numahop.domain.dto.exchange.InternetArchiveReportDTO;
+import org.numahop.numahop.domain.exchange.internetarchive.InternetArchiveReport;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

@@ -1,18 +1,18 @@
-package fr.progilone.pgcn.service.exchange.dc;
+package org.numahop.numahop.service.exchange.dc;
 
 import static com.opencsv.CSVWriter.*;
 
 import com.google.common.collect.Ordering;
 import com.opencsv.CSVWriter;
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.DocProperty;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.DocPropertyType.DocPropertySuperType;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.lot.Lot;
-import fr.progilone.pgcn.service.document.DocPropertyTypeService;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.service.lot.LotService;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.DocProperty;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.DocPropertyType.DocPropertySuperType;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.service.document.DocPropertyTypeService;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.service.lot.LotService;
 import jakarta.servlet.ServletOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;

@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.web.websocket;
+package org.numahop.numahop.web.websocket;
 
-import fr.progilone.pgcn.web.websocket.dto.NotificationDTO;
-import fr.progilone.pgcn.web.websocket.dto.NotificationDTO.NotificationCode;
-import fr.progilone.pgcn.web.websocket.dto.NotificationDTO.NotificationLevel;
+import org.numahop.numahop.web.websocket.dto.NotificationDTO;
+import org.numahop.numahop.web.websocket.dto.NotificationDTO.NotificationCode;
+import org.numahop.numahop.web.websocket.dto.NotificationDTO.NotificationLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.repository.audit;
+package org.numahop.numahop.repository.audit;
 
-import fr.progilone.pgcn.domain.audit.AuditRevision;
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.domain.exchange.MappingRule;
+import org.numahop.numahop.domain.audit.AuditRevision;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.domain.exchange.MappingRule;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;

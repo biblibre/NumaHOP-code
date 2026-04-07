@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.dto;
+package org.numahop.numahop.domain.dto;
 
 /**
  * Gestion des versions sur les objets DTO, inclut également la gestion des erreurs de

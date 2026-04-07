@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.delivery.mapper;
+package org.numahop.numahop.service.delivery.mapper;
 
-import fr.progilone.pgcn.service.delivery.PrefixedDocuments;
-import fr.progilone.pgcn.service.delivery.PrefixedDocumentsDTO;
-import fr.progilone.pgcn.service.document.DigitalDocumentService;
-import fr.progilone.pgcn.service.document.PhysicalDocumentService;
+import org.numahop.numahop.service.delivery.PrefixedDocuments;
+import org.numahop.numahop.service.delivery.PrefixedDocumentsDTO;
+import org.numahop.numahop.service.document.DigitalDocumentService;
+import org.numahop.numahop.service.document.PhysicalDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

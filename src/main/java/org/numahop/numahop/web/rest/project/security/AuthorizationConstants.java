@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.web.rest.project.security;
+package org.numahop.numahop.web.rest.project.security;
 
-import fr.progilone.pgcn.web.util.AuthorizationManager;
+import org.numahop.numahop.web.util.AuthorizationManager;
 
 /**
  * Habilitations du module Projet (PROJ)

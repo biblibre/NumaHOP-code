@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.service.util;
+package org.numahop.numahop.service.util;
 
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;

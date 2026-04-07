@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.library;
+package org.numahop.numahop.domain.dto.library;
 
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.dto.AbstractDTO;
 import java.util.List;
 
 /**

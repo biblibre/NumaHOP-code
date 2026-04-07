@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.filesgestionconfiguration;
+package org.numahop.numahop.service.filesgestionconfiguration;
 
-import fr.progilone.pgcn.domain.dto.filesgestionconfiguration.FilesGestionConfigDTO;
-import fr.progilone.pgcn.domain.filesgestionconfiguration.FilesGestionConfig;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.repository.filesgestionconfiguration.FilesGestionConfigRepository;
+import org.numahop.numahop.domain.dto.filesgestionconfiguration.FilesGestionConfigDTO;
+import org.numahop.numahop.domain.filesgestionconfiguration.FilesGestionConfig;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.repository.filesgestionconfiguration.FilesGestionConfigRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

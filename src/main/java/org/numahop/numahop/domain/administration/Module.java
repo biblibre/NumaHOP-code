@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.administration;
+package org.numahop.numahop.domain.administration;
 
 /**
  * Modules "métiers" de l'application

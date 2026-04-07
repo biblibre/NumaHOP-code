@@ -1,19 +1,19 @@
-package fr.progilone.pgcn.web.rest.workflow;
+package org.numahop.numahop.web.rest.workflow;
 
-import static fr.progilone.pgcn.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB1;
-import static fr.progilone.pgcn.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB2;
-import static fr.progilone.pgcn.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB3;
-import static fr.progilone.pgcn.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB4;
+import static org.numahop.numahop.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB1;
+import static org.numahop.numahop.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB2;
+import static org.numahop.numahop.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB3;
+import static org.numahop.numahop.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB4;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.workflow.SimpleWorkflowModelDTO;
-import fr.progilone.pgcn.domain.dto.workflow.WorkflowModelDTO;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.service.workflow.WorkflowModelService;
-import fr.progilone.pgcn.service.workflow.ui.UIWorkflowModelService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.AccessHelper;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.dto.workflow.SimpleWorkflowModelDTO;
+import org.numahop.numahop.domain.dto.workflow.WorkflowModelDTO;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.service.workflow.WorkflowModelService;
+import org.numahop.numahop.service.workflow.ui.UIWorkflowModelService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.AccessHelper;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.ArrayList;

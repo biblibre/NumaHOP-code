@@ -1,19 +1,19 @@
-package fr.progilone.pgcn.service.administration;
+package org.numahop.numahop.service.administration;
 
-import fr.progilone.pgcn.domain.administration.CinesPAC;
-import fr.progilone.pgcn.domain.administration.SftpConfiguration;
-import fr.progilone.pgcn.domain.dto.administration.SftpConfigurationDTO;
-import fr.progilone.pgcn.domain.jaxb.ppdi.FondsType;
-import fr.progilone.pgcn.domain.jaxb.ppdi.PpdiType;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.exception.message.PgcnList;
-import fr.progilone.pgcn.repository.administration.SftpConfigurationRepository;
-import fr.progilone.pgcn.service.administration.mapper.SftpConfigurationMapper;
-import fr.progilone.pgcn.service.util.CryptoService;
+import org.numahop.numahop.domain.administration.CinesPAC;
+import org.numahop.numahop.domain.administration.SftpConfiguration;
+import org.numahop.numahop.domain.dto.administration.SftpConfigurationDTO;
+import org.numahop.numahop.domain.jaxb.ppdi.FondsType;
+import org.numahop.numahop.domain.jaxb.ppdi.PpdiType;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.exception.message.PgcnList;
+import org.numahop.numahop.repository.administration.SftpConfigurationRepository;
+import org.numahop.numahop.service.administration.mapper.SftpConfigurationMapper;
+import org.numahop.numahop.service.util.CryptoService;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
@@ -190,7 +190,7 @@ public class SftpConfigurationService {
 
 	private Optional<PpdiType> unmarshallPpdiFile(final InputStream input) throws JAXBException {
 
-		final JAXBContext context = JAXBContext.newInstance(fr.progilone.pgcn.domain.jaxb.ppdi.ObjectFactory.class);
+		final JAXBContext context = JAXBContext.newInstance(org.numahop.numahop.domain.jaxb.ppdi.ObjectFactory.class);
 		final Unmarshaller unmarshaller = context.createUnmarshaller();
 		final JAXBElement<PpdiType> el = (JAXBElement<PpdiType>) unmarshaller.unmarshal(input);
 		if (el.getValue() == null) {

@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.web.rest.multilotsdelivery;
+package org.numahop.numahop.web.rest.multilotsdelivery;
 
-import fr.progilone.pgcn.domain.dto.document.PreDeliveryDocumentDTO;
-import fr.progilone.pgcn.domain.dto.document.PreDeliveryLockedDocsDTO;
+import org.numahop.numahop.domain.dto.document.PreDeliveryDocumentDTO;
+import org.numahop.numahop.domain.dto.document.PreDeliveryLockedDocsDTO;
 import java.util.ArrayList;
 import java.util.List;
 

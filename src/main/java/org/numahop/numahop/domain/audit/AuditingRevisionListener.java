@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.audit;
+package org.numahop.numahop.domain.audit;
 
 import org.hibernate.envers.RevisionListener;
 import org.slf4j.Logger;

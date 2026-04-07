@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.exchange.oaipmh;
+package org.numahop.numahop.service.exchange.oaipmh;
 
 public final class OaiPmhRequest {
 

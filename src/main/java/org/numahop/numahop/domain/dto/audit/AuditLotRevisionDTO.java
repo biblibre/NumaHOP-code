@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.audit;
+package org.numahop.numahop.domain.dto.audit;
 
-import fr.progilone.pgcn.domain.lot.Lot;
+import org.numahop.numahop.domain.lot.Lot;
 
 public class AuditLotRevisionDTO {
 

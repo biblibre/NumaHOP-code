@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.workflow;
+package org.numahop.numahop.service.workflow;
 
-import fr.progilone.pgcn.domain.workflow.WorkflowModelState;
-import fr.progilone.pgcn.domain.workflow.WorkflowModelStateType;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.exception.message.PgcnList;
-import fr.progilone.pgcn.repository.workflow.WorkflowModelStateRepository;
+import org.numahop.numahop.domain.workflow.WorkflowModelState;
+import org.numahop.numahop.domain.workflow.WorkflowModelStateType;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.exception.message.PgcnList;
+import org.numahop.numahop.repository.workflow.WorkflowModelStateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

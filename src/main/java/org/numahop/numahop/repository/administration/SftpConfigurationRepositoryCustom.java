@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.administration;
+package org.numahop.numahop.repository.administration;
 
-import fr.progilone.pgcn.domain.administration.SftpConfiguration;
+import org.numahop.numahop.domain.administration.SftpConfiguration;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

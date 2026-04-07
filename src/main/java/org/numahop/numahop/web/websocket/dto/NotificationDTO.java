@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.web.websocket.dto;
+package org.numahop.numahop.web.websocket.dto;
 
 public class NotificationDTO {
 

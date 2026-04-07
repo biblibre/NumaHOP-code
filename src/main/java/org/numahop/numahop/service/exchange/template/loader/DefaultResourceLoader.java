@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.exchange.template.loader;
+package org.numahop.numahop.service.exchange.template.loader;
 
 import java.io.InputStream;
 import org.apache.velocity.exception.ResourceNotFoundException;

@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.exchange.cines.ui;
+package org.numahop.numahop.service.exchange.cines.ui;
 
-import fr.progilone.pgcn.domain.dto.exchange.CinesReportDTO;
-import fr.progilone.pgcn.domain.dto.statistics.StatisticsProcessedDocUnitDTO;
-import fr.progilone.pgcn.domain.exchange.cines.CinesReport;
-import fr.progilone.pgcn.service.exchange.cines.CinesReportService;
-import fr.progilone.pgcn.service.exchange.cines.mapper.CinesReportMapper;
+import org.numahop.numahop.domain.dto.exchange.CinesReportDTO;
+import org.numahop.numahop.domain.dto.statistics.StatisticsProcessedDocUnitDTO;
+import org.numahop.numahop.domain.exchange.cines.CinesReport;
+import org.numahop.numahop.service.exchange.cines.CinesReportService;
+import org.numahop.numahop.service.exchange.cines.mapper.CinesReportMapper;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;

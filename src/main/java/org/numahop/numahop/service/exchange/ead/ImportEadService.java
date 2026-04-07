@@ -1,24 +1,24 @@
-package fr.progilone.pgcn.service.exchange.ead;
+package org.numahop.numahop.service.exchange.ead;
 
-import fr.progilone.pgcn.domain.document.BibliographicRecord.PropertyOrder;
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.exchange.ImportReport;
-import fr.progilone.pgcn.domain.exchange.ImportedDocUnit;
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.domain.jaxb.ead.C;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.service.document.DocPropertyTypeService;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.service.es.EsDocUnitService;
-import fr.progilone.pgcn.service.exchange.AbstractImportService;
-import fr.progilone.pgcn.service.exchange.DeduplicationService;
-import fr.progilone.pgcn.service.exchange.ImportDocUnitService;
-import fr.progilone.pgcn.service.exchange.ImportReportService;
-import fr.progilone.pgcn.service.exchange.MappingService;
-import fr.progilone.pgcn.service.exchange.ead.mapping.CompiledMapping;
-import fr.progilone.pgcn.service.util.transaction.TransactionService;
-import fr.progilone.pgcn.web.websocket.WebsocketService;
+import org.numahop.numahop.domain.document.BibliographicRecord.PropertyOrder;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.exchange.ImportReport;
+import org.numahop.numahop.domain.exchange.ImportedDocUnit;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.domain.jaxb.ead.C;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.service.document.DocPropertyTypeService;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.service.es.EsDocUnitService;
+import org.numahop.numahop.service.exchange.AbstractImportService;
+import org.numahop.numahop.service.exchange.DeduplicationService;
+import org.numahop.numahop.service.exchange.ImportDocUnitService;
+import org.numahop.numahop.service.exchange.ImportReportService;
+import org.numahop.numahop.service.exchange.MappingService;
+import org.numahop.numahop.service.exchange.ead.mapping.CompiledMapping;
+import org.numahop.numahop.service.util.transaction.TransactionService;
+import org.numahop.numahop.web.websocket.WebsocketService;
 import java.io.File;
 import java.util.Map;
 import java.util.Objects;
@@ -124,7 +124,7 @@ public class ImportEadService extends AbstractImportService {
 	 * @param propertyOrder
 	 * @return
 	 * @throws PgcnTechnicalException
-	 * @see fr.progilone.pgcn.domain.jaxb.rdf.RDF
+	 * @see org.numahop.numahop.domain.jaxb.rdf.RDF
 	 */
 	private ImportReport importEadRecords(final File importFile, final ImportReport.Type type, final String mappingId,
 			final String mappingChildId, final ImportReport report, final PropertyOrder propertyOrder,

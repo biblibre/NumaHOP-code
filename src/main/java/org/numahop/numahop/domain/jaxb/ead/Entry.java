@@ -6,7 +6,7 @@
 // Généré le : 2017.05.16 à 10:56:55 AM CEST
 //
 
-package fr.progilone.pgcn.domain.jaxb.ead;
+package org.numahop.numahop.domain.jaxb.ead;
 
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.annotation.XmlAccessType;

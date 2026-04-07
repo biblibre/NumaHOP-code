@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.config;
+package org.numahop.numahop.config;
 
 import com.codahale.metrics.MetricRegistry;
-import fr.progilone.pgcn.web.filter.CachingHttpHeadersFilter;
-import fr.progilone.pgcn.web.filter.StaticResourcesProductionFilter;
+import org.numahop.numahop.web.filter.CachingHttpHeadersFilter;
+import org.numahop.numahop.web.filter.StaticResourcesProductionFilter;
 import io.dropwizard.metrics.servlet.InstrumentedFilter;
 import io.dropwizard.metrics.servlets.MetricsServlet;
 import jakarta.servlet.DispatcherType;

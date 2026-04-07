@@ -1,20 +1,20 @@
-package fr.progilone.pgcn.repository.workflow.helper;
+package org.numahop.numahop.repository.workflow.helper;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
-import fr.progilone.pgcn.domain.administration.QInternetArchiveCollection;
-import fr.progilone.pgcn.domain.administration.omeka.QOmekaList;
-import fr.progilone.pgcn.domain.delivery.QDeliveredDocument;
-import fr.progilone.pgcn.domain.document.QDigitalDocument;
-import fr.progilone.pgcn.domain.document.QDocUnit;
-import fr.progilone.pgcn.domain.user.QUser;
-import fr.progilone.pgcn.domain.workflow.QDocUnitState;
-import fr.progilone.pgcn.domain.workflow.QDocUnitWorkflow;
-import fr.progilone.pgcn.domain.workflow.QWorkflowModel;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateStatus;
-import fr.progilone.pgcn.repository.util.QueryDSLBuilderUtils;
+import org.numahop.numahop.domain.administration.QInternetArchiveCollection;
+import org.numahop.numahop.domain.administration.omeka.QOmekaList;
+import org.numahop.numahop.domain.delivery.QDeliveredDocument;
+import org.numahop.numahop.domain.document.QDigitalDocument;
+import org.numahop.numahop.domain.document.QDocUnit;
+import org.numahop.numahop.domain.user.QUser;
+import org.numahop.numahop.domain.workflow.QDocUnitState;
+import org.numahop.numahop.domain.workflow.QDocUnitWorkflow;
+import org.numahop.numahop.domain.workflow.QWorkflowModel;
+import org.numahop.numahop.domain.workflow.WorkflowStateStatus;
+import org.numahop.numahop.repository.util.QueryDSLBuilderUtils;
 
 public class DocUnitWorkflowHelper {
 

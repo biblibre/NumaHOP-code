@@ -1,22 +1,22 @@
-package fr.progilone.pgcn.web.rest.workflow;
+package org.numahop.numahop.web.rest.workflow;
 
-import static fr.progilone.pgcn.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB1;
-import static fr.progilone.pgcn.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB2;
-import static fr.progilone.pgcn.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB3;
-import static fr.progilone.pgcn.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB4;
+import static org.numahop.numahop.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB1;
+import static org.numahop.numahop.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB2;
+import static org.numahop.numahop.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB3;
+import static org.numahop.numahop.web.rest.workflow.security.AuthorizationConstants.WORKFLOW_HAB4;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.workflow.SimpleWorkflowGroupDTO;
-import fr.progilone.pgcn.domain.dto.workflow.WorkflowGroupDTO;
-import fr.progilone.pgcn.exception.PgcnBusinessException;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.service.workflow.WorkflowGroupService;
-import fr.progilone.pgcn.service.workflow.ui.UIWorkflowGroupService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
-import fr.progilone.pgcn.web.util.WorkflowAccessHelper;
+import org.numahop.numahop.domain.dto.workflow.SimpleWorkflowGroupDTO;
+import org.numahop.numahop.domain.dto.workflow.WorkflowGroupDTO;
+import org.numahop.numahop.exception.PgcnBusinessException;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.service.workflow.WorkflowGroupService;
+import org.numahop.numahop.service.workflow.ui.UIWorkflowGroupService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.web.util.WorkflowAccessHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collection;

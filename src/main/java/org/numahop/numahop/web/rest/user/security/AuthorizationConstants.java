@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.web.rest.user.security;
+package org.numahop.numahop.web.rest.user.security;
 
-import fr.progilone.pgcn.web.util.AuthorizationManager;
+import org.numahop.numahop.web.util.AuthorizationManager;
 
 /**
  * Habilitations du module Usager (USER)

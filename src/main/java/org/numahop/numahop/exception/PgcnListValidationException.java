@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.exception;
+package org.numahop.numahop.exception;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.AbstractDomainObject;
 import java.util.List;
 
 public class PgcnListValidationException extends PgcnException {

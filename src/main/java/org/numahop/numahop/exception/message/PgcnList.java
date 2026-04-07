@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.exception.message;
+package org.numahop.numahop.exception.message;
 
 import java.util.*;
 import java.util.stream.Stream;

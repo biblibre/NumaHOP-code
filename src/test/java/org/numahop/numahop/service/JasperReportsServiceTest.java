@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service;
+package org.numahop.numahop.service;
 
 import static org.junit.jupiter.api.Assertions.fail;
 

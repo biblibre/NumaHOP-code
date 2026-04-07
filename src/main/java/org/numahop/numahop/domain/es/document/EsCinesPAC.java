@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.es.document;
+package org.numahop.numahop.domain.es.document;
 
-import fr.progilone.pgcn.domain.administration.CinesPAC;
+import org.numahop.numahop.domain.administration.CinesPAC;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 

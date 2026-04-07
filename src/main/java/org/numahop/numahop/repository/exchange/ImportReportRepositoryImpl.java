@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.repository.exchange;
+package org.numahop.numahop.repository.exchange;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.exchange.ImportReport;
-import fr.progilone.pgcn.domain.exchange.QImportReport;
+import org.numahop.numahop.domain.exchange.ImportReport;
+import org.numahop.numahop.domain.exchange.QImportReport;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.data.domain.Page;

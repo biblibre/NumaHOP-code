@@ -6,7 +6,7 @@
 // Généré le : 2017.08.25 à 03:15:17 PM CEST
 //
 
-package fr.progilone.pgcn.domain.jaxb.mix;
+package org.numahop.numahop.domain.jaxb.mix;
 
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlType;

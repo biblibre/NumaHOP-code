@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.repository.util;
+package org.numahop.numahop.repository.util;
 
 import org.hibernate.proxy.HibernateProxy;
 

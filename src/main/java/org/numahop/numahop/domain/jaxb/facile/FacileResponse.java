@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.jaxb.facile;
+package org.numahop.numahop.domain.jaxb.facile;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;

@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.service.exchange.mapper;
+package org.numahop.numahop.service.exchange.mapper;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import fr.progilone.pgcn.domain.dto.exchange.MappingDTO;
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.domain.dto.exchange.MappingDTO;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;

@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.exchange.cines;
+package org.numahop.numahop.service.exchange.cines;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.exchange.cines.CinesReport;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
-import fr.progilone.pgcn.repository.exchange.cines.CinesReportRepository;
-import fr.progilone.pgcn.service.workflow.WorkflowService;
-import fr.progilone.pgcn.web.websocket.WebsocketService;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.exchange.cines.CinesReport;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.repository.exchange.cines.CinesReportRepository;
+import org.numahop.numahop.service.workflow.WorkflowService;
+import org.numahop.numahop.web.websocket.WebsocketService;
 import jakarta.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

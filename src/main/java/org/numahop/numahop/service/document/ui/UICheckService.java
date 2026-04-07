@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.document.ui;
+package org.numahop.numahop.service.document.ui;
 
-import fr.progilone.pgcn.domain.document.Check;
-import fr.progilone.pgcn.domain.dto.document.CheckDTO;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.service.document.CheckService;
-import fr.progilone.pgcn.service.document.mapper.CheckMapper;
-import fr.progilone.pgcn.service.document.mapper.UICheckMapper;
-import fr.progilone.pgcn.service.util.transaction.VersionValidationService;
+import org.numahop.numahop.domain.document.Check;
+import org.numahop.numahop.domain.dto.document.CheckDTO;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.service.document.CheckService;
+import org.numahop.numahop.service.document.mapper.CheckMapper;
+import org.numahop.numahop.service.document.mapper.UICheckMapper;
+import org.numahop.numahop.service.util.transaction.VersionValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

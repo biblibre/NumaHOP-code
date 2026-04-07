@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.help;
+package org.numahop.numahop.repository.help;
 
-import fr.progilone.pgcn.domain.help.HelpPage;
+import org.numahop.numahop.domain.help.HelpPage;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

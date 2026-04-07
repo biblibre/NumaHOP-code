@@ -6,7 +6,7 @@
 // Généré le : 2018.08.13 à 01:08:19 PM CEST
 //
 
-package fr.progilone.pgcn.domain.jaxb.oaipmh;
+package org.numahop.numahop.domain.jaxb.oaipmh;
 
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.annotation.XmlElementDecl;

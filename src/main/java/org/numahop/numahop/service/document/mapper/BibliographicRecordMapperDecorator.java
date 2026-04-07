@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.document.mapper;
+package org.numahop.numahop.service.document.mapper;
 
-import fr.progilone.pgcn.domain.document.BibliographicRecord;
-import fr.progilone.pgcn.domain.document.BibliographicRecord.PropertyOrder;
-import fr.progilone.pgcn.domain.dto.document.BibliographicRecordDTO;
-import fr.progilone.pgcn.domain.dto.document.DocPropertyDTO;
-import fr.progilone.pgcn.domain.dto.document.DocPropertyTypeDTO;
-import fr.progilone.pgcn.domain.dto.document.DocUnitBibliographicRecordDTO;
-import fr.progilone.pgcn.domain.dto.document.SimpleBibliographicRecordDTO;
+import org.numahop.numahop.domain.document.BibliographicRecord;
+import org.numahop.numahop.domain.document.BibliographicRecord.PropertyOrder;
+import org.numahop.numahop.domain.dto.document.BibliographicRecordDTO;
+import org.numahop.numahop.domain.dto.document.DocPropertyDTO;
+import org.numahop.numahop.domain.dto.document.DocPropertyTypeDTO;
+import org.numahop.numahop.domain.dto.document.DocUnitBibliographicRecordDTO;
+import org.numahop.numahop.domain.dto.document.SimpleBibliographicRecordDTO;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 

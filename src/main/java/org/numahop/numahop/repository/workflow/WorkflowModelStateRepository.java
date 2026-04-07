@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.workflow;
+package org.numahop.numahop.repository.workflow;
 
-import fr.progilone.pgcn.domain.workflow.WorkflowModelState;
+import org.numahop.numahop.domain.workflow.WorkflowModelState;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WorkflowModelStateRepository

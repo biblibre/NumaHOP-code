@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.check;
+package org.numahop.numahop.domain.dto.check;
 
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
+import org.numahop.numahop.exception.PgcnTechnicalException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;

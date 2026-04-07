@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.service.exchange.marc.script.test;
+package org.numahop.numahop.service.exchange.marc.script.test;
 
-import fr.progilone.pgcn.service.exchange.marc.script.CustomScript;
+import org.numahop.numahop.service.exchange.marc.script.CustomScript;
 import org.marc4j.converter.CharConverter;
 import org.marc4j.marc.DataField;
 import org.marc4j.marc.Record;

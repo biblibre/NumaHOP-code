@@ -1,18 +1,18 @@
-package fr.progilone.pgcn.web.util;
+package org.numahop.numahop.web.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReportDetail.Type;
-import fr.progilone.pgcn.domain.lot.Lot;
-import fr.progilone.pgcn.domain.lot.Lot.LotStatus;
-import fr.progilone.pgcn.domain.workflow.WorkflowModel;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.service.lot.LotService;
-import fr.progilone.pgcn.service.workflow.WorkflowGroupService;
-import fr.progilone.pgcn.service.workflow.WorkflowService;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReportDetail.Type;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.domain.lot.Lot.LotStatus;
+import org.numahop.numahop.domain.workflow.WorkflowModel;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.service.lot.LotService;
+import org.numahop.numahop.service.workflow.WorkflowGroupService;
+import org.numahop.numahop.service.workflow.WorkflowService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

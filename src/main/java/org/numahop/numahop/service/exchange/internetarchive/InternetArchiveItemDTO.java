@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.exchange.internetarchive;
+package org.numahop.numahop.service.exchange.internetarchive;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.dto.AbstractDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;

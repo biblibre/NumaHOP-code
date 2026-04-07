@@ -6,7 +6,7 @@
 // Généré le : 2017.05.16 à 10:56:55 AM CEST
 //
 
-package fr.progilone.pgcn.domain.jaxb.ead;
+package org.numahop.numahop.domain.jaxb.ead;
 
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -150,7 +150,7 @@ public class Item {
 	 * {@link JAXBElement }{@code <}{@link Expan }{@code >} {@link JAXBElement
 	 * }{@code <}{@link Occupation }{@code >} {@link JAXBElement }{@code <}{@link Unitdate
 	 * }{@code >} {@link JAXBElement
-	 * }{@code <}{@link fr.progilone.pgcn.domain.jaxb.ead.List }{@code >}
+	 * }{@code <}{@link org.numahop.numahop.domain.jaxb.ead.List }{@code >}
 	 * {@link JAXBElement }{@code <}{@link Famname }{@code >} {@link JAXBElement
 	 * }{@code <}{@link Abbr }{@code >} {@link JAXBElement }{@code <}{@link Unittitle
 	 * }{@code >} {@link JAXBElement }{@code <}{@link Note }{@code >} {@link String }

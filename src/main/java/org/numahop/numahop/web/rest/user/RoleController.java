@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.web.rest.user;
+package org.numahop.numahop.web.rest.user;
 
-import static fr.progilone.pgcn.web.rest.library.security.AuthorizationConstants.LIB_HAB5;
-import static fr.progilone.pgcn.web.rest.user.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.library.security.AuthorizationConstants.LIB_HAB5;
+import static org.numahop.numahop.web.rest.user.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.user.RoleDTO;
-import fr.progilone.pgcn.domain.user.Role;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.service.user.RoleService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
+import org.numahop.numahop.domain.dto.user.RoleDTO;
+import org.numahop.numahop.domain.user.Role;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.service.user.RoleService;
+import org.numahop.numahop.web.rest.AbstractRestController;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 

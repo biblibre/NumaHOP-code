@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.audit;
+package org.numahop.numahop.domain.dto.audit;
 
-import fr.progilone.pgcn.domain.delivery.Delivery;
+import org.numahop.numahop.domain.delivery.Delivery;
 
 public class AuditDeliveryRevisionDTO {
 

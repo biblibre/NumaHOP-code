@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.domain.dto.document;
+package org.numahop.numahop.domain.dto.document;
 
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.dto.AbstractDTO;
 
 /**
  * DTO représentant une propriété
  *
  * @author jbrunet
- * @see fr.progilone.pgcn.domain.document.DocUnit
+ * @see org.numahop.numahop.domain.document.DocUnit
  */
 public class DocPropertyDTO extends AbstractDTO {
 

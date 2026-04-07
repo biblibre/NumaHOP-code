@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.library;
+package org.numahop.numahop.domain.library;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

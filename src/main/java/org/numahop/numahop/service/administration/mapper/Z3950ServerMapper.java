@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.administration.mapper;
+package org.numahop.numahop.service.administration.mapper;
 
-import fr.progilone.pgcn.domain.administration.exchange.z3950.Z3950Server;
-import fr.progilone.pgcn.domain.dto.administration.z3950.Z3950ServerDTO;
+import org.numahop.numahop.domain.administration.exchange.z3950.Z3950Server;
+import org.numahop.numahop.domain.dto.administration.z3950.Z3950ServerDTO;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

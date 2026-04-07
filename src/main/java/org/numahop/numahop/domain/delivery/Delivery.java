@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.domain.delivery;
+package org.numahop.numahop.domain.delivery;
 
-import static fr.progilone.pgcn.service.es.EsConstant.*;
+import static org.numahop.numahop.service.es.EsConstant.*;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.check.AutomaticCheckResult;
-import fr.progilone.pgcn.domain.lot.Lot;
-import fr.progilone.pgcn.domain.multilotsdelivery.MultiLotsDelivery;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.check.AutomaticCheckResult;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.domain.multilotsdelivery.MultiLotsDelivery;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

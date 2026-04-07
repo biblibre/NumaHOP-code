@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.web.rest.exchange;
+package org.numahop.numahop.web.rest.exchange;
 
-import static fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants.ADMINISTRATION_LIB;
-import static fr.progilone.pgcn.web.rest.exchange.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.administration.security.AuthorizationConstants.ADMINISTRATION_LIB;
+import static org.numahop.numahop.web.rest.exchange.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.dto.exchange.CSVMappingDTO;
-import fr.progilone.pgcn.domain.exchange.CSVMapping;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.service.exchange.CSVMappingService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.dto.exchange.CSVMappingDTO;
+import org.numahop.numahop.domain.exchange.CSVMapping;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.service.exchange.CSVMappingService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collection;

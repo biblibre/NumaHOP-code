@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.repository.user;
+package org.numahop.numahop.repository.user;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.user.QAuthorization;
-import fr.progilone.pgcn.domain.user.QRole;
-import fr.progilone.pgcn.domain.user.Role;
+import org.numahop.numahop.domain.user.QAuthorization;
+import org.numahop.numahop.domain.user.QRole;
+import org.numahop.numahop.domain.user.Role;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

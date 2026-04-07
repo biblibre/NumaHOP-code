@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.web.util;
+package org.numahop.numahop.web.util;
 
-import fr.progilone.pgcn.domain.dto.library.LibraryDTO;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.util.CustomUserDetails;
-import fr.progilone.pgcn.security.SecurityUtils;
-import fr.progilone.pgcn.web.rest.administration.security.AuthorizationConstants;
+import org.numahop.numahop.domain.dto.library.LibraryDTO;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.util.CustomUserDetails;
+import org.numahop.numahop.security.SecurityUtils;
+import org.numahop.numahop.web.rest.administration.security.AuthorizationConstants;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Collection;

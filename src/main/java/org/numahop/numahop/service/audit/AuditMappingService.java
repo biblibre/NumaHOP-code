@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.audit;
+package org.numahop.numahop.service.audit;
 
-import fr.progilone.pgcn.domain.audit.AuditRevision;
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.repository.audit.AuditMappingRepository;
+import org.numahop.numahop.domain.audit.AuditRevision;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.repository.audit.AuditMappingRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,22 +1,22 @@
-package fr.progilone.pgcn.service.exchange.dc;
+package org.numahop.numahop.service.exchange.dc;
 
-import fr.progilone.pgcn.domain.document.DocPropertyType;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.exchange.FileFormat;
-import fr.progilone.pgcn.domain.exchange.ImportReport;
-import fr.progilone.pgcn.domain.exchange.ImportedDocUnit;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.service.document.DocPropertyTypeService;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.service.es.EsDocUnitService;
-import fr.progilone.pgcn.service.exchange.AbstractImportService;
-import fr.progilone.pgcn.service.exchange.DeduplicationService;
-import fr.progilone.pgcn.service.exchange.ImportDocUnitService;
-import fr.progilone.pgcn.service.exchange.ImportReportService;
-import fr.progilone.pgcn.service.library.LibraryService;
-import fr.progilone.pgcn.service.util.transaction.TransactionService;
-import fr.progilone.pgcn.web.websocket.WebsocketService;
+import org.numahop.numahop.domain.document.DocPropertyType;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.exchange.FileFormat;
+import org.numahop.numahop.domain.exchange.ImportReport;
+import org.numahop.numahop.domain.exchange.ImportedDocUnit;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.service.document.DocPropertyTypeService;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.service.es.EsDocUnitService;
+import org.numahop.numahop.service.exchange.AbstractImportService;
+import org.numahop.numahop.service.exchange.DeduplicationService;
+import org.numahop.numahop.service.exchange.ImportDocUnitService;
+import org.numahop.numahop.service.exchange.ImportReportService;
+import org.numahop.numahop.service.library.LibraryService;
+import org.numahop.numahop.service.util.transaction.TransactionService;
+import org.numahop.numahop.web.websocket.WebsocketService;
 import java.io.File;
 import java.util.List;
 import org.slf4j.Logger;
@@ -124,7 +124,7 @@ public class ImportDcService extends AbstractImportService {
 	 * @param report
 	 * @return
 	 * @throws PgcnTechnicalException
-	 * @see fr.progilone.pgcn.domain.jaxb.rdf.RDF
+	 * @see org.numahop.numahop.domain.jaxb.rdf.RDF
 	 */
 	private ImportReport importDcRecords(final File importFile, final String libraryId, final String mappingId,
 			final ImportReport report, final boolean archivable, final boolean distributable)

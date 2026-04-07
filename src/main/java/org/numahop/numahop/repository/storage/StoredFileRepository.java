@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.storage;
+package org.numahop.numahop.repository.storage;
 
-import fr.progilone.pgcn.domain.storage.StoredFile;
+import org.numahop.numahop.domain.storage.StoredFile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 

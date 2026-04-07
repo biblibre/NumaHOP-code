@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.domain.es.conditionreport;
+package org.numahop.numahop.domain.es.conditionreport;
 
-import static fr.progilone.pgcn.service.es.EsConstant.*;
+import static org.numahop.numahop.service.es.EsConstant.*;
 
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReportDetail;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReportDetail.Type;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReportDetail;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReportDetail.Type;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;

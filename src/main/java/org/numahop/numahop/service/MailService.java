@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service;
+package org.numahop.numahop.service;
 
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.util.ByteArrayDataSource;

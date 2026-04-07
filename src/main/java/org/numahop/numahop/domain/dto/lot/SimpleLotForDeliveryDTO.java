@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.lot;
+package org.numahop.numahop.domain.dto.lot;
 
-import fr.progilone.pgcn.domain.lot.Lot;
+import org.numahop.numahop.domain.lot.Lot;
 
 /**
  * DTO représentant un lot allégé pour les livraisons (inclusion du format requis)

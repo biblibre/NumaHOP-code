@@ -1,14 +1,14 @@
-package fr.progilone.pgcn.service.document.conditionreport;
+package org.numahop.numahop.service.document.conditionreport;
 
-import static fr.progilone.pgcn.service.document.conditionreport.ConditionReportExportService.WorkbookFormat.*;
+import static org.numahop.numahop.service.document.conditionreport.ConditionReportExportService.WorkbookFormat.*;
 import static org.apache.poi.ss.usermodel.DataValidationConstraint.OperatorType.*;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionProperty;
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionValue;
-import fr.progilone.pgcn.domain.document.conditionreport.PropertyConfiguration;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.service.exchange.template.MessageService;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionProperty;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionValue;
+import org.numahop.numahop.domain.document.conditionreport.PropertyConfiguration;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.service.exchange.template.MessageService;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.*;

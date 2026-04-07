@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.es.user;
+package org.numahop.numahop.domain.es.user;
 
-import fr.progilone.pgcn.domain.user.User;
-import fr.progilone.pgcn.domain.user.User.Category;
+import org.numahop.numahop.domain.user.User;
+import org.numahop.numahop.domain.user.User.Category;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;

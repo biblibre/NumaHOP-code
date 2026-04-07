@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.service.sample;
+package org.numahop.numahop.service.sample;
 
-import fr.progilone.pgcn.domain.document.sample.Sample;
-import fr.progilone.pgcn.domain.dto.sample.SampleDTO;
-import fr.progilone.pgcn.exception.PgcnBusinessException;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.repository.sample.SampleRepository;
-import fr.progilone.pgcn.service.sample.mapper.SampleMapper;
+import org.numahop.numahop.domain.document.sample.Sample;
+import org.numahop.numahop.domain.dto.sample.SampleDTO;
+import org.numahop.numahop.exception.PgcnBusinessException;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.repository.sample.SampleRepository;
+import org.numahop.numahop.service.sample.mapper.SampleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

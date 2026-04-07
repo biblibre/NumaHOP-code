@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.domain.dto.document;
+package org.numahop.numahop.domain.dto.document;
 
-import fr.progilone.pgcn.domain.delivery.Delivery;
+import org.numahop.numahop.domain.delivery.Delivery;
 import java.time.LocalDateTime;
 
 public class LightDeliveredDigitalDocDTO {

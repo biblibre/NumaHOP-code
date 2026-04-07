@@ -1,15 +1,15 @@
-package fr.progilone.pgcn.service.es;
+package org.numahop.numahop.service.es;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.DocUnit.State;
-import fr.progilone.pgcn.domain.document.PhysicalDocument;
-import fr.progilone.pgcn.domain.es.document.EsDocUnit;
-import fr.progilone.pgcn.repository.document.DocUnitRepository;
-import fr.progilone.pgcn.repository.es.EsDocUnitRepository;
-import fr.progilone.pgcn.repository.es.helper.EsSearchOperation;
-import fr.progilone.pgcn.repository.es.helper.EsSort;
-import fr.progilone.pgcn.service.document.PhysicalDocumentService;
-import fr.progilone.pgcn.service.util.transaction.TransactionService;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.DocUnit.State;
+import org.numahop.numahop.domain.document.PhysicalDocument;
+import org.numahop.numahop.domain.es.document.EsDocUnit;
+import org.numahop.numahop.repository.document.DocUnitRepository;
+import org.numahop.numahop.repository.es.EsDocUnitRepository;
+import org.numahop.numahop.repository.es.helper.EsSearchOperation;
+import org.numahop.numahop.repository.es.helper.EsSort;
+import org.numahop.numahop.service.document.PhysicalDocumentService;
+import org.numahop.numahop.service.util.transaction.TransactionService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +70,7 @@ public class EsDocUnitService extends AbstractElasticsearchOperations<DocUnit, E
 
 	/**
 	 * Indexation asynchrone à partir de l'id d'un
-	 * {@link fr.progilone.pgcn.domain.document.PhysicalDocument}
+	 * {@link org.numahop.numahop.domain.document.PhysicalDocument}
 	 */
 	@Async
 	@Transactional(readOnly = true)

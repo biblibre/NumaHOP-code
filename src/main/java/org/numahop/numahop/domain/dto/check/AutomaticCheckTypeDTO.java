@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.dto.check;
+package org.numahop.numahop.domain.dto.check;
 
-import fr.progilone.pgcn.domain.check.AutomaticCheckType;
-import fr.progilone.pgcn.domain.check.AutomaticCheckType.AutoCheckType;
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.check.AutomaticCheckType;
+import org.numahop.numahop.domain.check.AutomaticCheckType.AutoCheckType;
+import org.numahop.numahop.domain.dto.AbstractDTO;
 
 /**
  * Type de contrôles automatiques

@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.repository.lot;
+package org.numahop.numahop.repository.lot;
 
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration;
-import fr.progilone.pgcn.domain.checkconfiguration.CheckConfiguration;
-import fr.progilone.pgcn.domain.exportftpconfiguration.ExportFTPConfiguration;
-import fr.progilone.pgcn.domain.ftpconfiguration.FTPConfiguration;
-import fr.progilone.pgcn.domain.lot.Lot;
-import fr.progilone.pgcn.domain.project.Project;
-import fr.progilone.pgcn.domain.user.User;
-import fr.progilone.pgcn.domain.workflow.WorkflowModel;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration;
+import org.numahop.numahop.domain.checkconfiguration.CheckConfiguration;
+import org.numahop.numahop.domain.exportftpconfiguration.ExportFTPConfiguration;
+import org.numahop.numahop.domain.ftpconfiguration.FTPConfiguration;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.domain.project.Project;
+import org.numahop.numahop.domain.user.User;
+import org.numahop.numahop.domain.workflow.WorkflowModel;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;

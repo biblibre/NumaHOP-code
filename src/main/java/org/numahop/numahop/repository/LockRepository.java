@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository;
+package org.numahop.numahop.repository;
 
-import fr.progilone.pgcn.domain.Lock;
+import org.numahop.numahop.domain.Lock;
 import java.time.LocalDateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.document.conditionreport;
+package org.numahop.numahop.service.document.conditionreport;
 
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReport;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReportAttachment;
-import fr.progilone.pgcn.repository.document.conditionreport.ConditionReportAttachmentRepository;
-import fr.progilone.pgcn.repository.document.conditionreport.ConditionReportRepository;
-import fr.progilone.pgcn.service.storage.FileStorageManager;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReport;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReportAttachment;
+import org.numahop.numahop.repository.document.conditionreport.ConditionReportAttachmentRepository;
+import org.numahop.numahop.repository.document.conditionreport.ConditionReportRepository;
+import org.numahop.numahop.service.storage.FileStorageManager;
 import jakarta.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;

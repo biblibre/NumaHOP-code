@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.domain.dto.user;
+package org.numahop.numahop.domain.dto.user;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
-import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
-import fr.progilone.pgcn.domain.dto.workflow.SimpleWorkflowGroupDTO;
-import fr.progilone.pgcn.domain.user.Lang;
-import fr.progilone.pgcn.domain.user.User;
-import fr.progilone.pgcn.domain.user.User.Category;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.dto.library.SimpleLibraryDTO;
+import org.numahop.numahop.domain.dto.workflow.SimpleWorkflowGroupDTO;
+import org.numahop.numahop.domain.user.Lang;
+import org.numahop.numahop.domain.user.User;
+import org.numahop.numahop.domain.user.User.Category;
 import java.time.LocalDateTime;
 import java.util.List;
 

@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.repository.workflow;
+package org.numahop.numahop.repository.workflow;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.document.QDocUnit;
-import fr.progilone.pgcn.domain.workflow.DocUnitState;
-import fr.progilone.pgcn.domain.workflow.QDocUnitState;
-import fr.progilone.pgcn.domain.workflow.QDocUnitWorkflow;
-import fr.progilone.pgcn.repository.workflow.helper.DocUnitWorkflowHelper;
-import fr.progilone.pgcn.repository.workflow.helper.DocUnitWorkflowSearchBuilder;
+import org.numahop.numahop.domain.document.QDocUnit;
+import org.numahop.numahop.domain.workflow.DocUnitState;
+import org.numahop.numahop.domain.workflow.QDocUnitState;
+import org.numahop.numahop.domain.workflow.QDocUnitWorkflow;
+import org.numahop.numahop.repository.workflow.helper.DocUnitWorkflowHelper;
+import org.numahop.numahop.repository.workflow.helper.DocUnitWorkflowSearchBuilder;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.util;
+package org.numahop.numahop.service.util;
 
 import java.io.File;
 import java.io.FileInputStream;

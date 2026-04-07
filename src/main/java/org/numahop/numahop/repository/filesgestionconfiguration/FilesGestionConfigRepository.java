@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.filesgestionconfiguration;
+package org.numahop.numahop.repository.filesgestionconfiguration;
 
-import fr.progilone.pgcn.domain.filesgestionconfiguration.FilesGestionConfig;
+import org.numahop.numahop.domain.filesgestionconfiguration.FilesGestionConfig;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

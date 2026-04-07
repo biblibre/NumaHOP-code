@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.repository.es.helper;
+package org.numahop.numahop.repository.es.helper;
 
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
 import com.google.common.base.MoreObjects;

@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.exchange;
+package org.numahop.numahop.domain.exchange;
 
 /**
  * Format des notices importées

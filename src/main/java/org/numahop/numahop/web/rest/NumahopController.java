@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.web.rest;
+package org.numahop.numahop.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.exchange;
+package org.numahop.numahop.service.exchange;
 
 import java.util.ArrayList;
 import java.util.Collections;

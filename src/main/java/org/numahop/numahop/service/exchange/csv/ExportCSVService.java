@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.exchange.csv;
+package org.numahop.numahop.service.exchange.csv;
 
 import static com.opencsv.CSVWriter.*;
 
@@ -6,7 +6,7 @@ import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
+import org.numahop.numahop.exception.PgcnTechnicalException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;

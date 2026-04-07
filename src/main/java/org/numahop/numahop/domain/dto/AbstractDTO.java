@@ -1,14 +1,14 @@
-package fr.progilone.pgcn.domain.dto;
+package org.numahop.numahop.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.voodoodyne.jackson.jsog.JSOGGenerator;
-import fr.progilone.pgcn.domain.ObjectWithErrors;
-import fr.progilone.pgcn.domain.user.Authorization;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnList;
+import org.numahop.numahop.domain.ObjectWithErrors;
+import org.numahop.numahop.domain.user.Authorization;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnList;
 import java.util.Collection;
 import java.util.Objects;
 

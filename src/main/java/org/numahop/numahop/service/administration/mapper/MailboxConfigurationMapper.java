@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.administration.mapper;
+package org.numahop.numahop.service.administration.mapper;
 
-import fr.progilone.pgcn.domain.administration.MailboxConfiguration;
-import fr.progilone.pgcn.domain.dto.administration.MailboxConfigurationDTO;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.domain.administration.MailboxConfiguration;
+import org.numahop.numahop.domain.dto.administration.MailboxConfigurationDTO;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
 import java.util.Collection;
 import java.util.List;
 import org.mapstruct.Mapper;

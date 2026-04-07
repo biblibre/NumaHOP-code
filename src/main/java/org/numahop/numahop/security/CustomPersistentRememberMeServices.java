@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.security;
+package org.numahop.numahop.security;
 
-import fr.progilone.pgcn.domain.security.PersistentToken;
-import fr.progilone.pgcn.domain.user.User;
-import fr.progilone.pgcn.repository.security.PersistentTokenRepository;
-import fr.progilone.pgcn.repository.user.UserRepository;
-import fr.progilone.pgcn.service.util.DateUtils;
+import org.numahop.numahop.domain.security.PersistentToken;
+import org.numahop.numahop.domain.user.User;
+import org.numahop.numahop.repository.security.PersistentTokenRepository;
+import org.numahop.numahop.repository.user.UserRepository;
+import org.numahop.numahop.service.util.DateUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.Serializable;

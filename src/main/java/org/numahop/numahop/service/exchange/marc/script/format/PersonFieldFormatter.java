@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.service.exchange.marc.script.format;
+package org.numahop.numahop.service.exchange.marc.script.format;
 
-import fr.progilone.pgcn.service.exchange.marc.MarcMappingEvaluationService;
+import org.numahop.numahop.service.exchange.marc.MarcMappingEvaluationService;
 import org.marc4j.converter.CharConverter;
 
 /**

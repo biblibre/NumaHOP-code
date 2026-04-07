@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.repository.help;
+package org.numahop.numahop.repository.help;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.dto.help.HelpPageDto;
-import fr.progilone.pgcn.domain.dto.help.QHelpPageDto;
-import fr.progilone.pgcn.domain.help.HelpPageType;
-import fr.progilone.pgcn.domain.help.QHelpPage;
+import org.numahop.numahop.domain.dto.help.HelpPageDto;
+import org.numahop.numahop.domain.dto.help.QHelpPageDto;
+import org.numahop.numahop.domain.help.HelpPageType;
+import org.numahop.numahop.domain.help.QHelpPage;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

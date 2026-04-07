@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.service.exchange.dc;
+package org.numahop.numahop.service.exchange.dc;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import fr.progilone.pgcn.domain.jaxb.dc.SimpleLiteral;
-import fr.progilone.pgcn.domain.jaxb.rdf.DescriptionType;
-import fr.progilone.pgcn.domain.jaxb.rdf.ObjectFactory;
-import fr.progilone.pgcn.domain.jaxb.rdf.RDF;
+import org.numahop.numahop.domain.jaxb.dc.SimpleLiteral;
+import org.numahop.numahop.domain.jaxb.rdf.DescriptionType;
+import org.numahop.numahop.domain.jaxb.rdf.ObjectFactory;
+import org.numahop.numahop.domain.jaxb.rdf.RDF;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
@@ -85,7 +85,7 @@ public class RdfDcEntityHandlerTest {
 	@Test
 	public void test0() throws JAXBException {
 		final ObjectFactory rdfFactory = new ObjectFactory();
-		final fr.progilone.pgcn.domain.jaxb.dc.ObjectFactory dcFactory = new fr.progilone.pgcn.domain.jaxb.dc.ObjectFactory();
+		final org.numahop.numahop.domain.jaxb.dc.ObjectFactory dcFactory = new org.numahop.numahop.domain.jaxb.dc.ObjectFactory();
 		final RDF rdf = rdfFactory.createRDF();
 		final DescriptionType desc = rdfFactory.createDescriptionType();
 
@@ -101,7 +101,7 @@ public class RdfDcEntityHandlerTest {
 
 		// Écriture du XML dans le flux de sortie
 		final JAXBContext context = JAXBContext.newInstance(ObjectFactory.class,
-				fr.progilone.pgcn.domain.jaxb.dc.ObjectFactory.class);
+				org.numahop.numahop.domain.jaxb.dc.ObjectFactory.class);
 		final Marshaller m = context.createMarshaller();
 		m.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8.name());
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);

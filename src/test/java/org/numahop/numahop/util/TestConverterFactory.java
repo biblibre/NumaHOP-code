@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.util;
+package org.numahop.numahop.util;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.AbstractDomainObject;
 import org.springframework.core.convert.converter.Converter;
 
 public class TestConverterFactory {

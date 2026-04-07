@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.exchange.ead;
+package org.numahop.numahop.service.exchange.ead;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

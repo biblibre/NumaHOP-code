@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.document;
+package org.numahop.numahop.service.document;
 
-import fr.progilone.pgcn.domain.document.CheckSlipConfiguration;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.service.library.LibraryService;
+import org.numahop.numahop.domain.document.CheckSlipConfiguration;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.service.library.LibraryService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

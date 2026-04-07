@@ -1,13 +1,13 @@
-package fr.progilone.pgcn.service.exchange.marc;
+package org.numahop.numahop.service.exchange.marc;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-import fr.progilone.pgcn.config.ScriptEngineConfiguration;
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.domain.exchange.MappingRule;
-import fr.progilone.pgcn.service.administration.TransliterationService;
-import fr.progilone.pgcn.service.exchange.marc.mapping.CompiledMapping;
+import org.numahop.numahop.config.ScriptEngineConfiguration;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.domain.exchange.MappingRule;
+import org.numahop.numahop.service.administration.TransliterationService;
+import org.numahop.numahop.service.exchange.marc.mapping.CompiledMapping;
 import java.util.HashMap;
 import java.util.Map;
 import javax.script.ScriptEngine;
@@ -132,7 +132,7 @@ public class MarcMappingEvaluationServiceTest {
 		final DataField fld702 = MARC_FACTORY.newDataField("702", ' ', ' ');
 		fld702.addSubfield(MARC_FACTORY.newSubfield('a', "Benson"));
 		fld702.addSubfield(MARC_FACTORY.newSubfield('b', "Rowland S."));
-		final String expression = "new fr.progilone.pgcn.service.exchange.marc.formatter.PersonFieldFormatter("
+		final String expression = "new org.numahop.numahop.service.exchange.marc.formatter.PersonFieldFormatter("
 				+ "(char)'a', (char)'b', (char)'c', (char)'d', (char)'f', (char)'D', (char)'4')" + ".format(field)";
 		final CompiledMapping compiledMapping = getCompiledMapping(expression, null);
 		assertEquals(1, compiledMapping.getCompiledRules().size());

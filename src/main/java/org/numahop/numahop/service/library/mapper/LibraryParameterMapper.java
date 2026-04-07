@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.library.mapper;
+package org.numahop.numahop.service.library.mapper;
 
-import fr.progilone.pgcn.domain.dto.library.AbstractLibraryParameterValueDTO;
-import fr.progilone.pgcn.domain.dto.library.LibraryParameterDTO;
-import fr.progilone.pgcn.domain.dto.library.LibraryParameterValueCinesDTO;
-import fr.progilone.pgcn.domain.dto.library.LibraryParameterValuedDTO;
-import fr.progilone.pgcn.domain.library.AbstractLibraryParameterValue;
-import fr.progilone.pgcn.domain.library.LibraryParameter;
-import fr.progilone.pgcn.domain.library.LibraryParameterValueCines;
+import org.numahop.numahop.domain.dto.library.AbstractLibraryParameterValueDTO;
+import org.numahop.numahop.domain.dto.library.LibraryParameterDTO;
+import org.numahop.numahop.domain.dto.library.LibraryParameterValueCinesDTO;
+import org.numahop.numahop.domain.dto.library.LibraryParameterValuedDTO;
+import org.numahop.numahop.domain.library.AbstractLibraryParameterValue;
+import org.numahop.numahop.domain.library.LibraryParameter;
+import org.numahop.numahop.domain.library.LibraryParameterValueCines;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

@@ -1,17 +1,17 @@
-package fr.progilone.pgcn.service.exchange.cines;
+package org.numahop.numahop.service.exchange.cines;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.dto.document.BibliographicRecordDcDTO;
-import fr.progilone.pgcn.domain.jaxb.mets.Mets;
-import fr.progilone.pgcn.domain.storage.CheckSummedStoredFile;
-import fr.progilone.pgcn.service.check.MetaDatasCheckService;
-import fr.progilone.pgcn.service.document.TableOfContentsService;
-import fr.progilone.pgcn.service.exchange.cines.GenerateDocUnitUtil.GenerateDocUnitUtilEnum;
-import fr.progilone.pgcn.service.exchange.ead.ExportEadService;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.dto.document.BibliographicRecordDcDTO;
+import org.numahop.numahop.domain.jaxb.mets.Mets;
+import org.numahop.numahop.domain.storage.CheckSummedStoredFile;
+import org.numahop.numahop.service.check.MetaDatasCheckService;
+import org.numahop.numahop.service.document.TableOfContentsService;
+import org.numahop.numahop.service.exchange.cines.GenerateDocUnitUtil.GenerateDocUnitUtilEnum;
+import org.numahop.numahop.service.exchange.ead.ExportEadService;
 import jakarta.xml.bind.JAXBException;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -59,7 +59,7 @@ public class ExportMetsServiceTest {
 		final BibliographicRecordDcDTO dcDto = new BibliographicRecordDcDTO();
 		dcDto.getIdentifier().add("TEST-001");
 
-		final fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory METS_FACTORY = new fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory();
+		final org.numahop.numahop.domain.jaxb.mets.ObjectFactory METS_FACTORY = new org.numahop.numahop.domain.jaxb.mets.ObjectFactory();
 		final Mets mets = METS_FACTORY.createMets();
 
 		when(mdCheckService.getMetaDataMetsFile(any(), any())).thenReturn(Optional.of(mets));
@@ -101,7 +101,7 @@ public class ExportMetsServiceTest {
 		final BibliographicRecordDcDTO dcDto = new BibliographicRecordDcDTO();
 		dcDto.getIdentifier().add("TEST-001");
 
-		final fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory METS_FACTORY = new fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory();
+		final org.numahop.numahop.domain.jaxb.mets.ObjectFactory METS_FACTORY = new org.numahop.numahop.domain.jaxb.mets.ObjectFactory();
 		final Mets mets = METS_FACTORY.createMets();
 
 		when(mdCheckService.getMetaDataMetsFile(any(String.class), isNull())).thenReturn(Optional.of(mets));
@@ -137,7 +137,7 @@ public class ExportMetsServiceTest {
 		final DocUnit docUnit = GenerateDocUnitUtil.getDocUnit(GenerateDocUnitUtilEnum.COMPLIANT);
 		final File eadTmpFile = createEadTmpFile();
 
-		final fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory METS_FACTORY = new fr.progilone.pgcn.domain.jaxb.mets.ObjectFactory();
+		final org.numahop.numahop.domain.jaxb.mets.ObjectFactory METS_FACTORY = new org.numahop.numahop.domain.jaxb.mets.ObjectFactory();
 		final Mets mets = METS_FACTORY.createMets();
 
 		when(exportEadService.retrieveEad(docUnit.getIdentifier())).thenReturn(eadTmpFile);

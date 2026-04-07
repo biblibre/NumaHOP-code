@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.domain.dto.multilotsdelivery;
+package org.numahop.numahop.domain.dto.multilotsdelivery;
 
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
-import fr.progilone.pgcn.domain.dto.delivery.SimpleDeliveryLotDTO;
-import fr.progilone.pgcn.domain.dto.lot.SimpleLotForDeliveryDTO;
-import fr.progilone.pgcn.domain.dto.train.SimpleTrainDTO;
+import org.numahop.numahop.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.dto.delivery.SimpleDeliveryLotDTO;
+import org.numahop.numahop.domain.dto.lot.SimpleLotForDeliveryDTO;
+import org.numahop.numahop.domain.dto.train.SimpleTrainDTO;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.service.lot;
+package org.numahop.numahop.service.lot;
 
-import fr.progilone.pgcn.domain.lot.Lot;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnError;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.exception.message.PgcnList;
-import fr.progilone.pgcn.repository.lot.LotRepository;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnError;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.exception.message.PgcnList;
+import org.numahop.numahop.repository.lot.LotRepository;
 import java.util.List;
 import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;

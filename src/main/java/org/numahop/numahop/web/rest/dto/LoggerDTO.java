@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.web.rest.dto;
+package org.numahop.numahop.web.rest.dto;
 
 import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.annotation.JsonCreator;

@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.config;
+package org.numahop.numahop.config;
 
-import fr.progilone.pgcn.async.ExceptionHandlingAsyncTaskExecutor;
+import org.numahop.numahop.async.ExceptionHandlingAsyncTaskExecutor;
 import java.util.concurrent.Executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

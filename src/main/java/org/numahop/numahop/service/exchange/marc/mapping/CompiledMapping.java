@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.exchange.marc.mapping;
+package org.numahop.numahop.service.exchange.marc.mapping;
 
 import com.google.common.collect.Ordering;
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.domain.exchange.MappingRule;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.domain.exchange.MappingRule;
+import org.numahop.numahop.domain.library.Library;
 import java.util.ArrayList;
 import java.util.List;
 import org.marc4j.converter.CharConverter;

@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.web.rest;
+package org.numahop.numahop.web.rest;
 
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
+import org.numahop.numahop.exception.PgcnTechnicalException;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;

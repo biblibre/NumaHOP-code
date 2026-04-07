@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.domain.dto.user;
+package org.numahop.numahop.domain.dto.user;
 
-import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
+import org.numahop.numahop.domain.dto.library.SimpleLibraryDTO;
 
 /**
  * DTO représentant un usager allégé
  *
  * @author jbrunet
- * @see fr.progilone.pgcn.domain.user.User
+ * @see org.numahop.numahop.domain.user.User
  */
 public class SimpleUserDTO {
 

@@ -1,19 +1,19 @@
-package fr.progilone.pgcn.web.rest.document.conditionreport;
+package org.numahop.numahop.web.rest.document.conditionreport;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReport;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReportDetail;
-import fr.progilone.pgcn.service.document.conditionreport.ConditionReportDetailService;
-import fr.progilone.pgcn.service.document.conditionreport.ConditionReportService;
-import fr.progilone.pgcn.service.es.EsConditionReportService;
-import fr.progilone.pgcn.util.TestUtil;
-import fr.progilone.pgcn.web.util.AccessHelper;
-import fr.progilone.pgcn.web.util.WorkflowAccessHelper;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReport;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReportDetail;
+import org.numahop.numahop.service.document.conditionreport.ConditionReportDetailService;
+import org.numahop.numahop.service.document.conditionreport.ConditionReportService;
+import org.numahop.numahop.service.es.EsConditionReportService;
+import org.numahop.numahop.util.TestUtil;
+import org.numahop.numahop.web.util.AccessHelper;
+import org.numahop.numahop.web.util.WorkflowAccessHelper;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.service.document.conditionreport;
+package org.numahop.numahop.service.document.conditionreport;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionProperty;
-import fr.progilone.pgcn.domain.document.conditionreport.PropertyConfiguration;
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.repository.document.conditionreport.DescriptionPropertyRepository;
-import fr.progilone.pgcn.repository.document.conditionreport.PropertyConfigurationRepository;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionProperty;
+import org.numahop.numahop.domain.document.conditionreport.PropertyConfiguration;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.repository.document.conditionreport.DescriptionPropertyRepository;
+import org.numahop.numahop.repository.document.conditionreport.PropertyConfigurationRepository;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

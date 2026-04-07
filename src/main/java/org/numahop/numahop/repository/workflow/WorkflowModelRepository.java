@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.repository.workflow;
+package org.numahop.numahop.repository.workflow;
 
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.workflow.WorkflowModel;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.workflow.WorkflowModel;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

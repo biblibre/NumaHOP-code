@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.web.rest.check;
+package org.numahop.numahop.web.rest.check;
 
-import static fr.progilone.pgcn.web.rest.document.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.document.security.AuthorizationConstants.*;
 
-import fr.progilone.pgcn.domain.check.AutomaticCheckType.AutoCheckType;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.service.check.AutomaticCheckService;
-import fr.progilone.pgcn.service.document.DocUnitService;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.check.AutomaticCheckType.AutoCheckType;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.service.check.AutomaticCheckService;
+import org.numahop.numahop.service.document.DocUnitService;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;

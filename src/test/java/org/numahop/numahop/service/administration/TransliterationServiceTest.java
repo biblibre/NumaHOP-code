@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.administration;
+package org.numahop.numahop.service.administration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import fr.progilone.pgcn.domain.administration.Transliteration;
-import fr.progilone.pgcn.repository.administration.TransliterationRepository;
+import org.numahop.numahop.domain.administration.Transliteration;
+import org.numahop.numahop.repository.administration.TransliterationRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

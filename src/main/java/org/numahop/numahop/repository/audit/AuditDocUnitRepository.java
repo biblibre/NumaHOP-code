@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.repository.audit;
+package org.numahop.numahop.repository.audit;
 
-import fr.progilone.pgcn.domain.audit.AuditRevision;
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.dto.audit.AuditDocUnitRevisionDTO;
-import fr.progilone.pgcn.domain.lot.Lot;
+import org.numahop.numahop.domain.audit.AuditRevision;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.dto.audit.AuditDocUnitRevisionDTO;
+import org.numahop.numahop.domain.lot.Lot;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;

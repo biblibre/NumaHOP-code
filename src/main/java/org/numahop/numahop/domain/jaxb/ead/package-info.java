@@ -13,4 +13,4 @@
 		elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED,
 		xmlns = { @jakarta.xml.bind.annotation.XmlNs(namespaceURI = "urn:isbn:1-931666-22-9", prefix = ""),
 				@jakarta.xml.bind.annotation.XmlNs(namespaceURI = "http://www.w3.org/1999/xlink", prefix = "xlink") })
-package fr.progilone.pgcn.domain.jaxb.ead;
+package org.numahop.numahop.domain.jaxb.ead;

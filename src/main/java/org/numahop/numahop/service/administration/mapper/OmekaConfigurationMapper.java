@@ -1,10 +1,10 @@
-package fr.progilone.pgcn.service.administration.mapper;
+package org.numahop.numahop.service.administration.mapper;
 
-import fr.progilone.pgcn.domain.administration.omeka.OmekaConfiguration;
-import fr.progilone.pgcn.domain.administration.omeka.OmekaList.ListType;
-import fr.progilone.pgcn.domain.dto.administration.omeka.OmekaConfigurationDTO;
-import fr.progilone.pgcn.domain.dto.administration.omeka.OmekaListDTO;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.domain.administration.omeka.OmekaConfiguration;
+import org.numahop.numahop.domain.administration.omeka.OmekaList.ListType;
+import org.numahop.numahop.domain.dto.administration.omeka.OmekaConfigurationDTO;
+import org.numahop.numahop.domain.dto.administration.omeka.OmekaListDTO;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

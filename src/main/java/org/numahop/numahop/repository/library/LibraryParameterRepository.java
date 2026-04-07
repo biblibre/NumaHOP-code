@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.repository.library;
+package org.numahop.numahop.repository.library;
 
-import fr.progilone.pgcn.domain.library.Library;
-import fr.progilone.pgcn.domain.library.LibraryParameter;
-import fr.progilone.pgcn.domain.library.LibraryParameter.LibraryParameterType;
+import org.numahop.numahop.domain.library.Library;
+import org.numahop.numahop.domain.library.LibraryParameter;
+import org.numahop.numahop.domain.library.LibraryParameter.LibraryParameterType;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

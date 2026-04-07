@@ -1,16 +1,16 @@
-package fr.progilone.pgcn.service.document.conditionreport;
+package org.numahop.numahop.service.document.conditionreport;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import fr.progilone.pgcn.domain.document.conditionreport.DescriptionProperty;
-import fr.progilone.pgcn.exception.PgcnValidationException;
-import fr.progilone.pgcn.exception.message.PgcnErrorCode;
-import fr.progilone.pgcn.repository.document.conditionreport.DescriptionPropertyRepository;
-import fr.progilone.pgcn.repository.document.conditionreport.DescriptionRepository;
-import fr.progilone.pgcn.repository.document.conditionreport.DescriptionValueRepository;
-import fr.progilone.pgcn.util.TestUtil;
+import org.numahop.numahop.domain.document.conditionreport.DescriptionProperty;
+import org.numahop.numahop.exception.PgcnValidationException;
+import org.numahop.numahop.exception.message.PgcnErrorCode;
+import org.numahop.numahop.repository.document.conditionreport.DescriptionPropertyRepository;
+import org.numahop.numahop.repository.document.conditionreport.DescriptionRepository;
+import org.numahop.numahop.repository.document.conditionreport.DescriptionValueRepository;
+import org.numahop.numahop.util.TestUtil;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

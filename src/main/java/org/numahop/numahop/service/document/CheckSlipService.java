@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.service.document;
+package org.numahop.numahop.service.document;
 
-import fr.progilone.pgcn.repository.document.CheckSlipRepository;
+import org.numahop.numahop.repository.document.CheckSlipRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.service.exchange.template;
+package org.numahop.numahop.service.exchange.template;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import fr.progilone.pgcn.domain.exchange.template.Name;
-import fr.progilone.pgcn.domain.exchange.template.Template;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.exchange.template.Name;
+import org.numahop.numahop.domain.exchange.template.Template;
+import org.numahop.numahop.domain.library.Library;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.dto.document;
+package org.numahop.numahop.domain.dto.document;
 
-import fr.progilone.pgcn.domain.document.PhysicalDocument;
-import fr.progilone.pgcn.domain.dto.AbstractDTO;
+import org.numahop.numahop.domain.document.PhysicalDocument;
+import org.numahop.numahop.domain.dto.AbstractDTO;
 
 public class ListPhysicalDocumentDTO extends AbstractDTO {
 

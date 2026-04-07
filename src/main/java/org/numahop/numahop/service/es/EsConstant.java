@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.es;
+package org.numahop.numahop.service.es;
 
 public interface EsConstant {
 

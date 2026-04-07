@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.check.mapper;
+package org.numahop.numahop.service.check.mapper;
 
-import fr.progilone.pgcn.domain.check.AutomaticCheckType;
-import fr.progilone.pgcn.domain.dto.check.AutomaticCheckTypeDTO;
+import org.numahop.numahop.domain.check.AutomaticCheckType;
+import org.numahop.numahop.domain.dto.check.AutomaticCheckTypeDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

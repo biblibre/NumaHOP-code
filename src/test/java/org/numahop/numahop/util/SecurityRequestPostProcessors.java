@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.util;
+package org.numahop.numahop.util;
 
 import java.util.stream.Stream;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;

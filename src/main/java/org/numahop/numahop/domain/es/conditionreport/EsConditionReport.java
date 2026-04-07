@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.domain.es.conditionreport;
+package org.numahop.numahop.domain.es.conditionreport;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReport;
-import fr.progilone.pgcn.domain.document.conditionreport.ConditionReportDetail;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReport;
+import org.numahop.numahop.domain.document.conditionreport.ConditionReportDetail;
 import java.util.Comparator;
 import java.util.Optional;
 import org.springframework.data.annotation.Id;

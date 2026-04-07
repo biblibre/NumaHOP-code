@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.exchange.ead;
+package org.numahop.numahop.service.exchange.ead;
 
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.service.administration.TransliterationService;
-import fr.progilone.pgcn.service.exchange.ead.mapping.CompiledMapping;
-import fr.progilone.pgcn.service.exchange.ead.mapping.CompiledMappingRule;
-import fr.progilone.pgcn.service.exchange.ead.mapping.CompiledStatement;
-import fr.progilone.pgcn.service.exchange.ead.mapping.RuleKey;
-import fr.progilone.pgcn.service.exchange.ead.script.CustomScript;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.service.administration.TransliterationService;
+import org.numahop.numahop.service.exchange.ead.mapping.CompiledMapping;
+import org.numahop.numahop.service.exchange.ead.mapping.CompiledMappingRule;
+import org.numahop.numahop.service.exchange.ead.mapping.CompiledStatement;
+import org.numahop.numahop.service.exchange.ead.mapping.RuleKey;
+import org.numahop.numahop.service.exchange.ead.script.CustomScript;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

@@ -5,7 +5,7 @@
 // Généré le : 2016.12.29 à 11:53:40 AM CET
 //
 
-package fr.progilone.pgcn.domain.jaxb.sip;
+package org.numahop.numahop.domain.jaxb.sip;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;

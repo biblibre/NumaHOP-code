@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.es;
+package org.numahop.numahop.repository.es;
 
-import fr.progilone.pgcn.domain.es.delivery.EsDelivery;
+import org.numahop.numahop.domain.es.delivery.EsDelivery;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 public interface EsDeliveryRepository extends ElasticsearchRepository<EsDelivery, String>, EsDeliveryRepositoryCustom {

@@ -1,22 +1,22 @@
-package fr.progilone.pgcn.web.rest.library;
+package org.numahop.numahop.web.rest.library;
 
-import static fr.progilone.pgcn.web.rest.library.security.AuthorizationConstants.LIB_HAB1;
-import static fr.progilone.pgcn.web.rest.library.security.AuthorizationConstants.LIB_HAB2;
-import static fr.progilone.pgcn.web.rest.library.security.AuthorizationConstants.LIB_HAB3;
-import static fr.progilone.pgcn.web.rest.library.security.AuthorizationConstants.LIB_HAB5;
-import static fr.progilone.pgcn.web.rest.library.security.AuthorizationConstants.LIB_HAB6;
-import static fr.progilone.pgcn.web.rest.library.security.AuthorizationConstants.LIB_HAB7;
+import static org.numahop.numahop.web.rest.library.security.AuthorizationConstants.LIB_HAB1;
+import static org.numahop.numahop.web.rest.library.security.AuthorizationConstants.LIB_HAB2;
+import static org.numahop.numahop.web.rest.library.security.AuthorizationConstants.LIB_HAB3;
+import static org.numahop.numahop.web.rest.library.security.AuthorizationConstants.LIB_HAB5;
+import static org.numahop.numahop.web.rest.library.security.AuthorizationConstants.LIB_HAB6;
+import static org.numahop.numahop.web.rest.library.security.AuthorizationConstants.LIB_HAB7;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.administration.SftpConfiguration;
-import fr.progilone.pgcn.domain.dto.library.LibraryParameterDTO;
-import fr.progilone.pgcn.domain.dto.library.LibraryParameterValuedDTO;
-import fr.progilone.pgcn.domain.library.LibraryParameter;
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.service.administration.SftpConfigurationService;
-import fr.progilone.pgcn.service.library.LibraryParameterService;
-import fr.progilone.pgcn.service.library.ui.UILibraryParameterService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
+import org.numahop.numahop.domain.administration.SftpConfiguration;
+import org.numahop.numahop.domain.dto.library.LibraryParameterDTO;
+import org.numahop.numahop.domain.dto.library.LibraryParameterValuedDTO;
+import org.numahop.numahop.domain.library.LibraryParameter;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.service.administration.SftpConfigurationService;
+import org.numahop.numahop.service.library.LibraryParameterService;
+import org.numahop.numahop.service.library.ui.UILibraryParameterService;
+import org.numahop.numahop.web.rest.AbstractRestController;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.repository.es.helper;
+package org.numahop.numahop.repository.es.helper;
 
 import java.util.Arrays;
 import org.apache.commons.lang3.StringUtils;

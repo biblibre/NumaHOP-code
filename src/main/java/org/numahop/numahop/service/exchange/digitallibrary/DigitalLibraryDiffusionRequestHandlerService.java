@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.service.exchange.digitallibrary;
+package org.numahop.numahop.service.exchange.digitallibrary;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.workflow.WorkflowStateKey;
-import fr.progilone.pgcn.service.workflow.WorkflowService;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.service.workflow.WorkflowService;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;

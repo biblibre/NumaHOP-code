@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.exception;
+package org.numahop.numahop.exception;
 
 /**
  * Classe des exceptions techniques.

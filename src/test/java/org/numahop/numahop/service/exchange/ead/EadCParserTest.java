@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.exchange.ead;
+package org.numahop.numahop.service.exchange.ead;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import fr.progilone.pgcn.domain.jaxb.ead.C;
-import fr.progilone.pgcn.domain.jaxb.ead.Eadheader;
-import fr.progilone.pgcn.domain.jaxb.ead.Physdesc;
-import fr.progilone.pgcn.domain.jaxb.ead.Title;
+import org.numahop.numahop.domain.jaxb.ead.C;
+import org.numahop.numahop.domain.jaxb.ead.Eadheader;
+import org.numahop.numahop.domain.jaxb.ead.Physdesc;
+import org.numahop.numahop.domain.jaxb.ead.Title;
 import jakarta.xml.bind.JAXBException;
 import java.io.IOException;
 import java.util.List;

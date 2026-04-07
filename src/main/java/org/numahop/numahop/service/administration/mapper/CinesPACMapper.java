@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.administration.mapper;
+package org.numahop.numahop.service.administration.mapper;
 
-import fr.progilone.pgcn.domain.administration.CinesPAC;
-import fr.progilone.pgcn.domain.dto.administration.CinesPACDTO;
+import org.numahop.numahop.domain.administration.CinesPAC;
+import org.numahop.numahop.domain.dto.administration.CinesPACDTO;
 import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.service.util.transaction;
+package org.numahop.numahop.service.util.transaction;
 
-import fr.progilone.pgcn.exception.PgcnException;
-import fr.progilone.pgcn.exception.message.PgcnError;
+import org.numahop.numahop.exception.PgcnException;
+import org.numahop.numahop.exception.message.PgcnError;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

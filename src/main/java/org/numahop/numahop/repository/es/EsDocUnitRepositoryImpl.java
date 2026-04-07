@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.es;
+package org.numahop.numahop.repository.es;
 
-import static fr.progilone.pgcn.repository.es.helper.EsQueryHelper.*;
+import static org.numahop.numahop.repository.es.helper.EsQueryHelper.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
@@ -15,17 +15,17 @@ import co.elastic.clients.elasticsearch.core.search.SuggestFuzziness;
 import co.elastic.clients.elasticsearch.core.search.Suggester;
 import co.elastic.clients.json.JsonData;
 import co.elastic.clients.util.NamedValue;
-import fr.progilone.pgcn.domain.administration.CinesPAC_;
-import fr.progilone.pgcn.domain.administration.InternetArchiveCollection_;
-import fr.progilone.pgcn.domain.document.BibliographicRecord_;
-import fr.progilone.pgcn.domain.document.DocUnit_;
-import fr.progilone.pgcn.domain.document.PhysicalDocument_;
-import fr.progilone.pgcn.domain.es.document.EsDocUnit;
-import fr.progilone.pgcn.domain.exchange.cines.CinesReport_;
-import fr.progilone.pgcn.domain.library.Library_;
-import fr.progilone.pgcn.repository.es.helper.EsQueryBuilder;
-import fr.progilone.pgcn.repository.es.helper.EsSearchOperation;
-import fr.progilone.pgcn.service.es.EsConstant;
+import org.numahop.numahop.domain.administration.CinesPAC_;
+import org.numahop.numahop.domain.administration.InternetArchiveCollection_;
+import org.numahop.numahop.domain.document.BibliographicRecord_;
+import org.numahop.numahop.domain.document.DocUnit_;
+import org.numahop.numahop.domain.document.PhysicalDocument_;
+import org.numahop.numahop.domain.es.document.EsDocUnit;
+import org.numahop.numahop.domain.exchange.cines.CinesReport_;
+import org.numahop.numahop.domain.library.Library_;
+import org.numahop.numahop.repository.es.helper.EsQueryBuilder;
+import org.numahop.numahop.repository.es.helper.EsSearchOperation;
+import org.numahop.numahop.service.es.EsConstant;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

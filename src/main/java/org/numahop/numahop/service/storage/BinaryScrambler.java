@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.storage;
+package org.numahop.numahop.service.storage;
 
 import java.io.File;
 

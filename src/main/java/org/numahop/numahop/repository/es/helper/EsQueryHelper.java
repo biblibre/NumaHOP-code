@@ -1,6 +1,6 @@
-package fr.progilone.pgcn.repository.es.helper;
+package org.numahop.numahop.repository.es.helper;
 
-import static fr.progilone.pgcn.service.es.EsConstant.*;
+import static org.numahop.numahop.service.es.EsConstant.*;
 
 import co.elastic.clients.elasticsearch._types.FieldValue;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
@@ -11,7 +11,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
 import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.TextQueryType;
 import co.elastic.clients.json.JsonData;
-import fr.progilone.pgcn.service.es.EsConstant;
+import org.numahop.numahop.service.es.EsConstant;
 import jakarta.persistence.metamodel.Attribute;
 import java.util.Arrays;
 import java.util.Collection;

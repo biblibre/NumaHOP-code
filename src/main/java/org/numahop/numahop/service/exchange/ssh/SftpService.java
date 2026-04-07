@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.service.exchange.ssh;
+package org.numahop.numahop.service.exchange.ssh;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
@@ -8,9 +8,9 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
-import fr.progilone.pgcn.domain.administration.SftpConfiguration;
-import fr.progilone.pgcn.exception.PgcnTechnicalException;
-import fr.progilone.pgcn.service.util.CryptoService;
+import org.numahop.numahop.domain.administration.SftpConfiguration;
+import org.numahop.numahop.exception.PgcnTechnicalException;
+import org.numahop.numahop.service.util.CryptoService;
 import jakarta.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileInputStream;

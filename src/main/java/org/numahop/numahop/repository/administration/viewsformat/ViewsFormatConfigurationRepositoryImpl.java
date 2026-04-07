@@ -1,11 +1,11 @@
-package fr.progilone.pgcn.repository.administration.viewsformat;
+package org.numahop.numahop.repository.administration.viewsformat;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fr.progilone.pgcn.domain.administration.viewsformat.QViewsFormatConfiguration;
-import fr.progilone.pgcn.domain.administration.viewsformat.ViewsFormatConfiguration;
+import org.numahop.numahop.domain.administration.viewsformat.QViewsFormatConfiguration;
+import org.numahop.numahop.domain.administration.viewsformat.ViewsFormatConfiguration;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;

@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.config;
+package org.numahop.numahop.config;
 
 import com.ryantenney.metrics.spring.config.annotation.EnableMetrics;
-import fr.progilone.pgcn.service.storage.ExifToolService;
+import org.numahop.numahop.service.storage.ExifToolService;
 import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import org.slf4j.Logger;

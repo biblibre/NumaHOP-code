@@ -1,12 +1,12 @@
-package fr.progilone.pgcn.service.exchange.marc;
+package org.numahop.numahop.service.exchange.marc;
 
-import fr.progilone.pgcn.domain.exchange.Mapping;
-import fr.progilone.pgcn.service.administration.TransliterationService;
-import fr.progilone.pgcn.service.exchange.marc.mapping.CompiledMapping;
-import fr.progilone.pgcn.service.exchange.marc.mapping.CompiledMappingRule;
-import fr.progilone.pgcn.service.exchange.marc.mapping.CompiledStatement;
-import fr.progilone.pgcn.service.exchange.marc.mapping.MarcKey;
-import fr.progilone.pgcn.service.exchange.marc.script.CustomScript;
+import org.numahop.numahop.domain.exchange.Mapping;
+import org.numahop.numahop.service.administration.TransliterationService;
+import org.numahop.numahop.service.exchange.marc.mapping.CompiledMapping;
+import org.numahop.numahop.service.exchange.marc.mapping.CompiledMappingRule;
+import org.numahop.numahop.service.exchange.marc.mapping.CompiledStatement;
+import org.numahop.numahop.service.exchange.marc.mapping.MarcKey;
+import org.numahop.numahop.service.exchange.marc.script.CustomScript;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

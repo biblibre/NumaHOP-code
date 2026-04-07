@@ -1,21 +1,21 @@
-package fr.progilone.pgcn.web.rest.exchange.oaipmh;
+package org.numahop.numahop.web.rest.exchange.oaipmh;
 
-import static fr.progilone.pgcn.web.rest.exchange.security.AuthorizationConstants.*;
+import static org.numahop.numahop.web.rest.exchange.security.AuthorizationConstants.*;
 
 import com.codahale.metrics.annotation.Timed;
-import fr.progilone.pgcn.domain.exchange.DataEncoding;
-import fr.progilone.pgcn.domain.exchange.FileFormat;
-import fr.progilone.pgcn.domain.exchange.ImportReport;
-import fr.progilone.pgcn.domain.exchange.ImportedDocUnit;
-import fr.progilone.pgcn.domain.jaxb.oaipmh.IdentifyType;
-import fr.progilone.pgcn.domain.jaxb.oaipmh.OAIPMHtype;
-import fr.progilone.pgcn.service.exchange.ImportReportService;
-import fr.progilone.pgcn.service.exchange.oaipmh.ImportOaiPmhService;
-import fr.progilone.pgcn.service.exchange.oaipmh.OaiPmhRequest;
-import fr.progilone.pgcn.service.exchange.oaipmh.OaiPmhService;
-import fr.progilone.pgcn.web.rest.AbstractRestController;
-import fr.progilone.pgcn.web.rest.exchange.ImportController;
-import fr.progilone.pgcn.web.util.LibraryAccesssHelper;
+import org.numahop.numahop.domain.exchange.DataEncoding;
+import org.numahop.numahop.domain.exchange.FileFormat;
+import org.numahop.numahop.domain.exchange.ImportReport;
+import org.numahop.numahop.domain.exchange.ImportedDocUnit;
+import org.numahop.numahop.domain.jaxb.oaipmh.IdentifyType;
+import org.numahop.numahop.domain.jaxb.oaipmh.OAIPMHtype;
+import org.numahop.numahop.service.exchange.ImportReportService;
+import org.numahop.numahop.service.exchange.oaipmh.ImportOaiPmhService;
+import org.numahop.numahop.service.exchange.oaipmh.OaiPmhRequest;
+import org.numahop.numahop.service.exchange.oaipmh.OaiPmhService;
+import org.numahop.numahop.web.rest.AbstractRestController;
+import org.numahop.numahop.web.rest.exchange.ImportController;
+import org.numahop.numahop.web.util.LibraryAccesssHelper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;

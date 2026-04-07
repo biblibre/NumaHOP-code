@@ -1,8 +1,8 @@
-package fr.progilone.pgcn.repository.exchange;
+package org.numahop.numahop.repository.exchange;
 
-import fr.progilone.pgcn.domain.document.DocUnit;
-import fr.progilone.pgcn.domain.exchange.ImportReport;
-import fr.progilone.pgcn.domain.exchange.ImportedDocUnit;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.exchange.ImportReport;
+import org.numahop.numahop.domain.exchange.ImportedDocUnit;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.data.domain.Page;

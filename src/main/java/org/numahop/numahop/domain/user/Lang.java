@@ -1,4 +1,4 @@
-package fr.progilone.pgcn.domain.user;
+package org.numahop.numahop.domain.user;
 
 import java.util.Locale;
 

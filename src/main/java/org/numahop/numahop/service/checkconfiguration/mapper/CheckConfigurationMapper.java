@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.service.checkconfiguration.mapper;
+package org.numahop.numahop.service.checkconfiguration.mapper;
 
-import fr.progilone.pgcn.domain.checkconfiguration.CheckConfiguration;
-import fr.progilone.pgcn.domain.dto.checkconfiguration.CheckConfigurationDTO;
-import fr.progilone.pgcn.service.check.mapper.AutomaticCheckTypeMapper;
-import fr.progilone.pgcn.service.library.mapper.SimpleLibraryMapper;
+import org.numahop.numahop.domain.checkconfiguration.CheckConfiguration;
+import org.numahop.numahop.domain.dto.checkconfiguration.CheckConfigurationDTO;
+import org.numahop.numahop.service.check.mapper.AutomaticCheckTypeMapper;
+import org.numahop.numahop.service.library.mapper.SimpleLibraryMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

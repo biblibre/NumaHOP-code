@@ -1,9 +1,9 @@
-package fr.progilone.pgcn.domain.filesgestionconfiguration;
+package org.numahop.numahop.domain.filesgestionconfiguration;
 
-import fr.progilone.pgcn.domain.AbstractDomainObject;
-import fr.progilone.pgcn.domain.administration.ExportFTPDeliveryFolder;
-import fr.progilone.pgcn.domain.exportftpconfiguration.ExportFTPConfiguration;
-import fr.progilone.pgcn.domain.library.Library;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.administration.ExportFTPDeliveryFolder;
+import org.numahop.numahop.domain.exportftpconfiguration.ExportFTPConfiguration;
+import org.numahop.numahop.domain.library.Library;
 import jakarta.persistence.*;
 
 @Entity

@@ -1,20 +1,20 @@
-package fr.progilone.pgcn.service.lot.mapper;
+package org.numahop.numahop.service.lot.mapper;
 
-import fr.progilone.pgcn.domain.dto.lot.LotWithConfigRulesDTO;
-import fr.progilone.pgcn.domain.lot.Lot;
-import fr.progilone.pgcn.service.administration.mapper.CinesPACMapper;
-import fr.progilone.pgcn.service.administration.mapper.InternetArchiveCollectionMapper;
-import fr.progilone.pgcn.service.administration.mapper.OmekaConfigurationMapper;
-import fr.progilone.pgcn.service.administration.mapper.OmekaListMapper;
-import fr.progilone.pgcn.service.administration.mapper.SimpleViewsFormatConfigurationMapper;
-import fr.progilone.pgcn.service.checkconfiguration.mapper.CheckConfigurationMapper;
-import fr.progilone.pgcn.service.document.mapper.SimpleDocUnitMapper;
-import fr.progilone.pgcn.service.ftpconfiguration.mapper.SimpleFTPConfigurationMapper;
-import fr.progilone.pgcn.service.ocrlangconfiguration.mapper.OcrLanguageMapper;
-import fr.progilone.pgcn.service.project.mapper.SimpleProjectMapper;
-import fr.progilone.pgcn.service.user.mapper.AddressMapper;
-import fr.progilone.pgcn.service.user.mapper.UserMapper;
-import fr.progilone.pgcn.service.workflow.mapper.SimpleWorkflowMapper;
+import org.numahop.numahop.domain.dto.lot.LotWithConfigRulesDTO;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.service.administration.mapper.CinesPACMapper;
+import org.numahop.numahop.service.administration.mapper.InternetArchiveCollectionMapper;
+import org.numahop.numahop.service.administration.mapper.OmekaConfigurationMapper;
+import org.numahop.numahop.service.administration.mapper.OmekaListMapper;
+import org.numahop.numahop.service.administration.mapper.SimpleViewsFormatConfigurationMapper;
+import org.numahop.numahop.service.checkconfiguration.mapper.CheckConfigurationMapper;
+import org.numahop.numahop.service.document.mapper.SimpleDocUnitMapper;
+import org.numahop.numahop.service.ftpconfiguration.mapper.SimpleFTPConfigurationMapper;
+import org.numahop.numahop.service.ocrlangconfiguration.mapper.OcrLanguageMapper;
+import org.numahop.numahop.service.project.mapper.SimpleProjectMapper;
+import org.numahop.numahop.service.user.mapper.AddressMapper;
+import org.numahop.numahop.service.user.mapper.UserMapper;
+import org.numahop.numahop.service.workflow.mapper.SimpleWorkflowMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

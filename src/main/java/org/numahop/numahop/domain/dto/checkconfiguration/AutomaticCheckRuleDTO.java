@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.dto.checkconfiguration;
+package org.numahop.numahop.domain.dto.checkconfiguration;
 
-import fr.progilone.pgcn.domain.dto.AbstractVersionedDTO;
-import fr.progilone.pgcn.domain.dto.check.AutomaticCheckTypeDTO;
+import org.numahop.numahop.domain.dto.AbstractVersionedDTO;
+import org.numahop.numahop.domain.dto.check.AutomaticCheckTypeDTO;
 
 public class AutomaticCheckRuleDTO extends AbstractVersionedDTO {
 

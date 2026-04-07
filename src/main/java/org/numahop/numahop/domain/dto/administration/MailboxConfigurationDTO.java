@@ -1,7 +1,7 @@
-package fr.progilone.pgcn.domain.dto.administration;
+package org.numahop.numahop.domain.dto.administration;
 
-import fr.progilone.pgcn.domain.administration.MailboxConfiguration;
-import fr.progilone.pgcn.domain.dto.library.SimpleLibraryDTO;
+import org.numahop.numahop.domain.administration.MailboxConfiguration;
+import org.numahop.numahop.domain.dto.library.SimpleLibraryDTO;
 import java.util.Objects;
 import java.util.Set;
 
