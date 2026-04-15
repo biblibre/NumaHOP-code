@@ -6,7 +6,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.0.2</version>
     </parent>
-    <groupId>fr.progilone.numahop</groupId>
+    <groupId>org.numahop</groupId>
     <artifactId>numahop</artifactId>
     <version>26.03</version>
     <packaging>jar</packaging>
