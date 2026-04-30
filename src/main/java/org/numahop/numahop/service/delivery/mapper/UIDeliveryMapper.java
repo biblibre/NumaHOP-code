@@ -1,0 +1,44 @@
+package org.numahop.numahop.service.delivery.mapper;
+
+import org.numahop.numahop.domain.delivery.Delivery;
+import org.numahop.numahop.domain.dto.delivery.ManualDeliveryDTO;
+import org.numahop.numahop.domain.dto.lot.SimpleLotDTO;
+import org.numahop.numahop.domain.lot.Lot;
+import org.numahop.numahop.service.lot.LotService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UIDeliveryMapper {
+
+	public UIDeliveryMapper() {
+	}
+
+	@Autowired
+	LotService lotService;
+
+	public void mapInto(final ManualDeliveryDTO deliveryDTO, final Delivery delivery) {
+		delivery.setIdentifier(deliveryDTO.getIdentifier());
+
+		final SimpleLotDTO lotDTO = deliveryDTO.getLot();
+		if (lotDTO != null && lotDTO.getIdentifier() != null) {
+			// Récupère bibliotheque depuis repository
+			final Lot lot = lotService.findByIdentifier(lotDTO.getIdentifier());
+			delivery.setLot(lot);
+		}
+		delivery.setLabel(deliveryDTO.getLabel());
+		delivery.setDescription(deliveryDTO.getDescription());
+		if (deliveryDTO.getPayment() != null) {
+			delivery.setPayment(Delivery.DeliveryPayment.valueOf(deliveryDTO.getPayment()));
+		}
+		if (deliveryDTO.getMethod() != null) {
+			delivery.setMethod(Delivery.DeliveryMethod.valueOf(deliveryDTO.getMethod()));
+		}
+		delivery.setReceptionDate(deliveryDTO.getReceptionDate());
+		delivery.setFolderPath(deliveryDTO.getFolderPath());
+		delivery.setImgFormat(deliveryDTO.getImgFormat());
+		delivery.setDigitizingNotes(deliveryDTO.getDigitizingNotes());
+		delivery.setControlNotes(deliveryDTO.getControlNotes());
+	}
+
+}

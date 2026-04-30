@@ -90,7 +90,7 @@ Here is the global organization of the project:
 src
 ├─ main
 │  ├─ docker # All the docker related files.
-│  ├─ java/fr/progilone/pgcn/
+│  ├─ java/org/numahop/numahop/
 │  │  ├─ config # Java configuration classes
 │  │  ├─ domain # Data Classes
 │  │  ├─ repository # Storage abstractions 

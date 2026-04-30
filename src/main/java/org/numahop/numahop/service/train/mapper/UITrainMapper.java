@@ -1,0 +1,43 @@
+package org.numahop.numahop.service.train.mapper;
+
+import org.numahop.numahop.domain.dto.train.TrainDTO;
+import org.numahop.numahop.domain.train.Train;
+import org.numahop.numahop.repository.document.PhysicalDocumentRepository;
+import org.numahop.numahop.repository.project.ProjectRepository;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UITrainMapper {
+
+	@Autowired
+	private ProjectRepository projectRepository;
+
+	@Autowired
+	private PhysicalDocumentRepository physicalDocumentRepository;
+
+	public UITrainMapper() {
+	}
+
+	public void mapInto(final TrainDTO trainDTO, final Train train) {
+		train.setIdentifier(trainDTO.getIdentifier());
+		train.setLabel(trainDTO.getLabel());
+		train.setActive(trainDTO.getActive());
+		train.setDescription(trainDTO.getDescription());
+		train.setStatus(trainDTO.getStatus());
+		if (trainDTO.getProject() != null) {
+			train.setProject(projectRepository.getOne(trainDTO.getProject().getIdentifier()));
+		}
+		if (trainDTO.getPhysicalDocuments() != null) {
+			train.setPhysicalDocuments(trainDTO.getPhysicalDocuments()
+				.stream()
+				.filter(documentDTO -> documentDTO.getIdentifier() != null)
+				.map(documentDTO -> physicalDocumentRepository.findByIdentifier(documentDTO.getIdentifier()))
+				.collect(Collectors.toSet()));
+		}
+		train.setProviderSendingDate(trainDTO.getProviderSendingDate());
+		train.setReturnDate(trainDTO.getReturnDate());
+	}
+
+}

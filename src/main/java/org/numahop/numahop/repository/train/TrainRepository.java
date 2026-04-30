@@ -1,0 +1,27 @@
+package org.numahop.numahop.repository.train;
+
+import org.numahop.numahop.domain.train.Train;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+public interface TrainRepository extends JpaRepository<Train, String>, TrainRepositoryCustom {
+
+	@Query("""
+			select t from Train t
+			where t.identifier = ?1
+			""")
+	Train findOneWithDependencies(String identifier);
+
+	List<Train> findAllByActive(boolean active);
+
+	List<Train> findAllByProjectIdentifier(String id);
+
+	List<Train> findByIdentifierIn(List<String> identifiers);
+
+	@Query("""
+			select t.identifier from Train t
+			""")
+	List<String> findAllIdentifiers();
+
+}

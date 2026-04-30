@@ -1,0 +1,58 @@
+package org.numahop.numahop.domain.workflow.state;
+
+import org.numahop.numahop.domain.user.User;
+import org.numahop.numahop.domain.workflow.DocUnitState;
+import org.numahop.numahop.domain.workflow.WorkflowStateKey;
+import org.numahop.numahop.domain.workflow.WorkflowStateStatus;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@DiscriminatorValue(value = WorkflowStateKey.Values.CONTROLES_AUTOMATIQUES_EN_COURS)
+public class ControlesAutomatiquesEnCoursState extends DocUnitState {
+
+	@Override
+	public WorkflowStateKey getKey() {
+		return WorkflowStateKey.CONTROLES_AUTOMATIQUES_EN_COURS;
+	}
+
+	@Override
+	public void process(final User user) {
+		processEndDate();
+		processUser(user);
+		processStatus();
+
+		// Initialisation de la prochaine étape si applicable (aucune étape en cours)
+		final List<DocUnitState> currentStates = getWorkflow().getCurrentStates();
+		if (currentStates.isEmpty() || (currentStates.size() == 1
+				&& WorkflowStateKey.VALIDATION_NOTICES == currentStates.get(0).getKey())) {
+			getNextStates().forEach(state -> state.initializeState(null, null, null));
+		}
+	}
+
+	@Override
+	public void reject(final User user) {
+		processEndDate();
+		processUser(user);
+		failStatus();
+
+		// Annule controle qualité
+		final DocUnitState ctrlQual = getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.CONTROLE_QUALITE_EN_COURS);
+		ctrlQual.initializeState(null, null, WorkflowStateStatus.CANCELED);
+		// et init rapport de ctrl
+		final DocUnitState ctrlReport = getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.RAPPORT_CONTROLES);
+		ctrlReport.initializeState(null, null, null);
+
+	}
+
+	@Override
+	protected List<DocUnitState> getNextStates() {
+		final List<DocUnitState> states = new ArrayList<>();
+		states.add(getWorkflow().getFutureOrRunningByKey(WorkflowStateKey.CONTROLE_QUALITE_EN_COURS));
+		cleanNullStates(states);
+		return states;
+	}
+
+}

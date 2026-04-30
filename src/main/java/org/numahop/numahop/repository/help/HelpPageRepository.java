@@ -1,0 +1,22 @@
+package org.numahop.numahop.repository.help;
+
+import org.numahop.numahop.domain.help.HelpPage;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+public interface HelpPageRepository extends JpaRepository<HelpPage, String>, HelpPageRepositoryCustom {
+
+	@Query("""
+			select distinct(hp.module) from HelpPage hp
+			""")
+	List<String> findAllModules();
+
+	@Query("""
+			select hp from HelpPage hp
+			left join fetch hp.parent
+			where hp.identifier = ?1
+			""")
+	HelpPage findOneWithParent(String id);
+
+}

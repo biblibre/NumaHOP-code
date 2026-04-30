@@ -1,0 +1,182 @@
+package org.numahop.numahop.domain.check;
+
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.check.AutomaticCheckType.AutoCheckType;
+import org.numahop.numahop.domain.delivery.Delivery;
+import org.numahop.numahop.domain.document.DigitalDocument;
+import org.numahop.numahop.domain.document.DocPage;
+import org.numahop.numahop.domain.document.DocUnit;
+import org.numahop.numahop.domain.document.PhysicalDocument;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Classe représentant un résultat de contrôle automatique
+ *
+ * @author jbrunet
+ */
+@Entity
+@Table(name = AutomaticCheckResult.TABLE_NAME)
+public class AutomaticCheckResult extends AbstractDomainObject {
+
+	public static final String TABLE_NAME = "check_automatic_result";
+
+	/**
+	 * Résultat du contrôle
+	 */
+	@Column(name = "result", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private AutoCheckResult result;
+
+	/**
+	 * Message optionnel
+	 */
+	@Column(name = "message", columnDefinition = "text")
+	private String message;
+
+	/**
+	 * Entités liés
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "check_type")
+	private AutomaticCheckType check;
+
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+	@JoinColumn(name = "digital_document")
+	private DigitalDocument digitalDocument;
+
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+	@JoinColumn(name = "physical_document")
+	private PhysicalDocument physicalDocument;
+
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+	@JoinColumn(name = "doc_unit")
+	private DocUnit docUnit;
+
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+	@JoinColumn(name = "page")
+	private DocPage page;
+
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+	@JoinColumn(name = "delivery")
+	private Delivery delivery;
+
+	/* Liste fichiers en erreur */
+	@Transient
+	private List<String> errorFiles = new ArrayList<>();
+
+	public AutoCheckResult getResult() {
+		return result;
+	}
+
+	public void setResult(AutoCheckResult result) {
+		this.result = result;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public AutomaticCheckType getCheck() {
+		return check;
+	}
+
+	public void setCheck(AutomaticCheckType check) {
+		this.check = check;
+	}
+
+	public DigitalDocument getDigitalDocument() {
+		return digitalDocument;
+	}
+
+	public void setDigitalDocument(DigitalDocument digitalDocument) {
+		this.digitalDocument = digitalDocument;
+	}
+
+	public PhysicalDocument getPhysicalDocument() {
+		return physicalDocument;
+	}
+
+	public void setPhysicalDocument(PhysicalDocument physicalDocument) {
+		this.physicalDocument = physicalDocument;
+	}
+
+	public DocUnit getDocUnit() {
+		return docUnit;
+	}
+
+	public void setDocUnit(DocUnit docUnit) {
+		this.docUnit = docUnit;
+	}
+
+	public DocPage getPage() {
+		return page;
+	}
+
+	public void setPage(DocPage page) {
+		this.page = page;
+	}
+
+	public Delivery getDelivery() {
+		return delivery;
+	}
+
+	public void setDelivery(Delivery delivery) {
+		this.delivery = delivery;
+	}
+
+	public List<String> getErrorFiles() {
+		return errorFiles;
+	}
+
+	public void setErrorFiles(List<String> errorFiles) {
+		this.errorFiles = errorFiles;
+	}
+
+	public void addErrorFile(String fileName) {
+		if (result != null) {
+			this.errorFiles.add(fileName);
+		}
+	}
+
+	/**
+	 * Résultats possibles du contrôle
+	 *
+	 * @author jbrunet
+	 */
+	public enum AutoCheckResult {
+
+		OK, /* contrôle passé avec succès */
+		KO, /* contrôle en échec */
+		OTHER /* se référer au message pour le détail */
+
+	}
+
+	/**
+	 * Récupération des infos du parent (label) (EAGER fetched)
+	 */
+	public String getLabel() {
+		return check != null ? check.getLabel() : null;
+	}
+
+	/**
+	 * Récupération des infos du parent (type) (EAGER fetched)
+	 */
+	public AutoCheckType getType() {
+		return check != null ? check.getType() : null;
+	}
+
+}

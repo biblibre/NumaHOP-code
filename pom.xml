@@ -6,7 +6,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.0.2</version>
     </parent>
-    <groupId>fr.progilone.numahop</groupId>
+    <groupId>org.numahop</groupId>
     <artifactId>numahop</artifactId>
     <version>26.03</version>
     <packaging>jar</packaging>
@@ -864,7 +864,7 @@
                     <defaultSchemaName />
                     <username>pgcn</username>
                     <password>pgcnpgcn</password>
-                    <referenceUrl>hibernate:spring:fr.progilone.pgcn.domain?dialect=org.hibernate.dialect.MySQL5InnoDBDialect</referenceUrl>
+                    <referenceUrl>hibernate:spring:org.numahop.numahop.domain?dialect=org.hibernate.dialect.MySQL5InnoDBDialect</referenceUrl>
                     <verbose>true</verbose>
                     <logging>debug</logging>
                 </configuration>
@@ -900,7 +900,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>fr.progilone.pgcn.Application</mainClass>
+                    <mainClass>org.numahop.numahop.Application</mainClass>
                     <executable>true</executable>
                 </configuration>
                 <executions>

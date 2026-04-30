@@ -1,0 +1,92 @@
+package org.numahop.numahop.domain.exchange.template;
+
+import com.google.common.base.MoreObjects;
+import org.numahop.numahop.domain.AbstractDomainObject;
+import org.numahop.numahop.domain.library.Library;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+/**
+ * Template velocity
+ */
+@Entity
+@Table(name = Template.TABLE_NAME)
+public class Template extends AbstractDomainObject {
+
+	public static final String TABLE_NAME = "exc_template";
+
+	/**
+	 * Nom du template
+	 */
+	@Column(name = "name", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Name name;
+
+	/**
+	 * Nom du fichier importé
+	 */
+	@Column(name = "original_filename", nullable = false)
+	private String originalFilename;
+
+	/**
+	 * Taille du fichier importé
+	 */
+	@Column(name = "file_size")
+	private Long fileSize;
+
+	/**
+	 * Bibliothèque
+	 */
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "library")
+	private Library library;
+
+	public Name getName() {
+		return name;
+	}
+
+	public void setName(final Name name) {
+		this.name = name;
+	}
+
+	public String getOriginalFilename() {
+		return originalFilename;
+	}
+
+	public void setOriginalFilename(final String originalFilename) {
+		this.originalFilename = originalFilename;
+	}
+
+	public Long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(final Long fileSize) {
+		this.fileSize = fileSize;
+	}
+
+	public Library getLibrary() {
+		return library;
+	}
+
+	public void setLibrary(final Library library) {
+		this.library = library;
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+			.add("identifier", identifier)
+			.add("name", name)
+			.add("originalFilename", originalFilename)
+			.add("fileSize", fileSize)
+			.toString();
+	}
+
+}
