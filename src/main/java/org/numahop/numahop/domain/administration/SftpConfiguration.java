@@ -62,7 +62,7 @@ public class SftpConfiguration extends AbstractDomainObject {
 	@Column(name = "target_dir")
 	private String targetDir;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "confPac", cascade = CascadeType.MERGE, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "confPac", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CinesPAC> pacs;
 
 	/**

@@ -21,9 +21,15 @@ import jakarta.xml.bind.Unmarshaller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -126,6 +132,77 @@ public class SftpConfigurationService {
 		return sftpConfigurationRepository.findOneWithDependencies(savedConf.getIdentifier());
 	}
 
+	/**
+	 * Update path for an existing configuration. Reconciles the detached request against
+	 * the managed entity instead of going through {@code EntityManager.merge}, which
+	 * would choke on duplicate detached representations of the same {@link CinesPAC} that
+	 * the JSON request graph can carry through JSOG decoding.
+	 */
+	@Transactional
+	public SftpConfiguration update(final SftpConfiguration detached)
+			throws PgcnValidationException, PgcnTechnicalException {
+		setDefaultValues(detached);
+		validate(detached);
+
+		final SftpConfiguration managed = sftpConfigurationRepository.findOneWithDependencies(detached.getIdentifier());
+		if (managed == null) {
+			return null;
+		}
+
+		managed.setLabel(detached.getLabel());
+		managed.setUsername(detached.getUsername());
+		managed.setPassword(detached.getPassword());
+		managed.setHost(detached.getHost());
+		managed.setPort(detached.getPort());
+		managed.setTargetDir(detached.getTargetDir());
+		managed.setActive(detached.isActive());
+		managed.setLibrary(detached.getLibrary());
+
+		final List<CinesPAC> incoming = detached.getPacs() == null ? List.of() : detached.getPacs();
+
+		// Dedupe by Java reference (catches JSOG @id+@ref decoding to one instance)
+		// and by identifier (catches a second Java instance with the same DB id).
+		final Set<CinesPAC> seenRefs = Collections.newSetFromMap(new IdentityHashMap<>());
+		final Set<String> seenIds = new HashSet<>();
+		final List<CinesPAC> deduped = new ArrayList<>(incoming.size());
+		for (final CinesPAC pac : incoming) {
+			if (!seenRefs.add(pac)) {
+				continue;
+			}
+			if (pac.getIdentifier() != null && !seenIds.add(pac.getIdentifier())) {
+				continue;
+			}
+			deduped.add(pac);
+		}
+
+		final Set<String> incomingIds = deduped.stream()
+			.map(CinesPAC::getIdentifier)
+			.filter(Objects::nonNull)
+			.collect(Collectors.toSet());
+
+		// orphanRemoval=true will delete these on flush
+		managed.getPacs().removeIf(p -> !incomingIds.contains(p.getIdentifier()));
+
+		final Map<String, CinesPAC> byId = managed.getPacs()
+			.stream()
+			.collect(Collectors.toMap(CinesPAC::getIdentifier, Function.identity()));
+
+		for (final CinesPAC pac : deduped) {
+			if (pac.getIdentifier() == null) {
+				pac.setConfPac(managed);
+				managed.getPacs().add(pac);
+			}
+			else {
+				final CinesPAC existing = byId.get(pac.getIdentifier());
+				if (existing != null) {
+					existing.setName(pac.getName());
+				}
+			}
+		}
+
+		return managed;
+	}
+
 	private void setDefaultValues(final SftpConfiguration conf) throws PgcnTechnicalException {
 		// Cryptage du mot de passe
 		if (conf.getPassword() != null) {
@@ -159,9 +236,9 @@ public class SftpConfigurationService {
 		return errors;
 	}
 
-	public void getPpdiPacs(final SftpConfiguration conf, final MultipartFile file) {
+	@Transactional
+	public SftpConfiguration getPpdiPacs(final SftpConfiguration conf, final MultipartFile file) {
 
-		final List<CinesPAC> pacs = new ArrayList<>();
 		Optional<PpdiType> opt = Optional.empty();
 
 		if (file != null && !file.isEmpty()) {
@@ -171,7 +248,7 @@ public class SftpConfigurationService {
 			catch (JAXBException | IOException e) {
 				LOG.error(e.getMessage(), e);
 				// pb du fichier ppdi : invalide ? - on fait rien ..
-				return;
+				return conf;
 			}
 			if (opt.isPresent()) {
 				final List<FondsType> fonds = opt.get().getContexte().getFonds();
@@ -186,6 +263,7 @@ public class SftpConfigurationService {
 				});
 			}
 		}
+		return sftpConfigurationRepository.save(conf);
 	}
 
 	private Optional<PpdiType> unmarshallPpdiFile(final InputStream input) throws JAXBException {

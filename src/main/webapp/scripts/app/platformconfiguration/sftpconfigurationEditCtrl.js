@@ -258,7 +258,6 @@
         }
 
         function afterLoadingConfiguration(configuration) {
-            loadConfPacs(configuration);
             loadParams();
             loadAll(configuration);
         }
@@ -330,15 +329,6 @@
                     $scope.files = _.map(element.files, angular.identity);
                 });
             }
-        }
-
-        function loadConfPacs(configuration) {
-            SFTPConfigurationSrvc.confPacs({ configuration: configuration.identifier }).$promise.then(function (pacs) {
-                _.map(pacs, function (pac) {
-                    return (pac.confPac = configuration);
-                });
-                $scope.configuration.pacs = pacs;
-            });
         }
 
         // Clean

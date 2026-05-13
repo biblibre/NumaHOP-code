@@ -248,7 +248,11 @@ public class SftpConfigurationController extends AbstractRestController {
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		}
 		// Mise à jour
-		return new ResponseEntity<>(sftpConfigurationService.save(conf), HttpStatus.OK);
+		final SftpConfiguration updated = sftpConfigurationService.update(conf);
+		if (updated == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(updated, HttpStatus.OK);
 	}
 
 	/**
@@ -276,8 +280,8 @@ public class SftpConfigurationController extends AbstractRestController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		else {
-			sftpConfigurationService.getPpdiPacs(configSFTP, files.get(0));
-			return new ResponseEntity<>(configSFTP, HttpStatus.OK);
+			final SftpConfiguration updated = sftpConfigurationService.getPpdiPacs(configSFTP, files.get(0));
+			return new ResponseEntity<>(updated, HttpStatus.OK);
 		}
 	}
 

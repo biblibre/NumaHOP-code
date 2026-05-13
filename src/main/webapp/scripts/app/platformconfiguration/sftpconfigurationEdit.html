@@ -150,7 +150,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="pac in configuration.pacs">
+                                <tr ng-repeat="pac in configuration.pacs track by $index">
                                     <td class="text-center">
                                         <sem-editable-field
                                             sem-type="text"

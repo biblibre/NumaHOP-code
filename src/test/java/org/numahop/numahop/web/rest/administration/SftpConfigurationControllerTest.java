@@ -204,7 +204,7 @@ public class SftpConfigurationControllerTest {
 
 		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
 		when(sftpConfigurationService.findOne(configurationSftp.getIdentifier())).thenReturn(configurationSftp);
-		when(sftpConfigurationService.save(configurationSftp)).thenReturn(savedStat);
+		when(sftpConfigurationService.update(any(SftpConfiguration.class))).thenReturn(savedStat);
 
 		// test update
 		this.restMockMvc
