@@ -266,4 +266,7 @@
 
     <!-- ajout données par defaut -->
     <include file="classpath:config/liquibase/changelog/db-changelog-update-parameter-cines-values.xml" relativeToChangelogFile="false" />
+
+    <!-- MT52421: Add a new permission for admin tools -->
+    <include file="classpath:config/liquibase/changelog/db-changelog-MT52421-add-admin-tools-authorization.xml" relativeToChangelogFile="false" />
 </databaseChangeLog>
