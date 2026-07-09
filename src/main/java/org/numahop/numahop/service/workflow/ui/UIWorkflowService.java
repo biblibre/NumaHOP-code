@@ -223,7 +223,7 @@ public class UIWorkflowService {
 
 	/* ========= ADMIN UTILS ================= */
 	/**
-	 * ADMIN only : annule tout !! AUCUN CONTROLE
+	 * SUPER_ADMIN ou ADMIN_TOOLS: annule tout !! AUCUN CONTROLE
 	 * @param docUnitIds
 	 */
 	@Transactional
@@ -235,7 +235,7 @@ public class UIWorkflowService {
 	}
 
 	/**
-	 * ADMIN only : Force la validation d'une etape et avance... !! AUCUN CONTROLE
+	 * SUPER_ADMIN ou ADMIN_TOOLS: Force la validation d'une etape et avance... !! AUCUN CONTROLE
 	 * @param docUnitIds
 	 */
 	public void validDocWorkflowState(final String stateId, final List<String> docUnitIds) {
@@ -256,7 +256,7 @@ public class UIWorkflowService {
 	}
 
 	/**
-	 * ADMIN only : Reinitialisation d'une etape Possible uniquement si : - l'étape est
+	 * SUPER_ADMIN ou ADMIN_TOOLS: Reinitialisation d'une etape Possible uniquement si : - l'étape est
 	 * passée - l'étape qui suit est en cours ou en attente.
 	 * @param docUnitIds
 	 */

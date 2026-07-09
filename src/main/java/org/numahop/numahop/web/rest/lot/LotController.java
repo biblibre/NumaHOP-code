@@ -440,7 +440,7 @@ public class LotController extends AbstractRestController {
 	 */
 	@RequestMapping(method = RequestMethod.POST, params = { "cloturelot" })
 	@Timed
-	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	@RolesAllowed({AuthorizationConstants.SUPER_ADMIN, AuthorizationConstants.ADMIN_TOOLS})
 	public ResponseEntity<List<ResultAdminLotDTO>> closeLot(@RequestBody final List<String> lotsIds) {
 
 		final List<ResultAdminLotDTO> results = new ArrayList<>();
@@ -458,7 +458,7 @@ public class LotController extends AbstractRestController {
 	 */
 	@RequestMapping(method = RequestMethod.POST, params = { "decloturelot" })
 	@Timed
-	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	@RolesAllowed({AuthorizationConstants.SUPER_ADMIN, AuthorizationConstants.ADMIN_TOOLS})
 	public ResponseEntity<List<ResultAdminLotDTO>> declotureLot(@RequestBody final List<String> lotsIds) {
 		final List<ResultAdminLotDTO> results = new ArrayList<>();
 		lotsIds.forEach(id -> {

@@ -14,7 +14,7 @@ public final class AuthorizationConstants {
 	/**
 	 * Accès aux outils d'administration
 	 */
-	public static final String ADMIN_TOOLS = "ADMIN_TOOLS";
+	public static final String ADMIN_TOOLS = "ADMIN-TOOLS";
 
 	/**
 	 * Autorisation ajoutée automatiquement au super administrateur : ne correspond pas à
