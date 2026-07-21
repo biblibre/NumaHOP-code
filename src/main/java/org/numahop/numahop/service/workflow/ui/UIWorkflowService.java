@@ -235,7 +235,8 @@ public class UIWorkflowService {
 	}
 
 	/**
-	 * SUPER_ADMIN ou ADMIN_TOOLS: Force la validation d'une etape et avance... !! AUCUN CONTROLE
+	 * SUPER_ADMIN ou ADMIN_TOOLS: Force la validation d'une etape et avance... !! AUCUN
+	 * CONTROLE
 	 * @param docUnitIds
 	 */
 	public void validDocWorkflowState(final String stateId, final List<String> docUnitIds) {
@@ -256,8 +257,8 @@ public class UIWorkflowService {
 	}
 
 	/**
-	 * SUPER_ADMIN ou ADMIN_TOOLS: Reinitialisation d'une etape Possible uniquement si : - l'étape est
-	 * passée - l'étape qui suit est en cours ou en attente.
+	 * SUPER_ADMIN ou ADMIN_TOOLS: Reinitialisation d'une etape Possible uniquement si : -
+	 * l'étape est passée - l'étape qui suit est en cours ou en attente.
 	 * @param docUnitIds
 	 */
 	public void reinitDocWorkflowState(final String stateId, final List<String> docUnitIds) {
