@@ -49,7 +49,7 @@ Build dependency list (optional but recommended for optimal developpement):
 - gnumake (optional)
 - npm (optional)
 
-The installation manual can be found at this url: [https://numahop.github.io/Documentation/install/index.html](https://numahop.github.io/Documentation/developper_manual/install/index.html)
+The installation manual can be found at this url: [https://numahop.github.io/Documentation/install/index.html](http://web.archive.org/web/20251205055726/https://numahop.github.io/Documentation/developper_manual/install/index.html)
 ## Project Actors
 
 ### Original Specification Redactors
