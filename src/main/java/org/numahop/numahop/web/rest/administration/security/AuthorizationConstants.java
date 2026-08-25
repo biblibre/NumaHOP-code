@@ -12,6 +12,11 @@ public final class AuthorizationConstants {
 	public static final String SUPER_ADMIN = "SUPER_ADMIN";
 
 	/**
+	 * Accès aux outils d'administration
+	 */
+	public static final String ADMIN_TOOLS = "ADMIN-TOOLS";
+
+	/**
 	 * Autorisation ajoutée automatiquement au super administrateur : ne correspond pas à
 	 * une authorisation en BD => donne acces aux management protected endPoints
 	 */

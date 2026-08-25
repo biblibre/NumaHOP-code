@@ -189,6 +189,7 @@
 
         // Administration
         ADMINISTRATION_LIB: 'ADMINISTRATION-LIB', // Visualisation des données des autres bibliothèques
+        ADMIN_TOOLS: 'ADMIN-TOOLS', // Accès aux outils d'administration
         CONF_INTERNET_ARCHIVE_HAB0: 'CONF-INTERNET-ARCHIVE-HAB0', // Habilitation configuration Internet Archive: lecture
         CONF_INTERNET_ARCHIVE_HAB1: 'CONF-INTERNET-ARCHIVE-HAB1', // Habilitation configuration Internet Archive: création / modification
         CONF_INTERNET_ARCHIVE_HAB2: 'CONF-INTERNET-ARCHIVE-HAB2', // Habilitation configuration Internet Archive: suppression

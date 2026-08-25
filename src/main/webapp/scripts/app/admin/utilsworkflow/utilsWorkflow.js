@@ -8,7 +8,7 @@
             title: gettext('Outils'),
             reloadOnSearch: false,
             access: {
-                authorizedRoles: [USER_ROLES.SUPER_ADMIN],
+                authorizedRoles: [USER_ROLES.ADMIN_TOOLS],
             },
         });
     });

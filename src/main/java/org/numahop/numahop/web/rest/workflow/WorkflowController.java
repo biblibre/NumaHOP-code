@@ -224,7 +224,7 @@ public class WorkflowController extends AbstractRestController {
 	 */
 	@RequestMapping(method = RequestMethod.POST, params = { "endAllDocWorkflows" })
 	@ResponseStatus(HttpStatus.OK)
-	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	@RolesAllowed({ AuthorizationConstants.SUPER_ADMIN, AuthorizationConstants.ADMIN_TOOLS })
 	@Timed
 	public ResponseEntity<?> endAllDocWorkflows(@RequestBody final List<String> docUnitIds) {
 		uiService.endAllDocWorkflows(docUnitIds);
@@ -233,7 +233,7 @@ public class WorkflowController extends AbstractRestController {
 
 	@RequestMapping(method = RequestMethod.POST, params = { "validDocWorkflowState" })
 	@ResponseStatus(HttpStatus.OK)
-	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	@RolesAllowed({ AuthorizationConstants.SUPER_ADMIN, AuthorizationConstants.ADMIN_TOOLS })
 	public ResponseEntity<?> validDocWorkflowState(@RequestBody final List<String> docUnitIds) {
 
 		final String stateId = docUnitIds.remove(docUnitIds.size() - 1);
@@ -243,7 +243,7 @@ public class WorkflowController extends AbstractRestController {
 
 	@RequestMapping(method = RequestMethod.POST, params = { "reinitDocWorkflowState" })
 	@ResponseStatus(HttpStatus.OK)
-	@RolesAllowed(AuthorizationConstants.SUPER_ADMIN)
+	@RolesAllowed({ AuthorizationConstants.SUPER_ADMIN, AuthorizationConstants.ADMIN_TOOLS })
 	public ResponseEntity<?> reinitDocWorkflowState(@RequestBody final List<String> docUnitIds) {
 
 		final String stateId = docUnitIds.remove(docUnitIds.size() - 1);
