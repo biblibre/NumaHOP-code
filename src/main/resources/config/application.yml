@@ -209,7 +209,7 @@ logging:
 
 management:
     endpoints:
-        web.exposure.include: '*'
+        web.exposure.include: [health, info]
         web.path-mapping.metrics: sb-metrics
     endpoint:
         health:
